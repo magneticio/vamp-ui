@@ -1,0 +1,36 @@
+// custom colors
+
+@brand-info-dark:           #1976D2;
+@brand-info:                #03A9F4;
+@brand-info-light:          #BBDEFB;
+@brand-accent:              #FF4081;
+
+@divider-color: #EDEDED;
+
+// typography
+@font-size-default: 15px;
+
+
+p {
+  font-size: @font-size-default !important;
+}
+
+//links
+@link-color:                @brand-info;
+@link-hover-color:          mix(@brand-info, white, 80%);
+
+a {
+  color: @link-color;
+  text-decoration: none;
+  -webkit-transition: color 0.25s, background 0.25s;
+  -moz-transition: color 0.25s, background 0.25s;
+  -o-transition: color 0.25s, background 0.25s;
+  transition: color 0.25s, background 0.25s;
+  &:hover {
+    color: @link-hover-color;
+    text-decoration: underline;
+  }
+  &:focus {
+    color: @link-color;
+  }
+}

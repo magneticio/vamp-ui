@@ -1,41 +1,80 @@
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
-var mui = require('material-ui');
-var AppBar = mui.AppBar;
-var AppCanvas = mui.AppCanvas;
-var Menu = mui.Menu;
-var IconButton = mui.IconButton;
+var BreedStore = require('../stores/BreedStore');
+var BlueprintStore = require('../stores/BlueprintStore');
+var DeploymentStore = require('../stores/DeploymentStore');
+var BreedActions = require('../actions/BreedActions');
+var BlueprintActions = require('../actions/BlueprintActions');
+var DeploymentActions = require('../actions/DeploymentActions');
+var BreedsList = require('./BreedsList.jsx');
+var NavBar = require("../components/NavBar.jsx");
+var LoadStates = require("../constants/LoadStates.js");
+
+var allTabs = [
+  {id: "/deployments", text: "Deployments"},
+  {id: "/blueprints", text: "Blueprints"},
+  {id: "/breeds", text: "Breeds"},
+];
+
+var POLL_INTERVAL = 5000;
+
+function getAll() {
+  return {
+    allBreeds: BreedStore.getAll(),
+    allBlueprints: BlueprintStore.getAll(),
+    allDeployments: DeploymentStore.getAll(),
+    loadState: LoadStates.STATE_SUCCESS
+  };
+}
 
 var Master = React.createClass({
+  
+  contextTypes: {
+    router: React.PropTypes.func
+  },
 
-  mixins: [Router.State],
+  getInitialState: function() {
+
+    return  {
+      loadState: LoadStates.STATE_LOADING,
+      allBreeds: []
+    }
+  },
+
+  componentDidMount: function() {
+
+    BreedStore.addChangeListener(this._onChange);
+    BlueprintStore.addChangeListener(this._onChange);
+    DeploymentStore.addChangeListener(this._onChange);
+    this.pollBackend;
+    setInterval(this.pollBackend, POLL_INTERVAL);
+  },
+
+  pollBackend: function() {
+    BreedActions.getAllBreeds()
+    BlueprintActions.getAllBlueprints()
+    DeploymentActions.getAllDeployments()
+  },
 
   render: function() {
-
-    var title = 'Vamp';
-    var githubButton = (
-      <IconButton
-        className="github-icon-button"
-        iconClassName="muidocs-icon-custom-github"
-        href="https://github.com/callemall/material-ui"
-        linkButton={true} />
-    );
-
+    var props = this.state
     return (
-      <AppCanvas predefinedLayout={1}>
 
-        <AppBar
-          className="mui-dark-theme"
-          onMenuIconButtonTouchTap={this._onMenuIconButtonTouchTap}
-          title={title}
-          zDepth={0}>
-          {githubButton}
-        </AppBar>
-        
-        <RouteHandler />
-      </AppCanvas>
+      <div>
+
+        <NavBar tabs={allTabs} activeTabId={this.context.router.getCurrentPath()} className="navbar-nav nav-tabs-unbordered"/>
+
+        <div className="container">
+          <RouteHandler {...props}/>
+        </div>
+      </div>
+
     );
+  },
+
+  _onChange: function() {
+    this.setState(getAll());
   },
 
   _onMenuIconButtonTouchTap: function() {

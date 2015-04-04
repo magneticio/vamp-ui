@@ -1,0 +1,22 @@
+.table {
+  
+  table-layout: fixed;
+  word-break: break-word;
+  white-space: nowrap;
+
+  tbody {
+    tr {
+      td {
+        cursor: pointer;
+        color: @brand-info;
+        font-size: 18px;
+        &.clip-names {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        }
+      }
+    }
+  }
+} 
+

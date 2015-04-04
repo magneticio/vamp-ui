@@ -1,6 +1,5 @@
 var dest = './build',
-  src = './src',
-  mui = './node_modules/material-ui/src';
+  src = './src'
 
 module.exports = {
   browserSync: {
@@ -17,13 +16,16 @@ module.exports = {
     src: src + '/less/main.less',
     watch: [
       src + '/less/**',
-      mui + '/less/**'
     ],
     dest: dest
   },
   markup: {
     src: src + "/www/**",
     dest: dest
+  },
+  fonts: {
+    src: './flat-ui/fonts/**',
+    dest: './build/fonts'
   },
   browserify: {
     // Enable source maps
