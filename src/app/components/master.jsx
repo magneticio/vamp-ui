@@ -17,7 +17,7 @@ var allTabs = [
   {id: "/breeds", text: "Breeds"},
 ];
 
-var POLL_INTERVAL = 30000;
+var POLL_INTERVAL = 4000;
 
 var Master = React.createClass({
   
