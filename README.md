@@ -1,7 +1,12 @@
 # Vamp-UI
 
 
+## Running it
 
+You need to have NPM installed. Then...
+
+    $ npm install
+    $ npm run
 
 ## Tips
 
