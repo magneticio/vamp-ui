@@ -1,0 +1,39 @@
+.services {
+
+  .service-header {
+    font-size: @component-font-size-base;
+    font-weight: 700;
+  }
+  .service-box {
+    margin-bottom: @spacer * 2;
+
+    h5 {
+      margin-top: 0px;
+      margin-bottom: (@spacer / 3) * 2;
+
+      &:after {
+
+        background: green;
+        width: 1em;
+        height: 1em;
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: middle;
+        text-indent: -1000px;
+        overflow: hidden;
+        margin-bottom: 8px;
+        margin-right: 15px;
+
+      }
+    }
+
+    .dialog {
+      margin-top: (-@spacer - 1);
+      border-bottom: 2px;
+      border-bottom-style: solid;
+      border-bottom-color: #fadbd8;      
+      border-top: none;
+      margin-bottom: @spacer * 2;
+    }
+  }
+}

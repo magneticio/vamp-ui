@@ -1,3 +1,4 @@
+var _ = require('underscore')
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
@@ -5,19 +6,27 @@ var LoadStates = require("../constants/LoadStates.js");
 
 var CHANGE_EVENT = 'change';
 
-var _breeds = [];
+var _breeds = {};
 
 var _persistBreeds = function(response){
-      if (response != LoadStates.STATE_LOADING ) {
-        _breeds = JSON.parse(response.text)
-      }
+        var _temp = {}
+        array = JSON.parse(response.text)
+        _.each(array, function(obj){ 
+          _temp[obj.name] = obj
+          _temp[obj.name].status = 'CLEAN'
+
+        });
+        _breeds = _temp
     };
 
 var BreedStore = assign({}, EventEmitter.prototype,{
 
   getAll: function() {
-    // console.log('return breeds from store')
     return _breeds;
+  },
+
+  getBreed: function(name) {
+    return _.findWhere(_breeds, { "name" : name });
   },
 
   emitChange: function() {
@@ -38,9 +47,11 @@ var BreedStore = assign({}, EventEmitter.prototype,{
     // console.log('register store with Dispatcher')
     var action = payload.actionType;
     switch(action) {
-      case 'GET_ALL_BREEDS':
+      case 'GET_ALL_BREEDS_SUCCESS':
         _persistBreeds(payload.response)
         break;
+      case 'DELETE_BREED':
+        _breeds[payload.response.name].status = 'DELETING'         
     }
     BreedStore.emitChange();
     return true; 

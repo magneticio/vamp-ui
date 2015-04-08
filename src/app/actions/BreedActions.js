@@ -5,9 +5,11 @@ var Api = require('./Api');
 var BreedActions = {
 
   getAllBreeds: function() {
-    // console.log('query sent to API')
-    Api.query('/breeds', BreedConstants.GET_ALL_BREEDS)
-  }
+    Api.get('/breeds', null, BreedConstants.GET_ALL_BREEDS)
+  },
+    deleteBreed: function(breed) {
+    Api.del('/breeds/' + breed.name, breed, BreedConstants.DELETE_BREED)
+  }  
 };
 
 module.exports = BreedActions;

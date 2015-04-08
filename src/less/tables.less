@@ -4,19 +4,57 @@
   word-break: break-word;
   white-space: nowrap;
 
-  tbody {
+  thead {
     tr {
-      td {
-        cursor: pointer;
-        color: @brand-info;
-        font-size: 18px;
-        &.clip-names {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        }
+      th {
+        color: @text-color;
+        border-bottom: 2px solid @divider-color;
       }
     }
   }
+
+  tbody {
+    tr {
+      td {
+        vertical-align: middle;
+        cursor: pointer;
+        font-size: 14px;
+        border-top: none;
+        border-bottom: 2px solid @divider-color;
+      }
+      &:hover {
+        background-color: @hover-color;
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    thead {
+      tr {
+        th {
+          padding: @spacer;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          padding: @spacer;
+        }
+      }
+    }
+
+  }
+
+
+
+  &.table-striped {
+    tbody {
+      tr:nt-child(odd) {
+        background-color: @hover-color;
+      } 
+    }
+  }
 } 
+
 

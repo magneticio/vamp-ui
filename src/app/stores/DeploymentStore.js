@@ -2,22 +2,42 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
 var LoadStates = require("../constants/LoadStates.js");
+var BlueprintConstants = require('../constants/BlueprintConstants');
+var DeploymentConstants = require('../constants/DeploymentConstants');
+var Actions = require('../actions/DeploymentActions');
 
 var CHANGE_EVENT = 'change';
 
-var _deployments = [];
+var _deployments = {};
+var _currentDeployment = {}
 
 var _persistDeployments = function(response){
-      if (response != LoadStates.STATE_LOADING ) {
-        _deployments = JSON.parse(response.text)
-      }
+        var _temp = {}
+        array = JSON.parse(response.text)
+        _.each(array, function(obj){ 
+          _temp[obj.name] = obj
+          _temp[obj.name].status = 'CLEAN'
+
+        });   
+        _deployments = _temp
     };
+
+var _persistCurrentDeployment = function(response){
+        _currentDeployment = JSON.parse(response.text)
+    };
+
+var _eraseCurrentDeployment = function() {
+  _currentDeployment = {};
+}        
 
 var DeploymentStore = assign({}, EventEmitter.prototype,{
 
   getAll: function() {
-    // console.log('return deployments from store')
     return _deployments;
+  },
+
+  getCurrent: function() {
+    return _currentDeployment;
   },
 
   emitChange: function() {
@@ -33,11 +53,23 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
   },
 
   dispatcherIndex: AppDispatcher.register(function(payload) {
+
     var action = payload.actionType;
+
     switch(action) {
-      case 'GET_ALL_DEPLOYMENTS':
+      case DeploymentConstants.GET_ALL_DEPLOYMENTS + '_SUCCESS':
         _persistDeployments(payload.response)
         break;
+      case DeploymentConstants.GET_DEPLOYMENT + '_SUCCESS':
+        _persistCurrentDeployment(payload.response)
+        break;
+      case BlueprintConstants.DEPLOY_BLUEPRINT:
+        payload.response.status = 'DIRTY'
+        _deployments[payload.response.name] = payload.response
+        break;  
+      case DeploymentConstants.CLEANUP_DEPLOYMENT:
+      console.log('depl is: ' + payload)
+        _deployments[payload.response.name].status = 'DELETING'                          
     }
     DeploymentStore.emitChange();
     return true; 

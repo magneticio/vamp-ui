@@ -1,23 +1,39 @@
 // custom colors
 
+@brand-primary:             #03A9F4;
+@brand-secondary:           #BBDEFB;
 @brand-info-dark:           #1976D2;
 @brand-info:                #03A9F4;
 @brand-info-light:          #BBDEFB;
 @brand-accent:              #FF4081;
 
-@divider-color: #EDEDED;
+@gray-light: #888;
+@divider-color: #eef0f0;
+@hover-color: #f9fafb;
+
+@body-bg:                   #fff;
+@text-color:                #333;
 
 // typography
-@font-size-default: 15px;
+@font-family-base:              "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-demo:              "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-monospace:          Monaco, Menlo, Consolas, "Courier New", monospace;
+@font-size-base:                 16px;
 
+@font-size-h1:              floor((@font-size-base * 3.444)); // ~62px
+@font-size-h2:              ceil((@font-size-base * 2.889)); // ~52px
+@font-size-h3:              ceil((@font-size-base * 2.222)); // ~40px
+@font-size-h4:              ceil((@font-size-base * 1.611)); // ~29px
+@font-size-h5:              floor((@font-size-base * 1.556)); // ~28px
+@font-size-h6:              ceil((@font-size-base * 1.333)); // ~24px
 
-p {
-  font-size: @font-size-default !important;
-}
+@text-muted: @gray-light;
+@text-muted-size: 15px;
 
 //links
 @link-color:                @brand-info;
 @link-hover-color:          mix(@brand-info, white, 80%);
+
 
 a {
   color: @link-color;
@@ -33,4 +49,84 @@ a {
   &:focus {
     color: @link-color;
   }
+}
+
+//spacing
+
+@spacer: 15px;
+
+// header and navbar
+@navbar-height: 76px;
+header {
+  margin-bottom: @spacer;
+  box-shadow: rgba(6,8,8,.14902) 0 0 5px 0;
+  height: @navbar-height;
+}
+
+
+// pre + code
+pre {
+  border: none;
+}
+
+@navbar-inverse-color:                @inverse;
+@navbar-inverse-bg:                   #fff;
+@navbar-inverse-border:               darken(@navbar-inverse-bg, 10%);
+
+// Inverted navbar links
+@navbar-inverse-link-color:           @brand-accent;
+@navbar-inverse-link-hover-color:     @brand-primary;
+@navbar-inverse-link-hover-bg:        transparent;
+@navbar-inverse-link-active-color:    @inverse;
+@navbar-inverse-link-active-bg:       @brand-accent;
+@navbar-inverse-link-disabled-color:  #444;
+@navbar-inverse-link-disabled-bg:     transparent;
+
+
+// forms
+
+.form-control {
+  border: 2px solid @divider-color;
+
+}
+
+//dialogs
+.dialog.dialog-danger {
+
+  background-color: #fdefed;
+  border-top-color: #fadbd8;
+  border-bottom-color: #fadbd8;
+
+}
+
+.example-enter {
+  opacity: 0.01;
+  transition: opacity .3s ease-in;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+}
+
+.example-leave {
+  opacity: 1;
+  transition: opacity .3s ease-in;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+}
+
+.example-appear {
+  opacity: 0.01;
+  transition: opacity .1s ease-in;
+}
+
+.example-appear.example-appear-active {
+  opacity: 1;
+}
+
+
+html {
+  overflow-y: scroll;
 }

@@ -17,16 +17,7 @@ var allTabs = [
   {id: "/breeds", text: "Breeds"},
 ];
 
-var POLL_INTERVAL = 5000;
-
-function getAll() {
-  return {
-    allBreeds: BreedStore.getAll(),
-    allBlueprints: BlueprintStore.getAll(),
-    allDeployments: DeploymentStore.getAll(),
-    loadState: LoadStates.STATE_SUCCESS
-  };
-}
+var POLL_INTERVAL = 30000;
 
 var Master = React.createClass({
   
@@ -35,20 +26,11 @@ var Master = React.createClass({
   },
 
   getInitialState: function() {
-
     return  {
       loadState: LoadStates.STATE_LOADING,
-      allBreeds: []
+      allBreeds: [],
+      activeTabId: '/deployments'
     }
-  },
-
-  componentDidMount: function() {
-
-    BreedStore.addChangeListener(this._onChange);
-    BlueprintStore.addChangeListener(this._onChange);
-    DeploymentStore.addChangeListener(this._onChange);
-    this.pollBackend;
-    setInterval(this.pollBackend, POLL_INTERVAL);
   },
 
   pollBackend: function() {
@@ -57,14 +39,32 @@ var Master = React.createClass({
     DeploymentActions.getAllDeployments()
   },
 
+  componentDidMount: function() {
+
+    BreedStore.addChangeListener(this._onChange);
+    BlueprintStore.addChangeListener(this._onChange);
+    DeploymentStore.addChangeListener(this._onChange);
+
+    // get initial data
+    BreedActions.getAllBreeds()
+    BlueprintActions.getAllBlueprints()
+    DeploymentActions.getAllDeployments()
+
+    // schedule poller
+    setInterval(this.pollBackend, POLL_INTERVAL);
+  },
+
+
+
   render: function() {
     var props = this.state
     return (
-
       <div>
-
-        <NavBar tabs={allTabs} activeTabId={this.context.router.getCurrentPath()} className="navbar-nav nav-tabs-unbordered"/>
-
+        <header>
+          <div className="container">
+            <NavBar tabs={allTabs} activeTabId={props.activeTabId} className="navbar-nav nav-tabs-unbordered"/>
+          </div>
+        </header>
         <div className="container">
           <RouteHandler {...props}/>
         </div>
@@ -74,7 +74,14 @@ var Master = React.createClass({
   },
 
   _onChange: function() {
-    this.setState(getAll());
+    this.setState(
+      {
+        allBreeds: BreedStore.getAll(),
+        allBlueprints: BlueprintStore.getAll(),
+        allDeployments: DeploymentStore.getAll(),
+        loadState: LoadStates.STATE_SUCCESS
+      }
+    )
   },
 
   _onMenuIconButtonTouchTap: function() {

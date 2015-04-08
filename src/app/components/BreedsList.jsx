@@ -2,6 +2,11 @@ var React = require('react/addons');
 var BreedListItem = require('./BreedListItem.jsx');
 var LoadStates = require("../constants/LoadStates.js");
 var BreedsList = React.createClass({
+
+  handleAdd: function() {
+    console.log('handle add')
+  },
+
   render: function() {
 
       var loadingClassSet = React.addons.classSet({
@@ -15,21 +20,25 @@ var BreedsList = React.createClass({
         breeds.push(<BreedListItem key={key} breed={allBreeds[key]} />);
       }
 
+      var emptyClassSet = React.addons.classSet({
+        "hidden": breeds.length > 0
+      });      
+
     return(
-      <div>
-        <div className={loadingClassSet}>
-          <h4 className="text-center muted">
-            Loading...
-          </h4>
-        </div>
-        <div className="">
-          <div className="">
-            <ul className="breeds-list">
+    <div className='breeds'>
+      <div className=''>
+        <table className="table table-hover">
+          <tbody>
+            <tr className={emptyClassSet}>
+              <td colSpan="6" className='text-center'>
+                No breeds found.
+              </td>
+            </tr>          
             {breeds}
-            </ul>
-          </div>
-        </div>
-      </div>  
+          </tbody>
+        </table>
+      </div>
+    </div>  
   )}
 });
  

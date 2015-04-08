@@ -3,10 +3,15 @@ var NavItem = require('react-bootstrap').NavItem;
 var Nav = require('react-bootstrap').Nav
 var NavBar = React.createClass({
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
+
   propTypes: {
-    activeTabId: React.PropTypes.string.isRequired,
     className: React.PropTypes.string,
-    tabs: React.PropTypes.array.isRequired
+    tabs: React.PropTypes.array.isRequired,
+    activeTabId: React.PropTypes.string
   },
 
   getDefaultProps: function () {
@@ -18,15 +23,20 @@ var NavBar = React.createClass({
   render: function () {
 
     var cx = React.addons.classSet;
-    var activeTabId = this.props.activeTabId;
 
     var tabs = this.props.tabs.map(function (tab) {
-      var tabClassSet = cx({
-        "active": tab.id === activeTabId
-      });
+
+    var path = this.context.router.getCurrentPathname() 
+    var params = this.context.router.getCurrentParams().id
+    
+    if (params != undefined) {
+          path = path.substring(0,(path.slice(1).indexOf('\/'))+1)
+    }
+    var isActive =  (path == tab.id)
+    var className = isActive ? 'active' : '';
 
       return (
-        <NavItem key={tab.id} className={tabClassSet} href={"#" + tab.id}>{tab.text}</NavItem>
+        <NavItem key={tab.id} className={className} href={"#" + tab.id}>{tab.text}</NavItem>
       );
     }, this);
 
@@ -36,7 +46,8 @@ var NavBar = React.createClass({
           <button type="button" className="navbar-toggle">
             <span className="sr-only">Toggle navigation</span>
           </button>
-          <a className="navbar-brand" href="#">Vamp</a>
+          <a className="navbar-brand" href="/#deployments"><img className='logo' src='/images/vamp_logo_blue.svg'/></a>
+          <span id="alpha">alpha</span>
         </div>
 
         <div className="collapse navbar-collapse" id="navbar-collapse-5">
