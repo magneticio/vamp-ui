@@ -9,7 +9,7 @@ var ClusterBox = React.createClass({
     var name = this.props.name  
 
     return(
-      <div>
+      <div className='cluster-box'>
         <h5>Cluster: {name}</h5>
         <hr/>
           <div className='row'>                    

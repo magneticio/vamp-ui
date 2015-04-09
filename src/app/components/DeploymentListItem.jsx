@@ -40,7 +40,7 @@ var DeploymentListItem = React.createClass({
         <td>{servicesCountTotal}</td>
         <td>
           <div className='button-bar'>
-            <button className='btn btn-danger' onClick={this.handleDelete}>Delete</button>
+            <button className='btn btn-danger' onClick={this.handleDelete}>Undeploy</button>
           </div>        
         </td>
       </tr>

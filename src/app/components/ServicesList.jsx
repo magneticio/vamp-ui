@@ -17,18 +17,15 @@ var ServicesList = React.createClass({
 
     return (
       <div className='container-fluid services'>
-        <div className='row service-header'>
-          <div className='col-sm-2'>
+        <div className='row service-header hidden-xs'>
+          <div className='col-sm-4'>
               service
           </div>
-          <div className='col-sm-2'>
+          <div className='col-sm-4'>
               weight
           </div>
           <div className='col-sm-4'>
               filters
-          </div>
-          <div className='col-sm-4'>
-              servers
           </div>
         </div>
         <hr/>                                

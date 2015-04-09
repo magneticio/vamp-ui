@@ -17,6 +17,9 @@ var BlueprintListItem = React.createClass({
     this.context.router.transitionTo('deployments')
   },
 
+  handleEdit: function() {
+  },
+
   handleDelete: function() {
     BlueprintActions.deleteBlueprint(this.props.blueprint)
   },
@@ -40,6 +43,7 @@ var BlueprintListItem = React.createClass({
         <td>
           <div className='inline-button-bar'>
             <button className='btn btn-info' onClick={this.handleDeploy}>Deploy</button>
+            <button className='btn btn-success' onClick={this.handleEdit}>Edit</button>
             <button className='btn btn-danger' onClick={this.handleDelete}>Delete</button>
           </div>
         </td>

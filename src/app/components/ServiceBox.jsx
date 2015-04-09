@@ -22,22 +22,18 @@ var ServiceBox = React.createClass({
                 </div>
             </div>
             <div className='row'>
-                <div className='col-sm-2'>
+                <div className='col-sm-4'>
                     <h5><a href={'/#/breeds/' + service.breed.name }> {service.breed.name}</a></h5>
                     <div className='text-muted'>{service.breed.deployable}</div>
                     <div className='text-muted small'>started <TimeAgo date={date}/></div>
                 </div>
-                <div className='col-sm-2'>
+                <div className='col-sm-4'>
                     <WeightSetter weight={service.routing.weight}/>                                        
                 </div> 
                 <div className='col-sm-4'>
                     <FilterList filters={service.routing.filters}/>
                 </div>                   
-                <div className='col-sm-4'>
-                    <ServersList servers={service.servers}/>
-                </div>
             </div> 
-            <hr/>   
         </div>
     )}
 });

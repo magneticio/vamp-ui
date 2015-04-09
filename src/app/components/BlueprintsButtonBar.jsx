@@ -1,4 +1,4 @@
-  var React = require('react');
+var React = require('react');
 var Yaml = require('yamljs');
 var Modal = require('react-bootstrap').Modal;
 var BlueprintActions = require('../actions/BlueprintActions.js')
@@ -70,6 +70,9 @@ var BlueprintsButtonBar = React.createClass({
         return <span/>;
       }
 
+      var disabled = (this.state.validYaml && this.state.blueprintYaml != '') ? '' : 'disabled' 
+
+
       return (
         <Modal title='Submit a blueprint in YAML' onRequestHide={this.handleToggle}>
           <div className='modal-body'>
@@ -77,14 +80,12 @@ var BlueprintsButtonBar = React.createClass({
                 <div className="form-group">
                   <textarea className="form-control" rows="15" id="yaml-blueprint" blueprintYaml={this.state.blueprintYaml} onInput={this.onChange}></textarea>
                 </div>
-                <input type='submit' className={'btn btn-info' + ( (this.state.validYaml && this.state.blueprintYaml != '' ) ? '' : 'disabled' ) } blueprintYaml='Add blueprint'/>
+                <button type='submit' className='btn btn-info' disabled={disabled}>Add blueprint</button>
               </form>
           </div>
         </Modal>
       );
     }
-
-
 });
- 
+
 module.exports = BlueprintsButtonBar;
