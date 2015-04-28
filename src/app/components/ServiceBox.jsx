@@ -32,6 +32,8 @@ var ServiceBox = React.createClass({
                 </div> 
                 <div className='col-sm-4'>
                     <FilterList filters={service.routing.filters}/>
+                </div>
+                <div>
                 </div>                   
             </div> 
         </div>

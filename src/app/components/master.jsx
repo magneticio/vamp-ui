@@ -61,11 +61,11 @@ var Master = React.createClass({
     return (
       <div>
         <header>
-          <div className="container">
+          <div className="container-fluid">
             <NavBar tabs={allTabs} activeTabId={props.activeTabId} className="navbar-nav nav-tabs-unbordered"/>
           </div>
         </header>
-        <div className="container">
+        <div className="container-fluid">
           <RouteHandler {...props}/>
         </div>
       </div>

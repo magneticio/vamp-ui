@@ -1,3 +1,4 @@
+var _ = require('underscore')
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
@@ -14,7 +15,7 @@ var _currentDeployment = {}
 var _persistDeployments = function(response){
         var _temp = {}
         array = JSON.parse(response.text)
-        _.each(array, function(obj){ 
+        _.each(array, function(obj){
           _temp[obj.name] = obj
           _temp[obj.name].status = 'CLEAN'
 

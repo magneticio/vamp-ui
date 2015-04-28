@@ -6,7 +6,7 @@
 You need to have NPM installed. Then...
 
     $ npm install
-    $ npm run
+    $ npm start
 
 ## Tips
 
