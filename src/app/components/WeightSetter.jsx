@@ -19,13 +19,7 @@ var WeightSetter = React.createClass({
   render: function() {
 
     return(
-      <div className='weight-setter' onMouseOver={this.toggleHovered} onMouseOut={this.toggleHovered}>
-        <div className={this.state.hovered ? '' : 'hidden'}>
-          <div className='btn-group-vertical plus-minus'>
-            <button className="btn btn-info" type="button">-</button>
-            <button className="btn btn-info" type="button">+</button>
-          </div>
-        </div>  
+      <div className='weight-setter'> 
         <h3>{this.props.weight}%</h3>
       </div>
   )}

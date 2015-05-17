@@ -7,25 +7,25 @@ var PulseApi = require('./PulseApi');
 var DeploymentActions = {
 
   getAllDeployments: function() {
-    // Api.get('/deployments', null, DeploymentConstants.GET_ALL_DEPLOYMENTS)
+    Api.get('/deployments', null, DeploymentConstants.GET_ALL_DEPLOYMENTS)
 
     // mock response
-    response = {}
-    response.text = JSON.stringify(mockObj)
+    // response = {}
+    // response.text = JSON.stringify(mockObj)
 
-    payload = {actionType: DeploymentConstants.GET_ALL_DEPLOYMENTS + '_SUCCESS', response: response }
-    console.log('dispatchng')
-    AppDispatcher.dispatch(payload)
+    // payload = {actionType: DeploymentConstants.GET_ALL_DEPLOYMENTS + '_SUCCESS', response: response }
+    // console.log('dispatchng')
+    // AppDispatcher.dispatch(payload)
 
   },
   getDeployment: function(name) {
-    // Api.get('/deployments/' + name, null, DeploymentConstants.GET_DEPLOYMENT)
+    Api.get('/deployments/' + name, null, DeploymentConstants.GET_DEPLOYMENT)
 
-    response = {}
-    response.text = JSON.stringify(mockObj[0])
+    // response = {}
+    // response.text = JSON.stringify(mockObj[0])
 
-    payload = {actionType: DeploymentConstants.GET_DEPLOYMENT + '_SUCCESS', response: response }
-    AppDispatcher.dispatch(payload)
+    // payload = {actionType: DeploymentConstants.GET_DEPLOYMENT + '_SUCCESS', response: response }
+    // AppDispatcher.dispatch(payload)
 
   },
   getDeploymentAsBlueprint: function(deployment) {

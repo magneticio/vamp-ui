@@ -1,5 +1,6 @@
 # Vamp-UI
 
+This is the UI for [Vamp](https://github.com/magneticio/vamp) build with ReactJS.
 
 ## Running it
 

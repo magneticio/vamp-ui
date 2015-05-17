@@ -10,7 +10,7 @@ var ClusterBox = React.createClass({
 
     return(
       <div className='cluster-box'>
-        <h5>Cluster: {name}</h5>
+        <h5>Cluster: {name} <small className="text-muted">port: {cluster.routes}</small></h5>
         <hr/>
           <div className='row'>                    
             <ServicesList services={cluster.services}/>    
