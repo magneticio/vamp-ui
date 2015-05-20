@@ -3,7 +3,7 @@ var LoadStates = require("../constants/LoadStates.js");
 var request = require('superagent');
 
 
-var API_URL = 'http://192.168.59.103:8081/api/v1';
+var API_URL = 'http://192.168.59.103:8080/api/v1';
 var TIMEOUT = 10000;
 
 var _pendingRequests = {};
