@@ -3,3 +3,4 @@ build
 .DS_Store
 vamp-ui.sublime-project
 vamp-ui.sublime-workspace
+.sass-cache
