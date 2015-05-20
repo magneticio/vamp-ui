@@ -1,0 +1,14 @@
+{
+    "name": "bugfree-dubstep:1.0.0",
+    "deployable": "magneticio/bugfree-dubstep:1.0.0",
+    "ports": {
+        "port": "80/http"
+    },
+    "environment_variables": {},
+    "constants": {},
+    "dependencies": {
+        "db":{ 
+            "name": "mysql"
+        }
+    }
+}
