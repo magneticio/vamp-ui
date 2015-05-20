@@ -1,0 +1,9 @@
+.footer {
+	background-color: $grey;
+	text-align: center;
+	color: white;
+	font-size: 0.8em;
+	padding: 2em 0;
+	background-color: $grey;
+	//@include background-image(linear-gradient(to top right, $red, $orange));
+}
