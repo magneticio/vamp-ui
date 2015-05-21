@@ -15,7 +15,7 @@ module.exports = {
   sass: {
     src: src + '/scss/style.scss',
     watch: [
-      src + '/scss/**',
+      src + '/scss/**/*',
     ],
     dest: dest
   },

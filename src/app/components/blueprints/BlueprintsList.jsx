@@ -2,6 +2,7 @@ var React = require('react/addons');
 var BlueprintActions = require('../../actions/BlueprintActions');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var ButtonBar = require('./BlueprintsButtonBar.jsx');
+var ToolBar = require('../ToolBar.jsx');
 var BlueprintListItem = require('./BlueprintListItem.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
 
@@ -26,7 +27,7 @@ var BlueprintsList = React.createClass({
 
  return(
     <div className='blueprints'>
-      <ButtonBar />
+      <ToolBar />    
       <div className=''>
         <table className="table table-hover">
           <tbody>

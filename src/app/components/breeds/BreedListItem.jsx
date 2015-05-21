@@ -19,7 +19,7 @@ var BreedListItem = React.createClass({
 
     var breed = this.props.breed;
     return (
-      <li>
+      <li className="card">
         <span className={ (breed.status == 'CLEAN' ? 'hidden' : '') }>
           <Loader />
         </span>

@@ -1,0 +1,17 @@
+[type="password"],
+[type="search"],
+[type="text"] {
+	display: inline-block;
+	background-color: $grey-light;
+	border: none;
+	outline: none;
+	padding: 0.5em 1em;
+}
+.filter-form {
+	display: inline-block;
+	
+	input {
+		box-sizing: border-box;
+  		width: 30rem;
+	}
+}

@@ -36,38 +36,3 @@
 		}
 	}
 }
-
-// /**
-//  * 	Responsive
-//  */
-
-// @include medium-and-below {
-// 	.main-navigation {
-// 		position: absolute;
-// 		opacity: 0;
-// 		left: 0;
-// 		top: -100vh;
-// 		width: 100%;
-// 		height: 100vh;
-// 		z-index: 100;
-// 		background-color: white;
-// 	}
-// 	.nav-menu {
-// 		height: 100vh;
-// 		@include box-sizing(border-box);
-// 		@include display-flex;
-// 		@include flex-direction(column);
-// 		@include justify-content(center);
-// 	}
-
-// 	.menu-item {
-// 		display: block;
-// 		text-align: center;
-// 		font-size: 1.2em;
-// 		font-weight: bold;
-// 		width: 100%;
-// 		a {
-// 			color: $red;
-// 		}
-// 	}
-// }

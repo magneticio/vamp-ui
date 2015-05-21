@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var ToolBar = require('../ToolBar.jsx');
 var BreedListItem = require('./BreedListItem.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
 var BreedsList = React.createClass({
@@ -26,8 +27,9 @@ var BreedsList = React.createClass({
 
     return(
       <div className='list-container'>
+      <ToolBar />
         <span className={emptyClassSet}>No breeds found.</span>
-        <ul className='breeds-list'>
+        <ul className='breeds-list card-list'>
           {breeds}
         </ul>
       </div>  
