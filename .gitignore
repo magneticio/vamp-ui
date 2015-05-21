@@ -4,3 +4,4 @@ build
 vamp-ui.sublime-project
 vamp-ui.sublime-workspace
 .sass-cache
+npm-debug.log
