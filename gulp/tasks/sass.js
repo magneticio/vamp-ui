@@ -5,16 +5,6 @@ var gulp = require('gulp'),
   handleErrors = require('../util/handleErrors'),
   config = require('../config').sass;
 
-// gulp.task('less', function() {
-//   return gulp.src(config.src)
-//     .pipe(sourcemaps.init())
-//     .pipe(less())
-//     .on('error', handleErrors)
-//     .pipe(autoprefixer({cascade: false, browsers: ['last 2 versions']}))
-//     .pipe(sourcemaps.write())
-//     .pipe(gulp.dest(config.dest));
-// });
-
 gulp.task('sass', function() {
   return gulp.src(config.src)
     .pipe(sourcemaps.init())
@@ -27,5 +17,19 @@ gulp.task('sass', function() {
     .on('error', handleErrors)
     .pipe(autoprefixer({cascade: false, browsers: ['last 2 versions']}))
     .pipe(sourcemaps.write())
+    .pipe(gulp.dest(config.dest));
+});
+
+gulp.task('sass-min', function() {
+  return gulp.src(config.src)
+    .pipe(sourcemaps.init())
+    .pipe(compass({
+      config_file: './config.rb',
+      css: './build',
+      sass: './src/scss',
+      style: 'compressed'
+    }))
+    .on('error', handleErrors)
+    .pipe(autoprefixer({cascade: false, browsers: ['last 2 versions']}))
     .pipe(gulp.dest(config.dest));
 });
