@@ -5,3 +5,23 @@
 	z-index: 1;
 	@include box-sizing(border-box);
 }
+.branding {
+	display: inline-block;
+}
+.logo {
+	display: inline-block;
+	height: 26px;
+	
+	img {
+		width: 84px;
+		height: 26px;
+	}
+	.alpha {
+		color: $pink;
+		text-transform: uppercase;
+		font-size: 0.625rem;
+		vertical-align: top;
+		margin: 0;
+		line-height: 1em;
+	}
+}

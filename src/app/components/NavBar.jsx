@@ -31,22 +31,22 @@ var NavBar = React.createClass({
       var className = isActive ? 'active' : '';
 
       return (
-        <li key={tab.id} className={className} href={"#" + tab.id}>{tab.text}</li>
+        <li key={tab.id} className={"navigation-item " + className} href={"#" + tab.id}>{tab.text}</li>
       );
     }, this);
 
     return (
-      <nav className="navbar navbar-inverse navbar-static-top" role="navigation">
-        <div className="navbar-header">
-          <a className="navbar-brand" href="/#deployments"><img className='logo' src='/images/vamp_logo_blue.svg'/></a>
-          <span id="alpha">alpha</span>
+      <nav className="main-navigation" role="navigation">
+        <div className="branding">
+          <a className="logo" href="/#deployments">
+            <img src='/images/vamp_logo_blue.svg' alt="VAMP logo" />
+            <span className="alpha">alpha</span>
+          </a>
         </div>
 
-        <div className="collapse navbar-collapse" id="navbar-collapse-5">
-          <ul className="nav navbar-nav">
-            {tabs}
-           </ul>
-        </div>
+        <ul className="navigation-list">
+          {tabs}
+        </ul>
       </nav>
     );
   }
