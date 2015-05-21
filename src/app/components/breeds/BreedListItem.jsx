@@ -19,23 +19,15 @@ var BreedListItem = React.createClass({
 
     var breed = this.props.breed;
     return (
-      <tr>
-        <td>
-          <span className={ (breed.status == 'CLEAN' ? 'hidden' : '') }>
-            <Loader />
-          </span>
-          <a className='artifact-name clip-names' onClick={this.handleDetail}>{breed.name}</a>
-        </td>
-        <td>
-        </td>
-        <td>
-        </td>
-        <td>
-          <div className='button-bar'>
-            <button className='btn btn-danger' onClick={this.handleDelete}>Delete</button>
-          </div>
-        </td>
-      </tr>
+      <li>
+        <span className={ (breed.status == 'CLEAN' ? 'hidden' : '') }>
+          <Loader />
+        </span>
+        <a className='artifact-name clip-names' onClick={this.handleDetail}>{breed.name}</a>
+        <div className='button-bar'>
+          <button className='btn btn-danger' onClick={this.handleDelete}>Delete</button>
+        </div>
+      </li>
   )}
 });
  

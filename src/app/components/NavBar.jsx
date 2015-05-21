@@ -31,7 +31,7 @@ var NavBar = React.createClass({
       var className = isActive ? 'active' : '';
 
       return (
-        <li key={tab.id} className={"navigation-item " + className} href={"#" + tab.id}>{tab.text}</li>
+        <li key={tab.id} className="navigation-item"><a href={"#" + tab.id} className={className}>{tab.text}</a></li>
       );
     }, this);
 

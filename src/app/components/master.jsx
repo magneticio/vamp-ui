@@ -61,9 +61,7 @@ var Master = React.createClass({
     return (
       <div id="page-container">
         <header id="header">
-          <div>
             <NavBar tabs={allTabs} activeTabId={props.activeTabId} />
-          </div>
         </header>
         <div id="page-content">
           <RouteHandler {...props}/>

@@ -9,37 +9,30 @@ var BreedsList = React.createClass({
 
   render: function() {
 
-      var loadingClassSet = React.addons.classSet({
-        "hidden": this.props.loadState !== LoadStates.STATE_LOADING
-      });
+    var loadingClassSet = React.addons.classSet({
+      "hidden": this.props.loadState !== LoadStates.STATE_LOADING
+    });
 
-      var allBreeds = this.props.allBreeds;
-      var breeds = [];
+    var allBreeds = this.props.allBreeds;
+    var breeds = [];
 
-      for (var key in allBreeds) {
-        breeds.push(<BreedListItem key={key} breed={allBreeds[key]} />);
-      }
+    for (var key in allBreeds) {
+      breeds.push(<BreedListItem key={key} breed={allBreeds[key]} />);
+    }
 
-      var emptyClassSet = React.addons.classSet({
-        "hidden": breeds.length > 0
-      });      
+    var emptyClassSet = React.addons.classSet({
+      "hidden": breeds.length > 0
+    });      
 
     return(
-    <div className='breeds'>
-      <div className=''>
-        <table className="table table-hover">
-          <tbody>
-            <tr className={emptyClassSet}>
-              <td colSpan="6" className='text-center'>
-                No breeds found.
-              </td>
-            </tr>          
-            {breeds}
-          </tbody>
-        </table>
-      </div>
-    </div>  
-  )}
+      <div className='list-container'>
+        <span className={emptyClassSet}>No breeds found.</span>
+        <ul className='breeds-list'>
+          {breeds}
+        </ul>
+      </div>  
+    )
+  }
 });
  
 module.exports = BreedsList;
