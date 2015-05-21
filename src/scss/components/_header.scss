@@ -1,12 +1,13 @@
 #header {
-	background-color: white;
-	padding: 1rem;
+	box-sizing: border-box;
 	width: 100%;
+	background-color: white;
 	z-index: 1;
-	@include box-sizing(border-box);
 }
 .branding {
 	display: inline-block;
+	height: 26px;
+	padding: 0 1rem;
 }
 .logo {
 	display: inline-block;
