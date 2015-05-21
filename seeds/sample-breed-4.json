@@ -1,0 +1,10 @@
+{
+    "name": "elected-danceoff:1.0.2",
+    "deployable": "magneticio/elected-danceoff:1.0.2",
+    "ports": {
+        "port": "80/http"
+    },
+    "environment_variables": {},
+    "constants": {},
+    "dependencies": {}
+}

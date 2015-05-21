@@ -5,3 +5,6 @@ var config      = require('../config').browserSync;
 gulp.task('browserSync', ['build'], function() {
   browserSync(config);
 });
+gulp.task('browserSync-min', ['build-min'], function() {
+  browserSync(config);
+});

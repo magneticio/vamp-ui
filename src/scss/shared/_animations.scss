@@ -1,0 +1,9 @@
+/* The masthead animation */
+@include keyframes(mastheadZoom) {
+    0% {
+    	@include transform(scale(1));
+   	}
+    100% {
+        @include transform(scale(1.15));
+    }
+}

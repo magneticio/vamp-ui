@@ -8,6 +8,10 @@ var gulp   = require('gulp');
 var config = require('../config');
 
 gulp.task('watch', ['setWatch', 'browserSync'], function() {
-  gulp.watch(config.less.watch, ['less']);
+  gulp.watch(config.sass.watch, ['sass']);
+  gulp.watch(config.markup.src, ['markup']);
+});
+gulp.task('watch-min', ['setWatch', 'browserSync-min'], function() {
+  gulp.watch(config.sass.watch, ['sass-min']);
   gulp.watch(config.markup.src, ['markup']);
 });
