@@ -6,12 +6,12 @@ var Redirect = Router.Redirect;
 var DefaultRoute = Router.DefaultRoute;
 
 var Master = require('./components/Master.jsx');
-var BreedsList = require('./components/BreedsList.jsx');
-var BreedDetail = require('./components/BreedDetail.jsx');
-var BlueprintsList = require('./components/BlueprintsList.jsx');
-var BlueprintDetail = require('./components/BlueprintDetail.jsx');
-var DeploymentsList = require('./components/DeploymentsList.jsx');
-var DeploymentDetail = require('./components/DeploymentDetail.jsx');
+var BreedsList = require('./components/breeds/BreedsList.jsx');
+var BreedDetail = require('./components/breeds/BreedDetail.jsx');
+var BlueprintsList = require('./components/blueprints/BlueprintsList.jsx');
+var BlueprintDetail = require('./components/blueprints/BlueprintDetail.jsx');
+var DeploymentsList = require('./components/deployments/DeploymentsList.jsx');
+var DeploymentDetail = require('./components/deployments/DeploymentDetail.jsx');
 
 var AppRoutes = (
   <Route name="root" path="/" handler={Master}>

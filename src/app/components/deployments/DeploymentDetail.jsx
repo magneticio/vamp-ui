@@ -1,10 +1,10 @@
 var _ = require('underscore')
 var React = require('react');
-var BreadCrumbsBar = require('./BreadCrumbsBar.jsx');
-var ClusterBox = require('./ClusterBox.jsx');
-var DeploymentActions = require('../actions/DeploymentActions');
-var LoadStates = require("../constants/LoadStates.js");
-var DeploymentStore = require('../stores/DeploymentStore');
+var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
+var ClusterBox = require('../ClusterBox.jsx');
+var DeploymentActions = require('../../actions/DeploymentActions');
+var LoadStates = require("../../constants/LoadStates.js");
+var DeploymentStore = require('../../stores/DeploymentStore');
 
 var DeploymentDetail = React.createClass({
 

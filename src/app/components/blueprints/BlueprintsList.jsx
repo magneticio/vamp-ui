@@ -1,9 +1,9 @@
 var React = require('react/addons');
-var BlueprintActions = require('../actions/BlueprintActions');
+var BlueprintActions = require('../../actions/BlueprintActions');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var ButtonBar = require('./BlueprintsButtonBar.jsx');
 var BlueprintListItem = require('./BlueprintListItem.jsx');
-var LoadStates = require("../constants/LoadStates.js");
+var LoadStates = require("../../constants/LoadStates.js");
 
 var BlueprintsList = React.createClass({
 

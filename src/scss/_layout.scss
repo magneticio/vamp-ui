@@ -1,18 +1,5 @@
-body {	
-}
-
-#page-content {
-	background-color: white;
-	z-index: 1;
-  	position: relative;
-}
-.wrapper {
-	position: relative;
-	width: 100%;
-	max-width: 960px;
-	padding: 0 1em;
-	margin: 0 auto;
-	@include box-sizing(border-box);
+body {
+	background-color: $off-white;
 }
 img {
 	max-width: 100%;

@@ -7,7 +7,7 @@ var DeploymentStore = require('../stores/DeploymentStore');
 var BreedActions = require('../actions/BreedActions');
 var BlueprintActions = require('../actions/BlueprintActions');
 var DeploymentActions = require('../actions/DeploymentActions');
-var BreedsList = require('./BreedsList.jsx');
+var BreedsList = require('./breeds/BreedsList.jsx');
 var NavBar = require("../components/NavBar.jsx");
 var LoadStates = require("../constants/LoadStates.js");
 
@@ -59,13 +59,13 @@ var Master = React.createClass({
   render: function() {
     var props = this.state
     return (
-      <div>
-        <header>
-          <div className="container-fluid">
-            <NavBar tabs={allTabs} activeTabId={props.activeTabId} className="navbar-nav nav-tabs-unbordered"/>
+      <div id="page-container">
+        <header id="header">
+          <div>
+            <NavBar tabs={allTabs} activeTabId={props.activeTabId} />
           </div>
         </header>
-        <div className="container-fluid">
+        <div id="page-content">
           <RouteHandler {...props}/>
         </div>
       </div>

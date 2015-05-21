@@ -1,9 +1,9 @@
 var React = require('react');
-var BlueprintActions = require('../actions/BlueprintActions');
-var BlueprintStore = require('../stores/BlueprintStore');
-var BreadCrumbsBar = require('./BreadCrumbsBar.jsx');
+var BreedActions = require('../../actions/BreedActions');
+var BreedStore = require('../../stores/BreedStore');
+var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
 
-var BlueprintDetail = React.createClass({
+var BreedDetail = React.createClass({
 
   contextTypes: {
     router: React.PropTypes.func
@@ -11,7 +11,7 @@ var BlueprintDetail = React.createClass({
 
   getInitialState: function() {
     return {
-      blueprint: {}
+      breed: []
     }
   },
 
@@ -19,21 +19,24 @@ var BlueprintDetail = React.createClass({
     var name = this.context.router.getCurrentParams().id
     this.setState(
       { 
-        blueprint: BlueprintStore.getBlueprint(name)
+        breed: BreedStore.getBreed(name)
       }
     )
   },
+
+
+
   render: function() {
     return(
-      <div className='col-md-12 blueprints'>
+      <div className='col-md-12 breeds'>
         <BreadCrumbsBar/>
         <pre>
           <code>
-          {JSON.stringify(this.state.blueprint,null,2)}
+          {JSON.stringify(this.state.breed,null,2)}
           </code>
         </pre>  
       </div>
   )}
 });
  
-module.exports = BlueprintDetail;
+module.exports = BreedDetail;

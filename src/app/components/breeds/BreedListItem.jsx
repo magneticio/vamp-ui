@@ -1,6 +1,6 @@
 var React = require('react');
-var Loader = require('./Loader.jsx')
-var BreedActions = require('../actions/BreedActions.js')
+var Loader = require('../Loader.jsx')
+var BreedActions = require('../../actions/BreedActions.js')
 var BreedListItem = React.createClass({
 
   contextTypes: {

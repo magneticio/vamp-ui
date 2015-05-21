@@ -1,6 +1,6 @@
 var React = require('react');
-var Loader = require('./Loader.jsx')
-var BlueprintActions = require('../actions/BlueprintActions.js')
+var Loader = require('../Loader.jsx')
+var BlueprintActions = require('../../actions/BlueprintActions.js')
 var BlueprintListItem = React.createClass({
 
   contextTypes: {

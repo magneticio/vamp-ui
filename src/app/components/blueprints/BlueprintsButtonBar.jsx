@@ -1,12 +1,10 @@
 var React = require('react');
 var Yaml = require('yamljs');
-var Modal = require('react-bootstrap').Modal;
-var BlueprintActions = require('../actions/BlueprintActions.js')
-var OverlayMixin = require('react-bootstrap').OverlayMixin;
+var BlueprintActions = require('../../actions/BlueprintActions.js')
 
 var BlueprintsButtonBar = React.createClass({
 
-  mixins: [OverlayMixin],
+  //mixins: [OverlayMixin],
 
   getInitialState: function() {
     return {
@@ -74,7 +72,7 @@ var BlueprintsButtonBar = React.createClass({
 
 
       return (
-        <Modal title='Submit a blueprint in YAML' onRequestHide={this.handleToggle}>
+        <div title='Submit a blueprint in YAML' onRequestHide={this.handleToggle}>
           <div className='modal-body'>
               <form className='form' onSubmit={this.handleSubmit}>
                 <div className="form-group">
@@ -83,7 +81,7 @@ var BlueprintsButtonBar = React.createClass({
                 <button type='submit' className='btn btn-info' disabled={disabled}>Add blueprint</button>
               </form>
           </div>
-        </Modal>
+        </div>
       );
     }
 });

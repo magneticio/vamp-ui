@@ -1,6 +1,6 @@
 var React = require('react/addons');
 var BreedListItem = require('./BreedListItem.jsx');
-var LoadStates = require("../constants/LoadStates.js");
+var LoadStates = require("../../constants/LoadStates.js");
 var BreedsList = React.createClass({
 
   handleAdd: function() {

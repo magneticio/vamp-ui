@@ -1,9 +1,9 @@
 var _ = require('underscore')
 var React = require('react');
 var Router = require('react-router')
-var Loader = require('./Loader.jsx')
-var DeploymentActions = require('../actions/DeploymentActions.js')
-var HealthCircle = require('./HealthCircle.jsx')
+var Loader = require('../Loader.jsx')
+var DeploymentActions = require('../../actions/DeploymentActions.js')
+var HealthCircle = require('../HealthCircle.jsx')
 var DeploymentListItem = React.createClass({
 
   contextTypes: {

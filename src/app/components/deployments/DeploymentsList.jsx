@@ -1,6 +1,6 @@
 var React = require('react/addons');
 var DeploymentListItem = require('./DeploymentListItem.jsx');
-var LoadStates = require("../constants/LoadStates.js");
+var LoadStates = require("../../constants/LoadStates.js");
 
 var DeploymentsList = React.createClass({
   render: function() {
