@@ -1,19 +1,48 @@
 .card-list {
-	width: 100%;
-	margin: 0;
-	padding: 0.5rem;
-	box-sizing: border-box;
-	list-style-type: none;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0;
+	padding: 0.5rem;
+	list-style-type: none;
 }
 .card {
 	display: inline-block;
-	background-color: white;
-	width: 25%;
-	min-height: 100px;
-	border: 0.5rem solid $off-white;
-	padding: 1rem;
 	box-sizing: border-box;
+	width: 31.33%;
+	min-height: 100px;
+	padding: 1rem;
+	margin: 1%;
+	background-color: white;
+	//border: 0.5rem solid $off-white;
+	cursor: pointer;
+
+	p {
+		margin: 0;
+	}
+}
+.card-name {
+	color: $grey-medium;
+	font-size: 0.875rem;
+	font-weight: 600;
+}
+.card-deployable {
+	color: $blue;
+	font-size: 1.125rem;
+	//font-weight: 600;
+}
+
+// RESPONSIVE
+@include large-and-below {
+	.card {
+		width: 48%;
+	}
+}
+@include medium-and-below {
+	.card {
+		width: 98%;
+		margin-bottom: 2%;
+	}
 }

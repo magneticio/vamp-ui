@@ -5,7 +5,7 @@ var config = require('../config');
 //var rimraf = require('rimraf');
 
 gulp.task('compress', function() {
-  return gulp.src('./build/*.js')
+  return gulp.src('./build/app.js')
     .pipe(uglify())
     .pipe(rename("app.min.js"))
     .pipe(gulp.dest('./build/'));
