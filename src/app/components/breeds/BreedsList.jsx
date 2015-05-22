@@ -28,10 +28,10 @@ var BreedsList = React.createClass({
     return(
       <div className='list-container'>
       <ToolBar />
-        <span className={emptyClassSet}>No breeds found.</span>
-        <ul className='breeds-list card-list'>
-          {breeds}
-        </ul>
+      <span className={emptyClassSet}>No breeds found.</span>
+      <ul className='general-list'>
+        {breeds}
+      </ul>
       </div>  
     )
   }

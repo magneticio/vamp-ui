@@ -9,13 +9,12 @@ var ToolBar = React.createClass({
 
     return (
       <section id="toolbar" className="toolbar">
+        <form className="filter-form">
+          <input type="search" placeholder="Search" />
+        </form>
         <div className="toggle-view-switch">
           view-icons
         </div>
-        <form className="filter-form">
-          <input type="search" placeholder="Filter" />
-          
-        </form>
       </section>
   )}
 });

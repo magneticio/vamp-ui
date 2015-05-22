@@ -1,7 +1,17 @@
-.card {
+.general-list {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0;
+	padding: 0.35rem;
+	list-style-type: none;
+}
+.list-item {
 	display: inline-block;
 	box-sizing: border-box;
-	width: 31.933%;
+	width: 100%;
 	min-height: 100px;
 	padding: 0.7rem 0.7rem 0;
 	margin: 0.7%;

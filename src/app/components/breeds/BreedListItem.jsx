@@ -29,29 +29,26 @@ var BreedListItem = React.createClass({
     });
 
     return (
-      <li className="card" onClick={this.handleDetail}>
+      <li className="list-item" onClick={this.handleDetail}>
         <span className={ (breed.status == 'CLEAN' ? 'hidden' : '') }>
           <Loader />
         </span>
-        <div className='artifact-name clip-names'>
-          <p className="card-name">{breed.name}</p>
-          <p className="card-deployable">{breed.deployable}</p>
-        </div>
-        <div className="card-ports">
-          <span className="ports-label">Ports</span>
+        <p className="item-name">{breed.name}</p>
+        <p className="item-deployable">{breed.deployable}</p>
+        <div className="item-ports">
           {ports}
         </div>
-        <ul className="card-meta-list">
-          <li className="card-meta">
-            <span className="card-meta-title">Constants </span>
+        <ul className="item-meta-list">
+          <li className="item-meta">
+            <span className="item-meta-title">Constants </span>
             {constants}
           </li>
-          <li className="card-meta">
-            <span className="card-meta-title">Dependencies </span>
+          <li className="item-meta">
+            <span className="item-meta-title">Dependencies </span>
             {dependencies}
           </li>
-          <li className="card-meta">
-            <span className="card-meta-title">Env. Variables </span>
+          <li className="item-meta">
+            <span className="item-meta-title">Env. Variables </span>
             {envVariables}
           </li>
         </ul>
