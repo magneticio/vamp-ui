@@ -1,3 +1,9 @@
+// Scale
+$h1-size: 1.999rem;
+$h2-size: 1.414rem;
+$h3-size: 1rem;
+$xs-size: 0.707rem;
+
 // Base setting
 html {
 	font-size: 16px;
@@ -9,7 +15,7 @@ html {
 
 // Headings
 h1 {
-	font-size: 1.705882353em;
+	font-size: $h1-size;
   	line-height: 1.3em;
 	color: $grey;
 	text-transform: uppercase;
@@ -18,13 +24,13 @@ h1 {
 }
 
 h2 {
-	font-size: 1.705882353em;
+	font-size: $h1-size;
   	line-height: 1.3em;
 	color: $red; 
 }
 
 h3 {
-	font-size: 1em;
+	font-size: $h1-size;
 	font-weight: 700;
   	line-height: 1.3em;
 	color: $red; 
@@ -34,7 +40,9 @@ p {
 	margin-bottom: 0.7em; 
 	line-height: 1.65em;
 }
-
+small {
+	font-size: $xs-size;
+}
 a {
   	color: $blue;
   	text-decoration: none;

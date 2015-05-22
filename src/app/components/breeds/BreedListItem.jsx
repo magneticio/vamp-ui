@@ -25,23 +25,23 @@ var BreedListItem = React.createClass({
     var envVariables = _.size(breed.environment_variables);
     var ports = [];
     _.each(this.props.breed.ports, function(val,key){
-      ports.push(val);
+      ports.push(<div className='badge'><span className='badge-key'>{key}</span>{val}</div>);
     });
 
     return (
-      <li className="card">
+      <li className="card" onClick={this.handleDetail}>
         <span className={ (breed.status == 'CLEAN' ? 'hidden' : '') }>
           <Loader />
         </span>
-        <a className='artifact-name clip-names' onClick={this.handleDetail}>
+        <div className='artifact-name clip-names'>
           <p className="card-name">{breed.name}</p>
           <p className="card-deployable">{breed.deployable}</p>
-        </a>
-        <ul>
-          <li className="card-meta">
-            <span className="card-meta-title">Ports </span>
-            {breed.ports}
-          </li>
+        </div>
+        <div className="card-ports">
+          <span className="ports-label">Ports</span>
+          {ports}
+        </div>
+        <ul className="card-meta-list">
           <li className="card-meta">
             <span className="card-meta-title">Constants </span>
             {constants}

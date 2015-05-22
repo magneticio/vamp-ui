@@ -3,6 +3,11 @@
 	width: 100%;
 	box-sizing: border-box;
 	padding: 1rem;
+	border-top: 1px solid $off-white;
+
+	input {
+		//background-color: white;
+	}
 }
 .toggle-view-switch {
 	display: inline-block;

@@ -13,7 +13,7 @@
 	box-sizing: border-box;
 	width: 31.33%;
 	min-height: 100px;
-	padding: 1rem;
+	padding: 1rem 1rem 0;
 	margin: 1%;
 	background-color: white;
 	//border: 0.5rem solid $off-white;
@@ -25,16 +25,60 @@
 }
 .card-name {
 	color: $grey-medium;
-	font-size: 0.875rem;
-	font-weight: 600;
+	font-size: $xs-size;
+	text-transform: uppercase;
 }
 .card-deployable {
-	color: $blue;
-	font-size: 1.125rem;
-	//font-weight: 600;
+	font-size: $h2-size;
+	color: $pink;
+}
+.card-ports {
+	box-sizing: border-box;
+	margin-top: 1rem;
+	
+	.ports-label {
+		display: block;
+		font-size: $xs-size;
+		text-transform: uppercase;
+		font-weight: 600;
+	}
+	.badge {
+		padding: 0 0.25rem 0 0;
+		background-color: $grey-light;
+		color: $grey;
+		margin-right: 0.5rem;
+	}
+	.badge-key {
+		display: inline-block;
+		padding: 0 0.25rem;
+		margin-right: 0.25rem;
+		background-color: $blue;
+		color: white;
+		border-radius: 3px 0 0 3px;
+	}
+}
+.card-meta-list {
+	list-style-type: none;
+	padding: 0;
+	border-top: 1px solid $grey-light;
+	margin-top: 1rem;
+
+}
+.card-meta {
+	display: inline-block;
+	list-style-type: none;
+	width: 33.3%;
+	padding: 0.5rem;
+	box-sizing: border-box;
+	//background-color: $grey-light;
+}
+.card-meta-title {
+	font-size: $xs-size;
 }
 
-// RESPONSIVE
+/**
+ * RESPONSIVE
+ */
 @include large-and-below {
 	.card {
 		width: 48%;
