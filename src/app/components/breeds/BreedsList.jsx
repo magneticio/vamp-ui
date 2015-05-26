@@ -5,19 +5,24 @@ var BreedListItem = require('./BreedListItem.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
 var BreedsList = React.createClass({
 
-  handleAdd: function() {
-    console.log('handle add')
-  },
-
   getInitialState: function() {
     return {
       filterText: '',
+      viewType:'card-list'
     };
   },
-
+  
+  handleAdd: function() {
+    console.log('handle add')
+  },
   handleUserInput: function(filterText) {
     this.setState({
       filterText: filterText,
+    });
+  },
+  handleViewSwitch: function(viewType) {
+    this.setState({
+      viewType: viewType,
     });
   },
 
@@ -30,12 +35,12 @@ var BreedsList = React.createClass({
     var allBreeds = this.props.allBreeds;
     var breeds = [];
 
-    _.each(allBreeds, function(val,key) {
-      console.log(this.state.filterText);
-      if (val.name.indexOf(this.state.filterText) === -1 && this.state.filterText !== '' && typeof this.state.filterText !== 'undefined') {
+    _.each(allBreeds, function(breed,key) {
+      var filterTerm = this.state.filterText.toLowerCase() || false;
+      if ( ( breed.name.toLowerCase().indexOf(filterTerm) === -1 && breed.deployable.toLowerCase().indexOf(filterTerm) === -1 && filterTerm) ) {
         return;
       }
-      breeds.push(<BreedListItem key={val.name} breed={val} />);
+      breeds.push(<BreedListItem key={key} breed={breed} />);
     }, this);
 
     var emptyClassSet = React.addons.classSet({
@@ -46,9 +51,10 @@ var BreedsList = React.createClass({
       <div className='list-container'>
       <ToolBar 
         filterText={this.state.filterText}
-        onUserInput={this.handleUserInput} />
+        onUserInput={this.handleUserInput}
+        handleViewSwitch={this.handleViewSwitch} />
       <span className={emptyClassSet}>No breeds found.</span>
-      <ul className='general-list'>
+      <ul className={this.state.viewType} >
         {breeds}
       </ul>
       </div>  

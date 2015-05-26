@@ -7,6 +7,7 @@
 	
 	label {
 		position: relative;
+		margin-left: 0.5rem;
 	}
 	input[type=search] {
 		padding-left: 2em;
@@ -18,9 +19,26 @@
 		top: 0;
 	}
 }
-.toggle-view-switch {
+.view-switch {
+	vertical-align: top;
 	display: inline-block;
-	width: 118px;
-	margin-right: 1.3rem;
+	width: 2.125rem;
+	height: 2.125rem;
+	padding: 0.5em;
+	margin-right: 0.3rem;
+	border: none;
 	color: white;
+	box-sizing: border-box;
+	background-color: transparent;
+	outline: none;
+
+	img {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	&:hover {
+		background-color: $pink;
+	}
 }
