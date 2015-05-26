@@ -2,7 +2,7 @@
 	display: inline-block;
 	box-sizing: border-box;
 	width: 31.933%;
-	min-height: 300px;
+	//min-height: 300px;
 	padding: 0.7rem 0.7rem 0;
 	margin: 0.7%;
 	background-color: white;
@@ -26,6 +26,7 @@
 		color: $pink;
 	}
 	.item-ports {
+		display: inline-block;
 		box-sizing: border-box;
 		margin-top: 0.7rem;
 		
@@ -51,6 +52,7 @@
 		}
 	}
 	.item-meta-list {
+		display: block;
 		list-style-type: none;
 		padding: 0;
 		border-top: 1px solid $grey-light;
@@ -63,7 +65,10 @@
 		width: 33.3%;
 		padding: 0.35rem;
 		box-sizing: border-box;
-		//background-color: $grey-light;
+		
+		&:first-of-type {
+			display: none;
+		}
 	}
 	.item-meta-title {
 		font-size: $xs-size;
@@ -75,12 +80,12 @@
  * RESPONSIVE
  */
 @include large-and-below {
-	.card {
+	.card-list .list-item {
 		width: 48%;
 	}
 }
 @include medium-and-below {
-	.card {
+	.card-list .list-item {
 		width: 98%;
 		margin-bottom: 2%;
 	}

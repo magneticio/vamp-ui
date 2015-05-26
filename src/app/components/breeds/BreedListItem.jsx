@@ -25,8 +25,10 @@ var BreedListItem = React.createClass({
     var dependencies = _.size(breed.dependencies);
     var envVariables = _.size(breed.environment_variables);
     var ports = [];
+    var portCount = 0;
     _.each(this.props.breed.ports, function(val,key){
       ports.push(<Badge key={key} label={key} port={val} />);
+      portCount++;
     });
 
     return (
@@ -40,6 +42,10 @@ var BreedListItem = React.createClass({
           {ports}
         </div>
         <ul className="item-meta-list">
+          <li className="item-meta">
+            <span className="item-meta-title">Ports </span>
+            {portCount}
+          </li>
           <li className="item-meta">
             <span className="item-meta-title">Constants </span>
             {constants}
