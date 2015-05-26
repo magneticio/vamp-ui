@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var _ = require('underscore');
 var ToolBar = require('../ToolBar.jsx');
 var BreedListItem = require('./BreedListItem.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
@@ -6,6 +7,18 @@ var BreedsList = React.createClass({
 
   handleAdd: function() {
     console.log('handle add')
+  },
+
+  getInitialState: function() {
+    return {
+      filterText: '',
+    };
+  },
+
+  handleUserInput: function(filterText) {
+    this.setState({
+      filterText: filterText,
+    });
   },
 
   render: function() {
@@ -17,9 +30,13 @@ var BreedsList = React.createClass({
     var allBreeds = this.props.allBreeds;
     var breeds = [];
 
-    for (var key in allBreeds) {
-      breeds.push(<BreedListItem key={key} breed={allBreeds[key]} />);
-    }
+    _.each(allBreeds, function(val,key) {
+      console.log(this.state.filterText);
+      if (val.name.indexOf(this.state.filterText) === -1 && this.state.filterText !== '' && typeof this.state.filterText !== 'undefined') {
+        return;
+      }
+      breeds.push(<BreedListItem key={val.name} breed={val} />);
+    }, this);
 
     var emptyClassSet = React.addons.classSet({
       "hidden": breeds.length > 0
@@ -27,7 +44,9 @@ var BreedsList = React.createClass({
 
     return(
       <div className='list-container'>
-      <ToolBar />
+      <ToolBar 
+        filterText={this.state.filterText}
+        onUserInput={this.handleUserInput} />
       <span className={emptyClassSet}>No breeds found.</span>
       <ul className='general-list'>
         {breeds}
