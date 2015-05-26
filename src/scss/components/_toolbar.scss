@@ -4,9 +4,18 @@
 	box-sizing: border-box;
 	padding: 0.7rem;
 	border-top: 1px solid $off-white;
-
-	input {
-		background-color: white;
+	
+	label {
+		position: relative;
+	}
+	input[type=search] {
+		padding-left: 2em;
+		background-color: $off-white;
+	}
+	.search-icon {
+		position: absolute;
+		left: 0.5rem;
+		top: 0;
 	}
 }
 .toggle-view-switch {

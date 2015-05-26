@@ -7,7 +7,7 @@ var BreedActions = {
   getAllBreeds: function() {
     Api.get('/breeds', null, BreedConstants.GET_ALL_BREEDS)
   },
-    deleteBreed: function(breed) {
+  deleteBreed: function(breed) {
     Api.del('/breeds/' + breed.name, breed, BreedConstants.DELETE_BREED)
   }  
 };
