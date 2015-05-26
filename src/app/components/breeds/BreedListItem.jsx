@@ -1,7 +1,8 @@
 var React = require('react');
-var Loader = require('../Loader.jsx')
-var BreedActions = require('../../actions/BreedActions.js')
 var _ = require('underscore');
+var Loader = require('../Loader.jsx');
+var Badge = require('../Badge.jsx');
+var BreedActions = require('../../actions/BreedActions.js')
 var BreedListItem = React.createClass({
 
   contextTypes: {
@@ -25,7 +26,7 @@ var BreedListItem = React.createClass({
     var envVariables = _.size(breed.environment_variables);
     var ports = [];
     _.each(this.props.breed.ports, function(val,key){
-      ports.push(<div className='badge'><span className='badge-key'>{key}</span>{val}</div>);
+      ports.push(<Badge key={key} label={key} port={val} />);
     });
 
     return (
