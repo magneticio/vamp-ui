@@ -1,8 +1,10 @@
 var React = require('react/addons');
 var _ = require('underscore');
+var classNames = require('classnames');
 var ToolBar = require('../ToolBar.jsx');
 var BreedListItem = require('./BreedListItem.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
+
 var BreedsList = React.createClass({
 
   getInitialState: function() {
@@ -28,7 +30,7 @@ var BreedsList = React.createClass({
 
   render: function() {
 
-    var loadingClassSet = React.addons.classSet({
+    var loadingClassSet = classNames({
       "hidden": this.props.loadState !== LoadStates.STATE_LOADING
     });
 
@@ -43,7 +45,7 @@ var BreedsList = React.createClass({
       breeds.push(<BreedListItem key={key} breed={breed} />);
     }, this);
 
-    var emptyClassSet = React.addons.classSet({
+    var emptyClassSet = classNames({
       "hidden": breeds.length > 0
     });      
 

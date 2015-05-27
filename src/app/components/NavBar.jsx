@@ -19,8 +19,6 @@ var NavBar = React.createClass({
 
   render: function () {
 
-    var cx = React.addons.classSet;
-
     var tabs = this.props.tabs.map(function (tab) {
       var path = this.context.router.getCurrentPathname();
       var params = this.context.router.getCurrentParams().id;

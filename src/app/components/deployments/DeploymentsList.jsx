@@ -1,6 +1,7 @@
 var React = require('react/addons');
 var DeploymentListItem = require('./DeploymentListItem.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
+var classNames = require('classnames');
 
 var DeploymentsList = React.createClass({
   render: function() {
@@ -8,7 +9,7 @@ var DeploymentsList = React.createClass({
       var allDeployments = this.props.allDeployments;
       var deployments = [];
 
-      var loadingClassSet = React.addons.classSet({
+      var loadingClassSet = classNames({
         "hidden": this.props.loadState !== LoadStates.STATE_LOADING
       });
 
@@ -17,7 +18,7 @@ var DeploymentsList = React.createClass({
         deployments.push(<DeploymentListItem key={key} deployment={allDeployments[key]} />);
       }
 
-      var emptyClassSet = React.addons.classSet({
+      var emptyClassSet = classNames({
         "hidden": deployments.length > 0
       });
 

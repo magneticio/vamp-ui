@@ -2,7 +2,8 @@ var React = require('react');
 var _ = require('underscore');
 var Loader = require('../Loader.jsx');
 var Badge = require('../Badge.jsx');
-var BreedActions = require('../../actions/BreedActions.js')
+var BreedActions = require('../../actions/BreedActions.js');
+
 var BreedListItem = React.createClass({
 
   contextTypes: {
@@ -24,11 +25,10 @@ var BreedListItem = React.createClass({
     var constants = _.size(breed.constants);
     var dependencies = _.size(breed.dependencies);
     var envVariables = _.size(breed.environment_variables);
+    var portCount = _.size(breed.ports);
     var ports = [];
-    var portCount = 0;
     _.each(this.props.breed.ports, function(val,key){
       ports.push(<Badge key={key} label={key} port={val} />);
-      portCount++;
     });
 
     return (

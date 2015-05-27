@@ -5,12 +5,13 @@ var ButtonBar = require('./BlueprintsButtonBar.jsx');
 var ToolBar = require('../ToolBar.jsx');
 var BlueprintListItem = require('./BlueprintListItem.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
+var classNames = require('classnames');
 
 var BlueprintsList = React.createClass({
 
   render: function() {
 
-      var loadingClassSet = React.addons.classSet({
+      var loadingClassSet = classNames({
         "hidden": this.props.loadState !== LoadStates.STATE_LOADING
       });
 
@@ -21,7 +22,7 @@ var BlueprintsList = React.createClass({
         blueprints.push(<BlueprintListItem key={key} blueprint={allBlueprints[key]} />);
       }
 
-      var emptyClassSet = React.addons.classSet({
+      var emptyClassSet = classNames({
         "hidden": blueprints.length > 0
       });
 
