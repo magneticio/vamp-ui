@@ -10,22 +10,21 @@ var Actions = require('../actions/DeploymentActions');
 var CHANGE_EVENT = 'change';
 
 var _deployments = {};
-var _currentDeployment = {}
+var _currentDeployment = {};
 
 var _persistDeployments = function(response){
-        var _temp = {}
-        array = JSON.parse(response.text)
-        _.each(array, function(obj){
-          _temp[obj.name] = obj
-          _temp[obj.name].status = 'CLEAN'
-
-        });   
-        _deployments = _temp
-    };
+  var _temp = {};
+  array = JSON.parse(response.text);
+  _.each(array, function(obj){
+    _temp[obj.name] = obj;
+    _temp[obj.name].status = 'CLEAN';
+  });   
+  _deployments = _temp;
+};
 
 var _persistCurrentDeployment = function(response){
-        _currentDeployment = JSON.parse(response.text)
-    };
+  _currentDeployment = JSON.parse(response.text)
+};
 
 var _eraseCurrentDeployment = function() {
   _currentDeployment = {};

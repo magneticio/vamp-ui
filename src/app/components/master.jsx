@@ -34,6 +34,7 @@ var Master = React.createClass({
   },
 
   pollBackend: function() {
+    console.log('masterpoll');
     BreedActions.getAllBreeds()
     BlueprintActions.getAllBlueprints()
     DeploymentActions.getAllDeployments()
@@ -46,18 +47,18 @@ var Master = React.createClass({
     DeploymentStore.addChangeListener(this._onChange);
 
     // get initial data
-    BreedActions.getAllBreeds()
-    BlueprintActions.getAllBlueprints()
-    DeploymentActions.getAllDeployments()
+    BreedActions.getAllBreeds();
+    BlueprintActions.getAllBlueprints();
+    DeploymentActions.getAllDeployments();
 
-    // schedule poller
+    //schedule poller
     setInterval(this.pollBackend, POLL_INTERVAL);
   },
 
-
-
+  
   render: function() {
-    var props = this.state
+    var props = this.state;
+    //console.log('master props', props);
     return (
       <div id="page-container">
         <header id="header">

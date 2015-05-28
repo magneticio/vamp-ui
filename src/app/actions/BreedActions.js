@@ -7,6 +7,9 @@ var BreedActions = {
   getAllBreeds: function() {
     Api.get('/breeds', null, BreedConstants.GET_ALL_BREEDS)
   },
+  getBreed: function(name) {
+    Api.get('/breeds/' + name, null, BreedConstants.GET_DEPLOYMENT)
+	},
   deleteBreed: function(breed) {
     Api.del('/breeds/' + breed.name, breed, BreedConstants.DELETE_BREED)
   }  

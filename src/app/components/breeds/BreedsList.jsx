@@ -4,6 +4,7 @@ var classNames = require('classnames');
 var ToolBar = require('../ToolBar.jsx');
 var BreedListItem = require('./BreedListItem.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
+var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
 
 var BreedsList = React.createClass({
 
@@ -29,7 +30,7 @@ var BreedsList = React.createClass({
   },
 
   render: function() {
-
+    console.log('breedslist render');
     var loadingClassSet = classNames({
       "hidden": this.props.loadState !== LoadStates.STATE_LOADING
     });

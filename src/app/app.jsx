@@ -4,7 +4,6 @@ var  AppRoutes = require('./routes.jsx');
 
   window.React = React;
 
-
   Router
       .create({
         routes: AppRoutes,

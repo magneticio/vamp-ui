@@ -7,9 +7,9 @@ var BreadCrumbsBar = React.createClass({
 
   render: function() {
     
-    var params = this.context.router.getCurrentParams()
-    var str = this.context.router.getCurrentPathname()
-    var normalizedPath = str.substring(0,(str.slice(1).indexOf('\/'))+1)
+    var params = this.context.router.getCurrentParams();
+    var str = this.context.router.getCurrentPathname();
+    var normalizedPath = str.substring(0,(str.slice(1).indexOf('\/'))+1);
 
     return (
       <ul className="breadcrumb">
