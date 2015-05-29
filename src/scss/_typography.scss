@@ -2,6 +2,7 @@
 $h1-size: 1.999rem;
 $h2-size: 1.414rem;
 $h3-size: 1rem;
+$s-size: 0.808rem;
 $xs-size: 0.707rem;
 
 // Base setting
@@ -22,20 +23,22 @@ h1 {
 	text-align: center;
 	margin-bottom: 1.705882353em;
 }
-
 h2 {
 	font-size: $h1-size;
   	line-height: 1.3em;
 	color: $red; 
 }
-
 h3 {
 	font-size: $h1-size;
 	font-weight: 700;
   	line-height: 1.3em;
 	color: $red; 
 }
+h5 {
+	margin-top: 0;
+}
 
+// General
 p { 
 	margin-bottom: 0.7em; 
 	line-height: 1.65em;

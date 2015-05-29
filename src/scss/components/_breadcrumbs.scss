@@ -1,0 +1,23 @@
+.breadcrumbs-bar {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 1rem;
+}
+.breadcrumbs {
+	display: inline-block;
+	list-style-type: none;
+	font-size: $s-size;
+	font-weight: 600;
+	line-height: $s-size;
+	margin: 0;
+	padding: 0;
+
+	li {
+		display: inline-block;
+		margin-right: 1rem;
+	}
+	.icon-triangle {
+		vertical-align: middle;
+		margin-top: -0.2em;
+	}
+}

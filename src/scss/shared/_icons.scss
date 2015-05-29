@@ -2,3 +2,12 @@
 	display: block;
 	text-indent: -9999px;
 }
+.icon-triangle {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 5px 7px 5px;
+	border-color: transparent transparent $grey-medium transparent;
+	transform: rotate(90deg);
+}
