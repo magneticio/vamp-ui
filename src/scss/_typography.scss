@@ -24,15 +24,20 @@ h1 {
 	margin-bottom: 1.705882353em;
 }
 h2 {
-	font-size: $h1-size;
+	margin: 0 0 ;
+	font-size: $h2-size;
   	line-height: 1.3em;
-	color: $red; 
+
+  	small {
+		font-weight: 400;
+		font-size: $s-size;
+  	}
 }
 h3 {
-	font-size: $h1-size;
-	font-weight: 700;
+	margin: 0;
+	font-size: $h3-size;
+	font-weight: 600;
   	line-height: 1.3em;
-	color: $red; 
 }
 h5 {
 	margin-top: 0;
@@ -52,6 +57,9 @@ a {
 }
 strong {
 	font-weight: 500;
+}
+.muted {
+	color: $grey-medium;
 }
 // a[target="_blank"]:before {
 //   	content: '\2197 \00a0';

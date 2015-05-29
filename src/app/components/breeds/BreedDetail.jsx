@@ -45,21 +45,21 @@ var BreedDetail = React.createClass({
 
   render: function() {
     return(
-      <div>
+      <section id="breed-single">
         <BreadCrumbsBar/>
-        <div className='single-view'>
-          <section className="single-half preview">
+        <div className='full-width-section'>
+          <section className="half-width-section preview">
             <pre>
               <code>
                 {this.state.breedDirty}
               </code>
             </pre>
           </section>
-          <section className="single-half editview">
+          <section className="half-width-section editview">
             <textarea value={this.state.breedDirty} onChange={this.handleChange} rows="16"/>
           </section>
         </div>
-      </div>
+      </section>
   )},
 
 });

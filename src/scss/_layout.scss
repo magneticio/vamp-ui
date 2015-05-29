@@ -5,3 +5,33 @@ img {
 	max-width: 100%;
 	height: auto;
 }
+hr {
+	background: $grey-light;
+	clear: both;
+	float: none;
+	width: 100%;
+	height: 1px;
+	margin: 0 0 1.4em;
+	border: none;
+}
+
+// Sections
+.full-width-section {
+	background-color: white;
+	margin: 0;
+	padding: 1rem;
+}
+.half-width-section {
+	padding: 1rem;
+	width: 50%;
+	height: 100%;
+	display: inline-block;
+	box-sizing: border-box;
+	vertical-align: top;
+}
+.detail-section {
+	margin-bottom: 2rem;
+}
+.cluster-box {
+//	margin-bottom: 1em;
+}

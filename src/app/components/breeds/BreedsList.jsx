@@ -30,7 +30,7 @@ var BreedsList = React.createClass({
   },
 
   render: function() {
-    console.log('breedslist render');
+
     var loadingClassSet = classNames({
       "hidden": this.props.loadState !== LoadStates.STATE_LOADING
     });

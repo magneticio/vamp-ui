@@ -1,7 +1,7 @@
 var _ = require('underscore')
 var React = require('react');
 var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
-var ClusterBox = require('../ClusterBox.jsx');
+var ClusterBox = require('./ClusterBox.jsx');
 var DeploymentActions = require('../../actions/DeploymentActions');
 var LoadStates = require("../../constants/LoadStates.js");
 var DeploymentStore = require('../../stores/DeploymentStore');
@@ -42,7 +42,7 @@ var DeploymentDetail = React.createClass({
     //grab the endpoint
     var endpoints = [] 
     _.each(deployment.endpoints,function(val,key){
-      endpoints.push(<div><h6 key={key} className='text-muted'>- {key}: {val}</h6></div>);
+      endpoints.push(<h2 key={key} className='text-muted'>{val} / {key} <small className="muted">endpoint</small></h2>);
     });
 
     // push cluster into an array
@@ -54,17 +54,21 @@ var DeploymentDetail = React.createClass({
       }).value()
 
     return(
-      <div className='col-md-12 deployments'>
+      <section id="deployment-single">
         <BreadCrumbsBar/>
-        <div className='detail-section'>
-          <h5>Endpoints</h5>
-          <hr/>
-          {endpoints}
+        <div className='full-width-section'>
+          <div id="general-metrics" className='detail-section'>
+            {endpoints}
+            <hr />
+            <div className="metrics-container">
+              nice metrics man
+            </div>
+          </div>
+          <div className='detail-section'>
+              {clusters}
+          </div>
         </div>
-        <div className='detail-section'>
-            {clusters}
-        </div>
-      </div>
+      </section>
   )},
 
  _onChange: function() {
