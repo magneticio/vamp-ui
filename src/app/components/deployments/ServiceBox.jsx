@@ -13,31 +13,29 @@ var ServiceBox = React.createClass({
     var notifClass = service.state.notification ? '' : 'hidden';
 
     return(
-        <div className='service-box'>
-            <div className={'row ' + notifClass}>
-                <div className='col-sm-12'>
-                    <div className={'dialog dialog-'+ stateClass}>
-                        {service.state.notification}
-                    </div>                
-                </div>
-            </div>
-            <div className='row'>
-                <div className='col-sm-4'>
-                    <h5><a href={'/#/breeds/' + service.breed.name }> {service.breed.name}</a></h5>
-                    <div>{service.breed.deployable}</div>
-                    <div className='text-muted'>{service.state.name}</div>
-                    <div className='text-muted small'>started <TimeAgo date={date}/></div>
-                </div>
-                <div className='col-sm-4'>
-                    <WeightSetter weight={service.routing.weight}/>                                        
-                </div> 
-                <div className='col-sm-4'>
-                    <FilterList filters={service.routing.filters}/>
-                </div>
-                <div>
-                </div>                   
-            </div> 
+      <div className='service-box'>
+        <div className={'dialog dialog-'+ stateClass + ' ' + notifClass}>
+          {service.state.notification}
         </div>
+      	<div className='service-section'>
+      	  <p className='small-caps'>{service.breed.deployable}</p>
+          <h3><a href={'/#/breeds/' + service.breed.name }> {service.breed.name}</a></h3>
+          <p className='small-caps'>started <TimeAgo date={date}/></p>
+        </div>
+        <div className='service-section service-routing'>
+        	<h4>Weight</h4>
+          <WeightSetter weight={service.routing.weight}/>
+          <h4>Filters</h4>
+          <FilterList filters={service.routing.filters}/>
+        </div>
+        <div className='service-section service-metrics'>
+        	<img src="/images/temp-service-graph.svg" />
+        </div>
+        <div className='service-section service-status'>
+        	<h4>Status</h4>
+        	<p>{service.state.name}</p>
+        </div>
+      </div>
     )}
 });
  

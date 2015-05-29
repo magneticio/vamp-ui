@@ -26,16 +26,12 @@
 	&:hover {
 		box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);
 	}
-
-	.item-name {
-		color: $grey-medium;
-		font-size: $xs-size;
-		text-transform: uppercase;
-	}
 	.item-deployable {
 		font-size: $h2-size;
-		color: $pink;
+		color: $blue;
+		font-weight: 400;
 	}
+
 	.item-ports {
 		display: none;
 	}

@@ -61,7 +61,10 @@ var DeploymentDetail = React.createClass({
             {endpoints}
             <hr />
             <div className="metrics-container">
-              nice metrics man
+              Vette metrics
+              <img src="/images/temp-graphs.svg" className="temp-graph" />
+              Meer vette metrics
+              <img src="/images/temp-graphs.svg" className="temp-graph" />
             </div>
           </div>
           <div className='detail-section'>

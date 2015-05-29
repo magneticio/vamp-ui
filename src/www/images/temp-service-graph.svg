@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="384px" height="163px" viewBox="0 0 384 163" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
+    <title>Group Copy 5</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Desktop-HD:-deployment-overview" sketch:type="MSArtboardGroup" transform="translate(-722.000000, -442.000000)">
+            <g id="Group-Copy-5" sketch:type="MSLayerGroup" transform="translate(722.000000, 442.000000)">
+                <g id="Group-Copy-2" transform="translate(1.000000, 150.000000)" font-weight="normal" font-family="Helvetica Neue" line-spacing="13.5600004" fill="#888888" font-size="12" sketch:type="MSTextLayer">
+                    <text id="16:56:00">
+                        <tspan x="0" y="11.102">16:56:00</tspan>
+                    </text>
+                    <text id="16:56:30">
+                        <tspan x="108" y="11.102">16:56:30</tspan>
+                    </text>
+                    <text id="16:57:30">
+                        <tspan x="323" y="11.102">16:57:30</tspan>
+                    </text>
+                    <text id="16:57:00">
+                        <tspan x="214.5" y="11.102">16:57:00</tspan>
+                    </text>
+                </g>
+                <path id="Path-20" stroke="#979797" sketch:type="MSShapeGroup" d=""></path>
+                <path d="M1,45.3556324 C1,45.3556324 19,31.3556324 29,31.3556324 C39,31.3556324 44,38.3556324 57,38.3556324 C70,38.3556324 77,25.3556324 93,25.3556324 C109,25.3556324 117,2.35563245 130,7.35563245 C143,12.3556324 146,22.3556318 156,30.3556324 C166,38.3556331 190,27.3556337 190,27.3556324 C190,27.3556312 205,16.3556327 216,16.3556324 C227,16.3556322 256,27.3556318 266,27.3556324 C276,27.3556331 299,26.3556327 305,21.3556324 C311,16.3556322 333,8.00000014 341,10.9999999 C349,13.9999996 358,22.0000003 358,22.0000003 L383,22" id="Path-26" stroke="#BBDEFB" stroke-width="2" sketch:type="MSShapeGroup"></path>
+                <path d="M1,122.855632 C1,122.855632 19,108.855632 29,108.855632 C39,108.855632 44,115.855632 57,115.855632 C70,115.855632 77,102.855632 93,102.855632 C109,102.855632 117,79.8556324 130,84.8556324 C143,89.8556324 146,99.8556318 156,107.855632 C166,115.855633 190,104.855634 190,104.855632 C190,104.855631 205,93.8556327 216,93.8556324 C227,93.8556322 256,104.855632 266,104.855632 C276,104.855633 299,103.855633 305,98.8556324 C311,93.8556322 333,85.5000001 341,88.4999999 C349,91.4999996 358,99.5000003 358,99.5000003 L383,99.5" id="Path-26-Copy" stroke="#C4E2FB" stroke-width="2" sketch:type="MSShapeGroup" transform="translate(192.000000, 103.500000) scale(-1, -1) translate(-192.000000, -103.500000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

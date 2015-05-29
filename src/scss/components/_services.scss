@@ -1,0 +1,23 @@
+.services-container {
+	border-left: 2px solid $grey-light;
+}
+.service-box {
+	&:nth-child(odd) {
+		background-color: $off-white;
+		//border-top: 2px solid $grey-light;
+	}
+}
+.service-section {
+	display: inline-block;
+	vertical-align: top;
+	box-sizing: border-box;
+	width: 20%;
+	padding: 1rem;
+
+	p {
+		margin: 0;
+	}
+}
+.service-metrics {
+	width: 40%;
+}

@@ -36,8 +36,8 @@ var BreedListItem = React.createClass({
         <span className={ (breed.status == 'CLEAN' ? 'hidden' : '') }>
           <Loader />
         </span>
-        <p className="item-name">{breed.name}</p>
-        <p className="item-deployable">{breed.deployable}</p>
+        <p className="item-name small-caps">{breed.name}</p>
+        <h2 className="item-deployable">{breed.deployable}</h2>
         <div className="item-ports">
           {ports}
         </div>
