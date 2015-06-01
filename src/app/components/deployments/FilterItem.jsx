@@ -9,7 +9,7 @@ var FilterItem = React.createClass({
 
     return(
       <li className="filter-list-item">
-        <a>{this.props.filter}</a>        
+        <a>{React.addons.createFragment(this.props.filter)}</a>
      </li>
   )}
 });

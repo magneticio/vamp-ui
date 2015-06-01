@@ -8,18 +8,16 @@ var FilterList = React.createClass({
 
   render: function() {
 
-    filters=[]
+    filters=[];
 
     for (var key in this.props.filters) {
         filters.push(<FilterItem key={key} filter={this.props.filters[key]} />);
     }
 
     return(
-     <div className='filters'> 
       <ul className='filters-list'>
         {filters}
-      </ul>
-     </div> 
+      </ul> 
   )}
 });
  

@@ -16,7 +16,7 @@ var BreadCrumbsBar = React.createClass({
         <ul className="breadcrumbs">
           <li><a href={ "#" + normalizedPath}>{normalizedPath}</a></li>
           <li className="icon-triangle"></li>
-          <li className='active'>{params}</li>
+          <li className='active'>{React.addons.createFragment(params)}</li>
         </ul>
       </div>
   )}
