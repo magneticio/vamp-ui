@@ -2,6 +2,7 @@ var React = require('react/addons');
 var DeploymentListItem = require('./DeploymentListItem.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
 var classNames = require('classnames');
+var TransitionGroup = React.addons.CSSTransitionGroup;
 
 var DeploymentsList = React.createClass({
   render: function() {
@@ -24,7 +25,7 @@ var DeploymentsList = React.createClass({
 
 
     return(
-      <div className=''>
+      <TransitionGroup component="div" transitionName="fadeIn" transitionAppear={true}>
         <table className="table table-hover">
           <thead>
             <tr>
@@ -44,7 +45,7 @@ var DeploymentsList = React.createClass({
             {deployments}
           </tbody>
         </table>
-      </div>  
+      </TransitionGroup>  
 
   )}
 });

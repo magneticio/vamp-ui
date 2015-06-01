@@ -7,3 +7,38 @@
         @include transform(scale(1.15));
     }
 }
+
+
+
+.fadeIn-enter {
+  opacity: 0.01;
+  transition: opacity 0.2s;
+}
+
+.fadeIn-enter.fadeIn-enter-active {
+  opacity: 1;
+}
+
+.fadeIn-leave {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.fadeIn-leave.fadeIn-leave-active {
+  opacity: 0.01;
+}
+
+.fadeIn-appear {
+  opacity: 0.01;
+  transition: opacity 0.2s;
+}
+
+.fadeIn-appear.fadeIn-appear-active {
+  opacity: 1;
+}
+// transitionName="moveUp" transitionAppear="true" popStateTransitionName="fade"
+// transitionName="moveUp" transitionAppear="true" popStateTransitionName="fade"
+// transitionName="moveUp" transitionAppear="true" popStateTransitionName="fade"
+// transitionName="moveUp" transitionAppear="true" popStateTransitionName="fade"
+// transitionName="moveUp" transitionAppear="true" popStateTransitionName="fade"
+// transitionName="moveUp" transitionAppear="true" popStateTransitionName="fade"

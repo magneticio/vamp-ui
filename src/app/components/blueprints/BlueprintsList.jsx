@@ -6,6 +6,7 @@ var ToolBar = require('../ToolBar.jsx');
 var BlueprintListItem = require('./BlueprintListItem.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
 var classNames = require('classnames');
+var TransitionGroup = React.addons.CSSTransitionGroup;
 
 var BlueprintsList = React.createClass({
 
@@ -29,7 +30,7 @@ var BlueprintsList = React.createClass({
  return(
     <div className='blueprints'>
       <ToolBar />    
-      <div className=''>
+      <TransitionGroup component="div" transitionName="fadeIn" transitionAppear={true}>
         <table className="table table-hover">
           <tbody>
             <tr className={emptyClassSet}>
@@ -40,7 +41,7 @@ var BlueprintsList = React.createClass({
             {blueprints}
           </tbody>
         </table>
-      </div>
+      </TransitionGroup>
     </div>    
   )}
 });

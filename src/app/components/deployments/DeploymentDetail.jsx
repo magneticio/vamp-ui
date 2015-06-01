@@ -5,6 +5,7 @@ var ClusterBox = require('./ClusterBox.jsx');
 var DeploymentActions = require('../../actions/DeploymentActions');
 var LoadStates = require("../../constants/LoadStates.js");
 var DeploymentStore = require('../../stores/DeploymentStore');
+var TransitionGroup = React.addons.CSSTransitionGroup;
 
 var DeploymentDetail = React.createClass({
 
@@ -54,6 +55,7 @@ var DeploymentDetail = React.createClass({
       }).value()
 
     return(
+      <TransitionGroup component="div" transitionName="fadeIn" transitionAppear={true}>
       <section id="deployment-single">
         <BreadCrumbsBar/>
         <div className='full-width-section'>
@@ -72,6 +74,7 @@ var DeploymentDetail = React.createClass({
           </div>
         </div>
       </section>
+      </TransitionGroup>
   )},
 
  _onChange: function() {

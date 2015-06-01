@@ -5,6 +5,7 @@ var ToolBar = require('../ToolBar.jsx');
 var BreedListItem = require('./BreedListItem.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
 var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
+var TransitionGroup = React.addons.CSSTransitionGroup;
 
 var BreedsList = React.createClass({
 
@@ -52,15 +53,15 @@ var BreedsList = React.createClass({
 
     return(
       <div className='list-container'>
-      <ToolBar 
-        filterText={this.state.filterText}
-        onUserInput={this.handleUserInput}
-        handleViewSwitch={this.handleViewSwitch} />
-      <span className={emptyClassSet}>No breeds found.</span>
-      <ul className={this.state.viewType} >
-        {breeds}
-      </ul>
-      </div>  
+        <ToolBar 
+          filterText={this.state.filterText}
+          onUserInput={this.handleUserInput}
+          handleViewSwitch={this.handleViewSwitch} />
+        <span className={emptyClassSet}>No breeds found.</span>
+        <TransitionGroup component="ul" transitionName="fadeIn" transitionAppear={true} className={this.state.viewType}>
+          {breeds}
+        </TransitionGroup>
+      </div>
     )
   }
 });
