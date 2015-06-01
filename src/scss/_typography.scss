@@ -4,11 +4,12 @@ $h2-size: 1.266em;
 $h3-size: 1.125rem;
 $s-size: 0.808rem;
 $xs-size: 0.707rem;
+$line-height: 1.65rem;
 
 // Base setting
 html {
 	font-size: 16px;
-	line-height: 1.5em;
+	line-height: $line-height;
 	font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Arial, freesans, sans-serif;
 	font-weight: 400;
 	color: $grey;
@@ -17,14 +18,14 @@ html {
 // Headings
 h1 {
 	font-size: $h1-size;
-  	line-height: 1.3em;
+  	line-height: $line-height;
 	color: $grey;
 	margin-bottom: 0;
 }
 h2 {
 	margin: 0;
 	font-size: $h2-size;
-  	line-height: 1.3em;
+  	line-height: $line-height;
 
   	small {
 		font-weight: 400;
@@ -35,13 +36,13 @@ h3 {
 	margin: 0 0 $h3-size;
 	font-size: $h3-size;
 	font-weight: 600;
-  	line-height: 1.3em;
+  	line-height: $line-height;
 }
 h4 {
-	margin: 0;
+	margin: 0.2rem 0 0;
 	font-size: $s-size;
 	font-weight: 400;
-  	line-height: 1.3em;
+  	line-height: $line-height - 0.1rem;
   	color: $grey-medium;
   	text-transform: uppercase;
 }
@@ -52,7 +53,7 @@ h5 {
 // General
 p { 
 	margin-bottom: 0.7em; 
-	line-height: 1.65em;
+	line-height: $line-height;
 }
 small {
 	font-size: $xs-size;
