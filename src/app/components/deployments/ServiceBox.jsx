@@ -18,7 +18,7 @@ var ServiceBox = React.createClass({
           {service.state.notification}
         </div>
       	<div className='service-section'>
-      	  <p className='small-caps'>{service.breed.deployable}</p>
+      	  <p className="">{service.breed.deployable}</p>
           <h3><a href={'/#/breeds/' + service.breed.name }> {service.breed.name}</a></h3>
           <p className='small-caps'>started <TimeAgo date={date}/></p>
         </div>

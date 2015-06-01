@@ -14,6 +14,10 @@ hr {
 	margin: 0 0 1.4em;
 	border: none;
 }
+ul, ol, dl {
+	list-style-type: none;
+	padding-left: 0;
+}
 
 // Sections
 .full-width-section {

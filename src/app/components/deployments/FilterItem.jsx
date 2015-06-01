@@ -8,7 +8,7 @@ var FilterItem = React.createClass({
   render: function() {
 
     return(
-      <li>
+      <li className="filter-list-item">
         <a>{this.props.filter}</a>        
      </li>
   )}

@@ -1,7 +1,7 @@
 // Scale
-$h1-size: 1.999rem;
-$h2-size: 1.414rem;
-$h3-size: 1.2rem;
+$h1-size: 1.424em;
+$h2-size: 1.266em;
+$h3-size: 1.125rem;
 $s-size: 0.808rem;
 $xs-size: 0.707rem;
 
@@ -19,12 +19,10 @@ h1 {
 	font-size: $h1-size;
   	line-height: 1.3em;
 	color: $grey;
-	text-transform: uppercase;
-	text-align: center;
-	margin-bottom: 1.705882353em;
+	margin-bottom: 0;
 }
 h2 {
-	margin: 0 0 ;
+	margin: 0;
 	font-size: $h2-size;
   	line-height: 1.3em;
 
@@ -34,13 +32,13 @@ h2 {
   	}
 }
 h3 {
-	margin: 0 0 1em;
+	margin: 0 0 $h3-size;
 	font-size: $h3-size;
 	font-weight: 600;
   	line-height: 1.3em;
 }
 h4 {
-	margin: 0 0 1em;
+	margin: 0;
 	font-size: $s-size;
 	font-weight: 400;
   	line-height: 1.3em;
@@ -62,6 +60,7 @@ small {
 a {
   	color: $blue;
   	text-decoration: none;
+  	cursor: pointer;
 }
 strong {
 	font-weight: 500;
