@@ -25,5 +25,14 @@
 	width: 40%;
 }
 .filters-list {
-//	list-style-type: none
+	font-weight: 600;
+
+	a {
+		color: $grey;
+	}
+
+	.add-filter a {
+		font-size: $s-size;
+		color: $blue;
+	}
 }
