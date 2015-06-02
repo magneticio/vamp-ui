@@ -19,7 +19,7 @@ var FilterList = React.createClass({
 
     if(_.isEmpty(filters)){
       randomKey = Math.random();
-      addFilter.push(<li key={randomKey} className="add-filter"><a>+ add filter</a></li>);
+      addFilter.push(<li key={randomKey}><a className="add-link">+ Add Filter</a></li>);
     }
 
     return(

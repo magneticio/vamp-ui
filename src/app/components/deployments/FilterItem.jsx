@@ -9,7 +9,7 @@ var FilterItem = React.createClass({
 
     return(
       <li className="filter-list-item">
-        <a>{React.addons.createFragment(this.props.filter)}</a>
+        <a className='editable'>{React.addons.createFragment(this.props.filter)}</a>
      </li>
   )}
 });

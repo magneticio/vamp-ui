@@ -20,7 +20,7 @@ var WeightSetter = React.createClass({
 
     return(
       <div className='weight-setter'> 
-        <h3>{this.props.weight}%</h3>
+        <h3 className='editable'>{this.props.weight}%</h3>
       </div>
   )}
 });

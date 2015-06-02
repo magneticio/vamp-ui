@@ -1,3 +1,6 @@
+/**
+ * 	General lists
+ */
 .general-list,
 .card-list {
 	display: flex;
@@ -54,5 +57,14 @@
 	}
 	.item-meta-title {
 		font-size: $xs-size;
+	}
+}
+
+/**
+ * 	Filterlist
+ */
+.filters-list {
+	a {
+		color: $grey;
 	}
 }

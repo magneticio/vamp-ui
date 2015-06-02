@@ -1,8 +1,10 @@
 var React = require('react');
 var TimeAgo = require('react-timeago');
-var ServersList = require('./ServersList.jsx')
-var WeightSetter = require('./WeightSetter.jsx')
-var FilterList = require('./FilterList.jsx')
+var ServersList = require('./ServersList.jsx');
+var WeightSetter = require('./WeightSetter.jsx');
+var FilterList = require('./FilterList.jsx');
+var StatusIndicator = require('./StatusIndicator.jsx');
+
 var ServiceBox = React.createClass({
 
   render: function() {
@@ -20,7 +22,7 @@ var ServiceBox = React.createClass({
       	<div className='service-section'>
       	  <p className="">{service.breed.deployable}</p>
           <h3><a href={'/#/breeds/' + service.breed.name }> {service.breed.name}</a></h3>
-          <p className='small-caps'>started <TimeAgo date={date}/></p>
+          <h5>started <TimeAgo date={date}/></h5>
         </div>
         <div className='service-section service-routing'>
         	<h4>Weight</h4>
@@ -33,7 +35,10 @@ var ServiceBox = React.createClass({
         </div>
         <div className='service-section service-status'>
         	<h4>Status</h4>
-        	<p>{service.state.name}</p>
+          <StatusIndicator status={service.state.name} />
+          <h4>Scale</h4>
+          <p>{service.scale.cpu} CPU / {service.scale.memory} MB</p>
+          <p className='muted'>{service.scale.instances} ({service.scale.instances}) instances</p>
         </div>
       </div>
     )}

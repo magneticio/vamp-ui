@@ -1,5 +1,5 @@
 .services-container {
-	border-left: 1px solid $grey-light;
+//	border-left: 1px solid $grey-light;
 }
 .service-box {
 	&:nth-child(even) {
@@ -24,15 +24,12 @@
 .service-metrics {
 	width: 40%;
 }
-.filters-list {
-	font-weight: 600;
-
-	a {
-		color: $grey;
-	}
-
-	.add-filter a {
+.service-status {
+	p {
 		font-size: $s-size;
-		color: $blue;
+
+		&:first-of-type {
+			font-weight: 600;
+		}
 	}
 }

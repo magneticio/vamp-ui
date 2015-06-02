@@ -60,8 +60,11 @@ var DeploymentDetail = React.createClass({
         <BreadCrumbsBar/>
         <div className='full-width-section'>
           <div id="general-metrics" className='detail-section'>
-            {endpoints}
-            <hr />
+            <div className='endpoints-container'>
+              {endpoints}
+              <a className='export-link'>Export as Blueprint</a>
+              <hr />
+            </div>
             <div className="metrics-container">
               <img src="/images/temp-graphs.svg" className="temp-graph" />
               <img src="/images/temp-graphs.svg" className="temp-graph" />

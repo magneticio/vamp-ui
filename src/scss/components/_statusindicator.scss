@@ -1,0 +1,39 @@
+.status-indicator {	
+	margin-top: 0.6rem;
+	margin-bottom: 2rem;
+
+	li {
+		display: flex;
+		line-height: $line-height;
+		height: $line-height;
+		text-transform: lowercase;
+		font-weight: 600;
+		margin-bottom: 2px;
+		vertical-align: middle;
+	}
+}
+
+.indicator-circle {
+	display: inline-block;
+	height: $line-height;
+	width: $line-height * 2;
+	margin-right: 1rem;
+	
+	&.indicator-top {
+		border-radius: $line-height $line-height 0 0;
+	}
+
+	&.indicator-bottom {
+		border-radius: 0 0 $line-height $line-height;
+	}
+
+	&.indicator-success {
+		background-color: $green;
+	}
+	&.indicator-pending {
+		background-color: $yellow;
+	}
+	&.indicator-fail {
+		background-color: $red;
+	}
+}

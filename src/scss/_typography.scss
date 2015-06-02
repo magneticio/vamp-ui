@@ -1,4 +1,6 @@
-// Scale
+/**
+ * TYPOGRAPHIC SCALE
+ */
 $h1-size: 1.424em;
 $h2-size: 1.266em;
 $h3-size: 1.125rem;
@@ -6,7 +8,10 @@ $s-size: 0.808rem;
 $xs-size: 0.707rem;
 $line-height: 1.65rem;
 
-// Base setting
+
+/**
+ * BASE
+ */
 html {
 	font-size: 16px;
 	line-height: $line-height;
@@ -15,7 +20,9 @@ html {
 	color: $grey;
 }
 
-// Headings
+/**
+ * HEADINGS
+ */
 h1 {
 	font-size: $h1-size;
   	line-height: $line-height;
@@ -39,29 +46,32 @@ h3 {
   	line-height: $line-height;
 }
 h4 {
-	margin: 0.2rem 0 0;
+	margin: 0.395rem 0 0.225rem;
 	font-size: $s-size;
 	font-weight: 400;
-  	line-height: $line-height - 0.1rem;
+  	line-height: 1rem;
   	color: $grey-medium;
   	text-transform: uppercase;
 }
 h5 {
-	margin-top: 0;
+	margin: 0.395rem 0 0.225rem;
+	font-size: $s-size;
+	font-weight: 400;
+  	line-height: 1rem;
+  	color: $grey-medium;
 }
 
-// General
+
+
+/**
+ * GENERAL
+ */
 p { 
 	margin-bottom: 0.7em; 
 	line-height: $line-height;
 }
 small {
 	font-size: $xs-size;
-}
-a {
-  	color: $blue;
-  	text-decoration: none;
-  	cursor: pointer;
 }
 strong {
 	font-weight: 500;
@@ -73,4 +83,21 @@ strong {
 	color: $grey-medium;
 	font-size: $xs-size;
 	text-transform: uppercase;
+}
+
+
+/**
+ * LINKS
+ */
+a {
+  	color: $blue;
+  	text-decoration: none;
+  	cursor: pointer;
+}
+a.add-link,
+a.export-link {
+	font-weight: 600;
+	font-size: $s-size;
+	color: $blue!important;
+	text-transform: lowercase;
 }
