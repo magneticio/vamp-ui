@@ -20,7 +20,7 @@ var ServiceMetricsGraph = React.createClass({
         {
           label: "Reqs/sec.",
           fillColor: "rgba(220,220,220,0)",
-          strokeColor: "#03A9F4",
+          strokeColor: "#BCDFFA",
           // pointColor: "rgba(220,220,220,1)",
           // pointStrokeColor: "#fff",
           // pointHighlightFill: "#fff",
@@ -42,12 +42,24 @@ var ServiceMetricsGraph = React.createClass({
 
 
     return(
-      <div id='service-metrics-container'>
+      <div className='service-metrics-container'>
         <div className='metrics-chart'>
-          <LineChart data={chartData} options={chartOptions}/>
+          <div className='metrics-requests'>
+            <h5><strong>reqs / sec</strong></h5>
+            <h3>45</h3><small className='muted'>64 max</small>
+          </div>
+          <div>
+            <LineChart data={chartData} options={chartOptions}/>
+          </div>
         </div>
         <div className='metrics-chart'>
-          <LineChart data={chartData} options={chartOptions}/>
+          <div className='metrics-requests'>
+            <h5><strong>reqs / sec</strong></h5>
+            <h3>45</h3><small className='muted'>64 max</small>
+          </div>
+          <div>
+            <LineChart data={chartData} options={chartOptions}/>
+          </div>
         </div>
       </div>
     )}

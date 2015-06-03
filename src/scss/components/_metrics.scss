@@ -1,12 +1,38 @@
 .metrics-chart {
 	display: inline-block;
 	
+	div {
+		vertical-align: middle;
+		display: inline-block;
+		width: 80%;
+		height: 100%;
+	}
+
+	.metrics-requests {
+		width: 20%;
+		height: auto;
+	}
+
+	h3 {
+		display: inline-block;
+		margin-bottom: 0;
+		margin-right: 0.2em;
+	}
+}
+.metrics-requests {
+	display: inline-block;
+	font-weight: 400;
 }
 
-#service-metrics-container {
+.service-metrics-container {
 	.metrics-chart {
 		height: 64px;
 		width: 100%;
+		padding-bottom: 1rem;
+	}
+
+	.metrics-requests {
+		vertical-align: top;
 	}
 }
 
