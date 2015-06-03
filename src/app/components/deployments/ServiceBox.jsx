@@ -4,11 +4,12 @@ var ServersList = require('./ServersList.jsx');
 var WeightSetter = require('./WeightSetter.jsx');
 var FilterList = require('./FilterList.jsx');
 var StatusIndicator = require('./StatusIndicator.jsx');
+var ServiceMetricsGraph = require('./ServiceMetricsGraph.jsx')
 
 var ServiceBox = React.createClass({
 
   render: function() {
-
+    window.smoothie = false;
     var service = this.props.service
     var date = new Date(service.state.started_at)
     var stateClass = (service.state.name === 'Error') ? 'danger' : 'success';
@@ -31,7 +32,7 @@ var ServiceBox = React.createClass({
           <FilterList filters={service.routing.filters}/>
         </div>
         <div className='service-section service-metrics'>
-        	<img src="/images/temp-service-graph.svg" />
+          <ServiceMetricsGraph />
         </div>
         <div className='service-section service-status'>
         	<h4>Status</h4>

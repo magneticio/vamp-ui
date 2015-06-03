@@ -41,11 +41,14 @@
     "watchify": "^3.2.1"
   },
   "dependencies": {
+    "chart.js": "^1.0.2",
     "classnames": "^2.1.1",
     "flux": "^2.0.1",
     "keymirror": "^0.1.1",
+    "nvd3": "novus/nvd3",
     "object-assign": "^2.0.0",
     "react": "^0.13.1",
+    "react-chartjs": "^0.6.0",
     "react-router": "^0.13.2",
     "react-tap-event-plugin": "^0.1.3",
     "react-timeago": "^2.0.2",

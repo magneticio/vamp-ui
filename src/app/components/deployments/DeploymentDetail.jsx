@@ -6,6 +6,7 @@ var DeploymentActions = require('../../actions/DeploymentActions');
 var LoadStates = require("../../constants/LoadStates.js");
 var DeploymentStore = require('../../stores/DeploymentStore');
 var TransitionGroup = React.addons.CSSTransitionGroup;
+var DeploymentMetricsGraph = require('./DeploymentMetricsGraph.jsx');
 
 var DeploymentDetail = React.createClass({
 
@@ -22,9 +23,11 @@ var DeploymentDetail = React.createClass({
   },
 
   componentDidMount: function() {
+    var name = this.context.router.getCurrentParams().id;
+
     DeploymentStore.addChangeListener(this._onChange);
-    var name = this.context.router.getCurrentParams().id
-    DeploymentActions.getDeployment(name)
+    DeploymentActions.getDeployment(name);
+    DeploymentActions.getDeploymentMetrics(name, 60);
   },
 
   componentWillUnmount: function() {
@@ -65,9 +68,12 @@ var DeploymentDetail = React.createClass({
               <a className='export-link'>Export as Blueprint</a>
               <hr />
             </div>
-            <div className="metrics-container">
-              <img src="/images/temp-graphs.svg" className="temp-graph" />
-              <img src="/images/temp-graphs.svg" className="temp-graph" />
+            <div className="deployment-metrics-container">
+              <div className="deployment-status">
+                UP
+              </div>
+              <DeploymentMetricsGraph />
+              <DeploymentMetricsGraph />
             </div>
           </div>
           <div className='detail-section'>
@@ -78,7 +84,7 @@ var DeploymentDetail = React.createClass({
       </TransitionGroup>
   )},
 
- _onChange: function() {
+  _onChange: function() {
     this.setState(
       {
         deployment: DeploymentStore.getCurrent(),

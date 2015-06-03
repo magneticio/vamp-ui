@@ -44,22 +44,23 @@ var DeploymentActions = {
   },
   getDeploymentMetrics: function(deployment, offsetInMinutes) {
 
-    var req = {}
-    var time = {}
+    var req = {};
+    var time = {};
 
     var MS_PER_MINUTE = 60000;
-    var now = new Date()
+    var now = new Date();
     var interval = new Date(now - offsetInMinutes * MS_PER_MINUTE);
 
-    time.from = interval.toISOString()
-    time.to = now.toISOString()
+    time.from = interval.toISOString();
+    time.from = '2015-02-18T04:57:56+00:00';
+    time.to = now.toISOString();
 
-    req.tags = []
-    req.tags.push(deployment.name)
+    req.tags = [];
+    req.tags.push(deployment.name);
 
-    req.time = time
+    req.time = time;
 
-    PulseApi.post('/event/get' + name, req, DeploymentConstants.GET_DEPLOYMENT_METRICS)
+    //PulseApi.post('/event/get' + name, req, DeploymentConstants.GET_DEPLOYMENT_METRICS);
   }
 
 };
@@ -222,5 +223,323 @@ var mockObj = [{
         "backend2.host": "localhost"
     }
 }]
+
+var mockScur = [
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "backend",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:32Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "scur",
+            "route"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:29Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:29Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "backend",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:29Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040.frontend.ports.port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:29Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:29Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "backend",
+            "scur",
+            "route"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:29Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "scur",
+            "route"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:26Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040.frontend.ports.port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:26Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "backend",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:26Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:26Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "backend",
+            "scur",
+            "route"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:26Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:26Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "scur",
+            "route"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:23Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:23Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:23Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040.frontend.ports.port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:23Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "backend",
+            "scur",
+            "route"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:23Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "backend",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:23Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:20Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:20Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040.frontend.ports.port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:20Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "backend",
+            "scur",
+            "route"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:20Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "scur",
+            "route"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:20Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "backend",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:20Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "scur",
+            "route"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:17Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:17Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "frontend",
+            "ports",
+            "port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:17Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040.frontend.ports.port",
+            "scur"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:17Z"
+    },
+    {
+        "tags": [
+            "68338a88-8528-46bf-baa7-c6eb1401221e_9040",
+            "backend",
+            "scur",
+            "route"
+        ],
+        "value": 0,
+        "timestamp": "2015-06-02T12:11:17Z"
+    }
+]
 
 module.exports = DeploymentActions;

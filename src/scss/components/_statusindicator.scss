@@ -37,3 +37,12 @@
 		background-color: $red;
 	}
 }
+.deployment-status {
+	border: 5px solid $green;
+	background-color: white;
+	border-radius: 50%;
+	font-weight: 600;
+	text-transform: uppercase;
+	display: inline-flex;
+	padding: 0.5rem 0.6rem;
+}

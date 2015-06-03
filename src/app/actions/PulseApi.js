@@ -2,11 +2,10 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var LoadStates = require("../constants/LoadStates.js");
 var request = require('superagent');
 
-var API_URL = 'http://localhost:8083/api/v1';
+var API_URL = 'http://192.168.59.103:8083/api/v1';
 var TIMEOUT = 10000;
 
 var _pendingRequests = {};
-
 
 function abortPendingRequests(actionType) {
     if (_pendingRequests[actionType]) {
