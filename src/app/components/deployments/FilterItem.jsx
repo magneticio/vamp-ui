@@ -5,11 +5,23 @@ var FilterItem = React.createClass({
     filter: React.PropTypes.object,
   },
 
+  getInitialState: function(){
+  	return {
+  		disabled: true
+  	}
+  },
+
+  handleClick: function(){
+  	this.setState({
+  		disabled: false
+  	});
+  },
+
   render: function() {
 
     return(
       <li className="filter-list-item">
-        <a className='editable'>{React.addons.createFragment(this.props.filter)}</a>
+        <input type="text" defaultValue={this.props.filter['condition']} className='editable' onClick={this.handleClick} disabled={this.state.disabled} />
      </li>
   )}
 });

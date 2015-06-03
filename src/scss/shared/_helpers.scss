@@ -16,3 +16,27 @@
 	    background-repeat: no-repeat;
 	}
 }
+
+
+input.editable {
+	color: inherit;
+	//background-color: transparent;
+	//border: 1px solid $grey-medium;
+
+	&:hover {
+		cursor: text;
+	}	
+}
+input.editable[disabled] {
+	background-color: transparent;
+	border: 1px solid transparent;
+	cursor: text;
+
+	&:hover {
+		cursor: pointer;
+		background-image: url(/images/edit.svg);
+		background-size: 13px;
+		background-repeat: no-repeat;
+		background-position: right center;
+	}	
+}
