@@ -10,7 +10,7 @@ var Badge = React.createClass({
     return (
       <div className='badge'>
         <span className='badge-label'>{this.props.label}</span>
-        {this.props.port}
+        {this.props.valueName}
       </div>
     )}
 });

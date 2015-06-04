@@ -9,25 +9,31 @@
 	box-sizing: border-box;
 	width: 100%;
 	margin: 0;
-	padding: 0.35rem;
+	//padding: 0.35rem;
 	list-style-type: none;
 }
-.list-item {
-	display: inline-block;
+.list-item,
+.list-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	overflow: hidden;
 	box-sizing: border-box;
 	width: 100%;
-	min-height: 100px;
-	padding: 1rem 1rem 0;
-	margin: 0.7%;
+	padding: 0.5rem 1rem;
+	border-top: 1px solid $off-white;
 	background-color: white;
-	//border: 0.35rem solid $off-white;
-	cursor: pointer;
 
+	&:nth-child(odd) {
+		background-color: $off-white;
+	}
+	
+	p,h2,h3 {
+		display: inline-block;
+	}
 	p {
 		margin: 0;
-	}
-	&:hover {
-		box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2);
 	}
 	.item-deployable {
 		font-size: $h2-size;
@@ -59,15 +65,46 @@
 		font-size: $xs-size;
 	}
 }
+.list-header {
+	background-color: white!important;
+	h4 {
+		color: $grey;
+		font-weight: 600;
+	}
+	.list-section { 
+		padding: 2rem 0;
+	}
+}
+.list-section {
+	box-sizing: border-box;
+	padding: 0;
+}
+.list-controls {
+	text-align: right;
+}
+/**
+ * 	Deploymentlist
+ */
+#deployments-list {
+
+	.list-item {
+			
+	}
+	.list-header .list-section:first-of-type {
+		padding-left: 2rem;
+	}
+}
 
 /**
  * 	Filterlist
  */
 .filters-list {
 	input {
-		margin-left: -1rem;
-		margin-top: -0.5rem;
-		//padding: 0;
 		display: inline-block;
+		box-sizing: border-box;
+		max-width: 100%;
+	}
+	input[disabled] {
+		padding: 0;
 	}
 }

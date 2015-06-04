@@ -1,0 +1,12 @@
+.dialog {
+	padding: 1rem 1rem 0;
+}
+
+.dialog-danger {
+	padding-left: 2.5rem;
+	color: $red;
+	background-image: url(/images/alert.svg);
+	background-size: 1rem;
+	background-repeat: no-repeat;
+	background-position: 1rem 1.35rem;
+}

@@ -30,10 +30,10 @@
 	&.indicator-success {
 		background-color: $green;
 	}
-	&.indicator-pending {
+	&.indicator-waiting {
 		background-color: $yellow;
 	}
-	&.indicator-fail {
+	&.indicator-danger {
 		background-color: $red;
 	}
 }
@@ -45,4 +45,14 @@
 	text-transform: uppercase;
 	display: inline-flex;
 	padding: 0.5rem 0.6rem;
+}
+
+.health-circle {
+	margin-right: 1rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    display: inline-block;
+    text-indent: -1000px;
+    overflow: hidden;
 }

@@ -28,7 +28,7 @@ var BreedListItem = React.createClass({
     var portCount = _.size(breed.ports);
     var ports = [];
     _.each(this.props.breed.ports, function(val,key){
-      ports.push(<Badge key={key} label={key} port={val} />);
+      ports.push(<Badge key={key} label={key} valueName={val} />);
     });
 
     return (

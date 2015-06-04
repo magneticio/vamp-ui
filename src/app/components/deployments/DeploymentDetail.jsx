@@ -61,7 +61,7 @@ var DeploymentDetail = React.createClass({
       <TransitionGroup component="div" transitionName="fadeIn" transitionAppear={true}>
       <section id="deployment-single">
         <BreadCrumbsBar/>
-        <div className='full-width-section'>
+        <div className='section-full'>
           <div id="general-metrics" className='detail-section'>
             <div className='endpoints-container'>
               {endpoints}

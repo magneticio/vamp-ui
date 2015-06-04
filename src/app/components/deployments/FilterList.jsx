@@ -17,15 +17,12 @@ var FilterList = React.createClass({
       filters.push(<FilterItem key={key} filter={this.props.filters[key]} />);
     }
 
-    if(_.isEmpty(filters)){
-      randomKey = Math.random();
-      addFilter.push(<li key={randomKey}><a className="add-link">+ Add Filter</a></li>);
-    }
+    var randomKey = Math.random();
 
     return(
       <ul className='filters-list'>
         {filters}
-        {addFilter}
+        <li key={randomKey}><a className="add-link">+ Add Filter</a></li>
       </ul> 
   )}
 });

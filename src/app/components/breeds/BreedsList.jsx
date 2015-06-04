@@ -12,7 +12,7 @@ var BreedsList = React.createClass({
   getInitialState: function() {
     return {
       filterText: '',
-      viewType:'card-list'
+      viewType:'general-list'
     };
   },
   
@@ -48,8 +48,13 @@ var BreedsList = React.createClass({
     }, this);
 
     var emptyClassSet = classNames({
+      "empty-list": true,
       "hidden": breeds.length > 0
-    });      
+    });
+    var listHeaderClasses = classNames({
+      "list-header": true,
+      "hidden": breeds.length <= 0
+    });
 
     return(
       <div className='list-container'>
@@ -59,6 +64,19 @@ var BreedsList = React.createClass({
           handleViewSwitch={this.handleViewSwitch} />
         <span className={emptyClassSet}>No breeds found.</span>
         <TransitionGroup component="ul" transitionName="fadeIn" transitionAppear={true} className={this.state.viewType}>
+          <li className={listHeaderClasses}>
+            <div className="list-section section-half">
+              <h4>Breed</h4>
+            </div>
+            <div className="list-section section-sixth">
+              <h4>Clusters</h4>
+            </div>
+            <div className="list-section section-sixth">
+              <h4>Services</h4>
+            </div>
+            <div className="list-section section-sixth">
+            </div>
+          </li>
           {breeds}
         </TransitionGroup>
       </div>

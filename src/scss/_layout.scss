@@ -1,5 +1,7 @@
 body {
-	background-color: $off-white;
+	max-width: 100vw;
+	overflow-x: hidden;
+	background-color: white;
 }
 img {
 	max-width: 100%;
@@ -21,19 +23,27 @@ ul, ol, dl {
 }
 
 // Sections
-.full-width-section {
-	background-color: white;
-	margin: 0;
+.section-full {
 	padding: 1rem;
+	width: 100%;
+	box-sizing: border-box;
 }
-.half-width-section {
+.section-half {
 	padding: 1rem;
 	width: 50%;
-	height: 100%;
+	vertical-align: top;
 	display: inline-block;
 	box-sizing: border-box;
-	vertical-align: top;
 }
+.section-sixth {
+	text-align: center;
+	padding: 1rem;
+	width: percentage(1/6);
+	vertical-align: top;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
 .detail-section {
 	margin-bottom: 2rem;
 	

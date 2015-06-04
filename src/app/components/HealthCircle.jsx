@@ -20,9 +20,9 @@ var HealthCircle = React.createClass({
   render: function() {
 
     var stateColors = {
-      green : '#4AE40B',
-      orange : '#FFAB40',
-      red : '#DD2C00'
+      green : '#2ECC71',
+      orange : '#FFEB3B',
+      red : '#E54D42'
     }
     
     var color = ''
@@ -35,18 +35,11 @@ var HealthCircle = React.createClass({
 
     var swatchStyle = {
         background: color,
-        width: '1.2em',
-        height: '1.2em',
-        borderRadius: '50%',
-        display: 'inline-block',
-        verticalAlign: 'middle',
-        textIndent: '-1000px',
-        overflow: 'hidden',
     }
 
     return(
 
-      <div style={swatchStyle}></div>
+      <div style={swatchStyle} className='health-circle'></div>
   )}
 });
  

@@ -27,27 +27,22 @@ var BlueprintListItem = React.createClass({
   render: function() {
 
     var blueprint = this.props.blueprint;
-    
+    var randomkey = Math.floor( Math.random() * 1000 );
+
     return (
-      <tr>
-        <td>
-          <span className={ (blueprint.status == 'CLEAN' ? 'hidden' : '') }>
-            <Loader />
-          </span>            
-          <a className='artifact-name clip-names' onClick={this.handleDetail}>{blueprint.name}</a>       
-        </td>
-        <td>
-        </td>
-        <td>
-        </td>
-        <td>
-          <div className='inline-button-bar'>
-            <button className='btn btn-info' onClick={this.handleDeploy}>Deploy</button>
-            <button className='btn btn-success' onClick={this.handleEdit}>Edit</button>
-            <button className='btn btn-danger' onClick={this.handleDelete}>Delete</button>
-          </div>
-        </td>
-      </tr>
+      <li className="list-item">
+        <span className={ (blueprint.status == 'CLEAN' ? 'hidden' : '') }>
+          <Loader />
+        </span>
+        <div className="list-section section-half">
+          <a onClick={this.handleDetail}><p className="item-name">{blueprint.name}</p></a>
+        </div>
+        <div className="list-section section-half list-controls">
+          <button className='button button-green' onClick={this.handleDeploy}>Deploy</button>
+          <button className='button button-yellow' onClick={this.handleEdit}>Edit</button>
+          <button className='button button-red' onClick={this.handleDelete}>Delete</button>
+        </div>
+      </li>
   )}
 });
  
