@@ -29,7 +29,7 @@ var ServiceBox = React.createClass({
         	<h4>Weight</h4>
           <WeightSetter weight={service.routing.weight}/>
           <h4>Filters</h4>
-          <FilterList filters={service.routing.filters}/>
+          <FilterList filters={service.routing.filters} onOptionsUpdate={this.props.onOptionsUpdate} />
         </div>
         <div className='service-section service-metrics'>
           <ServiceMetricsGraph />

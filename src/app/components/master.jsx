@@ -34,7 +34,6 @@ var Master = React.createClass({
   },
 
   pollBackend: function() {
-    console.log('masterpoll');
     BreedActions.getAllBreeds()
     BlueprintActions.getAllBlueprints()
     DeploymentActions.getAllDeployments()

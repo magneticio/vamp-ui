@@ -98,14 +98,34 @@
 
 /**
  * 	Filterlist
+ *
+ * 	For .editable class, see _helpers.scss
  */
 .filters-list {
 	input {
 		display: inline-block;
 		box-sizing: border-box;
-		max-width: 100%;
+		margin-bottom: 0.5rem;
+		width: 100%;
 	}
 	input[disabled] {
+		padding: 0 1em 0 0;
+		margin-bottom: 0;
+	}
+	.submit-button {
+		text-align: right;
+		outline: none;
+		//display: none;
+		font-size: $xs-size;
+		color: $blue;
+		background-color: transparent;
+		border: none;
 		padding: 0;
+		line-height: 1rem;
+		margin-top: -0.5rem;
+		float: right;
+	}
+	.submit-button[disabled] {
+		display: none;
 	}
 }

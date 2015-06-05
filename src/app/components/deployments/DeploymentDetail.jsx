@@ -27,20 +27,28 @@ var DeploymentDetail = React.createClass({
 
     DeploymentStore.addChangeListener(this._onChange);
     DeploymentActions.getDeployment(name);
+    
     DeploymentActions.getDeploymentMetrics(name, 60);
   },
 
   componentWillUnmount: function() {
     DeploymentStore.removeChangeListener(this._onChange);
   },
+    componentWillReceiveProps: function(nextProps){
+    //console.log('deployment nextprops: ', nextProps);
+  },
 
   handleSubmit: function() {
-    console.log(this.props)
-    this.props.getDeploymentDetails
+    console.log(this.props);
+    this.props.getDeploymentDetails;
   },
   
-  render: function() {
+  onOptionsUpdate: function(routeOption, newValues){    
+    console.log(this.state.deployment);
+    DeploymentActions.putRoutingOption(deployment, routeOption, newValues);
+  },
 
+  render: function() {
     deployment = this.state.deployment
 
     //grab the endpoint
@@ -54,8 +62,8 @@ var DeploymentDetail = React.createClass({
     _.chain(deployment.clusters)
       .pairs()
       .each(function(item,idx){
-        clusters.push(<ClusterBox key={item[0]} name={item[0]} cluster={item[1]} />);
-      }).value()
+        clusters.push(<ClusterBox key={item[0]} name={item[0]} cluster={item[1]} onOptionsUpdate={this.onOptionsUpdate} />);
+      }, this).value()
 
     return(
       <TransitionGroup component="div" transitionName="fadeIn" transitionAppear={true}>

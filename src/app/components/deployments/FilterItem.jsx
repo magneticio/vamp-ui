@@ -1,4 +1,6 @@
 var React = require('react');
+var DeploymentActions = require('../../actions/DeploymentActions');
+
 var FilterItem = React.createClass({
   
   propTypes: {
@@ -7,8 +9,22 @@ var FilterItem = React.createClass({
 
   getInitialState: function(){
   	return {
-  		disabled: true
+  		disabled: true,
+      value: ''
   	}
+  },
+  componentDidMount: function(){
+    this.setState({
+      value: this.props.filter['condition']
+    });
+  },
+  componentWillReceiveProps: function(nextProps){
+    console.log(nextProps.filter.condition);
+    if(nextProps.filter.condition !== this.state.value){
+      this.setState({
+        value: nextProps.filter.condition
+      });
+    }
   },
 
   handleClick: function(){
@@ -16,10 +32,22 @@ var FilterItem = React.createClass({
   		disabled: false
   	});
   },
-
   handleSubmit: function(e){
-  	e.preventDefault();
-  	console.log('submit!');
+  	e.preventDefault();    
+
+    //try {
+      this.props.updateFilters(this.state.value, this.props.filter['condition']);
+    //} catch(e) {
+      //console.log('%c ' + e + ' ', 'background: #E54D42; color: #fff');
+      //return;
+    //}
+
+    this.setState({
+      disabled: true
+    });
+  },
+  handleChange: function(e){
+    this.setState({value: e.target.value});
   },
 
   render: function() {
@@ -27,7 +55,19 @@ var FilterItem = React.createClass({
     return(
       <li className="filter-list-item">
       	<form onSubmit={this.handleSubmit}>
-        	<input type="text" defaultValue={this.props.filter['condition']} className='editable' onClick={this.handleClick} disabled={this.state.disabled} />
+        	<input 
+            type="text" 
+            value={this.state.value} 
+            className='editable' 
+            disabled={this.state.disabled}
+            onClick={this.handleClick} 
+            onChange={this.handleChange} />
+          <input 
+            type='submit' 
+            value='save' 
+            className='submit-button'
+            disabled={this.state.disabled}
+            onClick={this.handleSubmit} />
         </form>
      </li>
   )}

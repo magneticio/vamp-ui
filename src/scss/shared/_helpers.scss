@@ -16,11 +16,10 @@
 	    background-repeat: no-repeat;
 	}
 }
-
-
 input.editable {
 	color: inherit;
-	//background-color: transparent;
+	background-color: white;
+	padding: 0.5rem;
 	//border: 1px solid $grey-medium;
 
 	&:hover {
@@ -39,8 +38,4 @@ input.editable[disabled] {
 		background-repeat: no-repeat;
 		background-position: right center;
 	}	
-}
-
-.empty-list {
-	
 }

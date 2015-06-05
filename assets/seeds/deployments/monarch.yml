@@ -18,6 +18,7 @@ clusters:
           weight: 95
           filters:
             - condition: user-agent != ios
+            - condition: user-agent != chrome
         scale:
           cpu: 0.5
           memory: 256

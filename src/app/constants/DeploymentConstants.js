@@ -7,5 +7,6 @@ module.exports = keyMirror({
   DELETE_FULL_DEPLOYMENT: null,
   GET_DEPLOYMENT: null,
   CLEANUP_DEPLOYMENT: null,
-  GET_DEPLOYMENT_METRICS: null
+  GET_DEPLOYMENT_METRICS: null,
+  UPDATE_DEPLOYMENT_ROUTING: null
 });

@@ -18,7 +18,7 @@ var ClusterBox = React.createClass({
         </div>
         <hr/>
         <div className='services-container'>                    
-          <ServicesList services={cluster.services}/>    
+          <ServicesList services={cluster.services} onOptionsUpdate={this.props.onOptionsUpdate}/>    
         </div>
       </div>
     )}

@@ -60,16 +60,26 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
       case DeploymentConstants.GET_ALL_DEPLOYMENTS + '_SUCCESS':
         _persistDeployments(payload.response)
         break;
+
       case DeploymentConstants.GET_DEPLOYMENT + '_SUCCESS':
         _persistCurrentDeployment(payload.response)
         break;
+
       case BlueprintConstants.DEPLOY_BLUEPRINT:
         payload.response.status = 'DIRTY'
         _deployments[payload.response.name] = payload.response
         break;  
+
       case DeploymentConstants.CLEANUP_DEPLOYMENT:
-      console.log('depl is: ' + payload)
-        _deployments[payload.response.name].status = 'DELETING'                          
+        console.log('depl is: ' + payload)
+        _deployments[payload.response.name].status = 'DELETING'
+
+      case DeploymentConstants.UPDATE_DEPLOYMENT_ROUTING + '_SUCCESS':
+        //console.log('update routing success');
+        //console.log(payload.response);
+        //_eraseCurrentDeployment();
+        _persistCurrentDeployment(payload.response)
+        break;                          
     }
     DeploymentStore.emitChange();
     return true; 
