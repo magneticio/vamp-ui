@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var _ = require('underscore');
 var BlueprintActions = require('../../actions/BlueprintActions');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var ButtonBar = require('./BlueprintsButtonBar.jsx');
@@ -40,9 +41,14 @@ var BlueprintsList = React.createClass({
     var allBlueprints = this.props.allBlueprints;
     var blueprints = [];
 
-    for (var key in allBlueprints) {
+    _.each(allBlueprints, function(blueprint,key) {
+      var filterTerm = this.state.filterText.toLowerCase() || false;
+      if ( ( blueprint.name.toLowerCase().indexOf(filterTerm) === -1 && filterTerm) ) {
+        return;
+      }
       blueprints.push(<BlueprintListItem key={key} blueprint={allBlueprints[key]} />);
-    }
+    }, this);
+
 
     var emptyClassSet = classNames({
       "empty-list": true,
@@ -68,10 +74,7 @@ var BlueprintsList = React.createClass({
             <div className="list-section section-sixth">
               <h4>Clusters</h4>
             </div>
-            <div className="list-section section-sixth">
-              <h4>Services</h4>
-            </div>
-            <div className="list-section section-sixth">
+            <div className="list-section section-third list-actions">
             </div>
           </li>
           {blueprints}

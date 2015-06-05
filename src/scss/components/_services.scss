@@ -2,9 +2,8 @@
 //	border-left: 1px solid $grey-light;
 }
 .service-box {
-	&:nth-child(even) {
+	&:hover {
 		background-color: $off-white;
-		//border-top: 2px solid $grey-light;
 	}
 }
 .service-section {
@@ -19,6 +18,14 @@
 	}
 	p {
 		margin: 0;
+	}
+}
+.service-name {
+	h3 {
+		margin-bottom: 0;
+	}
+	p {
+		margin-bottom: $h3-size;
 	}
 }
 .service-metrics {

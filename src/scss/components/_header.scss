@@ -7,11 +7,11 @@
 .branding {
 	display: inline-block;
 	height: 26px;
-	padding: 0 1rem;
+	padding: 7px 1rem 0;
 }
 .logo {
 	display: inline-block;
-	width: 118px;
+	width: 121px;
 	height: 26px;
 	
 	img {
@@ -21,9 +21,9 @@
 	.alpha {
 		color: $pink;
 		text-transform: uppercase;
-		font-size: 0.625rem;
+		font-size: 9px;
 		vertical-align: top;
-		margin: 0;
+		margin: 0 0 0 3px;
 		line-height: 1em;
 	}
 }

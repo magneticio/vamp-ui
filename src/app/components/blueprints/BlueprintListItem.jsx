@@ -1,4 +1,5 @@
 var React = require('react');
+var _ = require('underscore');
 var Loader = require('../Loader.jsx')
 var BlueprintActions = require('../../actions/BlueprintActions.js')
 var BlueprintListItem = React.createClass({
@@ -27,6 +28,10 @@ var BlueprintListItem = React.createClass({
   render: function() {
 
     var blueprint = this.props.blueprint;
+    var clusterCountTotal = _.keys(blueprint.clusters).length
+    var servicesCountTotal = _.reduce(blueprint.clusters, function(memo,cluster){
+        return memo + cluster.services.length
+    },0);
     var randomkey = Math.floor( Math.random() * 1000 );
 
     return (
@@ -37,9 +42,12 @@ var BlueprintListItem = React.createClass({
         <div className="list-section section-half">
           <a onClick={this.handleDetail}><p className="item-name">{blueprint.name}</p></a>
         </div>
-        <div className="list-section section-half list-controls">
-          <button className='button button-green' onClick={this.handleDeploy}>Deploy</button>
-          <button className='button button-yellow' onClick={this.handleEdit}>Edit</button>
+        <div className="list-section section-sixth">
+          {clusterCountTotal}
+        </div>
+        <div className="list-section section-third list-controls">
+          <button className='button button-ghost' onClick={this.handleDeploy}>Deploy</button>
+          <button className='button button-ghost' onClick={this.handleEdit}>Edit</button>
           <button className='button button-red' onClick={this.handleDelete}>Delete</button>
         </div>
       </li>

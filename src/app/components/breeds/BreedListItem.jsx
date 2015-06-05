@@ -36,29 +36,19 @@ var BreedListItem = React.createClass({
         <span className={ (breed.status == 'CLEAN' ? 'hidden' : '') }>
           <Loader />
         </span>
-        <p className="item-name small-caps">{breed.name}</p>
-        <h2 className="item-deployable">{breed.deployable}</h2>
-        <div className="item-ports">
-          {ports}
+        <div className='list-section section-half'>
+          <p><a>{breed.name}</a></p><br/>
+          <p className="small-caps">{breed.deployable}</p>
         </div>
-        <ul className="item-meta-list">
-          <li className="item-meta">
-            <span className="item-meta-title">Ports </span>
-            {portCount}
-          </li>
-          <li className="item-meta">
-            <span className="item-meta-title">Constants </span>
-            {constants}
-          </li>
-          <li className="item-meta">
-            <span className="item-meta-title">Dependencies </span>
-            {dependencies}
-          </li>
-          <li className="item-meta">
-            <span className="item-meta-title">Env. Variables </span>
-            {envVariables}
-          </li>
-        </ul>
+        <div className="list-section section-sixth">
+          {portCount}
+        </div>
+        <div className="list-section section-sixth">
+          {dependencies}
+        </div>
+        <div className="list-section section-sixth">
+          {constants}
+        </div>
       </li>
   )}
 });

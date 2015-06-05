@@ -25,7 +25,7 @@ var DeploymentListItem = React.createClass({
     var clusterCountTotal = _.keys(deployment.clusters).length
     var servicesCountTotal = _.reduce(deployment.clusters, function(memo,cluster){
         return memo + cluster.services.length
-    },0)
+    },0);
     var randomkey = Math.floor( Math.random() * 1000 );
 
     return (

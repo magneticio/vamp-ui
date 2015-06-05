@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var _ = require('underscore');
 var DeploymentListItem = require('./DeploymentListItem.jsx');
 var ToolBar = require('../ToolBar.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
@@ -36,10 +37,13 @@ var DeploymentsList = React.createClass({
         "hidden": this.props.loadState !== LoadStates.STATE_LOADING
       });
 
-
-      for (var key in allDeployments) {
+      _.each(allDeployments, function(deployment,key) {
+        var filterTerm = this.state.filterText.toLowerCase() || false;
+        if ( ( deployment.name.toLowerCase().indexOf(filterTerm) === -1 && filterTerm) ) {
+          return;
+        }
         deployments.push(<DeploymentListItem key={key} deployment={allDeployments[key]} />);
-      }
+      }, this);
 
       var emptyClassSet = classNames({
         "empty-list": true,

@@ -42,28 +42,28 @@
 	}
 
 	.item-ports {
-		display: none;
+		//display: none;
 	}
-	.item-meta-list {
-		display: inline-block;
-		width: 100%;
-		list-style-type: none;
-		padding: 0;
-		border-top: 1px solid $grey-light;
-		margin-top: 0.7rem;
+	// .item-meta-list {
+	// 	display: inline-block;
+	// 	width: 100%;
+	// 	list-style-type: none;
+	// 	padding: 0;
+	// 	border-top: 1px solid $grey-light;
+	// 	margin-top: 0.7rem;
 
-	}
-	.item-meta {
-		display: inline-block;
-		list-style-type: none;
-		width: 25%;
-		padding: 0.35rem;
-		box-sizing: border-box;
-		//background-color: $grey-light;
-	}
-	.item-meta-title {
-		font-size: $xs-size;
-	}
+	// }
+	// .item-meta {
+	// 	display: inline-block;
+	// 	list-style-type: none;
+	// 	width: 25%;
+	// 	padding: 0.35rem;
+	// 	box-sizing: border-box;
+	// 	//background-color: $grey-light;
+	// }
+	// .item-meta-title {
+	// 	font-size: $xs-size;
+	// }
 }
 .list-header {
 	background-color: white!important;
@@ -82,6 +82,7 @@
 .list-controls {
 	text-align: right;
 }
+
 /**
  * 	Deploymentlist
  */

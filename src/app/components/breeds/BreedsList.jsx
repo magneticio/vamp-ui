@@ -69,12 +69,13 @@ var BreedsList = React.createClass({
               <h4>Breed</h4>
             </div>
             <div className="list-section section-sixth">
-              <h4>Clusters</h4>
+              <h4>Ports</h4>
             </div>
             <div className="list-section section-sixth">
-              <h4>Services</h4>
+              <h4>Dependencies</h4>
             </div>
             <div className="list-section section-sixth">
+              <h4>Constants</h4>
             </div>
           </li>
           {breeds}

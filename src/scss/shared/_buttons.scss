@@ -1,44 +1,60 @@
 .button {
 	position: relative;
 	display: inline-block;
-	border: none;
-	padding: 0.5rem 1rem;
+	//border: 2px solid transparent;
+	border: 0px;
+	padding: 0.2rem 1rem;
 	color: white;
+	font-size: $s-size;
 	cursor: pointer;
 	outline: none;
 	z-index: 1;
 	border-radius: 3px;
 	overflow: hidden;
 	margin-left: 0.5rem;
-	transition: all 0.15s;
+	transition: all 0.2s;
 }
 .button-pink {
 	background-color: $pink;
+	border-color: $pink;
 	&:hover {
 		background-color: darken( $pink, 10% );
 	}	
 }
 .button-red {
 	background-color: $red;
+	border-color: $red;
 	&:hover {
-		background-color: darken( $red, 10% );
+		background-color: darken( $red, 12% );
 	}
 }
 .button-green {
 	background-color: $green;
+	border-color: $green;
 	&:hover {
 		background-color: darken( $green, 5% );
 	}	
 }
 .button-yellow {
 	background-color: $yellow;
+	border-color: $yellow;
 	&:hover {
 		background-color: darken( $yellow, 5% );
 	}	
 }
 .button-blue {
 	background-color: $blue;
+	border-color: $blue;
 	&:hover {
 		background-color: darken( $blue, 10% );
+	}	
+}
+.button-ghost {
+	background-color: darken( $grey-light, 5% );
+	border-color: white;
+	color: lighten( $grey, 10% );
+
+	&:hover {
+		background-color: darken( $grey-light, 15% );
 	}	
 }
