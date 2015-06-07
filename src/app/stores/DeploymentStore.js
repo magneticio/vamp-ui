@@ -75,10 +75,8 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         _deployments[payload.response.name].status = 'DELETING'
 
       case DeploymentConstants.UPDATE_DEPLOYMENT_ROUTING + '_SUCCESS':
-        //console.log('update routing success');
-        //console.log(payload.response);
-        //_eraseCurrentDeployment();
-        _persistCurrentDeployment(payload.response)
+      console.log(payload.response);
+        //_persistCurrentDeployment(payload.response)
         break;                          
     }
     DeploymentStore.emitChange();

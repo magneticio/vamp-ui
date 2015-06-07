@@ -19,8 +19,7 @@ var FilterItem = React.createClass({
     });
   },
   componentWillReceiveProps: function(nextProps){
-    console.log(nextProps.filter.condition);
-    if(nextProps.filter.condition !== this.state.value){
+    if(nextProps.filter.condition !== this.state.value && this.state.disabled){
       this.setState({
         value: nextProps.filter.condition
       });
@@ -33,15 +32,12 @@ var FilterItem = React.createClass({
   	});
   },
   handleSubmit: function(e){
-  	e.preventDefault();    
+  	e.preventDefault();
+    console.log('submit')
 
-    //try {
-      this.props.updateFilters(this.state.value, this.props.filter['condition']);
-    //} catch(e) {
-      //console.log('%c ' + e + ' ', 'background: #E54D42; color: #fff');
-      //return;
-    //}
+    this.props.updateFilters(this.state.value, this.props.filter['condition']);
 
+    // TODO: set state after succes returns
     this.setState({
       disabled: true
     });

@@ -21,19 +21,17 @@ var FilterList = React.createClass({
   },
 
   updateFilters: function(newValue, oldValue){
-    var routeOption = 'filters';
-    var filterObject = [];
+    var filtersArray = [];
     
     _.each(this.state.allFilters, function(value, key){
-      filterObject[key] = value;
+      filtersArray[key] = value;
       if (value['condition'] == oldValue){
-        filterObject[key] = { condition: newValue };
+        filtersArray[key] = { condition: newValue };
       }
     }, this);
 
-    this.props.onOptionsUpdate(routeOption, filterObject);
-    //throw 'i dont know what happend';
-    return 'success';
+    this.props.updateServiceFilters(filtersArray);
+    //return 'success';
   },
 
   componentWillReceiveProps: function(nextProps){

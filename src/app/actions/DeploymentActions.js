@@ -45,34 +45,17 @@ var DeploymentActions = {
 
     //PulseApi.post('/event/get' + name, req, DeploymentConstants.GET_DEPLOYMENT_METRICS);
   },
-  putRoutingOption: function(deployment, routeOption, newValues) {
+  putRoutingOption: function(deployment, cluster, service, filters, weight) {
     //console.log('%c Actions > Put Routing Option ', 'background: #23AE8F; color: #fff');
+    var putRoute = '/deployments/' + deployment.name + '/clusters/' + cluster + '/services/' + service +'/routing';
+    console.log('putRoute: ', putRoute);
+    var putObject = 
+    {
+      "weight": weight,
+      "filters": filters
+    };
 
-    var putObject = {
-      "name": deployment.name,
-      "clusters": {
-        "frontend": {
-          "services": {
-            "breed": {
-              "name": "monarch_front:0.1"
-            },
-            "routing": {
-              "weight" : 95,
-              "filters": [
-                {
-                  "condition": "user-agent = asdf"
-                },
-                {
-                  "condition": "Header = X-VAMP-SCALA"
-                }
-              ]
-            }
-          }
-        }
-      }
-    }
-
-    Api.update('/deployments/' + deployment.name, putObject, DeploymentConstants.UPDATE_DEPLOYMENT_ROUTING);
+    Api.update(putRoute, putObject, DeploymentConstants.UPDATE_DEPLOYMENT_ROUTING);
   }
 };
 

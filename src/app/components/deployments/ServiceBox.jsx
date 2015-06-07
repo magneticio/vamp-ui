@@ -8,6 +8,12 @@ var ServiceMetricsGraph = require('./ServiceMetricsGraph.jsx')
 
 var ServiceBox = React.createClass({
 
+  updateServiceFilters: function(filtersArray){
+    var currentService = this.props.service.breed.name;
+    var currentWeight = this.props.service.routing.weight;
+    this.props.updateServiceListFilters(currentService, filtersArray, currentWeight);
+  },
+
   render: function() {
     window.smoothie = false;
     var service = this.props.service
@@ -29,7 +35,7 @@ var ServiceBox = React.createClass({
         	<h4>Weight</h4>
           <WeightSetter weight={service.routing.weight}/>
           <h4>Filters</h4>
-          <FilterList filters={service.routing.filters} onOptionsUpdate={this.props.onOptionsUpdate} />
+          <FilterList filters={service.routing.filters} updateServiceFilters={this.updateServiceFilters} />
         </div>
         <div className='service-section service-metrics'>
           <ServiceMetricsGraph />

@@ -12,7 +12,7 @@ var ServicesList = React.createClass({
     var services = []
   
     for (var key in this.props.services) {
-        services.push(<ServiceBox key={key} service={this.props.services[key]} onOptionsUpdate={this.props.onOptionsUpdate}/>);
+        services.push(<ServiceBox key={key} service={this.props.services[key]} updateServiceListFilters={this.props.updateClusterFilters}/>);
     }
 
     return (

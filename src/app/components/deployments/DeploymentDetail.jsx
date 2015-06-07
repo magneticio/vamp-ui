@@ -32,10 +32,8 @@ var DeploymentDetail = React.createClass({
   },
 
   componentWillUnmount: function() {
+    console.log('deploymentdetails will unmount');
     DeploymentStore.removeChangeListener(this._onChange);
-  },
-    componentWillReceiveProps: function(nextProps){
-    //console.log('deployment nextprops: ', nextProps);
   },
 
   handleSubmit: function() {
@@ -43,13 +41,19 @@ var DeploymentDetail = React.createClass({
     this.props.getDeploymentDetails;
   },
   
-  onOptionsUpdate: function(routeOption, newValues){    
-    console.log(this.state.deployment);
-    DeploymentActions.putRoutingOption(deployment, routeOption, newValues);
+  onOptionsUpdate: function(cluster, service, filters, weight){    
+    // console.log('DeploymentDetail: update routing options');
+    // console.log('Cluster: ', cluster);
+    // console.log('Service: ', service);
+    // console.log('Filters: ', filters);
+    // console.log('Weight: ', weight);
+    DeploymentActions.putRoutingOption(deployment, cluster, service, filters, weight);
   },
 
   render: function() {
-    deployment = this.state.deployment
+    //console.log('deployment render');
+    deployment = this.state.deployment;
+    console.log(deployment);
 
     //grab the endpoint
     var endpoints = [] 

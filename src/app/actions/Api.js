@@ -49,7 +49,7 @@ function post(url, body) {
     .timeout(TIMEOUT);
 }
 function put(url, body) {
-  console.log('putting to:' + url + '   ' + JSON.stringify(body,null,2))
+  //console.log('putting to:' + url + '   ' + JSON.stringify(body,null,2))
   return request
     .put(url)
     .send(body)
@@ -91,7 +91,7 @@ var Api = {
     abortPendingRequests(actionType);
     dispatch(actionType,body);
     _pendingRequests[actionType] = put(url,body).end(
-      handleResponse(actionType)
+       handleResponse(actionType)
     );
   },
   del: function(uri,body,actionType) {
