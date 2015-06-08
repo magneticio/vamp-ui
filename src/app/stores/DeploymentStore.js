@@ -11,6 +11,7 @@ var CHANGE_EVENT = 'change';
 
 var _deployments = {};
 var _currentDeployment = {};
+var _currentDeploymentMetrics = {};
 
 var _persistDeployments = function(response){
   var _temp = {};
@@ -77,13 +78,20 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
 
       case DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT + '_SUCCESS':
         window.open().document.write('<pre><code>' + payload.response.text + '</pre></code>');
-        break;                          
+        break;        
+
+      case DeploymentConstants.GET_DEPLOYMENT_METRICS_SCUR + '_SUCCESS':
+        _currentDeployment.scur = JSON.parse(payload.response.text);
+        break;
+      case DeploymentConstants.GET_DEPLOYMENT_METRICS_RTIME + '_SUCCESS':
+        _currentDeployment.rtime = JSON.parse(payload.response.text);
+        console.log(_currentDeployment.rtime);
+        break;
     }
     DeploymentStore.emitChange();
     return true; 
   })
 
-
-})
+});
 
 module.exports = DeploymentStore

@@ -27,24 +27,24 @@ var DeploymentActions = {
     var payload = {actionType: DeploymentConstants.CLEANUP_DEPLOYMENT , response: deployment };
     AppDispatcher.dispatch(payload);
   },
-  getDeploymentMetrics: function(deployment, offsetInMinutes) {
-    console.log('%c Actions > Get Deployment Metrics ', 'background: #23AE8F; color: #fff');
-    var req = {};
-    var time = {};
-    var MS_PER_MINUTE = 60000;
-    var now = new Date();
-    var interval = new Date(now - offsetInMinutes * MS_PER_MINUTE);
+  getDeploymentMetrics: function(deployment, metricsType) {
+    console.log('%c Actions > Get Deployment Metrics: ' + metricsType.toUpperCase() + ' ', 'background: #23AE8F; color: #fff');
+    tags = [];
+    tags.push('metrics:' + metricsType);
+    tags.push('routes:' + deployment.name + '_9040');
+    postObject = {
+      "tags" : tags,
+      "timestamp" : {
+        "lte" : "now"
+      }
+    }
 
-    time.from = interval.toISOString();
-    time.from = '2015-02-18T04:57:56+00:00';
-    time.to = now.toISOString();
-
-    req.tags = [];
-    req.tags.push(deployment.name);
-
-    req.time = time;
-
-    //PulseApi.post('/event/get' + name, req, DeploymentConstants.GET_DEPLOYMENT_METRICS);
+    if( metricsType == 'scur'){
+      PulseApi.post('/events/get', postObject, DeploymentConstants.GET_DEPLOYMENT_METRICS_SCUR);
+    }
+    if( metricsType == 'rtime'){
+      PulseApi.post('/events/get', postObject, DeploymentConstants.GET_DEPLOYMENT_METRICS_RTIME);
+    }
   },
   putRoutingOption: function(deployment, cluster, service, filters, weight) {
     var putRoute = '/deployments/' + deployment.name + '/clusters/' + cluster + '/services/' + service +'/routing';

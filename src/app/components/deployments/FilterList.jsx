@@ -24,9 +24,9 @@ var FilterList = React.createClass({
     var filtersArray = [];
 
     _.each(this.state.allFilters, function(value, key){
-      if (_.isEmpty(value['condition'])){
-        return;
-      }
+      // if (_.isEmpty(value['condition'])){
+      //   return;
+      // }
       filtersArray[key] = value;
       if (value['condition'] == oldValue){
         filtersArray[key] = { condition: newValue };

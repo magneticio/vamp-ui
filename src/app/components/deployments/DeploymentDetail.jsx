@@ -23,15 +23,22 @@ var DeploymentDetail = React.createClass({
     }
   },
   componentDidMount: function() {
-    DeploymentStore.addChangeListener(this._onChange);
     DeploymentActions.getDeployment(this.state.name);
-    DeploymentActions.getDeploymentMetrics(this.state.name, 60);
+    this.setState({
+      deployment: DeploymentStore.getCurrent()
+    });
+    DeploymentStore.addChangeListener(this._onChange);
+    
+    DeploymentActions.getDeploymentMetrics(deployment, 'rtime');
+    DeploymentActions.getDeploymentMetrics(deployment, 'scur');      
+
+    setInterval(function(){
+      DeploymentActions.getDeploymentMetrics(deployment, 'rtime');
+      DeploymentActions.getDeploymentMetrics(deployment, 'scur');
+    }, 4000);
   },
   componentWillUnmount: function() {
     DeploymentStore.removeChangeListener(this._onChange);
-  },
-  componentWillRecieveProps: function(nextprops) {
-    console.log(nextprops);
   },
 
 
@@ -40,11 +47,9 @@ var DeploymentDetail = React.createClass({
   },
   handleExportAsBlueprint: function(){
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, 'application/x-yaml');
-    // 'application/x-yaml'
   },
   
   onOptionsUpdate: function(cluster, service, filters, weight){
-    //console.log(filters);
     DeploymentActions.putRoutingOption(deployment, cluster, service, filters, weight);
   },
 
@@ -58,7 +63,7 @@ var DeploymentDetail = React.createClass({
     });
 
     // push cluster into an array
-    var clusters = []    
+    var clusters = [];
     _.chain(deployment.clusters)
       .pairs()
       .each(function(item,idx){
@@ -80,8 +85,8 @@ var DeploymentDetail = React.createClass({
               <div className="deployment-status">
                 UP
               </div>
-              <DeploymentMetricsGraph />
-              <DeploymentMetricsGraph />
+              <DeploymentMetricsGraph data={deployment.rtime} metricsType='rtime' />
+              <DeploymentMetricsGraph data={deployment.scur} metricsType='scur' />
             </div>
           </div>
           <div className='detail-section'>

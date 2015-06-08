@@ -29,7 +29,7 @@ var ServiceBox = React.createClass({
       	<div className='service-section service-name'>
           <h3><a href={'/#/breeds/' + service.breed.name }> {service.breed.name}</a></h3>
           <p className="muted">{service.breed.deployable}</p>
-          <h5>started <TimeAgo date={date}/></h5>
+          <h5>updated <TimeAgo date={date}/></h5>
         </div>
         <div className='service-section service-routing'>
         	<h4>Weight</h4>
