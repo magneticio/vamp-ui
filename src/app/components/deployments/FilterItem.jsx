@@ -10,7 +10,8 @@ var FilterItem = React.createClass({
   getInitialState: function(){
   	return {
   		disabled: true,
-      value: ''
+      value: '',
+      updated: false
   	}
   },
   componentDidMount: function(){
@@ -19,7 +20,7 @@ var FilterItem = React.createClass({
     });
   },
   componentWillReceiveProps: function(nextProps){
-    if(nextProps.filter.condition !== this.state.value && this.state.disabled){
+    if(nextProps.filter.condition !== this.state.value && this.state.disabled && !this.state.updated){
       this.setState({
         value: nextProps.filter.condition
       });
@@ -39,7 +40,8 @@ var FilterItem = React.createClass({
 
     // TODO: set state after succes returns
     this.setState({
-      disabled: true
+      disabled: true,
+      updated: true
     });
   },
   handleChange: function(e){

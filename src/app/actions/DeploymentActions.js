@@ -12,8 +12,9 @@ var DeploymentActions = {
   getDeployment: function(name) {
     Api.get('/deployments/' + name, null, DeploymentConstants.GET_DEPLOYMENT);
   },
-  getDeploymentAsBlueprint: function(deployment) {
-    Api.get('/deployments/' + deployment.name, {as_blueprint: true}, DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT);
+  getDeploymentAsBlueprint: function(deployment, format) {
+    format = typeof format !== 'undefined' ? format : null;
+    Api.get('/deployments/' + deployment.name, {as_blueprint: true}, DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT, format);
   },
   deleteFullDeployment: function(deployment) {
     var deplAsBlueprint = {}
@@ -46,15 +47,8 @@ var DeploymentActions = {
     //PulseApi.post('/event/get' + name, req, DeploymentConstants.GET_DEPLOYMENT_METRICS);
   },
   putRoutingOption: function(deployment, cluster, service, filters, weight) {
-    //console.log('%c Actions > Put Routing Option ', 'background: #23AE8F; color: #fff');
     var putRoute = '/deployments/' + deployment.name + '/clusters/' + cluster + '/services/' + service +'/routing';
-    console.log('putRoute: ', putRoute);
-    var putObject = 
-    {
-      "weight": weight,
-      "filters": filters
-    };
-
+    var putObject = { "weight": weight, "filters": filters };
     Api.update(putRoute, putObject, DeploymentConstants.UPDATE_DEPLOYMENT_ROUTING);
   }
 };

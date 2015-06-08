@@ -18,42 +18,38 @@ var DeploymentDetail = React.createClass({
   getInitialState: function() {
     return  {
       loadState: LoadStates.STATE_LOADING,
-      deployment: {}
+      deployment: {},
+      name: this.context.router.getCurrentParams().id
     }
   },
-
   componentDidMount: function() {
-    var name = this.context.router.getCurrentParams().id;
-
     DeploymentStore.addChangeListener(this._onChange);
-    DeploymentActions.getDeployment(name);
-    
-    DeploymentActions.getDeploymentMetrics(name, 60);
+    DeploymentActions.getDeployment(this.state.name);
+    DeploymentActions.getDeploymentMetrics(this.state.name, 60);
   },
-
   componentWillUnmount: function() {
-    console.log('deploymentdetails will unmount');
     DeploymentStore.removeChangeListener(this._onChange);
   },
+  componentWillRecieveProps: function(nextprops) {
+    console.log(nextprops);
+  },
+
 
   handleSubmit: function() {
-    console.log(this.props);
     this.props.getDeploymentDetails;
   },
+  handleExportAsBlueprint: function(){
+    DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, 'application/x-yaml');
+    // 'application/x-yaml'
+  },
   
-  onOptionsUpdate: function(cluster, service, filters, weight){    
-    // console.log('DeploymentDetail: update routing options');
-    // console.log('Cluster: ', cluster);
-    // console.log('Service: ', service);
-    // console.log('Filters: ', filters);
-    // console.log('Weight: ', weight);
+  onOptionsUpdate: function(cluster, service, filters, weight){
+    //console.log(filters);
     DeploymentActions.putRoutingOption(deployment, cluster, service, filters, weight);
   },
 
   render: function() {
-    //console.log('deployment render');
     deployment = this.state.deployment;
-    console.log(deployment);
 
     //grab the endpoint
     var endpoints = [] 
@@ -77,7 +73,7 @@ var DeploymentDetail = React.createClass({
           <div id="general-metrics" className='detail-section'>
             <div className='endpoints-container'>
               {endpoints}
-              <a className='export-link'>Export as Blueprint</a>
+              <a className='export-link' onClick={this.handleExportAsBlueprint}>Export as Blueprint</a>
               <hr />
             </div>
             <div className="deployment-metrics-container">

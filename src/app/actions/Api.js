@@ -33,28 +33,29 @@ function handleResponse(actionType) {
       dispatch(actionType + '_SUCCESS', res);
     }
   };
-}
+};
 
-function get(url,params) {
+function get(url,params,accept) {
   return request
     .get(url)
+    .accept(accept)
     .query(params)
     .timeout(TIMEOUT);
-}
+};
 function post(url, body) {
   console.log('posting to:' + url + '   ' + JSON.stringify(body,null,2))
   return request
     .post(url)
     .send(body)
     .timeout(TIMEOUT);
-}
+};
 function put(url, body) {
-  //console.log('putting to:' + url + '   ' + JSON.stringify(body,null,2))
+  console.log('putting to:' + url + '   ' + JSON.stringify(body,null,2))
   return request
     .put(url)
     .send(body)
     .timeout(TIMEOUT);
-}
+};
 function del(url,body) {
   if (body != null) {
     return request
@@ -66,14 +67,15 @@ function del(url,body) {
       .del(url)
       .timeout(TIMEOUT);
   }
-}         
+};  
 
 var Api = {
-  get: function(uri,params,actionType) {
+  get: function(uri,params,actionType,accept) {
+    accept = typeof accept !== 'undefined' ? accept : null;
     var url = makeUrl(uri);
     abortPendingRequests(actionType);
     dispatch(actionType, LoadStates.STATE_LOADING);
-    _pendingRequests[actionType] = get(url,params).end(
+    _pendingRequests[actionType] = get(url,params,accept).end(
       handleResponse(actionType)
     );
   },
