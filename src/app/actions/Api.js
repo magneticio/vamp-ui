@@ -43,14 +43,14 @@ function get(url,params,accept) {
     .timeout(TIMEOUT);
 };
 function post(url, body) {
-  console.log('posting to:' + url + '   ' + JSON.stringify(body,null,2))
+  //console.log('posting to:' + url + '   ' + JSON.stringify(body,null,2))
   return request
     .post(url)
     .send(body)
     .timeout(TIMEOUT);
 };
 function put(url, body) {
-  console.log('putting to:' + url + '   ' + JSON.stringify(body,null,2))
+  //console.log('putting to:' + url + '   ' + JSON.stringify(body,null,2))
   return request
     .put(url)
     .send(body)

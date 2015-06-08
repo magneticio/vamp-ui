@@ -46,6 +46,14 @@
 	display: inline-flex;
 	padding: 0.5rem 0.6rem;
 }
+.status-text {
+	overflow: hidden;
+	min-width: 1em;
+	white-space: nowrap; /* No line breaks */
+	overflow: hidden; /* Hide text which does not fit the block */
+	text-overflow: ellipsis; /* Cut off with ellipsis */
+	display: block; /* Works only for block elements */
+}
 
 .health-circle {
 	margin-right: 1rem;

@@ -28,7 +28,7 @@ var DeploymentActions = {
     AppDispatcher.dispatch(payload);
   },
   getDeploymentMetrics: function(deployment, metricsType) {
-    console.log('%c Actions > Get Deployment Metrics: ' + metricsType.toUpperCase() + ' ', 'background: #23AE8F; color: #fff');
+    //console.log('%c Actions > Get Deployment Metrics: ' + metricsType.toUpperCase() + ' ', 'background: #23AE8F; color: #fff');
     tags = [];
     tags.push('metrics:' + metricsType);
     tags.push('routes:' + deployment.name + '_9040');
@@ -42,8 +42,8 @@ var DeploymentActions = {
     if( metricsType == 'scur'){
       PulseApi.post('/events/get', postObject, DeploymentConstants.GET_DEPLOYMENT_METRICS_SCUR);
     }
-    if( metricsType == 'rtime'){
-      PulseApi.post('/events/get', postObject, DeploymentConstants.GET_DEPLOYMENT_METRICS_RTIME);
+    if( metricsType == 'rate'){
+      PulseApi.post('/events/get', postObject, DeploymentConstants.GET_DEPLOYMENT_METRICS_RATE);
     }
   },
   putRoutingOption: function(deployment, cluster, service, filters, weight) {

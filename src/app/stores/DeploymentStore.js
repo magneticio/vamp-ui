@@ -83,9 +83,8 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_SCUR + '_SUCCESS':
         _currentDeployment.scur = JSON.parse(payload.response.text);
         break;
-      case DeploymentConstants.GET_DEPLOYMENT_METRICS_RTIME + '_SUCCESS':
-        _currentDeployment.rtime = JSON.parse(payload.response.text);
-        console.log(_currentDeployment.rtime);
+      case DeploymentConstants.GET_DEPLOYMENT_METRICS_RATE + '_SUCCESS':
+        _currentDeployment.rate = JSON.parse(payload.response.text);
         break;
     }
     DeploymentStore.emitChange();

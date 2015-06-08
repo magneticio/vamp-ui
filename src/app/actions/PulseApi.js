@@ -40,7 +40,7 @@ function handleResponse(actionType) {
 
 function post(url, body) {
 
-    console.log('posting to:' + url + '   ' + JSON.stringify(body,null,2))
+    //console.log('posting to:' + url + '   ' + JSON.stringify(body,null,2))
 
     return request
         .post(url)

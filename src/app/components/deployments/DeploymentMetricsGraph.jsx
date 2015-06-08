@@ -12,14 +12,14 @@ var MetricsGraph = React.createClass({
   },
 
   componentWillMount: function(){
-    if(this.props.metricsType == 'rtime'){
+    if(this.props.metricsType == 'rate'){
       this.setState({
-        label: 'req / sec'
+        label: 'requests / sec'
       });
     }
     if(this.props.metricsType == 'scur'){
       this.setState({
-        label: 'cur. sessions'
+        label: 'current sessions'
       });
     }
   },
@@ -32,13 +32,20 @@ var MetricsGraph = React.createClass({
     if(!_.isEmpty(this.props.data) ){
 
       var filteredApiData = [];
+      var chartLabels = [];
+
       _.each(this.props.data, function(property, key){
         filteredApiData.push(property['value']);
+        chartLabels.push('');
       }, this);
 
+      var mostRecentDatapoint = filteredApiData[0];
+      filteredApiData = filteredApiData.reverse();
+
       var chartOptions = {
-        showScale: false,
-        scaleShowGridLines: false,
+        showScale: true,
+        scaleFontSize: 10,
+        scaleShowGridLines: true,
         responsive: true,
         animation: false,
         barShowStroke : false,
@@ -47,7 +54,7 @@ var MetricsGraph = React.createClass({
       };
 
       var chartData = {
-        labels: filteredApiData,
+        labels: chartLabels,
         datasets: [
           {
             label: "Reqs/sec.",
@@ -58,7 +65,6 @@ var MetricsGraph = React.createClass({
         ]
       };
 
-      var mostRecentDatapoint = filteredApiData[0];
       var linechart = <LineChart data={chartData} options={chartOptions}/>  
     } 
 

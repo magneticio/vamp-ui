@@ -1,3 +1,6 @@
+#general-metrics {
+	margin-bottom: 1rem;
+}
 .metrics-chart {
 	display: inline-block;
 	
@@ -10,7 +13,6 @@
 
 	.metrics-requests {
 		width: 20%;
-		height: auto;
 	}
 
 	h3 {
@@ -40,10 +42,10 @@
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-start;
 	
 	.metrics-chart {
-		height: 100px;
+		height: 150px;
 		width: 45%;
 	}
 }

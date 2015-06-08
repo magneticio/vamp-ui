@@ -1,5 +1,6 @@
 var React = require('react');
 var DeploymentActions = require('../../actions/DeploymentActions');
+var cx = require('classnames');
 
 var FilterItem = React.createClass({
   
@@ -11,7 +12,8 @@ var FilterItem = React.createClass({
   	return {
   		disabled: true,
       value: '',
-      updated: false
+      updated: false,
+      hidden: ''
   	}
   },
   componentDidMount: function(){
@@ -34,7 +36,12 @@ var FilterItem = React.createClass({
   },
   handleSubmit: function(e){
   	e.preventDefault();
-    console.log('submit')
+
+    if(this.state.value == ''){
+      this.setState({
+        hidden: 'hidden'
+      });
+    }
 
     this.props.updateFilters(this.state.value, this.props.filter['condition']);
 
@@ -50,13 +57,15 @@ var FilterItem = React.createClass({
 
   render: function() {
 
+    var inputClasses = cx('editable', this.state.hidden);
+
     return(
       <li className="filter-list-item">
       	<form onSubmit={this.handleSubmit}>
         	<input 
             type="text" 
             value={this.state.value} 
-            className='editable' 
+            className={inputClasses} 
             disabled={this.state.disabled}
             onClick={this.handleClick} 
             onChange={this.handleChange} />

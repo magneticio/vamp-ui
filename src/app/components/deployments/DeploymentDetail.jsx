@@ -29,11 +29,11 @@ var DeploymentDetail = React.createClass({
     });
     DeploymentStore.addChangeListener(this._onChange);
     
-    DeploymentActions.getDeploymentMetrics(deployment, 'rtime');
+    DeploymentActions.getDeploymentMetrics(deployment, 'rate');
     DeploymentActions.getDeploymentMetrics(deployment, 'scur');      
 
     setInterval(function(){
-      DeploymentActions.getDeploymentMetrics(deployment, 'rtime');
+      DeploymentActions.getDeploymentMetrics(deployment, 'rate');
       DeploymentActions.getDeploymentMetrics(deployment, 'scur');
     }, 4000);
   },
@@ -85,7 +85,7 @@ var DeploymentDetail = React.createClass({
               <div className="deployment-status">
                 UP
               </div>
-              <DeploymentMetricsGraph data={deployment.rtime} metricsType='rtime' />
+              <DeploymentMetricsGraph data={deployment.rate} metricsType='rate' />
               <DeploymentMetricsGraph data={deployment.scur} metricsType='scur' />
             </div>
           </div>

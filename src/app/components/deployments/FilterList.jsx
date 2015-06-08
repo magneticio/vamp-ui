@@ -22,26 +22,30 @@ var FilterList = React.createClass({
 
   updateFilters: function(newValue, oldValue){
     var filtersArray = [];
+    var dropKey = '';
 
     _.each(this.state.allFilters, function(value, key){
-      // if (_.isEmpty(value['condition'])){
-      //   return;
-      // }
-      filtersArray[key] = value;
-      if (value['condition'] == oldValue){
+      if (value['condition'] == oldValue && newValue == ''){
+        console.log('emtpy');
+      } else if (value['condition'] == oldValue && newValue !== ''){
         filtersArray[key] = { condition: newValue };
+      } else {
+        filtersArray.push(value);
       }
-
     }, this);
 
-    console.log(filtersArray);
+    this.setState({
+      allFilters: filtersArray
+    });
+    
     this.props.updateServiceFilters(filtersArray);
   },
 
   addFilter: function(e){
     e.preventDefault();
+    console.log('onclick');
     
-    emptyFilter = {
+    var emptyFilter = {
       'condition': ''
     };
     currentFilters = this.state.allFilters;
@@ -61,7 +65,7 @@ var FilterList = React.createClass({
       filters.push(<FilterItem key={key} filter={this.props.filters[key]} updateFilters={this.updateFilters} />);
     }
 
-    var randomKey = Math.random();
+    var randomKey = Math.floor( Math.random() * 10 );
 
     return(
       <ul className='filters-list'>
