@@ -37,14 +37,13 @@ var FilterItem = React.createClass({
   handleSubmit: function(e){
   	e.preventDefault();
 
+    this.props.updateFilters(this.state.value, this.props.filter['condition']);
+
     if(this.state.value == ''){
       this.setState({
         hidden: 'hidden'
       });
     }
-
-    this.props.updateFilters(this.state.value, this.props.filter['condition']);
-
     // TODO: set state after succes returns
     this.setState({
       disabled: true,

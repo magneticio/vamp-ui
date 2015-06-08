@@ -45,12 +45,13 @@ var FilterList = React.createClass({
     e.preventDefault();
     console.log('onclick');
     
-    var emptyFilter = {
-      'condition': ''
-    };
-    currentFilters = this.state.allFilters;
-    currentFilters.push(emptyFilter);
+    var emptyFilter = {'condition': ''};
+    var currentFilters = [];
+    _.each(this.state.allFilters, function(value, key){
+      currentFilters.push(value);  
+    });
     
+    currentFilters.push(emptyFilter);
     this.setState({
       allFilters: currentFilters
     });
@@ -61,9 +62,9 @@ var FilterList = React.createClass({
     var filters = [],
         addFilter = [];
 
-    for (var key in this.props.filters) {
-      filters.push(<FilterItem key={key} filter={this.props.filters[key]} updateFilters={this.updateFilters} />);
-    }
+    _.each(this.state.allFilters, function(value, key) {
+      filters.push(<FilterItem key={key} filter={value} updateFilters={this.updateFilters} />);
+    }, this);
 
     var randomKey = Math.floor( Math.random() * 10 );
 
