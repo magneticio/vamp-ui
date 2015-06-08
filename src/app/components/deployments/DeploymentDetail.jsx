@@ -18,38 +18,43 @@ var DeploymentDetail = React.createClass({
   getInitialState: function() {
     return  {
       loadState: LoadStates.STATE_LOADING,
-      deployment: {}
+      deployment: {},
+      name: this.context.router.getCurrentParams().id
     }
   },
-
   componentDidMount: function() {
-    var name = this.context.router.getCurrentParams().id;
-
+    DeploymentActions.getDeployment(this.state.name);
+    this.setState({
+      deployment: DeploymentStore.getCurrent()
+    });
     DeploymentStore.addChangeListener(this._onChange);
-    DeploymentActions.getDeployment(name);
     
-    DeploymentActions.getDeploymentMetrics(name, 60);
-  },
+    DeploymentActions.getDeploymentMetrics(deployment, 'rtime');
+    DeploymentActions.getDeploymentMetrics(deployment, 'scur');      
 
+    setInterval(function(){
+      DeploymentActions.getDeploymentMetrics(deployment, 'rtime');
+      DeploymentActions.getDeploymentMetrics(deployment, 'scur');
+    }, 4000);
+  },
   componentWillUnmount: function() {
     DeploymentStore.removeChangeListener(this._onChange);
   },
-    componentWillReceiveProps: function(nextProps){
-    //console.log('deployment nextprops: ', nextProps);
-  },
+
 
   handleSubmit: function() {
-    console.log(this.props);
     this.props.getDeploymentDetails;
   },
+  handleExportAsBlueprint: function(){
+    DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, 'application/x-yaml');
+  },
   
-  onOptionsUpdate: function(routeOption, newValues){    
-    console.log(this.state.deployment);
-    DeploymentActions.putRoutingOption(deployment, routeOption, newValues);
+  onOptionsUpdate: function(cluster, service, filters, weight){
+    DeploymentActions.putRoutingOption(deployment, cluster, service, filters, weight);
   },
 
   render: function() {
-    deployment = this.state.deployment
+    deployment = this.state.deployment;
 
     //grab the endpoint
     var endpoints = [] 
@@ -58,7 +63,7 @@ var DeploymentDetail = React.createClass({
     });
 
     // push cluster into an array
-    var clusters = []    
+    var clusters = [];
     _.chain(deployment.clusters)
       .pairs()
       .each(function(item,idx){
@@ -73,15 +78,15 @@ var DeploymentDetail = React.createClass({
           <div id="general-metrics" className='detail-section'>
             <div className='endpoints-container'>
               {endpoints}
-              <a className='export-link'>Export as Blueprint</a>
+              <a className='export-link' onClick={this.handleExportAsBlueprint}>Export as Blueprint</a>
               <hr />
             </div>
             <div className="deployment-metrics-container">
               <div className="deployment-status">
                 UP
               </div>
-              <DeploymentMetricsGraph />
-              <DeploymentMetricsGraph />
+              <DeploymentMetricsGraph data={deployment.rtime} metricsType='rtime' />
+              <DeploymentMetricsGraph data={deployment.scur} metricsType='scur' />
             </div>
           </div>
           <div className='detail-section'>

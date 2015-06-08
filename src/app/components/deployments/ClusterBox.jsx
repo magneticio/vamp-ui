@@ -4,6 +4,16 @@ var Badge = require('../Badge.jsx');
 
 var ClusterBox = React.createClass({
 
+  updateClusterFilters: function(service, filters, weight){
+    var currentCluster = this.props.name;
+    this.props.onOptionsUpdate(currentCluster, service, filters, weight)
+  },
+
+  componentWillUnmount: function() {
+    console.log('Clusters will unmount');
+    // DeploymentStore.removeChangeListener(this._onChange);
+  },
+
   render: function() {
 
     var cluster = this.props.cluster;
@@ -18,7 +28,7 @@ var ClusterBox = React.createClass({
         </div>
         <hr/>
         <div className='services-container'>                    
-          <ServicesList services={cluster.services} onOptionsUpdate={this.props.onOptionsUpdate}/>    
+          <ServicesList services={cluster.services} updateClusterFilters={this.updateClusterFilters}/>    
         </div>
       </div>
     )}

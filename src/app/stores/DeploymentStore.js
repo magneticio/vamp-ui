@@ -11,6 +11,7 @@ var CHANGE_EVENT = 'change';
 
 var _deployments = {};
 var _currentDeployment = {};
+var _currentDeploymentMetrics = {};
 
 var _persistDeployments = function(response){
   var _temp = {};
@@ -28,7 +29,7 @@ var _persistCurrentDeployment = function(response){
 
 var _eraseCurrentDeployment = function() {
   _currentDeployment = {};
-}        
+};  
 
 var DeploymentStore = assign({}, EventEmitter.prototype,{
 
@@ -58,34 +59,39 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
 
     switch(action) {
       case DeploymentConstants.GET_ALL_DEPLOYMENTS + '_SUCCESS':
-        _persistDeployments(payload.response)
+        _persistDeployments(payload.response);
         break;
 
       case DeploymentConstants.GET_DEPLOYMENT + '_SUCCESS':
-        _persistCurrentDeployment(payload.response)
+        _persistCurrentDeployment(payload.response);
         break;
 
       case BlueprintConstants.DEPLOY_BLUEPRINT:
-        payload.response.status = 'DIRTY'
-        _deployments[payload.response.name] = payload.response
+        payload.response.status = 'DIRTY';
+        _deployments[payload.response.name] = payload.response;
         break;  
 
       case DeploymentConstants.CLEANUP_DEPLOYMENT:
-        console.log('depl is: ' + payload)
-        _deployments[payload.response.name].status = 'DELETING'
+        console.log('depl is: ' + payload);
+        _deployments[payload.response.name].status = 'DELETING';
+        break;
 
-      case DeploymentConstants.UPDATE_DEPLOYMENT_ROUTING + '_SUCCESS':
-        //console.log('update routing success');
-        //console.log(payload.response);
-        //_eraseCurrentDeployment();
-        _persistCurrentDeployment(payload.response)
-        break;                          
+      case DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT + '_SUCCESS':
+        window.open().document.write('<pre><code>' + payload.response.text + '</pre></code>');
+        break;        
+
+      case DeploymentConstants.GET_DEPLOYMENT_METRICS_SCUR + '_SUCCESS':
+        _currentDeployment.scur = JSON.parse(payload.response.text);
+        break;
+      case DeploymentConstants.GET_DEPLOYMENT_METRICS_RTIME + '_SUCCESS':
+        _currentDeployment.rtime = JSON.parse(payload.response.text);
+        console.log(_currentDeployment.rtime);
+        break;
     }
     DeploymentStore.emitChange();
     return true; 
   })
 
-
-})
+});
 
 module.exports = DeploymentStore

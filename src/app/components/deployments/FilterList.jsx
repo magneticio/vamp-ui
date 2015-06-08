@@ -21,23 +21,35 @@ var FilterList = React.createClass({
   },
 
   updateFilters: function(newValue, oldValue){
-    var routeOption = 'filters';
-    var filterObject = [];
-    
+    var filtersArray = [];
+
     _.each(this.state.allFilters, function(value, key){
-      filterObject[key] = value;
+      // if (_.isEmpty(value['condition'])){
+      //   return;
+      // }
+      filtersArray[key] = value;
       if (value['condition'] == oldValue){
-        filterObject[key] = { condition: newValue };
+        filtersArray[key] = { condition: newValue };
       }
+
     }, this);
 
-    this.props.onOptionsUpdate(routeOption, filterObject);
-    //throw 'i dont know what happend';
-    return 'success';
+    console.log(filtersArray);
+    this.props.updateServiceFilters(filtersArray);
   },
 
-  componentWillReceiveProps: function(nextProps){
-    //console.log('check');
+  addFilter: function(e){
+    e.preventDefault();
+    
+    emptyFilter = {
+      'condition': ''
+    };
+    currentFilters = this.state.allFilters;
+    currentFilters.push(emptyFilter);
+    
+    this.setState({
+      allFilters: currentFilters
+    });
   },
 
   render: function() {
@@ -54,7 +66,7 @@ var FilterList = React.createClass({
     return(
       <ul className='filters-list'>
         {filters}
-        <li key={randomKey}><a className="add-link">+ Add Filter</a></li>
+        <li key={randomKey}><a className="add-link" onClick={this.addFilter}>+ Add Filter</a></li>
       </ul> 
   )}
 });
