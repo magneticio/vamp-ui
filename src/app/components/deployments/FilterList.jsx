@@ -22,7 +22,6 @@ var FilterList = React.createClass({
 
   updateFilters: function(newValue, oldValue){
     var filtersArray = [];
-    var dropKey = '';
 
     _.each(this.state.allFilters, function(value, key){
       if (value['condition'] == oldValue && newValue == ''){

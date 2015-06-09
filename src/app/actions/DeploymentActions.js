@@ -29,9 +29,13 @@ var DeploymentActions = {
   },
   getDeploymentMetrics: function(deployment, metricsType) {
     //console.log('%c Actions > Get Deployment Metrics: ' + metricsType.toUpperCase() + ' ', 'background: #23AE8F; color: #fff');
+    var endpoint = '';
+    _.each(deployment.endpoints, function(value, key){
+      endpoint = value;
+    }, this);
     tags = [];
     tags.push('metrics:' + metricsType);
-    tags.push('routes:' + deployment.name + '_9040');
+    tags.push('routes:' + deployment.name + '_' + endpoint);
     postObject = {
       "tags" : tags,
       "timestamp" : {
