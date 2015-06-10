@@ -57,9 +57,10 @@ function put(url, body) {
     .timeout(TIMEOUT);
 };
 function del(url,body) {
-  if (body != null) {
+  if(body !== null) {
     return request
       .del(url)
+      .set('Content-type', 'application/json')
       .send(JSON.stringify(body))
       .timeout(TIMEOUT);
   } else {

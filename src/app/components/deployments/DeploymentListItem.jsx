@@ -5,6 +5,7 @@ var Loader = require('../Loader.jsx');
 var Badge = require('../Badge.jsx');
 var DeploymentActions = require('../../actions/DeploymentActions.js');
 var HealthCircle = require('../HealthCircle.jsx');
+
 var DeploymentListItem = React.createClass({
 
   contextTypes: {
@@ -12,11 +13,11 @@ var DeploymentListItem = React.createClass({
   },
 
   handleDetail: function () {
-    this.context.router.transitionTo('deployment',{id: this.props.deployment.name})
+    this.context.router.transitionTo('deployment',{id: this.props.deployment.name});
   },
   handleDelete: function () {
     console.log('delete');
-    DeploymentActions.deleteFullDeployment(this.props.deployment)
+    DeploymentActions.deleteFullDeployment(this.props.deployment);
   },
 
   render: function() {
@@ -25,7 +26,7 @@ var DeploymentListItem = React.createClass({
     var clusterCountTotal = _.keys(deployment.clusters).length
     var servicesCountTotal = _.reduce(deployment.clusters, function(memo,cluster){
         return memo + cluster.services.length
-    },0);
+    }, 0);
     var randomkey = Math.floor( Math.random() * 1000 );
 
     return (
