@@ -21,6 +21,8 @@ var POLL_INTERVAL = 4000;
 
 var Master = React.createClass({
   
+  mixins: [PureRenderMixin],
+
   contextTypes: {
     router: React.PropTypes.func
   },

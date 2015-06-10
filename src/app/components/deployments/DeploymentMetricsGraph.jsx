@@ -25,7 +25,7 @@ var MetricsGraph = React.createClass({
   },
 
   render: function() {
-
+    console.log('chart render');
     var linechart = '';
     var mostRecentDatapoint = 0;
 

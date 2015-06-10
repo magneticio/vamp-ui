@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 var _ = require('underscore');
 var classNames = require('classnames');
 var ToolBar = require('../ToolBar.jsx');
@@ -8,6 +9,8 @@ var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
 var TransitionGroup = React.addons.CSSTransitionGroup;
 
 var BreedsList = React.createClass({
+  
+  mixins: [PureRenderMixin],
 
   getInitialState: function() {
     return {
@@ -35,7 +38,7 @@ var BreedsList = React.createClass({
     var loadingClassSet = classNames({
       "hidden": this.props.loadState !== LoadStates.STATE_LOADING
     });
-
+      
     var allBreeds = this.props.allBreeds;
     var breeds = [];
 

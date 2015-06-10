@@ -1,5 +1,6 @@
 var _ = require('underscore')
 var React = require('react');
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
 var ClusterBox = require('./ClusterBox.jsx');
 var DeploymentActions = require('../../actions/DeploymentActions');
@@ -10,6 +11,7 @@ var DeploymentMetricsGraph = require('./DeploymentMetricsGraph.jsx');
 
 var DeploymentDetail = React.createClass({
 
+  mixins: [PureRenderMixin],
 
   contextTypes: {
     router: React.PropTypes.func
@@ -54,6 +56,7 @@ var DeploymentDetail = React.createClass({
   },
 
   render: function() {
+    console.log('deploymentdetail render');
     deployment = this.state.deployment;
 
     //grab the endpoint

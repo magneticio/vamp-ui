@@ -1,5 +1,6 @@
 var React = require('react/addons');
 var _ = require('underscore');
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 var BlueprintActions = require('../../actions/BlueprintActions');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var ButtonBar = require('./BlueprintsButtonBar.jsx');
@@ -10,6 +11,8 @@ var classNames = require('classnames');
 var TransitionGroup = React.addons.CSSTransitionGroup;
 
 var BlueprintsList = React.createClass({
+  
+  mixins: [PureRenderMixin],
 
   getInitialState: function() {
     return {
@@ -34,6 +37,7 @@ var BlueprintsList = React.createClass({
 
   render: function() {
 
+    console.log('blueprintslist render');
     var loadingClassSet = classNames({
       "hidden": this.props.loadState !== LoadStates.STATE_LOADING
     });
@@ -65,8 +69,8 @@ var BlueprintsList = React.createClass({
           filterText={this.state.filterText}
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch} />
-        <span className={emptyClassSet}>No blueprints found.</span> 
-        <TransitionGroup id='blueprints-list' component="ul" transitionName="fadeIn" transitionAppear={true} className={this.state.viewType}>
+        <span className={emptyClassSet}>No blueprints found.</span>
+        <TransitionGroup id='blueprints-list' component="ul" transitionName="fadeIn" transitionAppear={true} transitionLeave={true} className={this.state.viewType}>
           <li className={listHeaderClasses}>
             <div className="list-section section-half">
               <h4>Blueprint</h4>

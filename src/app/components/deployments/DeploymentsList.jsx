@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
 var _ = require('underscore');
 var DeploymentListItem = require('./DeploymentListItem.jsx');
 var ToolBar = require('../ToolBar.jsx');
@@ -7,6 +8,9 @@ var classNames = require('classnames');
 var TransitionGroup = React.addons.CSSTransitionGroup;
 
 var DeploymentsList = React.createClass({
+
+  mixins: [PureRenderMixin],
+
   getInitialState: function() {
     return {
       filterText: '',
@@ -29,6 +33,8 @@ var DeploymentsList = React.createClass({
   },
 
   render: function() {
+
+      console.log('deploymentslist render');
 
       var allDeployments = this.props.allDeployments;
       var deployments = [];

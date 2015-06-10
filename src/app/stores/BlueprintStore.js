@@ -9,15 +9,14 @@ var CHANGE_EVENT = 'change';
 var _blueprints = {};
 
 var _persistBlueprints = function(response){
-        var _temp = {}
-        array = JSON.parse(response.text)
-        _.each(array, function(obj){ 
-          _temp[obj.name] = obj
-          _temp[obj.name].status = 'CLEAN'
-
-        });
-        _blueprints = _temp
-    };
+  var _temp = {}
+  array = JSON.parse(response.text)
+  _.each(array, function(obj){ 
+    _temp[obj.name] = obj
+    _temp[obj.name].status = 'CLEAN'
+  });
+  _blueprints = _temp
+};
 
 var _addBlueprint = function(response,id,status){
         _blueprints[id] = response

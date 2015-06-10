@@ -19,7 +19,8 @@ var _persistDeployments = function(response){
   _.each(array, function(obj){
     _temp[obj.name] = obj;
     _temp[obj.name].status = 'CLEAN';
-  });   
+  });
+
   _deployments = _temp;
 };
 
