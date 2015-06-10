@@ -1,24 +1,29 @@
 var React = require('react/addons');
-var _ = require('underscore');
-var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
-var BlueprintActions = require('../../actions/BlueprintActions');
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var ButtonBar = require('./BlueprintsButtonBar.jsx');
-var ToolBar = require('../ToolBar.jsx');
-var BlueprintListItem = require('./BlueprintListItem.jsx');
-var LoadStates = require("../../constants/LoadStates.js");
-var classNames = require('classnames');
 var TransitionGroup = React.addons.CSSTransitionGroup;
+var PureRenderMixin = React.addons.PureRenderMixin;
+var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
+var _ = require('underscore');
+var classNames = require('classnames');
+var ToolBar = require('../ToolBar.jsx');
+var LoadStates = require("../../constants/LoadStates.js");
+var ButtonBar = require('./BlueprintsButtonBar.jsx');
+var BlueprintListItem = require('./BlueprintListItem.jsx');
+var BlueprintActions = require('../../actions/BlueprintActions');
+
 
 var BlueprintsList = React.createClass({
   
-  mixins: [PureRenderMixin],
+  mixins: [PureRenderMixin, SetIntervalMixin],
 
   getInitialState: function() {
     return {
       filterText: '',
       viewType:'general-list'
     };
+  },
+  componentDidMount: function(){
+    BlueprintActions.getAllBlueprints();
+    this.setInterval(this.pollBackend, 4000);
   },
   
   handleAdd: function() {
@@ -84,7 +89,12 @@ var BlueprintsList = React.createClass({
           {blueprints}
         </TransitionGroup>
       </div>    
-    )}
+  )},
+
+  pollBackend: function() {
+    console.log('polling breeds');
+    BlueprintActions.getAllBlueprints();
+  }
 });
  
 module.exports = BlueprintsList;

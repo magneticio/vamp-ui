@@ -1,22 +1,28 @@
 var React = require('react/addons');
-var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
+var TransitionGroup = React.addons.CSSTransitionGroup;
+var PureRenderMixin = React.addons.PureRenderMixin;
+var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
 var _ = require('underscore');
 var classNames = require('classnames');
 var ToolBar = require('../ToolBar.jsx');
-var BreedListItem = require('./BreedListItem.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
+var BreedListItem = require('./BreedListItem.jsx');
 var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
-var TransitionGroup = React.addons.CSSTransitionGroup;
+var BreedActions = require('../../actions/BreedActions');
 
 var BreedsList = React.createClass({
   
-  mixins: [PureRenderMixin],
+  mixins: [PureRenderMixin, SetIntervalMixin],
 
   getInitialState: function() {
     return {
       filterText: '',
       viewType:'general-list'
     };
+  },
+  componentDidMount: function(){
+    BreedActions.getAllBreeds();
+    this.setInterval(this.pollBackend, 4000);
   },
   
   handleAdd: function() {
@@ -84,7 +90,11 @@ var BreedsList = React.createClass({
           {breeds}
         </TransitionGroup>
       </div>
-    )
+  )},
+  
+  pollBackend: function() {
+    console.log('polling breeds');
+    BreedActions.getAllBreeds();
   }
 });
  

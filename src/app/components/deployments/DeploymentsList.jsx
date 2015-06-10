@@ -1,21 +1,27 @@
 var React = require('react/addons');
-var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
+var TransitionGroup = React.addons.CSSTransitionGroup;
+var PureRenderMixin = React.addons.PureRenderMixin;
+var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
 var _ = require('underscore');
-var DeploymentListItem = require('./DeploymentListItem.jsx');
+var classNames = require('classnames');
 var ToolBar = require('../ToolBar.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
-var classNames = require('classnames');
-var TransitionGroup = React.addons.CSSTransitionGroup;
+var DeploymentListItem = require('./DeploymentListItem.jsx');
+var DeploymentActions = require('../../actions/DeploymentActions');
 
 var DeploymentsList = React.createClass({
 
-  mixins: [PureRenderMixin],
+  mixins: [PureRenderMixin, SetIntervalMixin],
 
   getInitialState: function() {
     return {
       filterText: '',
       viewType:'general-list'
     };
+  },
+  componentDidMount: function(){
+    DeploymentActions.getAllDeployments();
+    this.setInterval(this.pollBackend, 4000);
   },
   
   handleAdd: function() {
@@ -33,8 +39,6 @@ var DeploymentsList = React.createClass({
   },
 
   render: function() {
-
-    console.log('deploymentslist render');
 
     var allDeployments = this.props.allDeployments;
     var deployments = [];
@@ -60,7 +64,6 @@ var DeploymentsList = React.createClass({
       "hidden": deployments.length <= 0
     });
 
-
     return(
       <div className='list-container'>
         <ToolBar 
@@ -85,7 +88,12 @@ var DeploymentsList = React.createClass({
           {deployments}
         </TransitionGroup>
       </div>
-  )}
+  )},
+
+  pollBackend: function() {
+    console.log('polling deployments');
+    DeploymentActions.getAllDeployments();
+  }
 });
  
 module.exports = DeploymentsList;

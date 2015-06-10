@@ -1,6 +1,7 @@
 var _ = require('underscore')
-var React = require('react');
-var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
+var React = require('react/addons');
+var PureRenderMixin = React.addons.PureRenderMixin;
+var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
 var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
 var ClusterBox = require('./ClusterBox.jsx');
 var DeploymentActions = require('../../actions/DeploymentActions');
@@ -10,8 +11,8 @@ var TransitionGroup = React.addons.CSSTransitionGroup;
 var DeploymentMetricsGraph = require('./DeploymentMetricsGraph.jsx');
 
 var DeploymentDetail = React.createClass({
-
-  mixins: [PureRenderMixin],
+  
+  mixins: [SetIntervalMixin],
 
   contextTypes: {
     router: React.PropTypes.func
@@ -34,7 +35,8 @@ var DeploymentDetail = React.createClass({
     DeploymentActions.getDeploymentMetrics(deployment, 'rate');
     DeploymentActions.getDeploymentMetrics(deployment, 'scur');      
 
-    setInterval(function(){
+    this.setInterval(function(){
+      console.log('poll metrics');
       DeploymentActions.getDeploymentMetrics(deployment, 'rate');
       DeploymentActions.getDeploymentMetrics(deployment, 'scur');
     }, 4000);

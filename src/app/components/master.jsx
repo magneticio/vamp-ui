@@ -1,4 +1,4 @@
-var React = require('react');
+var React = require('react/addons');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 var BreedStore = require('../stores/BreedStore');
@@ -21,8 +21,6 @@ var POLL_INTERVAL = 4000;
 
 var Master = React.createClass({
   
-  mixins: [PureRenderMixin],
-
   contextTypes: {
     router: React.PropTypes.func
   },
@@ -31,19 +29,10 @@ var Master = React.createClass({
     return  {
       loadState: LoadStates.STATE_LOADING,
       allBreeds: [],
-      activeTabId: '/deployments'
+      activeTabId: '/deployments',
     }
   },
-
-  pollBackend: function() {
-    console.log('polling');
-    BreedActions.getAllBreeds()
-    BlueprintActions.getAllBlueprints()
-    DeploymentActions.getAllDeployments()
-  },
-
   componentDidMount: function() {
-
     BreedStore.addChangeListener(this._onChange);
     BlueprintStore.addChangeListener(this._onChange);
     DeploymentStore.addChangeListener(this._onChange);
@@ -54,9 +43,8 @@ var Master = React.createClass({
     DeploymentActions.getAllDeployments();
 
     //schedule poller
-    setInterval(this.pollBackend, POLL_INTERVAL);
+    //this.setInterval(this.pollBackend, POLL_INTERVAL);
   },
-
   
   render: function() {
     var props = this.state;
@@ -67,7 +55,7 @@ var Master = React.createClass({
             <NavBar tabs={allTabs} activeTabId={props.activeTabId} />
         </header>
         <div id="page-content">
-          <RouteHandler {...props}/>
+          <RouteHandler {...props} />
         </div>
       </div>
 
@@ -83,12 +71,7 @@ var Master = React.createClass({
         loadState: LoadStates.STATE_SUCCESS
       }
     )
-  },
-
-  _onMenuIconButtonTouchTap: function() {
-    console.log("touched")
   }
-  
 });
 
 module.exports = Master;
