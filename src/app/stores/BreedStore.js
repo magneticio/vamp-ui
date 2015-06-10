@@ -1,5 +1,4 @@
 var _ = require('underscore');
-var Immutable = require('seamless-immutable');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
