@@ -44,7 +44,6 @@
     "chart.js": "^1.0.2",
     "classnames": "^2.1.1",
     "flux": "^2.0.1",
-    "immutable": "^3.7.3",
     "keymirror": "^0.1.1",
     "nvd3": "novus/nvd3",
     "object-assign": "^2.0.0",
