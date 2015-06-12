@@ -6,6 +6,7 @@ var PulseApi = require('./PulseApi');
 
 var DeploymentActions = {
 
+  // GET
   getAllDeployments: function() {
     Api.get('/deployments', null, DeploymentConstants.GET_ALL_DEPLOYMENTS);
   },
@@ -16,12 +17,15 @@ var DeploymentActions = {
     format = typeof format !== 'undefined' ? format : null;
     Api.get('/deployments/' + deployment.name, {as_blueprint: true}, DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT, format);
   },
+
+  // DELETE
   deleteFullDeployment: function(deployment) {
-    var deplAsBlueprint = {}
-    var name = deployment.name
-    deplAsBlueprint.name = name
-    deplAsBlueprint.clusters = _.mapObject(deployment.clusters,function(val,key){ return {services: _.map(val.services,function(service){ return _.omit(service, ['state','servers','scale'])})}});
-    Api.del('/deployments/' + name, deplAsBlueprint, DeploymentConstants.DELETE_FULL_DEPLOYMENT);
+    var req = {};
+    
+    req.name = deployment.name;
+    req.body = JSON.stringify(_.omit(deployment, "status"));
+    
+    Api.del('/deployments/' + req.name, req.body, DeploymentConstants.DELETE_FULL_DEPLOYMENT);
   },
   cleanUpCurrent: function(deployment) {
     var payload = {actionType: DeploymentConstants.CLEANUP_DEPLOYMENT , response: deployment };

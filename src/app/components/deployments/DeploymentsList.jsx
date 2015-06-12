@@ -1,17 +1,27 @@
 var React = require('react/addons');
+var TransitionGroup = React.addons.CSSTransitionGroup;
+var PureRenderMixin = React.addons.PureRenderMixin;
+var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
 var _ = require('underscore');
-var DeploymentListItem = require('./DeploymentListItem.jsx');
+var classNames = require('classnames');
 var ToolBar = require('../ToolBar.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
-var classNames = require('classnames');
-var TransitionGroup = React.addons.CSSTransitionGroup;
+var DeploymentListItem = require('./DeploymentListItem.jsx');
+var DeploymentActions = require('../../actions/DeploymentActions');
 
 var DeploymentsList = React.createClass({
+
+  mixins: [SetIntervalMixin],
+
   getInitialState: function() {
     return {
       filterText: '',
       viewType:'general-list'
     };
+  },
+  componentDidMount: function(){
+    console.log('componentDidMount');
+    this.setInterval(this.pollBackend, 4000);
   },
   
   handleAdd: function() {
@@ -30,30 +40,29 @@ var DeploymentsList = React.createClass({
 
   render: function() {
 
-      var allDeployments = this.props.allDeployments;
-      var deployments = [];
+    var allDeployments = this.props.allDeployments;
+    var deployments = [];
 
-      var loadingClassSet = classNames({
-        "hidden": this.props.loadState !== LoadStates.STATE_LOADING
-      });
+    var loadingClassSet = classNames({
+      "hidden": this.props.loadState !== LoadStates.STATE_LOADING
+    });
 
-      _.each(allDeployments, function(deployment,key) {
-        var filterTerm = this.state.filterText.toLowerCase() || false;
-        if ( ( deployment.name.toLowerCase().indexOf(filterTerm) === -1 && filterTerm) ) {
-          return;
-        }
-        deployments.push(<DeploymentListItem key={key} deployment={allDeployments[key]} />);
-      }, this);
+    _.each(allDeployments, function(deployment,key) {
+      var filterTerm = this.state.filterText.toLowerCase() || false;
+      if ( ( deployment.name.toLowerCase().indexOf(filterTerm) === -1 && filterTerm) ) {
+        return;
+      }
+      deployments.push(<DeploymentListItem key={key} deployment={allDeployments[key]} />);
+    }, this);
 
-      var emptyClassSet = classNames({
-        "empty-list": true,
-        "hidden": deployments.length > 0
-      });
-      var listHeaderClasses = classNames({
-        "list-header": true,
-        "hidden": deployments.length <= 0
-      });
-
+    var emptyClassSet = classNames({
+      "empty-list": true,
+      "hidden": deployments.length > 0
+    });
+    var listHeaderClasses = classNames({
+      "list-header": true,
+      "hidden": deployments.length <= 0
+    });
 
     return(
       <div className='list-container'>
@@ -79,7 +88,12 @@ var DeploymentsList = React.createClass({
           {deployments}
         </TransitionGroup>
       </div>
-  )}
+  )},
+
+  pollBackend: function() {
+    console.log('polling deployments');
+    DeploymentActions.getAllDeployments();
+  }
 });
  
 module.exports = DeploymentsList;

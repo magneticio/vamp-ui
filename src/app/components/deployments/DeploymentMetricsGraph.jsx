@@ -25,9 +25,9 @@ var MetricsGraph = React.createClass({
   },
 
   render: function() {
-
     var linechart = '';
     var mostRecentDatapoint = 0;
+    var filteredApiData = []
 
     if(!_.isEmpty(this.props.data) ){
 
@@ -66,7 +66,9 @@ var MetricsGraph = React.createClass({
       };
 
       var linechart = <LineChart data={chartData} options={chartOptions}/>  
-    } 
+    } else {
+
+    }
 
     return(
       <div className='deployment-metrics-chart metrics-chart'>

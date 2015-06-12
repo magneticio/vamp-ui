@@ -39,3 +39,10 @@ input.editable[disabled] {
 		background-position: right center;
 	}	
 }
+
+.empty-list {
+	position: absolute;
+  	top: 50vh;
+  	width: 100%;
+  	text-align: center;
+}

@@ -1,18 +1,6 @@
-/* The masthead animation */
-@include keyframes(mastheadZoom) {
-    0% {
-    	@include transform(scale(1));
-   	}
-    100% {
-        @include transform(scale(1.15));
-    }
-}
-
-
-
 .fadeIn-enter {
   opacity: 0.01;
-  transition: opacity 0.2s;
+  transition: opacity 0.25s;
 }
 
 .fadeIn-enter.fadeIn-enter-active {
@@ -21,24 +9,18 @@
 
 .fadeIn-leave {
   opacity: 1;
-  transition: opacity 0.2s;
+  transition: opacity 0.25s;
 }
 
 .fadeIn-leave.fadeIn-leave-active {
-  opacity: 0.01;
+  opacity: 0.1;
 }
 
 .fadeIn-appear {
   opacity: 0.01;
-  transition: opacity 0.2s;
+  transition: opacity 0.25s;
 }
 
 .fadeIn-appear.fadeIn-appear-active {
   opacity: 1;
 }
-// transitionName="moveUp" transitionAppear="true" popStateTransitionName="fade"
-// transitionName="moveUp" transitionAppear="true" popStateTransitionName="fade"
-// transitionName="moveUp" transitionAppear="true" popStateTransitionName="fade"
-// transitionName="moveUp" transitionAppear="true" popStateTransitionName="fade"
-// transitionName="moveUp" transitionAppear="true" popStateTransitionName="fade"
-// transitionName="moveUp" transitionAppear="true" popStateTransitionName="fade"

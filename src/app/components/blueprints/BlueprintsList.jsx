@@ -1,21 +1,29 @@
 var React = require('react/addons');
-var _ = require('underscore');
-var BlueprintActions = require('../../actions/BlueprintActions');
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var ButtonBar = require('./BlueprintsButtonBar.jsx');
-var ToolBar = require('../ToolBar.jsx');
-var BlueprintListItem = require('./BlueprintListItem.jsx');
-var LoadStates = require("../../constants/LoadStates.js");
-var classNames = require('classnames');
 var TransitionGroup = React.addons.CSSTransitionGroup;
+var PureRenderMixin = React.addons.PureRenderMixin;
+var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
+var _ = require('underscore');
+var classNames = require('classnames');
+var ToolBar = require('../ToolBar.jsx');
+var LoadStates = require("../../constants/LoadStates.js");
+var ButtonBar = require('./BlueprintsButtonBar.jsx');
+var BlueprintListItem = require('./BlueprintListItem.jsx');
+var BlueprintActions = require('../../actions/BlueprintActions');
+
 
 var BlueprintsList = React.createClass({
+  
+  mixins: [PureRenderMixin, SetIntervalMixin],
 
   getInitialState: function() {
     return {
       filterText: '',
       viewType:'general-list'
     };
+  },
+  componentDidMount: function(){
+    BlueprintActions.getAllBlueprints();
+    this.setInterval(this.pollBackend, 4000);
   },
   
   handleAdd: function() {
@@ -34,6 +42,7 @@ var BlueprintsList = React.createClass({
 
   render: function() {
 
+    console.log('blueprintslist render');
     var loadingClassSet = classNames({
       "hidden": this.props.loadState !== LoadStates.STATE_LOADING
     });
@@ -65,8 +74,8 @@ var BlueprintsList = React.createClass({
           filterText={this.state.filterText}
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch} />
-        <span className={emptyClassSet}>No blueprints found.</span> 
-        <TransitionGroup id='blueprints-list' component="ul" transitionName="fadeIn" transitionAppear={true} className={this.state.viewType}>
+        <span className={emptyClassSet}>No blueprints found.</span>
+        <TransitionGroup id='blueprints-list' component="ul" transitionName="fadeIn" transitionAppear={true} transitionLeave={true} className={this.state.viewType}>
           <li className={listHeaderClasses}>
             <div className="list-section section-half">
               <h4>Blueprint</h4>
@@ -80,7 +89,12 @@ var BlueprintsList = React.createClass({
           {blueprints}
         </TransitionGroup>
       </div>    
-    )}
+  )},
+
+  pollBackend: function() {
+    console.log('polling breeds');
+    BlueprintActions.getAllBlueprints();
+  }
 });
  
 module.exports = BlueprintsList;

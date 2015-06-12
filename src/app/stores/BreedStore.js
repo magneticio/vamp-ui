@@ -1,4 +1,4 @@
-var _ = require('underscore')
+var _ = require('underscore');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
@@ -11,14 +11,15 @@ var CHANGE_EVENT = 'change';
 var _breeds = {};
 
 var _persistBreeds = function(response){
-    var _temp = {}
-    array = JSON.parse(response.text)
-    _.each(array, function(obj){ 
-      _temp[obj.name] = obj
-      _temp[obj.name].status = 'CLEAN'
+  var _temp = {}
 
-    });
-    _breeds = _temp
+  array = JSON.parse(response.text);
+  _.each(array, function(obj){ 
+    _temp[obj.name] = obj
+    _temp[obj.name].status = 'CLEAN'
+  });
+
+  _breeds = _temp
 };
 
 var BreedStore = assign({}, EventEmitter.prototype,{
