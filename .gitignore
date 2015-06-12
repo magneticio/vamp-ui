@@ -1,7 +1,11 @@
-node_modules
-build
 .DS_Store
-vamp-ui.sublime-project
-vamp-ui.sublime-workspace
+.com.apple.timemachine.supported
 .sass-cache
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+node_modules
 npm-debug.log
+build
+images/sprites*.png
+images/sprites-retina-*.png
