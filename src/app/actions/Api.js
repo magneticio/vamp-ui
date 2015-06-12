@@ -61,7 +61,7 @@ function del(url,body) {
     return request
       .del(url)
       .set('Content-type', 'application/json')
-      .send(JSON.stringify(body))
+      .send(body)
       .timeout(TIMEOUT);
   } else {
     return request
