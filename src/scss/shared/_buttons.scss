@@ -1,9 +1,9 @@
 .button {
 	position: relative;
 	display: inline-block;
-	//border: 2px solid transparent;
 	border: 0px;
-	padding: 0.2rem 1rem;
+	line-height: 100%;
+	padding: 0.5rem 1rem;
 	color: white;
 	font-size: $s-size;
 	cursor: pointer;
@@ -13,6 +13,15 @@
 	overflow: hidden;
 	margin-left: 0.5rem;
 	transition: all 0.2s;
+
+	&.active {
+		background-image: url('/images/spinner.svg');
+		background-position: 1rem center;
+		background-repeat: no-repeat;
+		background-size: 1rem;
+		padding-left: 2.75rem;
+	
+	}
 }
 .button-pink {
 	background-color: $pink;

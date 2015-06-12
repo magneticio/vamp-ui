@@ -11,7 +11,7 @@ var DeploymentActions = require('../../actions/DeploymentActions');
 
 var DeploymentsList = React.createClass({
 
-  mixins: [PureRenderMixin, SetIntervalMixin],
+  mixins: [SetIntervalMixin],
 
   getInitialState: function() {
     return {
@@ -20,7 +20,7 @@ var DeploymentsList = React.createClass({
     };
   },
   componentDidMount: function(){
-    DeploymentActions.getAllDeployments();
+    console.log('componentDidMount');
     this.setInterval(this.pollBackend, 4000);
   },
   

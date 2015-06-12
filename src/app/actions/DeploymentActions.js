@@ -23,7 +23,7 @@ var DeploymentActions = {
     var req = {};
     
     req.name = deployment.name;
-    req.body = _.omit(deployment, "status");
+    req.body = JSON.stringify(_.omit(deployment, "status"));
     
     Api.del('/deployments/' + req.name, req.body, DeploymentConstants.DELETE_FULL_DEPLOYMENT);
   },

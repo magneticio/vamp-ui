@@ -12,11 +12,17 @@ var DeploymentListItem = React.createClass({
     router: React.PropTypes.func
   },
 
-  handleDetail: function () {
+  handleDetail: function() {
     this.context.router.transitionTo('deployment',{id: this.props.deployment.name});
   },
-  handleDelete: function () {
-    console.log('delete');
+  handleDelete: function(e) {
+    e.preventDefault();
+
+    var el = e.currentTarget,
+        className = 'active';
+
+    el.classList ? el.classList.add(className) : el.className += ' ' + className;
+
     DeploymentActions.deleteFullDeployment(this.props.deployment);
   },
 
