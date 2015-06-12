@@ -16,8 +16,6 @@ var DeploymentListItem = React.createClass({
     this.context.router.transitionTo('deployment',{id: this.props.deployment.name});
   },
   handleDelete: function(e) {
-    e.preventDefault();
-
     var el = e.currentTarget,
         className = 'active';
 
@@ -40,17 +38,21 @@ var DeploymentListItem = React.createClass({
         <span className={ (deployment.status == 'CLEAN' ? 'hidden' : '') }>
           <Loader />
         </span>
-        <div className="list-section section-half">
-          <HealthCircle state='green'/>
-          <a onClick={this.handleDetail}><p className="item-name">{deployment.name}</p></a>
+        <div className="list-section section-fifth">
+          <a onClick={this.handleDetail}>
+            <p className="item-name">{deployment.name.split("-")[0]}...</p>
+          </a>
         </div>
-        <div className="list-section section-sixth">
-          {clusterCountTotal}
+        <div className="list-section section-fifth">
+          some endpoints here
         </div>
-        <div className="list-section section-sixth">
-          {servicesCountTotal}
+        <div className="list-section section-fifth">
+          Front-end and {clusterCountTotal} more
         </div>
-        <div className="list-section section-sixth list-controls">
+        <div className="list-section section-fifth">
+          monarch_front:0.1 and {servicesCountTotal} more
+        </div>
+        <div className="list-section section-fifth list-controls">
           <button className='button button-red' onClick={this.handleDelete}>Undeploy</button>
         </div>
       </li>

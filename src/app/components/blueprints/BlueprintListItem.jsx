@@ -8,21 +8,32 @@ var BlueprintListItem = React.createClass({
     router: React.PropTypes.func
   },
 
-  handleDetail: function () {
-    this.context.router.transitionTo('blueprint',{id: this.props.blueprint.name})
+  handleDetail: function(e) {
+    e.preventDefault();
+    this.context.router.transitionTo('blueprint',{id: this.props.blueprint.name});
   },
+  handleDeploy: function(e) {
+     var el = e.currentTarget,
+        className = 'active',
+        self = this;
 
-  handleDeploy: function() {
-    console.log('clicked deploy')
-    BlueprintActions.deployBlueprint(this.props.blueprint)
-    this.context.router.transitionTo('deployments')
+    el.classList ? el.classList.add(className) : el.className += ' ' + className;
+    BlueprintActions.deployBlueprint(this.props.blueprint);
+
+    setTimeout(function(){
+      self.context.router.transitionTo('deployments');
+    }, 2000);
   },
+  handleDelete: function(e) {
+    var el = e.currentTarget,
+        className = 'active',
+        self = this;
 
-  handleEdit: function() {
-  },
+    el.classList ? el.classList.add(className) : el.className += ' ' + className;
 
-  handleDelete: function() {
-    BlueprintActions.deleteBlueprint(this.props.blueprint)
+    setTimeout(function(){
+      BlueprintActions.deleteBlueprint(self.props.blueprint);
+    }, 200);
   },
 
   render: function() {
@@ -39,15 +50,20 @@ var BlueprintListItem = React.createClass({
         <span className={ (blueprint.status == 'CLEAN' ? 'hidden' : '') }>
           <Loader />
         </span>
-        <div className="list-section section-half">
+        <div className="list-section section-fifth">
           <a onClick={this.handleDetail}><p className="item-name">{blueprint.name}</p></a>
         </div>
-        <div className="list-section section-sixth">
+        <div className="list-section section-fifth">
+          9040
+        </div>
+        <div className="list-section section-fifth">
           {clusterCountTotal}
         </div>
-        <div className="list-section section-third list-controls">
+        <div className="list-section section-fifth">
+          Sava
+        </div>
+        <div className="list-section section-fifth list-controls">
           <button className='button button-ghost' onClick={this.handleDeploy}>Deploy</button>
-          <button className='button button-ghost' onClick={this.handleEdit}>Edit</button>
           <button className='button button-red' onClick={this.handleDelete}>Delete</button>
         </div>
       </li>

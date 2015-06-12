@@ -24,3 +24,22 @@
 .fadeIn-appear.fadeIn-appear-active {
   opacity: 1;
 }
+
+/* The button loading animation */
+@keyframes buttonLoading {
+    0%, 33%, 66%, 100% {
+    	transition-timing-function: ease-out;
+	}
+	0% {
+		padding-left: 1rem;
+	}
+	53% {
+	  	padding-left: 3rem
+	}
+	86% {
+	  	padding-left: 2.7rem;
+	}
+	100% {
+		padding-left: 2.75rem;
+	}
+}

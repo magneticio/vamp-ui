@@ -73,16 +73,19 @@ var DeploymentsList = React.createClass({
         <span className={emptyClassSet}>No running deployments.</span>
         <TransitionGroup id='deployments-list' component="ul" transitionName="fadeIn" transitionAppear={true} className={this.state.viewType}>
           <li className={listHeaderClasses}>
-            <div className="list-section section-half">
+            <div className="list-section section-fifth">
               <h4>Deployment</h4>
             </div>
-            <div className="list-section section-sixth">
+            <div className="list-section section-fifth">
+              <h4>Endpoints</h4>
+            </div>
+            <div className="list-section section-fifth">
               <h4>Clusters</h4>
             </div>
-            <div className="list-section section-sixth">
+            <div className="list-section section-fifth">
               <h4>Services</h4>
             </div>
-            <div className="list-section section-sixth">
+            <div className="list-section section-fifth">
             </div>
           </li>
           {deployments}

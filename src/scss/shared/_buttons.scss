@@ -1,7 +1,7 @@
 .button {
 	position: relative;
 	display: inline-block;
-	border: 0px;
+	border: 0px solid transparent;
 	line-height: 100%;
 	padding: 0.5rem 1rem;
 	color: white;
@@ -12,7 +12,7 @@
 	border-radius: 3px;
 	overflow: hidden;
 	margin-left: 0.5rem;
-	transition: all 0.2s;
+	transition: background-color 0.2s;
 
 	&.active {
 		background-image: url('/images/spinner.svg');
@@ -20,43 +20,20 @@
 		background-repeat: no-repeat;
 		background-size: 1rem;
 		padding-left: 2.75rem;
-	
+		
+		animation-name: buttonLoading;
+		animation-duration: 0.2s;
+		animation-fill-mode: forwards;
+		animation-iteration-count: 1;
 	}
-}
-.button-pink {
-	background-color: $pink;
-	border-color: $pink;
-	&:hover {
-		background-color: darken( $pink, 10% );
-	}	
 }
 .button-red {
 	background-color: $red;
-	border-color: $red;
+		border-color: $red;
 	&:hover {
 		background-color: darken( $red, 12% );
+		border-color: darken( $red, 12% );
 	}
-}
-.button-green {
-	background-color: $green;
-	border-color: $green;
-	&:hover {
-		background-color: darken( $green, 5% );
-	}	
-}
-.button-yellow {
-	background-color: $yellow;
-	border-color: $yellow;
-	&:hover {
-		background-color: darken( $yellow, 5% );
-	}	
-}
-.button-blue {
-	background-color: $blue;
-	border-color: $blue;
-	&:hover {
-		background-color: darken( $blue, 10% );
-	}	
 }
 .button-ghost {
 	background-color: darken( $grey-light, 5% );
@@ -65,5 +42,8 @@
 
 	&:hover {
 		background-color: darken( $grey-light, 15% );
-	}	
+	}
+	&:active {
+		background-color: darken( $grey-light, 25% );
+	}
 }

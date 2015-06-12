@@ -1,5 +1,6 @@
-var _ = require('underscore');
 var React = require('react');
+var TransitionGroup = React.addons.CSSTransitionGroup;
+var _ = require('underscore');
 var BreedActions = require('../../actions/BreedActions');
 var BreedStore = require('../../stores/BreedStore');
 var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
@@ -7,21 +8,20 @@ var LoadStates = require("../../constants/LoadStates.js");
 
 var BreedDetail = React.createClass({
 
-  name: '',
-
   contextTypes: {
     router: React.PropTypes.func
   },
 
   getInitialState: function() {
     return {
+      name: '',
       loadState: LoadStates.STATE_LOADING,
       currentBreed: {},
       breedDirty: ''
     };
   },
   componentDidMount: function() {
-    this.name = this.context.router.getCurrentParams().id;
+    this.state.name = this.context.router.getCurrentParams().id;
     this.setStatesWhenAvailable();
   },
   componentWillReceiveProps: function(nextProps) {
@@ -29,7 +29,7 @@ var BreedDetail = React.createClass({
   },
   setStatesWhenAvailable: function(props){
     if(_.isEmpty(this.state.currentBreed)){
-      var currentBreed = BreedStore.getBreed(this.name);
+      var currentBreed = BreedStore.getBreed(this.state.name);
       this.setState({
         breedDirty: JSON.stringify(currentBreed,null,2),
         currentBreed: currentBreed
@@ -45,7 +45,7 @@ var BreedDetail = React.createClass({
 
   render: function() {
     return(
-      <section id="breed-single">
+      <TransitionGroup id='breed-single' component="div" transitionName="fadeIn" transitionAppear={true} transitionLeave={true} >
         <BreadCrumbsBar/>
         <div className='full-width-section'>
           <section className="half-width-section preview">
@@ -55,11 +55,11 @@ var BreedDetail = React.createClass({
               </code>
             </pre>
           </section>
-          <section className="half-width-section editview">
+          <section className="half-width-section editview hidden">
             <textarea value={this.state.breedDirty} onChange={this.handleChange} rows="16"/>
           </section>
         </div>
-      </section>
+      </TransitionGroup>
   )},
 
 });

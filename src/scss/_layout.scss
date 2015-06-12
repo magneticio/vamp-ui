@@ -42,8 +42,14 @@ ul, ol, dl {
 	display: inline-block;
 	box-sizing: border-box;
 }
+.section-fifth {
+	padding: 1rem;
+	width: percentage(1/5);
+	vertical-align: top;
+	display: inline-block;
+	box-sizing: border-box;
+}
 .section-sixth {
-	text-align: center;
 	padding: 1rem;
 	width: percentage(1/6);
 	vertical-align: top;

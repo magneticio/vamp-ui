@@ -77,13 +77,19 @@ var BlueprintsList = React.createClass({
         <span className={emptyClassSet}>No blueprints found.</span>
         <TransitionGroup id='blueprints-list' component="ul" transitionName="fadeIn" transitionAppear={true} transitionLeave={true} className={this.state.viewType}>
           <li className={listHeaderClasses}>
-            <div className="list-section section-half">
+            <div className="list-section section-fifth">
               <h4>Blueprint</h4>
             </div>
-            <div className="list-section section-sixth">
+            <div className="list-section section-fifth">
+              <h4>Endpoints</h4>
+            </div>
+            <div className="list-section section-fifth">
               <h4>Clusters</h4>
             </div>
-            <div className="list-section section-third list-actions">
+            <div className="list-section section-fifth">
+              <h4>Services</h4>
+            </div>
+            <div className="list-section section-fifth list-actions">
             </div>
           </li>
           {blueprints}

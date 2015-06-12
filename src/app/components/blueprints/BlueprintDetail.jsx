@@ -1,4 +1,7 @@
 var React = require('react');
+var TransitionGroup = React.addons.CSSTransitionGroup;
+var _ = require('underscore');
+var LoadStates = require("../../constants/LoadStates.js");
 var BlueprintActions = require('../../actions/BlueprintActions');
 var BlueprintStore = require('../../stores/BlueprintStore');
 var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
@@ -14,25 +17,53 @@ var BlueprintDetail = React.createClass({
       blueprint: {}
     }
   },
-
-  componentDidMount: function() {
-    var name = this.context.router.getCurrentParams().id
-    this.setState(
-      { 
-        blueprint: BlueprintStore.getBlueprint(name)
-      }
-    )
+  getInitialState: function() {
+    return {
+      loadState: LoadStates.STATE_LOADING,
+      currentBlueprint: {},
+      blueprintDirty: ''
+    };
   },
+  componentDidMount: function() {
+    this.state.name = this.context.router.getCurrentParams().id;
+    this.setStatesWhenAvailable();
+  },
+  componentWillReceiveProps: function(nextProps) {
+    this.setStatesWhenAvailable();
+  },
+  setStatesWhenAvailable: function(props){
+    if(_.isEmpty(this.state.currentBlueprint)){
+      var currentBlueprint = BlueprintStore.getBlueprint(this.state.name);
+      this.setState({
+        blueprintDirty: JSON.stringify(currentBlueprint,null,2),
+        currentBlueprint: currentBlueprint
+      });
+    }
+  },
+  handleChange: function(e) {
+    console.log('handleChange');
+    this.setState({ 
+      blueprintDirty: e.target.value
+    });
+  },
+
   render: function() {
     return(
-      <div className='col-md-12 blueprints'>
+      <TransitionGroup id='blueprints-single' component="div" transitionName="fadeIn" transitionAppear={true} transitionLeave={true} >
         <BreadCrumbsBar/>
-        <pre>
-          <code>
-          {JSON.stringify(this.state.blueprint,null,2)}
-          </code>
-        </pre>  
-      </div>
+        <div className='full-width-section'>
+          <section className="half-width-section preview">
+            <pre>
+              <code>
+                {this.state.blueprintDirty}
+              </code>
+            </pre>
+          </section>
+          <section className="half-width-section editview hidden">
+            <textarea value={this.state.blueprintDirty} onChange={this.handleChange} rows="16"/>
+          </section>
+        </div>
+      </TransitionGroup>
   )}
 });
  
