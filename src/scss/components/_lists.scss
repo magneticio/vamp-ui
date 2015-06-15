@@ -9,7 +9,6 @@
 	box-sizing: border-box;
 	width: 100%;
 	margin: 0;
-	//padding: 0.35rem;
 	list-style-type: none;
 }
 .list-item,
@@ -25,7 +24,7 @@
 	border-top: 1px solid $off-white;
 	background-color: white;
 
-	&:nth-child(odd) {
+	&:hover {
 		background-color: $off-white;
 	}
 	
@@ -40,30 +39,6 @@
 		color: $blue;
 		font-weight: 400;
 	}
-
-	.item-ports {
-		//display: none;
-	}
-	// .item-meta-list {
-	// 	display: inline-block;
-	// 	width: 100%;
-	// 	list-style-type: none;
-	// 	padding: 0;
-	// 	border-top: 1px solid $grey-light;
-	// 	margin-top: 0.7rem;
-
-	// }
-	// .item-meta {
-	// 	display: inline-block;
-	// 	list-style-type: none;
-	// 	width: 25%;
-	// 	padding: 0.35rem;
-	// 	box-sizing: border-box;
-	// 	//background-color: $grey-light;
-	// }
-	// .item-meta-title {
-	// 	font-size: $xs-size;
-	// }
 }
 .list-header {
 	background-color: white!important;
@@ -72,7 +47,7 @@
 		font-weight: 600;
 	}
 	.list-section { 
-		padding: 2rem 0;
+		padding: 1rem 0;
 	}
 }
 .list-section {
@@ -102,7 +77,6 @@
 	.submit-button {
 		text-align: right;
 		outline: none;
-		//display: none;
 		font-size: $xs-size;
 		color: $blue;
 		background-color: transparent;

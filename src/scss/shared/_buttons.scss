@@ -4,6 +4,8 @@
 	border: 0px solid transparent;
 	line-height: 100%;
 	padding: 0.5rem 1rem;
+	box-sizing: content-box;
+	min-width: 3.5rem;
 	color: white;
 	font-size: $s-size;
 	cursor: pointer;
@@ -33,6 +35,22 @@
 	&:hover {
 		background-color: darken( $red, 12% );
 		border-color: darken( $red, 12% );
+	}
+}
+.button-pink {
+	background-color: $pink;
+		border-color: $pink;
+	&:hover {
+		background-color: darken( $pink, 12% );
+		border-color: darken( $pink, 12% );
+	}
+}
+.button-green {
+	background-color: $green;
+		border-color: $green;
+	&:hover {
+		background-color: darken( $green, 12% );
+		border-color: darken( $green, 12% );
 	}
 }
 .button-ghost {

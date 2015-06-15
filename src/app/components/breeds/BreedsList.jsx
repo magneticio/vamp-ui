@@ -26,7 +26,7 @@ var BreedsList = React.createClass({
   },
   
   handleAdd: function() {
-    console.log('handle add')
+    console.log('handle add');
   },
   handleUserInput: function(filterText) {
     this.setState({
@@ -70,7 +70,9 @@ var BreedsList = React.createClass({
         <ToolBar 
           filterText={this.state.filterText}
           onUserInput={this.handleUserInput}
-          handleViewSwitch={this.handleViewSwitch} />
+          handleViewSwitch={this.handleViewSwitch}
+          handleAdd={this.handleAdd}
+          addArtefactType='breed' />
         <span className={emptyClassSet}>No breeds found.</span>
         <TransitionGroup component="ul" transitionName="fadeIn" transitionAppear={true} className={this.state.viewType}>
           <li className={listHeaderClasses}>

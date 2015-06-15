@@ -45,6 +45,10 @@ var NavBar = React.createClass({
         <ul className="navigation-list">
           {tabs}
         </ul>
+
+        <div className="navigation-options">
+          <img src='/images/cog-thick.svg' alt="Options icon" width='20px' height='20px' />
+        </div>
       </nav>
     );
   }

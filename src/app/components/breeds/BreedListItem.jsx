@@ -32,12 +32,12 @@ var BreedListItem = React.createClass({
     });
 
     return (
-      <li className="list-item" onClick={this.handleDetail}>
+      <li className="list-item">
         <span className={ (breed.status == 'CLEAN' ? 'hidden' : '') }>
           <Loader />
         </span>
         <div className='list-section section-half'>
-          <p><a>{breed.name}</a></p><br/>
+          <p><a onClick={this.handleDetail}>{breed.name}</a></p><br/>
           <p className="small-caps">{breed.deployable}</p>
         </div>
         <div className="list-section section-sixth">
