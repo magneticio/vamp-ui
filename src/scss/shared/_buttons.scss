@@ -41,8 +41,8 @@
 	background-color: $pink;
 		border-color: $pink;
 	&:hover {
-		background-color: darken( $pink, 12% );
-		border-color: darken( $pink, 12% );
+		background-color: lighten( $pink, 8% );
+		border-color: lighten( $pink, 8% );
 	}
 }
 .button-green {
@@ -51,6 +51,14 @@
 	&:hover {
 		background-color: darken( $green, 12% );
 		border-color: darken( $green, 12% );
+	}
+}
+.button-blue {
+	background-color: $blue;
+		border-color: $blue;
+	&:hover {
+		background-color: darken( $blue, 12% );
+		border-color: darken( $blue, 12% );
 	}
 }
 .button-ghost {
