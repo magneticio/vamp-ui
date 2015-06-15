@@ -56,6 +56,8 @@ var BreedsList = React.createClass({
       breeds.push(<BreedListItem key={key} breed={breed} />);
     }, this);
 
+    breeds = breeds.reverse();
+
     var emptyClassSet = classNames({
       "empty-list": true,
       "hidden": breeds.length > 0

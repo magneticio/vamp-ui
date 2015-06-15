@@ -43,9 +43,9 @@ function get(url,params,accept) {
     .timeout(TIMEOUT);
 };
 function post(url, body) {
-  //console.log('posting to:' + url + '   ' + JSON.stringify(body,null,2))
   return request
     .post(url)
+    .type('json')
     .send(body)
     .timeout(TIMEOUT);
 };

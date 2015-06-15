@@ -55,8 +55,12 @@ var BreedStore = assign({}, EventEmitter.prototype,{
       case 'GET_ALL_BREEDS_SUCCESS':
         _persistBreeds(payload.response)
         break;
+      case 'POST_BREED':
+        _breeds[payload.response.name] = payload.response;
+        break;
       case 'DELETE_BREED':
         _breeds[payload.response.name].status = 'DELETING'         
+        break;
     }
     BreedStore.emitChange();
     return true; 

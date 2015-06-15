@@ -1,5 +1,6 @@
 var React = require('react');
 var cx = require('classnames');
+var BreedActions = require('../actions/BreedActions');
 
 var ToolBar = React.createClass({
 
@@ -10,7 +11,7 @@ var ToolBar = React.createClass({
   getInitialState: function(){
     return {
       toolbarState: '',
-      animations: '',
+      buttonLoadsate: '',
       newArtefact: ''
     }
   },
@@ -29,10 +30,10 @@ var ToolBar = React.createClass({
   handleAdd: function(e){
     this.setState({
       toolbarState: 'expanded',
-      animations: 'fadeInUp'
     });
     React.findDOMNode(this.refs.inputfield).focus();
   },
+
   handleUpload: function(e){
     var self = this;
     var reader = new FileReader();
@@ -47,26 +48,38 @@ var ToolBar = React.createClass({
     //reader.readAsDataURL(file);
     reader.readAsText(file);
   },
-  handleAddSubmit: function(e){
-    e.preventDefault();
-  },
   handleCancel: function(e){
+    React.findDOMNode(this.refs.AddNewForm).reset();    
     this.setState({
       toolbarState: '',
-      newArtefact: ''
+      newArtefact: '',
+      buttonLoadsate: ''
     });
-    React.findDOMNode(this.refs.AddNewForm).reset();
+
+    var self=this;
+    console.log(this.state);
+    setTimeout(function(){
+      console.log(self.state);
+    }, 500);
   },
-  handleSave: function(e){
-    this.props.handleAdd();
-  },
-  handleChange: function(e){
+  handleTextareaChange: function(e){
     this.setState({newArtefact: e.target.value});
+  },
+  handleAddSubmit: function(e){
+    e.preventDefault();
+    if(this.state.toolbarState == 'expanded'){
+      //this.props.handleAdd();
+      BreedActions.postBreed(this.state.newArtefact);
+      this.setState({
+        buttonLoadsate: 'active'
+      });
+    }
   },
 
   render: function() {
 
     var toolbarClasses = cx('toolbar', this.state.toolbarState);
+    var saveButtonClasses = cx('button button-pink save-button', this.state.buttonLoadsate);
 
     return (
       <section id="toolbar" className={toolbarClasses}>
@@ -93,10 +106,12 @@ var ToolBar = React.createClass({
             <p>Type or paste the contents of your {this.props.addArtefactType}, or drag a JSON file to this modal to upload.</p>
             <div className='actions'>
               <button className="button button-ghost cancel-button" onClick={this.handleCancel}>Cancel</button>
-              <input type='file' className="button button-ghost upload-button" onChange={this.handleUpload} />
-              <input type='submit' className="button button-pink save-button" onClick={this.handleSave} value='Save' />
+              <span className='button button-ghost upload-button'> 
+                Upload file<input type='file' onChange={this.handleUpload} />
+              </span>
+              <input type='submit' className={saveButtonClasses} value='Save' />
             </div>
-            <textarea className='inputfield' ref="inputfield" value={this.state.newArtefact} onChange={this.handleChange}></textarea>
+            <textarea className='inputfield' ref="inputfield" value={this.state.newArtefact} onChange={this.handleTextareaChange}></textarea>
         </form>
 
       </section>

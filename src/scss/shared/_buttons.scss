@@ -65,3 +65,30 @@
 		background-color: darken( $grey-light, 25% );
 	}
 }
+
+.upload-button {
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+	cursor: pointer;
+	vertical-align: bottom;
+
+	input {
+		display: inline-block;
+		margin: 0;
+		padding: 0;
+		opacity: 0;
+		position: absolute;
+		left: 0;
+		top: 0;
+		min-width: 100%;
+	    min-height: 100%;
+	    font-size: 100px;
+	    text-align: right;
+	    filter: alpha(opacity=0);
+	    opacity: 0;
+	    outline: none;
+	    background: transparent;
+	    cursor: inherit;
+	}
+}
