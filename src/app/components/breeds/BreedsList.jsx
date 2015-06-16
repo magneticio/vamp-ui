@@ -18,8 +18,8 @@ var BreedsList = React.createClass({
     return {
       filterText: '',
       viewType:'general-list',
+      breedCount: 0,
       breedCreated: false,
-      breedCount: 0
     };
   },
   componentDidMount: function(){
@@ -29,7 +29,7 @@ var BreedsList = React.createClass({
   componentWillReceiveProps: function(nextProps){
     if(_.size(nextProps.allBreeds) > this.state.breedCount){
       this.setState({
-        breedCount: nextBreedCount,
+        breedCount: _.size(nextProps.allBreeds),
         breedCreated: true
       });
     } else {
