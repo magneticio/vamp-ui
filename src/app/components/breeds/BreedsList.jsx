@@ -27,9 +27,10 @@ var BreedsList = React.createClass({
     this.setInterval(this.pollBackend, 4000);
   },
   componentWillReceiveProps: function(nextProps){
-    if(_.size(nextProps.allBreeds) > this.state.breedCount){
+    var nextBreedCount = _.size(nextProps.allBreeds);
+    if(nextBreedCount > this.state.breedCount){
       this.setState({
-        breedCount: _.size(nextProps.allBreeds),
+        breedCount: nextBreedCount,
         breedCreated: true
       });
     } else {

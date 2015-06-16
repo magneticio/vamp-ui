@@ -28,7 +28,7 @@ function handleResponse(actionType) {
       dispatch(LoadStates.STATE_TIMEOUT, null);
     }
     else if (!res.ok) {
-      dispatch(actionType + '_ERROR', null);
+      dispatch(actionType + '_ERROR', res);
     } else {
       dispatch(actionType + '_SUCCESS', res);
     }

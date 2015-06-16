@@ -62,6 +62,10 @@ var BreedStore = assign({}, EventEmitter.prototype,{
       case BreedConstants.POST_BREED + '_SUCCESS':
         _addBreed(payload.response);
         break;
+      case BreedConstants.POST_BREED + '_ERROR':
+        _addBreed(payload);
+        console.log('error');
+        break;
       case 'DELETE_BREED':
         _breeds[payload.response.name].status = 'DELETING'         
         break;

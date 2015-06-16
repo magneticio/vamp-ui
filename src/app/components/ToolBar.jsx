@@ -1,5 +1,6 @@
 var React = require('react');
 var cx = require('classnames');
+var LoadStates = require("../../constants/LoadStates.js");
 
 var ToolBar = React.createClass({
 
@@ -13,6 +14,9 @@ var ToolBar = React.createClass({
       buttonLoadsate: '',
       newArtefact: ''
     }
+  },
+  componentDidMount: function(){
+    BreedStore.addChangeListener(this._onChange);
   },
   componentWillReceiveProps: function(nextProps) {
     if(nextProps.requestResolved){
@@ -77,6 +81,9 @@ var ToolBar = React.createClass({
 
     var toolbarClasses = cx('toolbar', this.state.toolbarState);
     var saveButtonClasses = cx('button button-pink save-button', this.state.buttonLoadsate);
+    var loadingClassSet = classNames({
+      "hidden": this.props.loadState == LoadStates.STATE_LOADING
+    });
 
     return (
       <section id="toolbar" className={toolbarClasses}>
@@ -112,7 +119,11 @@ var ToolBar = React.createClass({
         </form>
 
       </section>
-  )}
+  )},
+
+  _onChange: function() {
+    console.log('toolbar change');
+  }
 });
  
 module.exports = ToolBar;
