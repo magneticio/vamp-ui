@@ -10,8 +10,8 @@ var BreedActions = {
   getBreed: function(name) {
     Api.get('/breeds/' + name, null, BreedConstants.GET_BREED);
 	},
-	createBreed: function(breed) {
-    Api.create('/breeds', breed, BreedConstants.POST_BREED);
+	createBreed: function(body) {
+    Api.create('/breeds', body, BreedConstants.CREATE_BREED);
 	},
   deleteBreed: function(breed) {
     Api.del('/breeds/' + breed.name, breed, BreedConstants.DELETE_BREED)

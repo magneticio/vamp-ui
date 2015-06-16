@@ -10,24 +10,38 @@ var ButtonBar = require('./BlueprintsButtonBar.jsx');
 var BlueprintListItem = require('./BlueprintListItem.jsx');
 var BlueprintActions = require('../../actions/BlueprintActions');
 
-
 var BlueprintsList = React.createClass({
   
-  mixins: [PureRenderMixin, SetIntervalMixin],
+  mixins: [SetIntervalMixin],
 
   getInitialState: function() {
     return {
       filterText: '',
-      viewType:'general-list'
+      viewType:'general-list',
+      blueprintCount: 0,
+      blueprintCreated: false,
     };
   },
   componentDidMount: function(){
     BlueprintActions.getAllBlueprints();
     this.setInterval(this.pollBackend, 4000);
   },
+  componentWillReceiveProps: function(nextProps){
+    var nextBlueprintCount = _.size(nextProps.allBlueprints);
+    if(nextBlueprintCount > this.state.blueprintCount){
+      this.setState({
+        blueprintCount: nextBlueprintCount,
+        blueprintCreated: true
+      });
+    } else {
+      this.setState({
+        blueprintCreated: false
+      });
+    }
+  },
   
-  handleAdd: function() {
-    console.log('handle add')
+  handleAdd: function(newBlueprint) {
+    BlueprintActions.createBlueprint(newBlueprint);
   },
   handleUserInput: function(filterText) {
     this.setState({
@@ -42,7 +56,6 @@ var BlueprintsList = React.createClass({
 
   render: function() {
 
-    console.log('blueprintslist render');
     var loadingClassSet = classNames({
       "hidden": this.props.loadState !== LoadStates.STATE_LOADING
     });
@@ -58,6 +71,7 @@ var BlueprintsList = React.createClass({
       blueprints.push(<BlueprintListItem key={key} blueprint={allBlueprints[key]} />);
     }, this);
 
+    blueprints = blueprints.reverse();
 
     var emptyClassSet = classNames({
       "empty-list": true,
@@ -69,13 +83,23 @@ var BlueprintsList = React.createClass({
     });
 
     return(
-      <div className='blueprints'>
+      <div className='list-container'>
         <ToolBar 
           filterText={this.state.filterText}
           onUserInput={this.handleUserInput}
-          handleViewSwitch={this.handleViewSwitch} />
+          handleViewSwitch={this.handleViewSwitch}
+          handleAdd={this.handleAdd}
+          addArtefactType='blueprint'
+          requestResolved={this.state.blueprintCreated} 
+          loadState={this.props.loadState} />
         <span className={emptyClassSet}>No blueprints found.</span>
-        <TransitionGroup id='blueprints-list' component="ul" transitionName="fadeIn" transitionAppear={true} transitionLeave={true} className={this.state.viewType}>
+        <TransitionGroup 
+          id='blueprints-list' 
+          component="ul" 
+          transitionName="fadeIn" 
+          transitionAppear={true} 
+          transitionLeave={true} 
+          className={this.state.viewType}>
           <li className={listHeaderClasses}>
             <div className="list-section section-fifth">
               <h4>Blueprint</h4>
@@ -98,7 +122,7 @@ var BlueprintsList = React.createClass({
   )},
 
   pollBackend: function() {
-    console.log('polling breeds');
+    console.log('polling blueprints');
     BlueprintActions.getAllBlueprints();
   }
 });

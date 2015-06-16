@@ -36,7 +36,7 @@ var BreedsList = React.createClass({
     } else {
       this.setState({
         breedCreated: false
-      })
+      });
     }
   },
   
@@ -94,9 +94,11 @@ var BreedsList = React.createClass({
           loadState={this.props.loadState}/>
         <span className={emptyClassSet}>No breeds found.</span>
         <TransitionGroup 
+          id='breeds-list'         
           component="ul" 
           transitionName="fadeIn" 
-          transitionAppear={true} 
+          transitionAppear={true}
+          transitionLeave={true}
           className={this.state.viewType}>
           <li className={listHeaderClasses}>
             <div className="list-section section-half">

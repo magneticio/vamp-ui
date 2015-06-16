@@ -2,6 +2,7 @@ var React = require('react');
 var cx = require('classnames');
 var LoadStates = require("../constants/LoadStates.js");
 var BreedStore = require('../stores/BreedStore');
+var BlueprintStore = require('../stores/BlueprintStore');
 
 var ToolBar = React.createClass({
 
@@ -12,22 +13,27 @@ var ToolBar = React.createClass({
     toolbarState: '',
     buttonLoadsate: '',
     newArtefact: '',
-    errorMessage: ''
+    errorMessage: '',
   },
 
   getInitialState: function(){
-    return this.clearStates;
+    return {
+      toolbarState: '',
+      buttonLoadsate: '',
+      newArtefact: '',
+      errorMessage: ''
+    };
   },
   componentDidMount: function(){
-    BreedStore.addChangeListener(this._onChange);
+    this._initArtefactFunctions();
+  },
+  componentWillUnmount: function(){
+    this._destroyArtefactFunctions();
   },
   componentWillReceiveProps: function(nextProps) {
     if(nextProps.requestResolved){
       this.handleCancel();
     }
-  },
-  componentWillUnmount: function(){
-    BreedStore.removeChangeListener(this._onChange);
   },
   
   handleChange: function() {
@@ -74,7 +80,14 @@ var ToolBar = React.createClass({
 
   render: function() {
 
+    // Set dynamic classes for elements
     var toolbarClasses = cx('toolbar', this.state.toolbarState);
+    var addButtonClasses = cx({
+      'button': true,
+      'button-pink': true,
+      'add-button': true,
+      'hidden': this.props.addArtefactType == undefined ? true : false
+    })
     var dialogClasses = cx({
       'dialog': true,
       'dialog-danger': true,
@@ -104,12 +117,12 @@ var ToolBar = React.createClass({
                 onChange={this.handleChange} />
             </label>
           </form>
-          <button className="button button-pink add-button" onClick={this.handleAdd}>Add new</button>
+          <button className={addButtonClasses} onClick={this.handleAdd}>Add new</button>
         </div>
 
         <form className='add-artefact-box' onSubmit={this.handleSubmit} ref='AddNewForm'>
             <h2>Adding a new {this.props.addArtefactType}</h2>
-            <p>Type or paste the contents of your {this.props.addArtefactType}, or drag a JSON file to this modal to upload.</p>
+            <p>Type or paste the contents of your {this.props.addArtefactType}, or upload a JSON file and edit its contents.</p>
             <div className='actions'>
               <button className="button button-ghost cancel-button" onClick={this.handleCancel}>Cancel</button>
               <span className='button button-ghost upload-button'> 
@@ -125,11 +138,36 @@ var ToolBar = React.createClass({
   )},
 
   _onChange: function() {
-    var errorMessage = BreedStore.getError();
+    var errorMessage = this._getErrorMessage();
     if(errorMessage){
       this.setState({
         errorMessage: errorMessage
       });
+    }
+  },
+
+  _initArtefactFunctions: function(){
+    if(this.props.addArtefactType == 'breed'){
+      BreedStore.addChangeListener(this._onChange);
+    }
+    if(this.props.addArtefactType == 'blueprint'){
+      BlueprintStore.addChangeListener(this._onChange);
+    }
+  },
+  _destroyArtefactFunctions: function(){
+    if(this.props.addArtefactType == 'breed'){
+      BreedStore.removeChangeListener(this._onChange);
+    }
+    if(this.props.addArtefactType == 'blueprint'){
+      BlueprintStore.removeChangeListener(this._onChange);
+    }
+  },
+  _getErrorMessage: function(){
+    if(this.props.addArtefactType == 'breed'){
+      return BreedStore.getError()
+    }
+    if(this.props.addArtefactType == 'blueprint'){
+      return BlueprintStore.getError()
     }
   }
 });

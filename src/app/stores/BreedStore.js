@@ -13,13 +13,11 @@ var _error = null;
 
 var _persistBreeds = function(response){
   var _temp = {}
-
   var array = JSON.parse(response.text);
   _.each(array, function(obj){ 
     _temp[obj.name] = obj;
     _temp[obj.name].status = 'CLEAN';
   });
-
   _breeds = _temp;
 };
 
@@ -33,11 +31,9 @@ var BreedStore = assign({}, EventEmitter.prototype,{
   getAll: function() {
     return _breeds;
   },
-
   getBreed: function(name) {
     return _.findWhere(_breeds, { "name" : name });
   },
-
   getError: function(){
     var returnError = _error;
     _error = null;
@@ -48,12 +44,10 @@ var BreedStore = assign({}, EventEmitter.prototype,{
      //console.log('emits change event from store')
     this.emit(CHANGE_EVENT);
   },
-
   addChangeListener: function(callback) {
     // console.log('add change listener to store')
     this.on(CHANGE_EVENT, callback);
   },
-
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   },
@@ -67,15 +61,15 @@ var BreedStore = assign({}, EventEmitter.prototype,{
         _persistBreeds(payload.response)
         break;
 
-      case BreedConstants.POST_BREED + '_SUCCESS':
+      case BreedConstants.CREATE_BREED + '_SUCCESS':
         _addBreed(payload.response);
         break;
-      case BreedConstants.POST_BREED + '_ERROR':
+      case BreedConstants.CREATE_BREED + '_ERROR':
         var errortext = JSON.parse(payload.response.text)
         _error = errortext.message;
         break;
 
-      case 'DELETE_BREED':
+      case BreedConstants.DELETE_BREED:
         _breeds[payload.response.name].status = 'DELETING'         
         break;
     }
