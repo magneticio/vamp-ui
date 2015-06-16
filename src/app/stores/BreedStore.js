@@ -9,6 +9,7 @@ var Actions = require('../actions/BreedActions');
 var CHANGE_EVENT = 'change';
 
 var _breeds = {};
+var _error = null;
 
 var _persistBreeds = function(response){
   var _temp = {}
@@ -37,6 +38,12 @@ var BreedStore = assign({}, EventEmitter.prototype,{
     return _.findWhere(_breeds, { "name" : name });
   },
 
+  getError: function(){
+    var returnError = _error;
+    _error = null;
+    return returnError;
+  },
+
   emitChange: function() {
      //console.log('emits change event from store')
     this.emit(CHANGE_EVENT);
@@ -59,13 +66,15 @@ var BreedStore = assign({}, EventEmitter.prototype,{
       case BreedConstants.GET_ALL_BREEDS + '_SUCCESS':
         _persistBreeds(payload.response)
         break;
+
       case BreedConstants.POST_BREED + '_SUCCESS':
         _addBreed(payload.response);
         break;
       case BreedConstants.POST_BREED + '_ERROR':
-        _addBreed(payload);
-        console.log('error');
+        var errortext = JSON.parse(payload.response.text)
+        _error = errortext.message;
         break;
+
       case 'DELETE_BREED':
         _breeds[payload.response.name].status = 'DELETING'         
         break;

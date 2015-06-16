@@ -1,19 +1,22 @@
 var React = require('react');
 var cx = require('classnames');
-var LoadStates = require("../../constants/LoadStates.js");
+var LoadStates = require("../constants/LoadStates.js");
+var BreedStore = require('../stores/BreedStore');
 
 var ToolBar = React.createClass({
 
   contextTypes: {
     router: React.PropTypes.func
   },
+  clearStates: {
+    toolbarState: '',
+    buttonLoadsate: '',
+    newArtefact: '',
+    errorMessage: ''
+  },
 
   getInitialState: function(){
-    return {
-      toolbarState: '',
-      buttonLoadsate: '',
-      newArtefact: ''
-    }
+    return this.clearStates;
   },
   componentDidMount: function(){
     BreedStore.addChangeListener(this._onChange);
@@ -23,22 +26,20 @@ var ToolBar = React.createClass({
       this.handleCancel();
     }
   },
+  componentWillUnmount: function(){
+    BreedStore.removeChangeListener(this._onChange);
+  },
   
   handleChange: function() {
     this.props.onUserInput(
         this.refs.filterTextInput.getDOMNode().value
     );
   },
-  handleSubmit: function(e){
-    e.preventDefault();
-  },
   handleClick: function(viewType){
     this.props.handleViewSwitch(viewType);
   },
   handleAdd: function(e){
-    this.setState({
-      toolbarState: 'expanded',
-    });
+    this.setState({ toolbarState: 'expanded' });
     React.findDOMNode(this.refs.inputfield).focus();
   },
 
@@ -52,27 +53,21 @@ var ToolBar = React.createClass({
         newArtefact: upload.target.result,
       });
     }
-    //reader.readAsDataURL(file);
     reader.readAsText(file);
   },
   handleCancel: function(e){
     React.findDOMNode(this.refs.AddNewForm).reset();    
-    this.setState({
-      toolbarState: '',
-      newArtefact: '',
-      buttonLoadsate: ''
-    });
+    this.setState(this.clearStates);
   },
   handleTextareaChange: function(e){
     this.setState({newArtefact: e.target.value});
   },
-  handleAddSubmit: function(e){
+  handleSubmit: function(e){
     e.preventDefault();
 
     if(this.state.toolbarState == 'expanded'){
-      this.setState({
-        buttonLoadsate: 'active'
-      });
+      var self = this;
+      //this.setState({ buttonLoadsate: 'active' });
       this.props.handleAdd(this.state.newArtefact);
     }
   },
@@ -80,9 +75,16 @@ var ToolBar = React.createClass({
   render: function() {
 
     var toolbarClasses = cx('toolbar', this.state.toolbarState);
-    var saveButtonClasses = cx('button button-pink save-button', this.state.buttonLoadsate);
-    var loadingClassSet = classNames({
-      "hidden": this.props.loadState == LoadStates.STATE_LOADING
+    var dialogClasses = cx({
+      'dialog': true,
+      'dialog-danger': true,
+      'dialog-empty': this.state.errorMessage == '' ? true : false
+    });
+    var saveButtonClasses = cx({
+      "active": this.props.loadState == LoadStates.STATE_LOADING,
+      "button": true,
+      "button-pink": true,
+      "save-button": true
     });
 
     return (
@@ -105,7 +107,7 @@ var ToolBar = React.createClass({
           <button className="button button-pink add-button" onClick={this.handleAdd}>Add new</button>
         </div>
 
-        <form className='add-artefact-box' onSubmit={this.handleAddSubmit} ref='AddNewForm'>
+        <form className='add-artefact-box' onSubmit={this.handleSubmit} ref='AddNewForm'>
             <h2>Adding a new {this.props.addArtefactType}</h2>
             <p>Type or paste the contents of your {this.props.addArtefactType}, or drag a JSON file to this modal to upload.</p>
             <div className='actions'>
@@ -115,6 +117,7 @@ var ToolBar = React.createClass({
               </span>
               <input type='submit' className={saveButtonClasses} value='Save' />
             </div>
+            <p className={dialogClasses}>{this.state.errorMessage}</p>
             <textarea className='inputfield' ref="inputfield" value={this.state.newArtefact} onChange={this.handleTextareaChange}></textarea>
         </form>
 
@@ -122,7 +125,12 @@ var ToolBar = React.createClass({
   )},
 
   _onChange: function() {
-    console.log('toolbar change');
+    var errorMessage = BreedStore.getError();
+    if(errorMessage){
+      this.setState({
+        errorMessage: errorMessage
+      });
+    }
   }
 });
  

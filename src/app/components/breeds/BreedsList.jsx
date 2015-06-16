@@ -42,7 +42,6 @@ var BreedsList = React.createClass({
   
   handleAdd: function(newBreed) {
     BreedActions.createBreed(newBreed);
-    // TODO: optimistically add new breed
   },
   handleUserInput: function(filterText) {
     this.setState({
@@ -91,7 +90,8 @@ var BreedsList = React.createClass({
           handleViewSwitch={this.handleViewSwitch}
           handleAdd={this.handleAdd}
           addArtefactType='breed'
-          requestResolved={this.state.breedCreated} />
+          requestResolved={this.state.breedCreated} 
+          loadState={this.props.loadState}/>
         <span className={emptyClassSet}>No breeds found.</span>
         <TransitionGroup 
           component="ul" 
