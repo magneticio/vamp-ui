@@ -88,6 +88,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         _currentDeployment.rate = JSON.parse(payload.response.text);
         break;
     }
+    
     DeploymentStore.emitChange();
     return true; 
   })

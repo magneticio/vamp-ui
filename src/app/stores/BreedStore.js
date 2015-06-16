@@ -13,14 +13,19 @@ var _breeds = {};
 var _persistBreeds = function(response){
   var _temp = {}
 
-  array = JSON.parse(response.text);
+  var array = JSON.parse(response.text);
   _.each(array, function(obj){ 
-    _temp[obj.name] = obj
-    _temp[obj.name].status = 'CLEAN'
+    _temp[obj.name] = obj;
+    _temp[obj.name].status = 'CLEAN';
   });
 
-  _breeds = _temp
+  _breeds = _temp;
 };
+
+var _addBreed = function(response){
+  var newBreed = JSON.parse(response.text);
+  _breeds[newBreed.name] = newBreed;
+}
 
 var BreedStore = assign({}, EventEmitter.prototype,{
 
@@ -29,14 +34,11 @@ var BreedStore = assign({}, EventEmitter.prototype,{
   },
 
   getBreed: function(name) {
-    if(_.isEmpty(_breeds)){
-      console.log('breedstore: should wait');
-    }
     return _.findWhere(_breeds, { "name" : name });
   },
 
   emitChange: function() {
-    // console.log('emits change event from store')
+     //console.log('emits change event from store')
     this.emit(CHANGE_EVENT);
   },
 
@@ -50,23 +52,24 @@ var BreedStore = assign({}, EventEmitter.prototype,{
   },
 
   dispatcherIndex: AppDispatcher.register(function(payload) {
+    
     var action = payload.actionType;
+
     switch(action) {
-      case 'GET_ALL_BREEDS_SUCCESS':
+      case BreedConstants.GET_ALL_BREEDS + '_SUCCESS':
         _persistBreeds(payload.response)
         break;
-      case 'POST_BREED':
-        _breeds[payload.response.name] = payload.response;
+      case BreedConstants.POST_BREED + '_SUCCESS':
+        _addBreed(payload.response);
         break;
       case 'DELETE_BREED':
         _breeds[payload.response.name].status = 'DELETING'         
         break;
     }
+
     BreedStore.emitChange();
     return true; 
   })
-
-
-})
+});
 
 module.exports = BreedStore

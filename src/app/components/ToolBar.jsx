@@ -1,6 +1,5 @@
 var React = require('react');
 var cx = require('classnames');
-var BreedActions = require('../actions/BreedActions');
 
 var ToolBar = React.createClass({
 
@@ -13,6 +12,11 @@ var ToolBar = React.createClass({
       toolbarState: '',
       buttonLoadsate: '',
       newArtefact: ''
+    }
+  },
+  componentWillReceiveProps: function(nextProps) {
+    if(nextProps.requestResolved){
+      this.handleCancel();
     }
   },
   
@@ -40,7 +44,6 @@ var ToolBar = React.createClass({
     var file = e.target.files[0];
 
     reader.onload = function(upload) {
-      console.log(upload.target.result);
       self.setState({
         newArtefact: upload.target.result,
       });
@@ -55,24 +58,18 @@ var ToolBar = React.createClass({
       newArtefact: '',
       buttonLoadsate: ''
     });
-
-    var self=this;
-    console.log(this.state);
-    setTimeout(function(){
-      console.log(self.state);
-    }, 500);
   },
   handleTextareaChange: function(e){
     this.setState({newArtefact: e.target.value});
   },
   handleAddSubmit: function(e){
     e.preventDefault();
+
     if(this.state.toolbarState == 'expanded'){
-      //this.props.handleAdd();
-      BreedActions.postBreed(this.state.newArtefact);
       this.setState({
         buttonLoadsate: 'active'
       });
+      this.props.handleAdd(this.state.newArtefact);
     }
   },
 

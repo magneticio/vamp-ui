@@ -12,21 +12,36 @@ var BreedActions = require('../../actions/BreedActions');
 
 var BreedsList = React.createClass({
   
-  mixins: [PureRenderMixin, SetIntervalMixin],
+  mixins: [SetIntervalMixin],
 
   getInitialState: function() {
     return {
       filterText: '',
-      viewType:'general-list'
+      viewType:'general-list',
+      breedCreated: false,
+      breedCount: 0
     };
   },
   componentDidMount: function(){
     BreedActions.getAllBreeds();
     this.setInterval(this.pollBackend, 4000);
   },
+  componentWillReceiveProps: function(nextProps){
+    if(_.size(nextProps.allBreeds) > this.state.breedCount){
+      this.setState({
+        breedCount: nextBreedCount,
+        breedCreated: true
+      });
+    } else {
+      this.setState({
+        breedCreated: false
+      })
+    }
+  },
   
-  handleAdd: function() {
-    console.log('handle add');
+  handleAdd: function(newBreed) {
+    BreedActions.createBreed(newBreed);
+    // TODO: optimistically add new breed
   },
   handleUserInput: function(filterText) {
     this.setState({
@@ -74,9 +89,14 @@ var BreedsList = React.createClass({
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch}
           handleAdd={this.handleAdd}
-          addArtefactType='breed' />
+          addArtefactType='breed'
+          requestResolved={this.state.breedCreated} />
         <span className={emptyClassSet}>No breeds found.</span>
-        <TransitionGroup component="ul" transitionName="fadeIn" transitionAppear={true} className={this.state.viewType}>
+        <TransitionGroup 
+          component="ul" 
+          transitionName="fadeIn" 
+          transitionAppear={true} 
+          className={this.state.viewType}>
           <li className={listHeaderClasses}>
             <div className="list-section section-half">
               <h4>Breed</h4>

@@ -63,6 +63,7 @@ var Master = React.createClass({
   },
 
   _onChange: function() {
+    console.log('master onchange');
     this.setState(
       {
         allBreeds: BreedStore.getAll(),

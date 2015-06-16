@@ -32,45 +32,9 @@
   	opacity: 1;
   	transition: margin-top 0.3s, opacity 0.15s;
 }
-.add-artefact-box {
-	width: 100%;
-	height: 0;
-	opacity: 0;
-	overflow: hidden;
-	transition: height 0.3s, opacity 0.3s;
-
-	h2 {
-		padding-top: 2rem;
-	}
-	
-	p {
-		display: inline-block;
-		width: 50%;
-	}
-
-	textarea { 
-		outline: none;
-		padding: 0.5rem 1rem;
-		box-sizing: border-box;
-		border: none;
-		width: 100%;
-		height: 78vh;
-		margin-bottom: 1rem;
-	}
-	
-	.actions {
-		display: inline-block;
-		width: 50%;
-		text-align: right;
-	}
-	.button {
-		margin: 0 0 1rem 1rem;
-		min-width: 0;
-	}
-}
 
 .toolbar.expanded {
-	.add-artefact-box {
+	.add-artefact-form {
 		height: 92vh;
 		opacity: 1;		
 	}

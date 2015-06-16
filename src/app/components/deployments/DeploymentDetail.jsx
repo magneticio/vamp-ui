@@ -103,11 +103,9 @@ var DeploymentDetail = React.createClass({
   )},
 
   _onChange: function() {
-    this.setState(
-      {
-        deployment: DeploymentStore.getCurrent(),
-      }
-    )
+    this.setState({
+      deployment: DeploymentStore.getCurrent(),
+    });
   }
 });
  
