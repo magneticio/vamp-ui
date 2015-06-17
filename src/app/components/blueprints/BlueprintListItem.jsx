@@ -3,6 +3,8 @@ var _ = require('underscore');
 var cx = require('classnames');
 var Loader = require('../Loader.jsx')
 var BlueprintActions = require('../../actions/BlueprintActions.js')
+var DropdownList = require('../DropdownList.jsx');
+
 var BlueprintListItem = React.createClass({
 
   contextTypes: {
@@ -34,14 +36,34 @@ var BlueprintListItem = React.createClass({
     }, 200);
   },
 
+  prepareMetaInformation: function(metaInformation, storeType){
+    var itemList = [];
+    _.each(metaInformation, function(val,key){
+      if(storeType == 'key')
+        itemList.push(key);
+      else
+        itemList.push(val);
+    });
+    return itemList;
+  },
+  prepareServices: function(clusters){
+    var servicesList = [];
+    _.each(clusters, function(val,key){
+      _.each(val.services, function(val,key){
+        servicesList.push(val.breed.name);
+      });
+    });
+    return servicesList;
+  },
+
   render: function() {
 
     var blueprint = this.props.blueprint;
-    var clusterCountTotal = _.keys(blueprint.clusters).length
-    var servicesCountTotal = _.reduce(blueprint.clusters, function(memo,cluster){
-        return memo + cluster.services.length
-    },0);
-    var randomkey = Math.floor( Math.random() * 1000 );
+        endpoints = this.prepareMetaInformation(blueprint.endpoints),
+        clusters = this.prepareMetaInformation(blueprint.clusters, 'key'),
+        services = this.prepareServices(blueprint.clusters);    
+
+
     var loaderClasses = cx({
       'hide': blueprint.status == 'CLEAN' ? true : false
     });
@@ -52,13 +74,13 @@ var BlueprintListItem = React.createClass({
           <a onClick={this.handleDetail}><p className="item-name">{blueprint.name}</p></a>
         </div>
         <div className="list-section section-fifth">
-          9040
+          <DropdownList items={endpoints} />
         </div>
         <div className="list-section section-fifth">
-          {clusterCountTotal}
+          <DropdownList items={clusters} />
         </div>
         <div className="list-section section-fifth">
-          Sava
+          <DropdownList items={services} />
         </div>
         <div className="list-section section-fifth list-controls">
           <button className='button button-ghost' onClick={this.handleDeploy}>Deploy</button>

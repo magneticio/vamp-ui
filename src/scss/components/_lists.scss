@@ -18,9 +18,9 @@
 	align-items: center;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	overflow: hidden;
 	box-sizing: border-box;
 	width: 100%;
+	overflow: visible;
 	padding: 0.5rem 1rem;
 	border-top: 1px solid $off-white;
 	background-color: white;
@@ -59,6 +59,8 @@
 	text-align: right;
 }
 .list-item.loading {
+	overflow: hidden;
+
 	p, h2, button {
 		opacity: 0.2;
 	}
@@ -95,4 +97,60 @@
 	.submit-button[disabled] {
 		display: none;
 	}
+}
+
+/**
+ * 	Dropdownlist
+ */
+.dropdown-list-container {
+	position: relative;
+	height: 1.625rem;
+
+	p {
+		margin-right: 0.2rem;
+	}
+}
+.dropdown-list {
+	position: relative;
+	vertical-align: top;
+	display: inline-block;
+	cursor: default;
+	width: 49%;
+	margin-top: -0.1rem;
+	margin-left: -0.3rem;
+
+	li {
+		display: none;
+		background-color: white;
+		padding: 0.2rem 0.5rem;
+		font-size: $s-size;
+	}
+	li:first-of-type {
+		display: inline-block;
+		background-color: transparent;
+		font-size: $xs-size;
+	}
+
+	&:hover {
+		z-index: 20;
+		box-shadow: 0 0 3px rgba(0,0,0,0.3);
+
+		li {
+			background-color: white;
+			position: relative;
+			z-index: 20;
+			display: block;
+			overflow: hidden;
+  			text-overflow: ellipsis;
+
+  			&:hover {
+  				background-color: $off-white;
+  			}
+		}
+	}
+}
+.dropdown-list-message {
+	max-width: 50%;
+	overflow: hidden;
+  	text-overflow: ellipsis;
 }

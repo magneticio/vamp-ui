@@ -122,7 +122,7 @@ var ToolBar = React.createClass({
 
         <form className='add-artefact-box' onSubmit={this.handleSubmit} ref='AddNewForm'>
             <h2>Adding a new {this.props.addArtefactType}</h2>
-            <p>Type or paste the contents of your {this.props.addArtefactType}, or upload a JSON file and edit its contents.</p>
+            <p>Type or paste the contents of your {this.props.addArtefactType}, or upload a YAML file and edit its contents.</p>
             <div className='actions'>
               <button className="button button-ghost cancel-button" onClick={this.handleCancel}>Cancel</button>
               <span className='button button-ghost upload-button'> 

@@ -34,7 +34,7 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
     return _blueprints;
   },
   getBlueprint: function(name) {
-    return _.each(_blueprints, function(obj){ _.findWhere(obj, { "name" : name })})
+    return _.findWhere(_blueprints, { "name" : name });
   },
   getError: function(){
     var returnError = _error;

@@ -1,8 +1,8 @@
 var React = require('react');
 var _ = require('underscore');
 var Loader = require('../Loader.jsx');
-var Badge = require('../Badge.jsx');
 var BreedActions = require('../../actions/BreedActions.js');
+var DropdownList = require('../DropdownList.jsx');
 
 var BreedListItem = React.createClass({
 
@@ -13,23 +13,25 @@ var BreedListItem = React.createClass({
   handleDetail: function (){
     this.context.router.transitionTo('breed',{id: this.props.breed.name});
   },  
-
   handleDelete: function(){
     BreedActions.deleteBreed(this.props.breed);
   },
 
+  prepareMetaInformation: function(metaInformation){
+    var itemList = [];
+    _.each(metaInformation, function(val,key){
+      itemList.push(val);
+    });
+    return itemList;
+  },
+
   render: function() {
 
-    var breed = this.props.breed;
-    
-    var constants = _.size(breed.constants);
-    var dependencies = _.size(breed.dependencies);
-    var envVariables = _.size(breed.environment_variables);
-    var portCount = _.size(breed.ports);
-    var ports = [];
-    _.each(this.props.breed.ports, function(val,key){
-      ports.push(<Badge key={key} label={key} valueName={val} />);
-    });
+    var breed = this.props.breed,
+        constants = this.prepareMetaInformation(breed.constants),
+        dependencies = this.prepareMetaInformation(breed.dependencies),
+        envVariables = this.prepareMetaInformation(breed.envVariables),
+        ports = this.prepareMetaInformation(breed.ports);
 
     return (
       <li className="list-item">
@@ -41,13 +43,13 @@ var BreedListItem = React.createClass({
           <p className="small-caps">{breed.deployable}</p>
         </div>
         <div className="list-section section-sixth">
-          {portCount}
+          <DropdownList items={ports} />
         </div>
         <div className="list-section section-sixth">
-          {dependencies}
+          <DropdownList items={dependencies} />
         </div>
         <div className="list-section section-sixth">
-          {constants}
+          <DropdownList items={constants} />
         </div>
       </li>
   )}

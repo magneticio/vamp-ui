@@ -1,6 +1,5 @@
 var React = require('react');
 var ServicesList = require('./ServicesList.jsx');
-var Badge = require('../Badge.jsx');
 
 var ClusterBox = React.createClass({
 

@@ -64,8 +64,6 @@ var DeploymentsList = React.createClass({
       "hidden": deployments.length <= 0
     });
 
-    console.log(deployments);
-
     return(
       <div className='list-container'>
         <ToolBar 

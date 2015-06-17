@@ -3,9 +3,9 @@ var cx = require('classnames');
 var React = require('react');
 var Router = require('react-router');
 var Loader = require('../Loader.jsx');
-var Badge = require('../Badge.jsx');
 var DeploymentActions = require('../../actions/DeploymentActions.js');
 var HealthCircle = require('../HealthCircle.jsx');
+var DropdownList = require('../DropdownList.jsx');
 
 var DeploymentListItem = React.createClass({
 
@@ -21,18 +21,36 @@ var DeploymentListItem = React.createClass({
         className = 'active';
 
     el.classList ? el.classList.add(className) : el.className += ' ' + className;
-
     DeploymentActions.deleteFullDeployment(this.props.deployment);
+  },
+
+  prepareMetaInformation: function(metaInformation, storeType){
+    var itemList = [];
+    _.each(metaInformation, function(val,key){
+      if(storeType == 'key')
+        itemList.push(key);
+      else
+        itemList.push(val);
+    });
+    return itemList;
+  },
+  prepareServices: function(clusters){
+    var servicesList = [];
+    _.each(clusters, function(val,key){
+      _.each(val.services, function(val,key){
+        servicesList.push(val.breed.name);
+      });
+    });
+    return servicesList;
   },
 
   render: function() {
 
-    var deployment = this.props.deployment;
-    var clusterCountTotal = _.keys(deployment.clusters).length
-    var servicesCountTotal = _.reduce(deployment.clusters, function(memo,cluster){
-        return memo + cluster.services.length
-    }, 0);
-    var randomkey = Math.floor( Math.random() * 1000 );
+    var deployment = this.props.deployment,
+        endpoints = this.prepareMetaInformation(deployment.endpoints),
+        clusters = this.prepareMetaInformation(deployment.clusters, 'key'),
+        services = this.prepareServices(deployment.clusters);
+
     var loaderClasses = cx({
       'hide': deployment.status == 'CLEAN' ? true : false
     });
@@ -50,13 +68,13 @@ var DeploymentListItem = React.createClass({
           </a>
         </div>
         <div className="list-section section-fifth">
-          <p>some endpoints here</p>
+          <DropdownList items={endpoints} />
         </div>
         <div className="list-section section-fifth">
-          <p>Front-end and {clusterCountTotal} more</p>
+          <DropdownList items={clusters} />
         </div>
         <div className="list-section section-fifth">
-          <p>monarch_front:0.1 and {servicesCountTotal} more</p>
+          <DropdownList items={services} />
         </div>
         <div className="list-section section-fifth list-controls">
           <button className='button button-red' onClick={this.handleDelete}>Undeploy</button>
