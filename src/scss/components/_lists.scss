@@ -142,7 +142,8 @@
 			display: block;
 			overflow: hidden;
   			text-overflow: ellipsis;
-
+  			white-space: nowrap;
+  			
   			&:hover {
   				background-color: $off-white;
   			}
@@ -153,4 +154,6 @@
 	max-width: 50%;
 	overflow: hidden;
   	text-overflow: ellipsis;
+  	white-space: nowrap;
+  	//word-wrap:break-word;
 }
