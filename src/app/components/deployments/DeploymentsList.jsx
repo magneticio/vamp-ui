@@ -64,6 +64,8 @@ var DeploymentsList = React.createClass({
       "hidden": deployments.length <= 0
     });
 
+    console.log(deployments);
+
     return(
       <div className='list-container'>
         <ToolBar 
@@ -71,7 +73,13 @@ var DeploymentsList = React.createClass({
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch} />
         <span className={emptyClassSet}>No running deployments.</span>
-        <TransitionGroup id='deployments-list' component="ul" transitionName="fadeIn" transitionAppear={true} className={this.state.viewType}>
+        <TransitionGroup 
+          id='deployments-list' 
+          component="ul" 
+          transitionName="fadeIn" 
+          transitionAppear={true} 
+          transitionLeave={true}
+          className={this.state.viewType}>
           <li className={listHeaderClasses}>
             <div className="list-section section-fifth">
               <h4>Deployment</h4>

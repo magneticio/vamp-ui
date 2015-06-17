@@ -70,9 +70,7 @@ var BlueprintsList = React.createClass({
       }
       blueprints.push(<BlueprintListItem key={key} blueprint={allBlueprints[key]} />);
     }, this);
-
-    blueprints = blueprints.reverse();
-
+    
     var emptyClassSet = classNames({
       "empty-list": true,
       "hidden": blueprints.length > 0

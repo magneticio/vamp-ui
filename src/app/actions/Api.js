@@ -42,10 +42,10 @@ function get(url,params,accept) {
     .query(params)
     .timeout(TIMEOUT);
 };
-function post(url, body) {
+function post(url, body, contenttype) {
   return request
     .post(url)
-    .type('json')
+    .set('Content-type', contenttype)
     .send(body)
     .timeout(TIMEOUT);
 };
@@ -80,11 +80,12 @@ var Api = {
       handleResponse(actionType)
     );
   },
-  create: function(uri,body,actionType) {
+  create: function(uri,body,actionType, contenttype) {
+    contenttype = typeof contenttype !== 'undefined' ? contenttype : 'application/json';
     var url = makeUrl(uri);
     abortPendingRequests(actionType);
     dispatch(actionType,body);
-    _pendingRequests[actionType] = post(url,body).end(
+    _pendingRequests[actionType] = post(url,body, contenttype).end(
       handleResponse(actionType)
     );
   },

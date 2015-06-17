@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var cx = require('classnames');
 var React = require('react');
 var Router = require('react-router');
 var Loader = require('../Loader.jsx');
@@ -32,25 +33,30 @@ var DeploymentListItem = React.createClass({
         return memo + cluster.services.length
     }, 0);
     var randomkey = Math.floor( Math.random() * 1000 );
+    var loaderClasses = cx({
+      'hide': deployment.status == 'CLEAN' ? true : false
+    });
+    var listItemClasses = cx({
+      'list-item': true,
+      'loading': deployment.status == 'CLEAN' ? false : true
+    });
 
     return (
-      <li className="list-item">
-        <span className={ (deployment.status == 'CLEAN' ? 'hidden' : '') }>
-          <Loader />
-        </span>
+      <li className={listItemClasses}>
+        <Loader hidden={loaderClasses} />
         <div className="list-section section-fifth">
           <a onClick={this.handleDetail}>
             <p className="item-name">{deployment.name.split("-")[0]} ...</p>
           </a>
         </div>
         <div className="list-section section-fifth">
-          some endpoints here
+          <p>some endpoints here</p>
         </div>
         <div className="list-section section-fifth">
-          Front-end and {clusterCountTotal} more
+          <p>Front-end and {clusterCountTotal} more</p>
         </div>
         <div className="list-section section-fifth">
-          monarch_front:0.1 and {servicesCountTotal} more
+          <p>monarch_front:0.1 and {servicesCountTotal} more</p>
         </div>
         <div className="list-section section-fifth list-controls">
           <button className='button button-red' onClick={this.handleDelete}>Undeploy</button>

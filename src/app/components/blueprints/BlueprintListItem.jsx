@@ -1,5 +1,6 @@
 var React = require('react');
 var _ = require('underscore');
+var cx = require('classnames');
 var Loader = require('../Loader.jsx')
 var BlueprintActions = require('../../actions/BlueprintActions.js')
 var BlueprintListItem = React.createClass({
@@ -19,10 +20,7 @@ var BlueprintListItem = React.createClass({
 
     el.classList ? el.classList.add(className) : el.className += ' ' + className;
     BlueprintActions.deployBlueprint(this.props.blueprint);
-
-    setTimeout(function(){
-      self.context.router.transitionTo('deployments');
-    }, 2000);
+    self.context.router.transitionTo('deployments');
   },
   handleDelete: function(e) {
     var el = e.currentTarget,
@@ -44,12 +42,12 @@ var BlueprintListItem = React.createClass({
         return memo + cluster.services.length
     },0);
     var randomkey = Math.floor( Math.random() * 1000 );
+    var loaderClasses = cx({
+      'hide': blueprint.status == 'CLEAN' ? true : false
+    });
 
     return (
       <li className="list-item">
-        <span className={ (blueprint.status == 'CLEAN' ? 'hidden' : '') }>
-          <Loader />
-        </span>
         <div className="list-section section-fifth">
           <a onClick={this.handleDetail}><p className="item-name">{blueprint.name}</p></a>
         </div>

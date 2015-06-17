@@ -20,9 +20,9 @@ var _persistBlueprints = function(response){
   _blueprints = _temp
 };
 
-var _addBlueprint = function(response,id,status){
-    _blueprints[id] = response
-};
+// var _addBlueprint = function(response,id,status){
+//     _blueprints[id] = response
+// };
 var _addBlueprint = function(response){
   var newBlueprint = JSON.parse(response.text);
   _blueprints[newBlueprint.name] = newBlueprint;

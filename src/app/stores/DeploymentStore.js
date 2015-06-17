@@ -60,6 +60,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
 
     switch(action) {
       case DeploymentConstants.GET_ALL_DEPLOYMENTS + '_SUCCESS':
+        console.log('getting deployments');
         _persistDeployments(payload.response);
         break;
 
@@ -68,9 +69,15 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         break;
 
       case BlueprintConstants.DEPLOY_BLUEPRINT:
+        console.log('%c deploying', 'background-color: orange; color: white;');
         payload.response.status = 'DIRTY';
         _deployments[payload.response.name] = payload.response;
-        break;  
+        break;
+      case BlueprintConstants.DEPLOY_BLUEPRINT + '_SUCCESS':
+        console.log('%c deploying success ', 'background-color: green; color: white;');
+        //payload.response.status = 'DIRTY';
+        //_deployments[payload.response.name] = payload.response;
+        break; 
 
       case DeploymentConstants.CLEANUP_DEPLOYMENT:
         console.log('depl is: ' + payload);

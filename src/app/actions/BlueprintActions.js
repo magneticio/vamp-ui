@@ -11,7 +11,6 @@ var BlueprintActions = {
     Api.get('/blueprints/' + blueprints.name, null, BlueprintConstants.GET_BLUEPRINT);
   },  
   deployBlueprint: function(body) {
-    console.log('in deploy action')
     Api.create('/deployments',body, BlueprintConstants.DEPLOY_BLUEPRINT);
   },
   createBlueprint: function(body) {

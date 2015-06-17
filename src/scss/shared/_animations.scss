@@ -43,3 +43,12 @@
 		padding-left: 2.75rem;
 	}
 }
+
+@keyframes listItemLoading {
+	0% {
+		left: 0%;
+	}
+	100% {
+		left: 100%;
+	}
+}
