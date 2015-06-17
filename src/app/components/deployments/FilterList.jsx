@@ -70,7 +70,6 @@ var FilterList = React.createClass({
     return(
       <ul className='filters-list'>
         {filters}
-        <li key={randomKey}><a className="add-link" onClick={this.addFilter}>+ Add Filter</a></li>
       </ul> 
   )}
 });

@@ -36,7 +36,7 @@ var NavBar = React.createClass({
     return (
       <nav className="main-navigation" role="navigation">
         <div className="branding">
-          <a className="logo" href="/#deployments">
+          <a className="logo animated fadeInLeft" href="/#deployments">
             <img src='/images/vamp_logo_blue.svg' alt="VAMP logo" />
             <span className="alpha">alpha</span>
           </a>
