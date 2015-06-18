@@ -30,6 +30,7 @@ var FilterItem = React.createClass({
   },
 
   handleClick: function(){
+    return;
   	this.setState({
   		disabled: false
   	});

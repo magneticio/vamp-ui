@@ -42,13 +42,11 @@ var Master = React.createClass({
     BlueprintActions.getAllBlueprints();
     DeploymentActions.getAllDeployments();
 
-    //schedule poller
-    //this.setInterval(this.pollBackend, POLL_INTERVAL);
   },
   
   render: function() {
     var props = this.state;
-    //console.log('master props', props);
+
     return (
       <div id="page-container">
         <header id="header">

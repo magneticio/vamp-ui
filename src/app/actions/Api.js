@@ -1,8 +1,8 @@
+var Config = require('../config.js');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var LoadStates = require("../constants/LoadStates.js");
 var request = require('superagent');
 
-var API_URL = 'http://192.168.59.103:8080/api/v1';
 var TIMEOUT = 10000;
 
 var _pendingRequests = {};
@@ -13,27 +13,31 @@ function abortPendingRequests(actionType) {
     _pendingRequests[actionType].abort();
     _pendingRequests[actionType] = null;
   }
-}
+};
 
 function makeUrl(part) {
-  return API_URL + part;
-}
+  return Config.getApiHost() + part;
+};
 function dispatch(actionType, response) {
   var payload = {actionType: actionType, response: response };
   AppDispatcher.dispatch(payload);
-}
+};
 function handleResponse(actionType) {
   return function (err, res) {
     if (err && err.timeout === TIMEOUT) {
       dispatch(LoadStates.STATE_TIMEOUT, null);
     }
     else if (!res.ok) {
-      dispatch(actionType + '_ERROR', res);
+      handleError(actionType, res);
     } else {
       dispatch(actionType + '_SUCCESS', res);
     }
   };
 };
+function handleError(actionType, res){
+  console.log('api error', res);
+  dispatch(actionType + '_ERROR', res);
+}
 
 function get(url,params,accept) {
   return request

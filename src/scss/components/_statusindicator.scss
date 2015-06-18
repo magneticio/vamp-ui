@@ -8,7 +8,7 @@
 		height: $line-height;
 		text-transform: lowercase;
 		font-weight: 600;
-		margin-bottom: 2px;
+		//margin-bottom: 2px;
 		vertical-align: middle;
 	}
 }
@@ -53,6 +53,9 @@
 	overflow: hidden; /* Hide text which does not fit the block */
 	text-overflow: ellipsis; /* Cut off with ellipsis */
 	display: block; /* Works only for block elements */
+
+	//Quick fix for release, remove when 'up' status gets in
+	transform: translate(0, 0.7rem);
 }
 
 .health-circle {

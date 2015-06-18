@@ -44,14 +44,19 @@ h3 {
 	font-size: $h3-size;
 	font-weight: 600;
   	line-height: $line-height;
+
+  	small {
+  		line-height: 0;
+  	}
 }
 h4 {
 	margin: 0.395rem 0 0.225rem;
-	font-size: $s-size;
-	font-weight: 400;
+	font-size: $xs-size;
+	font-weight: 600;
   	line-height: 1rem;
   	color: $grey-medium;
   	text-transform: uppercase;
+  	
 }
 h5 {
 	margin: 0.395rem 0 0.225rem;

@@ -1,18 +1,9 @@
-.services-container {
-//	border-left: 1px solid $grey-light;
-}
 .service-box {
 	&:hover {
 		background-color: $off-white;
 	}
 }
 .service-section {
-	display: inline-block;
-	vertical-align: top;
-	box-sizing: border-box;
-	width: 20%;
-	padding: 1rem;
-	
 	h3 {
 		margin-bottom: $h3-size;
 	}
@@ -28,9 +19,6 @@
 		margin-bottom: $h3-size;
 	}
 }
-.service-metrics {
-	width: 40%;
-}
 .service-status {
 	p {
 		font-size: $s-size;
@@ -39,4 +27,12 @@
 			font-weight: 600;
 		}
 	}
+}
+.server-host, .server-ports {
+	display: inline-block;
+	width: 50%;
+}
+.server-host {
+	font-weight: 600;
+	//color: $grey-medium;
 }

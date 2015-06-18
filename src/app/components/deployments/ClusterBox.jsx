@@ -23,7 +23,7 @@ var ClusterBox = React.createClass({
       <div className='cluster-box'>
         <div className='cluster-name'>
           <h1>{name} <small className="muted">cluster</small></h1>
-          <a className='add-link add-service-link'>+ Add Service</a>
+          <a className='add-link add-service-link hidden'>+ Add Service</a>
         </div>
         <hr/>
         <div className='services-container'>                    

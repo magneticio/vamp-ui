@@ -55,11 +55,13 @@ var StatusIndicator = React.createClass({
   render: function() {
   	var status = 'indicator-' + this.state.status;
   	var deploymentClasses = cx('indicator-circle', 'indicator-top', status);
+  	var upStatusClasses = cx('indicator-circle', 'indicator-bottom', status);
+
     return(
       <div className='status-indicator'>
         <ul>
           <li><span className={deploymentClasses} /><span className='status-text'>{this.props.status}</span></li>
-          <li><span className='indicator-circle indicator-bottom indicator-success' />up</li>
+          <li><span className={upStatusClasses} /></li>
         </ul>
       </div>
     )}

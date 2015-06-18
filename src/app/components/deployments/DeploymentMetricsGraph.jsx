@@ -1,13 +1,15 @@
 var React = require('react');
 var LineChart = require('react-chartjs').Bar;
 var _ = require('underscore');
+var cx = require('classnames');
 
 var MetricsGraph = React.createClass({
 
   getInitialState: function() {
     return {
       datapoints: 30,
-      label: ''
+      label: '',
+      loadingMetrics: true
     };
   },
 
@@ -24,25 +26,39 @@ var MetricsGraph = React.createClass({
     }
   },
 
+  componentWillReceiveProps: function(nextProps){
+    if(_.size(nextProps.data) > 0)
+      this.setState({ loadingMetrics: false });
+  },
+
   render: function() {
-    var linechart = '';
-    var mostRecentDatapoint = 0;
-    var filteredApiData = []
 
-    if(!_.isEmpty(this.props.data) ){
+    var linechart = '',
+        mostRecentDatapoint = 0,
+        filteredApiData = [],
+        loaderClasses = cx({
+          'metrics-loader': true,
+          'hidden': this.state.loadingMetrics ? false : true
+        });
 
-      var filteredApiData = [];
-      var chartLabels = [];
+
+    if(!this.state.loadingMetrics){
+
+      var filteredApiData = [],
+          chartLabels = [],
+          chartOptions = {},
+          chartData = {},
+          linechart;
 
       _.each(this.props.data, function(property, key){
         filteredApiData.push(property['value']);
         chartLabels.push('');
       }, this);
 
-      var mostRecentDatapoint = filteredApiData[0];
+      mostRecentDatapoint = filteredApiData[0];
       filteredApiData = filteredApiData.reverse();
 
-      var chartOptions = {
+      chartOptions = {
         showScale: true,
         scaleFontSize: 10,
         scaleShowGridLines: true,
@@ -53,7 +69,7 @@ var MetricsGraph = React.createClass({
         barValueSpacing : 1,
       };
 
-      var chartData = {
+      chartData = {
         labels: chartLabels,
         datasets: [
           {
@@ -65,9 +81,7 @@ var MetricsGraph = React.createClass({
         ]
       };
 
-      var linechart = <LineChart data={chartData} options={chartOptions}/>  
-    } else {
-
+      linechart = (<LineChart data={chartData} options={chartOptions}/>);
     }
 
     return(
@@ -77,6 +91,7 @@ var MetricsGraph = React.createClass({
           <h3>{mostRecentDatapoint} </h3><small className='muted'>64 max</small>
         </div>
         <div>
+          <span className={loaderClasses}>loading</span>
           {linechart}
         </div>
       </div>

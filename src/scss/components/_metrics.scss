@@ -26,17 +26,21 @@
 	font-weight: 400;
 }
 
-.service-metrics-container {
-	.metrics-chart {
-		height: 64px;
-		width: 100%;
-		padding-bottom: 1rem;
-	}
+// .service-metrics-container {
+// 	display: inline-block;
+// 	width: 5rem;
 
-	.metrics-requests {
-		vertical-align: top;
-	}
-}
+// 	.metrics-chart {
+// 		height: 64px;
+// 		width: 100%;
+// 		padding-bottom: 1rem;
+// 	}
+
+// 	.metrics-requests {
+// 		vertical-align: top;
+// 		width: 100%;
+// 	}
+// }
 
 .deployment-metrics-container {
 	display: flex;

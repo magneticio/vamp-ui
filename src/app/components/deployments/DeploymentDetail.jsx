@@ -1,6 +1,5 @@
 var _ = require('underscore')
 var React = require('react/addons');
-var PureRenderMixin = React.addons.PureRenderMixin;
 var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
 var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
 var ClusterBox = require('./ClusterBox.jsx');
@@ -58,7 +57,7 @@ var DeploymentDetail = React.createClass({
   },
 
   render: function() {
-    console.log('deploymentdetail render');
+    
     deployment = this.state.deployment;
 
     //grab the endpoint
@@ -87,7 +86,7 @@ var DeploymentDetail = React.createClass({
               <hr />
             </div>
             <div className="deployment-metrics-container">
-              <div className="deployment-status">
+              <div className="deployment-status hidden">
                 UP
               </div>
               <DeploymentMetricsGraph data={deployment.rate} metricsType='rate' />

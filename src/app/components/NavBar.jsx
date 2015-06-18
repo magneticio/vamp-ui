@@ -1,4 +1,6 @@
 var React = require('react/addons');
+var Config = require('../config.js');
+
 var NavBar = React.createClass({
 
   contextTypes: {
@@ -16,15 +18,34 @@ var NavBar = React.createClass({
       className: ""
     };
   },
+  getInitialState: function(){
+    return({
+      apiUrl: ''
+    });
+  },
+  componentDidMount: function(){
+    this.setState({
+      apiUrl: Config.getApiHost()
+    });
+  },
+
+  handleSubmit: function(e){
+    e.preventDefault();
+    Config.setApiHost(this.state.apiUrl);
+  },
+  handleChange: function(e){
+    this.setState({apiUrl: e.target.value});
+  },
 
   render: function () {
 
     var tabs = this.props.tabs.map(function (tab) {
       var path = this.context.router.getCurrentPathname();
       var params = this.context.router.getCurrentParams().id;
-      if (params != undefined) {
-            path = path.substring(0,(path.slice(1).indexOf('\/'))+1)
-      }
+      
+      if (params != undefined) 
+        path = path.substring(0,(path.slice(1).indexOf('\/'))+1);
+
       var isActive = (path == tab.id);
       var className = isActive ? 'active' : '';
 
@@ -48,6 +69,15 @@ var NavBar = React.createClass({
 
         <div className="navigation-options">
           <img src='/images/cog-thick.svg' alt="Options icon" width='20px' height='20px' />
+        </div>
+
+        <div className="options-pane">
+          <form onSubmit={this.handleSubmit}>
+            <input 
+              type='text' 
+              value={this.state.apiUrl} 
+              onChange={this.handleChange} />
+          </form>
         </div>
       </nav>
     );

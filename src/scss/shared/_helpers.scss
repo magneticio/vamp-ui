@@ -2,6 +2,13 @@
 	display: none!important;
 	visibility: hidden;
 }
+.clip-textoverflow {
+	display: inline-block;
+	max-width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 .editable {
 	cursor: pointer;
 	

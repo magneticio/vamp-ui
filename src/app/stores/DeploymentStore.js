@@ -60,7 +60,6 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
 
     switch(action) {
       case DeploymentConstants.GET_ALL_DEPLOYMENTS + '_SUCCESS':
-        console.log('getting deployments');
         _persistDeployments(payload.response);
         break;
 
