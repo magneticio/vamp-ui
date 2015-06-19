@@ -16,8 +16,12 @@ var ClusterBox = React.createClass({
   render: function() {
 
     var cluster = this.props.cluster;
-    var name = this.props.name  ;
+    var name = this.props.name ;
     var port = "<Badge label='port' port={cluster.routes} />";
+    var clusterForService = {
+      name: name, 
+      port: Object.keys(this.props.cluster.routes)[0]
+    }
 
     return(
       <div className='cluster-box'>
@@ -27,7 +31,7 @@ var ClusterBox = React.createClass({
         </div>
         <hr/>
         <div className='services-container'>                    
-          <ServicesList services={cluster.services} updateClusterFilters={this.updateClusterFilters}/>    
+          <ServicesList services={cluster.services} cluster={clusterForService} serviceMetrics={this.props.serviceMetrics} updateClusterFilters={this.updateClusterFilters}/>    
         </div>
       </div>
     )}

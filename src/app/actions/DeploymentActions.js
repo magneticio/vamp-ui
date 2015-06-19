@@ -18,6 +18,8 @@ var DeploymentActions = {
     Api.get('/deployments/' + deployment.name, {as_blueprint: true}, DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT, format);
   },
 
+
+
   // DELETE
   deleteFullDeployment: function(deployment) {
     var req = {};
@@ -31,27 +33,43 @@ var DeploymentActions = {
     var payload = {actionType: DeploymentConstants.CLEANUP_DEPLOYMENT , response: deployment };
     AppDispatcher.dispatch(payload);
   },
-  getDeploymentMetrics: function(deployment, metricsType) {
-    //console.log('%c Actions > Get Deployment Metrics: ' + metricsType.toUpperCase() + ' ', 'background: #23AE8F; color: #fff');
-    var endpoint = '';
+
+
+
+  // METRICS
+  getDeploymentMetrics: function(deployment, metricsType, service, cluster) {
+    var endpoint = null,
+        tags = [],
+        req = {};
+
+    // TODO: only 1 endpoint is supported at this moment, make fix for this in the future
     _.each(deployment.endpoints, function(value, key){
-      endpoint = value;
+        service ? endpoint = cluster.port : endpoint = value;
     }, this);
-    tags = [];
-    tags.push('metrics:' + metricsType);
-    tags.push('routes:' + deployment.name + '_' + endpoint);
-    postObject = {
+
+    cluster ? tags.push('routes:' + deployment.name + '_' + cluster.name + '_' + endpoint) : tags.push('routes:' + deployment.name + '_' + endpoint)
+    metricsType ? tags.push('metrics:' + metricsType) : tags.push('metrics');
+    if(service) { tags.push('services:' + service, 'service') }
+
+    req = {
       "tags" : tags,
       "timestamp" : {
         "lte" : "now"
       }
     }
 
+    if( service ){
+      //console.log(JSON.stringify(req));
+      PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_SERVICE);
+      return;
+    }
     if( metricsType == 'scur'){
-      PulseApi.post('/events/get', postObject, DeploymentConstants.GET_DEPLOYMENT_METRICS_SCUR);
+      PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_SCUR);
+      return;
     }
     if( metricsType == 'rate'){
-      PulseApi.post('/events/get', postObject, DeploymentConstants.GET_DEPLOYMENT_METRICS_RATE);
+      PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_RATE);
+      return;
     }
   },
   putRoutingOption: function(deployment, cluster, service, filters, weight) {

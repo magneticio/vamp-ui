@@ -1,6 +1,7 @@
 var React = require('react/addons');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
+var Config = require('./config.js');
 var BreedStore = require('../stores/BreedStore');
 var BlueprintStore = require('../stores/BlueprintStore');
 var DeploymentStore = require('../stores/DeploymentStore');
@@ -41,7 +42,6 @@ var Master = React.createClass({
     BreedActions.getAllBreeds();
     BlueprintActions.getAllBlueprints();
     DeploymentActions.getAllDeployments();
-
   },
   
   render: function() {

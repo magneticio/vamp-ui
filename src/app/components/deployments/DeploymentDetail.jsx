@@ -26,11 +26,12 @@ var DeploymentDetail = React.createClass({
   },
   componentDidMount: function() {
     DeploymentActions.getDeployment(this.state.name);
+    DeploymentStore.addChangeListener(this._onChange);
+    
     this.setState({
       deployment: DeploymentStore.getCurrent()
     });
-    DeploymentStore.addChangeListener(this._onChange);
-    
+
     DeploymentActions.getDeploymentMetrics(deployment, 'rate');
     DeploymentActions.getDeploymentMetrics(deployment, 'scur');      
 
@@ -60,6 +61,8 @@ var DeploymentDetail = React.createClass({
     
     deployment = this.state.deployment;
 
+    // console.log('%c deployment ', 'background-color: green; color: white;', deployment);
+
     //grab the endpoint
     var endpoints = [] 
     _.each(deployment.endpoints,function(val,key){
@@ -71,7 +74,7 @@ var DeploymentDetail = React.createClass({
     _.chain(deployment.clusters)
       .pairs()
       .each(function(item,idx){
-        clusters.push(<ClusterBox key={item[0]} name={item[0]} cluster={item[1]} onOptionsUpdate={this.onOptionsUpdate} />);
+        clusters.push(<ClusterBox key={item[0]} name={item[0]} cluster={item[1]} serviceMetrics={deployment.serviceMetrics} onOptionsUpdate={this.onOptionsUpdate} />);
       }, this).value()
 
     return(

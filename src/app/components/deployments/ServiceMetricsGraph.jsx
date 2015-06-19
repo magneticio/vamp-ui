@@ -1,15 +1,16 @@
 var React = require('react');
 var LineChart = require('react-chartjs').Line;
+var DeploymentActions = require('../../actions/DeploymentActions');
 
 var ServiceMetricsGraph = React.createClass({
-
-  graphdata: [],
-  chartOptions: {},
-
-  getInitialState: function() {
-    return {
-      chartIsRunning: false,
-    };
+  
+  componentWillReceiveProps: function(nextProps){
+    // console.log('nextprops', nextProps.smax);
+    // if(this.props.smax !== nextProps.smax){
+    //   this.setState({
+    //     smax: nextProps.smax
+    //   });
+    // }
   },
 
   render: function() {
@@ -17,9 +18,9 @@ var ServiceMetricsGraph = React.createClass({
     return(
       <div className='service-metrics-container'>
         <h4>Resp. time</h4>
-        <h3>45 <small className='muted'>ms</small></h3>
+        <h3>{this.props.responseTime} <small className='muted'>ms</small></h3>
         <h4>reqs / sec</h4>
-        <h3>45 <small className='muted'>64 max</small></h3>
+        <h3>{this.props.requestPerSec} <small className='muted'>{this.props.smax} max</small></h3>
       </div>
     )}
   }

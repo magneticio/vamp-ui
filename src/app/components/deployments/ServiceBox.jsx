@@ -7,8 +7,33 @@ var FilterList = require('./FilterList.jsx');
 var StatusIndicator = require('./StatusIndicator.jsx');
 var ServiceMetricsGraph = require('./ServiceMetricsGraph.jsx')
 var DropdownList = require('../DropdownList.jsx');
+var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
+var DeploymentActions = require('../../actions/DeploymentActions');
 
 var ServiceBox = React.createClass({
+  
+  mixins: [SetIntervalMixin],
+
+  getInitalState: function(){
+    return {
+      loading: true,
+      smax: '-',
+      rate: '-',
+      rtime: '-'
+    }
+  },
+  componentWillMount: function(){
+    var currentService = this.props.service.breed.name,
+        cluster = this.props.cluster,
+        interval = Math.floor(Math.random() * 2000) + 2000;
+
+    this.setInterval(function(){
+      DeploymentActions.getDeploymentMetrics(deployment, null, currentService, cluster);
+    }, interval);
+  },
+  componentWillReceiveProps: function(nextProps){
+    //console.log(nextProps);
+  },
 
   updateServiceFilters: function(filtersArray){
     var currentService = this.props.service.breed.name,
@@ -16,24 +41,42 @@ var ServiceBox = React.createClass({
 
     this.props.updateServiceListFilters(currentService, filtersArray, currentWeight);
   },
-
   generateServersList: function(servers){
     serverlist = [];
-    portslist = [];
-    
-    _.each(servers, function(val,key){
-      _.each(val.ports, function(val,key){
-        portslist.push(val);
+    _.each(servers, function(serverval,serverkey){
+      _.each(serverval.ports, function(portval,portkey){
+        serverlist.push(
+          <li key={portkey+portval}>
+            <span className='server-host'>{serverval.host}</span>
+            <span className='server-ports'>: {portval}</span>
+          </li>
+        );
       });
-      serverlist.push(
-        <li key={key+val}>
-          <span className='server-host'>{val.host}</span>
-          <span className='server-ports'>: {val.ports}</span>
-        </li>
-      );
     });
 
     return serverlist;
+  },
+  generateMetric: function(metricType){
+    if(!this.props.serviceMetrics)
+      return '-';
+
+    if(!this.props.serviceMetrics['services:'+this.props.service.breed.name])
+      return '-';
+    
+    var allMetrics = this.props.serviceMetrics['services:' + this.props.service.breed.name],
+        metricValue = null;
+
+    _.each(allMetrics, function(metricObject, key){
+      _.each(metricObject['tags'], function(tagValue, key){
+        if(tagValue == 'metrics:' + metricType){
+          console.log(metricObject.value);
+          metricValue = metricObject.value;
+        }
+      }, this);
+    }, this);
+   
+    //console.log(allMetrics);
+    return metricValue;
   },
 
   render: function() {
@@ -43,7 +86,10 @@ var ServiceBox = React.createClass({
         date = new Date(service.state.started_at),
         stateClass = (service.state.name === 'Error') ? 'danger' : 'success',
         notifClass = service.state.notification ? '' : 'hidden',
-        serverlist = this.generateServersList(servers);
+        serverlist = this.generateServersList(servers),
+        responseTime = this.generateMetric('rtime'),
+        requestPerSec = this.generateMetric('rate'),
+        smax = this.generateMetric('smax');
 
     return(
       <div className='service-box'>
@@ -62,7 +108,7 @@ var ServiceBox = React.createClass({
           <FilterList filters={service.routing.filters} updateServiceFilters={this.updateServiceFilters} />
         </div>
         <div className='service-section service-metrics section-fifth'>
-          <ServiceMetricsGraph />
+          <ServiceMetricsGraph responseTime={responseTime} requestPerSec={requestPerSec} smax={smax} />
         </div>
         <div className='service-section service-servers section-fifth'>
           <h4>Servers</h4>

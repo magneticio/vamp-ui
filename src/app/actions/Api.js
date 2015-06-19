@@ -15,8 +15,8 @@ function abortPendingRequests(actionType) {
   }
 };
 
-function makeUrl(part) {
-  return Config.getApiHost() + part;
+function makeUrl(path) {
+  return Config.getApiUrl() + path;
 };
 function dispatch(actionType, response) {
   var payload = {actionType: actionType, response: response };

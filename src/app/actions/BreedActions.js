@@ -14,7 +14,7 @@ var BreedActions = {
     Api.create('/breeds', body, BreedConstants.CREATE_BREED, 'application/x-yaml');
 	},
   deleteBreed: function(breed) {
-    Api.del('/breeds/' + breed.name, breed, BreedConstants.DELETE_BREED)
+    Api.del('/breeds/' + breed.name, breed, BreedConstants.DELETE_BREED);
   }  
 };
 

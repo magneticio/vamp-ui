@@ -93,6 +93,20 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_RATE + '_SUCCESS':
         _currentDeployment.rate = JSON.parse(payload.response.text);
         break;
+      case DeploymentConstants.GET_DEPLOYMENT_METRICS_SERVICE + '_SUCCESS':
+        var metrics = payload.response.body;
+        
+        if(!_currentDeployment.serviceMetrics)
+          _currentDeployment.serviceMetrics = {};
+
+        _.each(metrics[0].tags, function(val, key){
+          if(val.indexOf('services:') === 0){
+            _currentDeployment.serviceMetrics[val] = payload.response.body;
+            return;
+          }
+        });
+        
+        break;
     }
     
     DeploymentStore.emitChange();
