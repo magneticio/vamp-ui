@@ -75,7 +75,6 @@ var ServiceBox = React.createClass({
       }, this);
     }, this);
    
-    //console.log(allMetrics);
     return metricValue;
   },
 
@@ -89,7 +88,7 @@ var ServiceBox = React.createClass({
         serverlist = this.generateServersList(servers),
         responseTime = this.generateMetric('rtime'),
         requestPerSec = this.generateMetric('rate'),
-        smax = this.generateMetric('smax');
+        smax = this.generateMetric('rate_max');
 
     return(
       <div className='service-box'>

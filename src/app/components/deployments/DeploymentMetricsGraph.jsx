@@ -88,7 +88,7 @@ var MetricsGraph = React.createClass({
       <div className='deployment-metrics-chart metrics-chart'>
         <div className='metrics-requests'>
           <h5><strong>{this.state.label}</strong></h5>
-          <h3>{mostRecentDatapoint} </h3><small className='muted'>64 max</small>
+          <h3>{mostRecentDatapoint} </h3><small className='muted'></small>
         </div>
         <div>
           <span className={loaderClasses}>loading</span>
