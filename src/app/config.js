@@ -29,11 +29,11 @@ var Config = {
 				self = this;
 
 		request.get(infoEndpoint).end(function(err,res){
-    	var infoObject = JSON.parse(res.text);
-    	self.setPulseApiUrl(infoObject);
-  	});
+	    	var infoObject = JSON.parse(res.text);
+	    	self.setPulseApiUrl(infoObject);
+	  	});
 
-  	return this.pulseApiUrl;
+	  	return this.pulseApiUrl;
 	},
 	setPulseApiUrl: function(infoObject){
 		var pulseUrl = infoObject.pulse_url,

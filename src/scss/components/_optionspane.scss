@@ -1,0 +1,36 @@
+.options-pane {
+	position: fixed;
+	top: 0;
+	right: -15vw;
+	width: 40vw;
+	height: 100vh;
+	z-index: 0;
+	transition: transform 0.4s ease;
+	background-color: $off-white;
+}
+.inner-options-pane {
+	box-sizing: border-box;
+	padding: 1rem;
+}
+
+#page-container {	
+	.wrapper {
+		display: inline-block;
+		position: relative;
+		z-index: 1;
+		background-color: white;
+		width: 100vw;
+		min-height: 100vh;
+		transition: transform 0.4s;
+		box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
+	}
+
+	&.options-pane-opened {
+		.wrapper {
+			transform: translateX(-40vw);
+		}
+		.options-pane { 
+			transform: translateX(-15vw);
+		}
+	}
+}

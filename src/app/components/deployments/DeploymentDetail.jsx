@@ -1,4 +1,4 @@
-var _ = require('underscore')
+var _ = require('underscore');
 var React = require('react/addons');
 var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
 var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');

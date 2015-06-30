@@ -10,6 +10,8 @@ var DeploymentActions = require('../actions/DeploymentActions');
 var BreedsList = require('./breeds/BreedsList.jsx');
 var NavBar = require("../components/NavBar.jsx");
 var LoadStates = require("../constants/LoadStates.js");
+var OptionsPane = require('./OptionsPane.jsx');
+var classNames = require('classnames');
 
 var allTabs = [
   {id: "/deployments", text: "Deployments"},
@@ -30,6 +32,7 @@ var Master = React.createClass({
       loadState: LoadStates.STATE_LOADING,
       allBreeds: [],
       activeTabId: '/deployments',
+      isOptionsPaneOpened: false
     }
   },
   componentDidMount: function() {
@@ -42,20 +45,31 @@ var Master = React.createClass({
     BlueprintActions.getAllBlueprints();
     DeploymentActions.getAllDeployments();
   },
+  togglePageContent: function(){
+    this.setState({
+      isOptionsPaneOpened: this.state.isOptionsPaneOpened ? false : true
+    });
+  },
   
   render: function() {
+
+    var pageContentClasses = classNames({
+      'options-pane-opened': this.state.isOptionsPaneOpened
+    });
     var props = this.state;
 
     return (
-      <div id="page-container">
-        <header id="header">
-            <NavBar tabs={allTabs} activeTabId={props.activeTabId} />
-        </header>
-        <div id="page-content">
-          <RouteHandler {...props} />
+      <div id="page-container" className={pageContentClasses}>
+        <div className="wrapper">
+          <header id="header">
+              <NavBar tabs={allTabs} activeTabId={props.activeTabId} togglePageContent={this.togglePageContent} />
+          </header>
+          <div id="page-content">
+            <RouteHandler {...props} />
+          </div>
         </div>
+        <OptionsPane togglePageContent={this.togglePageContent} />
       </div>
-
     );
   },
 
