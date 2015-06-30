@@ -41,7 +41,8 @@ var ToolBar = React.createClass({
         this.refs.filterTextInput.getDOMNode().value
     );
   },
-  handleClick: function(viewType){
+  handleClick: function(e, viewType){
+    e.preventDefault();
     this.props.handleViewSwitch(viewType);
   },
   handleAdd: function(e){
@@ -62,7 +63,9 @@ var ToolBar = React.createClass({
     reader.readAsText(file);
   },
   handleCancel: function(e){
-    e.preventDefault();
+    if(e)
+      e.preventDefault();
+    
     React.findDOMNode(this.refs.AddNewForm).reset();    
     this.setState(this.clearStates);
   },
