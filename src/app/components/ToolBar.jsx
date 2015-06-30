@@ -31,7 +31,6 @@ var ToolBar = React.createClass({
     this._destroyArtefactFunctions();
   },
   componentWillReceiveProps: function(nextProps) {
-    console.log('%c will receive props ', 'background-color: green; color: white;', nextProps.requestResolved);
     if(nextProps.requestResolved){
       this.handleCancel();
     }
@@ -63,6 +62,7 @@ var ToolBar = React.createClass({
     reader.readAsText(file);
   },
   handleCancel: function(e){
+    e.preventDefault();
     React.findDOMNode(this.refs.AddNewForm).reset();    
     this.setState(this.clearStates);
   },
