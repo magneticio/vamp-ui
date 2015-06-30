@@ -28,7 +28,6 @@ var BlueprintsList = React.createClass({
   },
   componentWillReceiveProps: function(nextProps){
     var nextBlueprintCount = _.size(nextProps.allBlueprints);
-    console.log('%c Blueprintcount ', 'background-color: blue; color: white;', nextBlueprintCount)
     if(nextBlueprintCount > this.state.blueprintCount){
       this.setState({
         blueprintCount: nextBlueprintCount,

@@ -12,6 +12,9 @@ var NavBar = require("../components/NavBar.jsx");
 var LoadStates = require("../constants/LoadStates.js");
 var OptionsPane = require('./OptionsPane.jsx');
 var classNames = require('classnames');
+var Config = require('../config.js');
+var AppActions = require('../actions/AppActions');
+var AppStore = require('../stores/AppStore');
 
 var allTabs = [
   {id: "/deployments", text: "Deployments"},
@@ -32,10 +35,14 @@ var Master = React.createClass({
       loadState: LoadStates.STATE_LOADING,
       allBreeds: [],
       activeTabId: '/deployments',
-      isOptionsPaneOpened: false
+      isOptionsPaneOpened: false,
+      errors: []
     }
   },
   componentDidMount: function() {
+    // check application health
+    //AppActions.getInfo();
+
     BreedStore.addChangeListener(this._onChange);
     BlueprintStore.addChangeListener(this._onChange);
     DeploymentStore.addChangeListener(this._onChange);
@@ -45,6 +52,7 @@ var Master = React.createClass({
     BlueprintActions.getAllBlueprints();
     DeploymentActions.getAllDeployments();
   },
+
   togglePageContent: function(){
     this.setState({
       isOptionsPaneOpened: this.state.isOptionsPaneOpened ? false : true

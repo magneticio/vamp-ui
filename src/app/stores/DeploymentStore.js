@@ -68,7 +68,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         break;
 
       case BlueprintConstants.DEPLOY_BLUEPRINT:
-        console.log('%c deploying', 'background-color: orange; color: white;');
+        console.log('%c deploying ', 'background-color: orange; color: white;');
         payload.response.status = 'DIRTY';
         _deployments[payload.response.name] = payload.response;
         break;

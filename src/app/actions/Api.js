@@ -25,11 +25,13 @@ function dispatch(actionType, response) {
 function handleResponse(actionType) {
   return function (err, res) {
     if (err && err.timeout === TIMEOUT) {
+      console.log(err);
       dispatch(LoadStates.STATE_TIMEOUT, null);
-    }
-    else if (!res.ok) {
+    } else if (!res.ok) {
+      console.log(res);
       handleError(actionType, res);
     } else {
+      console.log(res);
       dispatch(actionType + '_SUCCESS', res);
     }
   };
