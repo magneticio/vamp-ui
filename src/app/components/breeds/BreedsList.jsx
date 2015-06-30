@@ -33,6 +33,11 @@ var BreedsList = React.createClass({
         breedCount: nextBreedCount,
         breedCreated: true
       });
+    } else if(nextBreedCount < this.state.breedCount){
+      this.setState({
+        breedCount: nextBreedCount,
+        breedCreated: false
+      });
     } else {
       this.setState({
         breedCreated: false

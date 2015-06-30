@@ -31,6 +31,7 @@ var ToolBar = React.createClass({
     this._destroyArtefactFunctions();
   },
   componentWillReceiveProps: function(nextProps) {
+    console.log('%c will receive props ', 'background-color: green; color: white;', nextProps.requestResolved);
     if(nextProps.requestResolved){
       this.handleCancel();
     }
@@ -71,11 +72,12 @@ var ToolBar = React.createClass({
   handleSubmit: function(e){
     e.preventDefault();
 
-    if(this.state.toolbarState == 'expanded'){
-      var self = this;
-      //this.setState({ buttonLoadsate: 'active' });
-      this.props.handleAdd(this.state.newArtefact);
-    }
+    console.log(this.state);
+    this.setState({ 
+      errorMessage: '',
+      buttonLoadsate: 'active'
+    });
+    this.props.handleAdd(this.state.newArtefact);
   },
 
   render: function() {
@@ -139,36 +141,31 @@ var ToolBar = React.createClass({
 
   _onChange: function() {
     var errorMessage = this._getErrorMessage();
-    if(errorMessage){
-      this.setState({
-        errorMessage: errorMessage
-      });
-    }
+    if(errorMessage)
+      this.setState({ errorMessage: errorMessage });
   },
 
   _initArtefactFunctions: function(){
-    if(this.props.addArtefactType == 'breed'){
+    if(this.props.addArtefactType == 'breed')
       BreedStore.addChangeListener(this._onChange);
-    }
-    if(this.props.addArtefactType == 'blueprint'){
+    
+    if(this.props.addArtefactType == 'blueprint')
       BlueprintStore.addChangeListener(this._onChange);
-    }
   },
   _destroyArtefactFunctions: function(){
-    if(this.props.addArtefactType == 'breed'){
+    if(this.props.addArtefactType == 'breed')
       BreedStore.removeChangeListener(this._onChange);
-    }
-    if(this.props.addArtefactType == 'blueprint'){
+    
+    if(this.props.addArtefactType == 'blueprint')
       BlueprintStore.removeChangeListener(this._onChange);
-    }
+    
   },
   _getErrorMessage: function(){
-    if(this.props.addArtefactType == 'breed'){
-      return BreedStore.getError()
-    }
-    if(this.props.addArtefactType == 'blueprint'){
-      return BlueprintStore.getError()
-    }
+    if(this.props.addArtefactType == 'breed')
+      return BreedStore.getError();
+    
+    if(this.props.addArtefactType == 'blueprint')
+      return BlueprintStore.getError();
   }
 });
  

@@ -64,6 +64,7 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
       //   _blueprints[payload.response.name] = payload.response
       //   break;
       case BlueprintConstants.CREATE_BLUEPRINT + '_SUCCESS':
+        console.log('created');
         _addBlueprint(payload.response);
         break;
       case BlueprintConstants.CREATE_BLUEPRINT + '_ERROR':
