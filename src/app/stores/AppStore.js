@@ -8,8 +8,7 @@ var Actions = require('../actions/AppActions');
 
 var CHANGE_EVENT = 'change';
 
-//var _breeds = {};
-var _error = null;
+var _errors = [];
 
 // var _persistBreeds = function(response){
 //   var _temp = {}
@@ -25,11 +24,21 @@ var _error = null;
 //   var newBreed = JSON.parse(response.text);
 //   _breeds[newBreed.name] = newBreed;
 // }
+var _registerError = function(actionType, message){
+  _errors.push({
+    'type': actionType,
+    'time': Date.now(),
+    'message': message,
+  });
+};
 
 var AppStore = assign({}, EventEmitter.prototype,{
 
   getInfo: function() {
     //return _breeds;
+  },
+  getErrors: function(){
+    return _errors;
   },
 
   emitChange: function() {
@@ -57,7 +66,10 @@ var AppStore = assign({}, EventEmitter.prototype,{
         //_persistInfo(payload.response);
         break;
       case AppConstants.GET_INFO + '_ERROR':
-        console.log('error AppStore');
+        _registerError('GET_INFO', "Something went wrong. It's us, not you.");
+        break;
+      case AppConstants.GET_INFO + '_UNREACHABLE':
+        _registerError('GET_INFO', "It's seems the backend is unreachable, are you sure it's running?");
         break; 
     }
 

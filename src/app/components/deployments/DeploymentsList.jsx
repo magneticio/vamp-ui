@@ -8,6 +8,7 @@ var ToolBar = require('../ToolBar.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
 var DeploymentListItem = require('./DeploymentListItem.jsx');
 var DeploymentActions = require('../../actions/DeploymentActions');
+var AppStore = require('../../stores/AppStore');
 
 var DeploymentsList = React.createClass({
 
@@ -16,12 +17,13 @@ var DeploymentsList = React.createClass({
   getInitialState: function() {
     return {
       filterText: '',
-      viewType:'general-list'
+      viewType:'general-list',
+      errors: [],
     };
   },
   componentDidMount: function(){
-    console.log('componentDidMount');
     this.setInterval(this.pollBackend, 4000);
+    this.setState({ errors: AppStore.getErrors() });
   },
   
   handleAdd: function() {
@@ -40,13 +42,13 @@ var DeploymentsList = React.createClass({
 
   render: function() {
 
-    var allDeployments = this.props.allDeployments;
-    var deployments = [];
+    // Set vars
+    var allDeployments = this.props.allDeployments,
+        deployments = [],
+        errorsToBeShown = _.size(this.state.errors) > 0 ? true : false,
+        errorMessages = [];
 
-    var loadingClassSet = classNames({
-      "hidden": this.props.loadState !== LoadStates.STATE_LOADING
-    });
-
+    // Prepare Deploymentslist
     _.each(allDeployments, function(deployment,key) {
       var filterTerm = this.state.filterText.toLowerCase() || false;
       if ( ( deployment.name.toLowerCase().indexOf(filterTerm) === -1 && filterTerm) ) {
@@ -55,9 +57,26 @@ var DeploymentsList = React.createClass({
       deployments.push(<DeploymentListItem key={key} deployment={allDeployments[key]} />);
     }, this);
 
+    // Format errors
+    if(errorsToBeShown) {
+      _.each(this.state.errors, function(error, key){
+        errorMessages.push(error.message);
+      }, this);
+    }
+
+    // Prepare dynamic classes
+    var loadingClassSet = classNames({
+      "hidden": this.props.loadState !== LoadStates.STATE_LOADING
+    });
     var emptyClassSet = classNames({
       "empty-list": true,
-      "hidden": deployments.length > 0
+      "container-status-message": true,
+      "hidden": deployments.length > 0 || errorsToBeShown
+    });
+    var errorMessageClassSet = classNames({
+      "error-status-message": true,
+      "container-status-message": true,
+      "hidden": !errorsToBeShown
     });
     var listHeaderClasses = classNames({
       "list-header": true,
@@ -71,6 +90,7 @@ var DeploymentsList = React.createClass({
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch} />
         <span className={emptyClassSet}>No running deployments.</span>
+        <span className={errorMessageClassSet}>{errorMessages}</span>
         <TransitionGroup 
           id='deployments-list' 
           component="ul" 

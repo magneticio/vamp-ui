@@ -7,6 +7,7 @@ var TIMEOUT = 10000;
 
 var _pendingRequests = {};
 
+// Helpers
 function abortPendingRequests(actionType) {
   if (_pendingRequests[actionType]) {
     _pendingRequests[actionType]._callback = function(){};
@@ -14,7 +15,6 @@ function abortPendingRequests(actionType) {
     _pendingRequests[actionType] = null;
   }
 };
-
 function makeUrl(path) {
   return Config.getApiUrl() + path;
 };
@@ -25,22 +25,23 @@ function dispatch(actionType, response) {
 function handleResponse(actionType) {
   return function (err, res) {
     if (err && err.timeout === TIMEOUT) {
-      console.log(err);
       dispatch(LoadStates.STATE_TIMEOUT, null);
-    } else if (!res.ok) {
-      console.log(res);
+    } else if (typeof res == "undefined" || !res.ok) {
       handleError(actionType, res);
     } else {
-      console.log(res);
       dispatch(actionType + '_SUCCESS', res);
     }
   };
 };
 function handleError(actionType, res){
-  console.log('api error', res);
-  dispatch(actionType + '_ERROR', res);
-}
+  if(res){
+    dispatch(actionType + '_ERROR', res);
+  } else {
+    dispatch(actionType + '_UNREACHABLE');
+  }
+};
 
+// REST methods
 function get(url,params,accept) {
   return request
     .get(url)
@@ -56,7 +57,6 @@ function post(url, body, contenttype) {
     .timeout(TIMEOUT);
 };
 function put(url, body) {
-  //console.log('putting to:' + url + '   ' + JSON.stringify(body,null,2))
   return request
     .put(url)
     .send(body)
@@ -76,6 +76,7 @@ function del(url,body) {
   }
 };  
 
+// Public methods
 var Api = {
   get: function(uri,params,actionType,accept) {
     accept = typeof accept !== 'undefined' ? accept : null;

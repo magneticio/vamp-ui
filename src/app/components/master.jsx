@@ -41,7 +41,7 @@ var Master = React.createClass({
   },
   componentDidMount: function() {
     // check application health
-    //AppActions.getInfo();
+    AppActions.getInfo();
 
     BreedStore.addChangeListener(this._onChange);
     BlueprintStore.addChangeListener(this._onChange);
