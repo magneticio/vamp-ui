@@ -1,9 +1,11 @@
 var React = require('react/addons');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
+var AppStore = require('../stores/AppStore');
 var BreedStore = require('../stores/BreedStore');
 var BlueprintStore = require('../stores/BlueprintStore');
 var DeploymentStore = require('../stores/DeploymentStore');
+var AppActions = require('../actions/AppActions');
 var BreedActions = require('../actions/BreedActions');
 var BlueprintActions = require('../actions/BlueprintActions');
 var DeploymentActions = require('../actions/DeploymentActions');
@@ -13,8 +15,6 @@ var LoadStates = require("../constants/LoadStates.js");
 var OptionsPane = require('./OptionsPane.jsx');
 var classNames = require('classnames');
 var Config = require('../config.js');
-var AppActions = require('../actions/AppActions');
-var AppStore = require('../stores/AppStore');
 
 var allTabs = [
   {id: "/deployments", text: "Deployments"},
@@ -40,12 +40,12 @@ var Master = React.createClass({
     }
   },
   componentDidMount: function() {
-    // check application health
     AppActions.getInfo();
-
+    
     BreedStore.addChangeListener(this._onChange);
     BlueprintStore.addChangeListener(this._onChange);
     DeploymentStore.addChangeListener(this._onChange);
+    AppStore.addChangeListener(this._onChange);
 
     // get initial data
     BreedActions.getAllBreeds();
@@ -87,6 +87,7 @@ var Master = React.createClass({
         allBreeds: BreedStore.getAll(),
         allBlueprints: BlueprintStore.getAll(),
         allDeployments: DeploymentStore.getAll(),
+        errors: AppStore.getErrors(),
         loadState: LoadStates.STATE_SUCCESS
       }
     )

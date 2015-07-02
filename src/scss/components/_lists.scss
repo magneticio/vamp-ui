@@ -10,6 +10,10 @@
 	width: 100%;
 	margin: 0;
 	list-style-type: none;
+
+	&.dimmed {
+		opacity: 0.5;
+	}
 }
 .list-item,
 .list-header {

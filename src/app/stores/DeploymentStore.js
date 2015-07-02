@@ -6,6 +6,7 @@ var LoadStates = require("../constants/LoadStates.js");
 var BlueprintConstants = require('../constants/BlueprintConstants');
 var DeploymentConstants = require('../constants/DeploymentConstants');
 var Actions = require('../actions/DeploymentActions');
+var AppStore = require('./AppStore');
 
 var CHANGE_EVENT = 'change';
 
@@ -60,7 +61,11 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
 
     switch(action) {
       case DeploymentConstants.GET_ALL_DEPLOYMENTS + '_SUCCESS':
+        AppStore.deleteError('UNREACHABLE');
         _persistDeployments(payload.response);
+        break;
+      case DeploymentConstants.GET_ALL_DEPLOYMENTS + '_UNREACHABLE':
+        AppStore.putError('UNREACHABLE');
         break;
 
       case DeploymentConstants.GET_DEPLOYMENT + '_SUCCESS':

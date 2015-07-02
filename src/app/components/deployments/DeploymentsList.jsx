@@ -18,12 +18,10 @@ var DeploymentsList = React.createClass({
     return {
       filterText: '',
       viewType:'general-list',
-      errors: [],
     };
   },
   componentDidMount: function(){
     this.setInterval(this.pollBackend, 4000);
-    this.setState({ errors: AppStore.getErrors() });
   },
   
   handleAdd: function() {
@@ -45,8 +43,8 @@ var DeploymentsList = React.createClass({
     // Set vars
     var allDeployments = this.props.allDeployments,
         deployments = [],
-        errorsToBeShown = _.size(this.state.errors) > 0 ? true : false,
-        errorMessages = [];
+        errorsToBeShown = this.props.errors['UNREACHABLE'] ? true : false,
+        errorMessage = errorsToBeShown ? this.props.errors['UNREACHABLE'].message : '';
 
     // Prepare Deploymentslist
     _.each(allDeployments, function(deployment,key) {
@@ -56,13 +54,6 @@ var DeploymentsList = React.createClass({
       }
       deployments.push(<DeploymentListItem key={key} deployment={allDeployments[key]} />);
     }, this);
-
-    // Format errors
-    if(errorsToBeShown) {
-      _.each(this.state.errors, function(error, key){
-        errorMessages.push(error.message);
-      }, this);
-    }
 
     // Prepare dynamic classes
     var loadingClassSet = classNames({
@@ -82,7 +73,10 @@ var DeploymentsList = React.createClass({
       "list-header": true,
       "hidden": deployments.length <= 0
     });
-
+    var listClasses = classNames( this.state.viewType, {
+      'dimmed': this.props.errors['UNREACHABLE']
+    });
+    
     return(
       <div className='list-container'>
         <ToolBar 
@@ -90,14 +84,14 @@ var DeploymentsList = React.createClass({
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch} />
         <span className={emptyClassSet}>No running deployments.</span>
-        <span className={errorMessageClassSet}>{errorMessages}</span>
+        <span className={errorMessageClassSet}>{errorMessage}</span>
         <TransitionGroup 
           id='deployments-list' 
           component="ul" 
           transitionName="fadeIn" 
           transitionAppear={true} 
           transitionLeave={true}
-          className={this.state.viewType}>
+          className={listClasses}>
           <li className={listHeaderClasses}>
             <div className="list-section section-fifth">
               <h4>Deployment</h4>

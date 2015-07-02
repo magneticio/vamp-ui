@@ -24,12 +24,16 @@ var _errors = [];
 //   var newBreed = JSON.parse(response.text);
 //   _breeds[newBreed.name] = newBreed;
 // }
-var _registerError = function(actionType, message){
-  _errors.push({
-    'type': actionType,
+var _registerError = function(errorType, message, artefactType){
+  if(errorType == 'UNREACHABLE')
+    message = "It seems the backend is unreachable, are you sure it's runing?";
+
+  _errors[errorType] = {
+    'type': errorType,
     'time': Date.now(),
     'message': message,
-  });
+    'artefact': artefactType
+  };
 };
 
 var AppStore = assign({}, EventEmitter.prototype,{
@@ -39,6 +43,13 @@ var AppStore = assign({}, EventEmitter.prototype,{
   },
   getErrors: function(){
     return _errors;
+  },
+  putError: function(errorType, message){
+    _registerError(errorType, message);
+  },
+  deleteError: function(errorType){
+    if(_errors[errorType])
+      delete _errors[errorType];
   },
 
   emitChange: function() {
@@ -58,9 +69,6 @@ var AppStore = assign({}, EventEmitter.prototype,{
     var action = payload.actionType;
 
     switch(action) {
-      case AppConstants.GET_INFO:
-        console.log('get info dispatcher');
-        break;
       case AppConstants.GET_INFO + '_SUCCESS':
         console.log(payload.response);
         //_persistInfo(payload.response);
@@ -69,7 +77,7 @@ var AppStore = assign({}, EventEmitter.prototype,{
         _registerError('GET_INFO', "Something went wrong. It's us, not you.");
         break;
       case AppConstants.GET_INFO + '_UNREACHABLE':
-        _registerError('GET_INFO', "It's seems the backend is unreachable, are you sure it's running?");
+        _registerError('UNREACHABLE');
         break; 
     }
 

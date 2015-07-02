@@ -60,13 +60,13 @@ var BlueprintsList = React.createClass({
 
   render: function() {
 
-    var loadingClassSet = classNames({
-      "hidden": this.props.loadState !== LoadStates.STATE_LOADING
-    });
+    // Set vars
+    var allBlueprints = this.props.allBlueprints,
+        blueprints = [],
+        errorsToBeShown = this.props.errors['UNREACHABLE'] ? true : false,
+        errorMessage = errorsToBeShown ? this.props.errors['UNREACHABLE'].message : '';
 
-    var allBlueprints = this.props.allBlueprints;
-    var blueprints = [];
-
+    // Prepare Blueprintslist
     _.each(allBlueprints, function(blueprint,key) {
       var filterTerm = this.state.filterText.toLowerCase() || false;
       if ( ( blueprint.name.toLowerCase().indexOf(filterTerm) === -1 && filterTerm) ) {
@@ -75,13 +75,26 @@ var BlueprintsList = React.createClass({
       blueprints.push(<BlueprintListItem key={key} blueprint={allBlueprints[key]} />);
     }, this);
     
+    // Prepare dynamic classes
+    var loadingClassSet = classNames({
+      "hidden": this.props.loadState !== LoadStates.STATE_LOADING
+    });
     var emptyClassSet = classNames({
       "empty-list": true,
-      "hidden": blueprints.length > 0
+      "container-status-message": true,
+      "hidden": blueprints.length > 0 || errorsToBeShown
+    });
+    var errorMessageClassSet = classNames({
+      "error-status-message": true,
+      "container-status-message": true,
+      "hidden": !errorsToBeShown
     });
     var listHeaderClasses = classNames({
       "list-header": true,
       "hidden": blueprints.length <= 0
+    });
+    var listClasses = classNames( this.state.viewType, {
+      'dimmed': this.props.errors['UNREACHABLE']
     });
 
     return(
@@ -95,13 +108,14 @@ var BlueprintsList = React.createClass({
           requestResolved={this.state.blueprintCreated} 
           loadState={this.props.loadState} />
         <span className={emptyClassSet}>No blueprints found.</span>
+        <span className={errorMessageClassSet}>{errorMessage}</span>        
         <TransitionGroup 
           id='blueprints-list' 
           component="ul" 
           transitionName="fadeIn" 
           transitionAppear={true} 
           transitionLeave={true} 
-          className={this.state.viewType}>
+          className={listClasses}>
           <li className={listHeaderClasses}>
             <div className="list-section section-fifth">
               <h4>Blueprint</h4>

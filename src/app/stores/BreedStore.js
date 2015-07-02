@@ -5,6 +5,7 @@ var assign = require('object-assign');
 var BreedConstants = require('../constants/BreedConstants');
 var LoadStates = require("../constants/LoadStates.js");
 var Actions = require('../actions/BreedActions');
+var AppStore = require('./AppStore');
 
 var CHANGE_EVENT = 'change';
 
@@ -58,7 +59,11 @@ var BreedStore = assign({}, EventEmitter.prototype,{
 
     switch(action) {
       case BreedConstants.GET_ALL_BREEDS + '_SUCCESS':
+        AppStore.deleteError('UNREACHABLE');
         _persistBreeds(payload.response)
+        break;
+      case BreedConstants.GET_ALL_BREEDS + '_UNREACHABLE':
+        AppStore.putError('UNREACHABLE');
         break;
 
       case BreedConstants.CREATE_BREED + '_SUCCESS':

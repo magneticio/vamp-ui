@@ -61,13 +61,13 @@ var BreedsList = React.createClass({
 
   render: function() {
 
-    var loadingClassSet = classNames({
-      "hidden": this.props.loadState !== LoadStates.STATE_LOADING
-    });
-      
-    var allBreeds = this.props.allBreeds;
-    var breeds = [];
-
+    // Set vars
+    var allBreeds = this.props.allBreeds,
+        breeds = [],
+        errorsToBeShown = this.props.errors['UNREACHABLE'] ? true : false,
+        errorMessage = errorsToBeShown ? this.props.errors['UNREACHABLE'].message : '';
+    
+    // Prepare Breedslist
     _.each(allBreeds, function(breed,key) {
       var filterTerm = this.state.filterText.toLowerCase() || false;
       if ( ( breed.name.toLowerCase().indexOf(filterTerm) === -1 && breed.deployable.toLowerCase().indexOf(filterTerm) === -1 && filterTerm) ) {
@@ -76,13 +76,26 @@ var BreedsList = React.createClass({
       breeds.push(<BreedListItem key={key} breed={breed} />);
     }, this);
 
+    // Prepare dynamic classes
+    var loadingClassSet = classNames({
+      "hidden": this.props.loadState !== LoadStates.STATE_LOADING
+    });
     var emptyClassSet = classNames({
       "empty-list": true,
-      "hidden": breeds.length > 0
+      "container-status-message": true,
+      "hidden": breeds.length > 0 || errorsToBeShown
+    });
+    var errorMessageClassSet = classNames({
+      "error-status-message": true,
+      "container-status-message": true,
+      "hidden": !errorsToBeShown
     });
     var listHeaderClasses = classNames({
       "list-header": true,
       "hidden": breeds.length <= 0
+    });
+    var listClasses = classNames( this.state.viewType, {
+      'dimmed': this.props.errors['UNREACHABLE']
     });
 
     return(
@@ -95,14 +108,15 @@ var BreedsList = React.createClass({
           addArtefactType='breed'
           requestResolved={this.state.breedCreated} 
           loadState={this.props.loadState}/>
-        <span className={emptyClassSet}>No breeds found.</span>
+        <span className={emptyClassSet}>No running deployments.</span>
+        <span className={errorMessageClassSet}>{errorMessage}</span>        
         <TransitionGroup 
           id='breeds-list'         
           component="ul" 
           transitionName="fadeIn" 
           transitionAppear={true}
           transitionLeave={true}
-          className={this.state.viewType}>
+          className={listClasses}>
           <li className={listHeaderClasses}>
             <div className="list-section section-half">
               <h4>Breed</h4>

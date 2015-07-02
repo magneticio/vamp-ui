@@ -17,9 +17,9 @@ var Config = {
     // remove trailing slash
     if(url.substr(-1) === '/') {
       localStorage.setItem('host', url.substr(0, url.length - 1));
-      return
+    } else {
+      localStorage.setItem('host', url);
     }
-    localStorage.setItem('host', url);
   },
   removeApiHost: function(){
     localStorage.removeItem('host');
