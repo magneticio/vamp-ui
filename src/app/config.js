@@ -23,35 +23,8 @@ var Config = {
   },
   removeApiHost: function(){
     localStorage.removeItem('host');
-  },
+  }
   
-  // PULSE REST API
-  getPulseApiUrl: function(){
-    if(this.pulseApiUrl)
-      return this.pulseApiUrl;
-
-    var infoEndpoint = this.getApiUrl() + '/info',
-        self = this;
-
-    request.get(infoEndpoint).end(function(err,res){
-      var infoObject = JSON.parse(res.text);
-      self.setPulseApiUrl(infoObject);
-    });
-
-      return this.pulseApiUrl;
-  },
-  setPulseApiUrl: function(infoObject){
-    var pulseUrl = infoObject.pulse_url,
-        pulsePort = pulseUrl.substring(pulseUrl.lastIndexOf(":") + 1, pulseUrl.length),
-        localStorageHost = localStorage.getItem('host').substr(0, localStorage.getItem('host').lastIndexOf(":"));
-
-    if (pulseUrl.indexOf("localhost") > -1) {
-      this.pulseApiUrl = localStorageHost + ':' +  pulsePort + '/api/v1';
-    } else {
-      this.pulseApiUrl = pulseUrl + '/api/v1';
-    }
-  },
-
 };
 
 module.exports = Config;
