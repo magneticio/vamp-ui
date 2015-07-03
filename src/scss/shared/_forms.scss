@@ -2,8 +2,18 @@
 	display: inline-block;
 	width: 25rem;
 	box-sizing: border-box;
+
+	label {
+		width: 100%;
+		font-size: 1rem;
+		font-weight: 400;
+		margin: 0;
+		line-height: $line-height;
+		text-transform: none;
+	}
 	input {
 		width: 100%;
+		color: $grey;
 	}
 }
 [type="password"],
@@ -55,10 +65,11 @@
 }
 
 .options-form {
-	label {
-		display: block;
+	h4 {
+		margin-top: 1rem;
 	}
 	input {
 		width: 100%;
+		background-color: white;
 	}
 }

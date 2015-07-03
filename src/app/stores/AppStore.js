@@ -9,7 +9,7 @@ var Actions = require('../actions/AppActions');
 var CHANGE_EVENT = 'change';
 
 var _info = {},
-    _errors = [];
+    _errors = {};
 
 // var _persistBreeds = function(response){
 //   var _temp = {}
@@ -23,7 +23,7 @@ var _info = {},
 
 var _registerError = function(errorType, message, artefactType){
   if(errorType == 'UNREACHABLE')
-    message = "It seems the backend is unreachable, are you sure it's runing?";
+    message = "It seems the backend is unreachable, are you sure it's running?";
 
   _errors[errorType] = {
     'type': errorType,
@@ -42,6 +42,7 @@ var AppStore = assign({}, EventEmitter.prototype,{
     return _errors;
   },
   putError: function(errorType, message){
+    console.log('%c Put error ', 'background-color: red; color: white;');
     _registerError(errorType, message);
   },
   deleteError: function(errorType){

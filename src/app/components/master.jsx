@@ -36,7 +36,7 @@ var Master = React.createClass({
       allBreeds: [],
       activeTabId: '/deployments',
       isOptionsPaneOpened: false,
-      errors: []
+      errors: {}
     }
   },
   componentDidMount: function() {
@@ -76,7 +76,7 @@ var Master = React.createClass({
             <RouteHandler {...props} />
           </div>
         </div>
-        <OptionsPane togglePageContent={this.togglePageContent} apiInfo={this.state.apiInfo} />
+        <OptionsPane togglePageContent={this.togglePageContent} apiInfo={this.state.apiInfo} errors={this.state.errors} />
       </div>
     );
   },
