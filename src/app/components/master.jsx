@@ -76,7 +76,7 @@ var Master = React.createClass({
             <RouteHandler {...props} />
           </div>
         </div>
-        <OptionsPane togglePageContent={this.togglePageContent} />
+        <OptionsPane togglePageContent={this.togglePageContent} apiInfo={this.state.apiInfo} />
       </div>
     );
   },
@@ -87,6 +87,7 @@ var Master = React.createClass({
         allBreeds: BreedStore.getAll(),
         allBlueprints: BlueprintStore.getAll(),
         allDeployments: DeploymentStore.getAll(),
+        apiInfo: AppStore.getInfo(),
         errors: AppStore.getErrors(),
         loadState: LoadStates.STATE_SUCCESS
       }

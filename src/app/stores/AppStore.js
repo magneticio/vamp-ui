@@ -8,7 +8,8 @@ var Actions = require('../actions/AppActions');
 
 var CHANGE_EVENT = 'change';
 
-var _errors = [];
+var _info = {},
+    _errors = [];
 
 // var _persistBreeds = function(response){
 //   var _temp = {}
@@ -20,10 +21,6 @@ var _errors = [];
 //   _breeds = _temp;
 // };
 
-// var _addBreed = function(response){
-//   var newBreed = JSON.parse(response.text);
-//   _breeds[newBreed.name] = newBreed;
-// }
 var _registerError = function(errorType, message, artefactType){
   if(errorType == 'UNREACHABLE')
     message = "It seems the backend is unreachable, are you sure it's runing?";
@@ -39,7 +36,7 @@ var _registerError = function(errorType, message, artefactType){
 var AppStore = assign({}, EventEmitter.prototype,{
 
   getInfo: function() {
-    //return _breeds;
+    return _info;
   },
   getErrors: function(){
     return _errors;
@@ -71,6 +68,7 @@ var AppStore = assign({}, EventEmitter.prototype,{
     switch(action) {
       case AppConstants.GET_INFO + '_SUCCESS':
         console.log(payload.response);
+        _info = JSON.parse(payload.response.text);
         //_persistInfo(payload.response);
         break;
       case AppConstants.GET_INFO + '_ERROR':
