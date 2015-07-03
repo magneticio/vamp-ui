@@ -16,7 +16,7 @@ function abortPendingRequests(actionType) {
 }
 
 function makeUrl(path) {
-  return Config.getPulseApiUrl() + path;
+  return Config.getApiUrl() + path;
 }
 
 function dispatch(actionType, response) {
