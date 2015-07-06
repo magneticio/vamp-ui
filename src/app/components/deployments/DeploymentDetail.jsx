@@ -61,8 +61,6 @@ var DeploymentDetail = React.createClass({
     
     deployment = this.state.deployment;
 
-    // console.log('%c deployment ', 'background-color: green; color: white;', deployment);
-
     //grab the endpoint
     var endpoints = [] 
     _.each(deployment.endpoints,function(val,key){

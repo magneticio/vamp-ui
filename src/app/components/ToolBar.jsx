@@ -136,7 +136,7 @@ var ToolBar = React.createClass({
               <input type='submit' className={saveButtonClasses} value='Save' />
             </div>
             <p className={dialogClasses}>{this.state.errorMessage}</p>
-            <textarea className='inputfield' ref="inputfield" value={this.state.newArtefact} onChange={this.handleTextareaChange}></textarea>
+            <textarea className='inputfield' ref="inputfield" value={this.state.newArtefact} onChange={this.handleTextareaChange} rows='15'></textarea>
         </form>
 
       </section>
