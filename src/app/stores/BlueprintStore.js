@@ -20,7 +20,6 @@ var _persistBlueprints = function(response){
   });
   _blueprints = _temp
 };
-
 var _addBlueprint = function(response){
   var newBlueprint = JSON.parse(response.text);
   _blueprints[newBlueprint.name] = newBlueprint;
@@ -42,9 +41,7 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
 
   setBlueprintStatus: function(name, newStatus) {
     var blueprint = _.findWhere(_blueprints, { "name" : name });
-    console.log('%c before: ', 'background-color: #3498DB; color: white;', blueprint);
     blueprint.status = newStatus;
-    console.log('%c after: ', 'background-color: #3498DB; color: white;', blueprint);
   },
 
   emitChange: function() {
@@ -58,7 +55,9 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
   },
 
   dispatcherIndex: AppDispatcher.register(function(payload) {
+
     var action = payload.actionType;
+
     switch(action) {
       case BlueprintConstants.GET_ALL_BLUEPRINTS + '_SUCCESS':
         AppStore.deleteError('UNREACHABLE');
@@ -67,22 +66,29 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
       case BlueprintConstants.GET_ALL_BLUEPRINTS + '_UNREACHABLE':
         AppStore.putError('UNREACHABLE');
         break;
+      case BlueprintConstants.GET_ALL_BLUEPRINTS + '_ERROR':
+        AppStore.putError('UNREACHABLE');
+        break;  
+
       // case BlueprintConstants.CREATE_BLUEPRINT:
       //   payload.response.status = 'DIRTY'
       //   _blueprints[payload.response.name] = payload.response
       //   break;
+
       case BlueprintConstants.CREATE_BLUEPRINT + '_SUCCESS':
         _addBlueprint(payload.response);
         break;
-
-
       case BlueprintConstants.CREATE_BLUEPRINT + '_ERROR':
         var errortext = JSON.parse(payload.response.text)
         _error = errortext.message;
         break;
 
       case BlueprintConstants.DELETE_BLUEPRINT:
-        _blueprints[payload.response.name].status = 'DELETING'                    
+        _blueprints[payload.response.name].status = 'DELETING';
+        break;
+      case BlueprintConstants.DELETE_BLUEPRINT + '_ERROR':
+        _blueprints[payload.response.name].status = 'DELETE_ERROR';
+        break;                      
     }
     
     BlueprintStore.emitChange();

@@ -13,14 +13,22 @@ var BlueprintListItem = React.createClass({
 
   getInitialState: function(){
     return {
-      requestPending: false
+      deployRequestPending: false,
+      deleteRequestPending: false,
+      deleteRequestError: false
     }
   },
   componentWillReceiveProps: function(nextProps){
-    console.log(nextProps);
-    if(this.state.requestPending && nextProps.blueprint.status == "ACCEPTED"){
-      this.setState({ requestPending: false });
+    console.log(nextProps.blueprint.name);
+    if(this.state.deployRequestPending && nextProps.blueprint.status == "ACCEPTED"){
+      this.setState({ deployRequestPending: false });
       this.context.router.transitionTo('deployments');
+    }
+    if(this.state.deleteRequestPending && nextProps.blueprint.status == "DELETE_ERROR"){
+      this.setState({ 
+        deleteRequestPending: false, 
+        deleteRequestError: true 
+      });
     }
   },
 
@@ -29,23 +37,12 @@ var BlueprintListItem = React.createClass({
     this.context.router.transitionTo('blueprint',{id: this.props.blueprint.name});
   },
   handleDeploy: function(e) {
-     var el = e.currentTarget,
-        className = 'active';
-
-    el.classList ? el.classList.add(className) : el.className += ' ' + className;
-    this.setState({ requestPending: true });
+    this.setState({ deployRequestPending: true });
     BlueprintActions.deployBlueprint(this.props.blueprint);
   },
   handleDelete: function(e) {
-    var el = e.currentTarget,
-        className = 'active',
-        self = this;
-
-    el.classList ? el.classList.add(className) : el.className += ' ' + className;
-
-    setTimeout(function(){
-      BlueprintActions.deleteBlueprint(self.props.blueprint);
-    }, 200);
+    this.setState({ deleteRequestPending: true });
+    BlueprintActions.deleteBlueprint(this.props.blueprint);
   },
 
   prepareMetaInformation: function(metaInformation, storeType){
@@ -75,18 +72,26 @@ var BlueprintListItem = React.createClass({
         clusters = this.prepareMetaInformation(blueprint.clusters, 'key'),
         services = this.prepareServices(blueprint.clusters);    
 
-
+    var listClasses = cx({
+      'list-item': true,
+      'hidden': this.state.deleteRequestPending
+    });
     var loaderClasses = cx({
       'hide': blueprint.status == 'CLEAN' ? true : false
     });
     var deployButtonClasses = cx({
       'button': true,
       'button-ghost': true,
-      'active': this.state.requestPending
+      'active': this.state.deployRequestPending
+    });
+    var deleteButtonClasses = cx({
+      'button': true,
+      'button-red': true,
+      'active': this.state.deleteRequestPending,
     });
 
     return (
-      <li className="list-item">
+      <li className={listClasses}>
         <div className="list-section section-fifth">
           <a onClick={this.handleDetail}><p className="item-name">{blueprint.name}</p></a>
         </div>
@@ -101,7 +106,7 @@ var BlueprintListItem = React.createClass({
         </div>
         <div className="list-section section-fifth list-controls">
           <button className={deployButtonClasses} onClick={this.handleDeploy}>Deploy</button>
-          <button className='button button-red' onClick={this.handleDelete}>Delete</button>
+          <button className={deleteButtonClasses} onClick={this.handleDelete}>Delete</button>
         </div>
       </li>
   )}

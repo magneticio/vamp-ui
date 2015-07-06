@@ -21,7 +21,6 @@ var _persistBreeds = function(response){
   });
   _breeds = _temp;
 };
-
 var _addBreed = function(response){
   var newBreed = JSON.parse(response.text);
   _breeds[newBreed.name] = newBreed;
@@ -65,6 +64,9 @@ var BreedStore = assign({}, EventEmitter.prototype,{
       case BreedConstants.GET_ALL_BREEDS + '_UNREACHABLE':
         AppStore.putError('UNREACHABLE');
         break;
+      case BreedConstants.GET_ALL_BREEDS + '_ERROR':
+        AppStore.putError('UNREACHABLE');
+        break;
 
       case BreedConstants.CREATE_BREED + '_SUCCESS':
         _addBreed(payload.response);
@@ -76,6 +78,9 @@ var BreedStore = assign({}, EventEmitter.prototype,{
 
       case BreedConstants.DELETE_BREED:
         _breeds[payload.response.name].status = 'DELETING'         
+        break;
+      case BreedConstants.DELETE_BREED + '_SUCCESS':
+        _breeds[payload.response.name].status = 'DELETED'         
         break;
     }
 

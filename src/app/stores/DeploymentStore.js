@@ -23,14 +23,11 @@ var _persistDeployments = function(response){
     _temp[obj.name] = obj;
     _temp[obj.name].status = 'CLEAN';
   });
-
   _deployments = _temp;
 };
-
 var _persistCurrentDeployment = function(response){
   _currentDeployment = JSON.parse(response.text)
 };
-
 var _eraseCurrentDeployment = function() {
   _currentDeployment = {};
 };  
@@ -40,7 +37,6 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
   getAll: function() {
     return _deployments;
   },
-
   getCurrent: function() {
     return _currentDeployment;
   },
@@ -48,11 +44,9 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
-
   addChangeListener: function(callback) {
     this.on(CHANGE_EVENT, callback);
   },
-
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   },
@@ -69,32 +63,30 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
       case DeploymentConstants.GET_ALL_DEPLOYMENTS + '_UNREACHABLE':
         AppStore.putError('UNREACHABLE');
         break;
+      case DeploymentConstants.GET_ALL_DEPLOYMENTS + '_ERROR':
+        AppStore.putError('UNREACHABLE');
+        break;
 
       case DeploymentConstants.GET_DEPLOYMENT + '_SUCCESS':
         _persistCurrentDeployment(payload.response);
         break;
+      case DeploymentConstants.GET_DEPLOYMENT + '_ERROR':
+        AppStore.putError('UNREACHABLE');
+        break;
 
       case BlueprintConstants.DEPLOY_BLUEPRINT:
-        console.log('%c deploying ', 'background-color: orange; color: white;');
         payload.response.status = 'PENDING';
         _blueprintToDeploy = payload.response.name;
         _deployments[payload.response.name] = payload.response;
         BlueprintStore.setBlueprintStatus(_blueprintToDeploy, payload.response.status);
         break;
       case BlueprintConstants.DEPLOY_BLUEPRINT + '_SUCCESS':
-        console.log('%c deploying ACCEPTED ', 'background-color: green; color: white;');
         payload.response.status = 'ACCEPTED';
         BlueprintStore.setBlueprintStatus(_blueprintToDeploy, payload.response.status);
-        break; 
-
-      case DeploymentConstants.CLEANUP_DEPLOYMENT:
-        console.log('depl is: ' + payload);
-        _deployments[payload.response.name].status = 'DELETING';
         break;
-
-      case DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT + '_SUCCESS':
-        window.open().document.write('<pre><code>' + payload.response.text + '</pre></code>');
-        break;        
+      case BlueprintConstants.DEPLOY_BLUEPRINT + '_ERROR':
+        console.log('%c deploying ERROR ', 'background-color: red; color: white;');
+        break;      
 
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_SCUR + '_SUCCESS':
         _currentDeployment.scur = JSON.parse(payload.response.text);
@@ -114,6 +106,15 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
             return;
           }
         });
+
+      case DeploymentConstants.CLEANUP_DEPLOYMENT:
+        console.log('depl is: ' + payload);
+        _deployments[payload.response.name].status = 'DELETING';
+        break;
+
+      case DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT + '_SUCCESS':
+        window.open().document.write('<pre><code>' + payload.response.text + '</pre></code>');
+        break;   
         
         break;
     }
