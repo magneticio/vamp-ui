@@ -5,6 +5,7 @@ var assign = require('object-assign');
 var LoadStates = require("../constants/LoadStates.js");
 var BlueprintConstants = require('../constants/BlueprintConstants');
 var DeploymentConstants = require('../constants/DeploymentConstants');
+var BlueprintStore = require('../stores/BlueprintStore');
 var Actions = require('../actions/DeploymentActions');
 var AppStore = require('./AppStore');
 
@@ -13,6 +14,7 @@ var CHANGE_EVENT = 'change';
 var _deployments = {};
 var _currentDeployment = {};
 var _currentDeploymentMetrics = {};
+var _blueprintToDeploy = '';
 
 var _persistDeployments = function(response){
   var _temp = {};
@@ -74,13 +76,15 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
 
       case BlueprintConstants.DEPLOY_BLUEPRINT:
         console.log('%c deploying ', 'background-color: orange; color: white;');
-        payload.response.status = 'DIRTY';
+        payload.response.status = 'PENDING';
+        _blueprintToDeploy = payload.response.name;
         _deployments[payload.response.name] = payload.response;
+        BlueprintStore.setBlueprintStatus(_blueprintToDeploy, payload.response.status);
         break;
       case BlueprintConstants.DEPLOY_BLUEPRINT + '_SUCCESS':
-        console.log('%c deploying success ', 'background-color: green; color: white;');
-        //payload.response.status = 'DIRTY';
-        //_deployments[payload.response.name] = payload.response;
+        console.log('%c deploying ACCEPTED ', 'background-color: green; color: white;');
+        payload.response.status = 'ACCEPTED';
+        BlueprintStore.setBlueprintStatus(_blueprintToDeploy, payload.response.status);
         break; 
 
       case DeploymentConstants.CLEANUP_DEPLOYMENT:

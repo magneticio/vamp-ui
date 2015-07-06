@@ -11,18 +11,30 @@ var BlueprintListItem = React.createClass({
     router: React.PropTypes.func
   },
 
+  getInitialState: function(){
+    return {
+      requestPending: false
+    }
+  },
+  componentWillReceiveProps: function(nextProps){
+    console.log(nextProps);
+    if(this.state.requestPending && nextProps.blueprint.status == "ACCEPTED"){
+      this.setState({ requestPending: false });
+      this.context.router.transitionTo('deployments');
+    }
+  },
+
   handleDetail: function(e) {
     e.preventDefault();
     this.context.router.transitionTo('blueprint',{id: this.props.blueprint.name});
   },
   handleDeploy: function(e) {
      var el = e.currentTarget,
-        className = 'active',
-        self = this;
+        className = 'active';
 
     el.classList ? el.classList.add(className) : el.className += ' ' + className;
+    this.setState({ requestPending: true });
     BlueprintActions.deployBlueprint(this.props.blueprint);
-    self.context.router.transitionTo('deployments');
   },
   handleDelete: function(e) {
     var el = e.currentTarget,
@@ -67,6 +79,11 @@ var BlueprintListItem = React.createClass({
     var loaderClasses = cx({
       'hide': blueprint.status == 'CLEAN' ? true : false
     });
+    var deployButtonClasses = cx({
+      'button': true,
+      'button-ghost': true,
+      'active': this.state.requestPending
+    });
 
     return (
       <li className="list-item">
@@ -83,7 +100,7 @@ var BlueprintListItem = React.createClass({
           <DropdownList items={services} />
         </div>
         <div className="list-section section-fifth list-controls">
-          <button className='button button-ghost' onClick={this.handleDeploy}>Deploy</button>
+          <button className={deployButtonClasses} onClick={this.handleDeploy}>Deploy</button>
           <button className='button button-red' onClick={this.handleDelete}>Delete</button>
         </div>
       </li>

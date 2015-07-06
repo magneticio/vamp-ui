@@ -40,6 +40,13 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
     return returnError;
   },
 
+  setBlueprintStatus: function(name, newStatus) {
+    var blueprint = _.findWhere(_blueprints, { "name" : name });
+    console.log('%c before: ', 'background-color: #3498DB; color: white;', blueprint);
+    blueprint.status = newStatus;
+    console.log('%c after: ', 'background-color: #3498DB; color: white;', blueprint);
+  },
+
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
@@ -55,7 +62,7 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
     switch(action) {
       case BlueprintConstants.GET_ALL_BLUEPRINTS + '_SUCCESS':
         AppStore.deleteError('UNREACHABLE');
-        _persistBlueprints(payload.response)
+        _persistBlueprints(payload.response);
         break;
       case BlueprintConstants.GET_ALL_BLUEPRINTS + '_UNREACHABLE':
         AppStore.putError('UNREACHABLE');
