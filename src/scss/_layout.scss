@@ -64,10 +64,25 @@ ul, ol, dl {
 		position: relative;
 	}
 
-	.export-link {
+	.export-links {
+		width: auto;
 		position: absolute;
 		right: 0;
-		bottom: 0.1rem;
+
+		li {
+			cursor: pointer;
+		}
+		.first-item {
+			font-weight: 600;
+			text-transform: lowercase;
+
+			&:hover {
+				background-color: white;
+			}
+		}
+		&:hover .first-item a {
+			//color: $grey-medium; 
+		}
 	}
 }
 .cluster-box {

@@ -69,7 +69,6 @@ var ServiceBox = React.createClass({
     _.each(allMetrics, function(metricObject, key){
       _.each(metricObject['tags'], function(tagValue, key){
         if(tagValue == 'metrics:' + metricType){
-          console.log(metricObject.value);
           metricValue = metricObject.value;
         }
       }, this);

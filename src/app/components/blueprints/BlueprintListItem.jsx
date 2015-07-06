@@ -19,7 +19,6 @@ var BlueprintListItem = React.createClass({
     }
   },
   componentWillReceiveProps: function(nextProps){
-    console.log(nextProps.blueprint.name);
     if(this.state.deployRequestPending && nextProps.blueprint.status == "ACCEPTED"){
       this.setState({ deployRequestPending: false });
       this.context.router.transitionTo('deployments');

@@ -49,8 +49,8 @@ var DeploymentDetail = React.createClass({
   handleSubmit: function() {
     this.props.getDeploymentDetails;
   },
-  handleExportAsBlueprint: function(){
-    DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, 'application/x-yaml');
+  handleExportAsBlueprint: function(type){
+    DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, type);
   },
   
   onOptionsUpdate: function(cluster, service, filters, weight){
@@ -84,8 +84,12 @@ var DeploymentDetail = React.createClass({
         <div className='section-full'>
           <div id="general-metrics" className='detail-section'>
             <div className='endpoints-container'>
+              <ul className='export-links dropdown-list'>
+                <li className='first-item'><a onClick={this.handleExportAsBlueprint.bind(this, 'application/x-yaml')}>Export as Blueprint</a></li>
+                <li onClick={this.handleExportAsBlueprint.bind(this, 'application/x-yaml')}><a>YAML</a></li>
+                <li onClick={this.handleExportAsBlueprint.bind(this, 'application/json')}><a>JSON</a></li>
+              </ul>
               {endpoints}
-              <a className='export-link' onClick={this.handleExportAsBlueprint}>Export as Blueprint</a>
               <hr />
             </div>
             <div className="deployment-metrics-container">

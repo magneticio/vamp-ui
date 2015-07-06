@@ -109,7 +109,8 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
 
       case DeploymentConstants.CLEANUP_DEPLOYMENT:
         console.log('depl is: ' + payload);
-        _deployments[payload.response.name].status = 'DELETING';
+        if(_deployments[payload.response.name])
+          _deployments[payload.response.name].status = 'DELETING';
         break;
 
       case DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT + '_SUCCESS':
