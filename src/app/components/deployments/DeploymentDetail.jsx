@@ -80,7 +80,7 @@ var DeploymentDetail = React.createClass({
 
     // Setup dynamic classes
     var containerClassnames = classNames({
-      'dimmed': true
+      'dimmed': errorsToBeShown
     });
     var errorMessageClassSet = classNames({
       "error-status-message": true,

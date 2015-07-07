@@ -7,15 +7,24 @@ var classNames = require('classnames');
 var OptionsPaneSection = React.createClass({
 
   render: function(){
-    var listItems = [];
+
+    var listItems = [],
+        errorsToBeShown = this.props.errors['UNREACHABLE'] ? true : false,
+        errorMessage = errorsToBeShown ? this.props.errors['UNREACHABLE'].message : '';
 
     _.each(this.props.listItems, function(value, key){
       listItems.push(<dt key={key+value}>{key}</dt>);
       listItems.push(<dd key={value+key}>{value}</dd>);
     }, this);
-  
+
+    // Setup dynamic classes
+    var sectionClasses = classNames({
+      'hidden': errorsToBeShown,
+      'options-pane-section': true
+    });
+
   	return (
-  		<section className="options-pane-section">
+  		<section className={sectionClasses}>
           <h4>{this.props.sectionTitle}</h4>
           <dl>
             {listItems}

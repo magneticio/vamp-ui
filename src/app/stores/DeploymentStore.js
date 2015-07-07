@@ -92,12 +92,15 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         break;      
 
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_SCUR + '_SUCCESS':
+        AppStore.deleteError('UNREACHABLE');
         _currentDeployment.scur = JSON.parse(payload.response.text);
         break;
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_RATE + '_SUCCESS':
+        AppStore.deleteError('UNREACHABLE');
         _currentDeployment.rate = JSON.parse(payload.response.text);
         break;
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_SERVICE + '_SUCCESS':
+        AppStore.deleteError('UNREACHABLE');
         var metrics = payload.response.body;
         
         if(!_currentDeployment.serviceMetrics)

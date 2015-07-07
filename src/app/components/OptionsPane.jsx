@@ -41,6 +41,7 @@ var OptionsPane = React.createClass({
         pulseItems = {},
         containerDriverItems = {};
 
+    // filter trough info endpoint, set vars
     if( _.isEmpty(apiInfo) || !_.isEmpty(this.props.errors) ){
       apiInfo['message'] = "It seems the api can't be reached, we're sorry";
     }
@@ -87,11 +88,11 @@ var OptionsPane = React.createClass({
 	            value={this.state.apiUrl}
 	            onChange={this.handleChange} />
 
-              <OptionsPaneSection sectionTitle='JVM Runtime' listItems={jvmItems} />
-              <OptionsPaneSection sectionTitle='Persistence' listItems={persistenceItems} />
-              <OptionsPaneSection sectionTitle='Router' listItems={routerItems} />
-              <OptionsPaneSection sectionTitle='Pulse elasticsearch' listItems={pulseItems} />
-              <OptionsPaneSection sectionTitle='Container Driver' listItems={containerDriverItems} />
+              <OptionsPaneSection sectionTitle='JVM Runtime' errors={this.props.errors} listItems={jvmItems} />
+              <OptionsPaneSection sectionTitle='Persistence' errors={this.props.errors} listItems={persistenceItems} />
+              <OptionsPaneSection sectionTitle='Router' errors={this.props.errors} listItems={routerItems} />
+              <OptionsPaneSection sectionTitle='Pulse elasticsearch' errors={this.props.errors} listItems={pulseItems} />
+              <OptionsPaneSection sectionTitle='Container Driver' errors={this.props.errors} listItems={containerDriverItems} />
 
 	          </form>
 	        </div>
