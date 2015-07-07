@@ -70,6 +70,9 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
       case DeploymentConstants.GET_DEPLOYMENT + '_SUCCESS':
         _persistCurrentDeployment(payload.response);
         break;
+      case DeploymentConstants.GET_DEPLOYMENT + '_UNREACHABLE':
+        AppStore.putError('UNREACHABLE');
+        break;
       case DeploymentConstants.GET_DEPLOYMENT + '_ERROR':
         AppStore.putError('UNREACHABLE');
         break;

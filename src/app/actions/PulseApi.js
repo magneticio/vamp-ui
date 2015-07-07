@@ -1,5 +1,6 @@
 var Config = require('../config.js');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
+var AppStore = require('../stores/AppStore');
 var LoadStates = require("../constants/LoadStates.js");
 var request = require('superagent');
 
@@ -29,15 +30,22 @@ function handleResponse(actionType) {
   return function (err, res) {
     if (err && err.timeout === TIMEOUT) {
       dispatch(LoadStates.STATE_TIMEOUT, null);
-    }
-    else if (!res.ok) {
-      dispatch(actionType + '_ERROR', null);
+    } else if (typeof res == "undefined" || !res.ok) {
+      handleError(actionType, res);
+      AppStore.putError('UNREACHABLE');
     } else {
-      //console.log(res);
       dispatch(actionType + '_SUCCESS', res);
     }
   };
-}
+};
+function handleError(actionType, res){
+  console.log('pulse api error');
+  if(res){
+    dispatch(actionType + '_ERROR', res);
+  } else {
+    dispatch(actionType + '_UNREACHABLE');
+  }
+};
 
 function post(url, body) {
   return request

@@ -2,6 +2,9 @@
 	display: none!important;
 	visibility: hidden;
 }
+.dimmed {
+	opacity: 0.3;
+}
 .clip-textoverflow {
 	display: inline-block;
 	max-width: 100%;

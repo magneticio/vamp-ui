@@ -33,6 +33,7 @@ function handleResponse(actionType) {
   };
 };
 function handleError(actionType, res){
+  console.log('api error');
   if(res){
     dispatch(actionType + '_ERROR', res);
   } else {

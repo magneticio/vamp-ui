@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var React = require('react/addons');
+var classNames = require('classnames');
 var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
 var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
 var ClusterBox = require('./ClusterBox.jsx');
@@ -60,6 +61,8 @@ var DeploymentDetail = React.createClass({
   render: function() {
     
     deployment = this.state.deployment;
+    var errorsToBeShown = this.props.errors['UNREACHABLE'] ? true : false,
+        errorMessage = errorsToBeShown ? this.props.errors['UNREACHABLE'].message : '';
 
     //grab the endpoint
     var endpoints = [] 
@@ -75,9 +78,20 @@ var DeploymentDetail = React.createClass({
         clusters.push(<ClusterBox key={item[0]} name={item[0]} cluster={item[1]} serviceMetrics={deployment.serviceMetrics} onOptionsUpdate={this.onOptionsUpdate} />);
       }, this).value()
 
+    // Setup dynamic classes
+    var containerClassnames = classNames({
+      'dimmed': true
+    });
+    var errorMessageClassSet = classNames({
+      "error-status-message": true,
+      "container-status-message": true,
+      "hidden": !errorsToBeShown
+    });
+
     return(
       <TransitionGroup component="div" transitionName="fadeIn" transitionAppear={true}>
-      <section id="deployment-single">
+      <span className={errorMessageClassSet}>{errorMessage}</span>        
+      <section id="deployment-single" className={containerClassnames}>
         <BreadCrumbsBar/>
         <div className='section-full'>
           <div id="general-metrics" className='detail-section'>
