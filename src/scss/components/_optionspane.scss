@@ -8,11 +8,22 @@
 	overflow-y: scroll;
 	transition: transform 0.4s ease;
 	background-color: $off-white;
-
+	
+	h4 {
+		color: $grey;
+		padding-top: 1rem;
+		margin-bottom: 0.5rem;
+	}
 	dt, dd {
 		width: 50%;
 		display: inline-block;
 		margin: 0;
+		font-size: $s-size;
+	}
+	dt {
+		vertical-align: top;
+		font-weight: 600;
+		color: $grey-medium;
 	}
 }
 .inner-options-pane {
