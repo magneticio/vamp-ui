@@ -42,7 +42,6 @@ var AppStore = assign({}, EventEmitter.prototype,{
     return _errors;
   },
   putError: function(errorType, message){
-    console.log('%c Put error ', 'background-color: red; color: white;');
     _registerError(errorType, message);
   },
   deleteError: function(errorType){

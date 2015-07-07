@@ -2,6 +2,7 @@ var React = require('react/addons');
 var Config = require('../config.js');
 var AppActions = require('../actions/AppActions');
 var OptionsPaneSection = require('./OptionsPaneSection.jsx');
+var AppStore = require('../stores/AppStore');
 var _ = require('underscore');
 var classNames = require('classnames');
 
@@ -35,6 +36,7 @@ var OptionsPane = React.createClass({
 
     var formattedInfoObject = {},
         apiInfo = this.props.apiInfo || {},
+        welcomeMessage = '',
         jvmItems = {},
         persistenceItems = {},
         routerItems = {},
@@ -43,43 +45,66 @@ var OptionsPane = React.createClass({
 
     // filter trough info endpoint, set vars
     if( _.isEmpty(apiInfo) || !_.isEmpty(this.props.errors) ){
-      apiInfo['message'] = "It seems the api can't be reached, we're sorry";
+      welcomeMessage = "It seems the api can't be reached, we're sorry";
+    } else {
+      welcomeMessage = apiInfo.message;
     }
 
-    if ( apiInfo.jvm && 'runtime' in apiInfo.jvm) {
+    try {
       jvmItems['starttime'] = apiInfo.jvm.runtime.start_time;
       jvmItems['uptime'] = apiInfo.jvm.runtime.up_time;
+    } catch(e) {
+      jvmItems = {};
+      jvmItems['error'] = 'Internal error';
+      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services')
     }
-    if ( apiInfo.persistence && 'type' in apiInfo.persistence) {
+    try {
       persistenceItems['type'] = apiInfo.persistence.type;
       persistenceItems['url'] = apiInfo.persistence.url;
       persistenceItems['database'] = apiInfo.persistence.database;
+    } catch(e) {
+      persistenceItems = {};
+      persistenceItems['error'] = 'Internal error';
+      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services')
     }
-    if ( apiInfo.router && 'status' in apiInfo.router) {
+    try {
       routerItems['memmax__mb'] = apiInfo.router.status.memmax__mb;
       routerItems['name'] = apiInfo.router.status.name;
       routerItems['version'] = apiInfo.router.status.version;
       routerItems['sess_rate'] = apiInfo.router.status.sess_rate;
       routerItems['idle_pct'] = apiInfo.router.status.idle_pct;
       routerItems['uptime'] = apiInfo.router.status.uptime;
+    } catch(e) {
+      routerItems = {};
+      routerItems['error'] = 'Internal error';
+      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services')
     }
-    if ( apiInfo.pulse && 'elasticsearch' in apiInfo.pulse) {
+    try{
       pulseItems['cluster_name'] = apiInfo.pulse.elasticsearch.cluster_name;
       pulseItems['name'] = apiInfo.pulse.elasticsearch.name;
       pulseItems['version'] = apiInfo.pulse.elasticsearch.version.number;
       pulseItems['lucene_version'] = apiInfo.pulse.elasticsearch.version.lucene_version;
-      pulseItems['status'] = apiInfo.pulse.elasticsearch.status;    
+      pulseItems['status'] = apiInfo.pulse.elasticsearch.status;
+    } catch(e) {
+      pulseItems = {};
+      pulseItems['error'] = 'Internal error';
+      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services')
     }
-    if ( apiInfo.container_driver && 'type' in apiInfo.container_driver) {
+    try {
       containerDriverItems['type'] = apiInfo.container_driver.type;
+    } catch(e) {
+      containerDriverItems = {};
+      containerDriverItems['error'] = 'Internal error';
+      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services')
     }
-  
+    
+    console.log(this.props.errors);
   	return (
   		<aside className='options-pane'>
   			<div className='inner-options-pane'>
 	  			<form onSubmit={this.handleSubmit} className='options-form'>
 
-            <h3>{apiInfo.message}</h3>
+            <h3>{welcomeMessage}</h3>
 
             <h4>REST API URL</h4>
 	          <input 

@@ -19,11 +19,21 @@
 		display: inline-block;
 		margin: 0;
 		font-size: $s-size;
+		box-sizing: border-box;
 	}
 	dt {
 		vertical-align: top;
 		font-weight: 600;
 		color: $grey-medium;
+
+		&.warning {
+			color: $red!important;
+			padding-left: 1.5rem;
+		  	background-image: url(/images/alert.svg);
+		  	background-size: 1rem;
+		  	background-repeat: no-repeat;
+		  	background-position: 0;
+		}
 	}
 }
 .inner-options-pane {

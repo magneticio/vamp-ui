@@ -13,8 +13,9 @@ var OptionsPaneSection = React.createClass({
         errorMessage = errorsToBeShown ? this.props.errors['UNREACHABLE'].message : '';
 
     _.each(this.props.listItems, function(value, key){
-      listItems.push(<dt key={key+value}>{key}</dt>);
-      listItems.push(<dd key={value+key}>{value}</dd>);
+      var warningClass = classNames({ 'warning': key == 'error' ? true : false });
+      listItems.push(<dt key={key+value} className={warningClass}>{key}</dt>);
+      listItems.push(<dd key={value+key} className={warningClass}>{value}</dd>);
     }, this);
 
     // Setup dynamic classes
