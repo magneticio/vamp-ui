@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var classNames = require('classnames');
 
 var NavBar = React.createClass({
 
@@ -20,6 +21,9 @@ var NavBar = React.createClass({
 
   render: function () {
 
+    var errorsToBeShown = this.props.errors['INTERNAL'] ? true : false,
+        errorMessage = errorsToBeShown ? this.props.errors['INTERNAL'].message : '';
+
     var tabs = this.props.tabs.map(function (tab) {
       var path = this.context.router.getCurrentPathname(),
           params = this.context.router.getCurrentParams().id,
@@ -34,6 +38,12 @@ var NavBar = React.createClass({
       );
     }, this);
 
+    var optionsIconClasses = classNames({
+      "badge": errorsToBeShown,
+      "error-badge": errorsToBeShown,
+      "navigation-options": true
+    });
+
     return (
       <nav className="main-navigation" role="navigation">
         <div className="branding">
@@ -47,7 +57,7 @@ var NavBar = React.createClass({
           {tabs}
         </ul>
 
-        <div className="navigation-options" >
+        <div className={optionsIconClasses}>
           <img src='/images/cog-thick.svg' alt="Options icon" width='20px' height='20px' onClick={this.props.togglePageContent}/>
         </div>
       </nav>

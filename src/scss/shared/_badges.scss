@@ -1,9 +1,14 @@
-.badge {
-	display: inline-block;
-	background-color: $pink;
-	border-radius: 3px;
-	padding: 0 0.5rem;
-	color: white;
-	overflow: hidden;
-	font-size: $xs-size;
+.error-badge {
+	&:before {
+		content: '';
+		position: absolute;
+		top: -0.5rem;
+		right: 0.5rem;
+		display: block;
+		width: 1rem;
+		height: 1rem;
+		pointer-events: none;
+		background-image: url(/images/alert.svg);
+		background-size: 1rem;
+	}
 }

@@ -41,7 +41,8 @@ var OptionsPane = React.createClass({
         persistenceItems = {},
         routerItems = {},
         pulseItems = {},
-        containerDriverItems = {};
+        containerDriverItems = {},
+        errorFlag = false;
 
     // filter trough info endpoint, set vars
     if( _.isEmpty(apiInfo) || !_.isEmpty(this.props.errors) ){
@@ -56,7 +57,8 @@ var OptionsPane = React.createClass({
     } catch(e) {
       jvmItems = {};
       jvmItems['error'] = 'Internal error';
-      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services')
+      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services');
+      errorFlag = true;
     }
     try {
       persistenceItems['type'] = apiInfo.persistence.type;
@@ -65,7 +67,8 @@ var OptionsPane = React.createClass({
     } catch(e) {
       persistenceItems = {};
       persistenceItems['error'] = 'Internal error';
-      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services')
+      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services');
+      errorFlag = true;
     }
     try {
       routerItems['memmax__mb'] = apiInfo.router.status.memmax__mb;
@@ -77,7 +80,8 @@ var OptionsPane = React.createClass({
     } catch(e) {
       routerItems = {};
       routerItems['error'] = 'Internal error';
-      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services')
+      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services');
+      errorFlag = true;
     }
     try{
       pulseItems['cluster_name'] = apiInfo.pulse.elasticsearch.cluster_name;
@@ -88,17 +92,22 @@ var OptionsPane = React.createClass({
     } catch(e) {
       pulseItems = {};
       pulseItems['error'] = 'Internal error';
-      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services')
+      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services');
+      errorFlag = true;
     }
     try {
       containerDriverItems['type'] = apiInfo.container_driver.type;
     } catch(e) {
       containerDriverItems = {};
       containerDriverItems['error'] = 'Internal error';
-      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services')
+      AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services');
+      errorFlag = true;
+    }
+
+    if(!errorFlag){
+      AppStore.deleteError('INTERNAL');
     }
     
-    console.log(this.props.errors);
   	return (
   		<aside className='options-pane'>
   			<div className='inner-options-pane'>

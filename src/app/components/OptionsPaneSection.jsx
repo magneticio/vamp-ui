@@ -20,7 +20,7 @@ var OptionsPaneSection = React.createClass({
 
     // Setup dynamic classes
     var sectionClasses = classNames({
-      'hidden': errorsToBeShown,
+      'dimmed': errorsToBeShown,
       'options-pane-section': true
     });
 

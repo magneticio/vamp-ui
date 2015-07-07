@@ -38,8 +38,10 @@
 	}
 }
 .navigation-options {
+	position: relative;
 	display: inline-block;
 	right: 0;
+	overflow: visible;
 	margin-left: auto;
 	height: 20px;
 	padding-right: 1rem;

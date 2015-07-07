@@ -70,7 +70,7 @@ var Master = React.createClass({
       <div id="page-container" className={pageContentClasses}>
         <div className="wrapper">
           <header id="header">
-              <NavBar tabs={allTabs} activeTabId={props.activeTabId} togglePageContent={this.togglePageContent} />
+              <NavBar tabs={allTabs} activeTabId={props.activeTabId} togglePageContent={this.togglePageContent} errors={this.state.errors} />
           </header>
           <div id="page-content">
             <RouteHandler {...props} />
