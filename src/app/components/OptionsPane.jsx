@@ -44,16 +44,17 @@ var OptionsPane = React.createClass({
         containerDriverItems = {},
         errorFlag = false;
 
-    // filter trough info endpoint, set vars
     if( _.isEmpty(apiInfo) || !_.isEmpty(this.props.errors) ){
       welcomeMessage = "It seems the api can't be reached, we're sorry";
     } else {
       welcomeMessage = apiInfo.message;
     }
 
+    // Filter trough info endpoint, set vars.
     try {
-      jvmItems['starttime'] = apiInfo.jvm.runtime.start_time;
-      jvmItems['uptime'] = apiInfo.jvm.runtime.up_time;
+      var _starttime = new Date(apiInfo.jvm.runtime.start_time);
+      jvmItems['starttime'] = _starttime.toUTCString().substring(0, 16);
+      jvmItems['uptime-calculated'] = _starttime; // Uptime value gets calculated in OptionsPaneSection
     } catch(e) {
       jvmItems = {};
       jvmItems['error'] = 'Internal error';
@@ -122,7 +123,7 @@ var OptionsPane = React.createClass({
 	            value={this.state.apiUrl}
 	            onChange={this.handleChange} />
 
-              <OptionsPaneSection sectionTitle='JVM Runtime' errors={this.props.errors} listItems={jvmItems} />
+              <OptionsPaneSection sectionTitle='JVM Runtime' errors={this.props.errors} listItems={jvmItems}/>
               <OptionsPaneSection sectionTitle='Persistence' errors={this.props.errors} listItems={persistenceItems} />
               <OptionsPaneSection sectionTitle='Router' errors={this.props.errors} listItems={routerItems} />
               <OptionsPaneSection sectionTitle='Pulse elasticsearch' errors={this.props.errors} listItems={pulseItems} />

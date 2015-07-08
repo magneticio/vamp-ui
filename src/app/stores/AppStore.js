@@ -67,7 +67,6 @@ var AppStore = assign({}, EventEmitter.prototype,{
 
     switch(action) {
       case AppConstants.GET_INFO + '_SUCCESS':
-        console.log(payload.response);
         _info = JSON.parse(payload.response.text);
         //_persistInfo(payload.response);
         break;

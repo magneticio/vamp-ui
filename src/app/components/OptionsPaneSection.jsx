@@ -3,6 +3,7 @@ var Config = require('../config.js');
 var AppActions = require('../actions/AppActions');
 var _ = require('underscore');
 var classNames = require('classnames');
+var TimeAgo = require('react-timeago');
 
 var OptionsPaneSection = React.createClass({
 
@@ -14,8 +15,13 @@ var OptionsPaneSection = React.createClass({
 
     _.each(this.props.listItems, function(value, key){
       var warningClass = classNames({ 'warning': key == 'error' ? true : false });
-      listItems.push(<dt key={key+value} className={warningClass}>{key}</dt>);
-      listItems.push(<dd key={value+key} className={warningClass}>{value}</dd>);
+      if(key === 'uptime-calculated'){
+        listItems.push(<dt key={key+value} className={warningClass}>uptime</dt>);
+        listItems.push(<dd key={value+key} className={warningClass}><TimeAgo date={value}/></dd>);
+      } else {
+        listItems.push(<dt key={key+value} className={warningClass}>{key}</dt>);
+        listItems.push(<dd key={value+key} className={warningClass}>{value}</dd>);
+      }
     }, this);
 
     // Setup dynamic classes
