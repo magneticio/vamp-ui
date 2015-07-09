@@ -1,6 +1,7 @@
 var React = require('react');
 var TransitionGroup = React.addons.CSSTransitionGroup;
 var _ = require('underscore');
+var classNames = require('classnames');
 var BreedActions = require('../../actions/BreedActions');
 var BreedStore = require('../../stores/BreedStore');
 var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
@@ -44,10 +45,25 @@ var BreedDetail = React.createClass({
   },
 
   render: function() {
+
+    var errorsToBeShown = this.props.errors['UNREACHABLE'] ? true : false,
+        errorMessage = errorsToBeShown ? this.props.errors['UNREACHABLE'].message : '';
+
+    var containerClassnames = classNames({
+      'dimmed': errorsToBeShown,
+      'full-width-section': true
+    });
+    var errorMessageClassSet = classNames({
+      "error-status-message": true,
+      "container-status-message": true,
+      "hidden": !errorsToBeShown
+    });
+
     return(
       <TransitionGroup id='breed-single' component="div" transitionName="fadeIn" transitionAppear={true} transitionLeave={true} >
         <BreadCrumbsBar/>
-        <div className='full-width-section'>
+        <span className={errorMessageClassSet}>{errorMessage}</span>        
+        <div className={containerClassnames}>
           <section className="half-width-section preview">
             <pre>
               <code>

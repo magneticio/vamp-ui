@@ -24,6 +24,8 @@ function dispatch(actionType, response) {
 function handleResponse(actionType) {
   return function (err, res) {
     if (err && err.timeout === TIMEOUT) {
+      console.log('timeout', actionType);
+      handleError(actionType, res);
       dispatch(LoadStates.STATE_TIMEOUT, null);
     } else if (typeof res == "undefined" || !res.ok) {
       handleError(actionType, res);

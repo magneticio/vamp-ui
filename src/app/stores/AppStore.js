@@ -71,6 +71,7 @@ var AppStore = assign({}, EventEmitter.prototype,{
         //_persistInfo(payload.response);
         break;
       case AppConstants.GET_INFO + '_ERROR':
+        console.log('info error');
         _registerError('GET_INFO', "Something went wrong. It's us, not you.");
         break;
       case AppConstants.GET_INFO + '_UNREACHABLE':
