@@ -16,7 +16,7 @@
 .indicator-circle {
 	display: inline-block;
 	height: $line-height;
-	width: $line-height * 2;
+	min-width: $line-height * 2;
 	margin-right: 1rem;
 	
 	&.indicator-top {
