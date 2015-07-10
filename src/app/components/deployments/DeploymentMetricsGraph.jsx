@@ -1,5 +1,5 @@
 var React = require('react');
-var LineChart = require('react-chartjs').Bar;
+var LineChart = require('react-chartjs').Line;
 var _ = require('underscore');
 var cx = require('classnames');
 
@@ -34,7 +34,7 @@ var MetricsGraph = React.createClass({
   render: function() {
 
     var linechart = '',
-        mostRecentDatapoint = 0,
+        mostRecentDatapoint = '-',
         filteredApiData = [],
         loaderClasses = cx({
           'metrics-loader': true,
@@ -48,11 +48,14 @@ var MetricsGraph = React.createClass({
           chartLabels = [],
           chartOptions = {},
           chartData = {},
-          linechart;
+          i = 0;
 
       _.each(this.props.data, function(property, key){
-        filteredApiData.push(property['value']);
-        chartLabels.push('');
+        if(i % 2 == 0){
+          filteredApiData.push(property['value']);
+          chartLabels.push('');
+        }
+        i++;
       }, this);
 
       mostRecentDatapoint = filteredApiData[0];
@@ -62,11 +65,16 @@ var MetricsGraph = React.createClass({
         showScale: true,
         scaleFontSize: 10,
         scaleShowGridLines: true,
+        scaleShowVerticalLines: false,
+        showTooltips: false,
         responsive: true,
         animation: false,
-        barShowStroke : false,
         maintainAspectRatio: false,
-        barValueSpacing : 1,
+        bezierCurve : true,
+        bezierCurveTension : 0.3,
+        pointDot: false,
+        datasetStrokeWidth : 1,
+        datasetFill : true,
       };
 
       chartData = {
@@ -74,9 +82,9 @@ var MetricsGraph = React.createClass({
         datasets: [
           {
             label: "Reqs/sec.",
-            fillColor: "#BCDFFA",
-            highlightFill: "#03A9F4",
-            data: filteredApiData
+            fillColor: "RGBA(3, 169, 244, 0.4)",
+            strokeColor: "RGBA(3, 169, 244, 0)",
+            data: filteredApiData,
           }
         ]
       };
@@ -87,8 +95,7 @@ var MetricsGraph = React.createClass({
     return(
       <div className='deployment-metrics-chart metrics-chart'>
         <div className='metrics-requests'>
-          <h5><strong>{this.state.label}</strong></h5>
-          <h3>{mostRecentDatapoint} </h3><small className='muted'></small>
+          <h5>{this.state.label} <strong>{mostRecentDatapoint}</strong></h5>
         </div>
         <div>
           <span className={loaderClasses}><img src="/images/spinner-pink.svg" /></span>

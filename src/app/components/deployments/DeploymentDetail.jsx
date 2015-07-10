@@ -40,7 +40,7 @@ var DeploymentDetail = React.createClass({
       console.log('poll metrics');
       DeploymentActions.getDeploymentMetrics(deployment, 'rate');
       DeploymentActions.getDeploymentMetrics(deployment, 'scur');
-    }, 4000);
+    }, 1000);
   },
   componentWillUnmount: function() {
     DeploymentStore.removeChangeListener(this._onChange);
