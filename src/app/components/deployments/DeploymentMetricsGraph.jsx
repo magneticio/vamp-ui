@@ -91,7 +91,7 @@ var MetricsGraph = React.createClass({
           <h3>{mostRecentDatapoint} </h3><small className='muted'></small>
         </div>
         <div>
-          <span className={loaderClasses}>loading</span>
+          <span className={loaderClasses}><img src="/images/spinner-pink.svg" /></span>
           {linechart}
         </div>
       </div>

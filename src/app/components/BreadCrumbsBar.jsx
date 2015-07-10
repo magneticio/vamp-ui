@@ -10,7 +10,7 @@ var BreadCrumbsBar = React.createClass({
     var params = this.context.router.getCurrentParams();
     var str = this.context.router.getCurrentPathname();
     var normalizedPath = str.substring(1,(str.slice(1).indexOf('\/'))+1);
-    console.log(normalizedPath);
+
     return (
       <div className="breadcrumbs-bar">
         <ul className="breadcrumbs">
