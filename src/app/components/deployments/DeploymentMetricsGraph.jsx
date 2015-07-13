@@ -27,8 +27,11 @@ var MetricsGraph = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps){
-    if(_.size(nextProps.data) > 0)
+    if(nextProps.data && _.size(nextProps.data) > 0)
       this.setState({ loadingMetrics: false });
+    else {
+      this.setState({ loadingMetrics: true });
+    }
   },
 
   render: function() {
@@ -36,11 +39,7 @@ var MetricsGraph = React.createClass({
     var linechart = '',
         mostRecentDatapoint = '-',
         filteredApiData = [],
-        loaderClasses = cx({
-          'metrics-loader': true,
-          'hidden': this.state.loadingMetrics ? false : true
-        });
-
+        timestamps = [];
 
     if(!this.state.loadingMetrics){
 
@@ -92,10 +91,23 @@ var MetricsGraph = React.createClass({
       linechart = (<LineChart data={chartData} options={chartOptions}/>);
     }
 
+    if(this.props.data){
+      timestamps.push(this.props.data[0].timestamp);
+      timestamps.push(this.props.data[14].timestamp);
+      timestamps.push(this.props.data[29].timestamp);
+    }
+
+    console.log(timestamps);
+
+    loaderClasses = cx({
+      'metrics-loader': true,
+      'hidden': this.state.loadingMetrics ? false : true
+    });
+
     return(
       <div className='deployment-metrics-chart metrics-chart'>
         <div className='metrics-requests'>
-          <h5>{this.state.label} <strong>{mostRecentDatapoint}</strong></h5>
+          <h5>{this.state.label}: <strong>{mostRecentDatapoint}</strong></h5>
         </div>
         <div>
           <span className={loaderClasses}><img src="/images/spinner-pink.svg" /></span>

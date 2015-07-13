@@ -24,14 +24,14 @@
 	.metrics-requests {
 		display: inline-flex;
 		font-weight: 400;
-		width: 100%;
+		width: auto;
 		height: auto;
-		//background-color: rgba(248,248,248,0.7);
+		background-color: rgba(248,248,248,1);
 		position: absolute;
 		z-index: 1;
 		//left: 0;
 		right: 0;
-		top: 10px;
+		bottom: 1.25rem;
 		//margin: 0 auto;
 		padding: 0.2rem 0.5rem;
 		text-align: center;
