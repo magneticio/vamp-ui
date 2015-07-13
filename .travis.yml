@@ -18,6 +18,7 @@ script:
 - gulp build
 - gulp dist
 - mv build vamp-ui
+- rm vamp-ui/app.js
 - jar cvf ${DISTRIBUTABLE}.jar vamp-ui/
 after_success:
 - test ${TRAVIS_PULL_REQUEST} == "false" && if [[ ${TRAVIS_BRANCH} == "develop" ]];
