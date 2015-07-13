@@ -17,7 +17,7 @@ script:
 after_success:
 - test ${TRAVIS_PULL_REQUEST} == "false" &&
   test ${TRAVIS_BRANCH} == "develop" &&
-  curl -T ${DISTRIBUTABLE} -u${BINTRAY_API_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}" -H "X-Bintray-Version:${UI_VERSION}" https://api.bintray.com/content/magnetic-io/downloads/${PACKAGE}/${DISTRIBUTABLE} > result.txt
+  curl -v -T ${DISTRIBUTABLE} -u${BINTRAY_API_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}" -H "X-Bintray-Version:${UI_VERSION}" https://api.bintray.com/content/magnetic-io/downloads/${PACKAGE}/${DISTRIBUTABLE} -H "X-Bintray-Publish:1"> result.txt
   && cat result.txt
 
 
