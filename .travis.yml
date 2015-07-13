@@ -15,7 +15,6 @@ script:
 - gulp dist
 - mv build vamp-ui
 - jar cvf $DISTRIBUTABLE vamp-ui/
-- echo Bintray-user: $BINTRAY_USER
 after_success:
 - test ${TRAVIS_PULL_REQUEST} == "false" && test ${TRAVIS_BRANCH} == "develop" &&
   curl -v -T ${DISTRIBUTABLE} -u${BINTRAY_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}"
