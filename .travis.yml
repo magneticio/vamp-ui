@@ -8,6 +8,7 @@ env:
   - UI_VERSION="0.0.2"
   - DISTRIBUTABLE="vamp-ui-$UI_VERSION-$TRAVIS_BUILD_NUMBER.jar"
   - PACKAGE="vamp-ui"
+before_install: gem install compass
 script:
 - echo Building version ${UI_VERSION}-$TRAVIS_BUILD_NUMBER of ${PACKAGE}
 - gulp dist
