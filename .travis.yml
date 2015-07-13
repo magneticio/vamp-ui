@@ -11,6 +11,7 @@ env:
 before_install: gem install compass
 script:
 - echo Building version ${UI_VERSION}-$TRAVIS_BUILD_NUMBER of ${PACKAGE}
+- gulp build
 - gulp dist
 - mv build vamp-ui
 - jar cvf $DISTRIBUTABLE vamp-ui/
