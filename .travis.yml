@@ -1,9 +1,12 @@
 language: node_js
 node_js:
 - '0.11'
-- '0.10'
 script:
-- npm install
+- export UI_VERSION=0.0.2-$TRAVIS_JOB_ID
 - gulp dist
 - mv build vamp-ui
-- jar cvf ../vamp-ui.jar vamp-ui/
+- jar cvf ../vamp-ui-$UI_VERSION.jar vamp-ui/
+
+after_success:
+- test ${TRAVIS_PULL_REQUEST} == "false" && test ${TRAVIS_BRANCH} == "develop" &&
+  curl -T ../vamp-ui-$UI_VERSION.jar -u<API_USER>:<API_KEY> https://api.bintray.com/content/magnetic-io/vamp/vamp-ui/$UI_VERSION/
