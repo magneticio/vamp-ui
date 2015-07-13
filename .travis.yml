@@ -3,11 +3,11 @@ node_js:
 - '0.11'
 env:
   global:
-  - secure: "I5psJNRU2k/pBXYAhHA5tfG+7LP3K5c2Gaf+Jr1pcUt9MimKu/QNZzVrzM4GLGPOQ3XkGfMZK4ixn3ihHZdl2Ak/Fs4c9pdMOqYFRIA8pYYgRYcxuRVJcEDbMDZiBRPUsWG4epMwPG7e5+4j2x6BiLCyV70cEcv9v/RKcSrx8Tk="
-  - secure: "Dl8OVvgZurFtflsm4VCEr93UrqqP9ssdGz11/FWHcCbG407rMrBAIKrVjUEdDTRJ7VlTmre75ZZlrDTz8OA9XTwzwMzwOsWQVCLo+RGQoPTUQXXXJyKnrMmQcVUlCCLhaG3hP3y6IlDfXoR75romZqft4W6MuRrrVdVKSQBu0Fk="
   - UI_VERSION="0.0.2"
   - DISTRIBUTABLE="vamp-ui-$UI_VERSION-$TRAVIS_BUILD_NUMBER.jar"
   - PACKAGE="vamp-ui"
+  - secure: OLfqWw7kfWxjuyPi42e5mpd1hQCaUMYMrvF7qlnu5PvT4U4Hl92WARaPUouN10rxe17AtzNQw/g8g9+w/REP0axwyiQbjqM9qDe1yNm8DfyaNwDrSgj/G4mXbTAOFx9BqIRBKsI6coWZvbD6O5piWp87Tpi0drJq2XP1wGyx5m8=
+  - secure: SitulVd3T2atQ85iI+zDMElze5IOBRkdxGQjB97oDnPYrkyACtQhCZRmYgQ4uHzb0xKuh1s0hLyQ8VnmS3qzsUjHC2X2KOTl399q9tz7zcvswCjWWl1QQzTIrgcnxWGi6Xp1gus475dgh+saEhFbVLHIlkhnajC542OhKCRtpX0=
 before_install: gem install compass
 script:
 - echo Building version ${UI_VERSION}-$TRAVIS_BUILD_NUMBER of ${PACKAGE}
@@ -15,11 +15,9 @@ script:
 - gulp dist
 - mv build vamp-ui
 - jar cvf $DISTRIBUTABLE vamp-ui/
-- ls -al  vamp-ui/
+- echo Bintray-user: $BINTRAY_USER
 after_success:
-- test ${TRAVIS_PULL_REQUEST} == "false" &&
-  test ${TRAVIS_BRANCH} == "develop" &&
-  curl -v -T ${DISTRIBUTABLE} -u${BINTRAY_API_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}" -H "X-Bintray-Version:${UI_VERSION}" -H "X-Bintray-Publish:1" https://api.bintray.com/content/magnetic-io/downloads/${PACKAGE}/${DISTRIBUTABLE} > result.txt
-  && cat result.txt
-
-
+- test ${TRAVIS_PULL_REQUEST} == "false" && test ${TRAVIS_BRANCH} == "develop" &&
+  curl -v -T ${DISTRIBUTABLE} -u${BINTRAY_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}"
+  -H "X-Bintray-Version:${UI_VERSION}" -H "X-Bintray-Publish:1" https://api.bintray.com/content/magnetic-io/downloads/${PACKAGE}/${DISTRIBUTABLE}
+  > result.txt && cat result.txt
