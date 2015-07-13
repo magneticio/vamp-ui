@@ -5,11 +5,11 @@ env:
   global:
   - secure: "I5psJNRU2k/pBXYAhHA5tfG+7LP3K5c2Gaf+Jr1pcUt9MimKu/QNZzVrzM4GLGPOQ3XkGfMZK4ixn3ihHZdl2Ak/Fs4c9pdMOqYFRIA8pYYgRYcxuRVJcEDbMDZiBRPUsWG4epMwPG7e5+4j2x6BiLCyV70cEcv9v/RKcSrx8Tk="
   - secure: "Dl8OVvgZurFtflsm4VCEr93UrqqP9ssdGz11/FWHcCbG407rMrBAIKrVjUEdDTRJ7VlTmre75ZZlrDTz8OA9XTwzwMzwOsWQVCLo+RGQoPTUQXXXJyKnrMmQcVUlCCLhaG3hP3y6IlDfXoR75romZqft4W6MuRrrVdVKSQBu0Fk="
-  - UI_VERSION="0.0.2-$TRAVIS_BUILD_NUMBER"
-  - DISTRIBUTABLE="vamp-ui-$UI_VERSION.jar"
+  - UI_VERSION="0.0.2"
+  - DISTRIBUTABLE="vamp-ui-$UI_VERSION-$TRAVIS_BUILD_NUMBER.jar"
   - PACKAGE="vamp-ui"
 script:
-- echo Building version ${UI_VERSION} of ${PACKAGE}
+- echo Building version ${UI_VERSION}-$TRAVIS_BUILD_NUMBER of ${PACKAGE}
 - gulp dist
 - mv build vamp-ui
 - jar cvf $DISTRIBUTABLE vamp-ui/
@@ -17,6 +17,6 @@ script:
 after_success:
 - test ${TRAVIS_PULL_REQUEST} == "false" &&
   test ${TRAVIS_BRANCH} == "develop" &&
-  curl -T ${DISTRIBUTABLE} -u${BINTRAY_API_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}" -H "X-Bintray-Version:${UI_VERSION}" https://api.bintray.com/content/magnetic-io/downloads/${PACKAGE}/
+  curl -T ${DISTRIBUTABLE} -u${BINTRAY_API_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}" -H "X-Bintray-Version:${UI_VERSION}" https://api.bintray.com/content/magnetic-io/downloads/${PACKAGE}/${DISTRIBUTABLE}
 
 
