@@ -21,11 +21,11 @@ script:
 - jar cvf ${DISTRIBUTABLE}.jar vamp-ui/
 after_success:
 - test ${TRAVIS_PULL_REQUEST} == "false" && if [[ ${TRAVIS_BRANCH} == "develop" ]];
-  then curl -v -T ${DISTRIBUTABLE}.jar -u${BINTRAY_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}"
-   -H "X-Bintray-Version:${UI_VERSION}" -H "X-Bintray-Publish:1"  https://api.bintray.com/content/magnetic-io/downloads/${PACKAGE}/${DISTRIBUTABLE}-dev.jar;
-  else curl -v -T ${DISTRIBUTABLE}.jar -u${BINTRAY_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}"
-   -H "X-Bintray-Version:${UI_VERSION}" -H "X-Bintray-Publish:1"  https://api.bintray.com/content/magnetic-io/downloads/${PACKAGE}/${DISTRIBUTABLE}.jar
+  then curl -T ${DISTRIBUTABLE}.jar -u${BINTRAY_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}"
+  -H "X-Bintray-Version:${UI_VERSION}" -H "X-Bintray-Publish:1"  https://api.bintray.com/content/magnetic-io/downloads/${PACKAGE}/${DISTRIBUTABLE}-dev.jar;
+  else curl -T ${DISTRIBUTABLE}.jar -u${BINTRAY_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}"
+  -H "X-Bintray-Version:${UI_VERSION}" -H "X-Bintray-Publish:1"  https://api.bintray.com/content/magnetic-io/downloads/${PACKAGE}/${DISTRIBUTABLE}.jar
   ; fi
 notifications:
   slack:
-    secure: WoRQZ/Bza1bNd9LL6Qp2uEQ7p5jhjHT/3eGfUktu44EaMxPvfk9JcUsGPxZA5uXkUsOzhOi16/qwE3FgE6lKPIj3Al/h3/TRvHE6ZGc5U47JRZeJEriaeNTuX7Vw6bc8H2mmlvNT+1/yZfx7wGD9eqNuhUBxtaXRiO2E9cevy+g=
+    secure: LZ3Nn9cExIslnwGdwHLzAHXAV7gtX9gxaFFFUd1AVaD58Z4X177FwgH4J3g9jKMA3uLLx4CpWNkEWeMMRz/1rcX2V8Q80n8fIv58+zaMZ6UPzDWyN2dYc9mSxZOlsKkricSAQxNeAjdkrcuBf95pyNHp/34H/RVJ74CaYRxqYjg=
