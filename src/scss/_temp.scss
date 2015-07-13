@@ -1,38 +1,34 @@
-// #deployment-single .metrics-container {
-// 	/padding: 0 1rem;
-// 	box-sizing: border-box;
-// }
-// .badge {
-// 	display: inline-block;
-// 	padding: 0 0.25rem 0 0;
-// 	background-color: $grey-light;
-// 	color: $grey;
-// 	margin-right: 0.35rem;
-// }
-// .badge-label {
-// 	display: inline-block;
-// 	padding: 0 0.25rem;
-// 	margin-right: 0.25rem;
-// 	background-color: $blue;
-// 	color: white;
-// 	border-radius: 3px 0 0 3px;
-// }
+#general-metrics {
+	background-color: $off-white;
+	width: 100%;
+	padding: 1rem;
+	margin: -1rem 0 0 -1rem;
 
+	h1 {
+		margin: 0;
+	}
+	.endpoints-container {
+		
+	}
 
-.temp-graph {
-	display: inline-block;
-	margin: 0 2em 0 0;
-}
-
-#service-metrics-container {
-	.metrics-chart {
-		height: 64px;
-		width: 100%;
+	.deployment-metrics-container .metrics-chart {
+		background-color: $off-white;
+		padding: 1rem 1rem 1rem 0rem;
+		box-sizing: border-box;
+		border-radius: 3px;
 	}
 }
+.cluster-name {
+	// background-color: $off-white;
+	// padding: 1rem;
+	// width: 100%;
+	// margin-left: -1rem;
 
-#deployment-metrics-container {
-	.metrics-chart {
-		width: 40%;
-	}
+	// h1 {
+	// 	//color: white;
+	// 	margin: 0;
+	// }
+}
+.breadcrumbs-bar {
+	background-color: white;
 }

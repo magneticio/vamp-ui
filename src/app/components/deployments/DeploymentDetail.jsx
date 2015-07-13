@@ -67,7 +67,7 @@ var DeploymentDetail = React.createClass({
     //grab the endpoint
     var endpoints = [] 
     _.each(deployment.endpoints,function(val,key){
-      endpoints.push(<h1 key={key} className='text-muted'>{val} / {key} <small className="muted">endpoint</small></h1>);
+      endpoints.push(<h1 key={key}>{val} / {key} <small className="muted">endpoint</small></h1>);
     });
 
     // push cluster into an array
@@ -102,14 +102,13 @@ var DeploymentDetail = React.createClass({
                 <li onClick={this.handleExportAsBlueprint.bind(this, 'application/json')}><a>JSON</a></li>
               </ul>
               {endpoints}
-              <hr />
             </div>
             <div className="deployment-metrics-container">
               <div className="deployment-status hidden">
                 UP
               </div>
               <DeploymentMetricsGraph data={deployment.rate} metricsType='rate' />
-              <DeploymentMetricsGraph data={deployment.scur} metricsType='scur' />
+              <DeploymentMetricsGraph data={deployment.scur} metricsType='scur' />              
             </div>
           </div>
           <div className='detail-section'>

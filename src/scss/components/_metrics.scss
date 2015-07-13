@@ -26,15 +26,15 @@
 		font-weight: 400;
 		width: auto;
 		height: auto;
-		background-color: rgba(248,248,248,1);
+		//background-color: rgba(248,248,248,1);
 		position: absolute;
 		z-index: 1;
+		right: 0.5rem;
 		//left: 0;
-		right: 0;
-		bottom: 1.25rem;
+		top: 1.5rem;
 		//margin: 0 auto;
 		padding: 0.2rem 0.5rem;
-		text-align: center;
+		text-align: right;
 		align-items: center;
 		justify-content: flex-end;
 	}
@@ -74,7 +74,7 @@
 	
 	.metrics-chart {
 		height: 200px;
-		width: 48%;
+		width: 49.35%;
 		box-sizing: border-box;
 	}
 }

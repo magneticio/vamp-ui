@@ -34,6 +34,13 @@ var MetricsGraph = React.createClass({
     }
   },
 
+  formatdata: function(dataset, receivingArray, labelArray){
+    _.each(dataset, function(property, key){
+      receivingArray.push(property['value']);
+      labelArray.push('');
+    }, this);
+  },
+
   render: function() {
 
     var linechart = '',
@@ -46,16 +53,9 @@ var MetricsGraph = React.createClass({
       var filteredApiData = [],
           chartLabels = [],
           chartOptions = {},
-          chartData = {},
-          i = 0;
+          chartData = {};
 
-      _.each(this.props.data, function(property, key){
-        if(i % 2 == 0){
-          filteredApiData.push(property['value']);
-          chartLabels.push('');
-        }
-        i++;
-      }, this);
+      this.formatdata(this.props.data, filteredApiData, chartLabels);
 
       mostRecentDatapoint = filteredApiData[0];
       filteredApiData = filteredApiData.reverse();
@@ -63,16 +63,19 @@ var MetricsGraph = React.createClass({
       chartOptions = {
         showScale: true,
         scaleFontSize: 10,
+        scaleFontColor: "#303746",
         scaleShowGridLines: true,
         scaleShowVerticalLines: false,
-        showTooltips: false,
+        scaleLineColor: "#303746",
+        showTooltips: true,
         responsive: true,
         animation: false,
         maintainAspectRatio: false,
-        bezierCurve : true,
+        bezierCurve : false,
         bezierCurveTension : 0.3,
         pointDot: false,
-        datasetStrokeWidth : 1,
+        pointDotRadius : 1,
+        datasetStrokeWidth : 3,
         datasetFill : true,
       };
 
@@ -81,8 +84,8 @@ var MetricsGraph = React.createClass({
         datasets: [
           {
             label: "Reqs/sec.",
-            fillColor: "RGBA(3, 169, 244, 0.4)",
-            strokeColor: "RGBA(3, 169, 244, 0)",
+            fillColor: "#BCDFFA",
+            strokeColor: "#03A9F4",
             data: filteredApiData,
           }
         ]
