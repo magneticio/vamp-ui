@@ -1,10 +1,14 @@
 language: node_js
 node_js:
 - '0.11'
+branches:
+  only:
+  - master
+  - develop
 env:
   global:
   - UI_VERSION="0.0.2"
-  - DISTRIBUTABLE="vamp-ui-$UI_VERSION-$TRAVIS_BUILD_NUMBER.jar"
+  - DISTRIBUTABLE="vamp-ui-$UI_VERSION-$TRAVIS_BUILD_NUMBER"
   - PACKAGE="vamp-ui"
   - secure: OLfqWw7kfWxjuyPi42e5mpd1hQCaUMYMrvF7qlnu5PvT4U4Hl92WARaPUouN10rxe17AtzNQw/g8g9+w/REP0axwyiQbjqM9qDe1yNm8DfyaNwDrSgj/G4mXbTAOFx9BqIRBKsI6coWZvbD6O5piWp87Tpi0drJq2XP1wGyx5m8=
   - secure: SitulVd3T2atQ85iI+zDMElze5IOBRkdxGQjB97oDnPYrkyACtQhCZRmYgQ4uHzb0xKuh1s0hLyQ8VnmS3qzsUjHC2X2KOTl399q9tz7zcvswCjWWl1QQzTIrgcnxWGi6Xp1gus475dgh+saEhFbVLHIlkhnajC542OhKCRtpX0=
@@ -14,9 +18,14 @@ script:
 - gulp build
 - gulp dist
 - mv build vamp-ui
-- jar cvf $DISTRIBUTABLE vamp-ui/
+- jar cvf ${DISTRIBUTABLE}.jar vamp-ui/
 after_success:
-- test ${TRAVIS_PULL_REQUEST} == "false" && test ${TRAVIS_BRANCH} == "develop" &&
-  curl -v -T ${DISTRIBUTABLE} -u${BINTRAY_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}"
-  -H "X-Bintray-Version:${UI_VERSION}" -H "X-Bintray-Publish:1" https://api.bintray.com/content/magnetic-io/downloads/${PACKAGE}/${DISTRIBUTABLE}
-  > result.txt && cat result.txt
+- test ${TRAVIS_PULL_REQUEST} == "false" && if [[ ${TRAVIS_BRANCH} == "develop" ]];
+  then curl -v -T ${DISTRIBUTABLE}.jar -u${BINTRAY_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}"
+   -H "X-Bintray-Version:${UI_VERSION}" -H "X-Bintray-Publish:1"  https://api.bintray.com/content/magnetic-io/downloads/${PACKAGE}/${DISTRIBUTABLE}-dev.jar;
+  else curl -v -T ${DISTRIBUTABLE}.jar -u${BINTRAY_USER}:${BINTRAY_API_KEY} -H "X-Bintray-Package:${PACKAGE}"
+   -H "X-Bintray-Version:${UI_VERSION}" -H "X-Bintray-Publish:1"  https://api.bintray.com/content/magnetic-io/downloads/${PACKAGE}/${DISTRIBUTABLE}.jar
+  ; fi
+notifications:
+  slack:
+    secure: WoRQZ/Bza1bNd9LL6Qp2uEQ7p5jhjHT/3eGfUktu44EaMxPvfk9JcUsGPxZA5uXkUsOzhOi16/qwE3FgE6lKPIj3Al/h3/TRvHE6ZGc5U47JRZeJEriaeNTuX7Vw6bc8H2mmlvNT+1/yZfx7wGD9eqNuhUBxtaXRiO2E9cevy+g=
