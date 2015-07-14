@@ -6,12 +6,12 @@ var Config = {
 
   // CORE REST API
   getApiUrl: function(){
-    var hostname = localStorage.getItem('host') || window.location.hostname + ':8080';
-    return hostname + '/api/v1';
+    var host = localStorage.getItem('host') || window.location.origin;
+    return host + '/api/v1';
   },
   getApiHost: function(){
-    var hostname = localStorage.getItem('host') || window.location.hostname + ':8080';
-    return hostname;
+    var host = localStorage.getItem('host') || window.location.origin;
+    return host;
   },
   setApiHost: function(url){
     // remove trailing slash
