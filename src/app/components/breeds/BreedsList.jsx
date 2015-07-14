@@ -108,7 +108,7 @@ var BreedsList = React.createClass({
           addArtefactType='breed'
           requestResolved={this.state.breedCreated} 
           loadState={this.props.loadState}/>
-        <span className={emptyClassSet}>No running deployments.</span>
+        <span className={emptyClassSet}>No breeds found.</span>
         <span className={errorMessageClassSet}>{errorMessage}</span>        
         <TransitionGroup 
           id='breeds-list'         

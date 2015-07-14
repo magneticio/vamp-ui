@@ -31,6 +31,10 @@ var BreedDetail = React.createClass({
   setStatesWhenAvailable: function(props){
     if(_.isEmpty(this.state.currentBreed)){
       var currentBreed = BreedStore.getBreed(this.state.name);
+      
+      if(currentBreed && 'status' in currentBreed)
+        delete currentBreed.status;
+
       this.setState({
         breedDirty: JSON.stringify(currentBreed,null,2),
         currentBreed: currentBreed
