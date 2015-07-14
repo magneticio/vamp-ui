@@ -31,8 +31,6 @@ var OptionsPane = React.createClass({
       AppActions.getInfo();
       BreedActions.getAllBreeds();
       BlueprintActions.getAllBlueprints();
-      //DeploymentActions.getAllDeployments();
-      console.log('success');
     });
   },
   handleChange: function(e){
