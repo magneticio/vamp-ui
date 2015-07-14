@@ -1,6 +1,8 @@
 var React = require('react/addons');
 var Config = require('../config.js');
 var AppActions = require('../actions/AppActions');
+var BreedActions = require('../actions/BreedActions');
+var BlueprintActions = require('../actions/BlueprintActions');
 var OptionsPaneSection = require('./OptionsPaneSection.jsx');
 var AppStore = require('../stores/AppStore');
 var _ = require('underscore');
@@ -25,8 +27,13 @@ var OptionsPane = React.createClass({
 
   handleSubmit: function(e){
     e.preventDefault();
-    Config.setApiHost(this.state.apiUrl);
-    AppActions.getInfo();
+    Config.setApiHost(this.state.apiUrl, function(){
+      AppActions.getInfo();
+      BreedActions.getAllBreeds();
+      BlueprintActions.getAllBlueprints();
+      //DeploymentActions.getAllDeployments();
+      console.log('success');
+    });
   },
   handleChange: function(e){
     this.setState({apiUrl: e.target.value});
@@ -36,7 +43,7 @@ var OptionsPane = React.createClass({
 
     var formattedInfoObject = {},
         apiInfo = this.props.apiInfo || {},
-        welcomeMessage = '',
+        containerMessage = '',
         jvmItems = {},
         persistenceItems = {},
         routerItems = {},
@@ -45,9 +52,13 @@ var OptionsPane = React.createClass({
         errorFlag = false;
 
     if( _.isEmpty(apiInfo) || !_.isEmpty(this.props.errors) ){
-      welcomeMessage = "It seems the api can't be reached, we're sorry";
+      if(this.props.errors['UNREACHABLE'])
+        containerMessage = "It seems the api can't be reached, we're sorry";
+
+      if(this.props.errors['INTERNAL'])
+        containerMessage = "Some services are down, please check the status of VAMP";
     } else {
-      welcomeMessage = apiInfo.message;
+      containerMessage = apiInfo.message;
     }
 
     // Filter trough info endpoint, set vars.
@@ -108,18 +119,27 @@ var OptionsPane = React.createClass({
     if(!errorFlag){
       AppStore.deleteError('INTERNAL');
     }
+
+    var inputClasses = classNames({
+      'danger': 'UNREACHABLE' in this.props.errors ? true : false,
+    });
+
+    var restApiTitleClasses = classNames({
+      'error-badge': 'UNREACHABLE' in this.props.errors ? true : false,
+    });
     
   	return (
   		<aside className='options-pane'>
   			<div className='inner-options-pane'>
 	  			<form onSubmit={this.handleSubmit} className='options-form'>
 
-            <h3>{welcomeMessage}</h3>
+            <h3>{containerMessage}</h3>
 
-            <h4>REST API URL</h4>
+            <h4 className={restApiTitleClasses}>REST API URL</h4>
 	          <input 
 	            type='text'
               name='vamp_uri' 
+              className={inputClasses}
 	            value={this.state.apiUrl}
 	            onChange={this.handleChange} />
 

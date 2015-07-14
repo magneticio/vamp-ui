@@ -1,5 +1,6 @@
 var React = require('react/addons');
 var classNames = require('classnames');
+var _ = require('underscore');
 
 var NavBar = React.createClass({
 
@@ -21,8 +22,8 @@ var NavBar = React.createClass({
 
   render: function () {
 
-    var errorsToBeShown = this.props.errors['INTERNAL'] ? true : false,
-        errorMessage = errorsToBeShown ? this.props.errors['INTERNAL'].message : '';
+    var errorsToBeShown = _.isEmpty(this.props.errors) ? false : true,
+        errorMessage = errorsToBeShown && 'INTERNAL' in this.props.errors ? this.props.errors['INTERNAL'].message : '';
 
     var tabs = this.props.tabs.map(function (tab) {
       var path = this.context.router.getCurrentPathname(),

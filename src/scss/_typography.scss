@@ -24,12 +24,14 @@ html {
  * HEADINGS
  */
 h1 {
+	position: relative;
 	font-size: $h1-size;
   	line-height: $line-height;
 	color: $grey;
 	margin-bottom: 0;
 }
 h2 {
+	position: relative;
 	margin: 0;
 	font-size: $h2-size;
   	line-height: $line-height;
@@ -40,6 +42,7 @@ h2 {
   	}
 }
 h3 {
+	position: relative;
 	margin: 0 0 $h3-size;
 	font-size: $h3-size;
 	font-weight: 600;
@@ -50,15 +53,25 @@ h3 {
   	}
 }
 h4, label {
+	position: relative;
 	margin: 0.395rem 0 0.225rem;
 	font-size: $xs-size;
 	font-weight: 600;
   	line-height: 1rem;
   	color: $grey-medium;
   	text-transform: uppercase;
-  	
+  	transition: padding-left 0.2s;
+
+  	&.error-badge {
+  		padding-left: 1.5rem;
+  		&:before {
+	  		left: 0;
+	  		top: 1rem;
+	  	}
+  	}
 }
 h5 {
+	position: relative;
 	margin: 0.395rem 0 0.225rem;
 	font-size: $s-size;
 	font-weight: 400;

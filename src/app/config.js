@@ -13,12 +13,14 @@ var Config = {
     var host = localStorage.getItem('host') || window.location.origin;
     return host;
   },
-  setApiHost: function(url){
+  setApiHost: function(url, callback){
     // remove trailing slash
     if(url.substr(-1) === '/') {
       localStorage.setItem('host', url.substr(0, url.length - 1));
+      callback();
     } else {
       localStorage.setItem('host', url);
+      callback();
     }
   },
   removeApiHost: function(){
