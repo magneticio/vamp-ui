@@ -1,19 +1,21 @@
 #general-metrics {
-	background-color: $off-white;
+	background-color: white;
 	width: 100%;
-	padding: 1rem;
+	padding: 0 1rem;
 	margin: -1rem 0 0 -1rem;
+	box-sizing: content-box;
+	color: $grey;
 
 	h1 {
-		margin: 0;
+		//margin: 1rem 0;
+		color: inherit;
 	}
 	.endpoints-container {
 		
 	}
 
 	.deployment-metrics-container .metrics-chart {
-		background-color: $off-white;
-		padding: 1rem 1rem 1rem 0rem;
+		padding: 0.5rem 1rem 1rem 0rem;
 		box-sizing: border-box;
 		border-radius: 3px;
 	}
@@ -28,7 +30,4 @@
 	// 	//color: white;
 	// 	margin: 0;
 	// }
-}
-.breadcrumbs-bar {
-	background-color: white;
 }

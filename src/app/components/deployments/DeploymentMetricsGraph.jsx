@@ -63,19 +63,20 @@ var MetricsGraph = React.createClass({
       chartOptions = {
         showScale: true,
         scaleFontSize: 10,
-        scaleFontColor: "#303746",
+        scaleFontColor: "rgba(158,158,158,0.5)",
         scaleShowGridLines: true,
+        scaleGridLineColor : "RGBA(3, 169, 244, 0.1)",
         scaleShowVerticalLines: false,
-        scaleLineColor: "#303746",
+        scaleLineColor: "#9E9E9E",
         showTooltips: true,
         responsive: true,
         animation: false,
         maintainAspectRatio: false,
-        bezierCurve : false,
-        bezierCurveTension : 0.3,
+        bezierCurve : true,
+        bezierCurveTension : 0.25,
         pointDot: false,
         pointDotRadius : 1,
-        datasetStrokeWidth : 3,
+        datasetStrokeWidth : 2,
         datasetFill : true,
       };
 
@@ -84,7 +85,7 @@ var MetricsGraph = React.createClass({
         datasets: [
           {
             label: "Reqs/sec.",
-            fillColor: "#BCDFFA",
+            fillColor: "RGBA(3, 169, 244, 0.2)",
             strokeColor: "#03A9F4",
             data: filteredApiData,
           }

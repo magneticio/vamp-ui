@@ -15,9 +15,11 @@
 		display: inline-block;
 		margin: 0 0.2rem;
 		line-height: 1rem;
+		color: $grey;
 
 		strong {
 			color: $grey;
+			font-size: 2em;
 		}
 	}
 
@@ -31,7 +33,8 @@
 		z-index: 1;
 		right: 0.5rem;
 		//left: 0;
-		top: 1.5rem;
+		color: inherit;
+		bottom: 2.5rem;
 		//margin: 0 auto;
 		padding: 0.2rem 0.5rem;
 		text-align: right;
