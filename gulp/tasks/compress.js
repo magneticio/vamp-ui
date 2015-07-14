@@ -2,9 +2,8 @@ var gulp = require('gulp');
 var uglify = require('gulp-uglify');
 var rename = require("gulp-rename");
 var config = require('../config');
-//var rimraf = require('rimraf');
 
-gulp.task('compress', function() {
+gulp.task('compress', ['browserify-min'], function() {
   return gulp.src('./build/app.js')
     .pipe(uglify({
     	output: {
