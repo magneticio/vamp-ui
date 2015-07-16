@@ -97,7 +97,7 @@ var ServiceBox = React.createClass({
       	<div className='service-section service-name section-fifth'>
           <h3><a href={'/#/breeds/' + service.breed.name }> {service.breed.name}</a></h3>
           <p className="muted clip-textoverflow">{service.breed.deployable}</p>
-          <h5>updated <TimeAgo date={date}/></h5>
+          <h5><img src='/images/clock.svg' alt="Clock icon" width='10px' height='10px'/> updated <TimeAgo date={date}/></h5>
         </div>
         <div className='service-section service-routing section-fifth'>
         	<h4>Weight</h4>

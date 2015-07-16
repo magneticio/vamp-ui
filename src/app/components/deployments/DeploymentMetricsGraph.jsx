@@ -65,7 +65,7 @@ var MetricsGraph = React.createClass({
         scaleFontSize: 10,
         scaleFontColor: "rgba(158,158,158,0.5)",
         scaleShowGridLines: true,
-        scaleGridLineColor : "RGBA(3, 169, 244, 0.1)",
+        scaleGridLineColor : "RGBA(3, 169, 244, 0.2)",
         scaleShowVerticalLines: false,
         scaleLineColor: "#9E9E9E",
         showTooltips: true,

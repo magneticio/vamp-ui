@@ -1,6 +1,7 @@
 .service-box {
+	border-left: 2px solid white;
 	&:hover {
-		background-color: $off-white;
+		border-left: 2px solid $blue;
 	}
 }
 .service-section {
@@ -12,11 +13,11 @@
 	}
 }
 .service-name {
-	h3 {
-		margin-bottom: 0;
+	h3, h5 {
+		margin: 0;
 	}
 	p {
-		margin-bottom: $h3-size;
+		//margin-bottom: $h3-size;
 	}
 }
 .service-status {
