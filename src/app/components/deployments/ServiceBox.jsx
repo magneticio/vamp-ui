@@ -48,7 +48,7 @@ var ServiceBox = React.createClass({
         serverlist.push(
           <li key={portkey+portval}>
             <span className='server-host'>{serverval.host}</span>
-            <span className='server-ports'>: {portval}</span>
+            <span className='server-ports'>:{portval}</span>
           </li>
         );
       });

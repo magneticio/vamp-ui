@@ -55,7 +55,7 @@ var BlueprintDetail = React.createClass({
 
     var containerClassnames = classNames({
       'dimmed': errorsToBeShown,
-      'full-width-section': true
+      'section-full': true
     });
     var errorMessageClassSet = classNames({
       "error-status-message": true,

@@ -55,7 +55,7 @@ var BreedDetail = React.createClass({
 
     var containerClassnames = classNames({
       'dimmed': errorsToBeShown,
-      'full-width-section': true
+      'section-full': true
     });
     var errorMessageClassSet = classNames({
       "error-status-message": true,
@@ -64,7 +64,7 @@ var BreedDetail = React.createClass({
     });
 
     return(
-      <TransitionGroup id='breed-single' component="div" transitionName="fadeIn" transitionAppear={true} transitionLeave={true} >
+      <TransitionGroup id='breed-single' className='single' component="div" transitionName="fadeIn" transitionAppear={true} transitionLeave={true} >
         <BreadCrumbsBar/>
         <span className={errorMessageClassSet}>{errorMessage}</span>        
         <div className={containerClassnames}>
