@@ -17,10 +17,12 @@ var Config = {
     // remove trailing slash
     if(url.substr(-1) === '/') {
       localStorage.setItem('host', url.substr(0, url.length - 1));
-      callback();
+      if(typeof callback === 'function' && callback())
+        callback();
     } else {
       localStorage.setItem('host', url);
-      callback();
+      if(typeof callback === 'function' && callback())
+        callback();
     }
   },
   removeApiHost: function(){
