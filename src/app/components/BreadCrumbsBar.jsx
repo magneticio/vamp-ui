@@ -12,7 +12,7 @@ var BreadCrumbsBar = React.createClass({
     var normalizedPath = str.substring(1,(str.slice(1).indexOf('\/'))+1);
 
     return (
-      <div className="breadcrumbs-bar">
+      <div className="breadcrumbs-bar toolbar">
         <ul className="breadcrumbs">
           <li><a href={ "#" + normalizedPath}>{normalizedPath}</a></li>
           <li className="icon-triangle"></li>

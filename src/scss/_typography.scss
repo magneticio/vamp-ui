@@ -54,10 +54,11 @@ h3 {
 }
 h4, label {
 	position: relative;
-	margin: 0.395rem 0 0.225rem;
+	margin: 0.65rem 0 0.2rem;
 	font-size: $xs-size;
 	font-weight: 600;
-  	line-height: 1rem;
+  	line-height: 1em;
+  	vertical-align: bottom;
   	color: $grey-medium;
   	text-transform: uppercase;
   	transition: padding-left 0.2s;

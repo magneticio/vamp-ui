@@ -7,24 +7,42 @@
 	div {
 		vertical-align: middle;
 		display: inline-block;
-		width: 80%;
+		width: 100%;
 		height: 100%;
 	}
 
-	.metrics-requests {
-		width: 20%;
+	h5 {
+		display: inline-block;
+		margin: 0 0.2rem;
+		line-height: 1rem;
+		color: $grey;
+
+		strong {
+			color: $grey;
+			font-size: 2em;
+		}
 	}
 
-	h3 {
-		display: inline-block;
-		margin-bottom: 0;
-		margin-right: 0.2em;
+	.metrics-requests {
+		display: inline-flex;
+		font-weight: 400;
+		width: auto;
+		height: auto;
+		//background-color: rgba(248,248,248,1);
+		position: absolute;
+		z-index: 1;
+		right: 0.5rem;
+		//left: 0;
+		color: inherit;
+		bottom: 2.5rem;
+		//margin: 0 auto;
+		padding: 0.2rem 0.5rem;
+		text-align: right;
+		align-items: center;
+		justify-content: flex-end;
 	}
 }
-.metrics-requests {
-	display: inline-block;
-	font-weight: 400;
-}
+
 .metrics-loader {
 	display: inline-flex;
 	justify-content: center;
@@ -55,9 +73,11 @@
 	flex-flow: row nowrap;
 	justify-content: space-between;
 	align-items: flex-start;
+	box-sizing: border-box;
 	
 	.metrics-chart {
-		height: 150px;
-		width: 45%;
+		height: 200px;
+		width: 49.35%;
+		box-sizing: border-box;
 	}
 }

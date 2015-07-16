@@ -29,7 +29,6 @@ var ClusterBox = React.createClass({
           <h1>{name} <small className="muted">cluster</small></h1>
           <a className='add-link add-service-link hidden'>+ Add Service</a>
         </div>
-        <hr/>
         <div className='services-container'>                    
           <ServicesList services={cluster.services} cluster={clusterForService} serviceMetrics={this.props.serviceMetrics} updateClusterFilters={this.updateClusterFilters}/>    
         </div>

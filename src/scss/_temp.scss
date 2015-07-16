@@ -1,38 +1,60 @@
-// #deployment-single .metrics-container {
-// 	/padding: 0 1rem;
-// 	box-sizing: border-box;
-// }
-// .badge {
-// 	display: inline-block;
-// 	padding: 0 0.25rem 0 0;
-// 	background-color: $grey-light;
-// 	color: $grey;
-// 	margin-right: 0.35rem;
-// }
-// .badge-label {
-// 	display: inline-block;
-// 	padding: 0 0.25rem;
-// 	margin-right: 0.25rem;
-// 	background-color: $blue;
-// 	color: white;
-// 	border-radius: 3px 0 0 3px;
-// }
+#general-metrics {
+	//background-color: white;
+	//width: 100%;
+	//padding: 1rem;
+	margin: -1rem 0 1rem 0;
+	//margin: 0 0.5rem;
+	box-sizing: content-box;
+	color: $grey;
+	border: none;
 
+	h1 {
+		margin: 1rem 0 0 0;
+		color: inherit;
+	}
+	.endpoints-container {
+		background-color: white;
+		margin-bottom: 2px;	
+		padding: 1rem;
 
-.temp-graph {
-	display: inline-block;
-	margin: 0 2em 0 0;
-}
+		.export-links {
+			top: 2rem;
+			right: 1rem;
+		}
+	}
 
-#service-metrics-container {
-	.metrics-chart {
-		height: 64px;
-		width: 100%;
+	.deployment-metrics-container {
+		background-color: white;
+		padding-right: 2em;
+
+		.metrics-chart {
+			padding: 1rem 1rem 1rem 1rem;
+			box-sizing: border-box;
+			//border-radius: 3px;
+		}
 	}
 }
+.cluster-box {
+	//padding: 1rem;
+	//width: 100%;
+	margin: 0 0 1rem 0;
 
-#deployment-metrics-container {
-	.metrics-chart {
-		width: 40%;
+	//background-color: white;
+}
+.cluster-name {
+	padding: 1rem;
+	background-color: white;
+	margin-bottom: 2px;
+
+	h1 {
+		margin: 0;
 	}
+}
+.service-box {
+	background-color: white;
+	margin-bottom: 2px;
+}
+.section-full {
+	padding-top: 0;
+	background-color: $off-white;
 }

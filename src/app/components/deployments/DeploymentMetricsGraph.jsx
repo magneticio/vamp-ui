@@ -1,5 +1,5 @@
 var React = require('react');
-var LineChart = require('react-chartjs').Bar;
+var LineChart = require('react-chartjs').Line;
 var _ = require('underscore');
 var cx = require('classnames');
 
@@ -27,33 +27,35 @@ var MetricsGraph = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps){
-    if(_.size(nextProps.data) > 0)
+    if(nextProps.data && _.size(nextProps.data) > 0)
       this.setState({ loadingMetrics: false });
+    else {
+      this.setState({ loadingMetrics: true });
+    }
+  },
+
+  formatdata: function(dataset, receivingArray, labelArray){
+    _.each(dataset, function(property, key){
+      receivingArray.push(property['value']);
+      labelArray.push('');
+    }, this);
   },
 
   render: function() {
 
     var linechart = '',
-        mostRecentDatapoint = 0,
+        mostRecentDatapoint = '-',
         filteredApiData = [],
-        loaderClasses = cx({
-          'metrics-loader': true,
-          'hidden': this.state.loadingMetrics ? false : true
-        });
-
+        timestamps = [];
 
     if(!this.state.loadingMetrics){
 
       var filteredApiData = [],
           chartLabels = [],
           chartOptions = {},
-          chartData = {},
-          linechart;
+          chartData = {};
 
-      _.each(this.props.data, function(property, key){
-        filteredApiData.push(property['value']);
-        chartLabels.push('');
-      }, this);
+      this.formatdata(this.props.data, filteredApiData, chartLabels);
 
       mostRecentDatapoint = filteredApiData[0];
       filteredApiData = filteredApiData.reverse();
@@ -61,12 +63,21 @@ var MetricsGraph = React.createClass({
       chartOptions = {
         showScale: true,
         scaleFontSize: 10,
+        scaleFontColor: "rgba(158,158,158,0.5)",
         scaleShowGridLines: true,
+        scaleGridLineColor : "RGBA(3, 169, 244, 0.2)",
+        scaleShowVerticalLines: false,
+        scaleLineColor: "#9E9E9E",
+        showTooltips: true,
         responsive: true,
         animation: false,
-        barShowStroke : false,
         maintainAspectRatio: false,
-        barValueSpacing : 1,
+        bezierCurve : true,
+        bezierCurveTension : 0.25,
+        pointDot: false,
+        pointDotRadius : 1,
+        datasetStrokeWidth : 2,
+        datasetFill : true,
       };
 
       chartData = {
@@ -74,9 +85,9 @@ var MetricsGraph = React.createClass({
         datasets: [
           {
             label: "Reqs/sec.",
-            fillColor: "#BCDFFA",
-            highlightFill: "#03A9F4",
-            data: filteredApiData
+            fillColor: "RGBA(3, 169, 244, 0.2)",
+            strokeColor: "#03A9F4",
+            data: filteredApiData,
           }
         ]
       };
@@ -84,11 +95,21 @@ var MetricsGraph = React.createClass({
       linechart = (<LineChart data={chartData} options={chartOptions}/>);
     }
 
+    if(this.props.data){
+      timestamps.push(this.props.data[0].timestamp);
+      timestamps.push(this.props.data[14].timestamp);
+      timestamps.push(this.props.data[29].timestamp);
+    }
+
+    loaderClasses = cx({
+      'metrics-loader': true,
+      'hidden': this.state.loadingMetrics ? false : true
+    });
+
     return(
       <div className='deployment-metrics-chart metrics-chart'>
         <div className='metrics-requests'>
-          <h5><strong>{this.state.label}</strong></h5>
-          <h3>{mostRecentDatapoint} </h3><small className='muted'></small>
+          <h5>{this.state.label}: <strong>{mostRecentDatapoint}</strong></h5>
         </div>
         <div>
           <span className={loaderClasses}><img src="/images/spinner-pink.svg" /></span>
