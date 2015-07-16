@@ -101,8 +101,6 @@ var MetricsGraph = React.createClass({
       timestamps.push(this.props.data[29].timestamp);
     }
 
-    console.log(timestamps);
-
     loaderClasses = cx({
       'metrics-loader': true,
       'hidden': this.state.loadingMetrics ? false : true
