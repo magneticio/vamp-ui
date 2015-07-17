@@ -2,6 +2,7 @@ var React = require('react');
 var LineChart = require('react-chartjs').Line;
 var _ = require('underscore');
 var cx = require('classnames');
+var TransitionGroup = React.addons.CSSTransitionGroup;
 
 var MetricsGraph = React.createClass({
 
@@ -95,9 +96,13 @@ var MetricsGraph = React.createClass({
       linechart = (<LineChart data={chartData} options={chartOptions}/>);
     }
 
-    loaderClasses = cx({
+    var loaderClasses = cx({
       'metrics-loader': true,
       'hidden': this.state.loadingMetrics ? false : true
+    });
+    var containerClasses = cx({
+      'chart-container': true,
+      'invisible': this.state.loadingMetrics ? true : false
     });
 
     return(
@@ -105,8 +110,8 @@ var MetricsGraph = React.createClass({
         <div className='metrics-title'>
           <h5><strong>{mostRecentDatapoint}</strong> {this.state.label}</h5>
         </div>
-        <div className='chart-container'>
-          <span className={loaderClasses}><img src="/images/spinner-pink.svg" /></span>
+        <span className={loaderClasses}><img src="/images/spinner-pink.svg" /></span>
+        <div className={containerClasses}>
           {linechart}
         </div>
         <ul className='metrics-timestamps'>

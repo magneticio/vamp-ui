@@ -39,6 +39,7 @@ $chart-height: 200px;
 		justify-content: space-between;
 		font-size: $s-size;
 		color: $grey-medium;
+		height: 26px;
 		
 		li:first-of-type {
 			padding-left: 1rem;	
@@ -74,6 +75,8 @@ $chart-height: 200px;
 
 		.chart-container {
 			height: $chart-height;
+			opacity: 1;
+			transition: opacity 0.2s;
 		}
 	}
 }
