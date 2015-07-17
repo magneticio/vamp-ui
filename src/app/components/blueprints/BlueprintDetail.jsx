@@ -35,6 +35,10 @@ var BlueprintDetail = React.createClass({
   setStatesWhenAvailable: function(props){
     if(_.isEmpty(this.state.currentBlueprint)){
       var currentBlueprint = BlueprintStore.getBlueprint(this.state.name);
+
+      if(currentBlueprint && 'status' in currentBlueprint)
+        delete currentBlueprint.status;
+      
       this.setState({
         blueprintDirty: JSON.stringify(currentBlueprint,null,2),
         currentBlueprint: currentBlueprint
