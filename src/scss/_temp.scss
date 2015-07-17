@@ -15,22 +15,11 @@
 	.endpoints-container {
 		background-color: white;
 		margin-bottom: 2px;	
-		padding: 1rem;
+		padding: 1rem 1rem 0.75rem 1rem;
 
 		.export-links {
 			top: 2rem;
 			right: 1rem;
-		}
-	}
-
-	.deployment-metrics-container {
-		background-color: white;
-		padding-right: 2em;
-
-		.metrics-chart {
-			padding: 1rem 1rem 1rem 1rem;
-			box-sizing: border-box;
-			//border-radius: 3px;
 		}
 	}
 }
@@ -42,7 +31,7 @@
 	//background-color: white;
 }
 .cluster-name {
-	padding: 1rem;
+	padding: 1rem 1rem 0.75rem 1rem;
 	background-color: white;
 	margin-bottom: 2px;
 

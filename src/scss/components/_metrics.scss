@@ -31,7 +31,7 @@
 		//background-color: rgba(248,248,248,1);
 		position: absolute;
 		z-index: 1;
-		right: 0.5rem;
+		right: 2rem;
 		//left: 0;
 		color: inherit;
 		bottom: 2.5rem;
@@ -52,32 +52,21 @@
   	height: 100%;
 }
 
-// .service-metrics-container {
-// 	display: inline-block;
-// 	width: 5rem;
-
-// 	.metrics-chart {
-// 		height: 64px;
-// 		width: 100%;
-// 		padding-bottom: 1rem;
-// 	}
-
-// 	.metrics-requests {
-// 		vertical-align: top;
-// 		width: 100%;
-// 	}
-// }
-
 .deployment-metrics-container {
 	display: flex;
-	flex-flow: row nowrap;
-	justify-content: space-between;
-	align-items: flex-start;
 	box-sizing: border-box;
+	background-color: white;
 	
 	.metrics-chart {
+		padding: 1rem 1rem 2rem 1rem;
+		flex: 1;
 		height: 200px;
 		width: 49.35%;
+		border-right: 2px solid $off-white;
 		box-sizing: border-box;
+
+		&:last-of-type {
+			border-right: none;
+		}
 	}
 }

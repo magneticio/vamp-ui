@@ -114,6 +114,7 @@ var MetricsGraph = React.createClass({
         <div>
           <span className={loaderClasses}><img src="/images/spinner-pink.svg" /></span>
           {linechart}
+          {timestamps}
         </div>
       </div>
     )}
