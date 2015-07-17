@@ -4,12 +4,12 @@
 .metrics-chart {
 	display: inline-block;
 	
-	div {
-		vertical-align: middle;
-		display: inline-block;
-		width: 100%;
-		height: 100%;
-	}
+	// div {
+	// 	vertical-align: middle;
+	// 	display: inline-block;
+	// 	width: 100%;
+	// 	height: 100%;
+	// }
 
 	h5 {
 		display: inline-block;
@@ -23,23 +23,33 @@
 		}
 	}
 
-	.metrics-requests {
-		display: inline-flex;
-		font-weight: 400;
-		width: auto;
-		height: auto;
-		//background-color: rgba(248,248,248,1);
-		position: absolute;
-		z-index: 1;
-		right: 2rem;
-		//left: 0;
-		color: inherit;
-		bottom: 2.5rem;
-		//margin: 0 auto;
-		padding: 0.2rem 0.5rem;
-		text-align: right;
-		align-items: center;
-		justify-content: flex-end;
+	.metrics-title {
+		// display: inline-flex;
+		// font-weight: 400;
+		// width: auto;
+		// height: auto;
+		// //background-color: rgba(248,248,248,1);
+		// position: absolute;
+		// z-index: 1;
+		// right: 2rem;
+		// //left: 0;
+		// color: inherit;
+		// bottom: 2.5rem;
+		// //margin: 0 auto;
+		// padding: 0.2rem 0.5rem;
+		// text-align: right;
+		// align-items: center;
+		// justify-content: flex-end;
+	}
+	.metrics-timestamps {
+		display: flex;
+		justify-content: space-between;
+		font-size: $s-size;
+		color: $grey-medium;
+		
+		li:first-of-type {
+			padding-left: 1rem;	
+		}
 	}
 }
 
@@ -58,10 +68,10 @@
 	background-color: white;
 	
 	.metrics-chart {
-		padding: 1rem 1rem 2rem 1rem;
+		padding: 1rem 2rem 1rem 1rem;
 		flex: 1;
-		height: 200px;
-		width: 49.35%;
+		//height: 200px;
+		// width: 49.35%;
 		border-right: 2px solid $off-white;
 		box-sizing: border-box;
 

@@ -34,10 +34,12 @@ var MetricsGraph = React.createClass({
     }
   },
 
-  formatdata: function(dataset, receivingArray, labelArray){
+  formatdata: function(dataset, dataArray, labelArray, timestampsArray){
     _.each(dataset, function(property, key){
-      receivingArray.push(property['value']);
+      dataArray.push(property['value']);
       labelArray.push('');
+      if(timestampsArray)
+        timestampsArray.push(property.timestamp.substr(11, 8));
     }, this);
   },
 
@@ -55,17 +57,15 @@ var MetricsGraph = React.createClass({
           chartOptions = {},
           chartData = {};
 
-      this.formatdata(this.props.data, filteredApiData, chartLabels);
-
+      this.formatdata(this.props.data, filteredApiData, chartLabels, timestamps);
       mostRecentDatapoint = filteredApiData[0];
-      filteredApiData = filteredApiData.reverse();
 
       chartOptions = {
         showScale: true,
         scaleFontSize: 10,
         scaleFontColor: "rgba(158,158,158,0.5)",
         scaleShowGridLines: true,
-        scaleGridLineColor : "RGBA(3, 169, 244, 0.2)",
+        scaleGridLineColor : "RGBA(3, 169, 244, 0.1)",
         scaleShowVerticalLines: false,
         scaleLineColor: "#9E9E9E",
         showTooltips: true,
@@ -95,12 +95,6 @@ var MetricsGraph = React.createClass({
       linechart = (<LineChart data={chartData} options={chartOptions}/>);
     }
 
-    if(this.props.data){
-      timestamps.push(this.props.data[0].timestamp);
-      timestamps.push(this.props.data[14].timestamp);
-      timestamps.push(this.props.data[29].timestamp);
-    }
-
     loaderClasses = cx({
       'metrics-loader': true,
       'hidden': this.state.loadingMetrics ? false : true
@@ -108,14 +102,18 @@ var MetricsGraph = React.createClass({
 
     return(
       <div className='deployment-metrics-chart metrics-chart'>
-        <div className='metrics-requests'>
+        <div className='metrics-title'>
           <h5>{this.state.label}: <strong>{mostRecentDatapoint}</strong></h5>
         </div>
         <div>
           <span className={loaderClasses}><img src="/images/spinner-pink.svg" /></span>
           {linechart}
-          {timestamps}
         </div>
+        <ul className='metrics-timestamps'>
+          <li>{timestamps[29]}</li>
+          <li>{timestamps[14]}</li>
+          <li>{timestamps[0]}</li>
+        </ul>
       </div>
     )}
   }
