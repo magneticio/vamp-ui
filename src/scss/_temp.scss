@@ -14,12 +14,14 @@
 	}
 	.endpoints-container {
 		background-color: white;
+		position: relative;
 		margin-bottom: 2px;	
 		padding: 1rem 1rem 0.75rem 1rem;
 
 		.export-links {
 			top: 2rem;
 			right: 1rem;
+			z-index: 10;
 		}
 	}
 }

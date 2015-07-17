@@ -103,9 +103,9 @@ var MetricsGraph = React.createClass({
     return(
       <div className='deployment-metrics-chart metrics-chart'>
         <div className='metrics-title'>
-          <h5>{this.state.label}: <strong>{mostRecentDatapoint}</strong></h5>
+          <h5><strong>{mostRecentDatapoint}</strong> {this.state.label}</h5>
         </div>
-        <div>
+        <div className='chart-container'>
           <span className={loaderClasses}><img src="/images/spinner-pink.svg" /></span>
           {linechart}
         </div>

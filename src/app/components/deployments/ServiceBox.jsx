@@ -1,7 +1,6 @@
 var React = require('react');
 var _ = require('underscore')
 var TimeAgo = require('react-timeago');
-var ServersList = require('./ServersList.jsx');
 var WeightSetter = require('./WeightSetter.jsx');
 var FilterList = require('./FilterList.jsx');
 var StatusIndicator = require('./StatusIndicator.jsx');
@@ -85,8 +84,8 @@ var ServiceBox = React.createClass({
         stateClass = (service.state.name === 'Error') ? 'danger' : 'success',
         notifClass = service.state.notification ? '' : 'hidden',
         serverlist = this.generateServersList(servers),
-        responseTime = this.generateMetric('rtime'),
-        requestPerSec = this.generateMetric('rate'),
+        responseTime = this.generateMetric('rtime') || '-',
+        requestPerSec = this.generateMetric('rate') || '-',
         smax = this.generateMetric('rate_max');
 
     return(
