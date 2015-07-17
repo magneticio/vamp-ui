@@ -1,8 +1,9 @@
-// Sections
+// GENERAL CLASSES
 .section-full {
-	padding: 1rem;
+	padding: 0 1rem 1rem;
 	width: 100%;
-	box-sizing: border-box;
+	box-sizing: border-box;	
+	background-color: $off-white;
 }
 .section-half {
 	padding: 1rem;
@@ -33,6 +34,7 @@
 	box-sizing: border-box;
 }
 
+// DETAIL SECTIONS
 .detail-section {
 	margin-bottom: 2rem;
 	
@@ -58,8 +60,10 @@
 		}
 	}
 }
-.cluster-box {
-	margin-bottom: 2rem;
+
+// CLUSTER SECTIONS
+.cluster-section {
+	margin: 0 0 1rem 0;
 	
 	div {
 		position: relative;
@@ -72,7 +76,18 @@
 		right: 0;
 		bottom: 0;
 	}
+	.cluster-name {
+		padding: 1rem 1rem 0.75rem 1rem;
+		background-color: white;
+		margin-bottom: 2px;
+
+		h1 {
+			margin: 0;
+		}
+	}
 }
+
+// SERVICE SECTIONS
 .service-section .clock-icon {
 	margin-bottom: -2px;
 	margin-right: 0.2rem;

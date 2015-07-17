@@ -1,7 +1,27 @@
 $chart-height: 200px;
 
 #general-metrics {
-	margin-bottom: 1rem;
+	margin: -1rem 0 1rem 0;
+	box-sizing: content-box;
+	color: $grey;
+	border: none;
+
+	h1 {
+		margin: 1rem 0 0 0;
+		color: inherit;
+	}
+	.endpoints-container {
+		background-color: white;
+		position: relative;
+		margin-bottom: 2px;	
+		padding: 1rem 1rem 0.75rem 1rem;
+
+		.export-links {
+			top: 2rem;
+			right: 1rem;
+			z-index: 10;
+		}
+	}
 }
 .metrics-chart {
 	display: inline-block;

@@ -1,9 +1,10 @@
 .service-box {
 	border-left: 2px solid white;
 	display: flex;
-	//border-color: white;
+	background-color: white;
+	margin-bottom: 2px;
+	
 	&:hover {
-		//border-color: $off-white;
 		border-left: 2px solid $blue;
 		background-color: #fafafa;
 	}
@@ -11,11 +12,7 @@
 .service-section {
 	flex: 1;
 	background-color: inherit;
-	//border-right: 2px solid $off-white;
-	//border-color: inherit;
-	h3 {
-		//margin: 0;
-	}
+
 	p {
 		margin: 0;
 	}
@@ -23,9 +20,6 @@
 .service-name {
 	h3, h5 {
 		margin: 0;
-	}
-	p {
-		//margin-bottom: $h3-size;
 	}
 }
 .service-status {
@@ -39,9 +33,4 @@
 }
 .server-host, .server-ports {
 	display: inline-block;
-	//width: 50%;
-}
-.server-host {
-	//font-weight: 600;
-	//color: $grey-medium;
 }

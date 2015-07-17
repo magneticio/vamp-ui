@@ -1,21 +1,13 @@
 /* compass defaults
    ========================================================================== */
-
-// $experimental-support-for-svg: true;
-
 @import "compass/css3";
 @import "compass/support";
-@import "compass/typography/vertical_rhythm";
-@import "compass/utilities/general/clearfix";
 @import "compass/utilities/sprites";
-@import "compass/css3/box-shadow";
-@import "compass/css3/text-shadow";
 
 /* normalize setup
    ========================================================================== */
 $font-size: 16px;
 $font-family: helvetica;
-// The base font size.
 $base-font-size: $font-size !default; // Overrides default set in Vertical Rhythm partial.
 
 // The base line height determines the basic unit of vertical rhythm.
@@ -37,7 +29,6 @@ $legacy-support-for-ie7: false; // Overrides default set in Support partial.
 
 // The default font family. You should set $base-font-family in your _base partial.
 $base-font-family: $font-family !default;
-
 $base-font-weight: 400;
 
 // The amount lists and blockquotes are indented.

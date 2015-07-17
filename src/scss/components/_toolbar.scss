@@ -13,7 +13,11 @@
 	input[type=search] {
 		padding-left: 2em;
 		background-color: white;
-		//box-shadow: inset 0 1px 1px rgba(200,200,200,0.3);
+		border: none;
+
+		&:focus {
+			box-shadow: inset 0 0 1px 1px rgba(200,200,200,0.3);
+		}
 	}
 	.search-icon {
 		position: absolute;
