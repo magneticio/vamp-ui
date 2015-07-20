@@ -1,14 +1,14 @@
 .options-pane {
-	position: fixed;
+	position: absolute;
 	top: 0;
 	right: -15vw;
 	width: 40vw;
 	height: 100vh;
 	z-index: 0;
-	overflow-y: scroll;
 	transition: transform 0.4s ease;
 	background-color: $blue-dark;
 	color: white;
+	overflow: hidden;
 	
 	input {
 		color: $grey;
@@ -50,5 +50,7 @@
 	}
 	.options-pane { 
 		transform: translateX(-15vw);
+		height: auto;
+		min-height: 100vh;
 	}
 }

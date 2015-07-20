@@ -25,7 +25,9 @@ pre {
 	margin: 0;
 }
 
-
+#page-container {
+	background-color: $blue-dark;
+}
 .wrapper {
 	position: relative;
 	z-index: 1;
@@ -33,5 +35,4 @@ pre {
 	width: 100vw;
 	min-height: 100vh;
 	transition: transform 0.4s;
-	box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
 }
