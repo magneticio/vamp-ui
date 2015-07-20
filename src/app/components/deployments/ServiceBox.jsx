@@ -46,8 +46,8 @@ var ServiceBox = React.createClass({
       _.each(serverval.ports, function(portval,portkey){
         serverlist.push(
           <li key={portkey+portval}>
-            <span className='server-host'>{serverval.host}</span>
-            <span className='server-ports'>:{portval}</span>
+            <h5 className='server-host'>{serverval.host}</h5>
+            <h5 className='server-ports'>:{portval}</h5>
           </li>
         );
       });
