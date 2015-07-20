@@ -30,7 +30,11 @@ var _persistCurrentDeployment = function(response){
 };
 var _eraseCurrentDeployment = function() {
   _currentDeployment = {};
-};  
+};
+var _updateDeploymentStatus = function(response){
+  var newDeployment = JSON.parse(response.text);
+  _currentDeployment.clusters = newDeployment.clusters;
+};
 
 var DeploymentStore = assign({}, EventEmitter.prototype,{
 
@@ -74,6 +78,16 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         AppStore.putError('UNREACHABLE');
         break;
       case DeploymentConstants.GET_DEPLOYMENT + '_ERROR':
+        AppStore.putError('UNREACHABLE');
+        break;
+
+      case DeploymentConstants.GET_DEPLOYMENT_STATUS + '_SUCCESS':
+        _updateDeploymentStatus(payload.response);
+        break;
+      case DeploymentConstants.GET_DEPLOYMENT_STATUS + '_UNREACHABLE':
+        AppStore.putError('UNREACHABLE');
+        break;
+      case DeploymentConstants.GET_DEPLOYMENT_STATUS + '_ERROR':
         AppStore.putError('UNREACHABLE');
         break;
 

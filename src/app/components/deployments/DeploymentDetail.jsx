@@ -27,7 +27,9 @@ var DeploymentDetail = React.createClass({
   },
   componentDidMount: function() {
     DeploymentActions.getDeployment(this.state.name);
+    DeploymentActions.getDeploymentStatus(this.state.name);
     DeploymentStore.addChangeListener(this._onChange);
+    var self = this;
     
     this.setState({
       deployment: DeploymentStore.getCurrent()
@@ -40,6 +42,7 @@ var DeploymentDetail = React.createClass({
       console.log('poll metrics');
       DeploymentActions.getDeploymentMetrics(deployment, 'rate');
       DeploymentActions.getDeploymentMetrics(deployment, 'scur');
+      DeploymentActions.getDeploymentStatus(self.state.name);
     }, 4000);
   },
   componentWillUnmount: function() {

@@ -13,6 +13,9 @@ var DeploymentActions = {
   getDeployment: function(name) {
     Api.get('/deployments/' + name, null, DeploymentConstants.GET_DEPLOYMENT);
   },
+  getDeploymentStatus: function(name) {
+    Api.get('/deployments/' + name, null, DeploymentConstants.GET_DEPLOYMENT_STATUS);
+  },
   getDeploymentAsBlueprint: function(deployment, format) {
     format = typeof format !== 'undefined' ? format : null;
     Api.get('/deployments/' + deployment.name, {as_blueprint: true}, DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT, format);
