@@ -4,7 +4,7 @@ var AppStore = require('../stores/AppStore');
 var LoadStates = require("../constants/LoadStates.js");
 var request = require('superagent');
 
-var TIMEOUT = 10000;
+var TIMEOUT = Config.TIMEOUT;
 
 var _pendingRequests = {};
 

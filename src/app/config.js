@@ -2,7 +2,7 @@ var request = require('superagent');
 
 var Config = {
 
-  pulseApiUrl: null,
+  TIMEOUT: 5000,
 
   // CORE REST API
   getApiUrl: function(){
