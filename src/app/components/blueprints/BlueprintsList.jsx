@@ -20,10 +20,11 @@ var BlueprintsList = React.createClass({
     return {
       filterText: '',
       viewType:'general-list',
-      blueprintCount: 0,
       blueprintCreated: false,
       currentBlueprint: {},
-      requestingBlueprint: false
+      requestingBlueprint: false,
+      blueprintName: '',
+      pending: false
     };
   },
   componentDidMount: function(){
@@ -31,19 +32,14 @@ var BlueprintsList = React.createClass({
     this.setInterval(this.pollBackend, 4000);
   },
   componentWillReceiveProps: function(nextProps){
-    var nextBlueprintCount = _.size(nextProps.allBlueprints);
-    if(nextBlueprintCount > this.state.blueprintCount){
-      this.setState({
-        blueprintCount: nextBlueprintCount,
-        blueprintCreated: true
-      });
-    } else if(nextBlueprintCount < this.state.blueprintCount) {
-      this.setState({
-        blueprintCount: nextBlueprintCount,
-        blueprintCreated: false
-      });
+    if(this.state.pending){
+      var newBlueprint = BlueprintStore.getCurrentBlueprint();
+      if(this.state.currentBlueprint != newBlueprint){
+        this.setState({ pending: false, blueprintCreated: true, currentBlueprint: {} });
+        BlueprintStore.clearCurrentBlueprint();
+      } 
     } else {
-      this.setState({ blueprintCreated: false });
+      this.setState({ breedCreated: false });  
     }
     if(this.state.requestingBlueprint){
       _currentBlueprint = BlueprintStore.getCurrentBlueprint();
@@ -55,8 +51,12 @@ var BlueprintsList = React.createClass({
   },
   
   handleAdd: function(newBlueprint) {
-    this.setState({ blueprintCreated: false});
+    this.setState({ blueprintCreated: false, pending: true});
     BlueprintActions.createBlueprint(newBlueprint);
+  },
+  handleUpdate: function(blueprint) {
+    this.setState({ blueprintCreated: false, pending: true});
+    BlueprintActions.updateBlueprint(blueprint, this.state.blueprintName, 'application/x-yaml');
   },
   handleUserInput: function(filterText) {
     this.setState({
@@ -68,11 +68,11 @@ var BlueprintsList = React.createClass({
       viewType: viewType,
     });
   },
-  handleDetail: function(){
-    this.setState({ requestingBlueprint: true });
+  handleDetail: function(blueprintName){
+    this.setState({ requestingBlueprint: true, blueprintName: blueprintName });
   },
   clearCurrentBlueprint: function(){
-    this.setState({ currentBlueprint: {} });
+    this.setState({ currentBlueprint: {}, blueprintName: '' });
   },
 
   render: function() {
@@ -121,6 +121,7 @@ var BlueprintsList = React.createClass({
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch}
           handleAdd={this.handleAdd}
+          handleUpdate={this.handleUpdate}
           addArtefactType='blueprint'
           requestResolved={this.state.blueprintCreated} 
           loadState={this.props.loadState}

@@ -95,12 +95,12 @@ var ToolBar = React.createClass({
   handleSubmit: function(e){
     e.preventDefault();
 
-    console.log(this.state);
     this.setState({ 
       errorMessage: '',
       buttonLoadsate: 'active',
     });
-    this.props.handleAdd(this.state.newArtefact);
+
+    _.isEmpty(this.props.detailArtefact) ? this.props.handleAdd(this.state.newArtefact) : this.props.handleUpdate(this.state.newArtefact);
   },
 
   render: function() {

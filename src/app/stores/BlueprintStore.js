@@ -86,13 +86,9 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
         _error = errortext.message;
         break;
 
-      // case BlueprintConstants.CREATE_BLUEPRINT:
-      //   payload.response.status = 'DIRTY'
-      //   _blueprints[payload.response.name] = payload.response
-      //   break;
-
       case BlueprintConstants.CREATE_BLUEPRINT + '_SUCCESS':
         _addBlueprint(payload.response);
+        _persistCurrentBlueprint(payload.response);
         break;
       case BlueprintConstants.CREATE_BLUEPRINT + '_ERROR':
         var errortext = JSON.parse(payload.response.text)

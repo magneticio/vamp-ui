@@ -85,6 +85,7 @@ var BreedStore = assign({}, EventEmitter.prototype,{
 
       case BreedConstants.CREATE_BREED + '_SUCCESS':
         _addBreed(payload.response);
+        _persistCurrentBreed(payload.response);
         break;
       case BreedConstants.CREATE_BREED + '_ERROR':
         var errortext = JSON.parse(payload.response.text)

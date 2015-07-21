@@ -14,6 +14,10 @@ var BreedActions = {
 	createBreed: function(body) {
     Api.create('/breeds', body, BreedConstants.CREATE_BREED, 'application/x-yaml');
 	},
+  updateBreed: function(body, breedName, format) {
+    format = typeof format !== 'undefined' ? format : null;
+    Api.update('/breeds/' + breedName, body, BreedConstants.CREATE_BREED, format);
+  },  
   deleteBreed: function(breed) {
     Api.del('/breeds/' + breed.name, breed, BreedConstants.DELETE_BREED);
   }  

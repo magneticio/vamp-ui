@@ -18,10 +18,11 @@ var BreedsList = React.createClass({
     return {
       filterText: '',
       viewType:'general-list',
-      breedCount: 0,
       breedCreated: false,
       currentBreed: {},
-      requestingBreed: false
+      requestingBreed: false,
+      breedName: '',
+      pending: false
     };
   },
   componentDidMount: function(){
@@ -29,21 +30,14 @@ var BreedsList = React.createClass({
     this.setInterval(this.pollBackend, 4000);
   },
   componentWillReceiveProps: function(nextProps){
-    var nextBreedCount = _.size(nextProps.allBreeds);
-    if(nextBreedCount > this.state.breedCount){
-      this.setState({
-        breedCount: nextBreedCount,
-        breedCreated: true
-      });
-    } else if(nextBreedCount < this.state.breedCount){
-      this.setState({
-        breedCount: nextBreedCount,
-        breedCreated: false
-      });
+    if(this.state.pending){
+      var newBreed = BreedStore.getCurrentBreed();
+      if(this.state.currentBreed != newBreed){
+        this.setState({ pending: false, breedCreated: true, currentBreed: {} });
+        BreedStore.clearCurrentBreed();
+      } 
     } else {
-      this.setState({
-        breedCreated: false
-      });
+      this.setState({ breedCreated: false });  
     }
     if(this.state.requestingBreed){
       _currentBreed = BreedStore.getCurrentBreed();
@@ -55,8 +49,12 @@ var BreedsList = React.createClass({
   },
   
   handleAdd: function(newBreed) {
-    this.setState({ breedCreated: false});
+    this.setState({ breedCreated: false, pending: true});
     BreedActions.createBreed(newBreed);
+  },
+  handleUpdate: function(breed) {
+    this.setState({ breedCreated: false, pending: true});
+    BreedActions.updateBreed(breed, this.state.breedName, 'application/x-yaml');
   },
   handleUserInput: function(filterText) {
     this.setState({
@@ -68,12 +66,11 @@ var BreedsList = React.createClass({
       viewType: viewType,
     });
   },
-  handleDetail: function(){
-    this.setState({ requestingBreed: true });
-    console.log('handle');
+  handleDetail: function(breedName){
+    this.setState({ requestingBreed: true, breedName: breedName});
   },
   clearCurrentBreed: function(){
-    this.setState({ currentBreed: {} });
+    this.setState({ currentBreed: {}, breedName: '' });
   },
 
   render: function() {
@@ -122,6 +119,7 @@ var BreedsList = React.createClass({
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch}
           handleAdd={this.handleAdd}
+          handleUpdate={this.handleUpdate}          
           addArtefactType='breed'
           requestResolved={this.state.breedCreated} 
           loadState={this.props.loadState}
