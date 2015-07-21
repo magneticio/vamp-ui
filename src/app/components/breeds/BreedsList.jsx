@@ -72,7 +72,7 @@ var BreedsList = React.createClass({
     this.setState({ requestingBreed: true });
     console.log('handle');
   },
-  clearCurrentBlueprint: function(){
+  clearCurrentBreed: function(){
     this.setState({ currentBreed: {} });
   },
 
