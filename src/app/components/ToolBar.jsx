@@ -80,9 +80,14 @@ var ToolBar = React.createClass({
     if(e)
       e.preventDefault();
     
+    var self = this;
     React.findDOMNode(this.refs.AddNewForm).reset();    
     this.setState(this.clearStates);
-    this.props.clearDetailArtefact();
+
+    // Timeout is needed for animation to complete, otherwise ugly flash of 2 messages appears
+    setTimeout(function(){
+      self.props.clearDetailArtefact();
+    }, 200);
   },
   handleTextareaChange: function(e){
     this.setState({newArtefact: e.target.value});
@@ -119,8 +124,20 @@ var ToolBar = React.createClass({
       "button-pink": true,
       "save-button": true
     });
+    var uploadButtonClasses = cx({
+      "button": true,
+      "button-ghost": true,
+      "upload-button": true,
+      "hidden": !_.isEmpty(this.props.detailArtefact) ? true : false,
+    });
 
-    //console.log(this.props.detailArtefact);
+    if(!_.isEmpty(this.props.detailArtefact)){
+      var artefactTitle = (<h2>Edit {this.props.addArtefactType}</h2>);  
+      var artefactMessage = (<p>Edit the contents of your {this.props.addArtefactType} below.</p>);
+    } else {
+      var artefactTitle = (<h2>Adding a new {this.props.addArtefactType}</h2>);  
+      var artefactMessage = (<p>Type or paste the contents of your {this.props.addArtefactType}, or upload a YAML file and edit its contents.</p>);
+    }
 
     return (
       <section id="toolbar" className={toolbarClasses}>
@@ -143,11 +160,11 @@ var ToolBar = React.createClass({
         </div>
 
         <form className='add-artefact-box' onSubmit={this.handleSubmit} ref='AddNewForm'>
-            <h2>Adding a new {this.props.addArtefactType}</h2>
-            <p>Type or paste the contents of your {this.props.addArtefactType}, or upload a YAML file and edit its contents.</p>
+            {artefactTitle}
+            {artefactMessage}
             <div className='actions'>
               <button className="button button-ghost cancel-button" onClick={this.handleCancel}>Cancel</button>
-              <span className='button button-ghost upload-button'> 
+              <span className={uploadButtonClasses}> 
                 Upload file<input type='file' onChange={this.handleUpload} />
               </span>
               <input type='submit' className={saveButtonClasses} value='Save' />
