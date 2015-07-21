@@ -42,6 +42,7 @@ var OptionsPane = React.createClass({
     var formattedInfoObject = {},
         apiInfo = this.props.apiInfo || {},
         containerMessage = '',
+        vampVersion = '',
         jvmItems = {},
         persistenceItems = {},
         routerItems = {},
@@ -57,6 +58,7 @@ var OptionsPane = React.createClass({
         containerMessage = "Some services are down, please check the status of VAMP";
     } else {
       containerMessage = apiInfo.message;
+      vampVersion = apiInfo.version;
     }
 
     // Filter trough info endpoint, set vars.
@@ -132,6 +134,8 @@ var OptionsPane = React.createClass({
 	  			<form onSubmit={this.handleSubmit} className='options-form'>
 
             <h3>{containerMessage}</h3>
+            <h4>Version</h4>
+            {vampVersion}
 
             <h4 className={restApiTitleClasses}>REST API URL</h4>
 	          <input 
