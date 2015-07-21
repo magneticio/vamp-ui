@@ -88,7 +88,7 @@ var MetricsGraph = React.createClass({
             label: "Reqs/sec.",
             fillColor: "RGBA(3, 169, 244, 0.2)",
             strokeColor: "#03A9F4",
-            data: filteredApiData,
+            data: filteredApiData.reverse(),
           }
         ]
       };
