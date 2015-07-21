@@ -9,6 +9,8 @@ var LoadStates = require("../../constants/LoadStates.js");
 var ButtonBar = require('./BlueprintsButtonBar.jsx');
 var BlueprintListItem = require('./BlueprintListItem.jsx');
 var BlueprintActions = require('../../actions/BlueprintActions');
+var BlueprintStore = require('../../stores/BlueprintStore');
+
 
 var BlueprintsList = React.createClass({
   
@@ -20,6 +22,8 @@ var BlueprintsList = React.createClass({
       viewType:'general-list',
       blueprintCount: 0,
       blueprintCreated: false,
+      currentBlueprint: {},
+      requestingBlueprint: false
     };
   },
   componentDidMount: function(){
@@ -41,6 +45,13 @@ var BlueprintsList = React.createClass({
     } else {
       this.setState({ blueprintCreated: false });
     }
+    if(this.state.requestingBlueprint){
+      _currentBlueprint = BlueprintStore.getCurrentBlueprint();
+      this.setState({ 
+        currentBlueprint: _currentBlueprint,
+        requestingBlueprint: _.isEmpty(_currentBlueprint) 
+      });
+    }
   },
   
   handleAdd: function(newBlueprint) {
@@ -57,6 +68,12 @@ var BlueprintsList = React.createClass({
       viewType: viewType,
     });
   },
+  handleDetail: function(){
+    this.setState({ requestingBlueprint: true });
+  },
+  clearCurrentBlueprint: function(){
+    this.setState({ currentBlueprint: {} });
+  },
 
   render: function() {
 
@@ -72,7 +89,7 @@ var BlueprintsList = React.createClass({
       if ( ( blueprint.name.toLowerCase().indexOf(filterTerm) === -1 && filterTerm) ) {
         return;
       }
-      blueprints.push(<BlueprintListItem key={key} blueprint={allBlueprints[key]} />);
+      blueprints.push(<BlueprintListItem key={key} blueprint={allBlueprints[key]} handleDetail={this.handleDetail} />);
     }, this);
     
     // Prepare dynamic classes
@@ -106,7 +123,9 @@ var BlueprintsList = React.createClass({
           handleAdd={this.handleAdd}
           addArtefactType='blueprint'
           requestResolved={this.state.blueprintCreated} 
-          loadState={this.props.loadState} />
+          loadState={this.props.loadState}
+          detailArtefact={this.state.currentBlueprint} 
+          clearDetailArtefact={this.clearCurrentBlueprint} />
         <span className={emptyClassSet}>No blueprints found.</span>
         <span className={errorMessageClassSet}>{errorMessage}</span>        
         <TransitionGroup 

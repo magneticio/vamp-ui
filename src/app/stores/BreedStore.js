@@ -10,6 +10,7 @@ var AppStore = require('./AppStore');
 var CHANGE_EVENT = 'change';
 
 var _breeds = {};
+var _currentBreed = {};
 var _error = null;
 
 var _persistBreeds = function(response){
@@ -25,19 +26,25 @@ var _addBreed = function(response){
   var newBreed = JSON.parse(response.text);
   _breeds[newBreed.name] = newBreed;
 }
+var _persistCurrentBreed = function(response){
+  _currentBreed = response.text;
+}
 
 var BreedStore = assign({}, EventEmitter.prototype,{
 
   getAll: function() {
     return _breeds;
   },
-  getBreed: function(name) {
-    return _.findWhere(_breeds, { "name" : name });
+  getCurrentBreed: function(name) {
+    return _currentBreed;
   },
   getError: function(){
     var returnError = _error;
     _error = null;
     return returnError;
+  },
+  clearCurrentBreed: function(){
+    _currentBreed = {};
   },
 
   emitChange: function() {
@@ -66,6 +73,14 @@ var BreedStore = assign({}, EventEmitter.prototype,{
         break;
       case BreedConstants.GET_ALL_BREEDS + '_ERROR':
         AppStore.putError('UNREACHABLE');
+        break;
+
+      case BreedConstants.GET_BREED + '_SUCCESS':
+        _persistCurrentBreed(payload.response);
+        break;
+      case BreedConstants.GET_BREED + '_ERROR':
+        var errortext = JSON.parse(payload.response.text)
+        _error = errortext.message;
         break;
 
       case BreedConstants.CREATE_BREED + '_SUCCESS':

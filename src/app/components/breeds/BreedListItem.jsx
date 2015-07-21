@@ -2,6 +2,7 @@ var React = require('react');
 var _ = require('underscore');
 var Loader = require('../Loader.jsx');
 var BreedActions = require('../../actions/BreedActions.js');
+var BreedStore = require('../../stores/BreedStore.js');
 var DropdownList = require('../DropdownList.jsx');
 
 var BreedListItem = React.createClass({
@@ -9,9 +10,18 @@ var BreedListItem = React.createClass({
   contextTypes: {
     router: React.PropTypes.func
   },
-
-  handleDetail: function (){
-    this.context.router.transitionTo('breed',{id: this.props.breed.name});
+  
+  getInitialState: function(){
+    return {
+      deleteRequestPending: false,
+    }
+  },
+  handleDetail: function (e){
+    e.preventDefault();
+    BreedStore.clearCurrentBreed();
+    console.log(this.props.breed.name);
+    BreedActions.getBreed(this.props.breed.name, 'application/x-yaml');
+    this.props.handleDetail(this.props.breed.name);
   },  
   handleDelete: function(){
     BreedActions.deleteBreed(this.props.breed);

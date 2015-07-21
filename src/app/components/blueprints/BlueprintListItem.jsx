@@ -1,8 +1,9 @@
 var React = require('react');
 var _ = require('underscore');
 var cx = require('classnames');
-var Loader = require('../Loader.jsx')
-var BlueprintActions = require('../../actions/BlueprintActions.js')
+var Loader = require('../Loader.jsx');
+var BlueprintActions = require('../../actions/BlueprintActions.js');
+var BlueprintStore = require('../../stores/BlueprintStore.js')
 var DropdownList = require('../DropdownList.jsx');
 
 var BlueprintListItem = React.createClass({
@@ -23,17 +24,13 @@ var BlueprintListItem = React.createClass({
       this.setState({ deployRequestPending: false });
       this.context.router.transitionTo('deployments');
     }
-    if(this.state.deleteRequestPending && nextProps.blueprint.status == "DELETE_ERROR"){
-      this.setState({ 
-        deleteRequestPending: false, 
-        deleteRequestError: true 
-      });
-    }
   },
 
   handleDetail: function(e) {
     e.preventDefault();
-    this.context.router.transitionTo('blueprint',{id: this.props.blueprint.name});
+    BlueprintStore.clearCurrentBlueprint();
+    BlueprintActions.getBlueprint(this.props.blueprint.name, 'application/x-yaml');
+    this.props.handleDetail(this.props.blueprint.name);
   },
   handleDeploy: function(e) {
     this.setState({ deployRequestPending: true });

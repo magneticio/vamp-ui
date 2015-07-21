@@ -57,10 +57,10 @@ var ServiceBox = React.createClass({
   },
   generateMetric: function(metricType){
     if(!this.props.serviceMetrics)
-      return '-';
+      return '0';
 
     if(!this.props.serviceMetrics['services:'+this.props.service.breed.name])
-      return '-';
+      return '0';
     
     var allMetrics = this.props.serviceMetrics['services:' + this.props.service.breed.name],
         metricValue = null;
@@ -84,8 +84,8 @@ var ServiceBox = React.createClass({
         stateClass = (service.state.name === 'Error') ? 'danger' : 'success',
         notifClass = service.state.notification ? '' : 'hidden',
         serverlist = this.generateServersList(servers),
-        responseTime = this.generateMetric('rtime') || '-',
-        requestPerSec = this.generateMetric('rate') || '-',
+        responseTime = this.generateMetric('rtime') || '0',
+        requestPerSec = this.generateMetric('rate') || '0',
         smax = this.generateMetric('rate_max');
 
     return(

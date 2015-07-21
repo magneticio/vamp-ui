@@ -7,8 +7,8 @@ var classNames = require('classnames');
 var ToolBar = require('../ToolBar.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
 var BreedListItem = require('./BreedListItem.jsx');
-var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
 var BreedActions = require('../../actions/BreedActions');
+var BreedStore = require('../../stores/BreedStore');
 
 var BreedsList = React.createClass({
   
@@ -20,6 +20,8 @@ var BreedsList = React.createClass({
       viewType:'general-list',
       breedCount: 0,
       breedCreated: false,
+      currentBreed: {},
+      requestingBreed: false
     };
   },
   componentDidMount: function(){
@@ -43,9 +45,17 @@ var BreedsList = React.createClass({
         breedCreated: false
       });
     }
+    if(this.state.requestingBreed){
+      _currentBreed = BreedStore.getCurrentBreed();
+      this.setState({ 
+        currentBreed: _currentBreed,
+        requestingBreed: _.isEmpty(_currentBreed) 
+      });
+    }
   },
   
   handleAdd: function(newBreed) {
+    this.setState({ breedCreated: false});
     BreedActions.createBreed(newBreed);
   },
   handleUserInput: function(filterText) {
@@ -57,6 +67,13 @@ var BreedsList = React.createClass({
     this.setState({
       viewType: viewType,
     });
+  },
+  handleDetail: function(){
+    this.setState({ requestingBreed: true });
+    console.log('handle');
+  },
+  clearCurrentBlueprint: function(){
+    this.setState({ currentBreed: {} });
   },
 
   render: function() {
@@ -73,7 +90,7 @@ var BreedsList = React.createClass({
       if ( ( breed.name.toLowerCase().indexOf(filterTerm) === -1 && breed.deployable.toLowerCase().indexOf(filterTerm) === -1 && filterTerm) ) {
         return;
       }
-      breeds.push(<BreedListItem key={key} breed={breed} />);
+      breeds.push(<BreedListItem key={key} breed={breed} handleDetail={this.handleDetail} />);
     }, this);
 
     // Prepare dynamic classes
@@ -107,7 +124,9 @@ var BreedsList = React.createClass({
           handleAdd={this.handleAdd}
           addArtefactType='breed'
           requestResolved={this.state.breedCreated} 
-          loadState={this.props.loadState}/>
+          loadState={this.props.loadState}
+          detailArtefact={this.state.currentBreed} 
+          clearDetailArtefact={this.clearCurrentBreed} />
         <span className={emptyClassSet}>No breeds found.</span>
         <span className={errorMessageClassSet}>{errorMessage}</span>        
         <TransitionGroup 

@@ -7,8 +7,9 @@ var BlueprintActions = {
   getAllBlueprints: function() {
     Api.get('/blueprints', null, BlueprintConstants.GET_ALL_BLUEPRINTS);
   },
-  getBlueprint: function(blueprint) {
-    Api.get('/blueprints/' + blueprints.name, null, BlueprintConstants.GET_BLUEPRINT);
+  getBlueprint: function(blueprintName, format) {
+      format = typeof format !== 'undefined' ? format : null;
+      Api.get('/blueprints/' + blueprintName, null, BlueprintConstants.GET_BLUEPRINT, format);
   },  
   deployBlueprint: function(body) {
     Api.create('/deployments',body, BlueprintConstants.DEPLOY_BLUEPRINT);

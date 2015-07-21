@@ -7,8 +7,9 @@ var BreedActions = {
   getAllBreeds: function() {
     Api.get('/breeds', null, BreedConstants.GET_ALL_BREEDS);
   },
-  getBreed: function(name) {
-    Api.get('/breeds/' + name, null, BreedConstants.GET_BREED);
+  getBreed: function(breedName, format) {
+    format = typeof format !== 'undefined' ? format : null;
+    Api.get('/breeds/' + breedName, null, BreedConstants.GET_BREED, format);
 	},
 	createBreed: function(body) {
     Api.create('/breeds', body, BreedConstants.CREATE_BREED, 'application/x-yaml');

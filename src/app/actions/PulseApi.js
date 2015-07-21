@@ -32,7 +32,7 @@ function handleResponse(actionType) {
       dispatch(LoadStates.STATE_TIMEOUT, null);
     } else if (typeof res == "undefined" || !res.ok) {
       handleError(actionType, res);
-      AppStore.putError('UNREACHABLE');
+      AppStore.putError('PULSE_ERROR');
     } else {
       dispatch(actionType + '_SUCCESS', res);
     }

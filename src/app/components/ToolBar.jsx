@@ -1,5 +1,6 @@
 var React = require('react');
 var cx = require('classnames');
+var _ = require('underscore')
 var LoadStates = require("../constants/LoadStates.js");
 var BreedStore = require('../stores/BreedStore');
 var BlueprintStore = require('../stores/BlueprintStore');
@@ -14,6 +15,8 @@ var ToolBar = React.createClass({
     buttonLoadsate: '',
     newArtefact: '',
     errorMessage: '',
+    editArtefact: false,
+    dirty: false
   },
 
   getInitialState: function(){
@@ -21,7 +24,9 @@ var ToolBar = React.createClass({
       toolbarState: '',
       buttonLoadsate: '',
       newArtefact: '',
-      errorMessage: ''
+      errorMessage: '',
+      dirty: false,
+      editArtefact: false
     };
   },
   componentDidMount: function(){
@@ -31,14 +36,23 @@ var ToolBar = React.createClass({
     this._destroyArtefactFunctions();
   },
   componentWillReceiveProps: function(nextProps) {
-    if(nextProps.requestResolved){
+    if(this.state.newArtefact && nextProps.requestResolved){
       this.handleCancel();
+    }
+    if(!_.isEmpty(nextProps.detailArtefact) && !this.state.dirty){
+      formattedArtefact = nextProps.detailArtefact;
+      this.setState({ 
+        newArtefact: formattedArtefact,
+        dirty: true,
+        editArtefact: true,
+        toolbarState: 'expanded'
+      });
     }
   },
   
   handleChange: function() {
     this.props.onUserInput(
-        this.refs.filterTextInput.getDOMNode().value
+      this.refs.filterTextInput.getDOMNode().value
     );
   },
   handleClick: function(e, viewType){
@@ -68,6 +82,7 @@ var ToolBar = React.createClass({
     
     React.findDOMNode(this.refs.AddNewForm).reset();    
     this.setState(this.clearStates);
+    this.props.clearDetailArtefact();
   },
   handleTextareaChange: function(e){
     this.setState({newArtefact: e.target.value});
@@ -78,7 +93,7 @@ var ToolBar = React.createClass({
     console.log(this.state);
     this.setState({ 
       errorMessage: '',
-      buttonLoadsate: 'active'
+      buttonLoadsate: 'active',
     });
     this.props.handleAdd(this.state.newArtefact);
   },
@@ -104,6 +119,8 @@ var ToolBar = React.createClass({
       "button-pink": true,
       "save-button": true
     });
+
+    //console.log(this.props.detailArtefact);
 
     return (
       <section id="toolbar" className={toolbarClasses}>
@@ -144,6 +161,7 @@ var ToolBar = React.createClass({
 
   _onChange: function() {
     var errorMessage = this._getErrorMessage();
+
     if(errorMessage)
       this.setState({ errorMessage: errorMessage });
   },

@@ -110,8 +110,8 @@ var DeploymentDetail = React.createClass({
               <div className="deployment-status hidden">
                 UP
               </div>
-              <DeploymentMetricsGraph data={deployment.rate} metricsType='rate' />
-              <DeploymentMetricsGraph data={deployment.scur} metricsType='scur' />              
+              <DeploymentMetricsGraph data={deployment.rate} metricsType='rate' errors={this.props.errors} />
+              <DeploymentMetricsGraph data={deployment.scur} metricsType='scur' errors={this.props.errors} />              
             </div>
           </div>
           <div className='detail-section'>
