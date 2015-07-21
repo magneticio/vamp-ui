@@ -3,7 +3,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var LoadStates = require("../constants/LoadStates.js");
 var request = require('superagent');
 
-var TIMEOUT = 2000;
+var TIMEOUT = 5000;
 var _pendingRequests = {};
 
 // Helpers
