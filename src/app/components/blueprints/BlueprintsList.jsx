@@ -39,7 +39,7 @@ var BlueprintsList = React.createClass({
         BlueprintStore.clearCurrentBlueprint();
       } 
     } else {
-      this.setState({ breedCreated: false });  
+      this.setState({ blueprintCreated: false });  
     }
     if(this.state.requestingBlueprint){
       _currentBlueprint = BlueprintStore.getCurrentBlueprint();

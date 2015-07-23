@@ -19,7 +19,6 @@ var BreedListItem = React.createClass({
   handleDetail: function (e){
     e.preventDefault();
     BreedStore.clearCurrentBreed();
-    console.log(this.props.breed.name);
     BreedActions.getBreed(this.props.breed.name, 'application/x-yaml');
     this.props.handleDetail(this.props.breed.name);
   },  
