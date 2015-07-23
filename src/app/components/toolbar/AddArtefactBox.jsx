@@ -48,6 +48,18 @@ var AddArtefactBox = React.createClass({
       this.refs.filterTextInput.getDOMNode().value
     );
   },
+  handleUpload: function(e){
+    var self = this;
+    var reader = new FileReader();
+    var file = e.target.files[0];
+
+    reader.onload = function(upload) {
+      self.setState({
+        newArtefact: upload.target.result,
+      });
+    }
+    reader.readAsText(file);
+  },
   handleCancel: function(e){
     if(e)
       e.preventDefault();
