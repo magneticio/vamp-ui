@@ -1,5 +1,11 @@
+$filterbox-transition: margin-top 0.3s ease, opacity 0.15s;
+
 .toolbar {
 	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
 	background-color: $off-white;
 	width: 100%;
 	box-sizing: border-box;
@@ -7,7 +13,20 @@
 	z-index: 20;
 	border-top: 1px solid $off-white;
 
-	label {
+	.add-button {
+		transition: $filterbox-transition;
+		opacity: 1;
+	}
+}
+.filtering-tools-box {
+	display: inline-flex;
+	flex-direction: row;
+  	align-items: center;
+  	flex-wrap: wrap;
+  	opacity: 1;
+	transition: $filterbox-transition;
+
+  	label {
 		position: relative;
 	}
 	input[type=search] {
@@ -24,28 +43,13 @@
 		left: 0.5rem;
 		top: 0;
 	}
-	.add-button {
-		margin-left: auto;
-	}
-}
-.filtering-tools-box {
-	display: flex;
-	flex-direction: row;
-  	align-items: center;
-  	flex-wrap: wrap;
-  	opacity: 1;
-  	transition: margin-top 0.3s, opacity 0.15s;
 }
 .add-artefact-box {
 	width: 100%;
 	height: 0;
 	opacity: 0;
 	overflow: hidden;
-	transition: height 0.3s, opacity 0.15s;
-
-	h2 {
-		padding-top: 2rem;
-	}
+	transition: height 0.3s , opacity 0.15s ease;
 	
 	p {
 		display: inline-block;
@@ -81,34 +85,15 @@
 .toolbar.expanded {
 	.add-artefact-box {
 		height: 92vh;
-		opacity: 1;		
+		opacity: 1;
+		transition: height 0.3s, opacity 0.3s ease 0.1s;
 	}
 	.filtering-tools-box {
-		margin-top: -3.5em;
+		margin-top: -5em;
+		opacity: 0;
+	}
+	.add-button {
+		margin-top: -5em;
 		opacity: 0;
 	}
 }
-
-//.view-switch {
-// 	vertical-align: top;
-// 	display: inline-block;
-// 	width: 2.125rem;
-// 	height: 2.125rem;
-// 	padding: 0.5rem;
-// 	margin-right: 0.3rem;
-// 	border: none;
-// 	color: white;
-// 	box-sizing: border-box;
-// 	background-color: transparent;
-// 	outline: none;
-
-// 	img {
-// 		display: block;
-// 		width: 100%;
-// 		height: 100%;
-// 	}
-
-// 	&:hover {
-// 		background-color: $pink;
-// 	}
-// }
