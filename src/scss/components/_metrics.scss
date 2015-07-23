@@ -56,12 +56,17 @@ $chart-height: 200px;
   	width: 100%;
   	height: 100%;
 }
-.metrics-status-message {
-	z-index: 100;
-	text-align: center;
-	width: 100%;
+.pulse-status-message {
 	display: inline-block;
-	font-size: $s-size;
+	width: 100%;
+	padding: 1rem;
+	box-sizing: border-box;
+	text-align: center;
+	background-color: white;
+	//color: white;
+	margin-bottom: 2px;
+	
+	
 }
 .deployment-metrics-container {
 	display: flex;

@@ -49,9 +49,8 @@ var MetricsGraph = React.createClass({
     var linechart = '',
         mostRecentDatapoint = '-',
         filteredApiData = [],
-        timestamps = [],
-        errorsToBeShown = this.props.errors['PULSE_ERROR'] ? true : false,
-        errorMessage = errorsToBeShown ? this.props.errors['PULSE_ERROR'].message : '';
+        timestamps = [];
+
 
     if(!this.state.loadingMetrics){
 
@@ -106,22 +105,12 @@ var MetricsGraph = React.createClass({
       'chart-container': true,
       'invisible': this.state.loadingMetrics ? true : false
     });
-    var errorMessageClassSet = classNames({
-      "error-status-message": true,
-      "metrics-status-message": true,
-      "hidden": !errorsToBeShown
-    });
-    var chartTitleClasses = classNames({
-      "hidden": errorsToBeShown
-    });
-
    
 
     return(
       <div className='deployment-metrics-chart metrics-chart'>
         <div className='metrics-title'>
-          <h5 className={chartTitleClasses}><strong>{mostRecentDatapoint}</strong> {this.state.label}</h5>
-          <span className={errorMessageClassSet}>{errorMessage}</span>        
+          <h5><strong>{mostRecentDatapoint}</strong> {this.state.label}</h5>
         </div>
         <span className={loaderClasses}><img src="/images/spinner-pink.svg" /></span>
         <div className={containerClasses}>

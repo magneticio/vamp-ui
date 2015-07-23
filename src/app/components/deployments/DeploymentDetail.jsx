@@ -64,8 +64,11 @@ var DeploymentDetail = React.createClass({
   render: function() {
     
     deployment = this.state.deployment;
+
     var errorsToBeShown = this.props.errors['UNREACHABLE'] ? true : false,
-        errorMessage = errorsToBeShown ? this.props.errors['UNREACHABLE'].message : '';
+        errorMessage = errorsToBeShown ? this.props.errors['UNREACHABLE'].message : '',
+        pulseError = this.props.errors['PULSE_ERROR'] ? true : false,
+        pulseErrorMessage = pulseError ? this.props.errors['PULSE_ERROR'].message : '';
 
     //grab the endpoint
     var endpoints = [] 
@@ -90,6 +93,9 @@ var DeploymentDetail = React.createClass({
       "container-status-message": true,
       "hidden": !errorsToBeShown
     });
+    var pulseErrorMessageClassSet = classNames('error-status-message', 'pulse-status-message', {
+      'hidden': !pulseError
+    });
 
     return(
       <TransitionGroup component="div" transitionName="fadeIn" transitionAppear={true}>
@@ -106,12 +112,15 @@ var DeploymentDetail = React.createClass({
               </ul>
               {endpoints}
             </div>
+            <div className={pulseErrorMessageClassSet} >
+              {pulseErrorMessage}
+            </div>
             <div className="deployment-metrics-container">
               <div className="deployment-status hidden">
                 UP
               </div>
-              <DeploymentMetricsGraph data={deployment.rate} metricsType='rate' errors={this.props.errors} />
-              <DeploymentMetricsGraph data={deployment.scur} metricsType='scur' errors={this.props.errors} />              
+              <DeploymentMetricsGraph data={deployment.rate} metricsType='rate' />
+              <DeploymentMetricsGraph data={deployment.scur} metricsType='scur' />              
             </div>
           </div>
           <div className='detail-section'>
