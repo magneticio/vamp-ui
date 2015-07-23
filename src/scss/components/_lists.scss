@@ -65,6 +65,9 @@
 	ul, p, h2, button {
 		opacity: 0.2;
 	}
+	* {
+		cursor: progress!important;
+	}
 }
 
 /**
