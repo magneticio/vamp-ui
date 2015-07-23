@@ -13,6 +13,11 @@ var BlueprintStore = require('../../stores/BlueprintStore');
 
 
 var BlueprintsList = React.createClass({
+
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   
   mixins: [SetIntervalMixin],
 
@@ -28,6 +33,9 @@ var BlueprintsList = React.createClass({
     };
   },
   componentDidMount: function(){
+    if(this.context.router.getCurrentParams().id)
+      this.handleDetail(this.context.router.getCurrentParams().id);
+
     BlueprintActions.getAllBlueprints();
     this.setInterval(this.pollBackend, 4000);
   },
@@ -69,6 +77,8 @@ var BlueprintsList = React.createClass({
     });
   },
   handleDetail: function(blueprintName){
+    BlueprintStore.clearCurrentBlueprint();
+    BlueprintActions.getBlueprint(blueprintName, 'application/x-yaml');
     this.setState({ requestingBlueprint: true, blueprintName: blueprintName });
   },
   clearCurrentBlueprint: function(){

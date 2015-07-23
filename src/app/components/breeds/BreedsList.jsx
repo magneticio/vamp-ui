@@ -12,6 +12,10 @@ var BreedStore = require('../../stores/BreedStore');
 
 var BreedsList = React.createClass({
   
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [SetIntervalMixin],
 
   getInitialState: function() {
@@ -26,6 +30,9 @@ var BreedsList = React.createClass({
     };
   },
   componentDidMount: function(){
+    if(this.context.router.getCurrentParams().id)
+      this.handleDetail(this.context.router.getCurrentParams().id);
+
     BreedActions.getAllBreeds();
     this.setInterval(this.pollBackend, 4000);
   },
@@ -67,6 +74,8 @@ var BreedsList = React.createClass({
     });
   },
   handleDetail: function(breedName){
+    BreedStore.clearCurrentBreed();
+    BreedActions.getBreed(breedName, 'application/x-yaml');
     this.setState({ requestingBreed: true, breedName: breedName});
   },
   clearCurrentBreed: function(){

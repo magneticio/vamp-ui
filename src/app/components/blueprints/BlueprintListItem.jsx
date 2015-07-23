@@ -28,8 +28,6 @@ var BlueprintListItem = React.createClass({
 
   handleDetail: function(e) {
     e.preventDefault();
-    BlueprintStore.clearCurrentBlueprint();
-    BlueprintActions.getBlueprint(this.props.blueprint.name, 'application/x-yaml');
     this.props.handleDetail(this.props.blueprint.name);
   },
   handleDeploy: function(e) {

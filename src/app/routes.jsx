@@ -15,9 +15,9 @@ var DeploymentDetail = require('./components/deployments/DeploymentDetail.jsx');
 var AppRoutes = (
   <Route name="root" path="/" handler={Master}>
     <Route name="breeds" handler={BreedsList}/>
-    <Route name="breed" path="/breeds/:id" handler={BreedDetail}/>
+    <Route name="breed" path="/breeds/:id" handler={BreedsList}/>
     <Route name="blueprints" handler={BlueprintsList}/>
-    <Route name="blueprint" path="/blueprints/:id" handler={BlueprintDetail}/>
+    <Route name="blueprint" path="/blueprints/:id" handler={BlueprintsList}/>
     <Route name="deployments" handler={DeploymentsList} />
     <Route name="deployment" path="/deployments/:id" handler={DeploymentDetail} />
     <DefaultRoute handler={DeploymentsList} />
