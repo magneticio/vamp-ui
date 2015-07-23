@@ -24,8 +24,10 @@ var BreedsList = React.createClass({
       viewType:'general-list',
       breedCreated: false,
       currentBreed: {},
+      currentBreedcount: 0,
       requestingBreed: false,
       breedName: '',
+      crudType: '',
       pending: false
     };
   },
@@ -37,15 +39,24 @@ var BreedsList = React.createClass({
     this.setInterval(this.pollBackend, 4000);
   },
   componentWillReceiveProps: function(nextProps){
+
     if(this.state.pending){
-      var newBreed = BreedStore.getCurrentBreed();
-      if(this.state.currentBreed != newBreed){
-        this.setState({ pending: false, breedCreated: true, currentBreed: {} });
+      var newBreed = BreedStore.getCurrentBreed(),
+          nextBreedCount = _.size(nextProps.allBreeds); 
+
+      if(this.state.crudType == 'update' && this.state.currentBreed !== newBreed){
+        this.setState({ pending: false, breedCreated: true, currentBreed: {}, crudType:'' });
         BreedStore.clearCurrentBreed();
       } 
+
+      if(this.state.crudType == 'create' && this.state.currentBreedcount < nextBreedCount){
+        this.setState({ pending: false, breedCreated: true, currentBreed: {}, crudType:'' });
+        BreedStore.clearCurrentBreed();
+      }
     } else {
       this.setState({ breedCreated: false });  
     }
+
     if(this.state.requestingBreed){
       _currentBreed = BreedStore.getCurrentBreed();
       this.setState({ 
@@ -56,11 +67,11 @@ var BreedsList = React.createClass({
   },
   
   handleAdd: function(newBreed) {
-    this.setState({ breedCreated: false, pending: true});
+    this.setState({ breedCreated: false, pending: true, crudType:'create', currentBreedcount: _.size(this.props.allBreeds) });
     BreedActions.createBreed(newBreed);
   },
   handleUpdate: function(breed) {
-    this.setState({ breedCreated: false, pending: true});
+    this.setState({ breedCreated: false, pending: true, crudType:'update' });
     BreedActions.updateBreed(breed, this.state.breedName, 'application/x-yaml');
   },
   handleUserInput: function(filterText) {
@@ -124,7 +135,6 @@ var BreedsList = React.createClass({
     return(
       <div className='list-container'>
         <ToolBar 
-          filterText={this.state.filterText}
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch}
           handleAdd={this.handleAdd}

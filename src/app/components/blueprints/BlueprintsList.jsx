@@ -18,7 +18,6 @@ var BlueprintsList = React.createClass({
     router: React.PropTypes.func
   },
 
-  
   mixins: [SetIntervalMixin],
 
   getInitialState: function() {
@@ -27,8 +26,10 @@ var BlueprintsList = React.createClass({
       viewType:'general-list',
       blueprintCreated: false,
       currentBlueprint: {},
+      currentBlueprintcount: 0,
       requestingBlueprint: false,
       blueprintName: '',
+      crudType: '',
       pending: false
     };
   },
@@ -41,11 +42,17 @@ var BlueprintsList = React.createClass({
   },
   componentWillReceiveProps: function(nextProps){
     if(this.state.pending){
-      var newBlueprint = BlueprintStore.getCurrentBlueprint();
-      if(this.state.currentBlueprint != newBlueprint){
+      var newBlueprint = BlueprintStore.getCurrentBlueprint(),
+          nextBlueprintCount = _.size(nextProps.allBlueprints);
+
+      if(this.state.crudType == 'update' && this.state.currentBlueprint != newBlueprint){
         this.setState({ pending: false, blueprintCreated: true, currentBlueprint: {} });
         BlueprintStore.clearCurrentBlueprint();
       } 
+      if(this.state.crudType == 'create' && this.state.currentBlueprintcount < nextBlueprintCount){
+        this.setState({ pending: false, blueprintCreated: true, currentBlueprint: {}, crudType:'' });
+        BlueprintStore.clearCurrentBlueprint();
+      }
     } else {
       this.setState({ blueprintCreated: false });  
     }
@@ -59,11 +66,11 @@ var BlueprintsList = React.createClass({
   },
   
   handleAdd: function(newBlueprint) {
-    this.setState({ blueprintCreated: false, pending: true});
+    this.setState({ blueprintCreated: false, pending: true, crudType:'create', currentBlueprintcount: _.size(this.props.allBlueprints)});
     BlueprintActions.createBlueprint(newBlueprint);
   },
   handleUpdate: function(blueprint) {
-    this.setState({ blueprintCreated: false, pending: true});
+    this.setState({ blueprintCreated: false, pending: true, crudType:'update'});
     BlueprintActions.updateBlueprint(blueprint, this.state.blueprintName, 'application/x-yaml');
   },
   handleUserInput: function(filterText) {
@@ -127,7 +134,6 @@ var BlueprintsList = React.createClass({
     return(
       <div className='list-container'>
         <ToolBar 
-          filterText={this.state.filterText}
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch}
           handleAdd={this.handleAdd}

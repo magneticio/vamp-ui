@@ -2,13 +2,13 @@ var _ = require('underscore');
 var React = require('react/addons');
 var classNames = require('classnames');
 var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
-var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
 var ClusterBox = require('./ClusterBox.jsx');
 var DeploymentActions = require('../../actions/DeploymentActions');
 var LoadStates = require("../../constants/LoadStates.js");
 var DeploymentStore = require('../../stores/DeploymentStore');
 var TransitionGroup = React.addons.CSSTransitionGroup;
 var DeploymentMetricsGraph = require('./DeploymentMetricsGraph.jsx');
+var ToolBar = require('../toolbar/ToolBar.jsx');
 
 var DeploymentDetail = React.createClass({
   
@@ -93,9 +93,9 @@ var DeploymentDetail = React.createClass({
 
     return(
       <TransitionGroup component="div" transitionName="fadeIn" transitionAppear={true}>
-      <span className={errorMessageClassSet}>{errorMessage}</span>        
+      <span className={errorMessageClassSet}>{errorMessage}</span>
+      <ToolBar withBreadcrumbs={true} />
       <section id="deployment-single" className={containerClassnames}>
-        <BreadCrumbsBar/>
         <div className='section-full'>
           <div id="general-metrics" className='detail-section'>
             <div className='endpoints-container'>
