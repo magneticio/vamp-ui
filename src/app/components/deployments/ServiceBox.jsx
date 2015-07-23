@@ -30,9 +30,6 @@ var ServiceBox = React.createClass({
       DeploymentActions.getDeploymentMetrics(deployment, null, currentService, cluster);
     }, interval);
   },
-  componentWillReceiveProps: function(nextProps){
-    //console.log(nextProps);
-  },
 
   updateServiceFilters: function(filtersArray){
     var currentService = this.props.service.breed.name,

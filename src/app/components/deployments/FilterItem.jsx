@@ -22,7 +22,7 @@ var FilterItem = React.createClass({
     });
   },
   componentWillReceiveProps: function(nextProps){
-    if(nextProps.filter.condition !== this.state.value && this.state.disabled && !this.state.updated){
+    if(this.state.disabled && !this.state.updated){
       this.setState({
         value: nextProps.filter.condition
       });
