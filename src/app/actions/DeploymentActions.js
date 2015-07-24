@@ -21,6 +21,10 @@ var DeploymentActions = {
     Api.get('/deployments/' + deployment.name, {as_blueprint: true}, DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT, format);
   },
 
+  // UPDATE
+  updateDeployment: function(name, body) {
+    Api.update('/deployments/' + name, body, DeploymentConstants.UPDATE_DEPLOYMENT, 'application/x-yaml');
+  },
 
 
   // DELETE

@@ -15,6 +15,7 @@ var _deployments = {};
 var _currentDeployment = {};
 var _currentDeploymentMetrics = {};
 var _blueprintToDeploy = '';
+var _currentDeploymentAsBlueprint = null;
 
 var _persistDeployments = function(response){
   var _temp = {};
@@ -43,6 +44,14 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
   },
   getCurrent: function() {
     return _currentDeployment;
+  },
+  getCurrentAsBlueprint: function(){
+    return _currentDeploymentAsBlueprint;
+  },
+
+  clearCurrentAsBlueprint: function(){
+    console.log('clear as blueprint');
+    _currentDeploymentAsBlueprint = null;
   },
 
   emitChange: function() {
@@ -133,8 +142,16 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         break;
 
       case DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT + '_SUCCESS':
-        window.open().document.write('<pre><code>' + payload.response.text + '</pre></code>');
-        break;   
+        _currentDeploymentAsBlueprint = payload.response.text;
+        console.log('%c get as blueprint success ', 'background-color: #29BB9C; color: white;');
+        //window.open().document.write('<pre><code>' + payload.response.text + '</pre></code>');
+        break;
+
+      case DeploymentConstants.UPDATE_DEPLOYMENT + '_SUCCESS':
+        console.log(payload.response);
+        console.log('%c updated deployment ', 'background-color: #29BB9C; color: white;');
+        console.log(payload.response.text);
+        break;
     }
     
     DeploymentStore.emitChange();

@@ -22,7 +22,8 @@ var DeploymentDetail = React.createClass({
     return  {
       loadState: LoadStates.STATE_LOADING,
       deployment: {},
-      name: this.context.router.getCurrentParams().id
+      name: this.context.router.getCurrentParams().id,
+      deploymentAsBlueprint: null
     }
   },
   componentDidMount: function() {
@@ -49,12 +50,18 @@ var DeploymentDetail = React.createClass({
     DeploymentStore.removeChangeListener(this._onChange);
   },
 
-
   handleSubmit: function() {
     this.props.getDeploymentDetails;
   },
   handleExportAsBlueprint: function(type){
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, type);
+  },
+  editDeployment: function(){
+    // temp, should be set in Toolbar.jsx preferably
+    var type = 'application/x-yaml';
+    DeploymentStore.clearCurrentAsBlueprint();
+    DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, type);
+    console.log('edit!');
   },
   
   onOptionsUpdate: function(cluster, service, filters, weight){
@@ -100,12 +107,15 @@ var DeploymentDetail = React.createClass({
     return(
       <TransitionGroup component="div" transitionName="fadeIn" transitionAppear={true}>
       <span className={errorMessageClassSet}>{errorMessage}</span>
-      <ToolBar withBreadcrumbs={true} />
+      <ToolBar 
+        withBreadcrumbs={true} 
+        editDeployment={this.editDeployment}
+        deploymentAsBlueprint={this.state.deploymentAsBlueprint} />
       <section id="deployment-single" className={containerClassnames}>
         <div className='section-full'>
           <div id="general-metrics" className='detail-section'>
             <div className='endpoints-container'>
-              <ul className='export-links dropdown-list'>
+              <ul className='export-links dropdown-list hidden'>
                 <li className='first-item'><a onClick={this.handleExportAsBlueprint.bind(this, 'application/x-yaml')}>Export as Blueprint</a></li>
                 <li onClick={this.handleExportAsBlueprint.bind(this, 'application/x-yaml')}><a>YAML</a></li>
                 <li onClick={this.handleExportAsBlueprint.bind(this, 'application/json')}><a>JSON</a></li>
@@ -132,8 +142,10 @@ var DeploymentDetail = React.createClass({
   )},
 
   _onChange: function() {
+    //console.log('%c change! ', 'background-color: #F2C500; color: white;');
     this.setState({
       deployment: DeploymentStore.getCurrent(),
+      deploymentAsBlueprint: DeploymentStore.getCurrentAsBlueprint()
     });
   }
 });
