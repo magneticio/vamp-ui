@@ -23,7 +23,7 @@ var DeploymentDetail = React.createClass({
       loadState: LoadStates.STATE_LOADING,
       deployment: {},
       name: this.context.router.getCurrentParams().id,
-      deploymentAsBlueprint: null
+      deploymentAsBlueprint: null,
     }
   },
   componentDidMount: function() {
@@ -48,6 +48,9 @@ var DeploymentDetail = React.createClass({
   },
   componentWillUnmount: function() {
     DeploymentStore.removeChangeListener(this._onChange);
+  },
+  componentWillReceiveProps: function(nextProps){
+    //console.log(nextProps);
   },
 
   handleSubmit: function() {

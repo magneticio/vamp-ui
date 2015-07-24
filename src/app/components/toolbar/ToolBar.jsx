@@ -15,14 +15,20 @@ var ToolBar = React.createClass({
   getInitialState: function(){
     return {
       toolbarState: '',
+      waitingForDeployment: false
     };
   },
-
+  
   setToolbar: function(newState){
+    newState == 'expanded' ? this.setState({ waitingForDeployment: false }) : null ;
     this.setState({ toolbarState: newState });
   },
   handleAdd: function(e){
     this.setState({ toolbarState: 'expanded' });
+  },
+  editDeployment: function(){
+    this.setState({ waitingForDeployment: true });
+    this.props.editDeployment();
   },
 
   render: function() {
@@ -42,6 +48,7 @@ var ToolBar = React.createClass({
       'button': true,
       'button-pink': true,
       'add-button': true,
+      'active': !this.props.deploymentAsBlueprint && this.state.waitingForDeployment
       //'hidden': this.props.addArtefactType == undefined ? true : false
     });
 
@@ -58,7 +65,7 @@ var ToolBar = React.createClass({
     }
 
      if(this.props.editDeployment){
-      conditionalTools.push(<button className={editButtonClasses} onClick={this.props.editDeployment}>Edit deployment</button>)
+      conditionalTools.push(<button className={editButtonClasses} onClick={this.editDeployment}>Edit deployment</button>)
       conditionalTools.push(<EditDeploymentBox {...props} setToolbar={this.setToolbar} toolbarState={this.state.toolbarState} />);
     }
 

@@ -16,6 +16,7 @@ var _currentDeployment = {};
 var _currentDeploymentMetrics = {};
 var _blueprintToDeploy = '';
 var _currentDeploymentAsBlueprint = null;
+var _error = null;
 
 var _persistDeployments = function(response){
   var _temp = {};
@@ -48,6 +49,11 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
   getCurrentAsBlueprint: function(){
     return _currentDeploymentAsBlueprint;
   },
+  getError: function(){
+    var returnError = _error;
+    _error = null;
+    return returnError;
+  },
 
   clearCurrentAsBlueprint: function(){
     console.log('clear as blueprint');
@@ -69,6 +75,8 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
     var action = payload.actionType;
 
     switch(action) {
+
+      // GET
       case DeploymentConstants.GET_ALL_DEPLOYMENTS + '_SUCCESS':
         AppStore.deleteError('UNREACHABLE');
         _persistDeployments(payload.response);
@@ -100,6 +108,13 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         AppStore.putError('UNREACHABLE');
         break;
 
+      case DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT + '_SUCCESS':
+        _currentDeploymentAsBlueprint = payload.response.text;
+        console.log('%c get as blueprint success ', 'background-color: #29BB9C; color: white;');
+        //window.open().document.write('<pre><code>' + payload.response.text + '</pre></code>');
+        break;
+
+      // DEPLOY
       case BlueprintConstants.DEPLOY_BLUEPRINT:
         payload.response.status = 'PENDING';
         _blueprintToDeploy = payload.response.name;
@@ -114,6 +129,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         console.log('%c deploying ERROR ', 'background-color: red; color: white;');
         break;      
 
+      // METRICS
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_SCUR + '_SUCCESS':
         AppStore.deleteError('UNREACHABLE');
         _currentDeployment.scur = JSON.parse(payload.response.text);
@@ -136,21 +152,20 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
           }
         });
 
+      // CLEANUP
       case DeploymentConstants.CLEANUP_DEPLOYMENT:
         if(_deployments[payload.response.name])
           _deployments[payload.response.name].status = 'DELETING';
         break;
 
-      case DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT + '_SUCCESS':
-        _currentDeploymentAsBlueprint = payload.response.text;
-        console.log('%c get as blueprint success ', 'background-color: #29BB9C; color: white;');
-        //window.open().document.write('<pre><code>' + payload.response.text + '</pre></code>');
-        break;
-
+      // UPDATE
       case DeploymentConstants.UPDATE_DEPLOYMENT + '_SUCCESS':
-        console.log(payload.response);
+        _currentDeploymentAsBlueprint = null;
         console.log('%c updated deployment ', 'background-color: #29BB9C; color: white;');
-        console.log(payload.response.text);
+        break;
+      case DeploymentConstants.UPDATE_DEPLOYMENT + '_ERROR':
+        var errortext = JSON.parse(payload.response.text)
+        _error = errortext.message;
         break;
     }
     

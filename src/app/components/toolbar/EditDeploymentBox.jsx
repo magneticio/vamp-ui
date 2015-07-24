@@ -16,7 +16,7 @@ var AddArtefactBox = React.createClass({
     errorMessage: '',
     editArtefact: false,
     dirty: false,
-    buttonLoadsate: ''
+    buttonLoadsate: false
   },
   getInitialState: function(){
     return {
@@ -24,7 +24,7 @@ var AddArtefactBox = React.createClass({
       errorMessage: '',
       dirty: false,
       editArtefact: false,
-      buttonLoadsate: ''
+      buttonLoadsate: false
     };
   },
 
@@ -44,7 +44,8 @@ var AddArtefactBox = React.createClass({
       this.setState({ 
         deploymentRaw: this.props.deploymentAsBlueprint,
         editArtefact: true,
-        dirty: true
+        dirty: true,
+        buttonLoadsate: false
       });
       this.props.setToolbar('expanded');
     }
@@ -57,10 +58,10 @@ var AddArtefactBox = React.createClass({
     }
   },
   componentDidMount: function(){
-    //this._initArtefactFunctions();
+    this._initArtefactFunctions();
   },
   componentWillUnmount: function(){
-    //this._destroyArtefactFunctions();
+    this._destroyArtefactFunctions();
   },
   handleChange: function() {
     this.props.onUserInput(
@@ -81,7 +82,7 @@ var AddArtefactBox = React.createClass({
 
     this.setState({ 
       errorMessage: '',
-      buttonLoadsate: 'active',
+      buttonLoadsate: true,
     });
 
     DeploymentActions.updateDeployment(this.context.router.getCurrentParams().id, this.state.deploymentRaw);
@@ -99,7 +100,7 @@ var AddArtefactBox = React.createClass({
       'dialog-empty': this.state.errorMessage == '' ? true : false
     });
     var saveButtonClasses = classNames({
-      "active": this.props.loadState == LoadStates.STATE_LOADING,
+      "active": this.state.buttonLoadsate ? true : false,
       "button": true,
       "button-pink": true,
       "save-button": true
@@ -122,29 +123,17 @@ var AddArtefactBox = React.createClass({
     var errorMessage = this._getErrorMessage();
 
     if(errorMessage)
-      this.setState({ errorMessage: errorMessage });
+      this.setState({ errorMessage: errorMessage, buttonLoadsate: false });
   },
 
   _initArtefactFunctions: function(){
-    if(this.props.addArtefactType == 'breed')
-      BreedStore.addChangeListener(this._onChange);
-    
-    if(this.props.addArtefactType == 'blueprint')
-      BlueprintStore.addChangeListener(this._onChange);
+    DeploymentStore.addChangeListener(this._onChange);
   },
   _destroyArtefactFunctions: function(){
-    if(this.props.addArtefactType == 'breed')
-      BreedStore.removeChangeListener(this._onChange);
-    
-    if(this.props.addArtefactType == 'blueprint')
-      BlueprintStore.removeChangeListener(this._onChange);
-    
+    DeploymentStore.removeChangeListener(this._onChange);
   },
   _getErrorMessage: function(){
-    return BreedStore.getError();
-    
-    if(this.props.addArtefactType == 'blueprint')
-      return BlueprintStore.getError();
+    return DeploymentStore.getError();
   }  
 
 });
