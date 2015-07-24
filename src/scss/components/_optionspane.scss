@@ -6,6 +6,7 @@
 	height: 100vh;
 	z-index: 0;
 	transition: transform 0.4s ease;
+	will-change: transform;
 	background-color: $blue-dark;
 	color: white;
 	overflow: hidden;
