@@ -3,10 +3,15 @@
 	display: flex;
 	background-color: white;
 	margin-bottom: 2px;
+	flex-wrap: wrap;
 	
 	&:hover {
 		border-left: 2px solid $blue;
 		background-color: #fafafa;
+	}
+
+	.dialog {
+		flex-basis: 100%;
 	}
 }
 .service-section {
