@@ -61,6 +61,7 @@ var AddArtefactBox = React.createClass({
     this._initArtefactFunctions();
   },
   componentWillUnmount: function(){
+    this.handleCancel();
     this._destroyArtefactFunctions();
   },
   handleChange: function() {
