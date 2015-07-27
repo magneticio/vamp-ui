@@ -20,8 +20,12 @@ var DeploymentListItem = React.createClass({
     var el = e.currentTarget,
         className = 'active';
 
-    el.classList ? el.classList.add(className) : el.className += ' ' + className;
-    DeploymentActions.deleteFullDeployment(this.props.deployment);
+    if (confirm('Are you sure you want to undeploy this deployment?')) {
+      DeploymentActions.deleteFullDeployment(this.props.deployment);
+      el.classList ? el.classList.add(className) : el.className += ' ' + className;
+    } else {
+      el.classList ? el.classList.remove(className) : el.className += ' ' + className;
+    }
   },
 
   prepareMetaInformation: function(metaInformation, storeType){
