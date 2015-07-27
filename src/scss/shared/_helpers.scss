@@ -43,3 +43,6 @@ input.editable[disabled] {
 	border: 1px solid transparent;
 	cursor: text;
 }
+#deployment-single {
+	will-change: all; 
+}

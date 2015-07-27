@@ -51,7 +51,7 @@ $filterbox-transition: margin-top 0.3s ease, opacity 0.15s;
 	opacity: 0;
 	overflow: hidden;
 	transition: height 0.2s linear 0.2s, opacity 0.2s ease;
-	will-change: transform, opacity;
+	will-change: all;
 	
 	p {
 		display: inline-block;
