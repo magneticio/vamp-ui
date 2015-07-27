@@ -21,12 +21,22 @@ var MetricsGraph = React.createClass({
   },
 
   formatdata: function(dataset, dataArray, labelArray, timestampsArray){
-    _.each(dataset, function(property, key){
-      dataArray.push(property['value']);
+
+    /* UGLY FIX:
+     *
+     * ChartJS always needs the same amount of data in a set
+     * This is a weird bug, but the only workaround (without editing the core)
+     * is forcing the array to always be 30 items long. This is the default
+     * length of an object returned by pulse, but might change in the future.
+     */
+    
+    for(i = 0; i < 30; i++){
+      dataset[i] ? dataArray.push(dataset[i]['value']) : dataArray.push('0');
       labelArray.push('');
-      if(timestampsArray)
-        timestampsArray.push(property.timestamp.substr(11, 8));
-    }, this);
+
+      if(timestampsArray && dataset[i])
+          timestampsArray.push(dataset[i].timestamp.substr(11, 8));
+    }
   },
 
   render: function() {
@@ -79,7 +89,9 @@ var MetricsGraph = React.createClass({
         ]
       };
 
-      linechart = (<LineChart data={chartData} options={chartOptions}/>);
+      console.log(chartData.datasets[0].data.length);
+      if(chartData.datasets[0].data)
+        linechart = (<LineChart data={chartData} options={chartOptions}/>);
     }
 
     var loaderClasses = classNames({

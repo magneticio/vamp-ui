@@ -8,11 +8,6 @@ var ClusterBox = React.createClass({
     this.props.onOptionsUpdate(currentCluster, service, filters, weight)
   },
 
-  componentWillUnmount: function() {
-    console.log('Clusters will unmount');
-    // DeploymentStore.removeChangeListener(this._onChange);
-  },
-
   render: function() {
 
     var cluster = this.props.cluster;

@@ -60,7 +60,7 @@ var ServiceBox = React.createClass({
       return '0';
     
     var allMetrics = this.props.serviceMetrics['services:' + this.props.service.breed.name],
-        metricValue = null;
+        metricValue = 0;
 
     _.each(allMetrics, function(metricObject, key){
       _.each(metricObject['tags'], function(tagValue, key){

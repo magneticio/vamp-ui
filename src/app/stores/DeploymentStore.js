@@ -132,6 +132,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
       // METRICS
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_RTIME + '_SUCCESS':
         AppStore.deleteError('UNREACHABLE');
+        console.log('rtime succes');
         _currentDeployment.rtime = JSON.parse(payload.response.text);
         break;
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_RATE + '_SUCCESS':
