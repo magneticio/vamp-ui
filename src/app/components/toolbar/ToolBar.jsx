@@ -18,6 +18,9 @@ var ToolBar = React.createClass({
       waitingForDeployment: false
     };
   },
+  componentWillReceiveProps: function(nextProps){
+    console.log(this.state.waitingForDeployment);
+  },
   
   setToolbar: function(newState){
     newState == 'expanded' ? this.setState({ waitingForDeployment: false }) : null ;
@@ -48,7 +51,7 @@ var ToolBar = React.createClass({
       'button': true,
       'button-pink': true,
       'add-button': true,
-      'active': !this.props.deploymentAsBlueprint && this.state.waitingForDeployment
+      //'active': this.state.waitingForDeployment
       //'hidden': this.props.addArtefactType == undefined ? true : false
     });
 

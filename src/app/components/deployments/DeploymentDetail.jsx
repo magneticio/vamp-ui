@@ -64,7 +64,6 @@ var DeploymentDetail = React.createClass({
     var type = 'application/x-yaml';
     DeploymentStore.clearCurrentAsBlueprint();
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, type);
-    console.log('edit!');
   },
   
   onOptionsUpdate: function(cluster, service, filters, weight){
