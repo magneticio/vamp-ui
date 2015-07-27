@@ -18,10 +18,7 @@ var ToolBar = React.createClass({
       waitingForDeployment: false
     };
   },
-  componentWillReceiveProps: function(nextProps){
-    console.log(this.state.waitingForDeployment);
-  },
-  
+
   setToolbar: function(newState){
     newState == 'expanded' ? this.setState({ waitingForDeployment: false }) : null ;
     this.setState({ toolbarState: newState });

@@ -60,7 +60,7 @@ var Master = React.createClass({
   },
   
   render: function() {
-
+    
     var pageContentClasses = classNames({
       'options-pane-opened': this.state.isOptionsPaneOpened
     });

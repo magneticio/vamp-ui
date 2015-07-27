@@ -9,24 +9,9 @@ var MetricsGraph = React.createClass({
   getInitialState: function() {
     return {
       datapoints: 30,
-      label: '',
       loadingMetrics: true
     };
   },
-
-  componentWillMount: function(){
-    if(this.props.metricsType == 'rate'){
-      this.setState({
-        label: 'requests / sec'
-      });
-    }
-    if(this.props.metricsType == 'scur'){
-      this.setState({
-        label: 'current sessions'
-      });
-    }
-  },
-
   componentWillReceiveProps: function(nextProps){
     if(nextProps.data && _.size(nextProps.data) > 0)
       this.setState({ loadingMetrics: false });
@@ -110,7 +95,7 @@ var MetricsGraph = React.createClass({
     return(
       <div className='deployment-metrics-chart metrics-chart'>
         <div className='metrics-title'>
-          <h5><strong>{mostRecentDatapoint}</strong> {this.state.label}</h5>
+          <h5><strong>{mostRecentDatapoint}</strong> {this.props.metricsLabel}</h5>
         </div>
         <span className={loaderClasses}><img src="/images/spinner-pink.svg" /></span>
         <div className={containerClasses}>

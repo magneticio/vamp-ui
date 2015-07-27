@@ -37,20 +37,17 @@ var DeploymentDetail = React.createClass({
     });
 
     DeploymentActions.getDeploymentMetrics(deployment, 'rate');
-    DeploymentActions.getDeploymentMetrics(deployment, 'scur');      
+    DeploymentActions.getDeploymentMetrics(deployment, 'rtime');      
 
     this.setInterval(function(){
       console.log('poll metrics');
       DeploymentActions.getDeploymentMetrics(deployment, 'rate');
-      DeploymentActions.getDeploymentMetrics(deployment, 'scur');
+      DeploymentActions.getDeploymentMetrics(deployment, 'rtime');
       DeploymentActions.getDeploymentStatus(self.state.name);
     }, 4000);
   },
   componentWillUnmount: function() {
     DeploymentStore.removeChangeListener(this._onChange);
-  },
-  componentWillReceiveProps: function(nextProps){
-    //console.log(nextProps);
   },
 
   handleSubmit: function() {
@@ -117,11 +114,6 @@ var DeploymentDetail = React.createClass({
         <div className='section-full'>
           <div id="general-metrics" className='detail-section'>
             <div className='endpoints-container'>
-              <ul className='export-links dropdown-list hidden'>
-                <li className='first-item'><a onClick={this.handleExportAsBlueprint.bind(this, 'application/x-yaml')}>Export as Blueprint</a></li>
-                <li onClick={this.handleExportAsBlueprint.bind(this, 'application/x-yaml')}><a>YAML</a></li>
-                <li onClick={this.handleExportAsBlueprint.bind(this, 'application/json')}><a>JSON</a></li>
-              </ul>
               {endpoints}
             </div>
             <div className={pulseErrorMessageClassSet} >
@@ -131,8 +123,8 @@ var DeploymentDetail = React.createClass({
               <div className="deployment-status hidden">
                 UP
               </div>
-              <DeploymentMetricsGraph data={deployment.rate} metricsType='rate' />
-              <DeploymentMetricsGraph data={deployment.scur} metricsType='scur' />              
+              <DeploymentMetricsGraph data={deployment.rate} metricsLabel='requests / sec' />
+              <DeploymentMetricsGraph data={deployment.rtime} metricsLabel='ms resp. time' />              
             </div>
           </div>
           <div className='detail-section'>

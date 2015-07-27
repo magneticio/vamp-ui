@@ -130,9 +130,9 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         break;      
 
       // METRICS
-      case DeploymentConstants.GET_DEPLOYMENT_METRICS_SCUR + '_SUCCESS':
+      case DeploymentConstants.GET_DEPLOYMENT_METRICS_RTIME + '_SUCCESS':
         AppStore.deleteError('UNREACHABLE');
-        _currentDeployment.scur = JSON.parse(payload.response.text);
+        _currentDeployment.rtime = JSON.parse(payload.response.text);
         break;
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_RATE + '_SUCCESS':
         AppStore.deleteError('UNREACHABLE');
@@ -145,12 +145,15 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         if(!_currentDeployment.serviceMetrics)
           _currentDeployment.serviceMetrics = {};
 
-        _.each(metrics[0].tags, function(val, key){
-          if(val.indexOf('services:') === 0){
-            _currentDeployment.serviceMetrics[val] = payload.response.body;
-            return;
-          }
-        });
+        if('tags' in metrics){
+          _.each(metrics[0].tags, function(val, key){
+            if(val.indexOf('services:') === 0){
+              _currentDeployment.serviceMetrics[val] = payload.response.body;
+              return;
+            }
+          });
+        }
+        break;
 
       // CLEANUP
       case DeploymentConstants.CLEANUP_DEPLOYMENT:

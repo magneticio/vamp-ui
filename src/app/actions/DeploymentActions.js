@@ -70,8 +70,8 @@ var DeploymentActions = {
       PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_SERVICE);
       return;
     }
-    if( metricsType == 'scur'){
-      PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_SCUR);
+    if( metricsType == 'rtime'){
+      PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_RTIME);
       return;
     }
     if( metricsType == 'rate'){
