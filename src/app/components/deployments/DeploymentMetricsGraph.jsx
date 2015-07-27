@@ -89,9 +89,7 @@ var MetricsGraph = React.createClass({
         ]
       };
 
-      console.log(chartData.datasets[0].data.length);
-      if(chartData.datasets[0].data)
-        linechart = (<LineChart data={chartData} options={chartOptions}/>);
+      linechart = (<LineChart data={chartData} options={chartOptions}/>);
     }
 
     var loaderClasses = classNames({
