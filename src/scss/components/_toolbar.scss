@@ -12,10 +12,16 @@ $filterbox-transition: margin-top 0.3s ease, opacity 0.15s;
 	padding: 1rem;
 	z-index: 20;
 	border-top: 1px solid $off-white;
+	will-change: height;
 
 	.add-button {
 		transition: $filterbox-transition;
 		opacity: 1;
+	}
+	.filtering-tools-box,
+	.breadcrumbs-bar,
+	.add-button {
+		will-change: margin-top, opacity;
 	}
 }
 .filtering-tools-box {
@@ -51,7 +57,7 @@ $filterbox-transition: margin-top 0.3s ease, opacity 0.15s;
 	opacity: 0;
 	overflow: hidden;
 	transition: height 0.2s linear 0.2s, opacity 0.2s ease;
-	will-change: all;
+	will-change: height, opacity;
 	
 	p {
 		display: inline-block;

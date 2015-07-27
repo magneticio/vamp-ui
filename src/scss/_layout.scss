@@ -35,4 +35,5 @@ pre {
 	width: 100%;
 	min-height: 100vh;
 	transition: transform 0.4s;
+	will-change: transform;
 }
