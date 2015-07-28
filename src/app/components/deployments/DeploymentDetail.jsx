@@ -40,7 +40,6 @@ var DeploymentDetail = React.createClass({
     DeploymentActions.getDeploymentMetrics(deployment, 'rtime');      
 
     this.setInterval(function(){
-      console.log('poll metrics');
       DeploymentActions.getDeploymentMetrics(deployment, 'rate');
       DeploymentActions.getDeploymentMetrics(deployment, 'rtime');
       DeploymentActions.getDeploymentStatus(self.state.name);
@@ -136,7 +135,6 @@ var DeploymentDetail = React.createClass({
   )},
 
   _onChange: function() {
-    //console.log('%c change! ', 'background-color: #F2C500; color: white;');
     this.setState({
       deployment: DeploymentStore.getCurrent(),
       deploymentAsBlueprint: DeploymentStore.getCurrentAsBlueprint()

@@ -114,7 +114,6 @@ var DeploymentsList = React.createClass({
   )},
 
   pollBackend: function() {
-    console.log('polling deployments');
     DeploymentActions.getAllDeployments();
   }
 });

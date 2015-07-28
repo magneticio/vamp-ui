@@ -162,7 +162,6 @@ var OptionsPane = React.createClass({
   },
 
   pollBackend: function() {
-    console.log('polling info');
     AppActions.getInfo();
   }
 

@@ -174,7 +174,6 @@ var BlueprintsList = React.createClass({
   )},
 
   pollBackend: function() {
-    console.log('polling blueprints');
     BlueprintActions.getAllBlueprints();
   }
 });
