@@ -78,7 +78,7 @@ var DeploymentDetail = React.createClass({
     //grab the endpoint
     var endpoints = [] 
     _.each(deployment.endpoints,function(val,key){
-      endpoints.push(<h1 key={key}>{val} / {key} <small className="muted">endpoint</small></h1>);
+      endpoints.push(<h1 key={key}>{val} <span className='icon-triangle'></span> {key} <small className="muted">endpoint</small></h1>);
     });
 
     // push cluster into an array
