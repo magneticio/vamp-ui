@@ -76,10 +76,6 @@ var ServiceBox = React.createClass({
 
   render: function() {
 
-    if(this.props.service.breed.name == 'monarch_front:0.2' && this.props.serviceMetrics){
-      console.log(this.props.serviceMetrics['services:monarch_front:0.2']);
-    }
-
     var service = this.props.service,
         servers = service.servers,
         date = new Date(service.state.started_at),

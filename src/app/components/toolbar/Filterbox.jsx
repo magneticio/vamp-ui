@@ -16,7 +16,6 @@ var Filterbox = React.createClass({
 
     return(
       <div className='filtering-tools-box'>
-      
         <form className="search-form" onSubmit={this.handleSubmit}>
           <label htmlFor="searchfield">
             <img src="/images/search.svg" alt="search icon" width="16px" height="16px" className="search-icon" />
