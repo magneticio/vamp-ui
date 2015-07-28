@@ -5,6 +5,8 @@
 
 .dialog-danger {
 	padding-left: 2.5rem;
+	padding-right: 0;
+	box-sizing: border-box;
 	color: $red;
 	background-image: url(/images/alert.svg);
 	background-size: 1rem;
