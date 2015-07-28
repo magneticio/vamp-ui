@@ -51,7 +51,12 @@ var DeploymentActions = {
 
     // TODO: only 1 endpoint is supported at this moment, make fix for this in the future
     _.each(deployment.endpoints, function(value, key){
-      service ? endpoint = cluster.port : endpoint = value;
+      if(service) {
+        endpoint = cluster.port
+      } else {
+        portAndProtocolArray = value.split("/");
+        endpoint = portAndProtocolArray[0];
+      } 
     }, this);
 
     if(cluster) { 
