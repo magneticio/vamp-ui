@@ -83,7 +83,7 @@ var DeploymentsList = React.createClass({
           filterText={this.state.filterText}
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch} />
-        <span className={emptyClassSet}>No running deployments.</span>
+        <span className={emptyClassSet}>No running deployments found.</span>
         <span className={errorMessageClassSet}>{errorMessage}</span>
         <TransitionGroup 
           id='deployments-list' 
