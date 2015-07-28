@@ -1,6 +1,7 @@
 var React = require('react');
 var _ = require('underscore')
 var TimeAgo = require('react-timeago');
+var classNames = require('classnames');
 var WeightSetter = require('./WeightSetter.jsx');
 var FilterList = require('./FilterList.jsx');
 var StatusIndicator = require('./StatusIndicator.jsx');
@@ -13,12 +14,13 @@ var ServiceBox = React.createClass({
   
   mixins: [SetIntervalMixin],
 
-  getInitalState: function(){
+  getInitialState: function(){
     return {
       loading: true,
       smax: '-',
       rate: '-',
-      rtime: '-'
+      rtime: '-',
+      weightEdit: false
     }
   },
   componentWillMount: function(){
@@ -29,6 +31,10 @@ var ServiceBox = React.createClass({
     this.setInterval(function(){
       DeploymentActions.getDeploymentMetrics(deployment, null, currentService, cluster);
     }, interval);
+  },
+  handleWeightEdit: function(){
+    console.log('edit!');
+    this.setState({ weightEdit: !this.state.weightEdit });
   },
 
   updateServiceFilters: function(filtersArray){
@@ -86,32 +92,55 @@ var ServiceBox = React.createClass({
         requestPerSec = this.generateMetric('rate') || '0',
         smax = this.generateMetric('rate_max');
 
+    var serviceNameClasses = classNames('service-section', 'service-name', {
+      'section-fifth': !this.state.weightEdit,
+      'section-third': this.state.weightEdit
+    });
+    var serviceRoutingClasses = classNames('service-section', 'service-routing', {
+      'section-fifth': !this.state.weightEdit,
+      'section-third': this.state.weightEdit
+    });
+    var serviceMetricsClasses = classNames('service-section', 'service-metrics', {
+      'section-fifth': !this.state.weightEdit,
+      'section-third': this.state.weightEdit
+    });
+    var serviceServersClasses = classNames('service-section', 'service-servers', 'section-fifth', {
+      'hidden': this.state.weightEdit
+    });
+    var serviceStatusClasses = classNames('service-section', 'service-status', 'section-fifth', {
+      'hidden': this.state.weightEdit
+    });
+
     return(
       <div className='service-box'>
         <div className={'dialog dialog-'+ stateClass + ' ' + notifClass}>
           {service.state.notification}
         </div>
-      	<div className='service-section service-name section-fifth'>
+      	<div className={serviceNameClasses}>
           <h3><a href={'/#/breeds/' + service.breed.name } className='editable'> {service.breed.name}</a></h3>
           <p className="muted clip-textoverflow">{service.breed.deployable}</p>
           <h5><img src='/images/clock.svg' alt="Clock icon" width='12px' height='12px' className='clock-icon' /> updated <TimeAgo date={date}/></h5>
         </div>
-        <div className='service-section service-routing section-fifth'>
-        	<h4>Weight</h4>
-          <WeightSetter weight={service.routing.weight}/>
-          <h4>Filters</h4>
-          <FilterList filters={service.routing.filters} updateServiceFilters={this.updateServiceFilters} />
+        <div className={serviceRoutingClasses}>
+          <div className="weightsetBox">
+        	 <h4>Weight</h4>
+            <WeightSetter weight={service.routing.weight} handleWeightEdit={this.handleWeightEdit}/>
+          </div>
+          <div className="filterlistBox">
+            <h4>Filters</h4>
+            <FilterList filters={service.routing.filters} updateServiceFilters={this.updateServiceFilters} />
+          </div>
         </div>
-        <div className='service-section service-metrics section-fifth'>
+        <div className={serviceMetricsClasses}>
           <ServiceMetricsGraph responseTime={responseTime} requestPerSec={requestPerSec} smax={smax} />
         </div>
-        <div className='service-section service-servers section-fifth'>
+        <div className={serviceServersClasses}>
           <h4>Servers</h4>
           <ul>
             {serverlist}
           </ul>
         </div>
-        <div className='service-section service-status section-fifth'>
+        <div className={serviceStatusClasses}>
         	<h4>Status</h4>
           <StatusIndicator status={service.state.name} />
           <h4>Scale</h4>
