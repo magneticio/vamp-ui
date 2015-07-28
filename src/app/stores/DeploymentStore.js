@@ -56,7 +56,6 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
   },
 
   clearCurrentAsBlueprint: function(){
-    console.log('clear as blueprint');
     _currentDeploymentAsBlueprint = null;
   },
 
@@ -141,11 +140,11 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_SERVICE + '_SUCCESS':
         AppStore.deleteError('UNREACHABLE');
         var metrics = payload.response.body;
-        
+
         if(!_currentDeployment.serviceMetrics)
           _currentDeployment.serviceMetrics = {};
 
-        if('tags' in metrics){
+        if(metrics[0] && 'tags' in metrics[0]){
           _.each(metrics[0].tags, function(val, key){
             if(val.indexOf('services:') === 0){
               _currentDeployment.serviceMetrics[val] = payload.response.body;

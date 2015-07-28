@@ -51,10 +51,16 @@ var DeploymentActions = {
 
     // TODO: only 1 endpoint is supported at this moment, make fix for this in the future
     _.each(deployment.endpoints, function(value, key){
-        service ? endpoint = cluster.port : endpoint = value;
+      service ? endpoint = cluster.port : endpoint = value;
     }, this);
 
-    cluster ? tags.push('routes:' + deployment.name + '_' + cluster.name + '_' + endpoint) : tags.push('routes:' + deployment.name + '_' + endpoint)
+    if(cluster) { 
+      tags.push('routes:' + deployment.name + '_' + cluster.name + '_' + endpoint) 
+    } else {
+      tags.push('routes:' + deployment.name + '_' + endpoint);
+      tags.push('route');
+    }
+
     metricsType ? tags.push('metrics:' + metricsType) : tags.push('metrics');
     if(service) { tags.push('services:' + service, 'service') }
 

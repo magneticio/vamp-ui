@@ -53,6 +53,7 @@ var ServiceBox = React.createClass({
     return serverlist;
   },
   generateMetric: function(metricType){
+    //console.log(this.props.serviceMetrics);
     if(!this.props.serviceMetrics)
       return '0';
 
@@ -74,6 +75,10 @@ var ServiceBox = React.createClass({
   },
 
   render: function() {
+
+    if(this.props.service.breed.name == 'monarch_front:0.2' && this.props.serviceMetrics){
+      console.log(this.props.serviceMetrics['services:monarch_front:0.2']);
+    }
 
     var service = this.props.service,
         servers = service.servers,
