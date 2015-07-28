@@ -9,7 +9,7 @@ gulp.task('replace-dev', function() {
     .pipe(gulp.dest('build/'));
 });
 
-gulp.task('replace-dist', function() {
+gulp.task('replace-dist', ['browserify-min', 'compress'], function() {
   gulp.src('src/www/index.html')
     .pipe(htmlreplace({
         'js': 'app.min.js'

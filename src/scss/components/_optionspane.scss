@@ -1,16 +1,21 @@
 .options-pane {
-	position: fixed;
+	position: absolute;
 	top: 0;
 	right: -15vw;
 	width: 40vw;
 	height: 100vh;
 	z-index: 0;
-	overflow-y: scroll;
 	transition: transform 0.4s ease;
-	background-color: $off-white;
+	will-change: transform;
+	background-color: $blue-dark;
+	color: white;
+	overflow: hidden;
 	
-	h4 {
+	input {
 		color: $grey;
+	}
+	h4 {
+		color: inherit;
 		padding-top: 1rem;
 		margin-bottom: 0.5rem;
 	}
@@ -40,25 +45,13 @@
 	box-sizing: border-box;
 	padding: 1rem;
 }
-
-#page-container {	
+.options-pane-opened {
 	.wrapper {
-		display: inline-block;
-		position: relative;
-		z-index: 1;
-		background-color: white;
-		width: 100vw;
-		min-height: 100vh;
-		transition: transform 0.4s;
-		box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
+		transform: translateX(-40vw);
 	}
-
-	&.options-pane-opened {
-		.wrapper {
-			transform: translateX(-40vw);
-		}
-		.options-pane { 
-			transform: translateX(-15vw);
-		}
+	.options-pane { 
+		transform: translateX(-15vw);
+		height: auto;
+		min-height: 100vh;
 	}
 }

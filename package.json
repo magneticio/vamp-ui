@@ -1,6 +1,6 @@
 {
   "name": "vamp-ui",
-  "version": "0.1.0-RC1",
+  "version": "0.7.9",
   "description": "Graphical User Interface for Vamp",
   "repository": {
     "type": "git",
@@ -30,7 +30,6 @@
     "gulp-less": "^3.0.0",
     "gulp-notify": "^2.1.0",
     "gulp-rename": "^1.2.2",
-    "gulp-rimraf": "^0.1.1",
     "gulp-sourcemaps": "^1.2.8",
     "gulp-svg-sprite": "^1.1.2",
     "gulp-uglify": "^1.2.0",

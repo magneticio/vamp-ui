@@ -1,9 +1,7 @@
-@import "compass/css3/user-interface";
-
 // Mixins
 @import "mixins/mediaqueries";
 @import "mixins/sprite";
-@import "mixins/animate";
+//@import "mixins/animate";
 
 // General
 @import "base";
@@ -13,6 +11,7 @@
 @import "layout";
 
 // Shared
+@import "shared/sections";
 @import "shared/icons";
 @import "shared/buttons";
 @import "shared/badges";
@@ -36,6 +35,3 @@
 @import "components/statusindicator";
 @import "components/metrics";
 @import "components/footer";
-
-// TEMP REMOVE BEFORE PRODUCTION!
-@import "temp";

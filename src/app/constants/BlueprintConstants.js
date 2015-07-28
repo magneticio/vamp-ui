@@ -5,5 +5,6 @@ module.exports = keyMirror({
   GET_BLUEPRINT: null,
   DEPLOY_BLUEPRINT: null,
   CREATE_BLUEPRINT: null,
+  UPDATE_BLUEPRINT: null,
   DELETE_BLUEPRINT: null
 });

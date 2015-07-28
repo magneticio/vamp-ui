@@ -4,7 +4,7 @@ var AppStore = require('../stores/AppStore');
 var LoadStates = require("../constants/LoadStates.js");
 var request = require('superagent');
 
-var TIMEOUT = 10000;
+var TIMEOUT = Config.TIMEOUT;
 
 var _pendingRequests = {};
 
@@ -32,7 +32,7 @@ function handleResponse(actionType) {
       dispatch(LoadStates.STATE_TIMEOUT, null);
     } else if (typeof res == "undefined" || !res.ok) {
       handleError(actionType, res);
-      AppStore.putError('UNREACHABLE');
+      AppStore.putError('PULSE_ERROR');
     } else {
       dispatch(actionType + '_SUCCESS', res);
     }

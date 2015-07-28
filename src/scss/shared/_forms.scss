@@ -14,6 +14,7 @@
 	input {
 		width: 100%;
 		color: $grey;
+		box-sizing:border-box;
 	}
 }
 [type="password"],
@@ -21,10 +22,15 @@
 [type="text"] {
 	display: inline-block;
 	background-color: $grey-light;
-	border: none;
+	border: 2px solid transparent;
 	outline: none;
-	padding: 0.5em 1em;
+	padding: 0.5em;
 	box-sizing: border-box;
+	transition: border 0.2s;
+
+	&.danger {
+		border: 2px solid $red;
+	}
 }
 
 .add-artefact-form {

@@ -4,49 +4,75 @@ var PureRenderMixin = React.addons.PureRenderMixin;
 var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
 var _ = require('underscore');
 var classNames = require('classnames');
-var ToolBar = require('../ToolBar.jsx');
+var ToolBar = require('../toolbar/ToolBar.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
 var BreedListItem = require('./BreedListItem.jsx');
-var BreadCrumbsBar = require('../BreadCrumbsBar.jsx');
 var BreedActions = require('../../actions/BreedActions');
+var BreedStore = require('../../stores/BreedStore');
 
 var BreedsList = React.createClass({
   
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [SetIntervalMixin],
 
   getInitialState: function() {
     return {
       filterText: '',
       viewType:'general-list',
-      breedCount: 0,
       breedCreated: false,
+      currentBreed: {},
+      currentBreedcount: 0,
+      requestingBreed: false,
+      breedName: '',
+      crudType: '',
+      pending: false
     };
   },
   componentDidMount: function(){
+    if(this.context.router.getCurrentParams().id)
+      this.handleDetail(this.context.router.getCurrentParams().id);
+
     BreedActions.getAllBreeds();
     this.setInterval(this.pollBackend, 4000);
   },
   componentWillReceiveProps: function(nextProps){
-    var nextBreedCount = _.size(nextProps.allBreeds);
-    if(nextBreedCount > this.state.breedCount){
-      this.setState({
-        breedCount: nextBreedCount,
-        breedCreated: true
-      });
-    } else if(nextBreedCount < this.state.breedCount){
-      this.setState({
-        breedCount: nextBreedCount,
-        breedCreated: false
-      });
+
+    if(this.state.pending){
+      var newBreed = BreedStore.getCurrentBreed(),
+          nextBreedCount = _.size(nextProps.allBreeds); 
+
+      if(this.state.crudType == 'update' && this.state.currentBreed !== newBreed){
+        this.setState({ pending: false, breedCreated: true, currentBreed: {}, crudType:'' });
+        BreedStore.clearCurrentBreed();
+      } 
+
+      if(this.state.crudType == 'create' && this.state.currentBreedcount < nextBreedCount){
+        this.setState({ pending: false, breedCreated: true, currentBreed: {}, crudType:'' });
+        BreedStore.clearCurrentBreed();
+      }
     } else {
-      this.setState({
-        breedCreated: false
+      this.setState({ breedCreated: false });  
+    }
+
+    if(this.state.requestingBreed){
+      _currentBreed = BreedStore.getCurrentBreed();
+      this.setState({ 
+        currentBreed: _currentBreed,
+        requestingBreed: _.isEmpty(_currentBreed) 
       });
     }
   },
   
   handleAdd: function(newBreed) {
+    this.setState({ breedCreated: false, pending: true, crudType:'create', currentBreedcount: _.size(this.props.allBreeds) });
     BreedActions.createBreed(newBreed);
+  },
+  handleUpdate: function(breed) {
+    this.setState({ breedCreated: false, pending: true, crudType:'update' });
+    BreedActions.updateBreed(breed, this.state.breedName, 'application/x-yaml');
   },
   handleUserInput: function(filterText) {
     this.setState({
@@ -57,6 +83,14 @@ var BreedsList = React.createClass({
     this.setState({
       viewType: viewType,
     });
+  },
+  handleDetail: function(breedName){
+    BreedStore.clearCurrentBreed();
+    BreedActions.getBreed(breedName, 'application/x-yaml');
+    this.setState({ requestingBreed: true, breedName: breedName});
+  },
+  clearCurrentBreed: function(){
+    this.setState({ currentBreed: {}, breedName: '' });
   },
 
   render: function() {
@@ -73,7 +107,7 @@ var BreedsList = React.createClass({
       if ( ( breed.name.toLowerCase().indexOf(filterTerm) === -1 && breed.deployable.toLowerCase().indexOf(filterTerm) === -1 && filterTerm) ) {
         return;
       }
-      breeds.push(<BreedListItem key={key} breed={breed} />);
+      breeds.push(<BreedListItem key={key} breed={breed} handleDetail={this.handleDetail} />);
     }, this);
 
     // Prepare dynamic classes
@@ -101,14 +135,16 @@ var BreedsList = React.createClass({
     return(
       <div className='list-container'>
         <ToolBar 
-          filterText={this.state.filterText}
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch}
           handleAdd={this.handleAdd}
+          handleUpdate={this.handleUpdate}          
           addArtefactType='breed'
           requestResolved={this.state.breedCreated} 
-          loadState={this.props.loadState}/>
-        <span className={emptyClassSet}>No running deployments.</span>
+          loadState={this.props.loadState}
+          detailArtefact={this.state.currentBreed} 
+          clearDetailArtefact={this.clearCurrentBreed} />
+        <span className={emptyClassSet}>No breeds found.</span>
         <span className={errorMessageClassSet}>{errorMessage}</span>        
         <TransitionGroup 
           id='breeds-list'         
@@ -137,7 +173,6 @@ var BreedsList = React.createClass({
   )},
   
   pollBackend: function() {
-    console.log('polling breeds');
     BreedActions.getAllBreeds();
   }
 });

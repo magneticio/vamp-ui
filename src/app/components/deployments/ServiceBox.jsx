@@ -1,7 +1,6 @@
 var React = require('react');
 var _ = require('underscore')
 var TimeAgo = require('react-timeago');
-var ServersList = require('./ServersList.jsx');
 var WeightSetter = require('./WeightSetter.jsx');
 var FilterList = require('./FilterList.jsx');
 var StatusIndicator = require('./StatusIndicator.jsx');
@@ -31,9 +30,6 @@ var ServiceBox = React.createClass({
       DeploymentActions.getDeploymentMetrics(deployment, null, currentService, cluster);
     }, interval);
   },
-  componentWillReceiveProps: function(nextProps){
-    //console.log(nextProps);
-  },
 
   updateServiceFilters: function(filtersArray){
     var currentService = this.props.service.breed.name,
@@ -47,8 +43,8 @@ var ServiceBox = React.createClass({
       _.each(serverval.ports, function(portval,portkey){
         serverlist.push(
           <li key={portkey+portval}>
-            <span className='server-host'>{serverval.host}</span>
-            <span className='server-ports'>: {portval}</span>
+            <h5 className='server-host'>{serverval.host}</h5>
+            <h5 className='server-ports'>:{portval}</h5>
           </li>
         );
       });
@@ -57,14 +53,15 @@ var ServiceBox = React.createClass({
     return serverlist;
   },
   generateMetric: function(metricType){
+    //console.log(this.props.serviceMetrics);
     if(!this.props.serviceMetrics)
-      return '-';
+      return '0';
 
     if(!this.props.serviceMetrics['services:'+this.props.service.breed.name])
-      return '-';
+      return '0';
     
     var allMetrics = this.props.serviceMetrics['services:' + this.props.service.breed.name],
-        metricValue = null;
+        metricValue = 0;
 
     _.each(allMetrics, function(metricObject, key){
       _.each(metricObject['tags'], function(tagValue, key){
@@ -85,8 +82,8 @@ var ServiceBox = React.createClass({
         stateClass = (service.state.name === 'Error') ? 'danger' : 'success',
         notifClass = service.state.notification ? '' : 'hidden',
         serverlist = this.generateServersList(servers),
-        responseTime = this.generateMetric('rtime'),
-        requestPerSec = this.generateMetric('rate'),
+        responseTime = this.generateMetric('rtime') || '0',
+        requestPerSec = this.generateMetric('rate') || '0',
         smax = this.generateMetric('rate_max');
 
     return(
@@ -95,9 +92,9 @@ var ServiceBox = React.createClass({
           {service.state.notification}
         </div>
       	<div className='service-section service-name section-fifth'>
-          <h3><a href={'/#/breeds/' + service.breed.name }> {service.breed.name}</a></h3>
+          <h3><a href={'/#/breeds/' + service.breed.name } className='editable'> {service.breed.name}</a></h3>
           <p className="muted clip-textoverflow">{service.breed.deployable}</p>
-          <h5>updated <TimeAgo date={date}/></h5>
+          <h5><img src='/images/clock.svg' alt="Clock icon" width='12px' height='12px' className='clock-icon' /> updated <TimeAgo date={date}/></h5>
         </div>
         <div className='service-section service-routing section-fifth'>
         	<h4>Weight</h4>

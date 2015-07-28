@@ -2,6 +2,7 @@ var React = require('react');
 var _ = require('underscore');
 var Loader = require('../Loader.jsx');
 var BreedActions = require('../../actions/BreedActions.js');
+var BreedStore = require('../../stores/BreedStore.js');
 var DropdownList = require('../DropdownList.jsx');
 
 var BreedListItem = React.createClass({
@@ -9,9 +10,15 @@ var BreedListItem = React.createClass({
   contextTypes: {
     router: React.PropTypes.func
   },
-
-  handleDetail: function (){
-    this.context.router.transitionTo('breed',{id: this.props.breed.name});
+  
+  getInitialState: function(){
+    return {
+      deleteRequestPending: false,
+    }
+  },
+  handleDetail: function (e){
+    e.preventDefault();
+    this.props.handleDetail(this.props.breed.name)
   },  
   handleDelete: function(){
     BreedActions.deleteBreed(this.props.breed);
@@ -39,7 +46,7 @@ var BreedListItem = React.createClass({
           <span className={ (breed.status == 'CLEAN' ? 'hidden' : '') }>
             <Loader />
           </span>
-          <p><a onClick={this.handleDetail}>{breed.name}</a></p><br/>
+          <p><a onClick={this.handleDetail} className="editable">{breed.name}</a></p><br/>
           <p className="small-caps">{breed.deployable}</p>
         </div>
         <div className="list-section section-sixth">

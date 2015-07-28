@@ -10,6 +10,7 @@
 	width: 100%;
 	margin: 0;
 	list-style-type: none;
+	will-change: scroll-position; 
 }
 .list-item,
 .list-header {
@@ -65,6 +66,9 @@
 	ul, p, h2, button {
 		opacity: 0.2;
 	}
+	* {
+		cursor: progress!important;
+	}
 }
 
 /**
@@ -78,6 +82,7 @@
 		box-sizing: border-box;
 		margin-bottom: 0.5rem;
 		width: 100%;
+		font-size: $m-size;
 	}
 	input[disabled] {
 		padding: 0 1em 0 0;
@@ -159,5 +164,4 @@
 	overflow: hidden;
   	text-overflow: ellipsis;
   	white-space: nowrap;
-  	//word-wrap:break-word;
 }

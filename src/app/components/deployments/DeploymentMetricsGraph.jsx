@@ -1,45 +1,50 @@
 var React = require('react');
-var LineChart = require('react-chartjs').Bar;
+var classNames = require('classnames');
+var LineChart = require('react-chartjs').Line;
 var _ = require('underscore');
-var cx = require('classnames');
+var TransitionGroup = React.addons.CSSTransitionGroup;
 
 var MetricsGraph = React.createClass({
 
   getInitialState: function() {
     return {
       datapoints: 30,
-      label: '',
       loadingMetrics: true
     };
   },
-
-  componentWillMount: function(){
-    if(this.props.metricsType == 'rate'){
-      this.setState({
-        label: 'requests / sec'
-      });
-    }
-    if(this.props.metricsType == 'scur'){
-      this.setState({
-        label: 'current sessions'
-      });
+  componentWillReceiveProps: function(nextProps){
+    if(nextProps.data && _.size(nextProps.data) > 0)
+      this.setState({ loadingMetrics: false });
+    else {
+      this.setState({ loadingMetrics: true });
     }
   },
 
-  componentWillReceiveProps: function(nextProps){
-    if(_.size(nextProps.data) > 0)
-      this.setState({ loadingMetrics: false });
+  formatdata: function(dataset, dataArray, labelArray, timestampsArray){
+
+    /* CHARTJS FIX:
+     *
+     * ChartJS always needs the same amount of data in a set
+     * This is a weird bug, but the only workaround (without editing the core)
+     * is forcing the array to always be 30 items long. This is the default
+     * length of an object returned by pulse, but might change in the future.
+     */
+    
+    for(i = 0; i < 30; i++){
+      dataset[i] ? dataArray.push(dataset[i]['value']) : dataArray.push('0');
+      labelArray.push('');
+
+      if(timestampsArray && dataset[i])
+          timestampsArray.push(dataset[i].timestamp.substr(11, 8));
+    }
   },
 
   render: function() {
 
     var linechart = '',
-        mostRecentDatapoint = 0,
+        mostRecentDatapoint = '-',
         filteredApiData = [],
-        loaderClasses = cx({
-          'metrics-loader': true,
-          'hidden': this.state.loadingMetrics ? false : true
-        });
+        timestamps = [];
 
 
     if(!this.state.loadingMetrics){
@@ -47,26 +52,29 @@ var MetricsGraph = React.createClass({
       var filteredApiData = [],
           chartLabels = [],
           chartOptions = {},
-          chartData = {},
-          linechart;
+          chartData = {};
 
-      _.each(this.props.data, function(property, key){
-        filteredApiData.push(property['value']);
-        chartLabels.push('');
-      }, this);
-
+      this.formatdata(this.props.data, filteredApiData, chartLabels, timestamps);
       mostRecentDatapoint = filteredApiData[0];
-      filteredApiData = filteredApiData.reverse();
 
       chartOptions = {
         showScale: true,
         scaleFontSize: 10,
+        scaleFontColor: "rgba(158,158,158,0.5)",
         scaleShowGridLines: true,
+        scaleGridLineColor : "RGBA(3, 169, 244, 0.1)",
+        scaleShowVerticalLines: false,
+        scaleLineColor: "#9E9E9E",
+        showTooltips: false,
         responsive: true,
         animation: false,
-        barShowStroke : false,
         maintainAspectRatio: false,
-        barValueSpacing : 1,
+        bezierCurve : true,
+        bezierCurveTension : 0.25,
+        pointDot: false,
+        pointDotRadius : 1,
+        datasetStrokeWidth : 2,
+        datasetFill : true,
       };
 
       chartData = {
@@ -74,9 +82,9 @@ var MetricsGraph = React.createClass({
         datasets: [
           {
             label: "Reqs/sec.",
-            fillColor: "#BCDFFA",
-            highlightFill: "#03A9F4",
-            data: filteredApiData
+            fillColor: "RGBA(3, 169, 244, 0.2)",
+            strokeColor: "#03A9F4",
+            data: filteredApiData.reverse(),
           }
         ]
       };
@@ -84,16 +92,30 @@ var MetricsGraph = React.createClass({
       linechart = (<LineChart data={chartData} options={chartOptions}/>);
     }
 
+    var loaderClasses = classNames({
+      'metrics-loader': true,
+      'hidden': this.state.loadingMetrics ? false : true
+    });
+    var containerClasses = classNames({
+      'chart-container': true,
+      'invisible': this.state.loadingMetrics ? true : false
+    });
+   
+
     return(
       <div className='deployment-metrics-chart metrics-chart'>
-        <div className='metrics-requests'>
-          <h5><strong>{this.state.label}</strong></h5>
-          <h3>{mostRecentDatapoint} </h3><small className='muted'></small>
+        <div className='metrics-title'>
+          <h5><strong>{mostRecentDatapoint}</strong> {this.props.metricsLabel}</h5>
         </div>
-        <div>
-          <span className={loaderClasses}><img src="/images/spinner-pink.svg" /></span>
+        <span className={loaderClasses}><img src="/images/spinner-pink.svg" /></span>
+        <div className={containerClasses}>
           {linechart}
         </div>
+        <ul className='metrics-timestamps'>
+          <li>{timestamps[29]}</li>
+          <li>{timestamps[14]}</li>
+          <li>{timestamps[0]}</li>
+        </ul>
       </div>
     )}
   }

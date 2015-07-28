@@ -4,48 +4,74 @@ var PureRenderMixin = React.addons.PureRenderMixin;
 var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
 var _ = require('underscore');
 var classNames = require('classnames');
-var ToolBar = require('../ToolBar.jsx');
+var ToolBar = require('../toolbar/ToolBar.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
 var ButtonBar = require('./BlueprintsButtonBar.jsx');
 var BlueprintListItem = require('./BlueprintListItem.jsx');
 var BlueprintActions = require('../../actions/BlueprintActions');
+var BlueprintStore = require('../../stores/BlueprintStore');
+
 
 var BlueprintsList = React.createClass({
-  
+
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [SetIntervalMixin],
 
   getInitialState: function() {
     return {
       filterText: '',
       viewType:'general-list',
-      blueprintCount: 0,
       blueprintCreated: false,
+      currentBlueprint: {},
+      currentBlueprintcount: 0,
+      requestingBlueprint: false,
+      blueprintName: '',
+      crudType: '',
+      pending: false
     };
   },
   componentDidMount: function(){
+    if(this.context.router.getCurrentParams().id)
+      this.handleDetail(this.context.router.getCurrentParams().id);
+
     BlueprintActions.getAllBlueprints();
     this.setInterval(this.pollBackend, 4000);
   },
   componentWillReceiveProps: function(nextProps){
-    var nextBlueprintCount = _.size(nextProps.allBlueprints);
-    if(nextBlueprintCount > this.state.blueprintCount){
-      this.setState({
-        blueprintCount: nextBlueprintCount,
-        blueprintCreated: true
-      });
-    } else if(nextBlueprintCount < this.state.blueprintCount) {
-      this.setState({
-        blueprintCount: nextBlueprintCount,
-        blueprintCreated: false
-      });
+    if(this.state.pending){
+      var newBlueprint = BlueprintStore.getCurrentBlueprint(),
+          nextBlueprintCount = _.size(nextProps.allBlueprints);
+
+      if(this.state.crudType == 'update' && this.state.currentBlueprint != newBlueprint){
+        this.setState({ pending: false, blueprintCreated: true, currentBlueprint: {} });
+        BlueprintStore.clearCurrentBlueprint();
+      } 
+      if(this.state.crudType == 'create' && this.state.currentBlueprintcount < nextBlueprintCount){
+        this.setState({ pending: false, blueprintCreated: true, currentBlueprint: {}, crudType:'' });
+        BlueprintStore.clearCurrentBlueprint();
+      }
     } else {
-      this.setState({ blueprintCreated: false });
+      this.setState({ blueprintCreated: false });  
+    }
+    if(this.state.requestingBlueprint){
+      _currentBlueprint = BlueprintStore.getCurrentBlueprint();
+      this.setState({ 
+        currentBlueprint: _currentBlueprint,
+        requestingBlueprint: _.isEmpty(_currentBlueprint) 
+      });
     }
   },
   
   handleAdd: function(newBlueprint) {
-    this.setState({ blueprintCreated: false});
+    this.setState({ blueprintCreated: false, pending: true, crudType:'create', currentBlueprintcount: _.size(this.props.allBlueprints)});
     BlueprintActions.createBlueprint(newBlueprint);
+  },
+  handleUpdate: function(blueprint) {
+    this.setState({ blueprintCreated: false, pending: true, crudType:'update'});
+    BlueprintActions.updateBlueprint(blueprint, this.state.blueprintName, 'application/x-yaml');
   },
   handleUserInput: function(filterText) {
     this.setState({
@@ -56,6 +82,14 @@ var BlueprintsList = React.createClass({
     this.setState({
       viewType: viewType,
     });
+  },
+  handleDetail: function(blueprintName){
+    BlueprintStore.clearCurrentBlueprint();
+    BlueprintActions.getBlueprint(blueprintName, 'application/x-yaml');
+    this.setState({ requestingBlueprint: true, blueprintName: blueprintName });
+  },
+  clearCurrentBlueprint: function(){
+    this.setState({ currentBlueprint: {}, blueprintName: '' });
   },
 
   render: function() {
@@ -72,7 +106,7 @@ var BlueprintsList = React.createClass({
       if ( ( blueprint.name.toLowerCase().indexOf(filterTerm) === -1 && filterTerm) ) {
         return;
       }
-      blueprints.push(<BlueprintListItem key={key} blueprint={allBlueprints[key]} />);
+      blueprints.push(<BlueprintListItem key={key} blueprint={allBlueprints[key]} handleDetail={this.handleDetail} />);
     }, this);
     
     // Prepare dynamic classes
@@ -100,13 +134,15 @@ var BlueprintsList = React.createClass({
     return(
       <div className='list-container'>
         <ToolBar 
-          filterText={this.state.filterText}
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch}
           handleAdd={this.handleAdd}
+          handleUpdate={this.handleUpdate}
           addArtefactType='blueprint'
           requestResolved={this.state.blueprintCreated} 
-          loadState={this.props.loadState} />
+          loadState={this.props.loadState}
+          detailArtefact={this.state.currentBlueprint} 
+          clearDetailArtefact={this.clearCurrentBlueprint} />
         <span className={emptyClassSet}>No blueprints found.</span>
         <span className={errorMessageClassSet}>{errorMessage}</span>        
         <TransitionGroup 
@@ -138,7 +174,6 @@ var BlueprintsList = React.createClass({
   )},
 
   pollBackend: function() {
-    console.log('polling blueprints');
     BlueprintActions.getAllBlueprints();
   }
 });

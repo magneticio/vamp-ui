@@ -4,7 +4,7 @@ var PureRenderMixin = React.addons.PureRenderMixin;
 var SetIntervalMixin = require("../../mixins/SetIntervalMixin.js");
 var _ = require('underscore');
 var classNames = require('classnames');
-var ToolBar = require('../ToolBar.jsx');
+var ToolBar = require('../toolbar/ToolBar.jsx');
 var LoadStates = require("../../constants/LoadStates.js");
 var DeploymentListItem = require('./DeploymentListItem.jsx');
 var DeploymentActions = require('../../actions/DeploymentActions');
@@ -83,7 +83,7 @@ var DeploymentsList = React.createClass({
           filterText={this.state.filterText}
           onUserInput={this.handleUserInput}
           handleViewSwitch={this.handleViewSwitch} />
-        <span className={emptyClassSet}>No running deployments.</span>
+        <span className={emptyClassSet}>No running deployments found.</span>
         <span className={errorMessageClassSet}>{errorMessage}</span>
         <TransitionGroup 
           id='deployments-list' 
@@ -114,7 +114,6 @@ var DeploymentsList = React.createClass({
   )},
 
   pollBackend: function() {
-    console.log('polling deployments');
     DeploymentActions.getAllDeployments();
   }
 });

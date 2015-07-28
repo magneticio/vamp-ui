@@ -31,6 +31,10 @@ var BreedDetail = React.createClass({
   setStatesWhenAvailable: function(props){
     if(_.isEmpty(this.state.currentBreed)){
       var currentBreed = BreedStore.getBreed(this.state.name);
+      
+      if(currentBreed && 'status' in currentBreed)
+        delete currentBreed.status;
+
       this.setState({
         breedDirty: JSON.stringify(currentBreed,null,2),
         currentBreed: currentBreed
@@ -51,7 +55,7 @@ var BreedDetail = React.createClass({
 
     var containerClassnames = classNames({
       'dimmed': errorsToBeShown,
-      'full-width-section': true
+      'section-full': true
     });
     var errorMessageClassSet = classNames({
       "error-status-message": true,
@@ -60,7 +64,7 @@ var BreedDetail = React.createClass({
     });
 
     return(
-      <TransitionGroup id='breed-single' component="div" transitionName="fadeIn" transitionAppear={true} transitionLeave={true} >
+      <TransitionGroup id='breed-single' className='single' component="div" transitionName="fadeIn" transitionAppear={true} transitionLeave={true} >
         <BreadCrumbsBar/>
         <span className={errorMessageClassSet}>{errorMessage}</span>        
         <div className={containerClassnames}>

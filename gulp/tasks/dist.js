@@ -1,3 +1,3 @@
 var gulp = require('gulp');
 
-gulp.task('dist', ['sass-min', 'browserify-min', 'compress', 'replace-dist']);
+gulp.task('dist', ['build-min', 'replace-dist', 'compress']);

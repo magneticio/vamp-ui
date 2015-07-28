@@ -11,19 +11,12 @@ var CHANGE_EVENT = 'change';
 var _info = {},
     _errors = {};
 
-// var _persistBreeds = function(response){
-//   var _temp = {}
-//   var array = JSON.parse(response.text);
-//   _.each(array, function(obj){ 
-//     _temp[obj.name] = obj;
-//     _temp[obj.name].status = 'CLEAN';
-//   });
-//   _breeds = _temp;
-// };
-
 var _registerError = function(errorType, message, artefactType){
   if(errorType == 'UNREACHABLE')
     message = "It seems the backend is unreachable, are you sure it's running?";
+
+  if(errorType == 'PULSE_ERROR')
+    message = "It seems VAMP can't connect to pulse, are you sure it's running?";
 
   _errors[errorType] = {
     'type': errorType,
@@ -68,7 +61,7 @@ var AppStore = assign({}, EventEmitter.prototype,{
     switch(action) {
       case AppConstants.GET_INFO + '_SUCCESS':
         _info = JSON.parse(payload.response.text);
-        //_persistInfo(payload.response);
+        AppStore.deleteError('GET_INFO');
         break;
       case AppConstants.GET_INFO + '_ERROR':
         console.log('info error');

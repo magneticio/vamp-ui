@@ -3,7 +3,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var LoadStates = require("../constants/LoadStates.js");
 var request = require('superagent');
 
-var TIMEOUT = 2000;
+var TIMEOUT = Config.TIMEOUT;
 var _pendingRequests = {};
 
 // Helpers
@@ -35,7 +35,7 @@ function handleResponse(actionType) {
   };
 };
 function handleError(actionType, res){
-  console.log('api error');
+  console.log('api error', res);
   if(res){
     dispatch(actionType + '_ERROR', res);
   } else {
@@ -58,9 +58,10 @@ function post(url, body, contenttype) {
     .send(body)
     .timeout(TIMEOUT);
 };
-function put(url, body) {
+function put(url, body, contenttype) {
   return request
     .put(url)
+    .set('Content-type', contenttype)    
     .send(body)
     .timeout(TIMEOUT);
 };
@@ -98,12 +99,12 @@ var Api = {
       handleResponse(actionType)
     );
   },
-  update: function(uri,body,actionType) {
-    console.log('update');
+  update: function(uri,body,actionType, contenttype) {
+    contenttype = typeof contenttype !== 'undefined' ? contenttype : 'application/json';
     var url = makeUrl(uri);
     abortPendingRequests(actionType);
     dispatch(actionType,body);
-    _pendingRequests[actionType] = put(url,body).end(
+    _pendingRequests[actionType] = put(url,body, contenttype).end(
        handleResponse(actionType)
     );
   },

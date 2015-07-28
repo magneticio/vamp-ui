@@ -1,0 +1,92 @@
+// GENERAL CLASSES
+.section-full {
+	padding: 0 1rem 1rem;
+	width: 100%;
+	box-sizing: border-box;	
+	background-color: $off-white;
+}
+.section-half {
+	padding: 1rem;
+	width: 50%;
+	vertical-align: top;
+	display: inline-block;
+	box-sizing: border-box;
+}
+.section-third {
+	padding: 1rem;
+	width: percentage(1/3);
+	vertical-align: top;
+	display: inline-block;
+	box-sizing: border-box;
+}
+.section-fifth {
+	padding: 1rem;
+	width: percentage(1/5);
+	vertical-align: top;
+	display: inline-block;
+	box-sizing: border-box;
+}
+.section-sixth {
+	padding: 1rem;
+	width: percentage(1/6);
+	vertical-align: top;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
+// DETAIL SECTIONS
+.detail-section {	
+	div {
+		position: relative;
+	}
+
+	.export-links {
+		width: auto;
+		position: absolute;
+		right: 0;
+
+		li {
+			cursor: pointer;
+		}
+		.first-item {
+			font-weight: 600;
+			text-transform: lowercase;
+
+			&:hover {
+				background-color: white;
+			}
+		}
+	}
+}
+
+// CLUSTER SECTIONS
+.cluster-section {
+	margin: 0 0 1rem 0;
+	
+	div {
+		position: relative;
+	}
+	h1 {
+		display: inline-block;
+	}
+	.add-service-link {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+	}
+	.cluster-name {
+		padding: 1rem 1rem 0.75rem 1rem;
+		background-color: white;
+		margin-bottom: 2px;
+
+		h1 {
+			margin: 0;
+		}
+	}
+}
+
+// SERVICE SECTIONS
+.service-section .clock-icon {
+	margin-bottom: -2px;
+	margin-right: 0.2rem;
+}

@@ -1,47 +1,65 @@
+$filterbox-transition: margin-top 0.3s linear 0.2s, opacity 0.15s;
+
 .toolbar {
 	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
 	background-color: $off-white;
 	width: 100%;
 	box-sizing: border-box;
 	padding: 1rem;
 	z-index: 20;
 	border-top: 1px solid $off-white;
+	will-change: height;
 
-	label {
+	.add-button,
+	.breadcrumbs-bar {
+		margin-top: 0;
+		transition: $filterbox-transition;
+		opacity: 1;
+	}
+	.filtering-tools-box,
+	.breadcrumbs-bar,
+	.add-button {
+		will-change: margin-top, opacity;
+	}
+}
+.filtering-tools-box {
+	display: inline-flex;
+	flex-direction: row;
+  	align-items: center;
+  	flex-wrap: wrap;
+  	opacity: 1;
+	transition: $filterbox-transition;
+
+  	label {
 		position: relative;
 	}
 	input[type=search] {
 		padding-left: 2em;
 		background-color: white;
-		//box-shadow: inset 0 1px 1px rgba(200,200,200,0.3);
+		border: none;
+
+		&:focus {
+			box-shadow: inset 0 0 1px 1px rgba(200,200,200,0.3);
+		}
 	}
 	.search-icon {
 		position: absolute;
 		left: 0.5rem;
 		top: 0;
 	}
-	.add-button {
-		margin-left: auto;
-	}
 }
-.filtering-tools-box {
-	display: flex;
-	flex-direction: row;
-  	align-items: center;
-  	flex-wrap: wrap;
-  	opacity: 1;
-  	transition: margin-top 0.3s, opacity 0.15s;
-}
-.add-artefact-box {
+.add-artefact-box,
+.edit-deployment-box {
 	width: 100%;
 	height: 0;
 	opacity: 0;
 	overflow: hidden;
-	transition: height 0.3s, opacity 0.3s;
-
-	h2 {
-		padding-top: 2rem;
-	}
+	transition: height 0.2s linear 0.4s, opacity 0.2s ease;
+	will-change: height, opacity;
 	
 	p {
 		display: inline-block;
@@ -54,7 +72,7 @@
 		box-sizing: border-box;
 		border: none;
 		width: 100%;
-		height: 71vh;
+		height: 74.5vh;
 		margin-bottom: 1rem;
 	}
 	
@@ -73,38 +91,29 @@
   		margin-left: -1rem;
 	}
 }
-
-.toolbar.expanded {
-	.add-artefact-box {
-		height: 92vh;
-		opacity: 1;		
-	}
-	.filtering-tools-box {
-		margin-top: -3.5em;
-		opacity: 0;
+.edit-deployment-box {
+	textarea {
+		margin-bottom: 0;
 	}
 }
 
-//.view-switch {
-// 	vertical-align: top;
-// 	display: inline-block;
-// 	width: 2.125rem;
-// 	height: 2.125rem;
-// 	padding: 0.5rem;
-// 	margin-right: 0.3rem;
-// 	border: none;
-// 	color: white;
-// 	box-sizing: border-box;
-// 	background-color: transparent;
-// 	outline: none;
-
-// 	img {
-// 		display: block;
-// 		width: 100%;
-// 		height: 100%;
-// 	}
-
-// 	&:hover {
-// 		background-color: $pink;
-// 	}
-// }
+.toolbar.expanded {
+	.add-artefact-box,
+	.edit-deployment-box  {
+		height: 92vh;
+		opacity: 1;
+		transition: height 0.2s, opacity 0.2s ease 0.4s;
+	}
+	.edit-deployment-box {
+		height: 88.5vh;
+	}
+	.filtering-tools-box,
+	.breadcrumbs-bar {
+		margin-top: -5em;
+		opacity: 0;
+	}
+	.add-button {
+		margin-top: -5em;
+		opacity: 0;
+	}
+}

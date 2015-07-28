@@ -9,6 +9,7 @@ var AppStore = require('./AppStore');
 var CHANGE_EVENT = 'change';
 
 var _blueprints = {};
+var _currentBlueprint = {};
 var _error = null;
 
 var _persistBlueprints = function(response){
@@ -24,14 +25,17 @@ var _addBlueprint = function(response){
   var newBlueprint = JSON.parse(response.text);
   _blueprints[newBlueprint.name] = newBlueprint;
 }
+var _persistCurrentBlueprint = function(response){
+  _currentBlueprint = response.text;
+}
 
 var BlueprintStore = assign({}, EventEmitter.prototype,{
 
   getAll: function() {
     return _blueprints;
   },
-  getBlueprint: function(name) {
-    return _.findWhere(_blueprints, { "name" : name });
+  getCurrentBlueprint: function() {
+    return _currentBlueprint;
   },
   getError: function(){
     var returnError = _error;
@@ -42,6 +46,10 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
   setBlueprintStatus: function(name, newStatus) {
     var blueprint = _.findWhere(_blueprints, { "name" : name });
     blueprint.status = newStatus;
+  },
+
+  clearCurrentBlueprint: function(){
+    _currentBlueprint = {};
   },
 
   emitChange: function() {
@@ -70,13 +78,17 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
         AppStore.putError('UNREACHABLE');
         break;  
 
-      // case BlueprintConstants.CREATE_BLUEPRINT:
-      //   payload.response.status = 'DIRTY'
-      //   _blueprints[payload.response.name] = payload.response
-      //   break;
+      case BlueprintConstants.GET_BLUEPRINT + '_SUCCESS':
+        _persistCurrentBlueprint(payload.response);
+        break;
+      case BlueprintConstants.GET_BLUEPRINT + '_ERROR':
+        var errortext = JSON.parse(payload.response.text)
+        _error = errortext.message;
+        break;
 
       case BlueprintConstants.CREATE_BLUEPRINT + '_SUCCESS':
         _addBlueprint(payload.response);
+        _persistCurrentBlueprint(payload.response);
         break;
       case BlueprintConstants.CREATE_BLUEPRINT + '_ERROR':
         var errortext = JSON.parse(payload.response.text)
