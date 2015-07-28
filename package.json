@@ -1,6 +1,6 @@
 {
   "name": "vamp-ui",
-  "version": "0.1.0-RC1",
+  "version": "0.7.9",
   "description": "Graphical User Interface for Vamp",
   "repository": {
     "type": "git",
