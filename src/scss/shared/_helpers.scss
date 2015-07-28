@@ -29,6 +29,12 @@
 	    background-repeat: no-repeat;
 	}
 }
+a.editable:hover::after {
+	background-image: url(/images/edit-blue.svg);
+	width: 11px;
+	height: 11px;
+    background-size: 11px;
+}
 input.editable {
 	color: inherit;
 	background-color: white;

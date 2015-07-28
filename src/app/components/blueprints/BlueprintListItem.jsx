@@ -87,7 +87,7 @@ var BlueprintListItem = React.createClass({
     return (
       <li className={listClasses}>
         <div className="list-section section-fifth">
-          <a onClick={this.handleDetail}><p className="item-name">{blueprint.name}</p></a>
+          <a onClick={this.handleDetail} className="editable"><p className="item-name">{blueprint.name}</p></a>
         </div>
         <div className="list-section section-fifth">
           <DropdownList items={endpoints} />
