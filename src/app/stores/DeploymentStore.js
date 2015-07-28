@@ -130,15 +130,15 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
 
       // METRICS
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_RTIME + '_SUCCESS':
-        AppStore.deleteError('UNREACHABLE');
+        AppStore.deleteError('PULSE_ERROR');
         _currentDeployment.rtime = JSON.parse(payload.response.text);
         break;
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_RATE + '_SUCCESS':
-        AppStore.deleteError('UNREACHABLE');
+        AppStore.deleteError('PULSE_ERROR');
         _currentDeployment.rate = JSON.parse(payload.response.text);
         break;
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_SERVICE + '_SUCCESS':
-        AppStore.deleteError('UNREACHABLE');
+        AppStore.deleteError('PULSE_ERROR');
         var metrics = payload.response.body;
 
         if(!_currentDeployment.serviceMetrics)

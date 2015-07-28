@@ -57,8 +57,7 @@ var DeploymentActions = {
     if(cluster) { 
       tags.push('routes:' + deployment.name + '_' + cluster.name + '_' + endpoint) 
     } else {
-      tags.push('routes:' + deployment.name + '_' + endpoint);
-      tags.push('route');
+      tags.push('routes:' + deployment.name + '_' + endpoint, 'route');
     }
 
     metricsType ? tags.push('metrics:' + metricsType) : tags.push('metrics');
