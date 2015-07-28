@@ -12,7 +12,6 @@ var ClusterBox = React.createClass({
 
     var cluster = this.props.cluster;
     var name = this.props.name ;
-    var port = "<Badge label='port' port={cluster.routes} />";
     var clusterForService = {
       name: name, 
       port: Object.keys(this.props.cluster.routes)[0]

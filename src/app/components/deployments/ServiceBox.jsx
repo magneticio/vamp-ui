@@ -19,8 +19,7 @@ var ServiceBox = React.createClass({
       loading: true,
       smax: '-',
       rate: '-',
-      rtime: '-',
-      weightEdit: false
+      rtime: '-'
     }
   },
   componentWillMount: function(){
@@ -31,10 +30,6 @@ var ServiceBox = React.createClass({
     this.setInterval(function(){
       DeploymentActions.getDeploymentMetrics(deployment, null, currentService, cluster);
     }, interval);
-  },
-  handleWeightEdit: function(){
-    console.log('edit!');
-    this.setState({ weightEdit: !this.state.weightEdit });
   },
 
   updateServiceFilters: function(filtersArray){
@@ -92,55 +87,37 @@ var ServiceBox = React.createClass({
         requestPerSec = this.generateMetric('rate') || '0',
         smax = this.generateMetric('rate_max');
 
-    var serviceNameClasses = classNames('service-section', 'service-name', {
-      'section-fifth': !this.state.weightEdit,
-      'section-third': this.state.weightEdit
-    });
-    var serviceRoutingClasses = classNames('service-section', 'service-routing', {
-      'section-fifth': !this.state.weightEdit,
-      'section-third': this.state.weightEdit
-    });
-    var serviceMetricsClasses = classNames('service-section', 'service-metrics', {
-      'section-fifth': !this.state.weightEdit,
-      'section-third': this.state.weightEdit
-    });
-    var serviceServersClasses = classNames('service-section', 'service-servers', 'section-fifth', {
-      'hidden': this.state.weightEdit
-    });
-    var serviceStatusClasses = classNames('service-section', 'service-status', 'section-fifth', {
-      'hidden': this.state.weightEdit
-    });
 
     return(
       <div className='service-box'>
         <div className={'dialog dialog-'+ stateClass + ' ' + notifClass}>
           {service.state.notification}
         </div>
-      	<div className={serviceNameClasses}>
+      	<div className='service-section service-name section-fifth'>
           <h3><a href={'/#/breeds/' + service.breed.name } className='editable'> {service.breed.name}</a></h3>
           <p className="muted clip-textoverflow">{service.breed.deployable}</p>
           <h5><img src='/images/clock.svg' alt="Clock icon" width='12px' height='12px' className='clock-icon' /> updated <TimeAgo date={date}/></h5>
         </div>
-        <div className={serviceRoutingClasses}>
+        <div className='service-section service-routing section-fifth'>
           <div className="weightsetBox">
         	 <h4>Weight</h4>
-            <WeightSetter weight={service.routing.weight} handleWeightEdit={this.handleWeightEdit}/>
+            <WeightSetter weight={service.routing.weight} handleEditWeight={this.props.handleEditWeight}/>
           </div>
           <div className="filterlistBox">
             <h4>Filters</h4>
             <FilterList filters={service.routing.filters} updateServiceFilters={this.updateServiceFilters} />
           </div>
         </div>
-        <div className={serviceMetricsClasses}>
+        <div className='service-section service-metrics section-fifth'>
           <ServiceMetricsGraph responseTime={responseTime} requestPerSec={requestPerSec} smax={smax} />
         </div>
-        <div className={serviceServersClasses}>
+        <div className='service-section service-servers section-fifth'>
           <h4>Servers</h4>
           <ul>
             {serverlist}
           </ul>
         </div>
-        <div className={serviceStatusClasses}>
+        <div className='service-section service-status section-fifth'>
         	<h4>Status</h4>
           <StatusIndicator status={service.state.name} />
           <h4>Scale</h4>
