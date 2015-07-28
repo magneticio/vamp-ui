@@ -53,6 +53,7 @@ var ServiceBox = React.createClass({
     return serverlist;
   },
   generateMetric: function(metricType){
+    //console.log(this.props.serviceMetrics);
     if(!this.props.serviceMetrics)
       return '0';
 

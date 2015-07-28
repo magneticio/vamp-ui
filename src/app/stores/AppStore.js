@@ -11,16 +11,6 @@ var CHANGE_EVENT = 'change';
 var _info = {},
     _errors = {};
 
-// var _persistBreeds = function(response){
-//   var _temp = {}
-//   var array = JSON.parse(response.text);
-//   _.each(array, function(obj){ 
-//     _temp[obj.name] = obj;
-//     _temp[obj.name].status = 'CLEAN';
-//   });
-//   _breeds = _temp;
-// };
-
 var _registerError = function(errorType, message, artefactType){
   if(errorType == 'UNREACHABLE')
     message = "It seems the backend is unreachable, are you sure it's running?";

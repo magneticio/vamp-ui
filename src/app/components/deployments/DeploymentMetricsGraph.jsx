@@ -22,7 +22,7 @@ var MetricsGraph = React.createClass({
 
   formatdata: function(dataset, dataArray, labelArray, timestampsArray){
 
-    /* UGLY FIX:
+    /* CHARTJS FIX:
      *
      * ChartJS always needs the same amount of data in a set
      * This is a weird bug, but the only workaround (without editing the core)

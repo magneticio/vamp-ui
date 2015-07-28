@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var SetIntervalMixin = require("../mixins/SetIntervalMixin.js");
 var Config = require('../config.js');
 var AppActions = require('../actions/AppActions');
 var BreedActions = require('../actions/BreedActions');
@@ -9,6 +10,8 @@ var _ = require('underscore');
 var classNames = require('classnames');
 
 var OptionsPane = React.createClass({
+
+  mixins: [SetIntervalMixin],
 
 	contextTypes: {
     router: React.PropTypes.func
@@ -23,6 +26,7 @@ var OptionsPane = React.createClass({
     this.setState({
       apiUrl: Config.getApiHost(),
     });
+    this.setInterval(this.pollBackend, 4000);
   },
 
   handleSubmit: function(e){
@@ -155,6 +159,10 @@ var OptionsPane = React.createClass({
 	        </div>
   		</aside>
   	);
+  },
+
+  pollBackend: function() {
+    AppActions.getInfo();
   }
 
 });

@@ -173,7 +173,6 @@ var BreedsList = React.createClass({
   )},
   
   pollBackend: function() {
-    console.log('polling breeds');
     BreedActions.getAllBreeds();
   }
 });
