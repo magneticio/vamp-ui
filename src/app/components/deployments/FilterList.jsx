@@ -10,14 +10,16 @@ var FilterList = React.createClass({
 
   getInitialState: function(){
     return {
-      allFilters: ''
+      allFilters: '',
+      editState: false
     }
   },
-
   componentDidMount: function(){
-    this.setState({
-      allFilters: this.props.filters
-    });
+    this.setState({ allFilters: this.props.filters });
+  },
+  componentWillReceiveProps: function(nextProps){
+    if(!this.state.editState)
+    this.setState({ allFilters: nextProps.filters });
   },
 
   updateFilters: function(newValue, oldValue){

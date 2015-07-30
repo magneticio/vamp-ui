@@ -35,8 +35,10 @@ var BlueprintListItem = React.createClass({
     BlueprintActions.deployBlueprint(this.props.blueprint);
   },
   handleDelete: function(e) {
-    this.setState({ deleteRequestPending: true });
-    BlueprintActions.deleteBlueprint(this.props.blueprint);
+    if (confirm('Are you sure you want to undeploy this deployment?')) {
+      this.setState({ deleteRequestPending: true });
+      BlueprintActions.deleteBlueprint(this.props.blueprint);
+    }
   },
 
   prepareMetaInformation: function(metaInformation, storeType){
@@ -87,7 +89,7 @@ var BlueprintListItem = React.createClass({
     return (
       <li className={listClasses}>
         <div className="list-section section-fifth">
-          <a onClick={this.handleDetail} className="editable"><p className="item-name">{blueprint.name}</p></a>
+          <a onClick={this.handleDetail} className="editable"><p className="item-name clip-textoverflow">{blueprint.name}</p></a>
         </div>
         <div className="list-section section-fifth">
           <DropdownList items={endpoints} />

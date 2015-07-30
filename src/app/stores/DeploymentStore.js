@@ -126,7 +126,14 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         break;
       case BlueprintConstants.DEPLOY_BLUEPRINT + '_ERROR':
         console.log('%c deploying ERROR ', 'background-color: red; color: white;');
-        break;      
+        break;
+
+      // DELETE
+      case DeploymentConstants.DELETE_FULL_DEPLOYMENT + '_SUCCESS':
+        var deletedDeployment = JSON.parse(payload.response.text);
+        delete _deployments[deletedDeployment.name];
+        console.log('succes!');
+        break;
 
       // METRICS
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_RTIME + '_SUCCESS':
