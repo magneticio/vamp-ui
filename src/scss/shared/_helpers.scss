@@ -14,6 +14,10 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+
+	&.item-name {
+		max-width: 80%;
+	}
 }
 .editable {
 	cursor: pointer;
@@ -34,6 +38,8 @@ a.editable:hover::after {
 	width: 11px;
 	height: 11px;
     background-size: 11px;
+    vertical-align: top;
+    margin-top: 0.5rem;
 }
 input.editable {
 	color: inherit;
