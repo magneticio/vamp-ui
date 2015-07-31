@@ -25,6 +25,10 @@
 	vertical-align: top;
 	display: inline-block;
 	box-sizing: border-box;
+	
+	&.double {
+		width: percentage(2/5);
+	}
 }
 .section-sixth {
 	padding: 1rem;

@@ -34,8 +34,7 @@
 	}
 }
 
-.cluster-crud {
-	padding: 0 1rem;
+.cluster-options {
 	z-index: 25;
 	height: 0;
 	background-color: white;
@@ -45,12 +44,18 @@
 	will-change: height, padding;
 
 	&.active {
-		padding: 1rem;
 		z-index: 25;
 		transition: height 0.1s ease 0.3s, padding 0.1s ease 0.3s;
 	}
 
 	p {
+		display: inline-block;
 		margin: 0;
+	}
+	.weight-range {
+		input[type="range"]{
+			display: inline-block;
+			width: 80%;
+		}
 	}
 }
