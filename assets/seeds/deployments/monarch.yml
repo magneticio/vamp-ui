@@ -1,6 +1,6 @@
 name: monarchs:1.2
 endpoints:
-  frontend.port: 9040
+  frontend.port: 9040/http
 clusters:
   frontend:
     services:

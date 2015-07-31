@@ -1,6 +1,7 @@
 var React = require('react');
 var _ = require('underscore')
 var TimeAgo = require('react-timeago');
+var classNames = require('classnames');
 var WeightSetter = require('./WeightSetter.jsx');
 var FilterList = require('./FilterList.jsx');
 var StatusIndicator = require('./StatusIndicator.jsx');
@@ -13,7 +14,7 @@ var ServiceBox = React.createClass({
   
   mixins: [SetIntervalMixin],
 
-  getInitalState: function(){
+  getInitialState: function(){
     return {
       loading: true,
       smax: '-',
@@ -86,6 +87,7 @@ var ServiceBox = React.createClass({
         requestPerSec = this.generateMetric('rate') || '0',
         smax = this.generateMetric('rate_max');
 
+
     return(
       <div className='service-box'>
         <div className={'dialog dialog-'+ stateClass + ' ' + notifClass}>
@@ -97,10 +99,14 @@ var ServiceBox = React.createClass({
           <h5><img src='/images/clock.svg' alt="Clock icon" width='12px' height='12px' className='clock-icon' /> updated <TimeAgo date={date}/></h5>
         </div>
         <div className='service-section service-routing section-fifth'>
-        	<h4>Weight</h4>
-          <WeightSetter weight={service.routing.weight}/>
-          <h4>Filters</h4>
-          <FilterList filters={service.routing.filters} updateServiceFilters={this.updateServiceFilters} />
+          <div className="weightsetBox">
+        	 <h4>Weight</h4>
+            <WeightSetter weight={service.routing.weight} handleEditWeight={this.props.handleEditWeight}/>
+          </div>
+          <div className="filterlistBox">
+            <h4>Filters</h4>
+            <FilterList filters={service.routing.filters} updateServiceFilters={this.updateServiceFilters} />
+          </div>
         </div>
         <div className='service-section service-metrics section-fifth'>
           <ServiceMetricsGraph responseTime={responseTime} requestPerSec={requestPerSec} smax={smax} />

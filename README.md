@@ -11,7 +11,11 @@ You need to have NPM installed. Then...
 
 ## Seeds
 
-To get you up to speed there's some seeds included, navigate to the assets > seeds folder and execute 
+To get you up to speed there's some seeds included. It relies httpie so check if you have that installed
+
+	$ http --version
+
+With httpie installed just navigate to the assets > seeds folder and execute 
 	
 	$ sh seed.sh
 
