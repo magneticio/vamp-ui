@@ -7,10 +7,6 @@ var ServicesList = React.createClass({
     services: React.PropTypes.array,
   },
 
-  handleEditWeight: function(){
-    console.log('edit!');
-  },
-
   render: function() {
 
     var services = []
@@ -23,7 +19,7 @@ var ServicesList = React.createClass({
           serviceMetrics={this.props.serviceMetrics} 
           cluster={this.props.cluster} 
           updateServiceListFilters={this.props.updateClusterFilters} 
-          handleEditWeight={this.handleEditWeight} />);
+          handleEditWeight={this.props.handleEditWeight} />);
     }
 
     return (

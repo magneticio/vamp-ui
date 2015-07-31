@@ -4,6 +4,7 @@
 	background-color: white;
 	margin-bottom: 2px;
 	flex-wrap: wrap;
+	will-change: scroll-position;
 	
 	&:hover {
 		border-left: 2px solid $blue;
@@ -15,19 +16,7 @@
 	}
 }
 .service-section {
-	//flex: 1;
 	background-color: inherit;
-	// transition: max-height 0.2s;
-	// max-height: 220px;
-	// display: inline-block!important;
-	// visibility: visible;
-	// overflow: hidden;
-
-	// &.hidden {
-	// 	max-height: 0px;
-	// 	display: inline-block!important;
-	// 	visibility: visible;
-	// }
 
 	p {
 		margin: 0;

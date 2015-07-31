@@ -1,0 +1,56 @@
+// CLUSTER SECTIONS
+.cluster-section {
+	margin: 0 0 1rem 0;
+	
+	div {
+		position: relative;
+	}
+	h1 {
+		display: inline-block;
+	}
+	.add-service-link {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+	}
+	.cluster-name {
+		padding: 1rem 1rem 0.75rem 1rem;
+		background-color: white;
+		margin-bottom: 2px;
+		height: auto;
+		z-index: 0;
+		transition: box-shadow 0.2s ease 0.3s, z-index 0s linear 0.5s;
+		box-shadow: 0px 0px 0px 0 rgba(0,0,0,0);
+
+		h1 {
+			margin: 0;
+		}
+
+		&.active {
+			z-index: 25;
+			box-shadow: 0px 2px 10px 0 rgba(0,0,0,0.15);
+			transition: box-shadow 0.2s ease, z-index 0s;
+		}
+	}
+}
+
+.cluster-crud {
+	padding: 0 1rem;
+	z-index: 25;
+	height: 0;
+	background-color: white;
+	box-shadow: 0px 2px 10px 0 rgba(0,0,0,0.15);
+	overflow: hidden;
+	transition: height 0.1s ease, padding 0.1s ease;
+	will-change: height, padding;
+
+	&.active {
+		padding: 1rem;
+		z-index: 25;
+		transition: height 0.1s ease 0.3s, padding 0.1s ease 0.3s;
+	}
+
+	p {
+		margin: 0;
+	}
+}
