@@ -16,7 +16,6 @@ var ClusterSettingsBoxItem = React.createClass({
   componentWillReceiveProps: function(nextProps){
     if(nextProps.weight != this.state.weight){
       this.setState({ weight: nextProps.weight });
-      console.log(nextProps.weight);
     }
   },
 

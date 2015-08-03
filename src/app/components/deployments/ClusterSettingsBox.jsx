@@ -7,7 +7,8 @@ var ClusterSettingsBox = React.createClass({
 
   getInitialState: function(){
     return {
-      weights: {}
+      weights: {},
+      dirty: false
     }
   },
   componentDidMount: function(){
@@ -20,9 +21,8 @@ var ClusterSettingsBox = React.createClass({
 
   // Event handlers
   handleWeightSliderChange: function(e, name){
-    if(e){
+    if(e && !this.state.dirty)
       this.updateWeights(name, e.currentTarget.value);
-    }
   },
 
   // Helper methods
@@ -34,35 +34,38 @@ var ClusterSettingsBox = React.createClass({
     this.setState({ weights: _weightsObject });
   },
   updateWeights: function(serviceName, value){
-    var self = this,
-        _oldWeights = this.state.weights;
-    
-    _oldWeights[serviceName] = value;
-    
-    this.calculateWeights(_oldWeights, [serviceName], function(_newWeights){
-      self.setState({ weights: _newWeights});
-    });  
-  },
-  calculateWeights: function(weightsObject, lockedServices, callback){
-    var newWeights = {},
-        percentageToDivide = 100,
-        percentagePerService = 0;
+    this.setState({ dirty: true });
 
-    _.each(lockedServices, function(service){
-      percentageToDivide -= weightsObject[service];
-      newWeights[service] = weightsObject[service];
-    });
+    var newWeights = this.state.weights,
+        valueToDivide = 0,
+        valuePerService = 0,
+        valueRemainder = 0;
+      
+      valueToDivide = newWeights[serviceName] - value ;
+      console.log('value to divide', valueToDivide);
+      valuePerService = valueToDivide / ( Object.keys(newWeights).length - 1 );
+      console.log('value per service', valuePerService);
+      valueRemainder = valuePerService % 1;
+      newWeights[serviceName] = parseInt(value);
 
-    percentagePerService = percentageToDivide / ( Object.keys(weightsObject).length - lockedServices.length );
+      _.map(newWeights, function(value, service){
+        if(service != serviceName){
+          valueToAdd = Math.round( valuePerService );
+          newWeights[service] += valueToAdd;
+        }
+      });
 
-    console.log('percentage to divide', percentageToDivide);
-    console.log('percentage per service', percentagePerService);
-  
-    for (var service in weightsObject) { 
-      if(!(service in newWeights))
-        newWeights[service] = percentagePerService; 
-    }
-    callback(newWeights);
+      // if(valueRemainder){
+      //   _.min(newWeights, function(o){ 
+      //     o++; 
+      //   });
+      // }
+      console.log(newWeights);
+
+      this.setState({ 
+        weights: newWeights,
+        dirty: false
+      });
   },
   
   // Render
