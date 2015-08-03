@@ -10,11 +10,14 @@ var ClusterSettingsBoxItem = React.createClass({
       weight: this.props.weight,
     }
   },
-  componentDidMount: function(){
-    this.setState({ weight: this.props.weight });
-  },
+  // componentDidMount: function(){
+  //   this.setState({ weight: this.props.weight });
+  // },
   componentWillReceiveProps: function(nextProps){
-    this.setState({ weight: nextProps.weight });
+    if(nextProps.weight != this.state.weight){
+      this.setState({ weight: nextProps.weight });
+      console.log(nextProps.weight);
+    }
   },
 
   // Event handler
@@ -35,7 +38,8 @@ var ClusterSettingsBoxItem = React.createClass({
         <div className="section-fifth double weight-range">
           <p>{this.state.weight}%</p>
           <input type="range" min="0" max="100" step="1" 
-            defaultValue={settings.routing.weight} 
+            defaultValue={settings.routing.weight}
+            value={this.state.weight}
             onChange={this.handleWeightSliderChange} />
         </div>
         <div className="section-fifth">

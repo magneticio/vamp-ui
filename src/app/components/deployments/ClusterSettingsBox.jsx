@@ -14,25 +14,55 @@ var ClusterSettingsBox = React.createClass({
     this.setWeights(this.props.services);
   },
   componentWillReceiveProps: function(nextProps){
-    this.setWeights(nextProps.services);
+    if(!this.props.activeCluster)
+      this.setWeights(nextProps.services);
   },
 
   // Event handlers
   handleWeightSliderChange: function(e, name){
     if(e){
-      console.log(name);
-      console.log(e.currentTarget.value);
-      //this.setState({ weight: e.currentTarget.value });
+      this.updateWeights(name, e.currentTarget.value);
     }
   },
 
   // Helper methods
   setWeights: function(services){
-    _weightsObject = {};
+    var _weightsObject = {};
     _.each(services, function(service,key){
       _weightsObject[service.breed.name] = service.routing.weight;
     }, this);
     this.setState({ weights: _weightsObject });
+  },
+  updateWeights: function(serviceName, value){
+    var self = this,
+        _oldWeights = this.state.weights;
+    
+    _oldWeights[serviceName] = value;
+    
+    this.calculateWeights(_oldWeights, [serviceName], function(_newWeights){
+      self.setState({ weights: _newWeights});
+    });  
+  },
+  calculateWeights: function(weightsObject, lockedServices, callback){
+    var newWeights = {},
+        percentageToDivide = 100,
+        percentagePerService = 0;
+
+    _.each(lockedServices, function(service){
+      percentageToDivide -= weightsObject[service];
+      newWeights[service] = weightsObject[service];
+    });
+
+    percentagePerService = percentageToDivide / ( Object.keys(weightsObject).length - lockedServices.length );
+
+    console.log('percentage to divide', percentageToDivide);
+    console.log('percentage per service', percentagePerService);
+  
+    for (var service in weightsObject) { 
+      if(!(service in newWeights))
+        newWeights[service] = percentagePerService; 
+    }
+    callback(newWeights);
   },
   
   // Render
