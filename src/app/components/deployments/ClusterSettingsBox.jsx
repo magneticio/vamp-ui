@@ -39,33 +39,28 @@ var ClusterSettingsBox = React.createClass({
     var newWeights = this.state.weights,
         valueToDivide = 0,
         valuePerService = 0,
-        valueRemainder = 0;
-      
-      valueToDivide = newWeights[serviceName] - value ;
-      console.log('value to divide', valueToDivide);
-      valuePerService = valueToDivide / ( Object.keys(newWeights).length - 1 );
-      console.log('value per service', valuePerService);
-      valueRemainder = valuePerService % 1;
-      newWeights[serviceName] = parseInt(value);
+        valueRemainder = 0,
+        totalWeight = 0;
+    
+    valueToDivide = newWeights[serviceName] - value ;
+    valuePerService = valueToDivide / ( Object.keys(newWeights).length - 1 );
+    valueRemainder = valuePerService % 1;
+    valueRemainder == 0 ? valueRemainder == null : valueRemainder = valueRemainder;
+    newWeights[serviceName] = parseInt(value);
 
-      _.map(newWeights, function(value, service){
-        if(service != serviceName){
-          valueToAdd = Math.round( valuePerService );
-          newWeights[service] += valueToAdd;
-        }
-      });
+    _.each(newWeights, function(value, service){
+      if(service != serviceName){
+        newWeights[service] += valuePerService;
+        totalWeight += newWeights[service]
+      }
+    });
 
-      // if(valueRemainder){
-      //   _.min(newWeights, function(o){ 
-      //     o++; 
-      //   });
-      // }
-      console.log(newWeights);
+    console.log(totalWeight + newWeights[serviceName]);
 
-      this.setState({ 
-        weights: newWeights,
-        dirty: false
-      });
+    this.setState({ 
+      weights: newWeights,
+      dirty: false
+    });
   },
   
   // Render
