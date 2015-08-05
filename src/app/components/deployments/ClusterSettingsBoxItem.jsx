@@ -23,7 +23,10 @@ var ClusterSettingsBoxItem = React.createClass({
       this.setState({ weight: nextProps.weight });
     }
   },
-
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return nextProps.weight !== this.props.weight;
+  },
+  
   // Event handler
   handleWeightSliderChange: function(e){
     this.props.handleWeightSliderChange(e, this.props.serviceSettings.breed.name);
