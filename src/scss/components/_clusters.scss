@@ -37,16 +37,18 @@
 .cluster-options {
 	z-index: 25;
 	height: 0;
-	background-color: white;
-	box-shadow: 0px 2px 10px 0 rgba(0,0,0,0.15);
 	overflow: hidden;
+	box-shadow: 0px 2px 10px 0 rgba(0,0,0,0.15);
 	transition: height 0.1s ease, padding 0.1s ease;
 	will-change: height, padding;
 
 	&.active {
-		z-index: 25;
 		transition: height 0.1s ease 0.3s, padding 0.1s ease 0.3s;
 	}
+}
+.cluster-options-item {
+	background-color: white;
+	margin-bottom: 2px;
 
 	p {
 		display: inline-block;
@@ -61,7 +63,8 @@
 			width: 3em;
 		}
 	}
-	.total-weight {
-		padding: 1rem;
-	}
 }
+.cluster-options-footer {
+//	text-align: center;
+	background-color: white;
+}	

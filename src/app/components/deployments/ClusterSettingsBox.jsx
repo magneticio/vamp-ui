@@ -23,7 +23,7 @@ var ClusterSettingsBox = React.createClass({
   // Event handlers
   handleWeightSliderChange: function(e, name){
     if(e && !this.state.dirty)
-      this.updateWeights(name, e.currentTarget.value);
+      this.updateRangeSliders(name, e.currentTarget.value);
   },
 
   // Helper methods
@@ -34,7 +34,7 @@ var ClusterSettingsBox = React.createClass({
     }, this);
     this.setState({ weights: _weightsObject });
   },
-  updateWeights: function(serviceName, value){
+  updateRangeSliders: function(serviceName, value){
     this.setState({ dirty: true });
 
     var newWeights = this.state.weights,
@@ -45,7 +45,6 @@ var ClusterSettingsBox = React.createClass({
     for (service in newWeights){
       _totalWeight += newWeights[service];
     }
-
 
     this.setState({ 
       weights: newWeights,
@@ -62,19 +61,31 @@ var ClusterSettingsBox = React.createClass({
 
     _.each(services, function(service,key){
       _weight = this.state.weights[service.breed.name] ? this.state.weights[service.breed.name] : 0;
-      servicesSettingList.push(<ClusterSettingsBoxItem key={key} serviceSettings={service} handleWeightSliderChange={this.handleWeightSliderChange} weight={_weight} />);
+      servicesSettingList.push(<ClusterSettingsBoxItem key={key} serviceSettings={service} handleWeightSliderChange={this.handleWeightSliderChange} weight={_weight} serviceKey={service.breed.name} />);
     }, this);
 
     // Dynamic classes
     var clusterOptionsClasses = classNames('cluster-options', {
       'active': this.props.editServiceActive && this.props.activeCluster
     });
-    var clusterSettingsHeight = this.props.editServiceActive && this.props.activeCluster ? { height: (this.props.services.length + 1) * 58 } : { height: 0 }
+    var saveButtonClasses = classNames('button button-pink', {
+      'dimmed': this.state.totalWeight != 100 
+    });
+    var clusterSettingsHeight = this.props.editServiceActive && this.props.activeCluster ? { height: (this.props.services.length + 1) * 60 } : { height: 0 }
 
     return (
       <div className={clusterOptionsClasses} style={clusterSettingsHeight}>
         {servicesSettingList}
-        <div className="total-weight">{this.state.totalWeight}</div>
+        <div className="cluster-options-footer">
+          <div className="section-fifth"></div>
+          <div className="section-fifth double">
+            {this.state.totalWeight}%
+          </div>
+          <div className="section-fifth double">
+            <button className="button button-ghost">Cancel</button>
+            <button className={saveButtonClasses}>Save</button>
+          </div>
+        </div>
       </div>
   )}
 });
