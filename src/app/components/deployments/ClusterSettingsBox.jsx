@@ -71,17 +71,28 @@ var ClusterSettingsBox = React.createClass({
     var saveButtonClasses = classNames('button button-pink', {
       'dimmed': this.state.totalWeight != 100 
     });
+    var progressTrackClasses = classNames('progress-track', {
+      'accepted': this.state.totalWeight == 100
+    });
+    var totalWeightClasses = classNames({
+      
+      //'warning-subtle': this.state.totalWeight != 100 
+    })
     var clusterSettingsHeight = this.props.editServiceActive && this.props.activeCluster ? { height: (this.props.services.length + 1) * 60 } : { height: 0 }
+    var progressTrackWidth =  { width: this.state.totalWeight + "%" }
 
     return (
       <div className={clusterOptionsClasses} style={clusterSettingsHeight}>
         {servicesSettingList}
         <div className="cluster-options-footer">
-          <div className="section-fifth"></div>
+          <div className="section-fifth"><strong>Combined</strong></div>
           <div className="section-fifth double">
-            {this.state.totalWeight}%
+            <p className={totalWeightClasses}>{this.state.totalWeight}% </p>
+            <div className="progress-bar">
+              <div className={progressTrackClasses} style={progressTrackWidth}></div>
+            </div>
           </div>
-          <div className="section-fifth double">
+          <div className="section-fifth double cluster-option-actions">
             <button className="button button-ghost">Cancel</button>
             <button className={saveButtonClasses}>Save</button>
           </div>

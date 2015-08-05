@@ -58,13 +58,43 @@
 		input[type="range"]{
 			display: inline-block;
 			width: 80%;
+			transform: translateY(-3px);
 		}
 		p {
-			width: 3em;
+			width: 3.5em;
 		}
 	}
 }
 .cluster-options-footer {
 //	text-align: center;
 	background-color: white;
-}	
+
+	p {
+		display: inline-block;
+		margin: 0;
+		font-weight: 500;
+		width: 3.5em;
+	}
+	.progress-bar {
+		display: inline-block;
+		width: 80%;
+		height: 5px;
+		background-color: $off-white;
+		border-radius: 5px;
+		overflow: hidden;
+		transform: translateY(-3px);
+
+		.progress-track {
+			background-color: $grey-medium;
+			width: 20%;
+			height: 5px;
+
+			&.accepted {
+				background-color: $pink!important;
+			}
+		}
+	}
+}
+.cluster-option-actions {
+	text-align: right;
+}
