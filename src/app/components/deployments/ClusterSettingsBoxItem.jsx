@@ -34,7 +34,7 @@ var ClusterSettingsBoxItem = React.createClass({
     
     var settings = this.props.serviceSettings;
     var sliderClass = "rangeSlider-" + this.state.sliderKey;
-    
+
     return (
       <div className="cluster-options-item">      
         <div className="section-fifth">
@@ -43,7 +43,8 @@ var ClusterSettingsBoxItem = React.createClass({
         <div className="section-fifth double weight-range">
           <style type="text/css">
             { 
-              ".rangeSlider-" + this.state.sliderKey + "::-webkit-slider-runnable-track { background-size: " + this.state.weight + "% 100%!important;} "
+              ".rangeSlider-" + this.state.sliderKey + "::-webkit-slider-runnable-track { background-size: " + this.state.weight + "% 100%!important;} " +
+              ".rangeSlider-" + this.state.sliderKey + "::-moz-range-track { background-size: " + this.state.weight + "% 100%!important;} "
             }
           </style>
           <p className="service-weight">{this.state.weight}%</p>
