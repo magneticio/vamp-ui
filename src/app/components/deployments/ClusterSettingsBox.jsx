@@ -8,6 +8,7 @@ var ClusterSettingsBox = React.createClass({
   getInitialState: function(){
     return {
       weights: {},
+      totalWeight: 100,
       dirty: false
     }
   },
@@ -37,29 +38,19 @@ var ClusterSettingsBox = React.createClass({
     this.setState({ dirty: true });
 
     var newWeights = this.state.weights,
-        valueToDivide = 0,
-        valuePerService = 0,
-        valueRemainder = 0,
-        totalWeight = 0;
+        _totalWeight = 0;
     
-    valueToDivide = newWeights[serviceName] - value ;
-    valuePerService = valueToDivide / ( Object.keys(newWeights).length - 1 );
-    valueRemainder = valuePerService % 1;
-    valueRemainder == 0 ? valueRemainder == null : valueRemainder = valueRemainder;
     newWeights[serviceName] = parseInt(value);
 
-    _.each(newWeights, function(value, service){
-      if(service != serviceName){
-        newWeights[service] += valuePerService;
-        totalWeight += newWeights[service]
-      }
-    });
+    for (service in newWeights){
+      _totalWeight += newWeights[service];
+    }
 
-    console.log(totalWeight + newWeights[serviceName]);
 
     this.setState({ 
       weights: newWeights,
-      dirty: false
+      dirty: false,
+      totalWeight: _totalWeight
     });
   },
   
@@ -78,11 +69,12 @@ var ClusterSettingsBox = React.createClass({
     var clusterOptionsClasses = classNames('cluster-options', {
       'active': this.props.editServiceActive && this.props.activeCluster
     });
-    var clusterSettingsHeight = this.props.editServiceActive && this.props.activeCluster ? { height: this.props.services.length * 58 } : { height: 0 }
+    var clusterSettingsHeight = this.props.editServiceActive && this.props.activeCluster ? { height: (this.props.services.length + 1) * 58 } : { height: 0 }
 
     return (
       <div className={clusterOptionsClasses} style={clusterSettingsHeight}>
         {servicesSettingList}
+        <div className="total-weight">{this.state.totalWeight}</div>
       </div>
   )}
 });
