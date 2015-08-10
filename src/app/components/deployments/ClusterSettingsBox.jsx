@@ -5,6 +5,7 @@ var ClusterSettingsBoxItem = require('./ClusterSettingsBoxItem.jsx');
 
 var ClusterSettingsBox = React.createClass({
 
+  // Component lifecycle
   getInitialState: function(){
     return {
       weights: {},
@@ -38,13 +39,19 @@ var ClusterSettingsBox = React.createClass({
     this.setState({ dirty: true });
 
     var newWeights = this.state.weights,
-        _totalWeight = 0;
+        _totalWeight = 0,
+        singlePair = this.props.services.length == 2
     
     newWeights[serviceName] = parseInt(value);
 
     for (service in newWeights){
       _totalWeight += newWeights[service];
+      if(singlePair && service != serviceName)
+        newWeights[service] = 100 - value;
     }
+
+    if(singlePair)
+      _totalWeight = 100;
 
     this.setState({ 
       weights: newWeights,
@@ -93,7 +100,7 @@ var ClusterSettingsBox = React.createClass({
             </div>
           </div>
           <div className="section-fifth double cluster-option-actions">
-            <button className="button button-ghost">Cancel</button>
+            <button className="button button-ghost" onClick={this.props.handleEditWeight}>Cancel</button>
             <button className={saveButtonClasses}>Save</button>
           </div>
         </div>

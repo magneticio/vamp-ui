@@ -22,7 +22,7 @@ var ClusterBox = React.createClass({
     this.props.onOptionsUpdate(currentCluster, service, filters, weight)
   },
   handleEditWeight: function(){
-    this.setState({ activeCluster: true });
+    this.state.activeCluster ? this.setState({ activeCluster: false }) : this.setState({ activeCluster: true });
     this.props.handleEditWeight();
   },
 
@@ -51,6 +51,7 @@ var ClusterBox = React.createClass({
         <ClusterSettingsBox 
           services={cluster.services}
           editServiceActive={this.props.editServiceActive} 
+          handleEditWeight={this.handleEditWeight}
           activeCluster={this.state.activeCluster} />
         
         <div className='services-container'>                    
