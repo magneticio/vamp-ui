@@ -58,3 +58,26 @@ input.editable[disabled] {
 #deployment-single {
 	will-change: scroll-position; 
 }
+
+
+/*
+ * TEMP
+ */
+
+.shader {
+	position: fixed;
+	left: 0;
+	top: -100vh;
+	width: 100%;
+	height: 100vh;
+	z-index: 25;
+	background-color: $off-white;
+	opacity: 0;
+	transition: opacity 0.15s ease 0.35s, top 0s linear 0.4s;
+
+	&.active {
+		top: 0;
+		opacity: 0.9;
+		transition: opacity 0.15s ease 0.05s, top 0s;
+	}
+}

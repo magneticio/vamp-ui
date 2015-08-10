@@ -86,7 +86,7 @@ var AddArtefactBox = React.createClass({
       buttonLoadsate: true,
     });
 
-    DeploymentActions.updateDeployment(this.context.router.getCurrentParams().id, this.state.deploymentRaw);
+    DeploymentActions.updateDeployment(this.context.router.getCurrentParams().id, this.state.deploymentRaw, 'application/x-yaml');
   },
 
   render: function() {

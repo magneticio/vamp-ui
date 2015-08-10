@@ -14,7 +14,7 @@
 	border-radius: 3px;
 	overflow: hidden;
 	margin-left: 0.5rem;
-	transition: background-color 0.2s;
+	transition: background-color 0.2s, opacity 0.2s;
 
 	&.active {
 		background-image: url('/images/spinner.svg');
@@ -31,7 +31,8 @@
 }
 .button-red {
 	background-color: $red;
-		border-color: $red;
+	border-color: $red;
+	
 	&:hover {
 		background-color: darken( $red, 12% );
 		border-color: darken( $red, 12% );
@@ -39,7 +40,8 @@
 }
 .button-pink {
 	background-color: $pink;
-		border-color: $pink;
+	border-color: $pink;
+	
 	&:hover {
 		background-color: lighten( $pink, 8% );
 		border-color: lighten( $pink, 8% );
@@ -47,7 +49,8 @@
 }
 .button-green {
 	background-color: $green;
-		border-color: $green;
+	border-color: $green;
+	
 	&:hover {
 		background-color: darken( $green, 12% );
 		border-color: darken( $green, 12% );
@@ -55,7 +58,8 @@
 }
 .button-blue {
 	background-color: $blue;
-		border-color: $blue;
+	border-color: $blue;
+	
 	&:hover {
 		background-color: darken( $blue, 12% );
 		border-color: darken( $blue, 12% );

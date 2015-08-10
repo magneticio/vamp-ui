@@ -98,8 +98,17 @@ strong {
 .muted {
 	color: $grey-medium;
 }
+.info {
+	color: $blue!important;
+}
 .warning {
 	color: $red!important;
+}
+.accepted {
+	color: $green!important;
+}
+.warning-subtle {
+	color: $yellow!important;
 }
 .small-caps {
 	color: $grey-medium;
