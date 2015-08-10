@@ -28,6 +28,21 @@ var ClusterSettingsBoxItem = React.createClass({
   },
   
   // Event handler
+  handleKeypresses: function(e){
+    if(e.key == "ArrowUp"){
+      e.preventDefault();
+      e.currentTarget.value++;
+      this.props.handleWeightSliderChange(e, this.props.serviceSettings.breed.name);
+    }
+    if(e.key == "ArrowDown"){
+      e.preventDefault();
+      e.currentTarget.value--;
+      this.props.handleWeightSliderChange(e, this.props.serviceSettings.breed.name);
+    }
+  },
+  handleWeightInputChange: function(e){
+    this.props.handleWeightSliderChange(e, this.props.serviceSettings.breed.name);
+  },
   handleWeightSliderChange: function(e){
     this.props.handleWeightSliderChange(e, this.props.serviceSettings.breed.name);
   },
@@ -50,7 +65,13 @@ var ClusterSettingsBoxItem = React.createClass({
               ".rangeSlider-" + this.state.sliderKey + "::-moz-range-track { background-size: " + this.state.weight + "% 100%!important;} "
             }
           </style>
-          <p className="service-weight">{this.state.weight}%</p>
+          <input 
+            type="text"
+            className="service-weight" 
+            defaultValue={this.state.weight}
+            value={this.state.weight} 
+            onChange={this.handleWeightInputChange}
+            onKeyDown={this.handleKeypresses} />
           <input type="range" min="0" max="100" step="1" 
             defaultValue={settings.routing.weight}
             value={this.state.weight}
