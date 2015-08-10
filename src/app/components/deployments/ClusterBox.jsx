@@ -26,6 +26,12 @@ var ClusterBox = React.createClass({
     this.props.handleEditWeight();
   },
 
+  // Helper functions
+  updateDeployment: function(weights){
+    var clustername = (this.props.name);
+    this.props.handleDeploymentUpdate(clustername, weights);
+  },
+
   // Render
   render: function() {
 
@@ -52,7 +58,8 @@ var ClusterBox = React.createClass({
           services={cluster.services}
           editServiceActive={this.props.editServiceActive} 
           handleEditWeight={this.handleEditWeight}
-          activeCluster={this.state.activeCluster} />
+          activeCluster={this.state.activeCluster}
+          updateDeployment={this.updateDeployment} />
         
         <div className='services-container'>                    
           <ServicesList 

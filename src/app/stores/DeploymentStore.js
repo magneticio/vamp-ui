@@ -168,9 +168,12 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         break;
 
       // UPDATE
+      case DeploymentConstants.UPDATE_DEPLOYMENT:
+        console.log('updating deployment');
+        break;
       case DeploymentConstants.UPDATE_DEPLOYMENT + '_SUCCESS':
-        _currentDeploymentAsBlueprint = null;
         console.log('%c updated deployment ', 'background-color: #29BB9C; color: white;');
+        _currentDeploymentAsBlueprint = null;
         break;
       case DeploymentConstants.UPDATE_DEPLOYMENT + '_ERROR':
         var errortext = JSON.parse(payload.response.text)

@@ -101,7 +101,7 @@ var ClusterSettingsBox = React.createClass({
           </div>
           <div className="section-fifth double cluster-option-actions">
             <button className="button button-ghost" onClick={this.props.handleEditWeight}>Cancel</button>
-            <button className={saveButtonClasses}>Save</button>
+            <button className={saveButtonClasses} onClick={this.props.updateDeployment.bind(null, this.state.weights)}>Save</button>
           </div>
         </div>
       </div>

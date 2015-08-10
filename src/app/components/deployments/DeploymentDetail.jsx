@@ -25,7 +25,7 @@ var DeploymentDetail = React.createClass({
       deployment: {},
       name: this.context.router.getCurrentParams().id,
       deploymentAsBlueprint: null,
-      editServiceActive: false
+      editServiceActive: false,
     }
   },
   componentDidMount: function() {
@@ -62,11 +62,46 @@ var DeploymentDetail = React.createClass({
     DeploymentStore.clearCurrentAsBlueprint();
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, type);
   },
-  onOptionsUpdate: function(cluster, service, filters, weight){
-    DeploymentActions.putRoutingOption(deployment, cluster, service, filters, weight);
+  handleDeploymentUpdate: function(clustername, weights){
+    self = this;
+    currentDeployment = DeploymentStore.getCurrent();
+    formattedWeights = this.formatWeightsDictionary(weights);
+    req = {
+      name: this.state.name, 
+      endpoints: currentDeployment.endpoints,
+      clusters: currentDeployment.clusters
+    }
+
+    _.each(req.clusters, function(value, key){
+      if(key == clustername){
+        _.each(value.services, function(service, key){
+          service.routing.weight = service.breed.name in weights ? weights[service.breed.name] : service.routing.weight;
+        }, this); 
+      };
+    }, this);
+
+    console.log(req);
+    DeploymentActions.updateDeployment(this.state.name, req, 'application/json');
   },
   handleEditWeight: function(){
     this.state.editServiceActive ? this.setState({ editServiceActive: false }) : this.setState({ editServiceActive: true });
+  },
+
+  //Helper functions
+  formatWeightsDictionary: function(weights){
+    var servicesArray = [];
+    _.each(weights, function(routingWeight, breedName){
+      var _serviceObject = { 
+        breed: {
+          name: breedName
+        },
+        routing: {
+          weight: routingWeight
+        }
+      }
+      servicesArray.push(_serviceObject);
+    }, this);
+    return servicesArray;
   },
 
   // Render
@@ -90,7 +125,16 @@ var DeploymentDetail = React.createClass({
     _.chain(deployment.clusters)
       .pairs()
       .each(function(item,idx){
-        clusters.push(<ClusterBox key={item[0]} name={item[0]} cluster={item[1]} serviceMetrics={deployment.serviceMetrics} onOptionsUpdate={this.onOptionsUpdate} handleEditWeight={this.handleEditWeight} editServiceActive={this.state.editServiceActive} />);
+        clusters.push(
+          <ClusterBox 
+            key={item[0]} 
+            name={item[0]} 
+            cluster={item[1]} 
+            serviceMetrics={deployment.serviceMetrics} 
+            handleEditWeight={this.handleEditWeight} 
+            editServiceActive={this.state.editServiceActive}
+            handleDeploymentUpdate={this.handleDeploymentUpdate} />
+        );
       }, this).value()
 
     // Setup dynamic classes
