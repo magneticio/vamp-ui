@@ -4,6 +4,11 @@ var DeploymentActions = require('../../actions/DeploymentActions');
 
 var ServiceMetricsGraph = React.createClass({
   
+  componentDidMount: function(){
+  
+    console.log('yolo');
+  
+  },
   render: function() {
 
     return(

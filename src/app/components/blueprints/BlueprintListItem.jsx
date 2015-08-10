@@ -35,7 +35,7 @@ var BlueprintListItem = React.createClass({
     BlueprintActions.deployBlueprint(this.props.blueprint);
   },
   handleDelete: function(e) {
-    if (confirm('Are you sure you want to undeploy this deployment?')) {
+    if (confirm('Are you sure you want to delete this blueprint?')) {
       this.setState({ deleteRequestPending: true });
       BlueprintActions.deleteBlueprint(this.props.blueprint);
     }
