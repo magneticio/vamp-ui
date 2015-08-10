@@ -26,6 +26,7 @@ var DeploymentDetail = React.createClass({
       name: this.context.router.getCurrentParams().id,
       deploymentAsBlueprint: null,
       editServiceActive: false,
+      updatePending: false,
     }
   },
   componentDidMount: function() {
@@ -80,8 +81,8 @@ var DeploymentDetail = React.createClass({
       };
     }, this);
 
-    console.log(req);
     DeploymentActions.updateDeployment(this.state.name, req, 'application/json');
+    this.setState({ updatePending: true });
   },
   handleEditWeight: function(){
     this.state.editServiceActive ? this.setState({ editServiceActive: false }) : this.setState({ editServiceActive: true });
@@ -192,6 +193,12 @@ var DeploymentDetail = React.createClass({
       deployment: DeploymentStore.getCurrent(),
       deploymentAsBlueprint: DeploymentStore.getCurrentAsBlueprint()
     });
+    if(this.state.updatePending){
+      this.setState({ 
+        editServiceActive: false,
+        updatePending: false
+      });
+    }
   }
 });
  
