@@ -24,7 +24,6 @@ var DeploymentActions = {
   // UPDATE
   updateDeployment: function(name, body, format) {
     format = typeof format !== 'undefined' ? format : null;
-    console.log(format);
     Api.update('/deployments/' + name, body, DeploymentConstants.UPDATE_DEPLOYMENT, format);
   },
 
