@@ -26,6 +26,14 @@ var ClusterSettingsBox = React.createClass({
     if(e && !this.state.dirty)
       this.updateRangeSliders(name, e.currentTarget.value);
   },
+  updateDeployment: function(e){
+    if(e)
+      e.preventDefault();
+
+    if(this.state.totalWeight==100){
+      this.props.updateDeployment(this.state.weights);
+    }
+  },
 
   // Helper methods
   setWeights: function(services){
@@ -101,7 +109,7 @@ var ClusterSettingsBox = React.createClass({
           </div>
           <div className="section-fifth double cluster-option-actions">
             <button className="button button-ghost" onClick={this.props.handleEditWeight}>Cancel</button>
-            <button className={saveButtonClasses} onClick={this.props.updateDeployment.bind(null, this.state.weights)}>Save</button>
+            <button className={saveButtonClasses} onClick={this.updateDeployment}>Save</button>
           </div>
         </div>
       </div>
