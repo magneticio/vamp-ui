@@ -1,8 +1,9 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var _ = require('underscore');
 var DeploymentConstants = require('../constants/DeploymentConstants');
-var Api = require('./Api');
-var PulseApi = require('./PulseApi');
+var Api = require('../utils/Api');
+var SSE = require('../utils/SSE');
+var PulseApi = require('../utils/PulseApi');
 
 var DeploymentActions = {
 
@@ -42,6 +43,13 @@ var DeploymentActions = {
     AppDispatcher.dispatch(payload);
   },
 
+  // EVENTS Stream
+  openEventsStream: function(){
+    SSE.open();
+  },
+  closeEventsStream: function(){
+    SSE.close();
+  },
 
 
   // METRICS
@@ -90,11 +98,6 @@ var DeploymentActions = {
       return;
     }
   },
-  putRoutingOption: function(deployment, cluster, service, filters, weight) {
-    var putRoute = '/deployments/' + deployment.name + '/clusters/' + cluster + '/services/' + service +'/routing';
-    var putObject = { "weight": weight, "filters": filters };
-    Api.update(putRoute, putObject, DeploymentConstants.UPDATE_DEPLOYMENT_ROUTING);
-  }
 };
 
 module.exports = DeploymentActions;

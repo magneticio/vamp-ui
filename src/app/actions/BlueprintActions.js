@@ -1,6 +1,6 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var BlueprintConstants = require('../constants/BlueprintConstants');
-var Api = require('./Api');
+var Api = require('../utils/Api');
 
 var BlueprintActions = {
 
