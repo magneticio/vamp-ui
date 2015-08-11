@@ -22,6 +22,8 @@ var BlueprintActions = {
     Api.update('/blueprints/' + blueprintName, body, BlueprintConstants.CREATE_BLUEPRINT, format);
   },    
   deleteBlueprint: function(blueprint) {
+    if("status" in blueprint)
+      delete blueprint.status;
     Api.del('/blueprints/' + blueprint.name, blueprint, BlueprintConstants.DELETE_BLUEPRINT);
   },  
 
