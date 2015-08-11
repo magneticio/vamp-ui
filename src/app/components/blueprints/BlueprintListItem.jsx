@@ -19,6 +19,9 @@ var BlueprintListItem = React.createClass({
       deleteRequestError: false
     }
   },
+  componentWillMount: function() {
+    this.handleDeploy = _.debounce(this.handleDeploy,500);
+  },
   componentWillReceiveProps: function(nextProps){
     if(this.state.deployRequestPending && nextProps.blueprint.status == "ACCEPTED"){
       this.setState({ deployRequestPending: false });
