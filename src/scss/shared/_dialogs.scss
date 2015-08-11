@@ -2,7 +2,16 @@
 	padding: 1rem 1rem 0;
 	transition: padding 0.2s;
 }
-
+.dialog-warning {
+	padding-left: 2.5rem;
+	padding-right: 0;
+	box-sizing: border-box;
+	color: $yellow;
+	background-image: url(/images/alert-yellow.svg);
+	background-size: 1rem;
+	background-repeat: no-repeat;
+	background-position: 1rem 1.35rem;
+}
 .dialog-danger {
 	padding-left: 2.5rem;
 	padding-right: 0;

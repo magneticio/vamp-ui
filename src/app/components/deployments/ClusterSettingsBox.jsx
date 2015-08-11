@@ -89,10 +89,9 @@ var ClusterSettingsBox = React.createClass({
     var progressTrackClasses = classNames('progress-track', {
       'accepted': this.state.totalWeight == 100
     });
-    var totalWeightClasses = classNames({
-      
-      //'warning-subtle': this.state.totalWeight != 100 
-    })
+    var dialogClasses = classNames('dialog', 'dialog-warning', {
+      'hidden': this.state.totalWeight == 100
+    });
     var clusterSettingsHeight = this.props.editServiceActive && this.props.activeCluster ? { height: (this.props.services.length + 1) * 60 } : { height: 0 }
     var progressTrackWidth =  { width: this.state.totalWeight + "%" }
 
@@ -102,12 +101,15 @@ var ClusterSettingsBox = React.createClass({
         <div className="cluster-options-footer">
           <div className="section-fifth"><strong>Combined</strong></div>
           <div className="section-fifth double">
-            <p className={totalWeightClasses}>{this.state.totalWeight}% </p>
+            <p>{this.state.totalWeight}% </p>
             <div className="progress-bar">
               <div className={progressTrackClasses} style={progressTrackWidth}></div>
             </div>
           </div>
-          <div className="section-fifth double cluster-option-actions">
+          <div className="section-fifth">
+            <p className={dialogClasses}>Total should be 100%</p>            
+          </div>
+          <div className="section-fifth cluster-option-actions">
             <button className="button button-ghost" onClick={this.props.handleEditWeight}>Cancel</button>
             <button className={saveButtonClasses} onClick={this.updateDeployment}>Save</button>
           </div>

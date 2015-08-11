@@ -87,10 +87,12 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
         break;
 
       case BlueprintConstants.CREATE_BLUEPRINT + '_SUCCESS':
+        console.log(payload.response);
         _addBlueprint(payload.response);
         _persistCurrentBlueprint(payload.response);
         break;
       case BlueprintConstants.CREATE_BLUEPRINT + '_ERROR':
+        console.log(payload.response);
         var errortext = JSON.parse(payload.response.text)
         _error = errortext.message;
         break;

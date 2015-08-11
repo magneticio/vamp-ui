@@ -6,8 +6,6 @@ var ServiceMetricsGraph = React.createClass({
   
   componentDidMount: function(){
   
-    console.log('yolo');
-  
   },
   render: function() {
 

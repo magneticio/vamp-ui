@@ -99,7 +99,24 @@
 			}
 		}
 	}
+	.dialog {
+		font-size: $s-size;
+		font-weight: 400;
+		padding: 0 0 0 1.5rem;
+		background-position: 0rem 0.3rem;
+		width: 100%;
+		transition: opacity 0.2s;
+	}
 }
 .cluster-option-actions {
-	text-align: right;
+	text-align: left;
+	
+	button {
+		width: 45%;
+		box-sizing: border-box;
+		display: inline-block;
+		&:first-of-type {
+			margin-left: 0;
+		}
+	}
 }
