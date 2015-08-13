@@ -60,6 +60,7 @@ var MetricsGraph = React.createClass({
       chartOptions = {
         showScale: true,
         scaleFontSize: 10,
+        scaleBeginAtZero: true,
         scaleFontColor: "rgba(158,158,158,0.5)",
         scaleShowGridLines: true,
         scaleGridLineColor : "RGBA(3, 169, 244, 0.1)",
