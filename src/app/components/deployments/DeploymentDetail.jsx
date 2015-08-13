@@ -45,8 +45,8 @@ var DeploymentDetail = React.createClass({
       DeploymentActions.getDeploymentMetrics(deployment, 'rtime');
       DeploymentActions.getDeploymentStatus(self.state.name);
     }, 4000);
-
-    DeploymentActions.openEventsStream(['rate', 'rtime']);
+    
+    DeploymentActions.openEventsStream(this.state.name, ['rate', 'rtime']);
   },
   componentWillUnmount: function() {
     DeploymentActions.closeEventsStream();

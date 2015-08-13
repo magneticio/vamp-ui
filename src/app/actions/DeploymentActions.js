@@ -44,8 +44,8 @@ var DeploymentActions = {
   },
 
   // EVENTS Stream
-  openEventsStream: function(){
-    SSE.open();
+  openEventsStream: function(deploymentName, metrics){
+    SSE.open.apply(this, arguments);
   },
   closeEventsStream: function(){
     SSE.close();

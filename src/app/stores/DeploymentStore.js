@@ -135,6 +135,10 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         break;
 
       // METRICS
+      case DeploymentConstants.GET_DEPLOYMENT_METRICS_STREAM:
+        console.log(payload);
+        //_currentDeployment.rtime = JSON.parse(payload.response.text);
+        break;
       case DeploymentConstants.GET_DEPLOYMENT_METRICS_RTIME + '_SUCCESS':
         AppStore.deleteError('PULSE_ERROR');
         _currentDeployment.rtime = JSON.parse(payload.response.text);
