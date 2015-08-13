@@ -53,29 +53,19 @@ var DeploymentActions = {
 
 
   // METRICS
-  getDeploymentMetrics: function(deployment, metricsType, service, cluster) {
+  getDeploymentMetrics: function(deployment, metricTypes) {
     var endpoint = null,
         tags = [],
         req = {};
 
     // TODO: only 1 endpoint is supported at this moment, make fix for this in the future
     _.each(deployment.endpoints, function(value, key){
-      if(service) {
-        endpoint = cluster.port
-      } else {
         portAndProtocolArray = value.split("/");
         endpoint = portAndProtocolArray[0];
-      } 
     }, this);
 
-    if(cluster) { 
-      tags.push('routes:' + deployment.name + '_' + cluster.name + '_' + endpoint) 
-    } else {
-      tags.push('routes:' + deployment.name + '_' + endpoint, 'route');
-    }
-
-    metricsType ? tags.push('metrics:' + metricsType) : tags.push('metrics');
-    if(service) { tags.push('services:' + service, 'service') }
+    tags.push('routes:' + deployment.name + '_' + endpoint, 'route');
+    tags.push('metrics')
 
     req = {
       "tags" : tags,
@@ -84,19 +74,7 @@ var DeploymentActions = {
       }
     }
 
-    if( service ){
-      //console.log(JSON.stringify(req));
-      PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_SERVICE);
-      return;
-    }
-    if( metricsType == 'rtime'){
-      PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_RTIME);
-      return;
-    }
-    if( metricsType == 'rate'){
-      PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_RATE);
-      return;
-    }
+    PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_RATE);
   },
 };
 

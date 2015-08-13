@@ -30,19 +30,19 @@ var DeploymentDetail = React.createClass({
     }
   },
   componentDidMount: function() {
+    var self = this;
+    
     DeploymentActions.getDeployment(this.state.name);
     DeploymentActions.getDeploymentStatus(this.state.name);
+    
     DeploymentStore.addChangeListener(this._onChange);
-    var self = this;
     
     this.setState({ deployment: DeploymentStore.getCurrent() });
 
-    DeploymentActions.getDeploymentMetrics(deployment, 'rate');
-    DeploymentActions.getDeploymentMetrics(deployment, 'rtime');      
+    DeploymentActions.getDeploymentMetrics(deployment);
 
     this.setInterval(function(){
-      DeploymentActions.getDeploymentMetrics(deployment, 'rate');
-      DeploymentActions.getDeploymentMetrics(deployment, 'rtime');
+      DeploymentActions.getDeploymentMetrics(deployment);
       DeploymentActions.getDeploymentStatus(self.state.name);
     }, 4000);
     
@@ -178,8 +178,8 @@ var DeploymentDetail = React.createClass({
                 <div className="deployment-status hidden">
                   UP
                 </div>
-                <DeploymentMetricsGraph data={deployment.rate} metricsLabel='requests / sec' />
-                <DeploymentMetricsGraph data={deployment.rtime} metricsLabel='ms resp. time' />              
+                <DeploymentMetricsGraph data={deployment.metrics} metricsType='rate' metricsLabel='requests / sec' />
+                <DeploymentMetricsGraph data={deployment.metrics} metricsType='rtime' metricsLabel='ms resp. time' />              
               </div>
             </div>
             <div className='detail-section'>

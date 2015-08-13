@@ -23,13 +23,13 @@ var ServiceBox = React.createClass({
     }
   },
   componentWillMount: function(){
-    var currentService = this.props.service.breed.name,
-        cluster = this.props.cluster,
-        interval = Math.floor(Math.random() * 2000) + 2000;
+    // var currentService = this.props.service.breed.name,
+    //     cluster = this.props.cluster,
+    //     interval = Math.floor(Math.random() * 2000) + 2000;
 
-    this.setInterval(function(){
-      DeploymentActions.getDeploymentMetrics(deployment, null, currentService, cluster);
-    }, interval);
+    // this.setInterval(function(){
+    //   DeploymentActions.getDeploymentMetrics(deployment, null, currentService, cluster);
+    // }, interval);
   },
 
   updateServiceFilters: function(filtersArray){

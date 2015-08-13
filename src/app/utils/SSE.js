@@ -14,7 +14,8 @@ function filterStream(deployment, metrics){
 		_.each(metrics, function(metricsType){
 			var currentRoute = false;
 			_.each(data.tags, function(tag){
-				tag.indexOf(deployment) > -1 ? currentRoute = true : currentRoute = false;
+				if(tag.indexOf(deployment) > -1) 
+					currentRoute = true;
 			}, this);
 			if( currentRoute && data.tags.indexOf("metrics:" + metricsType) >= 0 ) {
 				var payload = {actionType: DeploymentConstants.GET_DEPLOYMENT_METRICS_STREAM, metricsType: metricsType, data: e.data };
