@@ -53,7 +53,7 @@ var DeploymentActions = {
 
 
   // METRICS
-  getDeploymentMetrics: function(deployment, metricTypes) {
+  getEndpointMetrics: function(deployment, metricTypes) {
     var endpoint = null,
         tags = [],
         req = {};
@@ -64,7 +64,7 @@ var DeploymentActions = {
         endpoint = portAndProtocolArray[0];
     }, this);
 
-    tags.push('routes:' + deployment.name + '_' + endpoint, 'route');
+    tags.push('routes', 'routes:' + deployment.name + '_' + endpoint);
     tags.push('metrics')
 
     req = {
@@ -74,7 +74,7 @@ var DeploymentActions = {
       }
     }
 
-    PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_RATE);
+    PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_ENDPOINT_METRICS);
   },
 };
 

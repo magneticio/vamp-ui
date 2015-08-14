@@ -34,19 +34,16 @@ var DeploymentDetail = React.createClass({
     
     DeploymentActions.getDeployment(this.state.name);
     DeploymentActions.getDeploymentStatus(this.state.name);
-    
     DeploymentStore.addChangeListener(this._onChange);
-    
     this.setState({ deployment: DeploymentStore.getCurrent() });
-
-    DeploymentActions.getDeploymentMetrics(deployment);
+    DeploymentActions.getEndpointMetrics(deployment);
 
     this.setInterval(function(){
-      DeploymentActions.getDeploymentMetrics(deployment);
+      DeploymentActions.getEndpointMetrics(deployment);
       DeploymentActions.getDeploymentStatus(self.state.name);
     }, 4000);
     
-    DeploymentActions.openEventsStream(this.state.name, ['rate', 'rtime']);
+    DeploymentActions.openEventsStream(this.state.name, ['rate', 'rtime', 'req_rate_max']);
   },
   componentWillUnmount: function() {
     DeploymentActions.closeEventsStream();
@@ -61,7 +58,7 @@ var DeploymentDetail = React.createClass({
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, type);
   },
   editDeployment: function(){
-    // temp, should be set in Toolbar.jsx preferably
+    // TODO: temp, should be set in Toolbar.jsx preferably
     var type = 'application/x-yaml';
     DeploymentStore.clearCurrentAsBlueprint();
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, type);
@@ -134,7 +131,6 @@ var DeploymentDetail = React.createClass({
             key={item[0]} 
             name={item[0]} 
             cluster={item[1]} 
-            serviceMetrics={deployment.serviceMetrics} 
             handleEditWeight={this.handleEditWeight} 
             editServiceActive={this.state.editServiceActive}
             handleDeploymentUpdate={this.handleDeploymentUpdate} />

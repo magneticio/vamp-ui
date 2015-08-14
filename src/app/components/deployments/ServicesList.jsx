@@ -16,7 +16,6 @@ var ServicesList = React.createClass({
         <ServiceBox 
           key={key} 
           service={this.props.services[key]} 
-          serviceMetrics={this.props.serviceMetrics} 
           cluster={this.props.cluster} 
           updateServiceListFilters={this.props.updateClusterFilters} 
           handleEditWeight={this.props.handleEditWeight} />);

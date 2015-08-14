@@ -9,16 +9,24 @@ var eventsUrl = Config.getApiUrl() + "/events/stream",
 		eventSource;
 
 function filterStream(deployment, metrics){
+	// On each event...
 	eventSource.addEventListener('router-metric', function(e) {	
 		var data = JSON.parse(e.data);
+
+		// Loop trough metrics asked by client...
 		_.each(metrics, function(metricsType){
 			var currentRoute = false;
+
+			// Check if stream contains object that belongs to current route...
 			_.each(data.tags, function(tag){
 				if(tag.indexOf(deployment) > -1) 
 					currentRoute = true;
 			}, this);
+
+			// If the metric tag is in the provided metrics array
 			if( currentRoute && data.tags.indexOf("metrics:" + metricsType) >= 0 ) {
 				var payload = {actionType: DeploymentConstants.GET_DEPLOYMENT_METRICS_STREAM, metricsType: metricsType, data: e.data };
+				// And finally send to dispatcher
 				AppDispatcher.dispatch(payload);
 			}
 		}, this);
@@ -42,11 +50,11 @@ var SSE = {
 			eventSource.close();
 			eventSource = null;
 			console.log('stream closed');
-		} catch(e) {
+		} catch(e){
 			console.log(e);
 		}
 	}
-
+	
 }
 
 module.exports = SSE;
