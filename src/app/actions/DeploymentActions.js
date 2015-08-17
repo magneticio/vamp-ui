@@ -1,8 +1,9 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var _ = require('underscore');
 var DeploymentConstants = require('../constants/DeploymentConstants');
-var Api = require('./Api');
-var PulseApi = require('./PulseApi');
+var Api = require('../utils/Api');
+var SSE = require('../utils/SSE');
+var PulseApi = require('../utils/PulseApi');
 
 var DeploymentActions = {
 
@@ -42,32 +43,29 @@ var DeploymentActions = {
     AppDispatcher.dispatch(payload);
   },
 
+  // EVENTS Stream
+  openEventsStream: function(deploymentName, metrics){
+    SSE.open.apply(this, arguments);
+  },
+  closeEventsStream: function(){
+    SSE.close();
+  },
 
 
   // METRICS
-  getDeploymentMetrics: function(deployment, metricsType, service, cluster) {
+  getEndpointMetrics: function(deployment, metricTypes) {
     var endpoint = null,
         tags = [],
         req = {};
 
     // TODO: only 1 endpoint is supported at this moment, make fix for this in the future
     _.each(deployment.endpoints, function(value, key){
-      if(service) {
-        endpoint = cluster.port
-      } else {
         portAndProtocolArray = value.split("/");
         endpoint = portAndProtocolArray[0];
-      } 
     }, this);
 
-    if(cluster) { 
-      tags.push('routes:' + deployment.name + '_' + cluster.name + '_' + endpoint) 
-    } else {
-      tags.push('routes:' + deployment.name + '_' + endpoint, 'route');
-    }
-
-    metricsType ? tags.push('metrics:' + metricsType) : tags.push('metrics');
-    if(service) { tags.push('services:' + service, 'service') }
+    tags.push('routes', 'routes:' + deployment.name + '_' + endpoint);
+    tags.push('metrics')
 
     req = {
       "tags" : tags,
@@ -76,25 +74,8 @@ var DeploymentActions = {
       }
     }
 
-    if( service ){
-      //console.log(JSON.stringify(req));
-      PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_SERVICE);
-      return;
-    }
-    if( metricsType == 'rtime'){
-      PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_RTIME);
-      return;
-    }
-    if( metricsType == 'rate'){
-      PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_METRICS_RATE);
-      return;
-    }
+    PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_ENDPOINT_METRICS);
   },
-  putRoutingOption: function(deployment, cluster, service, filters, weight) {
-    var putRoute = '/deployments/' + deployment.name + '/clusters/' + cluster + '/services/' + service +'/routing';
-    var putObject = { "weight": weight, "filters": filters };
-    Api.update(putRoute, putObject, DeploymentConstants.UPDATE_DEPLOYMENT_ROUTING);
-  }
 };
 
 module.exports = DeploymentActions;

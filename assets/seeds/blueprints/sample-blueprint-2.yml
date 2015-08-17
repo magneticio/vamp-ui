@@ -1,6 +1,6 @@
 name: monarchs:1.5
 endpoints:
-  frontend.port: 9040/http
+  frontend.port: 9090/http
 clusters:
   frontend:
     services:
@@ -22,7 +22,6 @@ clusters:
       routing:
         weight: 75
         filters:
-        - condition: user-agent != ios
       dialects: {}
     - breed:
         name: monarch_front:0.3
@@ -77,29 +76,7 @@ clusters:
       routing:
         weight: 5
         filters:
-        - condition: user-agent != ios
       dialects: {}
-    sla:
-      type: response_time_sliding_window
-      window:
-        interval: 600
-        cooldown: 600
-      threshold:
-        upper: 1000
-        lower: 100
-      escalations:
-      - type: to_one
-        escalations:
-        - type: scale_instances
-          target: backend
-          minimum: 1
-          maximum: 3
-          scale_by: 1
-        - type: scale_instances
-          target: frontend
-          minimum: 1
-          maximum: 3
-          scale_by: 1
     dialects: {}
   backend:
     services:

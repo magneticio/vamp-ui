@@ -65,7 +65,6 @@ var ClusterBox = React.createClass({
           <ServicesList 
             services={cluster.services} 
             cluster={clusterForService} 
-            serviceMetrics={this.props.serviceMetrics} 
             updateClusterFilters={this.updateClusterFilters} 
             handleEditWeight={this.handleEditWeight} />    
         </div>

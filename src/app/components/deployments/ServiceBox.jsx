@@ -14,24 +14,40 @@ var ServiceBox = React.createClass({
   
   mixins: [SetIntervalMixin],
 
+  // Component lifecycle
   getInitialState: function(){
     return {
       loading: true,
-      smax: '-',
-      rate: '-',
-      rtime: '-'
+      req_rate_max: '0',
+      rate: '0',
+      rtime: '0'
     }
   },
-  componentWillMount: function(){
-    var currentService = this.props.service.breed.name,
-        cluster = this.props.cluster,
-        interval = Math.floor(Math.random() * 2000) + 2000;
+  componentWillReceiveProps: function(nextProps){
 
-    this.setInterval(function(){
-      DeploymentActions.getDeploymentMetrics(deployment, null, currentService, cluster);
-    }, interval);
+    if(nextProps.service.metrics){
+      if(nextProps.service.metrics.rate)
+        this.setState({ rate: nextProps.service.metrics.rate });
+
+      if(nextProps.service.metrics.rtime)
+        this.setState({ rtime: nextProps.service.metrics.rtime });
+
+      if(nextProps.service.metrics.req_rate_max)
+        this.setState({ req_rate_max: nextProps.service.metrics.req_rate_max });
+    }
+  },
+  shouldComponentUpdate: function(nextProps, nextState){
+    if( JSON.stringify(nextProps.service.metrics) == JSON.stringify(this.props.service.metrics) &&
+        JSON.stringify(nextProps.service.scale) == JSON.stringify(this.props.service.scale) &&
+        JSON.stringify(nextProps.service.state) == JSON.stringify(this.props.service.state) &&
+        JSON.stringify(nextProps.service.routing) == JSON.stringify(this.props.service.routing) ){
+      return false;
+    } else {
+      return true;
+    }
   },
 
+  // Helpers
   updateServiceFilters: function(filtersArray){
     var currentService = this.props.service.breed.name,
         currentWeight = this.props.service.routing.weight;
@@ -53,29 +69,11 @@ var ServiceBox = React.createClass({
 
     return serverlist;
   },
-  generateMetric: function(metricType){
-    //console.log(this.props.serviceMetrics);
-    if(!this.props.serviceMetrics)
-      return '0';
 
-    if(!this.props.serviceMetrics['services:'+this.props.service.breed.name])
-      return '0';
-    
-    var allMetrics = this.props.serviceMetrics['services:' + this.props.service.breed.name],
-        metricValue = 0;
-
-    _.each(allMetrics, function(metricObject, key){
-      _.each(metricObject['tags'], function(tagValue, key){
-        if(tagValue == 'metrics:' + metricType){
-          metricValue = metricObject.value;
-        }
-      }, this);
-    }, this);
-   
-    return metricValue;
-  },
-
+  // Render
   render: function() {
+
+    console.log('render');
 
     var service = this.props.service,
         servers = service.servers,
@@ -83,10 +81,9 @@ var ServiceBox = React.createClass({
         stateClass = (service.state.name === 'Error') ? 'danger' : 'success',
         notifClass = service.state.notification ? '' : 'hidden',
         serverlist = this.generateServersList(servers),
-        responseTime = this.generateMetric('rtime') || '0',
-        requestPerSec = this.generateMetric('rate') || '0',
-        smax = this.generateMetric('rate_max');
-
+        responseTime = this.state.rtime,
+        requestPerSec = this.state.rate,
+        req_rate_max = this.state.req_rate_max;
 
     return(
       <div className='service-box'>
@@ -101,7 +98,7 @@ var ServiceBox = React.createClass({
         <div className='service-section service-routing section-fifth'>
           <div className="weightsetBox">
         	 <h4>Weight</h4>
-            <WeightSetter weight={service.routing.weight} handleEditWeight={this.props.handleEditWeight}/>
+            <WeightSetter weight={service.routing.weight} handleEditWeight={this.props.handleEditWeight} disableWeightSetting={this.props.disableWeightSetting}/>
           </div>
           <div className="filterlistBox">
             <h4>Filters</h4>
@@ -109,7 +106,7 @@ var ServiceBox = React.createClass({
           </div>
         </div>
         <div className='service-section service-metrics section-fifth'>
-          <ServiceMetricsGraph responseTime={responseTime} requestPerSec={requestPerSec} smax={smax} />
+          <ServiceMetricsGraph responseTime={responseTime} requestPerSec={requestPerSec} req_rate_max={req_rate_max} />
         </div>
         <div className='service-section service-servers section-fifth'>
           <h4>Servers</h4>

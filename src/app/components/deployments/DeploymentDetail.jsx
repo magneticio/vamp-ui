@@ -30,23 +30,23 @@ var DeploymentDetail = React.createClass({
     }
   },
   componentDidMount: function() {
+    var self = this;
+    
     DeploymentActions.getDeployment(this.state.name);
     DeploymentActions.getDeploymentStatus(this.state.name);
     DeploymentStore.addChangeListener(this._onChange);
-    var self = this;
-    
     this.setState({ deployment: DeploymentStore.getCurrent() });
-
-    DeploymentActions.getDeploymentMetrics(deployment, 'rate');
-    DeploymentActions.getDeploymentMetrics(deployment, 'rtime');      
+    DeploymentActions.getEndpointMetrics(deployment);
 
     this.setInterval(function(){
-      DeploymentActions.getDeploymentMetrics(deployment, 'rate');
-      DeploymentActions.getDeploymentMetrics(deployment, 'rtime');
+      DeploymentActions.getEndpointMetrics(deployment);
       DeploymentActions.getDeploymentStatus(self.state.name);
     }, 4000);
+    
+    DeploymentActions.openEventsStream(this.state.name, ['rate', 'rtime', 'req_rate_max']);
   },
   componentWillUnmount: function() {
+    DeploymentActions.closeEventsStream();
     DeploymentStore.removeChangeListener(this._onChange);
   },
 
@@ -58,7 +58,7 @@ var DeploymentDetail = React.createClass({
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, type);
   },
   editDeployment: function(){
-    // temp, should be set in Toolbar.jsx preferably
+    // TODO: temp, should be set in Toolbar.jsx preferably
     var type = 'application/x-yaml';
     DeploymentStore.clearCurrentAsBlueprint();
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, type);
@@ -131,7 +131,6 @@ var DeploymentDetail = React.createClass({
             key={item[0]} 
             name={item[0]} 
             cluster={item[1]} 
-            serviceMetrics={deployment.serviceMetrics} 
             handleEditWeight={this.handleEditWeight} 
             editServiceActive={this.state.editServiceActive}
             handleDeploymentUpdate={this.handleDeploymentUpdate} />
@@ -175,8 +174,8 @@ var DeploymentDetail = React.createClass({
                 <div className="deployment-status hidden">
                   UP
                 </div>
-                <DeploymentMetricsGraph data={deployment.rate} metricsLabel='requests / sec' />
-                <DeploymentMetricsGraph data={deployment.rtime} metricsLabel='ms resp. time' />              
+                <DeploymentMetricsGraph data={deployment.metrics} metricsType='rate' metricsLabel='requests / sec' />
+                <DeploymentMetricsGraph data={deployment.metrics} metricsType='rtime' metricsLabel='ms resp. time' />              
               </div>
             </div>
             <div className='detail-section'>

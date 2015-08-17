@@ -1,6 +1,6 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var BreedConstants = require('../constants/BreedConstants');
-var Api = require('./Api');
+var Api = require('../utils/Api');
 
 var BreedActions = {
 
