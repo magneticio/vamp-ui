@@ -84,8 +84,14 @@ var BreedStore = assign({}, EventEmitter.prototype,{
         break;
 
       case BreedConstants.CREATE_BREED + '_SUCCESS':
-        _addBreed(payload.response);
-        _persistCurrentBreed(payload.response);
+        var response = JSON.parse(payload.response.text),
+            newBreedName = response.name;
+        if(newBreedName in _breeds){
+          _error = "Breed with name already exists";
+        } else {
+          _addBreed(payload.response);
+          _persistCurrentBreed(payload.response);
+        }
         break;
       case BreedConstants.CREATE_BREED + '_ERROR':
         var errortext = JSON.parse(payload.response.text)

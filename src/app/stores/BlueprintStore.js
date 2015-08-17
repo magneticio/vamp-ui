@@ -86,10 +86,15 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
         _error = errortext.message;
         break;
 
-      case BlueprintConstants.CREATE_BLUEPRINT + '_SUCCESS':
-        console.log(payload.response);
-        _addBlueprint(payload.response);
-        _persistCurrentBlueprint(payload.response);
+      case BlueprintConstants.CREATE_BLUEPRINT + '_SUCCESS':        
+        var response = JSON.parse(payload.response.text),
+            newBlueprintName = response.name;
+        if(newBlueprintName in _blueprints){
+          _error = "Blueprint with name already exists";
+        } else {
+          _addBlueprint(payload.response);
+          _persistCurrentBlueprint(payload.response);
+        }
         break;
       case BlueprintConstants.CREATE_BLUEPRINT + '_ERROR':
         console.log(payload.response);
@@ -98,8 +103,7 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
         break;
 
       case BlueprintConstants.DELETE_BLUEPRINT:
-              console.log(payload.response);
-
+        console.log(payload.response);
         _blueprints[payload.response.name].status = 'DELETING';
         break;
       case BlueprintConstants.DELETE_BLUEPRINT + '_ERROR':
