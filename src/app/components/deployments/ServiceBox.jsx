@@ -36,6 +36,16 @@ var ServiceBox = React.createClass({
         this.setState({ req_rate_max: nextProps.service.metrics.req_rate_max });
     }
   },
+  shouldComponentUpdate: function(nextProps, nextState){
+    if( JSON.stringify(nextProps.service.metrics) == JSON.stringify(this.props.service.metrics) &&
+        JSON.stringify(nextProps.service.scale) == JSON.stringify(this.props.service.scale) &&
+        JSON.stringify(nextProps.service.state) == JSON.stringify(this.props.service.state) &&
+        JSON.stringify(nextProps.service.routing) == JSON.stringify(this.props.service.routing) ){
+      return false;
+    } else {
+      return true;
+    }
+  },
 
   // Helpers
   updateServiceFilters: function(filtersArray){
@@ -62,6 +72,8 @@ var ServiceBox = React.createClass({
 
   // Render
   render: function() {
+
+    console.log('render');
 
     var service = this.props.service,
         servers = service.servers,
