@@ -27,6 +27,10 @@ var BlueprintListItem = React.createClass({
       this.setState({ deployRequestPending: false });
       this.context.router.transitionTo('deployments');
     }
+    // Catch react bug where no unique id's can be generated. Ask Daniel for more details
+    if(this.props.blueprintCreated){
+      this.setState({ deleteRequestPending: false });
+    }
   },
 
   handleDetail: function(e) {
