@@ -98,7 +98,7 @@ var ServiceBox = React.createClass({
         <div className='service-section service-routing section-fifth'>
           <div className="weightsetBox">
         	 <h4>Weight</h4>
-            <WeightSetter weight={service.routing.weight} handleEditWeight={this.props.handleEditWeight}/>
+            <WeightSetter weight={service.routing.weight} handleEditWeight={this.props.handleEditWeight} disableWeightSetting={this.props.disableWeightSetting}/>
           </div>
           <div className="filterlistBox">
             <h4>Filters</h4>

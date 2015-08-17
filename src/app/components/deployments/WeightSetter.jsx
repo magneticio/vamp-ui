@@ -1,4 +1,6 @@
 var React = require('react');
+var classNames = require('classnames');
+
 var WeightSetter = React.createClass({
 
   propTypes: {
@@ -14,13 +16,21 @@ var WeightSetter = React.createClass({
 
   toggleHovered: function(){
     this.setState({hovered: !this.state.hovered})
-  },  
+  }, 
+  handleEditWeight: function(){
+    if(!this.props.disableWeightSetting)
+      this.props.handleEditWeight();
+  },
 
   render: function() {
+    
+    var weightSetterClasses = classNames({
+      editable: !this.props.disableWeightSetting
+    });
 
     return(
       <div className='weight-setter'> 
-        <h3 className='editable' onClick={this.props.handleEditWeight}>{this.props.weight}%</h3>
+        <h3 className={weightSetterClasses} onClick={this.handleEditWeight}>{this.props.weight}%</h3>
       </div>
   )}
 });
