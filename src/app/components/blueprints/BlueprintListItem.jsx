@@ -16,6 +16,7 @@ var BlueprintListItem = React.createClass({
     return {
       deployRequestPending: false,
       deleteRequestPending: false,
+      deployRequestError: false,
       deleteRequestError: false
     }
   },
@@ -26,6 +27,12 @@ var BlueprintListItem = React.createClass({
     if(this.state.deployRequestPending && nextProps.blueprint.status == "ACCEPTED"){
       this.setState({ deployRequestPending: false });
       this.context.router.transitionTo('deployments');
+    } 
+    if(this.state.deployRequestPending && nextProps.blueprint.status == "BADREQUEST"){
+      this.setState({ 
+        deployRequestError: BlueprintStore.getError(),
+        deployRequestPending: false
+      });
     }
     // Catch react bug where no unique id's can be generated. Ask Daniel for more details
     if(this.props.blueprintCreated){
@@ -92,9 +99,15 @@ var BlueprintListItem = React.createClass({
       'button-red': true,
       'active': this.state.deleteRequestPending,
     });
+    var dialogClasses = cx('list-section', 'section-full', 'dialog', 'dialog-danger', {
+      hidden: !this.state.deployRequestError
+    })
 
     return (
       <li className={listClasses}>
+        <div className={dialogClasses}>
+          <span className="clip-textoverflow">{this.state.deployRequestError}</span>
+        </div>
         <div className="list-section section-fifth">
           <a onClick={this.handleDetail} className="editable"><p className="item-name clip-textoverflow">{blueprint.name}</p></a>
         </div>

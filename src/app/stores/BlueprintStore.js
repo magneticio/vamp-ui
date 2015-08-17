@@ -40,8 +40,13 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
   getError: function(){
     var returnError = _error;
     _error = null;
-    return returnError;
+    if(returnError)
+      return returnError;
   },
+  setError: function(message){
+    _error = message;
+  },
+
 
   setBlueprintStatus: function(name, newStatus) {
     var blueprint = _.findWhere(_blueprints, { "name" : name });

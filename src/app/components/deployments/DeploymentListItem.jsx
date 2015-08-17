@@ -60,7 +60,8 @@ var DeploymentListItem = React.createClass({
     });
     var listItemClasses = cx({
       'list-item': true,
-      'loading': deployment.status == 'CLEAN' ? false : true
+      'loading': deployment.status == 'CLEAN' ? false : true,
+      'hidden': deployment.status == 'BADREQUEST' ? true : false
     });
 
     return (

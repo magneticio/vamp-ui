@@ -129,6 +129,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         payload.response.status = 'PENDING';
         _blueprintToDeploy = payload.response.name;
         _deployments[payload.response.name] = payload.response;
+        console.log(payload.response);
         BlueprintStore.setBlueprintStatus(_blueprintToDeploy, payload.response.status);
         break;
       case BlueprintConstants.DEPLOY_BLUEPRINT + '_SUCCESS':
@@ -136,7 +137,13 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         BlueprintStore.setBlueprintStatus(_blueprintToDeploy, payload.response.status);
         break;
       case BlueprintConstants.DEPLOY_BLUEPRINT + '_ERROR':
-        console.log('%c deploying ERROR ', 'background-color: red; color: white;');
+        var errorMessage = JSON.parse(payload.response.text);
+            errorMessage = errorMessage.message;
+            payload.response.status = 'BADREQUEST';
+        if(errorMessage.indexOf('The request content was malformed.') > -1)
+          errorMessage = errorMessage.substring('The request content was malformed.'.length);
+        BlueprintStore.setBlueprintStatus(_blueprintToDeploy, payload.response.status);
+        BlueprintStore.setError(errorMessage);
         break;
 
       // DELETE
