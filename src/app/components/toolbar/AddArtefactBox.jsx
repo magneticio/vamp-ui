@@ -7,12 +7,15 @@ var BreedStore = require('../../stores/BreedStore');
 
 var AddArtefactBox = React.createClass({
 
+  // Etc
   clearStates: {
     newArtefact: '',
     errorMessage: '',
     editArtefact: false,
     dirty: false
   },
+
+  // Component lifecycle
   getInitialState: function(){
     return {
       newArtefact: '',
@@ -21,20 +24,15 @@ var AddArtefactBox = React.createClass({
       editArtefact: false,
     };
   },
-
   componentWillReceiveProps: function(nextProps) {
     if(this.state.newArtefact && nextProps.requestResolved){
       this.handleCancel();
     }
     if(!_.isEmpty(nextProps.detailArtefact) && !this.state.dirty){
-      formattedArtefact = nextProps.detailArtefact;
-      this.props.setToolbar('expanded');
-      this.setState({ 
-        newArtefact: formattedArtefact,
-        dirty: true,
-        editArtefact: true
-      });
-      React.findDOMNode(this.refs.inputfield).focus();
+      this.activateEditArtefact(nextProps);
+    }
+    if(nextProps.detailArtefact != this.props.detailArtefact && !_.isEmpty(nextProps.detailArtefact)){
+      this.activateEditArtefact(nextProps);
     }
   },
   componentDidMount: function(){
@@ -43,6 +41,8 @@ var AddArtefactBox = React.createClass({
   componentWillUnmount: function(){
     this._destroyArtefactFunctions();
   },
+
+  // Event handlers
   handleChange: function() {
     this.props.onUserInput(
       this.refs.filterTextInput.getDOMNode().value
@@ -68,28 +68,32 @@ var AddArtefactBox = React.createClass({
     React.findDOMNode(this.refs.AddNewForm).reset();    
     this.setState(this.clearStates);
     this.props.setToolbar('');
-
-    // Timeout is needed for animation to complete, otherwise ugly flash of 2 messages appears
-    setTimeout(function(){
-      self.props.clearDetailArtefact();
-    }, 200);
+    this.props.clearDetailArtefact();
   },
   handleTextareaChange: function(e){
     this.setState({newArtefact: e.target.value});
   },
   handleSubmit: function(e){
     e.preventDefault();
-
     this.setState({ 
       errorMessage: '',
       buttonLoadsate: 'active',
     });
-
     _.isEmpty(this.props.detailArtefact) ? this.props.handleAdd(this.state.newArtefact) : this.props.handleUpdate(this.state.newArtefact);
   },
 
+  // Helpers
+  activateEditArtefact: function(nextProps){
+    this.props.setToolbar('expanded');
+    this.setState({ 
+      newArtefact: nextProps.detailArtefact,
+      dirty: true,
+      editArtefact: true
+    });
+    React.findDOMNode(this.refs.inputfield).focus();
+  },
 
-
+  // Render
   render: function() {
 
     // Setup text and title of edit box
@@ -156,7 +160,6 @@ var AddArtefactBox = React.createClass({
     
     if(this.props.addArtefactType == 'blueprint')
       BlueprintStore.removeChangeListener(this._onChange);
-    
   },
   _getErrorMessage: function(){
     if(this.props.addArtefactType == 'breed')

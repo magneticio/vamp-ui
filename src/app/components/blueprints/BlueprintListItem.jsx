@@ -36,7 +36,7 @@ var BlueprintListItem = React.createClass({
       });
       setTimeout(function(){
         self.setState({ deployRequestError: false });
-      }, 4000);
+      }, 5000);
     }
     // Catch react bug where no unique id's can be generated. Ask Daniel for more details
     if(this.props.blueprintCreated){

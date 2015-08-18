@@ -94,11 +94,6 @@ var BlueprintsList = React.createClass({
     this.setState({ currentBlueprint: {}, blueprintName: '' });
   },
 
-  // Helpers
-  checkForUniqueIDs: function(key){
-
-  },
-
   // Render
   render: function() {
 
