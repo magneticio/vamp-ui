@@ -28,17 +28,7 @@ var AddArtefactBox = React.createClass({
     };
   },
 
-  componentWillReceiveProps: function(nextProps) {
-    // if(!_.isEmpty(nextProps.detailArtefact) && !this.state.dirty){
-    //   formattedArtefact = nextProps.detailArtefact;
-    //   this.props.setToolbar('expanded');
-    //   this.setState({ 
-    //     dirty: true,
-    //     editArtefact: true
-    //   });
-    //   React.findDOMNode(this.refs.inputfield).focus();
-    // }
-    
+  componentWillReceiveProps: function(nextProps) {    
     // Open toolbar and fill state when deployment is fetched
     if(this.props.deploymentAsBlueprint && this.props.toolbarState != 'expanded' && !this.state.editArtefact){
       this.setState({ 
@@ -73,6 +63,8 @@ var AddArtefactBox = React.createClass({
     if(e)
       e.preventDefault();
 
+    this.setState(this.clearStates);
+    this.props.setToolbar('');
     DeploymentStore.clearCurrentAsBlueprint();
   },
   handleTextareaChange: function(e){
@@ -85,7 +77,6 @@ var AddArtefactBox = React.createClass({
       errorMessage: '',
       buttonLoadsate: true,
     });
-
     DeploymentActions.updateDeployment(this.context.router.getCurrentParams().id, this.state.deploymentRaw, 'application/x-yaml');
   },
 
@@ -101,7 +92,7 @@ var AddArtefactBox = React.createClass({
       'dialog-empty': this.state.errorMessage == '' ? true : false
     });
     var saveButtonClasses = classNames({
-      "active": this.state.buttonLoadsate ? true : false,
+      "active": this.state.buttonLoadsate,
       "button": true,
       "button-pink": true,
       "save-button": true
