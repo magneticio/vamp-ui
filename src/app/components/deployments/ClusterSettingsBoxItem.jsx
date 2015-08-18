@@ -8,15 +8,8 @@ var ClusterSettingsBoxItem = React.createClass({
   getInitialState: function(){
     return {
       weight: this.props.weight,
+      sliderKey: this.props.serviceKey.replace(/:/g,'').replace(/\./g,'')
     }
-  },
-  componentDidMount: function(){
-    var serviceKey = this.props.serviceKey;
-        serviceKey = serviceKey.replace(/:/g,'').replace(/\./g,'');
-
-    this.setState({ 
-      sliderKey: "rangeSlider-" + serviceKey
-    });
   },
   componentWillReceiveProps: function(nextProps){
     if(nextProps.weight != this.state.weight){
