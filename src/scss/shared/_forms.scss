@@ -91,34 +91,6 @@ input[type='range'] {
   &:focus {
     outline: none;
   }
-  
-  // .js & /deep/ #thumb {
-  //   position: relative;
-    
-  //   &:before, &:after {
-  //     position: absolute;
-  //     left: 50%;
-  //     //background: $tooltip-bg;
-  //   }
-    
-  //   &:before {
-  //     margin: -3em -2em;
-  //     width: 4em;
-  //     border-radius: .25em;
-  //     color: #fff;
-  //     font-weight: 600;
-  //     line-height: 2;
-  //     text-align: center;
-  //     content: '50%';
-  //   }
-    
-  //   &:after {
-  //     margin: -1.5em -.365em;
-  //     width: .75em; height: .75em;
-  //     transform: rotate(-45deg);
-  //     content: '';
-  //   }
-  // }
 }
 
 
