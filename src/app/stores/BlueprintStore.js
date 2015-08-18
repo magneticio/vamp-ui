@@ -47,7 +47,6 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
     _error = message;
   },
 
-
   setBlueprintStatus: function(name, newStatus) {
     var blueprint = _.findWhere(_blueprints, { "name" : name });
     blueprint.status = newStatus;
@@ -72,6 +71,8 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
     var action = payload.actionType;
 
     switch(action) {
+
+      // GET
       case BlueprintConstants.GET_ALL_BLUEPRINTS + '_SUCCESS':
         AppStore.deleteError('UNREACHABLE');
         _persistBlueprints(payload.response);
@@ -91,6 +92,7 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
         _error = errortext.message;
         break;
 
+      // CREATE
       case BlueprintConstants.CREATE_BLUEPRINT + '_SUCCESS':        
         var response = JSON.parse(payload.response.text),
             newBlueprintName = response.name;
@@ -107,6 +109,18 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
         _error = errortext.message;
         break;
 
+      // UPDATE
+      case BlueprintConstants.UPDATE_BLUEPRINT + '_SUCCESS':        
+          _addBlueprint(payload.response);
+          _persistCurrentBlueprint(payload.response);
+        break;
+      case BlueprintConstants.UPDATE_BLUEPRINT + '_ERROR':
+        console.log(payload.response);
+        var errortext = JSON.parse(payload.response.text)
+        _error = errortext.message;
+        break;      
+
+      // DELETE
       case BlueprintConstants.DELETE_BLUEPRINT:
         console.log(payload.response);
         _blueprints[payload.response.name].status = 'DELETING';

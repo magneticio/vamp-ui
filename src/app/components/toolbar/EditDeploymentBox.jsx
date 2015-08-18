@@ -62,10 +62,9 @@ var AddArtefactBox = React.createClass({
   handleCancel: function(e){
     if(e)
       e.preventDefault();
-
+    DeploymentStore.clearCurrentAsBlueprint();
     this.setState(this.clearStates);
     this.props.setToolbar('');
-    DeploymentStore.clearCurrentAsBlueprint();
   },
   handleTextareaChange: function(e){
     this.setState({deploymentRaw: e.target.value});

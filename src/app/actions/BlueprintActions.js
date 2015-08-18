@@ -19,7 +19,7 @@ var BlueprintActions = {
   },    
   updateBlueprint: function(body, blueprintName, format) {
     format = typeof format !== 'undefined' ? format : null;
-    Api.update('/blueprints/' + blueprintName, body, BlueprintConstants.CREATE_BLUEPRINT, format);
+    Api.update('/blueprints/' + blueprintName, body, BlueprintConstants.UPDATE_BLUEPRINT, format);
   },    
   deleteBlueprint: function(blueprint) {
     if("status" in blueprint)
