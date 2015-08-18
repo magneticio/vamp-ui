@@ -29,10 +29,14 @@ var BlueprintListItem = React.createClass({
       this.context.router.transitionTo('deployments');
     } 
     if(this.state.deployRequestPending && nextProps.blueprint.status == "BADREQUEST"){
+      var self = this;
       this.setState({ 
         deployRequestError: BlueprintStore.getError(),
         deployRequestPending: false
       });
+      setTimeout(function(){
+        self.setState({ deployRequestError: false });
+      }, 4000);
     }
     // Catch react bug where no unique id's can be generated. Ask Daniel for more details
     if(this.props.blueprintCreated){
@@ -99,7 +103,7 @@ var BlueprintListItem = React.createClass({
       'button-red': true,
       'active': this.state.deleteRequestPending,
     });
-    var dialogClasses = cx('list-section', 'section-full', 'dialog', 'dialog-danger', {
+    var dialogClasses = cx('list-section', 'section-full', 'dialog', 'dialog-danger', 'dialog-fade', {
       hidden: !this.state.deployRequestError
     })
 
