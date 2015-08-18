@@ -103,20 +103,33 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         _persistCurrentDeployment(payload.response);
         break;
       case DeploymentConstants.GET_DEPLOYMENT + '_UNREACHABLE':
-        AppStore.putError('UNREACHABLE');
-        break;
+        var errormessage = null;
+        if(payload.response.status == 404)
+          errormessage = payload.response.text;
+        AppStore.putError('UNREACHABLE',errormessage);
       case DeploymentConstants.GET_DEPLOYMENT + '_ERROR':
-        AppStore.putError('UNREACHABLE');
+        var errormessage = null;
+        if(payload.response.status == 404)
+          errormessage = payload.response.text;
+        AppStore.putError('UNREACHABLE',errormessage);
         break;
 
       case DeploymentConstants.GET_DEPLOYMENT_STATUS + '_SUCCESS':
         _updateDeploymentStatus(payload.response);
         break;
       case DeploymentConstants.GET_DEPLOYMENT_STATUS + '_UNREACHABLE':
-        AppStore.putError('UNREACHABLE');
+        var errormessage = null;
+        if(payload.response.status == 404)
+          errormessage = payload.response.text;
+        AppStore.putError('UNREACHABLE',errormessage);
         break;
       case DeploymentConstants.GET_DEPLOYMENT_STATUS + '_ERROR':
-        AppStore.putError('UNREACHABLE');
+        var errormessage = null
+        console.log(payload.response.status);
+        if(payload.response.status == "404"){
+          errormessage = payload.response.text;
+        }
+        AppStore.putError('UNREACHABLE',errormessage);
         break;
 
       case DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT + '_SUCCESS':
