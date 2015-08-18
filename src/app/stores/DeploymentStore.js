@@ -47,6 +47,11 @@ var removeDuplicateMetrics = function(metrics){
       usedObjects[so] = true;          
     }
   }
+    console.log(metrics.length);
+
+  while(metrics.length > 30){
+    metrics.pop();
+  }
   return metrics;
 }
 
