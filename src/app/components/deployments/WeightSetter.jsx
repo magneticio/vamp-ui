@@ -3,17 +3,23 @@ var classNames = require('classnames');
 
 var WeightSetter = React.createClass({
 
+  // Etc
   propTypes: {
     weight: React.PropTypes.number,
   },
   
+  // Component lifecycle
   getInitialState: function() {
     return {
       weight: 0,
       hovered: false
     }
   },
+  shouldComponentUpdate: function(nextProps){
+    return this.props.weight != nextProps.weight;
+  },
 
+  // Helpers
   toggleHovered: function(){
     this.setState({hovered: !this.state.hovered})
   }, 
@@ -22,8 +28,9 @@ var WeightSetter = React.createClass({
       this.props.handleEditWeight();
   },
 
+  // Render
   render: function() {
-    
+    console.log('weightbox render');
     var weightSetterClasses = classNames({
       editable: !this.props.disableWeightSetting
     });

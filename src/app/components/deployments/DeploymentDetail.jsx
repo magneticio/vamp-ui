@@ -41,7 +41,7 @@ var DeploymentDetail = React.createClass({
     this.setInterval(function(){
       DeploymentActions.getEndpointMetrics(deployment);
       DeploymentActions.getDeploymentStatus(self.state.name);
-    }, 4000);
+    }, 2000);
     
     DeploymentActions.openEventsStream(this.state.name, ['rate', 'rtime', 'req_rate_max']);
   },
@@ -50,6 +50,9 @@ var DeploymentDetail = React.createClass({
     DeploymentStore.removeChangeListener(this._onChange);
     DeploymentActions.getAllDeployments();
   },
+  // shouldComponentUpdate: function(nextProps, nextStates){
+  //   return JSON.stringify(this.props) != JSON.stringify(nextProps);
+  // },
 
   // Event handlers
   handleSubmit: function() {
@@ -194,6 +197,7 @@ var DeploymentDetail = React.createClass({
   
   // onChange listener actions
   _onChange: function() {
+    //this.forceUpdate();
     this.setState({
       deployment: DeploymentStore.getCurrent(),
       deploymentAsBlueprint: DeploymentStore.getCurrentAsBlueprint()

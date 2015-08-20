@@ -1,5 +1,5 @@
 var React = require('react');
-var _ = require('underscore')
+var _ = require('underscore');
 var TimeAgo = require('react-timeago');
 var classNames = require('classnames');
 var WeightSetter = require('./WeightSetter.jsx');
@@ -24,7 +24,6 @@ var ServiceBox = React.createClass({
     }
   },
   componentWillReceiveProps: function(nextProps){
-
     if(nextProps.service.metrics){
       if(nextProps.service.metrics.rate)
         this.setState({ rate: nextProps.service.metrics.rate });
@@ -72,8 +71,6 @@ var ServiceBox = React.createClass({
 
   // Render
   render: function() {
-
-    console.log('render');
 
     var service = this.props.service,
         servers = service.servers,

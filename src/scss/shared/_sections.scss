@@ -29,6 +29,12 @@
 	&.double {
 		width: percentage(2/5);
 	}
+	&.triple {
+		width: percentage(3/5);
+	}
+	&.quadruple {
+		width: percentage(4/5);
+	}	
 }
 .section-sixth {
 	padding: 1rem;

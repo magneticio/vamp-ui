@@ -51,7 +51,7 @@ var ClusterSettingsBoxItem = React.createClass({
         <div className="section-fifth">
           {settings.breed.name}
         </div>
-        <div className="section-fifth double weight-range">
+        <div className="section-fifth quadruple weight-range">
           <style type="text/css">
             { 
               ".rangeSlider-" + this.state.sliderKey + "::-webkit-slider-runnable-track { background-size: " + this.state.weight + "% 100%!important;} " +
@@ -70,12 +70,6 @@ var ClusterSettingsBoxItem = React.createClass({
             value={this.state.weight}
             className={sliderClass}
             onChange={this.handleWeightSliderChange} />
-        </div>
-        <div className="section-fifth">
-          173
-        </div>
-        <div className="section-fifth">
-          548
         </div>
       </div>
   )}
