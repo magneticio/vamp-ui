@@ -25,6 +25,9 @@ var DeploymentsList = React.createClass({
   componentDidMount: function(){
     this.setInterval(this.pollBackend, 4000);
   },
+  componentWillUnmount: function() {
+    DeploymentActions.getAllDeployments();
+  },
 
   // Event handlers  
   handleAdd: function() {

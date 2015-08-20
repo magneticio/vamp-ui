@@ -65,6 +65,9 @@ var BlueprintsList = React.createClass({
       });
     }
   },
+  componentWillUnmount: function() {
+    BlueprintActions.getAllBlueprints();
+  },
   
   // Event handlers
   handleAdd: function(newBlueprint) {

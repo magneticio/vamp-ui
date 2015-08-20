@@ -48,6 +48,7 @@ var DeploymentDetail = React.createClass({
   componentWillUnmount: function() {
     DeploymentActions.closeEventsStream();
     DeploymentStore.removeChangeListener(this._onChange);
+    DeploymentActions.getAllDeployments();
   },
 
   // Event handlers
