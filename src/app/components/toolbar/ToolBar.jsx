@@ -18,8 +18,12 @@ var ToolBar = React.createClass({
       waitingForDeployment: false
     };
   },
+  componentWillMount: function() {
+    this.setToolbar = _.debounce(this.setToolbar,200, true);
+  },
 
   setToolbar: function(newState){
+    console.log('set toolbar');
     newState == 'expanded' ? this.setState({ waitingForDeployment: false }) : null ;
     this.setState({ toolbarState: newState });
   },
@@ -27,6 +31,7 @@ var ToolBar = React.createClass({
     this.setState({ toolbarState: 'expanded' });
   },
   editDeployment: function(){
+    console.log('edit deployment clicked');
     this.setState({ waitingForDeployment: true });
     this.props.editDeployment();
   },

@@ -17,6 +17,7 @@ var _currentDeploymentMetrics = {};
 var _blueprintToDeploy = '';
 var _currentDeploymentAsBlueprint = null;
 var _error = null;
+var _deleting = false;
 
 var _persistDeployments = function(response){
   var _temp = {};
@@ -26,6 +27,8 @@ var _persistDeployments = function(response){
     _temp[obj.name].status = 'CLEAN';
   });
   _deployments = _temp;
+  _deleting = false;
+  console.log('persisted deployments', _.size(_deployments));
 };
 var _persistCurrentDeployment = function(response){
   _currentDeployment = JSON.parse(response.text)
@@ -56,7 +59,9 @@ var removeDuplicateMetrics = function(metrics){
 var DeploymentStore = assign({}, EventEmitter.prototype,{
 
   getAll: function() {
-    return _deployments;
+    if(!_deleting)
+      return _deployments;
+    console.log('get all deployments');
   },
   getCurrent: function() {
     return _currentDeployment;
@@ -94,6 +99,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
       case DeploymentConstants.GET_ALL_DEPLOYMENTS + '_SUCCESS':
         AppStore.deleteError('UNREACHABLE');
         _persistDeployments(payload.response);
+        console.log('persist all deployments');
         break;
       case DeploymentConstants.GET_ALL_DEPLOYMENTS + '_UNREACHABLE':
         AppStore.putError('UNREACHABLE');
@@ -118,6 +124,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         break;
 
       case DeploymentConstants.GET_DEPLOYMENT_STATUS + '_SUCCESS':
+        console.log('deployments received');
         _updateDeploymentStatus(payload.response);
         break;
       case DeploymentConstants.GET_DEPLOYMENT_STATUS + '_UNREACHABLE':
@@ -164,8 +171,10 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
 
       // DELETE
       case DeploymentConstants.DELETE_FULL_DEPLOYMENT + '_SUCCESS':
+        console.log('deleting', _.size(_deployments));
         var deletedDeployment = JSON.parse(payload.response.text);
         delete _deployments[deletedDeployment.name];
+        console.log('deleted', _.size(_deployments));
         break;
 
       // METRICS

@@ -58,10 +58,14 @@ var DeploymentDetail = React.createClass({
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, type);
   },
   editDeployment: function(){
-    // TODO: temp, should be set in Toolbar.jsx preferably
-    var type = 'application/x-yaml';
     DeploymentStore.clearCurrentAsBlueprint();
-    DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, type);
+    console.log('edit deployment in detail');
+    DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, 'application/x-yaml');
+  },
+  clearDetailArtefact: function(){
+    DeploymentStore.clearCurrentAsBlueprint();
+    this.setState({ deploymentAsBlueprint: null });
+    console.log('clear deployment in detail');
   },
   handleDeploymentUpdate: function(clustername, weights){
     self = this;
@@ -160,7 +164,8 @@ var DeploymentDetail = React.createClass({
         <ToolBar 
           withBreadcrumbs={true} 
           editDeployment={this.editDeployment}
-          deploymentAsBlueprint={this.state.deploymentAsBlueprint} />
+          deploymentAsBlueprint={this.state.deploymentAsBlueprint} 
+          clearDetailArtefact={this.clearDetailArtefact} />
         <section id="deployment-single" className={containerClasses}>
           <div className='section-full'>
             <div id="general-metrics" className='detail-section'>

@@ -23,6 +23,9 @@ var DeploymentsList = React.createClass({
   componentDidMount: function(){
     this.setInterval(this.pollBackend, 4000);
   },
+  componentWillReceiveProps: function(nextProps){
+    console.log(_.size(nextProps.allDeployments) + ' deployments in list');
+  },
   
   handleAdd: function() {
     console.log('handle add')
