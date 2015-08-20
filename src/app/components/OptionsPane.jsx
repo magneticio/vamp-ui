@@ -113,6 +113,8 @@ var OptionsPane = React.createClass({
     }
     try {
       containerDriverItems['type'] = apiInfo.container_driver.type;
+      if(containerDriverItems['type'] == 'error')
+        throw('container driver error');
     } catch(e) {
       containerDriverItems = {};
       containerDriverItems['error'] = 'Internal error';

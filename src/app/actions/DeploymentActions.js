@@ -9,7 +9,6 @@ var DeploymentActions = {
 
   // GET
   getAllDeployments: function() {
-    console.log('get deployments');
     Api.get('/deployments', null, DeploymentConstants.GET_ALL_DEPLOYMENTS);
   },
   getDeployment: function(name) {
