@@ -1,4 +1,4 @@
-describe('VAMP UI', function(){
+describe('VAMP UI Homepage', function(){
 
 	var optionsIcon = element(by.css('.navigation-options img')),
 			optionsPane = element(by.css('.options-pane')),
@@ -17,7 +17,7 @@ describe('VAMP UI', function(){
     expect(browser.getTitle()).toEqual('Vamp');
   });
 
-  it('starts up correctly', function(){
+  it('should start up correctly', function(){
     optionsIcon.click();
     browser.sleep(100).then(function(){
 			expect(optionsPane.isDisplayed()).toBeTruthy();

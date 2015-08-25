@@ -8,8 +8,8 @@
   },
   "scripts": {
     "start": "gulp",
-    "pretest": "./node_modules/forever/bin/forever start ./spec/server.js",
-    "test": "./node_modules/protractor/bin/protractor ./spec/protractor.conf.js",
+    "pretest": "./node_modules/forever/bin/forever start --minUptime 1000 --spinSleepTime 1000 --silent ./spec/server.js",
+    "test": "./node_modules/protractor/bin/protractor ./spec/protractor.conf.js --verbose",
     "posttest": "./node_modules/forever/bin/forever stopall"
   },
   "browserify": {
