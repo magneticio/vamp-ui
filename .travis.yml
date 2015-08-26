@@ -16,11 +16,10 @@ env:
 before_install: gem install compass
 script:
 - echo Building version ${UI_VERSION}-$TRAVIS_BUILD_NUMBER of ${PACKAGE}
-- echo "window.mixpanelToken = $MIXPANEL_TOKEN" > build/token.js
+- echo "window.mixpanelToken = \"$MIXPANEL_TOKEN\"" > build/token.js
 - gulp build
 - gulp dist
 - mv build vamp-ui
-#- rm vamp-ui/app.js
 - jar cvf ${DISTRIBUTABLE}.jar vamp-ui/
 after_success:
 - test ${TRAVIS_PULL_REQUEST} == "false" && if [[ ${TRAVIS_BRANCH} == "develop" ]];
