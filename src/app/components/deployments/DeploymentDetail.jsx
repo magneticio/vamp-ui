@@ -62,6 +62,7 @@ var DeploymentDetail = React.createClass({
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, type);
   },
   editDeployment: function(){
+    mixpanel.track("Edit deployment clicked");        
     DeploymentStore.clearCurrentAsBlueprint();
     console.log('edit deployment in detail');
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, 'application/x-yaml');
@@ -72,6 +73,7 @@ var DeploymentDetail = React.createClass({
     console.log('clear deployment in detail');
   },
   handleDeploymentUpdate: function(clustername, weights){
+    mixpanel.track("Edit deployment save button clicked");        
     self = this;
     currentDeployment = DeploymentStore.getCurrent();
     formattedWeights = this.formatWeightsDictionary(weights);

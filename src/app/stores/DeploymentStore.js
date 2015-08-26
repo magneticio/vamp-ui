@@ -68,6 +68,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
     return _currentDeploymentAsBlueprint;
   },
   getError: function(){
+    mixpanel.track("Deployment error registered");        
     var returnError = _error;
     _error = null;
     return returnError;
@@ -150,6 +151,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         BlueprintStore.setBlueprintStatus(_blueprintToDeploy, payload.response.status);
         break;
       case BlueprintConstants.DEPLOY_BLUEPRINT + '_SUCCESS':
+        mixpanel.track("Blueprint deployed");        
         payload.response.status = 'ACCEPTED';
         BlueprintStore.setBlueprintStatus(_blueprintToDeploy, payload.response.status);
         break;
@@ -222,6 +224,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
 
       // UPDATE
       case DeploymentConstants.UPDATE_DEPLOYMENT + '_SUCCESS':
+        mixpanel.track("Deployment updated trought UI");        
         _currentDeploymentAsBlueprint = null;
         break;
       case DeploymentConstants.UPDATE_DEPLOYMENT + '_ERROR':

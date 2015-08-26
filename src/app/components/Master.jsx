@@ -54,6 +54,7 @@ var Master = React.createClass({
   },
 
   togglePageContent: function(){
+    mixpanel.track("Options pane toggled");        
     this.setState({
       isOptionsPaneOpened: this.state.isOptionsPaneOpened ? false : true
     });

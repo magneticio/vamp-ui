@@ -44,6 +44,7 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
       return returnError;
   },
   setError: function(message){
+    mixpanel.track("Blueprint store error registered");        
     _error = message;
   },
 
@@ -93,7 +94,8 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
         break;
 
       // CREATE
-      case BlueprintConstants.CREATE_BLUEPRINT + '_SUCCESS':        
+      case BlueprintConstants.CREATE_BLUEPRINT + '_SUCCESS':
+        mixpanel.track("New blueprint added");        
         var response = JSON.parse(payload.response.text),
             newBlueprintName = response.name;
         if(newBlueprintName in _blueprints){

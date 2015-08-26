@@ -62,6 +62,7 @@ var AddArtefactBox = React.createClass({
       });
     }
     reader.readAsText(file);
+    mixpanel.track("New artefact file upload clicked");        
   },
   handleCancel: function(e){
     if(e)
@@ -72,6 +73,7 @@ var AddArtefactBox = React.createClass({
     this.setState(this.clearStates);
     this.props.setToolbar('');
     this.props.clearDetailArtefact();
+    mixpanel.track("New/Edit artefact cancel button clicked");        
   },
   handleTextareaChange: function(e){
     this.setState({newArtefact: e.target.value});

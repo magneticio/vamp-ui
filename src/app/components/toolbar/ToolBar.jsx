@@ -28,7 +28,7 @@ var ToolBar = React.createClass({
     this.setState({ toolbarState: newState });
   },
   handleAdd: function(e){
-    mixpanel.track("Artefact added");
+    mixpanel.track("New artefact panel opened");
     this.setState({ toolbarState: 'expanded' });
   },
   editDeployment: function(){

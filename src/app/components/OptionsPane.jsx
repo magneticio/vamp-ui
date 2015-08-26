@@ -30,6 +30,7 @@ var OptionsPane = React.createClass({
   },
 
   handleSubmit: function(e){
+    mixpanel.track("API URL changed");        
     e.preventDefault();
     Config.setApiHost(this.state.apiUrl, function(){
       AppActions.getInfo();

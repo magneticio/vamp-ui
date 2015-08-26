@@ -31,6 +31,7 @@ var ClusterSettingsBox = React.createClass({
       e.preventDefault();
 
     if(this.state.totalWeight==100){
+      mixpanel.track("Weight edit saved");        
       this.props.updateDeployment(this.state.weights);
     }
   },
