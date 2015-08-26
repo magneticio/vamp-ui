@@ -46,14 +46,17 @@ var BlueprintListItem = React.createClass({
 
   handleDetail: function(e) {
     e.preventDefault();
+    mixpanel.track("Blueprint edit panel opened");        
     this.props.handleDetail(this.props.blueprint.name);
   },
   handleDeploy: function(e) {
+    mixpanel.track("Blueprint deploy button clicked");        
     this.setState({ deployRequestPending: true });
     BlueprintActions.deployBlueprint(this.props.blueprint);
   },
   handleDelete: function(e) {
     if (confirm('Are you sure you want to delete this blueprint?')) {
+      mixpanel.track("Blueprint deleted");        
       this.setState({ deleteRequestPending: true });
       BlueprintActions.deleteBlueprint(this.props.blueprint);
     }

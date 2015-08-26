@@ -32,7 +32,7 @@ var ServiceMetricsGraph = React.createClass({
         req_rate_max: '-',
         responseTime: '-',     
       });
-    }, 5000);
+    }, 10000);
   },
   stopTimer: function(){
     clearTimeout(this.timer);

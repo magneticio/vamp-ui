@@ -41,7 +41,7 @@ var DeploymentDetail = React.createClass({
     this.setInterval(function(){
       DeploymentActions.getEndpointMetrics(deployment);
       DeploymentActions.getDeploymentStatus(self.state.name);
-    }, 2000);
+    }, 4000);
     
     DeploymentActions.openEventsStream(this.state.name, ['rate', 'rtime', 'req_rate_max']);
   },
@@ -62,16 +62,16 @@ var DeploymentDetail = React.createClass({
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, type);
   },
   editDeployment: function(){
+    mixpanel.track("Edit deployment clicked");        
     DeploymentStore.clearCurrentAsBlueprint();
-    console.log('edit deployment in detail');
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, 'application/x-yaml');
   },
   clearDetailArtefact: function(){
     DeploymentStore.clearCurrentAsBlueprint();
     this.setState({ deploymentAsBlueprint: null });
-    console.log('clear deployment in detail');
   },
   handleDeploymentUpdate: function(clustername, weights){
+    mixpanel.track("Edit deployment save button clicked");        
     self = this;
     currentDeployment = DeploymentStore.getCurrent();
     formattedWeights = this.formatWeightsDictionary(weights);

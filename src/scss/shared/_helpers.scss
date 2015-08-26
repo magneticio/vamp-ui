@@ -21,6 +21,10 @@
 }
 .editable {
 	cursor: pointer;
+
+	&:hover * {
+		text-decoration: underline;
+	}
 	
 	&:hover::after {
 		content:'';

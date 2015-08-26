@@ -30,7 +30,7 @@ var WeightSetter = React.createClass({
 
   // Render
   render: function() {
-    console.log('weightbox render');
+
     var weightSetterClasses = classNames({
       editable: !this.props.disableWeightSetting
     });

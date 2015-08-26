@@ -22,6 +22,7 @@ var ClusterBox = React.createClass({
     this.props.onOptionsUpdate(currentCluster, service, filters, weight)
   },
   handleEditWeight: function(){
+    mixpanel.track("Weight edit box openend");        
     this.state.activeCluster ? this.setState({ activeCluster: false }) : this.setState({ activeCluster: true });
     this.props.handleEditWeight();
   },

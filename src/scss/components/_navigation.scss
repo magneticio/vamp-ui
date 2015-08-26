@@ -26,6 +26,7 @@
 		transition: background-color 0.3s, border-bottom 0.3s;
 
 		&:hover {
+			text-decoration: none;
 			background-color: $pink;
 			color: white;
 			border-bottom: 2px solid $pink;

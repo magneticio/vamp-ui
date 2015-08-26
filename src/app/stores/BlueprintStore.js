@@ -44,6 +44,7 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
       return returnError;
   },
   setError: function(message){
+    mixpanel.track("Blueprint store error registered");        
     _error = message;
   },
 
@@ -93,7 +94,8 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
         break;
 
       // CREATE
-      case BlueprintConstants.CREATE_BLUEPRINT + '_SUCCESS':        
+      case BlueprintConstants.CREATE_BLUEPRINT + '_SUCCESS':
+        mixpanel.track("New blueprint added");        
         var response = JSON.parse(payload.response.text),
             newBlueprintName = response.name;
         if(newBlueprintName in _blueprints){
@@ -104,7 +106,6 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
         }
         break;
       case BlueprintConstants.CREATE_BLUEPRINT + '_ERROR':
-        console.log(payload.response);
         var errortext = JSON.parse(payload.response.text)
         _error = errortext.message;
         break;
@@ -115,18 +116,15 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
           _persistCurrentBlueprint(payload.response);
         break;
       case BlueprintConstants.UPDATE_BLUEPRINT + '_ERROR':
-        console.log(payload.response);
         var errortext = JSON.parse(payload.response.text)
         _error = errortext.message;
         break;      
 
       // DELETE
       case BlueprintConstants.DELETE_BLUEPRINT:
-        console.log(payload.response);
         _blueprints[payload.response.name].status = 'DELETING';
         break;
       case BlueprintConstants.DELETE_BLUEPRINT + '_ERROR':
-        console.log(payload.response);
         _blueprints[payload.response.name].status = 'DELETE_ERROR';
         break;                      
     }

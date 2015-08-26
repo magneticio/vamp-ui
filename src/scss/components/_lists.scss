@@ -36,6 +36,9 @@
 	p {
 		margin: 0;
 	}
+	.item-name:hover {
+		text-decoration: underline;
+	}
 	.item-deployable {
 		font-size: $h2-size;
 		color: $blue;

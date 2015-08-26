@@ -25,18 +25,12 @@ var AddArtefactBox = React.createClass({
     };
   },
   componentWillReceiveProps: function(nextProps) {
-    if(this.state.newArtefact && nextProps.requestResolved){
+    if(this.state.newArtefact && nextProps.requestResolved)
       this.handleCancel();
-      console.log('new artefact + request resolved');
-    }
-    if(!_.isEmpty(nextProps.detailArtefact) && !this.state.dirty){
+    if(!_.isEmpty(nextProps.detailArtefact) && !this.state.dirty)
       this.activateEditArtefact(nextProps);
-      console.log('not empty artefact + not dirty');
-    }
-    if(nextProps.detailArtefact != this.props.detailArtefact && !_.isEmpty(nextProps.detailArtefact)){
+    if(nextProps.detailArtefact != this.props.detailArtefact && !_.isEmpty(nextProps.detailArtefact))
       this.activateEditArtefact(nextProps);
-      console.log('new artefact + not empty artefact');
-    }
   },
   componentDidMount: function(){
     this._initArtefactFunctions();
@@ -62,6 +56,7 @@ var AddArtefactBox = React.createClass({
       });
     }
     reader.readAsText(file);
+    mixpanel.track("New artefact file upload clicked");        
   },
   handleCancel: function(e){
     if(e)
@@ -72,6 +67,7 @@ var AddArtefactBox = React.createClass({
     this.setState(this.clearStates);
     this.props.setToolbar('');
     this.props.clearDetailArtefact();
+    mixpanel.track("New/Edit artefact cancel button clicked");        
   },
   handleTextareaChange: function(e){
     this.setState({newArtefact: e.target.value});

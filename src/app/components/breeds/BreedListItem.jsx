@@ -18,6 +18,7 @@ var BreedListItem = React.createClass({
   },
   handleDetail: function (e){
     e.preventDefault();
+    mixpanel.track("Breed edit panel opened");        
     this.props.handleDetail(this.props.breed.name)
   },  
   handleDelete: function(){
