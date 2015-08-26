@@ -1,7 +1,9 @@
 exports.config = {
 
 	specs: [
-		'./e2e/**/*.spec.js'
+		'./e2e/homepage.spec.js',
+		'./e2e/optionsPane.spec.js',
+		'./e2e/blueprints.spec.js',
 	],
 
 	baseUrl: 'http://localhost:4000',
@@ -9,6 +11,5 @@ exports.config = {
 
 	onPrepare: function() {
     browser.ignoreSynchronization = true;
-	},
-	jasmineNodeOpts: {isVerbose: true}
+	}
 };
