@@ -32,13 +32,11 @@ var AddArtefactBox = React.createClass({
   componentWillReceiveProps: function(nextProps) {    
     // Close toolbar and clear state when deployment is cleared from store
     if(!this.props.deploymentAsBlueprint && this.props.toolbarState == 'expanded' ){
-      console.log('no deployment + toolbar: ', this.props.toolbarState);
       this.clearComponentState();
     }
 
     // Open toolbar and fill state when deployment is fetched
     if(this.props.deploymentAsBlueprint && this.props.toolbarState != 'expanded' && !this.state.editArtefact){
-      console.log('deployment + toolbar not expanded + not editstate');
       this.setState({ 
         deploymentRaw: this.props.deploymentAsBlueprint,
         editArtefact: true,
