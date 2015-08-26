@@ -23,7 +23,6 @@ var ToolBar = React.createClass({
   },
 
   setToolbar: function(newState){
-    console.log('set toolbar');
     newState == 'expanded' ? this.setState({ waitingForDeployment: false }) : null ;
     this.setState({ toolbarState: newState });
   },

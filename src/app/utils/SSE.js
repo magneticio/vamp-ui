@@ -37,10 +37,10 @@ var SSE = {
 
 	open: function(deployment, metrics){
 		var filteredStream;
-		console.log(eventsUrl + "?tags=metrics&tags=service&tags=services");
+		//console.log(eventsUrl + "?tags=metrics&tags=service&tags=services");
 		eventSource = new EventSource(eventsUrl + "?tags=metrics&tags=service&tags=services", { withCredentials: true });
 		eventSource.addEventListener('open', function(e) {
-			console.log('Connection Opened');
+			//console.log('Connection Opened');
 		}, false);
 
 		filterStream.apply(this, arguments);
@@ -49,9 +49,9 @@ var SSE = {
 		try {
 			eventSource.close();
 			eventSource = null;
-			console.log('stream closed');
+			//console.log('stream closed');
 		} catch(e){
-			console.log(e);
+			//console.log(e);
 		}
 	}
 	

@@ -200,7 +200,8 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
           _currentDeployment.metrics.rate = [];
           _currentDeployment.metrics.rtime = [];
         }
-        _currentDeployment.metrics.rtime = metrics;
+        if(_currentDeployment.metrics && 'rtime' in _currentDeployment.metrics)
+          _currentDeployment.metrics.rtime = metrics;
         break;
       case DeploymentConstants.GET_DEPLOYMENT_ENDPOINT_RATE + '_SUCCESS':
         AppStore.deleteError('PULSE_ERROR');
@@ -210,7 +211,8 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
           _currentDeployment.metrics.rate = [];
           _currentDeployment.metrics.rtime = [];
         }
-        _currentDeployment.metrics.rate = metrics;
+        if(_currentDeployment.metrics && 'rate' in _currentDeployment.metrics)
+          _currentDeployment.metrics.rate = metrics;
 
       // CLEANUP
       case DeploymentConstants.CLEANUP_DEPLOYMENT:

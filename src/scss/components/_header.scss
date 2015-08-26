@@ -15,7 +15,9 @@
 	width: 146px;
 	height: 26px;
 	outline: none;
-	
+	&:hover {
+		text-decoration: none;
+	}
 	img {
 		width: 109px;
 		height: 26px;
