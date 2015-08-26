@@ -31,7 +31,6 @@ var ToolBar = React.createClass({
     this.setState({ toolbarState: 'expanded' });
   },
   editDeployment: function(){
-    console.log('edit deployment clicked');
     this.setState({ waitingForDeployment: true });
     this.props.editDeployment();
   },

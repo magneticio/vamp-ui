@@ -106,7 +106,6 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
         }
         break;
       case BlueprintConstants.CREATE_BLUEPRINT + '_ERROR':
-        console.log(payload.response);
         var errortext = JSON.parse(payload.response.text)
         _error = errortext.message;
         break;
@@ -117,18 +116,15 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
           _persistCurrentBlueprint(payload.response);
         break;
       case BlueprintConstants.UPDATE_BLUEPRINT + '_ERROR':
-        console.log(payload.response);
         var errortext = JSON.parse(payload.response.text)
         _error = errortext.message;
         break;      
 
       // DELETE
       case BlueprintConstants.DELETE_BLUEPRINT:
-        console.log(payload.response);
         _blueprints[payload.response.name].status = 'DELETING';
         break;
       case BlueprintConstants.DELETE_BLUEPRINT + '_ERROR':
-        console.log(payload.response);
         _blueprints[payload.response.name].status = 'DELETE_ERROR';
         break;                      
     }
