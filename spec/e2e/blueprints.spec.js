@@ -6,7 +6,9 @@ describe('\nBlueprints', function(){
 			artefactTextarea = element(by.css('.add-artefact-box textarea')),
 			blueprintListItem = element(by.css('#blueprints-list .list-item')),
 			blueprintListItemCount = element.all(by.css('#blueprints-list .list-item')),
-			deployButton = element(by.css('#blueprints-list .list-controls .button-ghost'));
+			deployButton = element(by.css('#blueprints-list .list-controls .button-ghost')),
+			deleteButton = element.all(by.css('#blueprints-list .list-controls .button-red')).get(0);
+
 
   it('should accept a valid blueprint', function(){
   	browser.get('/#/blueprints');
@@ -26,7 +28,18 @@ describe('\nBlueprints', function(){
   });
 
 	it('should add new blueprints to the UI', function(){
-			expect(blueprintListItemCount.count()).toBe(2);;
+		expect(blueprintListItemCount.count()).toBe(2);;
+	});
+
+	it('should be removed when deleted', function(){
+		deleteButton.click();
+		browser.sleep(100).then(function(){
+			browser.switchTo().alert().accept();
+			browser.sleep(500).then(function(){
+				deletedBlueprint = blueprintListItemCount.get(0);
+				expect(deletedBlueprint.isDisplayed()).toBeFalsy();
+			});
+		});
 	});
 
 	// it('should deploy a valid blueprint', function(){
