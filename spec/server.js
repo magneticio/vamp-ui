@@ -24,7 +24,7 @@ app.route('/api/v1/info')
     });
 app.route('/api/v1/breeds')
     .get(function(req, res){
-      res.send(JSON.stringify('breeds')); 
+      res.send(breeds); 
     });
 app.route('/api/v1/deployments')
     .get(function(req, res){
@@ -32,15 +32,21 @@ app.route('/api/v1/deployments')
     });
 app.route('/api/v1/blueprints')
     .get(function(req, res){
-      res.send([{"name":"sava:1.0","endpoints":{"sava.port":"9050/http"},"clusters":{"sava":{"services":[{"breed":{"name":"sava:1.0.0","deployable":"docker://magneticio/sava:1.0.0","ports":{"port":"80/http"},"environment_variables":{},"constants":{},"dependencies":{}},"environment_variables":{},"scale":{"cpu":0.5,"memory":512.0,"instances":1},"dialects":{}}],"dialects":{}}},"environment_variables":{}}]);
+      res.send(blueprints);
     })
     .post(function(req, res){
-      //global._blueprints.push({"name":"testBlueprint:1.2","endpoints":{"frontend.port":"9010/http"},"clusters":{"frontend":{"services":[{"breed":{"name":"monarch_front:0.1","deployable":"docker://magneticio/monarch:0.1","ports":{"port":"8080/http"},"environment_variables":{"backend[BACKEND]":"http://$backend.host:$backend.ports.port/api/message"},"constants":{},"dependencies":{"backend":"monarch_backend:0.1"}},"environment_variables":{},"scale":{"cpu":0.5,"memory":256.0,"instances":1},"routing":{"weight":50,"filters":[]},"dialects":{}},{"breed":{"name":"monarch_front:0.2","deployable":"docker://magneticio/monarch:0.2","ports":{"port":"8080/http"},"environment_variables":{},"constants":{},"dependencies":{}},"environment_variables":{},"scale":{"cpu":0.5,"memory":256.0,"instances":1},"routing":{"weight":50,"filters":[]},"dialects":{}}],"dialects":{}},"backend":{"services":[{"breed":{"name":"monarch_backend:0.1","deployable":"docker://magneticio/monarch:0.2","ports":{"port":"8080/http"},"environment_variables":{},"constants":{},"dependencies":{}},"environment_variables":{},"dialects":{}}],"dialects":{}}},"environment_variables":{}});
+      blueprints.push({"name":"testBlueprint:1.2","endpoints":{"frontend.port":"9010/http"},"clusters":{"frontend":{"services":[{"breed":{"name":"monarch_front:0.1","deployable":"docker://magneticio/monarch:0.1","ports":{"port":"8080/http"},"environment_variables":{"backend[BACKEND]":"http://$backend.host:$backend.ports.port/api/message"},"constants":{},"dependencies":{"backend":"monarch_backend:0.1"}},"environment_variables":{},"scale":{"cpu":0.5,"memory":256.0,"instances":1},"routing":{"weight":50,"filters":[]},"dialects":{}},{"breed":{"name":"monarch_front:0.2","deployable":"docker://magneticio/monarch:0.2","ports":{"port":"8080/http"},"environment_variables":{},"constants":{},"dependencies":{}},"environment_variables":{},"scale":{"cpu":0.5,"memory":256.0,"instances":1},"routing":{"weight":50,"filters":[]},"dialects":{}}],"dialects":{}},"backend":{"services":[{"breed":{"name":"monarch_backend:0.1","deployable":"docker://magneticio/monarch:0.2","ports":{"port":"8080/http"},"environment_variables":{},"constants":{},"dependencies":{}},"environment_variables":{},"dialects":{}}],"dialects":{}}},"environment_variables":{}});
       res.send({"name":"testBlueprint:1.2","endpoints":{"frontend.port":"9010/http"},"clusters":{"frontend":{"services":[{"breed":{"name":"monarch_front:0.1","deployable":"docker://magneticio/monarch:0.1","ports":{"port":"8080/http"},"environment_variables":{"backend[BACKEND]":"http://$backend.host:$backend.ports.port/api/message"},"constants":{},"dependencies":{"backend":"monarch_backend:0.1"}},"environment_variables":{},"scale":{"cpu":0.5,"memory":256.0,"instances":1},"routing":{"weight":50,"filters":[]},"dialects":{}},{"breed":{"name":"monarch_front:0.2","deployable":"docker://magneticio/monarch:0.2","ports":{"port":"8080/http"},"environment_variables":{},"constants":{},"dependencies":{}},"environment_variables":{},"scale":{"cpu":0.5,"memory":256.0,"instances":1},"routing":{"weight":50,"filters":[]},"dialects":{}}],"dialects":{}},"backend":{"services":[{"breed":{"name":"monarch_backend:0.1","deployable":"docker://magneticio/monarch:0.2","ports":{"port":"8080/http"},"environment_variables":{},"constants":{},"dependencies":{}},"environment_variables":{},"dialects":{}}],"dialects":{}}},"environment_variables":{}});
+    })
+    .delete(function(req, res){
+      blueprints.pop();
+      res.send('');
     });
 
 app.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+
 
 exports = module.exports = app;
