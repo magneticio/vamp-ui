@@ -41,7 +41,7 @@ var DeploymentDetail = React.createClass({
     this.setInterval(function(){
       DeploymentActions.getEndpointMetrics(deployment);
       DeploymentActions.getDeploymentStatus(self.state.name);
-    }, 2000);
+    }, 4000);
     
     DeploymentActions.openEventsStream(this.state.name, ['rate', 'rtime', 'req_rate_max']);
   },

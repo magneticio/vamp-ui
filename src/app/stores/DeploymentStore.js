@@ -192,29 +192,27 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         }, this);
         break;
         
-      case DeploymentConstants.GET_DEPLOYMENT_ENDPOINT_METRICS + '_SUCCESS':
+      case DeploymentConstants.GET_DEPLOYMENT_ENDPOINT_RTIME + '_SUCCESS':
         AppStore.deleteError('PULSE_ERROR');
         var metrics = payload.response.body;
-
+        console.log(metrics);
         if(!_.isEmpty(_currentDeployment) && !_currentDeployment.metrics){
           _currentDeployment.metrics = {};
           _currentDeployment.metrics.rate = [];
           _currentDeployment.metrics.rtime = [];
         }
-        
-        if(metrics[0] && 'tags' in metrics[0]){
-          _.each(metrics, function(val, key){
-            if(val.tags.indexOf('metrics:rate') > -1){
-              _currentDeployment.metrics.rate.unshift({"value": val.value, "timestamp": val.timestamp });
-              _currentDeployment.metrics.rate = removeDuplicateMetrics(_currentDeployment.metrics.rate);
-            }          
-            if(val.tags.indexOf('metrics:rtime') > -1){
-              _currentDeployment.metrics.rtime.unshift({"value": val.value, "timestamp": val.timestamp });
-              _currentDeployment.metrics.rtime = removeDuplicateMetrics(_currentDeployment.metrics.rtime);
-            }
-          });
-        }
+        _currentDeployment.metrics.rtime = metrics;
         break;
+      case DeploymentConstants.GET_DEPLOYMENT_ENDPOINT_RATE + '_SUCCESS':
+        AppStore.deleteError('PULSE_ERROR');
+        var metrics = payload.response.body;
+        console.log(metrics);
+        if(!_.isEmpty(_currentDeployment) && !_currentDeployment.metrics){
+          _currentDeployment.metrics = {};
+          _currentDeployment.metrics.rate = [];
+          _currentDeployment.metrics.rtime = [];
+        }
+        _currentDeployment.metrics.rate = metrics;
 
       // CLEANUP
       case DeploymentConstants.CLEANUP_DEPLOYMENT:
