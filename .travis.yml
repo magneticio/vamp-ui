@@ -16,6 +16,9 @@ env:
 before_install: gem install compass
 script:
 - echo Building version ${UI_VERSION}-$TRAVIS_BUILD_NUMBER of ${PACKAGE}
+- if [ ! -d "build" ];
+  then mkdir build
+  ; fi
 - echo "window.mixpanelToken = \"$MIXPANEL_TOKEN\"" > build/token.js
 - gulp build
 - gulp dist
