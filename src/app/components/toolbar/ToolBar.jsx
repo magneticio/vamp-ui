@@ -18,12 +18,16 @@ var ToolBar = React.createClass({
       waitingForDeployment: false
     };
   },
+  componentWillMount: function() {
+    this.setToolbar = _.debounce(this.setToolbar,200, true);
+  },
 
   setToolbar: function(newState){
     newState == 'expanded' ? this.setState({ waitingForDeployment: false }) : null ;
     this.setState({ toolbarState: newState });
   },
   handleAdd: function(e){
+    mixpanel.track("New artefact panel opened");
     this.setState({ toolbarState: 'expanded' });
   },
   editDeployment: function(){

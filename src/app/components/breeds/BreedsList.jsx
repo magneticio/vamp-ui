@@ -65,6 +65,9 @@ var BreedsList = React.createClass({
       });
     }
   },
+  componentWillUnmount: function() {
+    BreedActions.getAllBreeds();
+  },  
   
   handleAdd: function(newBreed) {
     this.setState({ breedCreated: false, pending: true, crudType:'create', currentBreedcount: _.size(this.props.allBreeds) });

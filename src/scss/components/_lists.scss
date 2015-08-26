@@ -36,10 +36,21 @@
 	p {
 		margin: 0;
 	}
+	.item-name:hover {
+		text-decoration: underline;
+	}
 	.item-deployable {
 		font-size: $h2-size;
 		color: $blue;
 		font-weight: 400;
+	}
+	.dialog-danger {
+		background-color: inherit;
+		padding: 0.5rem 1.5rem;
+		margin-bottom: 0.5rem;
+		//margin-left: -1rem;
+		background-position: 0rem 0.85rem;
+		border-bottom: 1px solid #F6F6F6;
 	}
 }
 .list-header {

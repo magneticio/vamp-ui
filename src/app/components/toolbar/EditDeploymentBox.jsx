@@ -7,10 +7,10 @@ var DeploymentStore = require('../../stores/DeploymentStore');
 
 var AddArtefactBox = React.createClass({
 
+  // Etc
   contextTypes: {
     router: React.PropTypes.func
   },
-
   clearStates: {
     deploymentRaw: '',
     errorMessage: '',
@@ -18,6 +18,8 @@ var AddArtefactBox = React.createClass({
     dirty: false,
     buttonLoadsate: false
   },
+
+  // Component lifecylce
   getInitialState: function(){
     return {
       deploymentRaw: '',
@@ -27,18 +29,12 @@ var AddArtefactBox = React.createClass({
       buttonLoadsate: false
     };
   },
+  componentWillReceiveProps: function(nextProps) {    
+    // Close toolbar and clear state when deployment is cleared from store
+    if(!this.props.deploymentAsBlueprint && this.props.toolbarState == 'expanded' ){
+      this.clearComponentState();
+    }
 
-  componentWillReceiveProps: function(nextProps) {
-    // if(!_.isEmpty(nextProps.detailArtefact) && !this.state.dirty){
-    //   formattedArtefact = nextProps.detailArtefact;
-    //   this.props.setToolbar('expanded');
-    //   this.setState({ 
-    //     dirty: true,
-    //     editArtefact: true
-    //   });
-    //   React.findDOMNode(this.refs.inputfield).focus();
-    // }
-    
     // Open toolbar and fill state when deployment is fetched
     if(this.props.deploymentAsBlueprint && this.props.toolbarState != 'expanded' && !this.state.editArtefact){
       this.setState({ 
@@ -49,13 +45,9 @@ var AddArtefactBox = React.createClass({
       });
       this.props.setToolbar('expanded');
     }
-
-    // Close toolbar and clear state when deployment is cleared from store
-    if(!this.props.deploymentAsBlueprint && this.props.toolbarState == 'expanded' ){
-      this.props.setToolbar('');
-      this.setState(this.clearStates);
-      React.findDOMNode(this.refs.AddNewForm).reset(); 
-    }
+  },
+  componentWillMount: function() {
+    this.clearComponentState = _.debounce(this.clearComponentState,200, true);
   },
   componentDidMount: function(){
     this._initArtefactFunctions();
@@ -64,6 +56,8 @@ var AddArtefactBox = React.createClass({
     this.handleCancel();
     this._destroyArtefactFunctions();
   },
+
+  // Event handlers
   handleChange: function() {
     this.props.onUserInput(
       this.refs.filterTextInput.getDOMNode().value
@@ -72,8 +66,10 @@ var AddArtefactBox = React.createClass({
   handleCancel: function(e){
     if(e)
       e.preventDefault();
-
     DeploymentStore.clearCurrentAsBlueprint();
+    this.setState(this.clearStates);
+    this.props.setToolbar('');
+    this.props.clearDetailArtefact();
   },
   handleTextareaChange: function(e){
     this.setState({deploymentRaw: e.target.value});
@@ -85,10 +81,17 @@ var AddArtefactBox = React.createClass({
       errorMessage: '',
       buttonLoadsate: true,
     });
-
-    DeploymentActions.updateDeployment(this.context.router.getCurrentParams().id, this.state.deploymentRaw);
+    DeploymentActions.updateDeployment(this.context.router.getCurrentParams().id, this.state.deploymentRaw, 'application/x-yaml');
   },
 
+  // Helper methods
+  clearComponentState: function(){
+    this.props.setToolbar('');
+    this.setState(this.clearStates);
+    React.findDOMNode(this.refs.AddNewForm).reset(); 
+  },
+
+  // Render
   render: function() {
 
     // Get formatted deployment ID
@@ -101,7 +104,7 @@ var AddArtefactBox = React.createClass({
       'dialog-empty': this.state.errorMessage == '' ? true : false
     });
     var saveButtonClasses = classNames({
-      "active": this.state.buttonLoadsate ? true : false,
+      "active": this.state.buttonLoadsate,
       "button": true,
       "button-pink": true,
       "save-button": true

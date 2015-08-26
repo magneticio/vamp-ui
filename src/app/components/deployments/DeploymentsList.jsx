@@ -12,8 +12,10 @@ var AppStore = require('../../stores/AppStore');
 
 var DeploymentsList = React.createClass({
 
+  // Etc
   mixins: [SetIntervalMixin],
 
+  // Component lifecylce
   getInitialState: function() {
     return {
       filterText: '',
@@ -23,7 +25,11 @@ var DeploymentsList = React.createClass({
   componentDidMount: function(){
     this.setInterval(this.pollBackend, 4000);
   },
-  
+  componentWillUnmount: function() {
+    DeploymentActions.getAllDeployments();
+  },
+
+  // Event handlers  
   handleAdd: function() {
     console.log('handle add')
   },
@@ -38,6 +44,7 @@ var DeploymentsList = React.createClass({
     });
   },
 
+  // Render
   render: function() {
 
     // Set vars

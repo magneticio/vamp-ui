@@ -16,26 +16,47 @@ var BlueprintListItem = React.createClass({
     return {
       deployRequestPending: false,
       deleteRequestPending: false,
+      deployRequestError: false,
       deleteRequestError: false
     }
+  },
+  componentWillMount: function() {
+    this.handleDeploy = _.debounce(this.handleDeploy,500);
   },
   componentWillReceiveProps: function(nextProps){
     if(this.state.deployRequestPending && nextProps.blueprint.status == "ACCEPTED"){
       this.setState({ deployRequestPending: false });
       this.context.router.transitionTo('deployments');
+    } 
+    if(this.state.deployRequestPending && nextProps.blueprint.status == "BADREQUEST"){
+      var self = this;
+      this.setState({ 
+        deployRequestError: BlueprintStore.getError(),
+        deployRequestPending: false
+      });
+      setTimeout(function(){
+        self.setState({ deployRequestError: false });
+      }, 5000);
+    }
+    // Catch react bug where no unique id's can be generated. Ask Daniel for more details
+    if(this.props.blueprintCreated){
+      this.setState({ deleteRequestPending: false });
     }
   },
 
   handleDetail: function(e) {
     e.preventDefault();
+    mixpanel.track("Blueprint edit panel opened");        
     this.props.handleDetail(this.props.blueprint.name);
   },
   handleDeploy: function(e) {
+    mixpanel.track("Blueprint deploy button clicked");        
     this.setState({ deployRequestPending: true });
     BlueprintActions.deployBlueprint(this.props.blueprint);
   },
   handleDelete: function(e) {
-    if (confirm('Are you sure you want to undeploy this deployment?')) {
+    if (confirm('Are you sure you want to delete this blueprint?')) {
+      mixpanel.track("Blueprint deleted");        
       this.setState({ deleteRequestPending: true });
       BlueprintActions.deleteBlueprint(this.props.blueprint);
     }
@@ -85,9 +106,15 @@ var BlueprintListItem = React.createClass({
       'button-red': true,
       'active': this.state.deleteRequestPending,
     });
+    var dialogClasses = cx('list-section', 'section-full', 'dialog', 'dialog-danger', 'dialog-fade', {
+      hidden: !this.state.deployRequestError
+    })
 
     return (
       <li className={listClasses}>
+        <div className={dialogClasses}>
+          <span className="clip-textoverflow">{this.state.deployRequestError}</span>
+        </div>
         <div className="list-section section-fifth">
           <a onClick={this.handleDetail} className="editable"><p className="item-name clip-textoverflow">{blueprint.name}</p></a>
         </div>

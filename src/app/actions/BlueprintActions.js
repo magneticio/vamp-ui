@@ -1,6 +1,6 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var BlueprintConstants = require('../constants/BlueprintConstants');
-var Api = require('./Api');
+var Api = require('../utils/Api');
 
 var BlueprintActions = {
 
@@ -19,9 +19,11 @@ var BlueprintActions = {
   },    
   updateBlueprint: function(body, blueprintName, format) {
     format = typeof format !== 'undefined' ? format : null;
-    Api.update('/blueprints/' + blueprintName, body, BlueprintConstants.CREATE_BLUEPRINT, format);
+    Api.update('/blueprints/' + blueprintName, body, BlueprintConstants.UPDATE_BLUEPRINT, format);
   },    
   deleteBlueprint: function(blueprint) {
+    if("status" in blueprint)
+      delete blueprint.status;
     Api.del('/blueprints/' + blueprint.name, blueprint, BlueprintConstants.DELETE_BLUEPRINT);
   },  
 

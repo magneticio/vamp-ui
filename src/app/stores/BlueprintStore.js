@@ -40,7 +40,12 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
   getError: function(){
     var returnError = _error;
     _error = null;
-    return returnError;
+    if(returnError)
+      return returnError;
+  },
+  setError: function(message){
+    mixpanel.track("Blueprint store error registered");        
+    _error = message;
   },
 
   setBlueprintStatus: function(name, newStatus) {
@@ -67,6 +72,8 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
     var action = payload.actionType;
 
     switch(action) {
+
+      // GET
       case BlueprintConstants.GET_ALL_BLUEPRINTS + '_SUCCESS':
         AppStore.deleteError('UNREACHABLE');
         _persistBlueprints(payload.response);
@@ -86,15 +93,34 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
         _error = errortext.message;
         break;
 
+      // CREATE
       case BlueprintConstants.CREATE_BLUEPRINT + '_SUCCESS':
-        _addBlueprint(payload.response);
-        _persistCurrentBlueprint(payload.response);
+        mixpanel.track("New blueprint added");        
+        var response = JSON.parse(payload.response.text),
+            newBlueprintName = response.name;
+        if(newBlueprintName in _blueprints){
+          _error = "Blueprint with name already exists";
+        } else {
+          _addBlueprint(payload.response);
+          _persistCurrentBlueprint(payload.response);
+        }
         break;
       case BlueprintConstants.CREATE_BLUEPRINT + '_ERROR':
         var errortext = JSON.parse(payload.response.text)
         _error = errortext.message;
         break;
 
+      // UPDATE
+      case BlueprintConstants.UPDATE_BLUEPRINT + '_SUCCESS':        
+          _addBlueprint(payload.response);
+          _persistCurrentBlueprint(payload.response);
+        break;
+      case BlueprintConstants.UPDATE_BLUEPRINT + '_ERROR':
+        var errortext = JSON.parse(payload.response.text)
+        _error = errortext.message;
+        break;      
+
+      // DELETE
       case BlueprintConstants.DELETE_BLUEPRINT:
         _blueprints[payload.response.name].status = 'DELETING';
         break;

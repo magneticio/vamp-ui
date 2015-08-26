@@ -1,4 +1,5 @@
 var React = require('react');
+var _ = require('underscore');
 var ServiceBox = require('./ServiceBox.jsx');
 
 var ServicesList = React.createClass({
@@ -9,10 +10,18 @@ var ServicesList = React.createClass({
 
   render: function() {
 
-    var services = []
-  
+    var services = [],
+        disableWeightSetting = this.props.services.length == 1 ? true : false;
+    
     for (var key in this.props.services) {
-        services.push(<ServiceBox key={key} service={this.props.services[key]} serviceMetrics={this.props.serviceMetrics} cluster={this.props.cluster} updateServiceListFilters={this.props.updateClusterFilters}/>);
+      services.push(
+        <ServiceBox 
+          key={key} 
+          service={this.props.services[key]} 
+          cluster={this.props.cluster} 
+          updateServiceListFilters={this.props.updateClusterFilters} 
+          handleEditWeight={this.props.handleEditWeight} 
+          disableWeightSetting={disableWeightSetting} />);
     }
 
     return (

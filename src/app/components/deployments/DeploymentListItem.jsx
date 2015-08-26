@@ -21,6 +21,7 @@ var DeploymentListItem = React.createClass({
         className = 'active';
 
     if (confirm('Are you sure you want to undeploy this deployment?')) {
+      mixpanel.track("Deployment undeployed");        
       DeploymentActions.deleteFullDeployment(this.props.deployment);
       el.classList ? el.classList.add(className) : el.className += ' ' + className;
     } else {
@@ -60,7 +61,8 @@ var DeploymentListItem = React.createClass({
     });
     var listItemClasses = cx({
       'list-item': true,
-      'loading': deployment.status == 'CLEAN' ? false : true
+      'loading': deployment.status == 'CLEAN' ? false : true,
+      'hidden': deployment.status == 'BADREQUEST' ? true : false
     });
 
     return (

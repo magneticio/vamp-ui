@@ -98,8 +98,17 @@ strong {
 .muted {
 	color: $grey-medium;
 }
+.info {
+	color: $blue!important;
+}
 .warning {
 	color: $red!important;
+}
+.accepted {
+	color: $green!important;
+}
+.warning-subtle {
+	color: $yellow!important;
 }
 .small-caps {
 	color: $grey-medium;
@@ -118,6 +127,10 @@ a {
   	color: $blue;
   	text-decoration: none;
   	cursor: pointer;
+
+  	&:hover {
+  		text-decoration: underline;
+  	}
 }
 a.add-link {
 	font-weight: 600;

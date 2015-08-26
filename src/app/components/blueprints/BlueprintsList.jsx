@@ -14,12 +14,13 @@ var BlueprintStore = require('../../stores/BlueprintStore');
 
 var BlueprintsList = React.createClass({
 
+  // Etc
   contextTypes: {
     router: React.PropTypes.func
   },
-
   mixins: [SetIntervalMixin],
 
+  // Component lifecycle
   getInitialState: function() {
     return {
       filterText: '',
@@ -30,7 +31,7 @@ var BlueprintsList = React.createClass({
       requestingBlueprint: false,
       blueprintName: '',
       crudType: '',
-      pending: false
+      pending: false,
     };
   },
   componentDidMount: function(){
@@ -64,7 +65,11 @@ var BlueprintsList = React.createClass({
       });
     }
   },
+  componentWillUnmount: function() {
+    BlueprintActions.getAllBlueprints();
+  },
   
+  // Event handlers
   handleAdd: function(newBlueprint) {
     this.setState({ blueprintCreated: false, pending: true, crudType:'create', currentBlueprintcount: _.size(this.props.allBlueprints)});
     BlueprintActions.createBlueprint(newBlueprint);
@@ -92,13 +97,15 @@ var BlueprintsList = React.createClass({
     this.setState({ currentBlueprint: {}, blueprintName: '' });
   },
 
+  // Render
   render: function() {
 
     // Set vars
     var allBlueprints = this.props.allBlueprints,
         blueprints = [],
         errorsToBeShown = this.props.errors['UNREACHABLE'] ? true : false,
-        errorMessage = errorsToBeShown ? this.props.errors['UNREACHABLE'].message : '';
+        errorMessage = errorsToBeShown ? this.props.errors['UNREACHABLE'].message : '',
+        i = 0;
 
     // Prepare Blueprintslist
     _.each(allBlueprints, function(blueprint,key) {
@@ -106,13 +113,10 @@ var BlueprintsList = React.createClass({
       if ( ( blueprint.name.toLowerCase().indexOf(filterTerm) === -1 && filterTerm) ) {
         return;
       }
-      blueprints.push(<BlueprintListItem key={key} blueprint={allBlueprints[key]} handleDetail={this.handleDetail} />);
+      blueprints.push(<BlueprintListItem key={key} blueprint={allBlueprints[key]} handleDetail={this.handleDetail} blueprintCreated={this.state.blueprintCreated}/>);
     }, this);
     
     // Prepare dynamic classes
-    var loadingClassSet = classNames({
-      "hidden": this.props.loadState !== LoadStates.STATE_LOADING
-    });
     var emptyClassSet = classNames({
       "empty-list": true,
       "container-status-message": true,

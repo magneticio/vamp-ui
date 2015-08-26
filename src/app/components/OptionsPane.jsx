@@ -30,6 +30,7 @@ var OptionsPane = React.createClass({
   },
 
   handleSubmit: function(e){
+    mixpanel.track("API URL changed");        
     e.preventDefault();
     Config.setApiHost(this.state.apiUrl, function(){
       AppActions.getInfo();
@@ -113,6 +114,8 @@ var OptionsPane = React.createClass({
     }
     try {
       containerDriverItems['type'] = apiInfo.container_driver.type;
+      if(containerDriverItems['type'].toLowerCase() == 'error')
+        throw('container driver error');
     } catch(e) {
       containerDriverItems = {};
       containerDriverItems['error'] = 'Internal error';
