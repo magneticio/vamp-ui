@@ -64,13 +64,11 @@ var DeploymentDetail = React.createClass({
   editDeployment: function(){
     mixpanel.track("Edit deployment clicked");        
     DeploymentStore.clearCurrentAsBlueprint();
-    console.log('edit deployment in detail');
     DeploymentActions.getDeploymentAsBlueprint(this.state.deployment, 'application/x-yaml');
   },
   clearDetailArtefact: function(){
     DeploymentStore.clearCurrentAsBlueprint();
     this.setState({ deploymentAsBlueprint: null });
-    console.log('clear deployment in detail');
   },
   handleDeploymentUpdate: function(clustername, weights){
     mixpanel.track("Edit deployment save button clicked");        

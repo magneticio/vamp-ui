@@ -63,19 +63,17 @@ var DeploymentActions = {
         portAndProtocolArray = value.split("/");
         endpoint = portAndProtocolArray[0];
     }, this);
-
+    
     tags.push('routes', 'routes:' + deployment.name + '_' + endpoint);
     tags.push('metrics');
     tags.push('metrics:rtime');
 
     req = {
       "tags" : tags,
-      "timestamp" : {
-        "lte" : "now"
-      }
+      "timestamp" : {"lte" : "now"}
     }
-
     PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_ENDPOINT_RTIME);
+    
     req.tags.pop();
     req.tags.push('metrics:rate');
     PulseApi.post('/events/get', req, DeploymentConstants.GET_DEPLOYMENT_ENDPOINT_RATE);

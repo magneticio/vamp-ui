@@ -114,6 +114,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         if(payload.response.status == 404)
           errormessage = payload.response.text;
         AppStore.putError('UNREACHABLE',errormessage);
+        break;
       case DeploymentConstants.GET_DEPLOYMENT + '_ERROR':
         var errormessage = null;
         if(payload.response.status == 404)
@@ -140,7 +141,6 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
 
       case DeploymentConstants.GET_DEPLOYMENT_AS_BLUEPRINT + '_SUCCESS':
         _currentDeploymentAsBlueprint = payload.response.text;
-        console.log('%c get as blueprint success ', 'background-color: #29BB9C; color: white;');
         break;
 
       // DEPLOY
@@ -195,7 +195,6 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
       case DeploymentConstants.GET_DEPLOYMENT_ENDPOINT_RTIME + '_SUCCESS':
         AppStore.deleteError('PULSE_ERROR');
         var metrics = payload.response.body;
-        console.log(metrics);
         if(!_.isEmpty(_currentDeployment) && !_currentDeployment.metrics){
           _currentDeployment.metrics = {};
           _currentDeployment.metrics.rate = [];
@@ -206,7 +205,6 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
       case DeploymentConstants.GET_DEPLOYMENT_ENDPOINT_RATE + '_SUCCESS':
         AppStore.deleteError('PULSE_ERROR');
         var metrics = payload.response.body;
-        console.log(metrics);
         if(!_.isEmpty(_currentDeployment) && !_currentDeployment.metrics){
           _currentDeployment.metrics = {};
           _currentDeployment.metrics.rate = [];
