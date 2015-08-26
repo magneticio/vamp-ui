@@ -127,6 +127,10 @@ a {
   	color: $blue;
   	text-decoration: none;
   	cursor: pointer;
+
+  	&:hover {
+  		text-decoration: underline;
+  	}
 }
 a.add-link {
 	font-weight: 600;
