@@ -12,7 +12,7 @@ var _info = {},
     _errors = {};
 
 var _registerError = function(errorType, message, artefactType){
-  mixpanel.track("Vamp error registered in store");        
+  //mixpanel.track("Vamp error registered in store");        
   if(errorType == 'UNREACHABLE' && !message)
     message = "It seems the backend is unreachable, are you sure it's running?";
 
