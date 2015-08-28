@@ -122,8 +122,12 @@ var BlueprintStore = assign({}, EventEmitter.prototype,{
 
       // DELETE
       case BlueprintConstants.DELETE_BLUEPRINT:
+        console.log(JSON.stringify(payload.response));
         _blueprints[payload.response.name].status = 'DELETING';
         break;
+      case BlueprintConstants.DELETE_BLUEPRINT + '_SUCCESS':
+        delete _blueprints[payload.response.name];
+        break;        
       case BlueprintConstants.DELETE_BLUEPRINT + '_ERROR':
         _blueprints[payload.response.name].status = 'DELETE_ERROR';
         break;                      

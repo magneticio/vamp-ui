@@ -68,7 +68,6 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
     return _currentDeploymentAsBlueprint;
   },
   getError: function(){
-    //mixpanel.track("Deployment error registered");        
     var returnError = _error;
     _error = null;
     return returnError;

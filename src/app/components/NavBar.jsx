@@ -35,7 +35,7 @@ var NavBar = React.createClass({
         path = path.substring(0,(path.slice(1).indexOf('\/'))+1);
 
       return (
-        <li key={tab.id} className="navigation-item"><a href={"#" + tab.id} className={className}>{tab.text}</a></li>
+        <li key={tab.id} className="navigation-item"><a href={"#" + tab.id} id={tab.text + "-link"} className={className}>{tab.text}</a></li>
       );
     }, this);
 
