@@ -30,6 +30,18 @@ Running a build with minification and optimized assets for deployment.
 
 You can inspect the live build in the browser by running `$ gulp serve`, which will spawn a local webserver on port 3000. It will not 'watch' and live-reload, it'll serve your production build served from the 'build/' folder of the project.
 
+## Testing
+
+Automated e2e tests are included, but global installation of Selenium webdriver is necessery. 
+
+	$ npm install -g webdriver-manager
+	$ webdriver-manager update
+
+After a succesful install, make sure the webdriver manager is running in the background, and then run the tests:
+
+	$ webdriver-manager start
+	$ npm test
+
 ## Tips
 
 during development, start Chrome with disables web security to allow CORS requests.
