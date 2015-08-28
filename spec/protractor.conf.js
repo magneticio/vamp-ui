@@ -11,5 +11,15 @@ exports.config = {
 
 	onPrepare: function() {
     browser.ignoreSynchronization = true;
-	}
+	},
+
+	// capabilities: {
+ //  	'browserName': 'firefox'
+	// }
+	maxSessions: 1,
+	
+	multiCapabilities: [
+		{ 'browserName': 'firefox' },
+		{ 'browserName': 'chrome' }
+	]
 };

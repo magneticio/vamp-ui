@@ -12,7 +12,6 @@ describe('\nBlueprints', function(){
 
   it('should accept a valid blueprint', function(){
   	browser.get('/#/blueprints');
-  	//browser.pause();
   	browser.sleep(100).then(function(){
 			expect(addNewButton.isDisplayed()).toBeTruthy();
 			addNewButton.click();
@@ -28,7 +27,7 @@ describe('\nBlueprints', function(){
   });
 
 	it('should add new blueprints to the UI', function(){
-		expect(blueprintListItemCount.count()).toBe(2);;
+		expect(blueprintListItemCount.count()).toBeGreaterThan(1);
 	});
 
 	it('should be removed when deleted', function(){
