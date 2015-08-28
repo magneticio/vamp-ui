@@ -2,7 +2,7 @@
 describe('\nDeployments', function(){
 
 	var deploymentListItem = element.all(by.css('#deployments-list .list-item')),
-			deploymentLink = element(by.css('.item-link')),
+			deploymentLink = element.all(by.css('.item-link')).get(0),
 			editButton = element.all(by.css('#toolbar .button-pink')).get(0),
 			inputBox = element(by.css('.edit-deployment-box .inputfield')),
 			closeButton = element(by.css('#toolbar .cancel-button')),
