@@ -69,7 +69,7 @@ var DeploymentListItem = React.createClass({
       <li className={listItemClasses}>
         <Loader hidden={loaderClasses} />
         <div className="list-section section-fifth">
-          <a onClick={this.handleDetail}>
+          <a className="item-link" onClick={this.handleDetail}>
             <p className="item-name">{deployment.name.split("-")[0]} ...</p>
           </a>
         </div>

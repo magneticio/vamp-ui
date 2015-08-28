@@ -6,7 +6,7 @@ describe('\nBlueprints', function(){
 			artefactTextarea = element(by.css('.add-artefact-box textarea')),
 			blueprintListItem = element(by.css('#blueprints-list .list-item')),
 			blueprintListItemCount = element.all(by.css('#blueprints-list .list-item')),
-			deployButton = element(by.css('#blueprints-list .list-controls .button-ghost')),
+			deployButton = element.all(by.css('#blueprints-list .list-controls .button-ghost')),
 			deleteButton = element.all(by.css('#blueprints-list .list-controls .button-red')).get(0);
 
 
@@ -41,10 +41,16 @@ describe('\nBlueprints', function(){
 		});
 	});
 
-	// it('should deploy a valid blueprint', function(){
-	// 	deployButton.click();
-	// 	browser.sleep(5000).then(function(){
-			
-	// 	});
-	// });
+	it('should deploy a valid blueprint', function(){
+		var i = 1;
+		if(deployButton.get(i).isDisplayed()){
+			deployButton.get(i).click();
+		} else {
+			i++
+			deployButton.get(i).click();
+		}
+		browser.sleep(2000).then(function(){
+			expect(browser.getCurrentUrl()).toEqual('http://localhost:4000/#/deployments');
+		});
+	});
 });

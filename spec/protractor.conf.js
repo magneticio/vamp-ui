@@ -4,6 +4,7 @@ exports.config = {
 		'./e2e/homepage.spec.js',
 		'./e2e/optionsPane.spec.js',
 		'./e2e/blueprints.spec.js',
+		'./e2e/deployments.spec.js',
 	],
 
 	baseUrl: 'http://localhost:4000',
@@ -13,9 +14,6 @@ exports.config = {
     browser.ignoreSynchronization = true;
 	},
 
-	// capabilities: {
- //  	'browserName': 'firefox'
-	// }
 	maxSessions: 1,
 	
 	multiCapabilities: [
