@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "gulp",
-    "pretest": "./node_modules/forever/bin/forever stopall && ./node_modules/forever/bin/forever start --minUptime 100 --spinSleepTime 100 ./spec/server.js",
+    "pretest": "gulp dist && ./node_modules/forever/bin/forever stopall && ./node_modules/forever/bin/forever start --minUptime 100 --spinSleepTime 100 ./spec/server.js",
     "test": "./node_modules/protractor/bin/protractor ./spec/protractor.conf.js --verbose",
     "posttest": "./node_modules/forever/bin/forever stopall"
   },
