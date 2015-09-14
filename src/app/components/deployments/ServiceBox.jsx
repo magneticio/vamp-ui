@@ -52,8 +52,8 @@ var ServiceBox = React.createClass({
 
   // Event handlers
   handleDelete: function(){
-    DeploymentActions.deleteService(this.state.deploymentName, this.props.service.breed.name);
-    //console.log(this.state.deploymentName);
+    if (confirm('Are you sure you want to delete this service?'))
+      DeploymentActions.deleteService(this.state.deploymentName, this.props.service.breed.name);
   },
 
   // Helpers
