@@ -13,6 +13,9 @@ var DeploymentActions = require('../../actions/DeploymentActions');
 var ServiceBox = React.createClass({
   
   mixins: [SetIntervalMixin],
+  contextTypes: {
+    router: React.PropTypes.func
+  },
 
   // Component lifecycle
   getInitialState: function(){
@@ -20,7 +23,8 @@ var ServiceBox = React.createClass({
       loading: true,
       req_rate_max: '0',
       rate: '0',
-      rtime: '0'
+      rtime: '0',
+      deploymentName: this.context.router.getCurrentParams().id,
     }
   },
   componentWillReceiveProps: function(nextProps){
@@ -44,6 +48,12 @@ var ServiceBox = React.createClass({
     } else {
       return true;
     }
+  },
+
+  // Event handlers
+  handleDelete: function(){
+    DeploymentActions.deleteService(this.state.deploymentName, this.props.service.breed.name);
+    //console.log(this.state.deploymentName);
   },
 
   // Helpers
@@ -82,6 +92,13 @@ var ServiceBox = React.createClass({
         requestPerSec = this.state.rate,
         req_rate_max = this.state.req_rate_max;
 
+    // Dynamic classes
+    var deleteButtonClasses = classNames('button', 'clip-textoverflow', {
+      'button-ghost disabled': service.routing.weight !== 0,
+      'button-red': service.routing.weight == 0,
+      'hidden': this.props.disableWeightSetting
+    });
+
     return(
       <div className='service-box'>
         <div className={'dialog dialog-'+ stateClass + ' ' + notifClass}>
@@ -91,6 +108,7 @@ var ServiceBox = React.createClass({
           <h3><a href={'/#/breeds/' + service.breed.name } className='editable clip-textoverflow'> {service.breed.name}</a></h3>
           <p className="muted clip-textoverflow">{service.breed.deployable}</p>
           <h5><img src='/images/clock.svg' alt="Clock icon" width='12px' height='12px' className='clock-icon' /> updated <TimeAgo date={date}/></h5>
+          <button className={deleteButtonClasses} onClick={this.handleDelete}>Delete service</button>
         </div>
         <div className='service-section service-routing section-fifth'>
           <div className="weightsetBox">

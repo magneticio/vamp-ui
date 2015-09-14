@@ -32,11 +32,17 @@ var DeploymentActions = {
   // DELETE
   deleteFullDeployment: function(deployment) {
     var req = {};
-    
     req.name = deployment.name;
     req.body = JSON.stringify(_.omit(deployment, "status"));
     
     Api.del('/deployments/' + req.name, req.body, DeploymentConstants.DELETE_FULL_DEPLOYMENT);
+  },
+  deleteService: function(deploymentName, breedName) {
+    req = {
+      "name": deploymentName,
+      "clusters": { "frontend": { "services": [{ "breed": {"ref": breedName }}]}}
+    };
+    Api.del('/deployments/' + deploymentName, req, DeploymentConstants.DELETE_SERVICE);
   },
   cleanUpCurrent: function(deployment) {
     var payload = {actionType: DeploymentConstants.CLEANUP_DEPLOYMENT , response: deployment };
