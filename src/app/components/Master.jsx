@@ -40,6 +40,7 @@ var Master = React.createClass({
     }
   },
   componentDidMount: function() {
+    mixpanel.track('UI loaded');
     AppActions.getInfo();
     
     BreedStore.addChangeListener(this._onChange);

@@ -31,7 +31,7 @@ var DeploymentDetail = React.createClass({
   },
   componentDidMount: function() {
     var self = this;
-    
+    mixpanel.track("Deployment detail screen opened");        
     DeploymentActions.getDeployment(this.state.name);
     DeploymentActions.getDeploymentStatus(this.state.name);
     DeploymentStore.addChangeListener(this._onChange);
