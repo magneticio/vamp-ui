@@ -55,7 +55,6 @@ var BlueprintListItem = React.createClass({
     this.props.handleDetail(this.props.blueprint.name);
   },
   handleDeploy: function(e) {
-    e.preventDefault();
     mixpanel.track("Blueprint deploy button clicked");        
     this.setState({ deployRequestPending: true });
     BlueprintActions.deployBlueprint(this.props.blueprint);
