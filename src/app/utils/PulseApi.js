@@ -47,9 +47,10 @@ function handleError(actionType, res){
   }
 };
 
-function post(url, body) {
+function post(url, body, contenttype) {
   return request
     .post(url)
+    .set('Content-type', contenttype)
     .send(body)
     .timeout(TIMEOUT);
 }
@@ -59,7 +60,7 @@ var PulseApi = {
     var url = makeUrl(uri);
     abortPendingRequests(actionType);
     dispatch(actionType,body);
-    _pendingRequests[actionType] = post(url,body).end(
+    _pendingRequests[actionType] = post(url, body, 'application/json').end(
       handleResponse(actionType)
     );
   }

@@ -131,7 +131,7 @@ var ServiceBox = React.createClass({
         </div>
         <div className='service-section service-status section-fifth'>
         	<h4>Status</h4>
-          <StatusIndicator status={service.state.name} />
+          <StatusIndicator status={service.state.step.name} />
           <h4>Scale</h4>
           <p>{service.scale.cpu} CPU / {service.scale.memory} MB</p>
           <p className='muted'>{service.scale.instances} instances</p>

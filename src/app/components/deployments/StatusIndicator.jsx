@@ -8,18 +8,16 @@ var StatusIndicator = React.createClass({
 			status: 'waiting'
 		};
 	},
+
 	componentWillMount: function(){
-		var newStatus;
+		var newStatus = 'waiting';
 
 		switch(this.props.status){
-			case 'Deployed':
+			case 'Done':
 				newStatus = 'success'
 				break;
-			case 'Error':
+			case 'Failure':
 				newStatus = 'danger';
-				break;
-			case 'ReadyForDeployment':
-				newStatus = 'waiting';
 				break;
 			default:
 				newStatus = 'waiting';
@@ -30,18 +28,15 @@ var StatusIndicator = React.createClass({
 		});
 	},
 	
-	componentWillReceiveProps: function(nextProps){
-		var newStatus;
+	componentWillReceiveProps: function(nextProps) {
+		var newStatus = 'waiting';
 
 		switch(nextProps.status){
-			case 'Deployed':
+			case 'Done':
 				newStatus = 'success'
 				break;
-			case 'Error':
+			case 'Failure':
 				newStatus = 'danger';
-				break;
-			case 'ReadyForDeployment':
-				newStatus = 'waiting';
 				break;
 			default:
 				newStatus = 'waiting';
