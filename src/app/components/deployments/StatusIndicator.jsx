@@ -55,7 +55,7 @@ var StatusIndicator = React.createClass({
     return(
       <div className='status-indicator'>
         <ul>
-          <li><span className={deploymentClasses} /><span className='status-text'>{this.props.status}</span></li>
+          <li><span className={deploymentClasses} /><span className='status-text'>{this.props.status.replace(/([a-z](?=[A-Z]))/g, '$1 ')}</span></li>
           <li><span className={upStatusClasses} /></li>
         </ul>
       </div>
