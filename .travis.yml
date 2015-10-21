@@ -8,7 +8,7 @@ branches:
 env:
   global:
   - PACKAGE="vamp-ui"
-  - UI_VERSION="0.7.10"
+  - UI_VERSION="0.7.11"
   - DISTRIBUTABLE="${PACKAGE}-${UI_VERSION}-${TRAVIS_BUILD_NUMBER}"
   - secure: OLfqWw7kfWxjuyPi42e5mpd1hQCaUMYMrvF7qlnu5PvT4U4Hl92WARaPUouN10rxe17AtzNQw/g8g9+w/REP0axwyiQbjqM9qDe1yNm8DfyaNwDrSgj/G4mXbTAOFx9BqIRBKsI6coWZvbD6O5piWp87Tpi0drJq2XP1wGyx5m8=
   - secure: SitulVd3T2atQ85iI+zDMElze5IOBRkdxGQjB97oDnPYrkyACtQhCZRmYgQ4uHzb0xKuh1s0hLyQ8VnmS3qzsUjHC2X2KOTl399q9tz7zcvswCjWWl1QQzTIrgcnxWGi6Xp1gus475dgh+saEhFbVLHIlkhnajC542OhKCRtpX0=
