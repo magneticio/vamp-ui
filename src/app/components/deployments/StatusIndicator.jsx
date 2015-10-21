@@ -1,71 +1,91 @@
 var React = require('react');
 var cx = require('classnames');
 
-var StatusIndicator = React.createClass({
+var StepIndicator = React.createClass({
 
 	getInitialState: function(){
 		return {
-			status: 'waiting'
+			step: 'waiting'
 		};
 	},
-	componentWillMount: function(){
-		var newStatus;
 
-		switch(this.props.status){
-			case 'Deployed':
-				newStatus = 'success'
+	componentWillMount: function(){
+		var newStep = 'waiting';
+
+		switch(this.props.step){
+			case 'Done':
+				newStep = 'success'
 				break;
-			case 'Error':
-				newStatus = 'danger';
-				break;
-			case 'ReadyForDeployment':
-				newStatus = 'waiting';
+			case 'Failure':
+				newStep = 'danger';
 				break;
 			default:
-				newStatus = 'waiting';
+				newStep = 'waiting';
 		};
 
 		this.setState({
-			status: newStatus
+			step: newStep
 		});
 	},
 	
-	componentWillReceiveProps: function(nextProps){
-		var newStatus;
+	componentWillReceiveProps: function(nextProps) {
+		var newStep = 'waiting';
 
-		switch(nextProps.status){
-			case 'Deployed':
-				newStatus = 'success'
+		switch(nextProps.step){
+			case 'Done':
+				newStep = 'success'
 				break;
-			case 'Error':
-				newStatus = 'danger';
-				break;
-			case 'ReadyForDeployment':
-				newStatus = 'waiting';
+			case 'Failure':
+				newStep = 'danger';
 				break;
 			default:
-				newStatus = 'waiting';
+				newStep = 'waiting';
 		};
 
 		this.setState({
-			status: newStatus
+			step: newStep
 		});
 	},
 
   render: function() {
-  	var status = 'indicator-' + this.state.status;
-  	var deploymentClasses = cx('indicator-circle', 'indicator-top', status);
-  	var upStatusClasses = cx('indicator-circle', 'indicator-bottom', status);
+  	var step = 'indicator-' + this.state.step;
+  	var deploymentClasses = cx('indicator-circle', 'indicator-top', step);
+  	var upStatusClasses = cx('indicator-circle', 'indicator-bottom', step);
 
     return(
       <div className='status-indicator'>
         <ul>
-          <li><span className={deploymentClasses} /><span className='status-text'>{this.props.status}</span></li>
+          <li><span className={deploymentClasses} /><span className='status-text'>{this.renderStep()}</span></li>
           <li><span className={upStatusClasses} /></li>
         </ul>
       </div>
-    )}
+    )
+  },
+
+  renderStep: function() {
+  	var percentage;
+
+  	switch (this.props.step) {
+  		case 'Initiated':
+  			percentage = '0% ';
+  			break;
+
+  		case 'ContainerUpdate':
+  			percentage = (this.props.intention === 'Deploy') ? '33% ' : '67% ';
+        break;
+
+  		case 'RouteUpdate':
+      	percentage = (this.props.intention === 'Deploy') ? '67% ' : '33% ';
+        break;
+
+      default:
+        percentage = '';
+        break;
+  	}
+
+  	return percentage + this.props.step.replace(/([a-z](?=[A-Z]))/g, '$1 ');
+  }
 });
  
-module.exports = StatusIndicator;
+module.exports = StepIndicator;
 

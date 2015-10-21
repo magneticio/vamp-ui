@@ -38,7 +38,7 @@ var SSE = {
 	open: function(deployment, metrics){
 		var filteredStream;
 		//console.log(eventsUrl + "?tags=metrics&tags=service&tags=services");
-		eventSource = new EventSource(eventsUrl + "?tags=metrics&tags=service&tags=services", { withCredentials: true });
+		eventSource = new EventSource(eventsUrl + "?tags=metrics&tags=service&tags=services", { withCredentials: false });
 		eventSource.addEventListener('open', function(e) {
 			//console.log('Connection Opened');
 		}, false);
