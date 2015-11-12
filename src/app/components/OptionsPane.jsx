@@ -50,7 +50,7 @@ var OptionsPane = React.createClass({
         vampVersion = '',
         jvmItems = {},
         persistenceItems = {},
-        routerItems = {},
+        gatewayItems = {},
         pulseItems = {},
         containerDriverItems = {},
         errorFlag = false;
@@ -88,15 +88,13 @@ var OptionsPane = React.createClass({
       errorFlag = true;
     }
     try {
-      routerItems['memmax__mb'] = apiInfo.router.status.memmax__mb;
-      routerItems['name'] = apiInfo.router.status.name;
-      routerItems['version'] = apiInfo.router.status.version;
-      routerItems['sess_rate'] = apiInfo.router.status.sess_rate;
-      routerItems['idle_pct'] = apiInfo.router.status.idle_pct;
-      routerItems['uptime'] = apiInfo.router.status.uptime;
+      gatewayItems['zookeeper'] = apiInfo.gateway.store.zookeeper.version;
+      gatewayItems['proxy'] = apiInfo.gateway.marshaller;
+      gatewayItems['kibana'] = apiInfo.gateway.kibana.enabled ? "enabled" : "disabled";
     } catch(e) {
-      routerItems = {};
-      routerItems['error'] = 'Internal error';
+      console.log(e);
+      gatewayItems = {};
+      gatewayItems['error'] = 'Internal error';
       AppStore.putError('INTERNAL', 'Something went wrong while checking the status of services');
       errorFlag = true;
     }
@@ -154,7 +152,7 @@ var OptionsPane = React.createClass({
 
               <OptionsPaneSection sectionTitle='JVM Runtime' errors={this.props.errors} listItems={jvmItems}/>
               <OptionsPaneSection sectionTitle='Persistence' errors={this.props.errors} listItems={persistenceItems} />
-              <OptionsPaneSection sectionTitle='Router' errors={this.props.errors} listItems={routerItems} />
+              <OptionsPaneSection sectionTitle='Gateway' errors={this.props.errors} listItems={gatewayItems} />
               <OptionsPaneSection sectionTitle='Pulse elasticsearch' errors={this.props.errors} listItems={pulseItems} />
               <OptionsPaneSection sectionTitle='Container Driver' errors={this.props.errors} listItems={containerDriverItems} />
 
