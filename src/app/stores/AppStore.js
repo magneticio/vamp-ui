@@ -16,9 +16,6 @@ var _registerError = function(errorType, message, artefactType){
   if(errorType == 'UNREACHABLE' && !message)
     message = "It seems the backend is unreachable, are you sure it's running?";
 
-  if(errorType == 'PULSE_ERROR')
-    message = "It seems VAMP can't connect to pulse, are you sure it's running?";
-
   _errors[errorType] = {
     'type': errorType,
     'time': Date.now(),
