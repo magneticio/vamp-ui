@@ -25,6 +25,6 @@ echo "${green}Running gulp dist...${reset}"
 gulp dist
 
 echo "${green}Moving files to resource directory...${reset}"
-mkdir -p ${dir}/${target} && mv ${dir}/build ${dir}/${target}
+mkdir -p `dirname ${dir}/${target}` && mv ${dir}/build ${dir}/${target}
 
 echo "${green}Vamp UI build: done.${reset}"
