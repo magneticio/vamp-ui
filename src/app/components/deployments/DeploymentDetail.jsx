@@ -161,9 +161,6 @@ var DeploymentDetail = React.createClass({
       'active': this.state.editServiceActive
     });
 
-    var dashboard = ("" + deployment.name).replace(/-/g, '_');
-    var iframe = "http://192.168.99.100:5601/app/kibana#/dashboard/" + dashboard + "?embed&_g=(refreshInterval:(display:'5%20seconds',pause:!t,section:1,value:5000),time:(from:now-15m,mode:quick,to:now))";
-
     return(
       <TransitionGroup component="div" transitionName="fadeIn" transitionAppear={true}>
         <div className={shaderClasses} onClick={this.handleEditWeight}></div>
@@ -186,8 +183,8 @@ var DeploymentDetail = React.createClass({
                 <div className="deployment-status hidden">
                   UP
                 </div>
-
-              <iframe src={iframe} height="100%" width="100%" frameBorder="0" height="700px"></iframe>
+                <DeploymentMetricsGraph data={deployment.metrics} metricsType='rate' metricsLabel='requests / sec' />
+                <DeploymentMetricsGraph data={deployment.metrics} metricsType='rtime' metricsLabel='ms resp. time' />
               </div>
             </div>
             <div className='detail-section'>

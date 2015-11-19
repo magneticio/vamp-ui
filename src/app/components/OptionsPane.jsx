@@ -89,7 +89,7 @@ var OptionsPane = React.createClass({
     }
     try {
       gatewayItems['zookeeper'] = apiInfo.gateway.store.zookeeper.version;
-      gatewayItems['proxy'] = apiInfo.gateway.marshaller;
+      gatewayItems['router'] = apiInfo.gateway.marshaller;
       gatewayItems['kibana'] = apiInfo.gateway.kibana.enabled ? "enabled" : "disabled";
     } catch(e) {
       console.log(e);
@@ -103,7 +103,6 @@ var OptionsPane = React.createClass({
       pulseItems['name'] = apiInfo.pulse.elasticsearch.name;
       pulseItems['version'] = apiInfo.pulse.elasticsearch.version.number;
       pulseItems['lucene_version'] = apiInfo.pulse.elasticsearch.version.lucene_version;
-      pulseItems['status'] = apiInfo.pulse.elasticsearch.status;
     } catch(e) {
       pulseItems = {};
       pulseItems['error'] = 'Internal error';

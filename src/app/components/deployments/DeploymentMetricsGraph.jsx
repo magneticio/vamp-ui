@@ -31,7 +31,7 @@ var MetricsGraph = React.createClass({
      */
     
     for(i = 0; i < 30; i++){
-      dataset[i] ? dataArray.push(dataset[i]['value']) : dataArray.push('0');
+      dataset[i] ? dataArray.push(dataset[i]['value'].toFixed(2)) : dataArray.push('0');
       labelArray.push('');
 
       if(timestampsArray && dataset[i])
