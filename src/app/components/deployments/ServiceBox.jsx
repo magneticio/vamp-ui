@@ -84,7 +84,7 @@ var ServiceBox = React.createClass({
 
     var service = this.props.service,
         servers = service.servers,
-        date = new Date(service.state.started_at),
+        date = new Date(service.state.step.since),
         stateClass = (service.state.name === 'Error') ? 'danger' : 'success',
         notifClass = service.state.notification ? '' : 'hidden',
         serverlist = this.generateServersList(servers),
