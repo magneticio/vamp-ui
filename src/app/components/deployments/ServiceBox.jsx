@@ -21,7 +21,6 @@ var ServiceBox = React.createClass({
   getInitialState: function(){
     return {
       loading: true,
-      rateMax: '0',
       rate: '0',
       responseTime: '0',
       deploymentName: this.context.router.getCurrentParams().id,
@@ -29,14 +28,11 @@ var ServiceBox = React.createClass({
   },
   componentWillReceiveProps: function(nextProps){
     if(nextProps.service.metrics){
-      if(nextProps.service.metrics.rate)
+      if(typeof nextProps.service.metrics.rate != 'undefined')
         this.setState({ rate: nextProps.service.metrics.rate.toFixed(2) });
 
-      if(nextProps.service.metrics.responseTime)
+      if(typeof nextProps.service.metrics.responseTime != 'undefined')
         this.setState({ responseTime: nextProps.service.metrics.responseTime.toFixed(2) });
-
-      if(nextProps.service.metrics.rateMax)
-        this.setState({ rateMax: nextProps.service.metrics.rateMax.toFixed(2) });
     }
   },
   shouldComponentUpdate: function(nextProps, nextState){
@@ -89,8 +85,7 @@ var ServiceBox = React.createClass({
         notifClass = service.state.notification ? '' : 'hidden',
         serverlist = this.generateServersList(servers),
         responseTime = this.state.responseTime,
-        requestPerSec = this.state.rate,
-        rateMax = this.state.rateMax;
+        requestPerSec = this.state.rate;
 
     // Dynamic classes
     var deleteButtonClasses = classNames('button', 'clip-textoverflow', {
@@ -121,7 +116,7 @@ var ServiceBox = React.createClass({
           </div>
         </div>
         <div className='service-section service-metrics section-fifth'>
-          <ServiceMetricsGraph responseTime={responseTime} requestPerSec={requestPerSec} rateMax={rateMax} />
+          <ServiceMetricsGraph responseTime={responseTime} requestPerSec={requestPerSec} />
         </div>
         <div className='service-section service-servers section-fifth'>
           <h4>Servers</h4>

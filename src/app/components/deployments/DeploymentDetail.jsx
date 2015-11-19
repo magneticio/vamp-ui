@@ -43,7 +43,7 @@ var DeploymentDetail = React.createClass({
       DeploymentActions.getDeploymentStatus(self.state.name);
     }, 4000);
     
-    DeploymentActions.openEventsStream(this.state.name, ['rate', 'responseTime', 'rateMax']);
+    DeploymentActions.openEventsStream(this.state.name, ['rate', 'responseTime']);
   },
   componentWillUnmount: function() {
     DeploymentActions.closeEventsStream();
@@ -184,7 +184,7 @@ var DeploymentDetail = React.createClass({
                   UP
                 </div>
                 <DeploymentMetricsGraph data={deployment.metrics} metricsType='rate' metricsLabel='requests / sec' />
-                <DeploymentMetricsGraph data={deployment.metrics} metricsType='rtime' metricsLabel='ms resp. time' />
+                <DeploymentMetricsGraph data={deployment.metrics} metricsType='rtime' metricsLabel='ms response time' />
               </div>
             </div>
             <div className='detail-section'>

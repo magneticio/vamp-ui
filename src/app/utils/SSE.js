@@ -10,7 +10,7 @@ var eventsUrl = Config.getApiUrl() + "/events/stream",
 
 function filterStream(deployment, metrics){
 	// On each event...
-	eventSource.addEventListener('router-metric', function(e) {	
+	eventSource.addEventListener('gateway-metrics', function(e) {
 		var data = JSON.parse(e.data);
 
 		// Loop trough metrics asked by client...
