@@ -7,5 +7,6 @@ Thumbs.db
 node_modules
 npm-debug.log
 build
+src/main
 images/sprites*.png
 images/sprites-retina-*.png
