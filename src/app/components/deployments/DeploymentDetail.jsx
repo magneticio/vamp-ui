@@ -43,7 +43,7 @@ var DeploymentDetail = React.createClass({
       DeploymentActions.getDeploymentStatus(self.state.name);
     }, 4000);
     
-    DeploymentActions.openEventsStream(this.state.name, ['rate', 'rtime', 'req_rate_max']);
+    DeploymentActions.openEventsStream(this.state.name, ['rate', 'responseTime', 'rateMax']);
   },
   componentWillUnmount: function() {
     DeploymentActions.closeEventsStream();

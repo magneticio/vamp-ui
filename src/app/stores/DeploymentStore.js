@@ -226,7 +226,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
 
       // UPDATE
       case DeploymentConstants.UPDATE_DEPLOYMENT + '_SUCCESS':
-        mixpanel.track("Deployment updated trought UI");        
+        mixpanel.track("Deployment updated trough UI");
         _currentDeploymentAsBlueprint = null;
         break;
       case DeploymentConstants.UPDATE_DEPLOYMENT + '_ERROR':

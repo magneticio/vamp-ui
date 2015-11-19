@@ -21,22 +21,22 @@ var ServiceBox = React.createClass({
   getInitialState: function(){
     return {
       loading: true,
-      req_rate_max: '0',
+      rateMax: '0',
       rate: '0',
-      rtime: '0',
+      responseTime: '0',
       deploymentName: this.context.router.getCurrentParams().id,
     }
   },
   componentWillReceiveProps: function(nextProps){
     if(nextProps.service.metrics){
       if(nextProps.service.metrics.rate)
-        this.setState({ rate: nextProps.service.metrics.rate });
+        this.setState({ rate: nextProps.service.metrics.rate.toFixed(2) });
 
-      if(nextProps.service.metrics.rtime)
-        this.setState({ rtime: nextProps.service.metrics.rtime });
+      if(nextProps.service.metrics.responseTime)
+        this.setState({ responseTime: nextProps.service.metrics.responseTime.toFixed(2) });
 
-      if(nextProps.service.metrics.req_rate_max)
-        this.setState({ req_rate_max: nextProps.service.metrics.req_rate_max });
+      if(nextProps.service.metrics.rateMax)
+        this.setState({ rateMax: nextProps.service.metrics.rateMax.toFixed(2) });
     }
   },
   shouldComponentUpdate: function(nextProps, nextState){
@@ -88,9 +88,9 @@ var ServiceBox = React.createClass({
         stateClass = (service.state.name === 'Error') ? 'danger' : 'success',
         notifClass = service.state.notification ? '' : 'hidden',
         serverlist = this.generateServersList(servers),
-        responseTime = this.state.rtime,
+        responseTime = this.state.responseTime,
         requestPerSec = this.state.rate,
-        req_rate_max = this.state.req_rate_max;
+        rateMax = this.state.rateMax;
 
     // Dynamic classes
     var deleteButtonClasses = classNames('button', 'clip-textoverflow', {
@@ -121,7 +121,7 @@ var ServiceBox = React.createClass({
           </div>
         </div>
         <div className='service-section service-metrics section-fifth'>
-          <ServiceMetricsGraph responseTime={responseTime} requestPerSec={requestPerSec} req_rate_max={req_rate_max} />
+          <ServiceMetricsGraph responseTime={responseTime} requestPerSec={requestPerSec} rateMax={rateMax} />
         </div>
         <div className='service-section service-servers section-fifth'>
           <h4>Servers</h4>
