@@ -1,3 +1,4 @@
+var _ = require('underscore');
 var Config = require('../config.js');
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var LoadStates = require("../constants/LoadStates.js");
@@ -61,7 +62,7 @@ function post(url, body, contenttype) {
 function put(url, body, contenttype) {
   return request
     .put(url)
-    .set('Content-type', contenttype)    
+    .set('Content-type', contenttype)
     .send(body)
     .timeout(TIMEOUT);
 };
@@ -77,7 +78,23 @@ function del(url,body) {
       .del(url)
       .timeout(TIMEOUT);
   }
-};  
+};
+function purge(body) {
+
+  try {
+    return _.omit(body, "status");
+  } catch (e) {
+    // ignore
+  }
+
+  try {
+    return JSON.stringify(_.omit(JSON.parse(body), "status"));
+  } catch (e) {
+    // ignore
+  }
+
+  return body;
+};
 
 // Public methods
 var Api = {
@@ -95,7 +112,7 @@ var Api = {
     var url = makeUrl(uri);
     abortPendingRequests(actionType);
     dispatch(actionType,body);
-    _pendingRequests[actionType] = post(url,body, contenttype).end(
+    _pendingRequests[actionType] = post(url,purge(body), contenttype).end(
       handleResponse(actionType)
     );
   },
@@ -104,7 +121,7 @@ var Api = {
     var url = makeUrl(uri);
     abortPendingRequests(actionType);
     dispatch(actionType,body);
-    _pendingRequests[actionType] = put(url,body, contenttype).end(
+    _pendingRequests[actionType] = put(url,purge(body), contenttype).end(
        handleResponse(actionType)
     );
   },
@@ -112,10 +129,10 @@ var Api = {
     var url = makeUrl(uri);
     abortPendingRequests(actionType);
     dispatch(actionType, body);
-    _pendingRequests[actionType] = del(url,body).end(
+    _pendingRequests[actionType] = del(url,purge(body)).end(
       handleResponse(actionType)
     );
-  }  
+  }
 };
 
 module.exports = Api;
