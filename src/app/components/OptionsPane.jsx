@@ -80,7 +80,8 @@ var OptionsPane = React.createClass({
     try {
       persistenceItems['type'] = apiInfo.persistence.type;
       persistenceItems['url'] = apiInfo.persistence.url;
-      persistenceItems['database'] = apiInfo.persistence.database;
+      if (apiInfo.persistence.database) persistenceItems['database'] = apiInfo.persistence.database;
+      if (apiInfo.persistence.index) persistenceItems['index'] = apiInfo.persistence.index;
     } catch(e) {
       persistenceItems = {};
       persistenceItems['error'] = 'Internal error';
