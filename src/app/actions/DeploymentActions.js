@@ -70,7 +70,7 @@ var DeploymentActions = {
         endpoint = portAndProtocolArray[0];
     }, this);
     
-    tags.push('endpoints', 'endpoints:' + deployment.name + '_' + endpoint);
+    tags.push('gateways', 'gateways:' + deployment.name + '_' + endpoint + '____');
     tags.push('metrics');
     tags.push('metrics:responseTime');
 

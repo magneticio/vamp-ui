@@ -25,9 +25,9 @@ function dispatch(actionType, response) {
     try {
          var text = JSON.parse(payload.response.text);
          if (text instanceof Array) {
-           response.text = JSON.stringify(_.map(text, toOld(response)));
+           payload.response.text = JSON.stringify(_.map(text, function(blueprint) { return toOld(response, blueprint); }));
          } else {
-           response.text = JSON.stringify(toOld(response, text));
+           payload.response.text = JSON.stringify(toOld(response, text));
          }
      } catch (e) {
        // yaml format
