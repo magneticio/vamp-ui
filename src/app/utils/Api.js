@@ -21,9 +21,7 @@ function makeUrl(path) {
 function dispatch(actionType, response) {
   var payload = {actionType: actionType, response: response };
 
-  if (response && response.endpoints) {
-    response = toNew(response);
-  } else if (response && response.req && response.req.method === 'GET' && (response.req.url.indexOf('deployments') > -1 || response.req.url.indexOf('blueprints') > -1)) {
+  if (response && response.req && response.req.method === 'GET' && (response.req.url.indexOf('deployments') > -1 || response.req.url.indexOf('blueprints') > -1)) {
     try {
          var text = JSON.parse(payload.response.text);
          if (text instanceof Array) {
@@ -132,9 +130,6 @@ function toNew(deployment) {
         routing.routes[service.breed.name] = service.routing;
       });
     });
-
-    console.log("old: " + JSON.stringify(old));
-
     return old;
   }
 
@@ -241,6 +236,11 @@ var Api = {
     var url = makeUrl(uri);
     abortPendingRequests(actionType);
     dispatch(actionType,body);
+
+    if (uri.indexOf('deployments') > -1 && body.endpoints) {
+      body = toNew(body);
+    }
+
     _pendingRequests[actionType] = put(url,purge(body), contenttype).end(
        handleResponse(actionType)
     );
@@ -249,6 +249,28 @@ var Api = {
     var url = makeUrl(uri);
     abortPendingRequests(actionType);
     dispatch(actionType, body);
+
+    if (uri.indexOf('deployments') > -1 && body.clusters) {
+      // bug fix
+      var deployment = deployments[body.name];
+      var serviceName = body.clusters.frontend.services[0].breed.ref;
+
+      if (deployment) {
+        var clusterName;
+
+        _.each(deployment.clusters, function(cluster, name){
+          if(_.find(cluster.services, function(service){
+             return service.breed.name == serviceName;
+          })) clusterName = name;
+        });
+
+        body.clusters[clusterName] = body.clusters.frontend;
+        delete body.clusters['frontend'];
+      }
+
+      console.log(JSON.stringify(body));
+    }
+
     _pendingRequests[actionType] = del(url,purge(body)).end(
       handleResponse(actionType)
     );

@@ -171,7 +171,7 @@ var DeploymentStore = assign({}, EventEmitter.prototype,{
         break;
       case DeploymentConstants.DELETE_SERVICE + '_SUCCESS':
         //var deletedDeployment = JSON.parse(payload.response.text);
-        console.log(payload.response);
+        //console.log(payload.response);
         //delete _deployments[deletedDeployment.name];
         break;
 
