@@ -92,11 +92,32 @@ function toOld(response, blueprint) {
   // store if it's deployment
   if (response.req.url.indexOf('deployments') > -1) {
     var source = JSON.parse(response.text);
+    var deployment;
+
     if (source instanceof Array) {
-      deployments[blueprint.name] = _.find(source, function(dep){ return dep.name == blueprint.name; });
+      deployment = _.find(source, function(dep){ return dep.name == blueprint.name; });
     } else {
-      deployments[blueprint.name] = source;
+      deployment = source;
     }
+    // clean up
+    delete deployment['gateways'];
+    delete deployment['ports'];
+    delete deployment['environment_variables'];
+    delete deployment['hosts'];
+
+    _.each(deployment.clusters, function(cluster, name) {
+
+      delete cluster['port_mapping'];
+      delete cluster['dependencies'];
+
+      _.each(cluster.services, function(service) {
+        delete service['state'];
+        delete service['instances'];
+        delete service['dependencies'];
+      });
+    });
+
+    deployments[blueprint.name] = deployment;
   }
 
   return blueprint;
@@ -108,12 +129,11 @@ function toNew(deployment) {
       _.each(cluster.services, function(service) {
         var oldCluster = old.clusters[name];
         var routing = oldCluster.routing[Object.keys(oldCluster.routing)[0]];
-
-        console.log("routing: " + JSON.stringify(routing));
-
         routing.routes[service.breed.name] = service.routing;
       });
     });
+
+    console.log("old: " + JSON.stringify(old));
 
     return old;
   }
