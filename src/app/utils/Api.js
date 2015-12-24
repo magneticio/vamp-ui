@@ -98,28 +98,32 @@ function toOld(response, blueprint) {
       deployment = source;
     }
     // clean up
-    delete deployment['gateways'];
-    delete deployment['ports'];
-    delete deployment['environment_variables'];
-    delete deployment['hosts'];
-
-    _.each(deployment.clusters, function(cluster, name) {
-
-      delete cluster['port_mapping'];
-      delete cluster['dependencies'];
-
-      _.each(cluster.services, function(service) {
-        delete service['state'];
-        delete service['instances'];
-        delete service['dependencies'];
-      });
-    });
-
-    deployments[blueprint.name] = deployment;
+    deployments[blueprint.name] = cleanUpDeployment(deployment);
   }
 
   return blueprint;
 };
+function cleanUpDeployment(deployment) {
+  delete deployment['endpoints'];
+  delete deployment['gateways'];
+  delete deployment['ports'];
+  delete deployment['environment_variables'];
+  delete deployment['hosts'];
+
+  _.each(deployment.clusters, function(cluster, name) {
+
+    delete cluster['port_mapping'];
+    delete cluster['dependencies'];
+
+    _.each(cluster.services, function(service) {
+      delete service['state'];
+      delete service['instances'];
+      delete service['dependencies'];
+    });
+  });
+  return deployment;
+};
+
 function toNew(deployment) {
   var old = deployments[deployment.name];
   if (old) {
@@ -252,25 +256,39 @@ var Api = {
     abortPendingRequests(actionType);
     dispatch(actionType, body);
 
-    if (uri.indexOf('deployments') > -1 && body.clusters) {
-      // bug fix
-      var deployment = deployments[body.name];
-      var serviceName = body.clusters.frontend.services[0].breed.ref;
 
-      if (deployment) {
-        var clusterName;
+    if (uri.indexOf('deployments') > -1) {
+      // removing service
+      if (body.clusters) {
+        // bug fix
+        var deployment = deployments[body.name];
+        var serviceName = body.clusters.frontend.services[0].breed.ref;
 
-        _.each(deployment.clusters, function(cluster, name){
-          if(_.find(cluster.services, function(service){
-             return service.breed.name == serviceName;
-          })) clusterName = name;
+        if (deployment) {
+          var clusterName;
+          _.each(deployment.clusters, function(cluster, name){
+            if(_.find(cluster.services, function(service){
+               return service.breed.name == serviceName;
+            })) clusterName = name;
+          });
+
+          body.clusters[clusterName] = body.clusters.frontend;
+          delete body.clusters['frontend'];
+        }
+      } else {
+        // removing deployment
+        var deployment = cleanUpDeployment(JSON.parse(body));
+
+        _.each(deployment.clusters, function(cluster, name) {
+            delete cluster['routes'];
+          _.each(cluster.services, function(service) {
+            delete service['servers'];
+            delete service['routing'];
+          });
         });
 
-        body.clusters[clusterName] = body.clusters.frontend;
-        delete body.clusters['frontend'];
+        body = JSON.stringify(deployment);
       }
-
-      console.log(JSON.stringify(body));
     }
 
     _pendingRequests[actionType] = del(url,purge(body)).end(
