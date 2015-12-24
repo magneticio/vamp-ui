@@ -196,10 +196,12 @@ function del(url,body) {
 };
 function purge(body) {
 
-  try {
-    return _.omit(body, "status");
-  } catch (e) {
-    // ignore
+  if (body !== null && typeof body === 'object') {
+    try {
+      return _.omit(body, "status");
+    } catch (e) {
+      // ignore
+    }
   }
 
   try {
