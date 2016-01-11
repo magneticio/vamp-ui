@@ -85,6 +85,7 @@ var DeploymentDetail = React.createClass({
       if(key == clustername){
         _.each(value.services, function(service, key){
           service.routing.weight = service.breed.name in weights ? weights[service.breed.name] : service.routing.weight;
+          service.routing.weight = service.routing.weight + "%";
         }, this); 
       };
     }, this);

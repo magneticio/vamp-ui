@@ -74,6 +74,10 @@ function toOld(response, blueprint) {
         var name = service.breed.name ? service.breed.name : service.breed.reference;
         if (routing && routing.routes && routing.routes[name]) {
           service.routing = routing.routes[name];
+
+          if (service.routing.weight) {
+            service.routing.weight = service.routing.weight.replace("%", "");
+          }
         }
         // servers
         service.servers = service.instances;
@@ -105,6 +109,7 @@ function toOld(response, blueprint) {
 };
 function cleanUpDeployment(deployment) {
   delete deployment['endpoints'];
+  delete deployment['lookup_name'];
   delete deployment['gateways'];
   delete deployment['ports'];
   delete deployment['environment_variables'];
@@ -263,7 +268,6 @@ var Api = {
     abortPendingRequests(actionType);
     dispatch(actionType, body);
 
-
     if (uri.indexOf('deployments') > -1) {
       // removing service
       if (body.clusters) {
@@ -298,6 +302,7 @@ var Api = {
       }
     }
 
+console.log("===> " + JSON.stringify(body))
     _pendingRequests[actionType] = del(url,purge(body)).end(
       handleResponse(actionType)
     );
