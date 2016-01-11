@@ -78,10 +78,10 @@ var OptionsPane = React.createClass({
       errorFlag = true;
     }
     try {
-      persistenceItems['type'] = apiInfo.persistence.type;
-      persistenceItems['url'] = apiInfo.persistence.url;
-      if (apiInfo.persistence.database) persistenceItems['database'] = apiInfo.persistence.database;
-      if (apiInfo.persistence.index) persistenceItems['index'] = apiInfo.persistence.index;
+      persistenceItems['type'] = apiInfo.persistence.database.type;
+      persistenceItems['url'] = apiInfo.persistence.database.url;
+      if (apiInfo.persistence.database.index) persistenceItems['index'] = apiInfo.persistence.database.index;
+      persistenceItems['key-value'] = apiInfo.persistence.key_value.type;
     } catch(e) {
       persistenceItems = {};
       persistenceItems['error'] = 'Internal error';
@@ -89,7 +89,6 @@ var OptionsPane = React.createClass({
       errorFlag = true;
     }
     try {
-      gatewayItems['zookeeper'] = apiInfo.gateway.store.zookeeper.version;
       gatewayItems['router'] = apiInfo.gateway.marshaller;
       gatewayItems['kibana'] = apiInfo.gateway.kibana.enabled ? "enabled" : "disabled";
     } catch(e) {
@@ -100,10 +99,8 @@ var OptionsPane = React.createClass({
       errorFlag = true;
     }
     try{
-      pulseItems['cluster_name'] = apiInfo.pulse.elasticsearch.cluster_name;
-      pulseItems['name'] = apiInfo.pulse.elasticsearch.name;
-      pulseItems['version'] = apiInfo.pulse.elasticsearch.version.number;
-      pulseItems['lucene_version'] = apiInfo.pulse.elasticsearch.version.lucene_version;
+      pulseItems['cluster name'] = apiInfo.pulse.elasticsearch.cluster_name;
+      pulseItems['status'] = apiInfo.pulse.elasticsearch.status;
     } catch(e) {
       pulseItems = {};
       pulseItems['error'] = 'Internal error';
