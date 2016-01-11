@@ -91,10 +91,18 @@ var BlueprintListItem = React.createClass({
 
   // Render
   render: function() {
-
     // Set vars
     var blueprint = this.props.blueprint;
-        endpoints = this.prepareMetaInformation(blueprint.endpoints),
+        endpoints = this.prepareMetaInformation(
+          _.map(blueprint.gateways, function(gateway, port) {
+            var route = Object.keys(gateway.routes)[0].split("/")
+            route.splice(0, 1);
+            var target = route.join('.');
+            var endpoint = {};
+            endpoint[target] = port;
+            return endpoint;
+          })
+        ),
         clusters = this.prepareMetaInformation(blueprint.clusters, 'key'),
         services = this.prepareServices(blueprint.clusters);    
 

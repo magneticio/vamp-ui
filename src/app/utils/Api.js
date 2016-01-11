@@ -21,7 +21,7 @@ function makeUrl(path) {
 function dispatch(actionType, response) {
   var payload = {actionType: actionType, response: response };
 
-  if (response && response.req && response.req.method === 'GET' && (response.req.url.indexOf('deployments') > -1 || response.req.url.indexOf('blueprints') > -1)) {
+  if (response && response.req && response.req.method === 'GET' && response.req.url.indexOf('deployments') > -1) {
     try {
          var text = JSON.parse(payload.response.text);
          if (text instanceof Array) {
