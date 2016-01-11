@@ -139,7 +139,6 @@ function toNew(deployment) {
 
   return deployment;
 };
-// \workaround
 
 function handleResponse(actionType) {
   return function (err, res) {
@@ -150,10 +149,18 @@ function handleResponse(actionType) {
     } else if (typeof res == "undefined" || !res.ok) {
       handleError(actionType, res);
     } else {
-      dispatch(actionType + '_SUCCESS', res);
+    if (res.req.method === "PUT" || res.req.method === "POST") {
+      var text = JSON.parse(res.text);
+      if (text instanceof Array) {
+        res.text = JSON.stringify(text[text.length - 1]);
+      }
+    }
+    dispatch(actionType + '_SUCCESS', res);
     }
   };
 };
+// \workaround
+
 function handleError(actionType, res){
   console.log('api error', res);
   if(res){
