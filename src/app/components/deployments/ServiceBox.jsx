@@ -87,6 +87,8 @@ var ServiceBox = React.createClass({
         responseTime = this.state.responseTime,
         requestPerSec = this.state.rate;
 
+    service.scale.memory = Math.round(service.scale.memory.slice(0, -2));
+
     // Dynamic classes
     var deleteButtonClasses = classNames('button', 'clip-textoverflow', {
       'button-ghost disabled': service.routing.weight !== 0,
