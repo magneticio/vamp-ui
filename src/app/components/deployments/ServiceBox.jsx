@@ -87,8 +87,6 @@ var ServiceBox = React.createClass({
         responseTime = this.state.responseTime,
         requestPerSec = this.state.rate;
 
-    service.scale.memory = Math.round(service.scale.memory.slice(0, -2));
-
     // Dynamic classes
     var deleteButtonClasses = classNames('button', 'clip-textoverflow', {
       'button-ghost disabled': service.routing.weight !== 0,
@@ -130,7 +128,7 @@ var ServiceBox = React.createClass({
         	<h4>Status</h4>
           <StatusIndicator intention={service.state.intention} step={service.state.step.name} />
           <h4>Scale</h4>
-          <p>{service.scale.cpu} CPU / {service.scale.memory} MB</p>
+          <p>{service.scale.cpu} CPU / {service.scale.memory}</p>
           <p className='muted'>{service.scale.instances} instances</p>
         </div>
       </div>

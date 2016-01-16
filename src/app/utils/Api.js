@@ -302,7 +302,6 @@ var Api = {
       }
     }
 
-console.log("===> " + JSON.stringify(body))
     _pendingRequests[actionType] = del(url,purge(body)).end(
       handleResponse(actionType)
     );
