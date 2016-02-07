@@ -83,6 +83,7 @@ function toOld(response, blueprint) {
         service.servers = service.instances;
         delete service['instances'];
       });
+      delete routing['port'];
     }
     delete cluster['routing'];
 
@@ -137,6 +138,7 @@ function toNew(deployment) {
         var oldCluster = old.clusters[name];
         var routing = oldCluster.routing[Object.keys(oldCluster.routing)[0]];
         routing.routes[service.breed.name] = service.routing;
+        delete routing['port'];
       });
     });
     return old;
