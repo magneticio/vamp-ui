@@ -138,6 +138,13 @@ function toNew(deployment) {
         var oldCluster = old.clusters[name];
         var routing = oldCluster.routing[Object.keys(oldCluster.routing)[0]];
         routing.routes[service.breed.name] = service.routing;
+
+        _.each(Object.keys(routing.routes), function(name) {
+          var route = routing.routes[name];
+          if (route.weight && route.weight.indexOf('%', route.weight.length - 1) === -1)
+            route.weight = route.weight + '%';
+        });
+
         delete routing['port'];
       });
     });
