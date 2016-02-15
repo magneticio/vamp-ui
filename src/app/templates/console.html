@@ -1,6 +1,6 @@
 <h2>Deployments:</h2>
 <div>
-  <div *ngFor="#deployment of deployments">
+  <div *ngFor="#deployment of _store.deployments">
     {{ deployment.name }}
 
     <h3>Clusters:</h3>
@@ -15,7 +15,7 @@
 
 <h2>Gateways:</h2>
 <div>
-  <div *ngFor="#gateway of gateways">
+  <div *ngFor="#gateway of _store.gateways">
     {{ gateway.name }}
   </div>
 </div>

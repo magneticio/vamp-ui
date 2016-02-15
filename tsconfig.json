@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "rootDir":"src/app",
+    "outDir": "src/js",
     "target": "es5",
     "module": "system",
     "moduleResolution": "node",

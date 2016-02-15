@@ -5,6 +5,9 @@ import { bootstrap } from 'angular2/platform/browser'
 import { Component } from 'angular2/core'
 import { HTTP_PROVIDERS } from 'angular2/http'
 
+import { Api } from './lib/api'
+import { Store } from './lib/store'
+
 import { ConsoleComponent } from './dev/console'
 
 @Component({
@@ -20,5 +23,5 @@ export class AppComponent { }
 
 bootstrap(
   AppComponent,
-  [ HTTP_PROVIDERS ]
+  [ HTTP_PROVIDERS , Api , Store ]
 )
