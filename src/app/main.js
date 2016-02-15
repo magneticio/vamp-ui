@@ -1,3 +1,5 @@
+// Needed because https://github.com/angular/angular/issues/4902
+///<reference path="../../node_modules/angular2/typings/browser.d.ts"/>
 System.register(['angular2/platform/browser', 'angular2/core', 'angular2/http', './dev/console'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
