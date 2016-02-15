@@ -12,6 +12,7 @@
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="node_modules/rxjs/bundles/Rx.js"></script>
     <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="node_modules/angular2/bundles/http.dev.js"></script>
 
     <!-- 2. Configure SystemJS -->
     <script>
@@ -23,7 +24,7 @@
           }
         }
       });
-      System.import('src/main')
+      System.import('src/app/main')
             .then(null, console.error.bind(console));
     </script>
 
@@ -31,7 +32,7 @@
 
   <!-- 3. Display the application -->
   <body>
-    <my-app>Loading...</my-app>
+    <vamp-app>Loading...</vamp-app>
   </body>
 
 </html>
