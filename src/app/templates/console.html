@@ -1,0 +1,21 @@
+<h2>Deployments:</h2>
+<div>
+  <div *ngFor="#deployment of deployments">
+    {{ deployment.name }}
+
+    <h3>Clusters:</h3>
+    <div *ngFor="#cluster of deployment.clusters | values">
+      <h4>Services:</h4>
+      <div *ngFor="#service of cluster.services">
+        Status: {{ service.breed.name }} : {{ service.state.step.name }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>Gateways:</h2>
+<div>
+  <div *ngFor="#gateway of gateways">
+    {{ gateway.name }}
+  </div>
+</div>
