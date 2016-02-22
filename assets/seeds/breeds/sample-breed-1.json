@@ -8,7 +8,7 @@
     "constants": {},
     "dependencies": {
         "db":{ 
-            "name": "mysql"
+            "ref": "mysql"
         }
     }
 }

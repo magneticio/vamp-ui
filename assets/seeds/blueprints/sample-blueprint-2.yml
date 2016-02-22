@@ -1,8 +1,20 @@
 name: monarchs:1.5
-endpoints:
-  frontend.port: 9090/http
+gateways:
+  9090/http: frontend/port
 clusters:
   frontend:
+    routing:
+      port:
+        routes:
+          monarch_front:0.1:
+            weight: 75%
+          monarch_front:0.2:
+            weight: 5%
+          monarch_front:0.3:
+            weight: 10%
+          monarch_front:0.4:
+            weight: 10%
+
     services:
     - breed:
         name: monarch_front:0.1
@@ -14,14 +26,11 @@ clusters:
         constants: {}
         dependencies:
           backend:
-            name: monarch_backend:0.1
+            ref: monarch_backend:0.1
       scale:
         cpu: 0.5
-        memory: 128.0
+        memory: "128.0MB"
         instances: 1
-      routing:
-        weight: 75
-        filters:
       dialects: {}
     - breed:
         name: monarch_front:0.3
@@ -33,14 +42,11 @@ clusters:
         constants: {}
         dependencies:
           backend:
-            name: monarch_backend:0.1
+            ref: monarch_backend:0.1
       scale:
         cpu: 0.5
-        memory: 128.0
+        memory: "128.0MB"
         instances: 1
-      routing:
-        weight: 10
-        filters:
       dialects: {}
     - breed:
         name: monarch_front:0.4
@@ -52,14 +58,11 @@ clusters:
         constants: {}
         dependencies:
           backend:
-            name: monarch_backend:0.1
+            ref: monarch_backend:0.1
       scale:
         cpu: 0.5
-        memory: 128.0
+        memory: "128.0MB"
         instances: 1
-      routing:
-        weight: 10
-        filters:
       dialects: {}        
     - breed:
         name: monarch_front:0.2
@@ -71,11 +74,8 @@ clusters:
         dependencies: {}
       scale:
         cpu: 0.5
-        memory: 256.0
+        memory: "256.0MB"
         instances: 1
-      routing:
-        weight: 5
-        filters:
       dialects: {}
     dialects: {}
   backend:

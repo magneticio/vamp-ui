@@ -1,7 +1,7 @@
 name: shop:1.0
 
-endpoints:
-  catalog.port: 9050
+gateways:
+  9050: catalog/port
 
 clusters:
 

@@ -1,8 +1,16 @@
 name: monarchs:1.2
-endpoints:
-  frontend.port: 9010/http
+gateways:
+  9010/http: frontend/port
 clusters:
   frontend:
+    routing:
+      port:
+        routes:
+          monarch_front:0.1:
+            weight: 50%
+          monarch_front:0.2:
+            weight: 50%
+
     services:
       -
         breed:
@@ -14,12 +22,9 @@ clusters:
             backend[BACKEND]: http://$backend.host:$backend.ports.port/api/message          
           dependencies:
             backend: monarch_backend:0.1
-        routing:
-          weight: 50
-          filters:
         scale:
           cpu: 0.5
-          memory: 256
+          memory: "256MB"
           instances: 1
       -    
         breed:
@@ -27,12 +32,9 @@ clusters:
           deployable: magneticio/monarch:0.2
           ports:
             port: 8080/http
-        routing:
-          weight: 50
-          filters:
         scale:
           cpu: 0.5
-          memory: 256
+          memory: "256MB"
           instances: 1
   backend:
     services:
