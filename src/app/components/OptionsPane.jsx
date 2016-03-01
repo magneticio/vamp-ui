@@ -89,8 +89,8 @@ var OptionsPane = React.createClass({
       errorFlag = true;
     }
     try {
-      gatewayItems['router'] = apiInfo.gateway.marshaller;
-      gatewayItems['kibana'] = apiInfo.gateway.kibana.enabled ? "enabled" : "disabled";
+      gatewayItems['router'] = apiInfo.gateway_driver.marshaller;
+      gatewayItems['kibana'] = apiInfo.gateway_driver.kibana.enabled ? "enabled" : "disabled";
     } catch(e) {
       console.log(e);
       gatewayItems = {};
