@@ -2,11 +2,12 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Vamp</title>
+  <title>Vamp – Open Source Edition</title>
   <base href="/">
+  <link href="vamp.css" rel="stylesheet">
   {{content-for 'head'}}
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  
+
   <!-- Service worker support is disabled by default.
        Install the worker script and uncomment to enable.
        Only enable service workers in production.
@@ -18,6 +19,8 @@
     }
   </script>
   -->
+  <script src="https://cdn.rawgit.com/ajaxorg/ace-builds/v1.2.0/src-min-noconflict/ace.js"></script>
+
 </head>
 <body>
   <vamp-app>Loading...</vamp-app>
@@ -31,6 +34,7 @@
   <script src="vendor/angular2/bundles/angular2.dev.js"></script>
   <script src="vendor/angular2/bundles/http.dev.js"></script>
   <script src="vendor/angular2/bundles/router.dev.js"></script>
+
 
   <script src="thirdparty/libs.js"></script>
   <script>

@@ -1,0 +1,10 @@
+{
+    "name": "unfinished-eagle:2.2.0",
+    "deployable": "magneticio/unfinished-eagle:2.2.0",
+    "ports": {
+        "port": "80/http"
+    },
+    "environment_variables": {},
+    "constants": {},
+    "dependencies": {}
+}
