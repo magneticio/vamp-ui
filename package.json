@@ -9,12 +9,13 @@
     }
   },
   "scripts": {
-    "start": "ng server",
+    "start": "npm seed && ng server",
     "postinstall": "typings install --ambient",
     "lint": "tslint src/**/*.ts",
     "format": "clang-format -i -style=file --glob=src/**/*.ts",
     "pree2e": "webdriver-manager update",
-    "e2e": "protractor"
+    "e2e": "protractor",
+    "seed": "sh seeds/seed-blueprint.sh && sh seeds/seed.sh"
   },
   "private": true,
   "dependencies": {
