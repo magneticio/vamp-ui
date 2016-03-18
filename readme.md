@@ -1,6 +1,6 @@
 # VAMP OSS UI Architecture
 
-The Vamp OSS UI provides an interface to all artefacts accessible via the REST API. Since most of the artefacts share the same capabilities, we opted for an approach which lets us define endpoints and entities following a generic template so that the UI is consistent across artefacts.
+The Vamp OSS UI provides an interface to all artifacts accessible via the REST API. Since most of the artifacts share the same capabilities, we opted for an approach which lets us define endpoints and entities following a generic template so that the UI is consistent across artifacts.
 
 ## Overview of Artifacts
 
@@ -29,12 +29,14 @@ The Vamp OSS UI provides an interface to all artefacts accessible via the REST A
 
 ## Service architecture
 
-Almost every artefact can be mocked up as a CRUD service. This allows us to define Angular2 routes to all of the artefacts referencing a generic CRUD service. The CRUD service makes sure the correct functions are coupled to the corresponding API endpoints. The payload of any of the requests must be specified by the user in a text-area with YAML/JSON code formatting.
+Almost every artefact can be mocked up as a CRUD service. This allows us to define Angular2 routes to all of the artifacts referencing a generic CRUD service. The CRUD service makes sure the correct functions are coupled to the corresponding API endpoints. The payload of any of the requests must be specified by the user in a text-area with YAML/JSON code formatting.
 
-The only exceptions to this service-architecture are the cluster-specific routes, scales & sla's, and the VAMP event-system. A custom service needs to be coded to deal with these artefacts. The SSE coupling specifically needs to be integrated in a responsive metric/chart interface.
+The only exceptions to this service-architecture are the cluster-specific routes, scales & SLA's, and the VAMP event-system. A custom service needs to be coded to deal with these artifacts. The SSE coupling specifically needs to be integrated in a responsive metric/chart interface.
 
-## Event service coupling between SSE & other artefacts
+## Event service coupling between SSE & other artifacts
 
-## SSE Service?
+This might act as an interface between Server Side Events and the Stores discussed below.
 
-## Service architecture megastore?
+## Service architecture stores
+
+The VAMP OS UI has a generic Store service which provides an interface to all default artifact methods (e.g. `GET|POST|PUT|DELETE`) which are consumed by the API service. For each of the artifacts the generic Store is extended with per-artifact custom functionality. E.g. in the case of Blueprints the Store might be extended with `addCluster()` or similar methods. These methods provide mappings (with optional payloads) to generic API calls via the API service.
