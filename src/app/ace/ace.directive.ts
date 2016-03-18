@@ -16,6 +16,7 @@ declare var ace: any;
         "textChanged"
     ]
 })
+
 export class AceDirective {
     private editor;
     public textChanged: EventEmitter<string>;
