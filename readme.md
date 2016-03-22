@@ -8,7 +8,7 @@ The Vamp OSS UI provides an interface to all artifacts accessible via the REST A
 - `GET|POST|PUT|DELETE /blueprints`
 - `GET|POST|PUT|DELETE /deployments`
 	- `GET|POST|PUT /deployments/:id/clusters/:name/routing`
-	- `GET|POST|PUT /deployments/:id/clusters/:name/scale`
+	- `GET|POST|PUT /api/v1/deployments/:id/clusters/:name/services/:name/scale`
 	- `GET|POST|PUT|DELETE  /deployments/:id/clusters/:name/sla`
 - `GET|POST|PUT|DELETE /escalations`
 - `POST /events/get | /events`
