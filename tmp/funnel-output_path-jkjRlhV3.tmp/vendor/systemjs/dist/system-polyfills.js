@@ -1,0 +1,1 @@
+/Users/marijnscholtus/VM/vamp-ui/tmp/funnel-input_base_path-MrOLxIzi.tmp/0/systemjs/dist/system-polyfills.js

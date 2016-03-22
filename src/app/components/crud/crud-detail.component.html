@@ -1,0 +1,13 @@
+<div *ngIf="item">
+  <h3>"{{editName}}"</h3>
+  <div>
+    <label>Name:</label>
+    {{item.Name}}
+  </div>
+  <div>
+    <label>Name:</label>
+    <input [(ngModel)]="editName" placeholder="name"/>
+  </div>
+  <button (click)="save()">Save</button>
+  <button (click)="cancel()">Cancel</button>
+</div>
