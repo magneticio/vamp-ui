@@ -46,21 +46,22 @@ export class Store {
 
 // We add custom functions to each of the artifact types based on extending the
 // Store class like so:
-export class BlueprintStore extends Store {
-  private capabilites:Array<string> = [ 'GET' , 'POST' , 'PUT' , 'DELETE' ];
 
-  // Add requirements specific to Blueprints here.
-  constructor() {
-    super();
-
-    //api.capabilites( this.capabilites );
-  }
-
-  // This could add a cluster by providing a name and a JSON object.
-  addCluster( name:string , data:Object ) {}
-}
-
-export class GatewayStore extends Store {} //etc.
+// export class BlueprintStore extends Store {
+//   private capabilites:Array<string> = [ 'GET' , 'POST' , 'PUT' , 'DELETE' ];
+//
+//   // Add requirements specific to Blueprints here.
+//   constructor() {
+//     super();
+//
+//     api.capabilites( this.capabilites );
+//   }
+//
+//   // This could add a cluster by providing a name and a JSON object.
+//   addCluster( name:string , data:Object ) {}
+// }
+//
+// export class GatewayStore extends Store {} //etc.
 
 // Ideally we put all these classes in their own files, regardless of size, for
 // better code organization.
