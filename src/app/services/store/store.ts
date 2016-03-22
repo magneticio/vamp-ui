@@ -15,7 +15,7 @@ export class Store {
   // 1. an API coupling with the correct method names. (private)
   // 2. the name and/or interface of the VAMP artifact onto which this
   //    store will be modelled.
-  constructor( artifact:string , api:Object ) {
+  constructor( ) {
 
   }
 
@@ -53,7 +53,7 @@ export class BlueprintStore extends Store {
   constructor() {
     super();
 
-    api.capabilites( this.capabilites );
+    //api.capabilites( this.capabilites );
   }
 
   // This could add a cluster by providing a name and a JSON object.

@@ -23,6 +23,7 @@
   <!-- include in dev/production build -->
   <script src="https://cdn.rawgit.com/ajaxorg/ace-builds/v1.2.0/src-min-noconflict/ace.js"></script>
   <script src="https://cdn.rawgit.com/ajaxorg/ace-builds/v1.2.0/src-min-noconflict/mode-yaml.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 
 </head>
 <body>
@@ -38,7 +39,6 @@
   <script src="vendor/angular2/bundles/http.dev.js"></script>
   <script src="vendor/angular2/bundles/router.dev.js"></script>
 
-
   <script src="thirdparty/libs.js"></script>
   <script>
     System.config({
@@ -48,10 +48,9 @@
           defaultExtension: 'js'
         }
       },
-      /* Example for building libs
       paths: {
-        'ts-md5/dist/md5': 'assets/js/md5.js'
-      }*/
+        'dist/vendor/chartjs': 'node_modules/chartjs/chart.js'
+      }
     });
     System.import('app.js').then(null, console.error.bind(console));
   </script>

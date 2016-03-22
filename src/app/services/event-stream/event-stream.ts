@@ -44,26 +44,26 @@ export class EventStream {
 
     source.addEventListener('event', e => {
       // Deploying/undeploying
-      console.log('eventStream:event', e.data);
-      this._eventStore.items.push(e.data);
+      //console.log('eventStream:event', e.data);
+      this._eventStore.items.push(JSON.parse(e.data));
       this._eventObserver.next(this._eventStore.items);
     }, false);
 
     source.addEventListener('gateway-metrics', e => {
       // Metrics
-      console.log('eventStream:metric', e.data);
-      this._metricStore.items.push(e.data);
+      //console.log('eventStream:metric', e.data);
+      this._metricStore.items.push(JSON.parse(e.data));
       this._metricObserver.next(this._metricStore.items);
     }, false);
 
     source.addEventListener('open', function(e) {
-      console.log('eventStream opened…');
+      //console.log('eventStream opened…');
     }, false);
 
     source.addEventListener('error', function(e) {
-      console.log('eventStream errored…');
+      //console.log('eventStream errored…');
       if (e.readyState == EventSource.CLOSED) {
-        console.log('eventStream closed…');
+        //console.log('eventStream closed…');
       }
     }, false);
   }
