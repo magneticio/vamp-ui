@@ -1,7 +1,7 @@
 import {Component} from 'angular2/core';
-import {CrudListComponent} from './crud/crud-list.component';
-import {Test} from './test/test';
-import {CrudRoot} from './crud/crud-root.component';
+import {CrudListComponent} from './components/crud/crud-list.component';
+import {Test} from './components/test/test';
+import {CrudRoot} from './components/crud/crud-root.component';
 import {Http, HTTP_PROVIDERS} from 'angular2/http';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 

@@ -70,7 +70,7 @@ import {AceEditor} from './aceEditor';
         'saveHandler: save',
         'changeHandler: change'
     ],
-    templateUrl: './app/editor/editor.html',
+    templateUrl: 'app///components/editor/editor.html',
     directives: [CORE_DIRECTIVES, AceEditor],
     styles: []
 })

@@ -1,11 +1,11 @@
 import {Component, OnInit} from 'angular2/core';
-import {CrudService} from './crud.service';
+import {ApiService} from '../../services/api/api';
 import {RouteParams, Router} from 'angular2/router';
 import {CanDeactivate, ComponentInstruction} from 'angular2/router';
 
 @Component({
-  templateUrl: 'app/crud/crud-detail.component.html',
-  styleUrls: ['app/crud/crud-detail.component.css']
+  templateUrl: 'app/components/crud/crud-detail.component.html',
+  styleUrls: ['app/components/crud/crud-detail.component.css']
 })
 export class CrudDetailComponent implements OnInit, CanDeactivate {
 
@@ -15,7 +15,7 @@ export class CrudDetailComponent implements OnInit, CanDeactivate {
   editName: string;
 
   constructor(
-    private _service: CrudService,
+    private _service: ApiService,
     private _router: Router,
     private _routeParams: RouteParams
     ) { }

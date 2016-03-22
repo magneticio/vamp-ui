@@ -12,10 +12,10 @@ import {
 import {provide} from 'angular2/core';
 import {CrudDetailComponent} from './crud-detail.component';
 import {Router, RouteParams} from 'angular2/router';
-import {Crud, CrudService} from './crud.service';
+import {ApiService} from '../../services/api/api';
 
 class MockCrudService {
-  get() { return Promise.resolve(new Crud('one')); }
+  //get() { return Promise.resolve(new Crud('one')); }
 }
 
 class MockRouter {
@@ -29,7 +29,7 @@ class MockRouteParams {
 describe('CrudDetailComponent', () => {
 
   beforeEachProviders(() => [
-    provide(CrudService, {useClass: MockCrudService}),
+    //provide(ApiService, {useClass: MockCrudService}),
     provide(Router, {useClass: MockRouter}),
     provide(RouteParams, {useClass: MockRouteParams}),
   ]);

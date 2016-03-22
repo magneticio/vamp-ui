@@ -1,6 +1,8 @@
 {
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "eventsource": "github:yankee42/typescript-server-sent-events/master/sse.d.ts#e2ad1cab1b026920a22178d516a79bd27dbfb4da"
+  },
   "ambientDevDependencies": {
     "angular-protractor": "github:DefinitelyTyped/DefinitelyTyped/angular-protractor/angular-protractor.d.ts#17fa1e5f269189f7f8e0f53f8c443e6c2eac562c",
     "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#26c98c8a9530c44f8c801ccc3b2057e2101187ee",

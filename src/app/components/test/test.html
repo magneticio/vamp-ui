@@ -1,0 +1,20 @@
+{{ clock }}
+{{ clock2 }}
+
+<editor [initialContent]="welcome"></editor>
+
+<h2>Events</h2>
+
+<ul class="crudList">
+  <li *ngFor="#item of _events">
+    {{ item }}
+  </li>
+</ul>
+
+<h2>Metrics</h2>
+
+<ul class="crudList">
+  <li *ngFor="#item of _metrics">
+    {{ item }}
+  </li>
+</ul>

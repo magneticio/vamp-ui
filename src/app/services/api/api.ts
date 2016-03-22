@@ -28,28 +28,28 @@ const deserializeResponse = (resp: Response) => {
     return resp
 }
 
-export class Crud {
+export class Api {
   constructor( public name: string) { }
 }
 
 @Injectable()
-export class CrudService {
+export class ApiService {
 
   protected _endpoint = 'http://192.168.99.100:8080/api/v1/'
 
   items$: Observable<Array<any>>;
   private _itemsObserver: any;
   private _dataStore: {
-      items: Array<any>,
-      item: Object
+      items: Array<any>
   };
-  //public resource:string = '';
 
   constructor( private _http: Http ) {
+
     this.items$ = new Observable(
       observer => this._itemsObserver = observer
     ).share();
-    this._dataStore = { items: [], item: {} };
+    this._dataStore = { items: [] };
+
   }
 
   getAll( resource:string ) {
@@ -70,15 +70,8 @@ export class CrudService {
       );
   }
 
+
   get(resource:string, name:string) {
-      this._dataStore.items.forEach((t, index) => {
-          console.log(t);
-          if (t.name === name) {
-            return this._dataStore.item = this._dataStore.items[index];
-          } else {
-            return false;
-          }
-      });
       /*this._http.get( this._endpoint + resource + '/' + name).subscribe(
         response => {
             this._dataStore.items.forEach((t, index) => {

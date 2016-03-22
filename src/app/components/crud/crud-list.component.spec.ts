@@ -11,7 +11,7 @@ import {
 } from 'angular2/testing';
 import {provide} from 'angular2/core';
 import {CrudListComponent} from './crud-list.component';
-import {Crud, CrudService} from './crud.service';
+import {ApiService} from '../../services/api/api';
 
 class MockCrudService {
   //getAll() { return Promise.resolve([new Crud(1, 'one')]); }
@@ -20,7 +20,7 @@ class MockCrudService {
 describe('CrudListComponent', () => {
 
   beforeEachProviders(() => [
-    provide(CrudService, {useClass: MockCrudService}),
+    //provide(CrudService, {useClass: MockCrudService}),
   ]);
 
   it('should ...', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {

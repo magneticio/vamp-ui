@@ -3,11 +3,10 @@ import {RouteConfig, RouterOutlet} from 'angular2/router';
 
 import {CrudListComponent} from './crud-list.component';
 import {CrudDetailComponent} from './crud-detail.component';
-import {CrudService} from './crud.service';
 
 @Component({
   template: '<router-outlet></router-outlet>',
-  providers: [CrudService],
+  providers: [],
   directives: [RouterOutlet]
 })
 @RouteConfig([
