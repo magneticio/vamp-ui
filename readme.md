@@ -8,7 +8,7 @@ The Vamp OSS UI provides an interface to all artifacts accessible via the REST A
 - `GET|POST|PUT|DELETE /blueprints`
 - `GET|POST|PUT|DELETE /deployments`
 	- `GET|POST|PUT /deployments/:id/clusters/:name/routing`
-	- `GET|POST|PUT /deployments/:id/clusters/:name/scale`
+	- `GET|POST|PUT /api/v1/deployments/:id/clusters/:name/services/:name/scale`
 	- `GET|POST|PUT|DELETE  /deployments/:id/clusters/:name/sla`
 - `GET|POST|PUT|DELETE /escalations`
 - `POST /events/get | /events`
@@ -40,3 +40,9 @@ This might act as an interface between Server Side Events and the Stores discuss
 ## Service architecture stores
 
 The VAMP OS UI has a generic Store service which provides an interface to all default artifact methods (e.g. `GET|POST|PUT|DELETE`) which are consumed by the API service. For each of the artifacts the generic Store is extended with per-artifact custom functionality. E.g. in the case of Blueprints the Store might be extended with `addCluster()` or similar methods. These methods provide mappings (with optional payloads) to generic API calls via the API service.
+
+## Reading material:
+
+- https://coryrylan.com/blog/angular-2-observable-data-services
+- http://blog.jhades.org/how-to-build-angular2-apps-using-rxjs-observable-data-services-pitfalls-to-avoid/
+- http://blog.jhades.org/functional-reactive-programming-for-angular-2-developers-rxjs-and-observables/
