@@ -1,1 +1,0 @@
-/Users/marijnscholtus/VM/vamp-ui/tmp/funnel-input_base_path-MrOLxIzi.tmp/0/es6-shim/es6-shim.js
