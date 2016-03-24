@@ -1,1 +1,0 @@
-/Users/marijnscholtus/VM/vamp-ui/src/app/components/crud/crud-detail.component.spec.ts
