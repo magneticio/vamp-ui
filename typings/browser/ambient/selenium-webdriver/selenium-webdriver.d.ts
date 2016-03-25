@@ -1,4 +1,4 @@
-// Compiled using typings@0.6.9
+// Compiled using typings@0.6.10
 // Source: https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/a83677ed13add14c2ab06c7325d182d0ba2784ea/selenium-webdriver/selenium-webdriver.d.ts
 // Type definitions for Selenium WebDriverJS 2.44.0
 // Project: https://code.google.com/p/selenium/
