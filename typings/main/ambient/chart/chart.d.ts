@@ -1,4 +1,4 @@
-// Compiled using typings@0.6.9
+// Compiled using typings@0.6.10
 // Source: https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/9f28e020a04c0b726a5e21c5cf0d1fc91f0de626/chartjs/chart.d.ts
 // Type definitions for Chart.js
 // Project: https://github.com/nnnick/Chart.js

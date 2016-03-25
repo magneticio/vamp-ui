@@ -1,5 +1,3 @@
-/// <reference path="../typings/main.d.ts" />
-
 import { VampPage } from './app.po';
 
 describe('vamp App', function() {
@@ -10,7 +8,7 @@ describe('vamp App', function() {
   })
 
   it('should display message saying app works', () => {
-    page.navigateTo()
+    page.navigateTo();
     expect(page.getParagraphText()).toEqual('vamp Works!');
   });
 });
