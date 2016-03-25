@@ -1,10 +1,10 @@
 // Compiled using typings@0.6.9
-// Source: https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/9f28e020a04c0b726a5e21c5cf0d1fc91f0de626/chartjs/chart.d.ts
+// Source: https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/chartjs/chart.d.ts
 declare module 'chart' {
 // Type definitions for Chart.js
 // Project: https://github.com/nnnick/Chart.js
 // Definitions by: Steve Fenton <https://github.com/Steve-Fenton>
-// Definitions: https://github.com/borisyankov/DefinitelyTyped
+// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 interface ChartDataSet {
     label: string;
