@@ -29,6 +29,9 @@ export class Store {
     @Inject( newApiService ) private _api?,
     _capabilities? : Array<string>
   ) {
+    this._artifact = _artifact;
+    this._capabilities = _capabilities || this._capabilities;
+
     if ( this._api )
       this.load();
 
@@ -49,17 +52,17 @@ export class Store {
   // 2. It communicates the newly added artifact to the API
   // 3. The Store publishes the newly added artifact to the observer
   add( artifact ) {
-    if ( ! this._can( 'POST' ) || this.find( artifact.name ) )
+    if ( ! this._can( 'POST' ) || this.find( artifact ) )
       return null;
 
-    let items = this.items$.getValue(),
-        item  = { index: items.push( artifact ) , value : artifact };
+    let items = this.items$.getValue();
+    items.push( artifact );
 
     if ( this._api )
       this._api.post( this._artifact , null , artifact )
         .subscribe( res => this.items$.next( items ) );
 
-    return item;
+    return artifact;
   }
 
   // 1. This removes an artifact of the initialized type from the store
@@ -76,7 +79,7 @@ export class Store {
       items.splice( item.index , 1 );
 
     if ( item && this._api )
-      this._api.delete( this._artifact , item.value.name , withPayload && item.value )
+      this._api.delete( this._artifact , item.name , withPayload && item )
         .subscribe( res => this.items$.next( items ) );
     }
 
@@ -85,13 +88,18 @@ export class Store {
 
   // Helper method to query for artifacts in the store.
   find( val , property = 'name' ) {
-    let found = null,
-        items = this.items$.getValue(),
-        item  = null;
+    let items = this.items$.getValue(),
+        item  = null,
+        found = items.indexOf( val );
+
+    if ( found !== -1 )
+      return items[ found ];
+    else
+      found = null;
 
     for ( let item of items ) {
       if ( item[ property ] == val )
-	      found = { index : items.indexOf( item ) , value :  item };
+	      found =  item;
     }
 
     return found;
@@ -106,7 +114,7 @@ export class Store {
 
     // let item  = typeof artifact === 'number' ? this.items,
     let items = this.items$.getValue(),
-        item  = typeof artifact === 'number' ? items[ artifact ] : this.find( artifact.name );
+        item  = this.find( artifact );
 
     if ( this._api )
       this._api.get( this._artifact , artifact.name )
