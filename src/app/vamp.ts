@@ -1,9 +1,13 @@
-import {Component} from 'angular2/core';
-import {CrudListComponent} from './components/crud/crud-list.component';
-import {Test} from './components/test/test';
-import {CrudRoot} from './components/crud/crud-root.component';
+// NG stuff
+import {Component,provide} from 'angular2/core';
 import {Http, HTTP_PROVIDERS} from 'angular2/http';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+
+// App components
+import {CrudListComponent} from './components/crud/crud-list.component';
+import {CrudRoot} from './components/crud/crud-root.component';
+import {Test} from './components/test/test';
+import { NotificationStore } from './services/store/notifications';
 
 // Vamp
 import { Blueprints } from './components/artifacts/blueprints/blueprints';
@@ -17,6 +21,8 @@ import { Slas } from './components/artifacts/slas/slas';
 import { Workflows } from './components/artifacts/workflows/workflows';
 import {Info} from './components/info/info';
 
+// the plan was to include this in the vamp component. but since we init them
+// through the router, I don't think it's needed.
 const VAMP_ARTIFACTS = [
   Blueprints,
   Breeds,
@@ -47,6 +53,7 @@ const VAMP_ARTIFACTS = [
   { path: '/info'      , name: 'Info'     , component: Info },
   { path: '/test'      , name: 'Test'     , component: Test },
 ])
+
 @Component({
   selector: 'vamp-app',
   providers: [HTTP_PROVIDERS],
@@ -54,6 +61,7 @@ const VAMP_ARTIFACTS = [
   directives: [ROUTER_DIRECTIVES],
   pipes: []
 })
+
 export class VampApp {
   defaultMeaning: number = 42;
 

@@ -1,10 +1,7 @@
 import {Component} from 'angular2/core';
 import {Observable} from 'rxjs/Rx';
 
-interface Notification {
-  message : string,
-  type    : string
-}
+import {Notification,NotificationStore} from '../../services/store/notifications';
 
 @Component({
   selector: 'notifier',
