@@ -1,6 +1,6 @@
 import {Inject,Injectable} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
-import {Http, RequestOptionsArgs, Response, Headers} from 'angular2/http'
+import {Http, RequestOptions, Response, Headers} from 'angular2/http'
 import {Observable} from 'rxjs/Observable'
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/map';
@@ -125,8 +125,8 @@ export class ApiService {
 @Injectable()
 export class newApiService {
 
-  public _endpoint = 'http://192.168.99.100:8080/api/v1/'
-  private _http : Http
+  public _endpoint = 'http://192.168.99.100:8080/api/v1/';
+  private _http : Http;
 
   constructor( @Inject( Http ) Http ) {
     this._http = Http;
@@ -155,7 +155,7 @@ export class newApiService {
 
     console.log( 'Going to post ' , artifact , payload , this._http );
 
-    return this._http.post( this._endpoint + artifact + ( id ? '/' + id : '' ) , payload , { headers } )
+    return this._http.post( this._endpoint + artifact + ( id ? '/' + id : '' ) , JSON.stringify( payload ) , { headers } )
       // .map( res => res.json() )
       .share();
   }
@@ -164,16 +164,21 @@ export class newApiService {
     let headers = new Headers();
     headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
 
-    return this._http.put( this._endpoint + artifact + '/' + id , payload , { headers } )
+    return this._http.put( this._endpoint + artifact + '/' + id , JSON.stringify( payload ) , { headers } )
       // .map( res => res.json() )
       .share();
   }
 
-  delete( artifact:string , id:string ) {
+  delete( artifact:string , id:string , payload = null ) {
     let headers = new Headers();
     headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
 
-    return this._http.delete( this._endpoint + artifact + '/' + id , { headers } )
+    let requestOptions = new RequestOptions({
+      body    : payload && JSON.stringify( payload ),
+      headers : headers
+    });
+
+    return this._http.delete( this._endpoint + artifact + '/' + id , requestOptions )
       // .map( res => res.json() )
       .share();
   }

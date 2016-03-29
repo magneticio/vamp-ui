@@ -1,4 +1,4 @@
-import {Inject,Injectable} from 'angular2/core';
+import {Inject,Injectable,Optional} from 'angular2/core';
 import {BehaviorSubject, Observable , Subject} from 'rxjs/Rx';
 
 import {newApiService} from '../api/api'
@@ -13,9 +13,6 @@ export class Store {
   // observer instead of in the store methods. Seems like a more proper way
   // to deal with the observavle BehaviorSubject.
 
-  // Private api coupling
-  private _api:newApiService
-
   // Store needs an observable which provides a data stream corresponding to
   // the artifact whith which it is initialized.
   public items$ : BehaviorSubject<Array<any>> = new BehaviorSubject([]);
@@ -26,11 +23,13 @@ export class Store {
   //    store will be modelled.
   constructor(
     private _artifact:string,
-    private _capabilities:Array<string> = [ 'GET' , 'POST' , 'PUT' , 'DELETE' ],
-    @Inject( newApiService ) newApiService
+    @Inject( newApiService ) private _api?,
+    private _capabilities?:Array<string>
   ) {
-    this._api = newApiService;
-    this.load();
+    if ( this._api ) {
+      this._capabilities  = [ 'GET' , 'POST' , 'PUT' , 'DELETE' ];
+      this.load();
+    }
 
     console.log( 'Init Store with' , _artifact , _capabilities , this );
   }
@@ -56,31 +55,39 @@ export class Store {
     let items = this.items$.getValue(),
         item  = { index: items.push( artifact ) , value : artifact };
 
-    return this._api.post( this._artifact , null , JSON.stringify( artifact ) )
-      .subscribe( res => this.items$.next( items ) );
+    if ( this._api )
+      this._api.post( this._artifact , null , artifact )
+        .subscribe( res => this.items$.next( items ) );
+
+    return item;
   }
 
   // 1. This removes an artifact of the initialized type from the store
   // 2. It communicates the newly deleted artifact to the API
   // 3. The Store notifes the observer of the remvoval
-  delete( artifact ) {
+  delete( artifact , withPayload = false ) {
     if ( ! this._can( 'DELETE' ) )
       return null;
 
-    let item  = this.find( artifact.name ),
-        items = this.items$.getValue();
+    let items = this.items$.getValue(),
+        item  = this.get( artifact );
 
     if ( item ) {
       items.splice( item.index , 1 );
-      return this._api.delete( this._artifact , item.value.name )
+
+    if ( item && this._api )
+      this._api.delete( this._artifact , item.value.name , withPayload && item.value )
         .subscribe( res => this.items$.next( items ) );
     }
+
+    return item;
   }
 
   // Helper method to query for artifacts in the store.
   find( val , property = 'name' ) {
     let found = null,
-        items = this.items$.getValue();
+        items = this.items$.getValue(),
+        item  = null;
 
     for ( let item of items ) {
       if ( item[ property ] == val )
@@ -93,36 +100,42 @@ export class Store {
   // 1. Retrieve a single artifact from the store
   // 2. (optionally) GET's the single artifact from the API
   // Q:
-  get( id ) {
+  get( artifact ) {
     if ( ! this._can( 'GET' ) )
       return null;
 
-    let item  = this.find( id ),
-        items = this.items$.getValue();
+    // let item  = typeof artifact === 'number' ? this.items,
+    let items = this.items$.getValue(),
+        item  = typeof artifact === 'number' ? items[ artifact ] : this.find( artifact.name );
 
-    this._api.get( this._artifact , id )
-      .subscribe( res => {
-        Object.assign( items[ item.index ] , res );
-        this.items$.next( items );
-      } );
+    if ( this._api )
+      this._api.get( this._artifact , artifact.name )
+        .subscribe( res => {
+          Object.assign( item , res );
+          this.items$.next( items );
+        } );
 
-    return item && item.value;
+    return item;
   }
 
   // 1. Updates an existing artifact in the store
   // 2. Communicates the udpated artifact to the API service
-  update( id , artifact ) {
+  update( artifact ) {
     if ( ! this._can( 'PUT' ) )
       return null;
 
-    let item  = this.find( id ),
-        items = this.items$.getValue();
+    let items = this.items$.getValue(),
+        item  = this.get( artifact );
 
     if ( item ) {
-      Object.assign( items[ item.index ] , artifact );
-      return this._api.put( this._artifact , id , artifact )
-        .subscribe( res => this.items$.next( items ) );
+      Object.assign( item , artifact );
+
+      if ( this._api )
+        this._api.put( this._artifact , artifact.name , artifact )
+          .subscribe( res => this.items$.next( items ) );
     }
+
+    return item;
   }
 
 

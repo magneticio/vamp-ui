@@ -8,9 +8,10 @@ import {Store} from '../../../services/store/store'
   templateUrl: 'app/components/artifacts/_partials/list.html',
   styleUrls: ['app/components/artifacts/blueprints/blueprints.css'],
   providers: [
+    newApiService,
     provide( Store , {
       useFactory: newApiService => {
-        return new Store( 'blueprints' , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] , newApiService );
+        return new Store( 'blueprints' , newApiService , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] );
       },
       deps: [ newApiService ]
     } )
@@ -21,12 +22,24 @@ import {Store} from '../../../services/store/store'
 
 export class Blueprints {
   // Add requirements specific to Blueprints here.
-  constructor( private _store : Store ) {
+  constructor(
+    private _store : Store,
+    private _api   : newApiService
+  ) {
     this._store = _store;
   }
 
   get blueprints() {
-    return this._store.items$.getValue();
+    return this._store.items;
+  }
+
+  // Deploy method calls the api to create a deployment from the corresponding
+  // blueprint.
+  // TODO: Use the generated Deploymentstore to add the blueprint as deployment
+  // instead of injecting the API service here.
+  deploy( item ) {
+    return this._api.post( 'deployments' , null , item )
+      .subscribe();
   }
 
   // This could add a cluster by providing a name and a JSON object.
