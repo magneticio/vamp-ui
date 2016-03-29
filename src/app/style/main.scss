@@ -1,0 +1,31 @@
+@import "common/normalize";
+@import "common/mixins";
+@import "common/variables";
+@import "common/screens";
+@import "common/flex-grid";
+@import "common/typography";
+
+/* General styles and helper class */
+@import "common/styles";
+
+/*
+Component-level SASS only until Angular2-cli supports
+per component SASS compilation including mixins
+*/
+@import "components/header";
+@import "components/navigation";
+
+body {
+  background: $color-bg none;
+}
+a {
+  color: $link-color;
+  text-decoration: none;
+}
+a:hover {
+  border-bottom: 1px solid $link-color-hover;
+}
+
+h2 {
+  text-transform: capitalize;
+}

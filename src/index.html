@@ -4,9 +4,27 @@
   <meta charset="utf-8">
   <title>Vamp – Open Source Edition</title>
   <base href="/">
-  <link href="vamp.css" rel="stylesheet">
   {{content-for 'head'}}
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="main.css" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/icons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/images/icons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/images/icons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/icons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/images/icons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/icons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/images/icons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/icons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/icons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/assets/images/icons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/assets/images/icons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/assets/images/icons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/assets/images/icons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/assets/images/icons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="mask-icon" href="/assets/images/icons/safari-pinned-tab.svg" color="#ff4081">
+  <meta name="msapplication-TileColor" content="#ff4081">
+  <meta name="msapplication-TileImage" content="/assets/images/icons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
 
   <!-- Service worker support is disabled by default.
        Install the worker script and uncomment to enable.
@@ -27,7 +45,21 @@
 
 </head>
 <body>
-  <vamp-app>Loading...</vamp-app>
+
+  <vamp-app>
+
+    <header class="vamp-header box">
+
+    <a href="/">
+    <svg width="32px" height="30px" viewBox="0 0 32 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <path d="M23.34,20.64 L15.12,0 L31.39,0 L23.34,20.64 L23.34,20.64 Z M1.77635684e-15,0 L11.5,0 L21.56,25.13 L20.1,28.87 L11.4,28.87 L1.77635684e-15,0 L1.77635684e-15,0 Z" id="vamp-logo" fill="#FF4081"></path>
+    </svg>
+    </a>
+
+    <p>Loading…</p>
+
+    </header>
+  </vamp-app>
 
   <script src="vendor/es6-shim/es6-shim.js"></script>
   <script src="vendor/systemjs/dist/system-polyfills.js"></script>

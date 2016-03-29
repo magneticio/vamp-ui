@@ -1,0 +1,19 @@
+ul.navigation {
+  padding: 0;
+  list-style: none;
+}
+ul.navigation li {
+  display:inline-block;
+  margin:0;
+  padding:0;
+}
+ul.navigation li a {
+  margin:0 $gutter/2 0 0;
+}
+ul.navigation li a:hover {
+  border:none;
+  color: #ff4081;
+}
+ul.navigation li a.router-link-active {
+  color: #ff4081;
+}

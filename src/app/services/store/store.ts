@@ -7,7 +7,6 @@ function asObs( subject ) {
   return new Observable( fn => subject.subscribe( fn ) );
 }
 
-
 @Injectable()
 export class Store {
   // TODO: Respearch whether we could implement the API communication on the
@@ -49,6 +48,7 @@ export class Store {
   // 1. This adds an artifact of the initialized type to the store
   // 2. It communicates the newly added artifact to the API
   // 3. The Store publishes the newly added artifact to the observer
+
   add( artifact ) {
     if ( ! this._can( 'POST' ) || this.find( artifact.name ) )
       return null;
@@ -130,10 +130,8 @@ export class Store {
   _can( capability:string ) {
     return this._capabilities.indexOf( capability ) !== -1;
   }
-}
 
-// We add custom functions to each of the artifact types based on extending the
-// Store class like so:
+}
 
 // export class BlueprintStore extends Store {
 //
@@ -153,6 +151,3 @@ export class Store {
 // }
 //
 // export class GatewayStore extends Store {} //etc.
-
-// Ideally we put all these classes in their own files, regardless of size, for
-// better code organization.

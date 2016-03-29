@@ -5,7 +5,6 @@ import {CrudRoot} from './components/crud/crud-root.component';
 import {Http, HTTP_PROVIDERS} from 'angular2/http';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
-
 // Vamp
 import { Blueprints } from './components/artifacts/blueprints/blueprints';
 import { Breeds } from './components/artifacts/breeds/breeds';
@@ -16,6 +15,7 @@ import { Gateways } from './components/artifacts/gateways/gateways';
 import { Scales } from './components/artifacts/scales/scales';
 import { Slas } from './components/artifacts/slas/slas';
 import { Workflows } from './components/artifacts/workflows/workflows';
+import {Info} from './components/info/info';
 
 const VAMP_ARTIFACTS = [
   Blueprints,
@@ -44,17 +44,16 @@ const VAMP_ARTIFACTS = [
   { path: '/slas'        , name: 'Slas'        , component: Slas },
   { path: '/workflows'   , name: 'Workflows'   , component: Workflows },
 
+  { path: '/info'      , name: 'Info'     , component: Info },
   { path: '/test'      , name: 'Test'     , component: Test },
 ])
-
 @Component({
   selector: 'vamp-app',
   providers: [HTTP_PROVIDERS],
   templateUrl: 'app/vamp.html',
-  directives: [ROUTER_DIRECTIVES , VAMP_ARTIFACTS],
+  directives: [ROUTER_DIRECTIVES],
   pipes: []
 })
-
 export class VampApp {
   defaultMeaning: number = 42;
 
