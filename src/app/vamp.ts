@@ -1,6 +1,7 @@
 import {Component} from 'angular2/core';
 import {CrudListComponent} from './components/crud/crud-list.component';
 import {Test} from './components/test/test';
+import {Info} from './components/info/info';
 import {CrudRoot} from './components/crud/crud-root.component';
 import {Http, HTTP_PROVIDERS} from 'angular2/http';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
@@ -15,6 +16,7 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 @RouteConfig([
   {path:'/:resource', name: 'CrudList', component: CrudListComponent, useAsDefault: true},
   {path:'/test', name: 'Test', component: Test },
+  {path:'/info', name: 'Info', component: Info },
 ])
 export class VampApp {
   defaultMeaning: number = 42;

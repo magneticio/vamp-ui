@@ -1,16 +1,19 @@
-<h2>{{ resource }}</h2>
+<section class="space">
+  <h2>{{ resource }}</h2>
 
-<ul class="crudList">
-  <li *ngFor="#item of _items"
-    [class.selected]="item === selectedItem"
-    (click)="onSelect(item)">
-    {{item.name}}
-    <!--a
-      [routerLink]="['CrudDetail', { resource: resource, name: item.name }]">
-      <strong>{{ item.name }}</strong>
-    </a-->
-  </li>
-</ul>
+  <ul class="itemList">
+    <li class="card" *ngFor="#item of _items"
+      [class.selected]="item === selectedItem"
+      (click)="onSelect(item)">
+      {{item.name}}
+      <!--a
+        [routerLink]="['CrudDetail', { resource: resource, name: item.name }]">
+        <strong>{{ item.name }}</strong>
+      </a-->
+    </li>
+  </ul>
+
+</section>
 
 <!--
 
@@ -18,13 +21,13 @@ We should split this out over several templates!
 
 -->
 
-<div *ngIf="selectedItem && resource === 'deployments'">
+<section class="space" *ngIf="selectedItem && resource === 'deployments'">
   <h2>Deployment: {{selectedItem.name}}</h2>
 
   <button href="#">Undeploy</button>
 
   <ul>
-    <li *ngFor="#endpoint of selectedItem.gateways | keyValues">Endpoint: {{ endpoint.key }}
+    <li class="card" *ngFor="#endpoint of selectedItem.gateways | keyValues">Endpoint: {{ endpoint.key }}
   </ul>
 
   <h3>Clusters and breeds</h3>
@@ -33,16 +36,16 @@ We should split this out over several templates!
       {{item.key }} (port {{item.value.port_mapping.port }})
       <ul>
         <li *ngFor="#service of item.value.services">
-          {{ service.state.step.name }}: {{ service.breed.name }} (port {{ service.breed.ports.port }})
+          {{ service.state.intention }} / {{ service.state.step.name }}: {{ service.breed.name }} (port {{ service.breed.ports.port }})
           <editor [initialContent]="service.breed.name"></editor>
         </li>
       </ul>
     </li>
   </ul>
 
-</div>
+</section>
 
-<div *ngIf="selectedItem && resource === 'gateways'">
+<section class="space" *ngIf="selectedItem && resource === 'gateways'">
   <h2>Gateway: {{selectedItem.lookup_name}}</h2>
 
   <editor [initialContent]="selectedItem.lookup_name"></editor>
@@ -72,9 +75,9 @@ We should split this out over several templates!
     </li>
   </ul>
 
-</div>
+</section>
 
-<div *ngIf="selectedItem && resource === 'breeds'">
+<section *ngIf="selectedItem && resource === 'breeds'">
   <h2>Breed: {{selectedItem.name}}</h2>
 
   <editor [initialContent]="selectedItem.name"></editor>
@@ -98,9 +101,9 @@ We should split this out over several templates!
     {{ selectedItem.dependencies | json }}
   </div>
 
-</div>
+</section>
 
-<div *ngIf="selectedItem && resource === 'blueprints'">
+<section class="space" *ngIf="selectedItem && resource === 'blueprints'">
   <h2>Blueprint: {{selectedItem.name}}</h2>
 
   <button href="#">Deploy</button>
@@ -119,4 +122,4 @@ We should split this out over several templates!
     </li>
   </ul>
 
-</div>
+</section>

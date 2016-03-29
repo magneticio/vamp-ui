@@ -1,4 +1,10 @@
-<h1>Vamp – Open Source Edition</h1>
+<header class="vamp-header box">
+
+<a href="/">
+<svg width="32px" height="30px" viewBox="0 0 32 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<path d="M23.34,20.64 L15.12,0 L31.39,0 L23.34,20.64 L23.34,20.64 Z M1.77635684e-15,0 L11.5,0 L21.56,25.13 L20.1,28.87 L11.4,28.87 L1.77635684e-15,0 L1.77635684e-15,0 Z" id="vamp-logo" fill="#FF4081"></path>
+</svg>
+</a>
 
 <ul class="navigation">
   <li><a [routerLink]="['CrudList', { resource: 'deployments' }]">Deployments</a></li>
@@ -6,5 +12,7 @@
   <li><a [routerLink]="['CrudList', { resource: 'breeds' }]">Breeds</a></li>
   <li><a [routerLink]="['CrudList', { resource: 'blueprints' }]">Blueprints</a></li>
 </ul>
+
+</header>
 
 <router-outlet></router-outlet>
