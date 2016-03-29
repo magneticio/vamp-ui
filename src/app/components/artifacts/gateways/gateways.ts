@@ -5,12 +5,12 @@ import {Store} from '../../../services/store/store'
 
 @Component({
   selector: 'vamp-gateways',
-  templateUrl: 'app/components/artifacts/gateways/gateways.html',
+  templateUrl: 'app/components/artifacts/_partials/list.html',
   styleUrls: ['app/components/artifacts/gateways/gateways.css'],
   providers: [
     provide( Store , {
       useFactory: newApiService => {
-        return new Store( 'gateways' , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] , newApiService );
+        return new Store( 'gateways' , newApiService , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] );
       },
       deps: [ newApiService ]
     } )
