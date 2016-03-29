@@ -1,7 +1,7 @@
 <h2>{{ _store._artifact }}</h2>
 
 <ul class="crudList">
-  <li *ngFor="#item of _store.items$.value">
+  <li *ngFor="#item of _store.items$ | async">
     {{item.name}}
   </li>
 </ul>

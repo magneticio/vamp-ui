@@ -123,7 +123,7 @@ export class ApiService {
 @Injectable()
 export class newApiService {
 
-  protected _endpoint = 'http://192.168.99.100:8080/api/v1/'
+  private _endpoint = 'http://192.168.99.100:8080/api/v1/'
   private _http : Http
 
   constructor( @Inject( Http ) Http ) {
@@ -131,20 +131,27 @@ export class newApiService {
   }
 
   getAll( artifact:string ) {
-    return this._http.get( this._endpoint + artifact )
+    let headers = new Headers();
+    headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
+
+    return this._http.get( this._endpoint + artifact , { headers } )
       .map( res => res.json() )
       .share();
   }
 
   get( artifact:string , id:string ) {
-    return this._http.get( this._endpoint + artifact + '/' + id )
+    let headers = new Headers();
+    headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
+
+    return this._http.get( this._endpoint + artifact + '/' + id , { headers } )
       .map( res => res.json() )
   }
 
   post( artifact:string , id:string , payload ) {
-    console.log( 'Going to post ' , artifact , payload , this._http );
     let headers = new Headers();
     headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
+
+    console.log( 'Going to post ' , artifact , payload , this._http );
 
     return this._http.post( this._endpoint + artifact + ( id ? '/' + id : '' ) , payload , { headers } )
       .map( res => res.json() )
@@ -152,13 +159,19 @@ export class newApiService {
   }
 
   put( artifact:string , id:string , payload ) {
-    return this._http.get( this._endpoint + artifact + '/' + id , payload )
+    let headers = new Headers();
+    headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
+
+    return this._http.put( this._endpoint + artifact + '/' + id , payload , { headers } )
       .map( res => res.json() )
       .share();
   }
 
   delete( artifact:string , id:string ) {
-    return this._http.delete( this._endpoint + artifact + '/' + id )
+    let headers = new Headers();
+    headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
+
+    return this._http.delete( this._endpoint + artifact + '/' + id , { headers } )
       .map( res => res.json() )
       .share();
   }

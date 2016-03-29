@@ -42,13 +42,16 @@ export class Store {
   // 2. It communicates the newly added artifact to the API
   // 3. The Store publishes the newly added artifact to the observer
   add( artifact ) {
-    if ( ! this._can( 'POST' ) )
+    if ( ! this._can( 'POST' ) || this.find( artifact.name ) )
       return null;
 
-    this._api.post( this._artifact , null , artifact )
-      .subscribe();
+    let items = this.items$.getValue(),
+        item  = { index: items.push( artifact ) , value : artifact };
 
-    return this.items$.getValue().push( artifact );
+    this._api.post( this._artifact , null , artifact )
+      .subscribe( res => this.items$.next( items ) );
+
+    return item;
   }
 
   // 1. This removes an artifact of the initialized type from the store
@@ -58,21 +61,25 @@ export class Store {
     if ( ! this._can( 'DELETE' ) )
       return null;
 
-    let item = this.find( id );
+    let item  = this.find( id ),
+        items = this.items$.getValue();
 
     if ( item ) {
-      this.items$.getValue().splice( item.index , 1 );
+      items.splice( item.index , 1 );
+      console.log( items );
       this._api.delete( this._artifact , id )
-        .subscribe();
+        .subscribe( res => this.items$.next( items ) );
     }
   }
 
+  // Helper method to query for artifacts in the store.
   find( val , property = 'name' ) {
-    let found = null;
+    let found = null,
+        items = this.items$.getValue();
 
-    for ( let item of this.items$.getValue() ) {
+    for ( let item of items ) {
       if ( item[ property ] == val )
-	      found = { index : this.items$.getValue().indexOf( item ) , value :  item };
+	      found = { index : items.indexOf( item ) , value :  item };
     }
 
     return found;
@@ -85,10 +92,14 @@ export class Store {
     if ( ! this._can( 'GET' ) )
       return null;
 
-    let item = this.find( id );
+    let item  = this.find( id ),
+        items = this.items$.getValue();
 
     this._api.get( this._artifact , id )
-      .subscribe( res => item.value = res );
+      .subscribe( res => {
+        Object.assign( items[ item.index ] , res );
+        this.items$.next( items );
+      } );
 
     return item && item.value;
   }
@@ -99,12 +110,13 @@ export class Store {
     if ( ! this._can( 'PUT' ) )
       return null;
 
-    let item = this.find( id );
+    let item  = this.find( id ),
+        items = this.items$.getValue();
 
     if ( item ) {
-      Object.assign( item.value , artifact );
+      Object.assign( items[ item.index ] , artifact );
       this._api.put( this._artifact , id , artifact )
-        .subscribe();
+        .subscribe( res => this.items$.next( items ) );
     }
 
     return item && item.value;
