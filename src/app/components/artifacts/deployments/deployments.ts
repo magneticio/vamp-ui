@@ -10,7 +10,7 @@ import {Store} from '../../../services/store/store'
   providers: [
     provide( Store , {
       useFactory: newApiService => {
-        return new Store( 'deployments' , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] , newApiService );
+        return new Store( 'deployments' , newApiService , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] );
       },
       deps: [ newApiService ]
     } )
@@ -20,9 +20,13 @@ import {Store} from '../../../services/store/store'
 })
 
 export class Deployments {
-  // Add requirements specific to Blueprints here.
-  constructor( private _store : Store ) {
-    this._store = _store;
+  // Add requirements specific to Deployments here.
+  constructor(
+    private _store : Store
+  ) { }
+
+  undeploy( item ) {
+    return this._store.delete( item , true );
   }
 
   get deployments() {
