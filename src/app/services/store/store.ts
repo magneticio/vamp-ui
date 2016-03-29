@@ -63,16 +63,16 @@ export class Store {
   // 1. This removes an artifact of the initialized type from the store
   // 2. It communicates the newly deleted artifact to the API
   // 3. The Store notifes the observer of the remvoval
-  delete( id ) {
+  delete( artifact ) {
     if ( ! this._can( 'DELETE' ) )
       return null;
 
-    let item  = this.find( id ),
+    let item  = this.find( artifact.name ),
         items = this.items$.getValue();
 
     if ( item ) {
       items.splice( item.index , 1 );
-      return this._api.delete( this._artifact , id )
+      return this._api.delete( this._artifact , item.value.name )
         .subscribe( res => this.items$.next( items ) );
     }
   }
