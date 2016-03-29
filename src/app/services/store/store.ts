@@ -45,7 +45,8 @@ export class Store {
     if ( ! this._can( 'POST' ) )
       return null;
 
-    this._api.post( this._artifact , null , artifact );
+    this._api.post( this._artifact , null , artifact )
+      .subscribe();
 
     return this.items$.getValue().push( artifact );
   }
@@ -60,8 +61,9 @@ export class Store {
     let item = this.find( id );
 
     if ( item ) {
-      this._api.delete( this._artifact , id );
       this.items$.getValue().splice( item.index , 1 );
+      this._api.delete( this._artifact , id )
+        .subscribe();
     }
   }
 
@@ -70,7 +72,7 @@ export class Store {
 
     for ( let item of this.items$.getValue() ) {
       if ( item[ property ] == val )
-	found = { index : this.items$.getValue().indexOf( item ) , value :  item };
+	      found = { index : this.items$.getValue().indexOf( item ) , value :  item };
     }
 
     return found;
@@ -85,6 +87,9 @@ export class Store {
 
     let item = this.find( id );
 
+    this._api.get( this._artifact , id )
+      .subscribe( res => item.value = res );
+
     return item && item.value;
   }
 
@@ -97,8 +102,9 @@ export class Store {
     let item = this.find( id );
 
     if ( item ) {
-      this._api.put( this._artifact , id , artifact );
       Object.assign( item.value , artifact );
+      this._api.put( this._artifact , id , artifact )
+        .subscribe();
     }
 
     return item && item.value;

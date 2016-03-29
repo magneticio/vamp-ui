@@ -19,8 +19,33 @@ import { Workflows } from './components/artifacts/workflows/workflows';
 
 const VAMP_ARTIFACTS = [
   Blueprints,
+  Breeds,
   Deployments,
+  Escalations,
+  Filters,
+  Gateways,
+  Scales,
+  Slas,
+  Workflows
 ];
+
+@RouteConfig([
+  // { path: '/:resource' , name: 'CrudList' , component: CrudListComponent , useAsDefault: true },
+
+  // TODO: Abstract all the artifacts which share capabilities into a generic
+  // component instead of each having their own logic.
+  { path: '/blueprints'  , name: 'Blueprints'  , component: Blueprints },
+  { path: '/breeds'      , name: 'Breeds'      , component: Breeds },
+  { path: '/deployments' , name: 'Deployments' , component: Deployments , useAsDefault: true },
+  { path: '/escalations' , name: 'Escalations' , component: Escalations },
+  { path: '/filters'     , name: 'Filters'     , component: Filters },
+  { path: '/gateways'    , name: 'Gateways'    , component: Gateways },
+  { path: '/scales'      , name: 'Scales'      , component: Scales },
+  { path: '/slas'        , name: 'Slas'        , component: Slas },
+  { path: '/workflows'   , name: 'Workflows'   , component: Workflows },
+
+  { path: '/test'      , name: 'Test'     , component: Test },
+])
 
 @Component({
   selector: 'vamp-app',
@@ -29,10 +54,7 @@ const VAMP_ARTIFACTS = [
   directives: [ROUTER_DIRECTIVES , VAMP_ARTIFACTS],
   pipes: []
 })
-@RouteConfig([
-  {path:'/:resource', name: 'CrudList', component: CrudListComponent, useAsDefault: true},
-  {path:'/test', name: 'Test', component: Test },
-])
+
 export class VampApp {
   defaultMeaning: number = 42;
 

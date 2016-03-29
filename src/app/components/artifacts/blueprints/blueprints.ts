@@ -5,7 +5,7 @@ import {Store} from '../../../services/store/store'
 
 @Component({
   selector: 'vamp-blueprints',
-  templateUrl: 'app/components/artifacts/blueprints/blueprints.html',
+  templateUrl: 'app/components/artifacts/_partials/list.html',
   styleUrls: ['app/components/artifacts/blueprints/blueprints.css'],
   providers: [
     provide( Store , {

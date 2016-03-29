@@ -1,16 +1,31 @@
-import {Component} from 'angular2/core';
+import {Component , provide} from 'angular2/core';
 
+import {newApiService} from '../../../services/api/api'
+import {Store} from '../../../services/store/store'
 
 @Component({
-  selector: 'workflows',
-  templateUrl: 'app/components/workflows/workflows.html',
-  styleUrls: ['app/components/workflows/workflows.css'],
-  providers: [],
+  selector: 'vamp-workflows',
+  templateUrl: 'app/components/artifacts/workflows/workflows.html',
+  styleUrls: ['app/components/artifacts/workflows/workflows.css'],
+  providers: [
+    provide( Store , {
+      useFactory: newApiService => {
+        return new Store( 'workflows' , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] , newApiService );
+      },
+      deps: [ newApiService ]
+    } )
+  ],
   directives: [],
   pipes: []
 })
+
 export class Workflows {
+  // Add requirements specific to Blueprints here.
+  constructor( private _store : Store ) {
+    this._store = _store;
+  }
 
-  constructor() {}
-
+  get workflows() {
+    return this._store.items$.getValue();
+  }
 }

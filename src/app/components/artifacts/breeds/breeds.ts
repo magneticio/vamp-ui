@@ -1,17 +1,31 @@
-import {Component} from 'angular2/core';
+import {Component , provide} from 'angular2/core';
 
+import {newApiService} from '../../../services/api/api'
+import {Store} from '../../../services/store/store'
 
 @Component({
-  selector: 'artifacts/breeds',
-  templateUrl: 'app/components/artifacts/breeds/breeds.html',
+  selector: 'vamp-breeds',
+  templateUrl: 'app/components/artifacts/_partials/list.html',
   styleUrls: ['app/components/artifacts/breeds/breeds.css'],
-  providers: [],
+  providers: [
+    provide( Store , {
+      useFactory: newApiService => {
+        return new Store( 'breeds' , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] , newApiService );
+      },
+      deps: [ newApiService ]
+    } )
+  ],
   directives: [],
   pipes: []
 })
 
 export class Breeds {
+  // Add requirements specific to Blueprints here.
+  constructor( private _store : Store ) {
+    this._store = _store;
+  }
 
-  constructor() {}
-
+  get breeds() {
+    return this._store.items$.getValue();
+  }
 }

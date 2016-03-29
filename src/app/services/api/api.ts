@@ -142,18 +142,25 @@ export class newApiService {
   }
 
   post( artifact:string , id:string , payload ) {
-    return this._http.post( this._endpoint + artifact + ( id && '/' + id ) , payload )
+    console.log( 'Going to post ' , artifact , payload , this._http );
+    let headers = new Headers();
+    headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
+
+    return this._http.post( this._endpoint + artifact + ( id ? '/' + id : '' ) , payload , { headers } )
       .map( res => res.json() )
+      .share();
   }
 
   put( artifact:string , id:string , payload ) {
     return this._http.get( this._endpoint + artifact + '/' + id , payload )
       .map( res => res.json() )
+      .share();
   }
 
   delete( artifact:string , id:string ) {
-    return this._http.get( this._endpoint + artifact + '/' + id )
+    return this._http.delete( this._endpoint + artifact + '/' + id )
       .map( res => res.json() )
+      .share();
   }
 
 }
