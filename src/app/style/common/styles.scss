@@ -69,6 +69,7 @@ body {
 .card {
   @extend .box;
   @extend .space.vertical;
+
   align-self: auto;
   background-color: white;
   border-radius: $border-radius;
@@ -78,6 +79,7 @@ body {
   overflow: hidden;
   position: relative;
 
+  // TODO: proper spacing
   h3,
   h4,
   p {

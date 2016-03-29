@@ -7,7 +7,7 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {CrudListComponent} from './components/crud/crud-list.component';
 import {CrudRoot} from './components/crud/crud-root.component';
 import {Test} from './components/test/test';
-import { NotificationStore } from './services/store/notifications';
+import { Notifier } from './components/notifier/notifier';
 
 // Vamp
 import { Blueprints } from './components/artifacts/blueprints/blueprints';
@@ -56,9 +56,9 @@ const VAMP_ARTIFACTS = [
 
 @Component({
   selector: 'vamp-app',
-  providers: [HTTP_PROVIDERS],
+  providers: [ HTTP_PROVIDERS ],
   templateUrl: 'app/vamp.html',
-  directives: [ROUTER_DIRECTIVES],
+  directives: [ ROUTER_DIRECTIVES , Notifier ],
   pipes: []
 })
 
