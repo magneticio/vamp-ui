@@ -2,6 +2,6 @@
 
 <ul class="crudList">
   <li *ngFor="#item of _store.items | async">
-    {{item.name}}
+    {{item.name}} <a (click)="_store.delete( item )">delete</a>
   </li>
 </ul>
