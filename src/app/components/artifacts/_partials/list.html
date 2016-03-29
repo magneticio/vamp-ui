@@ -2,6 +2,11 @@
 
 <ul class="crudList">
   <li *ngFor="#item of _store.items | async">
-    {{item.name}} <a (click)="_store.delete( item )">delete</a>
+    {{item.name}}
+
+    <a *ngIf="_store._artifact == 'blueprints'" (click)="deploy( item )">deploy</a>
+    <a *ngIf="_store._artifact == 'deployments'" (click)="undeploy( item )">undeploy</a>
+
+    <a (click)="_store.delete( item )">delete</a>
   </li>
 </ul>

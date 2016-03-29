@@ -56,14 +56,14 @@ export class Store {
     let items = this.items$.getValue(),
         item  = { index: items.push( artifact ) , value : artifact };
 
-    return this._api.post( this._artifact , null , JSON.stringify( artifact ) )
+    return this._api.post( this._artifact , null , artifact )
       .subscribe( res => this.items$.next( items ) );
   }
 
   // 1. This removes an artifact of the initialized type from the store
   // 2. It communicates the newly deleted artifact to the API
   // 3. The Store notifes the observer of the remvoval
-  delete( artifact ) {
+  delete( artifact , withPayload = false ) {
     if ( ! this._can( 'DELETE' ) )
       return null;
 
@@ -72,7 +72,7 @@ export class Store {
 
     if ( item ) {
       items.splice( item.index , 1 );
-      return this._api.delete( this._artifact , item.value.name )
+      return this._api.delete( this._artifact , item.value.name , withPayload && item.value )
         .subscribe( res => this.items$.next( items ) );
     }
   }
@@ -111,16 +111,16 @@ export class Store {
 
   // 1. Updates an existing artifact in the store
   // 2. Communicates the udpated artifact to the API service
-  update( id , artifact ) {
+  update( artifact ) {
     if ( ! this._can( 'PUT' ) )
       return null;
 
-    let item  = this.find( id ),
+    let item  = this.find( artifact.name ),
         items = this.items$.getValue();
 
     if ( item ) {
       Object.assign( items[ item.index ] , artifact );
-      return this._api.put( this._artifact , id , artifact )
+      return this._api.put( this._artifact , artifact.name , artifact )
         .subscribe( res => this.items$.next( items ) );
     }
   }
