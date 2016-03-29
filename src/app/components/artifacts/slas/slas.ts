@@ -10,7 +10,7 @@ import {Store} from '../../../services/store/store'
   providers: [
     provide( Store , {
       useFactory: newApiService => {
-        return new Store( 'slas' , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] , newApiService );
+        return new Store( 'slas' , newApiService , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] );
       },
       deps: [ newApiService ]
     } )

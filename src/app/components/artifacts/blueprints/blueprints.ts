@@ -11,7 +11,7 @@ import {Store} from '../../../services/store/store'
     newApiService,
     provide( Store , {
       useFactory: newApiService => {
-        return new Store( 'blueprints' , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] , newApiService );
+        return new Store( 'blueprints' , newApiService , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] );
       },
       deps: [ newApiService ]
     } )
