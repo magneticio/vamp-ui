@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/core';
+import {Inject,Injectable} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {Http, RequestOptionsArgs, Response, Headers} from 'angular2/http'
 import {Observable} from 'rxjs/Observable'
@@ -115,4 +115,45 @@ export class ApiService {
   handleError(error) {
     console.log('Error', error);
   }
+}
+
+// New API
+
+
+@Injectable()
+export class newApiService {
+
+  protected _endpoint = 'http://192.168.99.100:8080/api/v1/'
+  private _http : Http
+
+  constructor( @Inject( Http ) Http ) {
+    this._http = Http;
+  }
+
+  getAll( artifact:string ) {
+    return this._http.get( this._endpoint + artifact )
+      .map( res => res.json() )
+      .share();
+  }
+
+  get( artifact:string , id:string ) {
+    return this._http.get( this._endpoint + artifact + '/' + id )
+      .map( res => res.json() )
+  }
+
+  post( artifact:string , id:string , payload ) {
+    return this._http.post( this._endpoint + artifact + ( id && '/' + id ) , payload )
+      .map( res => res.json() )
+  }
+
+  put( artifact:string , id:string , payload ) {
+    return this._http.get( this._endpoint + artifact + '/' + id , payload )
+      .map( res => res.json() )
+  }
+
+  delete( artifact:string , id:string ) {
+    return this._http.get( this._endpoint + artifact + '/' + id )
+      .map( res => res.json() )
+  }
+
 }

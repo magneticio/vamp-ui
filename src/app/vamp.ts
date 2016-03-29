@@ -5,11 +5,15 @@ import {CrudRoot} from './components/crud/crud-root.component';
 import {Http, HTTP_PROVIDERS} from 'angular2/http';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
+
+// Vamp Artifacts
+import {Blueprint} from './components/blueprint/blueprint';
+
 @Component({
   selector: 'vamp-app',
   providers: [HTTP_PROVIDERS],
   templateUrl: 'app/vamp.html',
-  directives: [ROUTER_DIRECTIVES],
+  directives: [ROUTER_DIRECTIVES,Blueprint],
   pipes: []
 })
 @RouteConfig([
