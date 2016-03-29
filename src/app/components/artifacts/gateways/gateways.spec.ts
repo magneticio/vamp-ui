@@ -10,16 +10,16 @@ import {
   beforeEachProviders
 } from 'angular2/testing';
 import {provide} from 'angular2/core';
-import {Blueprint} from './blueprint';
+import {Gateways} from './gateways';
 
 
-describe('Blueprint Component', () => {
+describe('Gateways Component', () => {
 
   beforeEachProviders((): any[] => []);
 
 
   it('should ...', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-    return tcb.createAsync(Blueprint).then((fixture) => {
+    return tcb.createAsync(Gateways).then((fixture) => {
       fixture.detectChanges();
     });
   }));

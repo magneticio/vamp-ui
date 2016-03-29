@@ -23,7 +23,7 @@ export class Store {
   //    store will be modelled.
   constructor(
     private _artifact:string,
-    private _capabilities:Array<string>,
+    private _capabilities:Array<string> = [ 'GET' , 'POST' , 'PUT' , 'DELETE' ],
     @Inject( newApiService ) newApiService
   ) {
     this._api = newApiService;

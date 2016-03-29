@@ -1,9 +1,10 @@
 import {Component, OnInit} from 'angular2/core';
-import {ApiService} from '../../services/api/api';
-import {Editor} from '../../components/editor/editor';
 import {RouteParams, Router} from 'angular2/router';
 import {RouterOutlet, ROUTER_DIRECTIVES} from 'angular2/router';
 import {Pipe, PipeTransform} from 'angular2/core';
+
+import {ApiService} from '../../services/api/api';
+import {Editor} from '../../components/editor/editor';
 
 /*
 Pipe keys and values for an Array
@@ -34,13 +35,15 @@ export class CrudListComponent implements OnInit {
 
   constructor(
     private _routeParams: RouteParams,
-    private _service: ApiService
-  ) {}
+    private _store: ApiService
+  ) {
+
+  }
 
   ngOnInit() {
     this.resource = this._routeParams.get('resource') || 'deployments';
-    this._service.items$.subscribe(updatedItems => this._items = updatedItems);
-    this._service.getAll(this.resource);
+    this._store.items$.subscribe(updatedItems => this._items = updatedItems);
+    this._store.getAll(this.resource);
   }
 
   onSelect(item: Object) { console.log('Selected', item); this.selectedItem = item; }
