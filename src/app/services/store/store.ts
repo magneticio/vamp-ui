@@ -25,7 +25,7 @@ export class Store {
   // 2. the name and/or interface of the VAMP artifact onto which this
   //    store will be modelled.
   constructor(
-    _artifact:string,
+    _artifact : string,
     @Inject( newApiService ) private _api?,
     _capabilities? : Array<string>
   ) {
@@ -54,6 +54,8 @@ export class Store {
   add( artifact ) {
     if ( ! this._can( 'POST' ) || this.find( artifact ) )
       return null;
+
+    console.log( 'Adding' , artifact , 'to' , this._artifact );
 
     let items = this.items$.getValue();
     items.push( artifact );

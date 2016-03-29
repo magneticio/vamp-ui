@@ -1,3 +1,11 @@
-<p>
-  notifier Works!
-</p>
+<aside class="space notifier">
+
+  <ul class="itemList">
+    <li class="notification" *ngFor="#notification of notifications | async"
+      [ngClass]="notification.type">
+      {{ notification.message }} {{ notification.type }}
+      <a (click)="remove( notification )">remove</a>
+    </li>
+  </ul>
+
+</aside>
