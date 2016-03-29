@@ -1,10 +1,9 @@
 import {Component, OnInit} from 'angular2/core';
+import {ApiService} from '../../services/api/api';
+import {Editor} from '../../components/editor/editor';
 import {RouteParams, Router} from 'angular2/router';
 import {RouterOutlet, ROUTER_DIRECTIVES} from 'angular2/router';
 import {Pipe, PipeTransform} from 'angular2/core';
-
-import {ApiService} from '../../services/api/api';
-import {Editor} from '../../components/editor/editor';
 
 /*
 Pipe keys and values for an Array
@@ -21,8 +20,8 @@ export class KeyValuesPipe implements PipeTransform {
 }
 
 @Component({
+  selector: 'crud-list',
   templateUrl: 'app/components/crud/crud-list.component.html',
-  styleUrls: ['app/components/crud/crud-list.component.css'],
   directives: [RouterOutlet, ROUTER_DIRECTIVES, Editor],
   pipes: [KeyValuesPipe],
   providers: [ApiService],
@@ -37,7 +36,6 @@ export class CrudListComponent implements OnInit {
     private _routeParams: RouteParams,
     private _store: ApiService
   ) {
-
   }
 
   ngOnInit() {

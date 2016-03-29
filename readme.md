@@ -1,4 +1,13 @@
-# VAMP OSS UI Architecture
+# VAMP Open Source UI
+
+## Installation
+
+- Run `npm install` to install dependencies.
+- Run `npm start` to run a local server (default ip: http://localhost:4200)
+- The UI listens to the VAMP API on `http://192.168.99.100:8080`. [See instructions for running VAMP](http://vamp.io/documentation/installation/quick_start/)
+- Run `npm run-script seed` to add some example content to VAMP (for testing purposes)
+
+# Architecture
 
 The Vamp OSS UI provides an interface to all artifacts accessible via the REST API. Since most of the artifacts share the same capabilities, we opted for an approach which lets us define endpoints and entities following a generic template so that the UI is consistent across artifacts.
 
