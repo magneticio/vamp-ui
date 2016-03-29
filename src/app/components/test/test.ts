@@ -8,7 +8,6 @@ import {Observable} from 'rxjs/Observable';
 @Component({
   selector: 'test',
   templateUrl: 'app///components/test/test.html',
-  styleUrls: ['app///components/test/test.css'],
   providers: [ApiService, EventStream],
   directives: [Editor, LineChart],
   pipes: []

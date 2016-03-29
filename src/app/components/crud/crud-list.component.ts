@@ -20,6 +20,7 @@ export class KeyValuesPipe implements PipeTransform {
 }
 
 @Component({
+  selector: 'crud-list',
   templateUrl: 'app/components/crud/crud-list.component.html',
   styleUrls: ['app/components/crud/crud-list.component.css'],
   directives: [RouterOutlet, ROUTER_DIRECTIVES, Editor],

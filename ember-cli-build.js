@@ -40,7 +40,7 @@ function getCssTree(folder) {
 
     return scssFiles.map(fileName => {
       return BroccoliSass(
-          [`${srcPath}/${component}`, 'src/app/style'], // Directories w/ scss sources
+          [`${srcPath}/${component}`], // Directories w/ scss sources
           `./${fileName}.scss`,                              // Root scss input file
           `${folder}/${component}/${fileName}.css`);        // Css output file
     }).concat(trees);

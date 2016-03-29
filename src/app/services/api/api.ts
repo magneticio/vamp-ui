@@ -35,7 +35,7 @@ export class Api {
 @Injectable()
 export class ApiService {
 
-  protected _endpoint = 'http://192.168.99.100:8080/api/v1/'
+  public _endpoint = 'http://192.168.99.100:8080/api/v1/'
 
   items$: Observable<Array<any>>;
   private _itemsObserver: any;
@@ -70,6 +70,10 @@ export class ApiService {
       );
   }
 
+  getInfo() {
+    return this._http.get( this._endpoint + 'info' )
+      .map( res => res.json() )
+  }
 
   get(resource:string, name:string) {
       /*this._http.get( this._endpoint + resource + '/' + name).subscribe(
