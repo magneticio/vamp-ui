@@ -13,8 +13,11 @@ export class Store {
   // observer instead of in the store methods. Seems like a more proper way
   // to deal with the observavle BehaviorSubject.
 
-  // Store needs an observable which provides a data stream corresponding to
-  // the artifact whith which it is initialized.
+  private _artifact : string
+  private _capabilities : Array<string> = [ 'GET' , 'POST' , 'PUT' , 'DELETE' ];
+
+  // Store needs an observable which provides data corresponding to
+  // the artifact(s) whith which it is initialized.
   public items$ : BehaviorSubject<Array<any>> = new BehaviorSubject([]);
 
   // On initialization of the Store the following parameters are expected:
@@ -22,16 +25,14 @@ export class Store {
   // 2. the name and/or interface of the VAMP artifact onto which this
   //    store will be modelled.
   constructor(
-    private _artifact:string,
+    _artifact:string,
     @Inject( newApiService ) private _api?,
-    private _capabilities?:Array<string>
+    _capabilities? : Array<string>
   ) {
-    if ( this._api ) {
-      this._capabilities  = [ 'GET' , 'POST' , 'PUT' , 'DELETE' ];
+    if ( this._api )
       this.load();
-    }
 
-    console.log( 'Init Store with' , _artifact , _capabilities , this );
+    console.log( 'Init Store with' , this );
   }
 
   get items() {
