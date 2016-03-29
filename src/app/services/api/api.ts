@@ -154,7 +154,7 @@ export class newApiService {
     console.log( 'Going to post ' , artifact , payload , this._http );
 
     return this._http.post( this._endpoint + artifact + ( id ? '/' + id : '' ) , payload , { headers } )
-      .map( res => res.json() )
+      // .map( res => res.json() )
       .share();
   }
 
@@ -163,7 +163,7 @@ export class newApiService {
     headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
 
     return this._http.put( this._endpoint + artifact + '/' + id , payload , { headers } )
-      .map( res => res.json() )
+      // .map( res => res.json() )
       .share();
   }
 
@@ -172,7 +172,7 @@ export class newApiService {
     headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
 
     return this._http.delete( this._endpoint + artifact + '/' + id , { headers } )
-      .map( res => res.json() )
+      // .map( res => res.json() )
       .share();
   }
 
