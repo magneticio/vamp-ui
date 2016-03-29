@@ -1,12 +1,16 @@
-<h2>{{ _store._artifact }}</h2>
+<section class="space">
 
-<ul class="crudList">
-  <li *ngFor="#item of _store.items | async">
-    {{item.name}}
+  <h2>{{ _store._artifact }}</h2>
 
-    <a *ngIf="_store._artifact == 'blueprints'" (click)="deploy( item )">deploy</a>
-    <a *ngIf="_store._artifact == 'deployments'" (click)="undeploy( item )">undeploy</a>
+  <ul class="itemList">
+    <li class="card" *ngFor="#item of _store.items | async">
+      {{item.name}}
 
-    <a (click)="_store.delete( item )">delete</a>
-  </li>
-</ul>
+      <a *ngIf="_store._artifact == 'blueprints'" (click)="deploy( item )">deploy</a>
+      <a *ngIf="_store._artifact == 'deployments'" (click)="undeploy( item )">undeploy</a>
+
+      <a (click)="_store.delete( item )">delete</a>
+    </li>
+  </ul>
+
+</section>
