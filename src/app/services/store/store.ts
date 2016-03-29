@@ -13,9 +13,6 @@ export class Store {
   // observer instead of in the store methods. Seems like a more proper way
   // to deal with the observavle BehaviorSubject.
 
-  // Private api coupling
-  private _api:newApiService
-
   // Store needs an observable which provides a data stream corresponding to
   // the artifact whith which it is initialized.
   public items$ : BehaviorSubject<Array<any>> = new BehaviorSubject([]);
@@ -26,11 +23,9 @@ export class Store {
   //    store will be modelled.
   constructor(
     private _artifact:string,
-    @Optional() @Inject( newApiService ) newApiService?,
+    @Inject( newApiService ) private _api?,
     private _capabilities?:Array<string>
   ) {
-    this._api = newApiService;
-
     if ( this._api ) {
       this._capabilities  = [ 'GET' , 'POST' , 'PUT' , 'DELETE' ];
       this.load();
