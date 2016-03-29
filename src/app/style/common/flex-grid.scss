@@ -1,0 +1,342 @@
+//
+//
+// Grid.scss establishes the grid system.
+//
+// 1. Functions
+// 2. Row & Column styles
+// 3. Grid-system styles
+// 4. Container styles â€” last because containers override max-widhts
+//
+//
+
+// Flex-grid variables
+$gutter: 2rem;
+$total-cols: 12;
+
+// 1. Fuctions
+
+// Griw width outputs a responsive width in percentages and
+// is based on the amount of columns and your gutter
+//
+// params:
+// $cols - int, number of columns
+// $include-gutter - float, for calculating gutter offsets.
+@function grid-width( $cols, $include-gutter: null, $base-width: 100% ) {
+	$col: $base-width / $total-cols;
+	$col-width: $col * $cols;
+	$width: calc( #{$col-width} - #{$gutter} );
+
+	@if ( $include-gutter != null ) {
+		$width: calc( #{$col-width} );
+
+		@if ( $include-gutter > 0 or $include-gutter < 0) {
+			$gutters: $gutter * $include-gutter;
+			$width: calc( #{$col-width} + #{$gutters} );
+		}
+	}
+
+	@return $width;
+}
+
+// 2. Row & Column styles
+// The .row and .column elements wrap flex box content.
+// Not sure if we should margin-out the rows. Maybe vertical margins should be
+// separated from the grid system?
+.column,
+.row {
+	// align-items: flex-start;;
+
+	margin-bottom: $gutter/2;
+	margin-top: $gutter/2;
+
+	&-small {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: center;
+	}
+
+	&.center {
+		align-items: center;
+		justify-content: center;
+	}
+
+	&.start-x {
+		justify-content: flex-start;
+	}
+
+	&.end-x {
+		justify-content: flex-end;
+	}
+
+	&.stretch-x {
+		justify-content: space-between;
+	}
+
+	&.center-x {
+		justify-content: center;
+	}
+
+	@include tablet {
+		// align-items: flex-start;
+		justify-content: flex-start;
+		margin-left: -$gutter/2;
+		margin-right: -$gutter/2;
+		// max-width: 100%;
+		&.start-y {
+			align-items: flex-start;
+		}
+
+		&.end-y {
+			align-items: flex-end;
+		}
+
+		&.stretch-y {
+			align-items: stretch;
+		}
+
+		&.center-y {
+			align-items: center;
+		}
+	}
+
+	// & > & {
+	// 	margin-bottom: 0;
+	// 	margin-top: 0;
+	// }
+}
+
+.column {
+	// @include phablet {
+	display: flex;
+		flex-flow: column wrap;
+
+		&.reverse {
+			flex-direction: column-reverse;
+		}
+	// }
+}
+
+.row {
+	@at-root section#{&} {
+		margin-bottom: $gutter*3;
+		margin-top: $gutter*3;
+	}
+
+	@include phablet {
+		flex-flow: row wrap;
+
+		&.reverse {
+			flex-direction: row-reverse;
+		}
+
+		&:not(.center):not(.center-x) > .indent:first-of-type {
+			margin-left: grid-width( 1 , 0.5 );
+		}
+	}
+
+	@include tablet {
+		display: flex;
+	}
+
+	& > .column {
+		margin-bottom: 0;
+		margin-top: 0;
+	}
+}
+
+// 3. Grid-system styles
+// .grid-aside 		= 3 cols, 4 cols with bleed on > tablet
+// .grid-content 	= 8 cols, 9 cols with bleed on > tablet
+// .grid-full			= 12 cols, 10 cols on > desktop
+// .grid-lead			= 1 col on > desktop
+
+// This makes sure the width includes the borders, padding, etc.
+.column,
+.container,
+.grid-aside,
+.grid-content,
+.grid-full,
+.grid-lead,
+.row {
+	box-sizing: border-box;
+}
+
+.grid-aside,
+.grid-content,
+.grid-lead {
+	flex: 1;
+	max-width: 100%;
+}
+
+.grid-full {
+	flex: 100%;
+	max-width: 100%;
+}
+
+@include phablet {
+	.grid-aside,
+	.grid-content,
+	.grid-full,
+	.grid-lead {
+		margin-left: $gutter/2;
+		margin-right: $gutter/2;
+	}
+
+	.grid-lead {
+		order: -1;
+	}
+}
+
+// Grid styles
+@include tablet {
+	// .column > .row,
+	// .row > .column {
+	// 	flex: 1;
+	// 	margin: $gutter/2;
+	// }
+
+	.row.grid-content {
+		margin: 0;
+		flex: grid-width( 8 , 0 );
+		// max-width: grid-width( 8 , 1 );
+	}
+
+	.grid-aside {
+		flex: grid-width( 4 );
+		max-width: grid-width( 4 );
+
+		&.center {
+			margin: auto;
+		}
+
+		&.stretch {
+			align-self: auto;
+			justify-content: space-between;
+			display: flex;
+			flex-flow: column nowrap;
+		}
+	}
+
+	.grid-content {
+		flex: grid-width( 8 );
+		max-width: grid-width( 8 );
+
+		&.half {
+			flex: grid-width( 6 );
+			max-width: grid-width( 6 );
+
+			&.bleed {
+				flex: grid-width( 7 );
+				max-width: grid-width( 7 );
+			}
+
+			&.indent {
+				flex: grid-width( 5 );
+				max-width: grid-width( 5 );
+			}
+		}
+
+		&.stretch {
+			// align-self: flex-start;;
+			max-width: none;
+		}
+
+		// I think this is the fix for cases consisting of a
+		// .row within the grid .row, containing 2 grid-halves
+		// with a figure + text
+		.row:not(.center-x):not(.reverse) > .row > &.half {
+			flex: grid-width( 6 , -0.5 );
+			max-width: grid-width( 6 , -0.5 );
+		}
+	}
+}
+
+@include desktop {
+	// .row.grid-content {
+	// 	flex: grid-width( 8 , 1 );
+	// 	margin: 0 (-$gutter) 0 0;
+	// 	padding-right: $gutter;
+  //   max-width: grid-width( 8 , 1 );
+	// }
+
+	.grid-lead {
+		flex: grid-width( 1 );
+		max-width: grid-width( 1 );
+	}
+
+	.grid-aside {
+		flex: grid-width( 3 );
+		max-width: grid-width( 3 );
+
+		&.bleed {
+			flex: grid-width( 4 );
+			max-width: grid-width( 4 );
+		}
+	}
+
+	.grid-content {
+		&.bleed {
+			flex: grid-width( 9 );
+			max-width: grid-width( 9 );
+		}
+		//
+		// .row:not(.center-x):not(.reverse) > &:first-child {
+		// 	margin-left: grid-width( 1 , 0.5 );
+		// }
+		//
+		// .row:not(.center-x):not(.reverse) > .row > &:first-child {
+		// 	margin-left: $gutter/2;
+		// }
+	}
+
+	.grid-full {
+		flex: grid-width( 10 , -1 );
+		margin-left: auto;
+		margin-right: auto;
+		max-width: grid-width( 10 , -1 );
+	}
+
+	// Figures get less space
+	// .row:not(.case) > figure.grid-content.half { max-width: grid-width( 4 ); }
+
+}
+
+// 4. Container styles
+// The .container wraps the website in a responsive container.
+.container {
+	margin-left: auto;
+	margin-right: auto;
+
+	// We're setting the max width of the .container to mobile until the
+	// viewport is tablet-size.
+	max-width: 480px;
+
+	// The padding ensures a small gutter on the sides of the container.
+	padding-left: $gutter/2;
+	padding-right: $gutter/2;
+
+	// If we ever want to absolute position content inside .containers
+	position: relative;
+	// width: 100%;
+
+
+	@include tablet {
+		max-width: 1230px;
+
+		&.small {
+			width: grid-width( 8 , -1.5 );
+			max-width: grid-width( 8 , -1.5 );
+		}
+
+		&.full {
+			width: grid-width( 10 , -0.75 );
+			max-width: grid-width( 8 , -0.75 );
+		}
+	}
+
+	@include widescreen {
+		margin-left: auto;
+		margin-right: auto;
+		// max-width: 84vw;
+	}
+}
