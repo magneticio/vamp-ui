@@ -1,7 +1,11 @@
 import {Inject,Injectable} from 'angular2/core';
-import {BehaviorSubject} from 'rxjs/Rx';
+import {BehaviorSubject, Observable , Subject} from 'rxjs/Rx';
 
 import {newApiService} from '../api/api'
+
+function asObs( subject ) {
+  return new Observable( fn => subject.subscribe( fn ) );
+}
 
 
 @Injectable()
@@ -32,6 +36,10 @@ export class Store {
     console.log( 'Init Store with' , _artifact , _capabilities , this );
   }
 
+  get items() {
+    return asObs( this.items$ );
+  }
+
   // Load all data from the Store's initialzed artifact
   load() {
     this._api.getAll( this._artifact )
@@ -48,10 +56,8 @@ export class Store {
     let items = this.items$.getValue(),
         item  = { index: items.push( artifact ) , value : artifact };
 
-    this._api.post( this._artifact , null , artifact )
+    return this._api.post( this._artifact , null , JSON.stringify( artifact ) )
       .subscribe( res => this.items$.next( items ) );
-
-    return item;
   }
 
   // 1. This removes an artifact of the initialized type from the store
@@ -66,8 +72,7 @@ export class Store {
 
     if ( item ) {
       items.splice( item.index , 1 );
-      console.log( items );
-      this._api.delete( this._artifact , id )
+      return this._api.delete( this._artifact , id )
         .subscribe( res => this.items$.next( items ) );
     }
   }
@@ -115,11 +120,9 @@ export class Store {
 
     if ( item ) {
       Object.assign( items[ item.index ] , artifact );
-      this._api.put( this._artifact , id , artifact )
+      return this._api.put( this._artifact , id , artifact )
         .subscribe( res => this.items$.next( items ) );
     }
-
-    return item && item.value;
   }
 
 
