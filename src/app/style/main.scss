@@ -12,20 +12,6 @@
 Component-level SASS only until Angular2-cli supports
 per component SASS compilation including mixins
 */
+@import "components/artifacts";
 @import "components/header";
 @import "components/navigation";
-
-body {
-  background: $color-bg none;
-}
-a {
-  color: $link-color;
-  text-decoration: none;
-}
-a:hover {
-  border-bottom: 1px solid $link-color-hover;
-}
-
-h2 {
-  text-transform: capitalize;
-}

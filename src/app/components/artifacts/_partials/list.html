@@ -1,7 +1,11 @@
-<h2>{{ _store._artifact }}</h2>
+<section class="space">
 
-<ul class="crudList">
-  <li *ngFor="#item of _store.items | async">
-    {{item.name}} <a (click)="_store.delete( item )">delete</a>
-  </li>
-</ul>
+  <h2 class="artifactHeader">{{ _store._artifact }}</h2>
+
+  <ul class="itemList">
+    <li class="card" *ngFor="#item of _store.items | async">
+      {{item.name}} <a (click)="_store.delete( item )">delete</a>
+    </li>
+  </ul>
+
+</section>
