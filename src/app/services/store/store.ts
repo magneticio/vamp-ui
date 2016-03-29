@@ -47,7 +47,6 @@ export class Store {
   // 1. This adds an artifact of the initialized type to the store
   // 2. It communicates the newly added artifact to the API
   // 3. The Store publishes the newly added artifact to the observer
-
   add( artifact ) {
     if ( ! this._can( 'POST' ) || this.find( artifact.name ) )
       return null;
@@ -145,22 +144,3 @@ export class Store {
   }
 
 }
-
-// export class BlueprintStore extends Store {
-//
-//   protected _capabilites = [ 'GET' , 'POST' , 'PUT' , 'DELETE' ];
-//
-//   // Add requirements specific to Blueprints here.
-//   constructor() {
-//     super( 'blueprint' );
-//   }
-//
-//   get blueprints() {
-//     return this._store$;
-//   }
-//
-//   // This could add a cluster by providing a name and a JSON object.
-//   addCluster( name:string , data:Object ) {}
-// }
-//
-// export class GatewayStore extends Store {} //etc.
