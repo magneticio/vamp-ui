@@ -16,6 +16,7 @@ import {Observable} from 'rxjs/Observable';
 export class Test {
 
   data: any;
+  metricsData: any;
   welcome:any;
 
   public _events = [];
@@ -59,6 +60,8 @@ export class Test {
   environment_variables: {}
   `;
 
+    this.metricsData = [25, 28, 32, 65, 75, 85, 75, 65, 40, 30];
+
     this.data = {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             datasets: [
@@ -70,7 +73,7 @@ export class Test {
                     pointStrokeColor: '#fff',
                     pointHighlightFill: 'rgba(255, 64, 129,1)',
                     pointHighlightStroke: '#fff',
-                    data: [65, 59, 80, 81, 56, 55, 40]
+                    data: this.metricsData
                 }
             ]
         }
@@ -79,13 +82,32 @@ export class Test {
   ngOnInit() {
     this._stream.listen();
 
+
     this._stream.events$
       .subscribe(updatedItems => this._events = updatedItems);
 
     this._stream.metrics$
       .subscribe(updatedItems => this._metrics = updatedItems);
 
+  }
 
+  setData(event) {
+    event.preventDefault();
+    this.data = {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [
+                {
+                    label: 'My First dataset',
+                    fillColor: 'rgba(52, 152, 219,0.2)',
+                    strokeColor: 'rgba(52, 152, 219,1)',
+                    pointColor: 'rgba(52, 152, 219,1)',
+                    pointStrokeColor: '#fff',
+                    pointHighlightFill: 'rgba(255, 64, 129,1)',
+                    pointHighlightStroke: '#fff',
+                    data: [65, 75, 85, 75, 65, 40, 30, 24, 28]
+                }
+            ]
+        }
   }
 
 }

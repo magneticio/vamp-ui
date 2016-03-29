@@ -3,7 +3,7 @@ import {Component, ElementRef, AfterViewInit, OnDestroy, DoCheck, SimpleChange, 
 @Component({
     selector: 'linechart',
     template: `
-        <canvas [attr.width]="width" [attr.height]="height" (click)="onCanvasClick($event)"></canvas>
+        <canvas [attr.width]="width" [attr.height]="height" (click)="onCanvasClick($event)" (updateChart)="contentUpdate($event)"></canvas>
     `
 })
 export class LineChart implements AfterViewInit, OnDestroy, DoCheck {
