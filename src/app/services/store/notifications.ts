@@ -19,7 +19,7 @@ export class NotificationStore extends Store {
     super( 'notifications' );
   }
 
-  addNotification( notification ) {
+  addNotification( notification : Notification ) {
     this.add( notification );
 
     setTimeout( () => this.delete( notification ) , this.timeoutDuration );
