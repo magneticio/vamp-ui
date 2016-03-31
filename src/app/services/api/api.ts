@@ -1,32 +1,98 @@
 import {Inject,Injectable} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
-import {Http, RequestOptions, Response, Headers} from 'angular2/http'
+import {Http, RequestOptions , RequestOptionsArgs, Response, Headers} from 'angular2/http'
 import {Observable} from 'rxjs/Observable'
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/map';
 
-const serializeParams = (params: any = {}) => {
-  if (!params.headers)
-    params.headers = new Headers({'Content-Type': 'applications/json'})
 
-  return params
+
+function serializeParams( params : RequestOptionsArgs = {} ) {
+  const defaults = {
+    'Content-Type' : 'application/json'
+  };
+
+  let { headers } = params;
+
+  if ( typeof params !== 'object ')
+    params = {};
+
+  if ( ! headers )
+    params.headers = new Headers( defaults );
+
+  if ( ! params.headers.has( 'Content-Type' ) )
+    params.headers.set( 'Content-Type' , defaults['Content-Type'] );
+
+  return new RequestOptions( params );
 }
 
-const deserializeResponse = (resp: Response) => {
-  let contentType = resp && resp.headers && (resp.headers.get('content-type') || resp.headers.get('Content-Type'))
-
-  if (!contentType)
-    return resp
+// Adapted from https://github.com/MikaAK/angular2-api/blob/master/src/ApiService.ts
+function deserializeResponse( response : Response ) {
+  let contentType = response && response.headers && (response.headers.get('content-type') || response.headers.get('Content-Type'));
 
   if (/json/.test(contentType))
-    return resp.json()
+    return response.json();
   else if (/text/.test(contentType))
-    return resp.text()
+    return response.text();
   else if (/blob/.test(contentType))
-    return resp.blob()
-  else
-    return resp
+    return response.blob();
+
+  return response
 }
+
+// New API
+@Injectable()
+export class newApiService {
+
+  public _endpoint = 'http://192.168.99.100:8080/api/v1/';
+  private _http : Http;
+
+  constructor( @Inject( Http ) Http ) {
+    this._http = Http;
+  }
+
+  getAll( artifact:string ) {
+    return this._http.get( this._endpoint + artifact , serializeParams() )
+      .map( deserializeResponse )
+      .share();
+  }
+
+  get( artifact:string , id:string ) {
+    return this._http.get( this._endpoint + artifact + '/' + id , serializeParams() )
+      .map( deserializeResponse )
+  }
+
+  post( artifact:string , id:string , payload ) {
+    return this._http.post( this._endpoint + artifact + ( id ? '/' + id : '' ) , JSON.stringify( payload ) , serializeParams() )
+      .map( deserializeResponse )
+      .share();
+  }
+
+  put( artifact:string , id:string , payload ) {
+    return this._http.put( this._endpoint + artifact + '/' + id , JSON.stringify( payload ) , serializeParams() )
+      .map( deserializeResponse )
+      .share();
+  }
+
+  delete( artifact:string , id:string , payload = null ) {
+    let params = { body : JSON.stringify( payload ) };
+
+    return this._http.delete( this._endpoint + artifact + '/' + id , serializeParams( payload && params ) )
+      .map( deserializeResponse )
+      .share();
+  }
+
+}
+
+// !! DEPRECATED !!
+// The code below is deprecated but we need it for legacy reasons during the
+// refactor of the crud-list components into the vamp-specific components.
+// const serializeParams = (params: any = {}) => {
+//   if (!params.headers)
+//     params.headers = new Headers({'Content-Type': 'applications/json'})
+//
+//   return params
+// }
 
 export class Api {
   constructor( public name: string) { }
@@ -119,68 +185,4 @@ export class ApiService {
   handleError(error) {
     console.log('Error', error);
   }
-}
-
-// New API
-@Injectable()
-export class newApiService {
-
-  public _endpoint = 'http://192.168.99.100:8080/api/v1/';
-  private _http : Http;
-
-  constructor( @Inject( Http ) Http ) {
-    this._http = Http;
-  }
-
-  getAll( artifact:string ) {
-    let headers = new Headers();
-    headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
-
-    return this._http.get( this._endpoint + artifact , { headers } )
-      .map( res => res.json() )
-      .share();
-  }
-
-  get( artifact:string , id:string ) {
-    let headers = new Headers();
-    headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
-
-    return this._http.get( this._endpoint + artifact + '/' + id , { headers } )
-      .map( res => res.json() )
-  }
-
-  post( artifact:string , id:string , payload ) {
-    let headers = new Headers();
-    headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
-
-    console.log( 'Going to post ' , artifact , payload , this._http );
-
-    return this._http.post( this._endpoint + artifact + ( id ? '/' + id : '' ) , JSON.stringify( payload ) , { headers } )
-      // .map( res => res.json() )
-      .share();
-  }
-
-  put( artifact:string , id:string , payload ) {
-    let headers = new Headers();
-    headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
-
-    return this._http.put( this._endpoint + artifact + '/' + id , JSON.stringify( payload ) , { headers } )
-      // .map( res => res.json() )
-      .share();
-  }
-
-  delete( artifact:string , id:string , payload = null ) {
-    let headers = new Headers();
-    headers.append( 'Content-Type' , 'application/json; charset=utf-8' );
-
-    let requestOptions = new RequestOptions({
-      body    : payload && JSON.stringify( payload ),
-      headers : headers
-    });
-
-    return this._http.delete( this._endpoint + artifact + '/' + id , requestOptions )
-      // .map( res => res.json() )
-      .share();
-  }
-
 }
