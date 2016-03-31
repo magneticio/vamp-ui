@@ -69,3 +69,22 @@ export class EventStream {
   }
 
 }
+
+
+@Injectable()
+export class newEventStream {
+  // The EvenStream service listens to the VAMP SSE enpoint for all events
+  // and allows other services/components to subscribe to certain types of events.
+  // The use-case for this service in VAMP's case is that the Artifact-specific
+  // stores can subscribe to relevant events and process the data through
+  // the update() method with the specific parameters.
+
+  private _endpoint = 'http://192.168.99.100:8080/api/v1/events/stream';
+
+  // On init we expect the following parameters:
+  // 1. the endpoint; default is given above.
+  constructor() {}
+
+
+
+}
