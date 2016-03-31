@@ -78,7 +78,7 @@ export class Store {
         item  = this.get( artifact );
 
     if ( item ) {
-      items.splice( item.index , 1 );
+      items.splice( items.indexOf( item ) , 1 );
 
     if ( item && this._api )
       this._api.delete( this._artifact , item.name , withPayload && item )
