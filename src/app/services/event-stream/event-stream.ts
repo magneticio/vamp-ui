@@ -43,6 +43,9 @@ export class EventStream {
     var source = new EventSource(this._endpoint + 'events/stream');
 
     source.addEventListener('event', e => {
+
+      // EmitEvents with data
+    
       // Deploying/undeploying
       //console.log('eventStream:event', e.data);
       this._eventStore.items.push(JSON.parse(e.data));

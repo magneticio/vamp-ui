@@ -20,11 +20,11 @@ export class Info {
   ngOnInit() {
       this.endpoint = this._service._endpoint;
       this.info = this._service.getInfo()
-      .subscribe(
-        data => {
-          this.info = data;
-        }
-      );
+        .subscribe(
+          data => {
+            this.info = data;
+          }
+        );
   }
 
 }

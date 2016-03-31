@@ -1,13 +1,1 @@
-.notification {
-  background-color: darkslategray;
-  color: white;
-  padding: 1rem;
-}
 
-.notification a {
-  color: rgba( 255, 255, 255, 0.75 );
-}
-
-.notification.error { background-color: orangered; }
-.notification.info { background-color: deepskyblue; }
-.notification.warn { background-color: coral; }
