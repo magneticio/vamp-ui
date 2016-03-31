@@ -1,14 +1,17 @@
-<section class="card space">
+
+
+<section class="space">
 
   <h1>{{ info.message }}</h1>
 
-  <dl class="small-type">
+  <h4>General info</h4>
+
+  <dl class="card small-type">
     <dt>Version</dt>
     <dd>{{ info.version }}</dd>
 
     <dt>REST API Endpoint</dt>
-    <dd>{{ endpoint }}</dd>
+    <dd><input type="text" name="endpoint" value="{{ endpoint }}"></dd>
   </dl>
-
 
 </section>
