@@ -60,6 +60,31 @@ body {
 	// }
 }
 
+.btn {
+  @include btn-color($grey, $color-primary);
+  border-radius: $border-radius;
+  padding: $gutter/4 $gutter/2;
+  &:hover {
+    text-decoration: none;
+  }
+  &.btn--action {
+    @include btn-color($color-action, white);
+    color: white;
+  }
+  &.btn--contrast {
+    @include btn-color($color-contrast, white);
+    color: white;
+  }
+  &.btn--destructive {
+    @include btn-color($color-destructive, white);
+    color: white;
+  }
+  &.btn--highlight {
+    @include btn-color($color-highlight, white);
+    color: white;
+  }
+}
+
 .itemList {
   padding:0;
   margin:0;
@@ -75,7 +100,8 @@ body {
   border-radius: $border-radius;
   box-sizing: border-box;
   display: flex;
-  flex-flow: column nowrap;
+  align-items: center;
+  //flex-flow: column nowrap;
   overflow: hidden;
   position: relative;
 

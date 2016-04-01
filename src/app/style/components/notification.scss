@@ -1,0 +1,13 @@
+.notification {
+  background-color: $color-action;
+  color: white;
+  padding: 1rem;
+}
+
+.notification a {
+  color: rgba( 255, 255, 255, 0.75 );
+}
+
+.notification.error { background-color: $pink; }
+.notification.info { background-color: $blue; }
+.notification.warn { background-color: $orange; }
