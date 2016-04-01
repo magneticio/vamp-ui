@@ -9,10 +9,6 @@
 //
 //
 
-// Flex-grid variables
-$gutter: 2rem;
-$total-cols: 12;
-
 // 1. Fuctions
 
 // Griw width outputs a responsive width in percentages and
@@ -44,7 +40,7 @@ $total-cols: 12;
 // separated from the grid system?
 .column,
 .row {
-	// align-items: flex-start;;
+	// align-items: flex-start;
 
 	margin-bottom: $gutter/2;
 	margin-top: $gutter/2;

@@ -5,7 +5,7 @@ import {Store} from '../../../services/store/store'
 
 @Component({
   selector: 'vamp-deployments',
-  templateUrl: 'app/components/artifacts/_partials/list.html',
+  templateUrl: 'app/components/artifacts/deployments/deployments.html',
   styleUrls: ['app/components/artifacts/deployments/deployments.css'],
   providers: [
     provide( Store , {

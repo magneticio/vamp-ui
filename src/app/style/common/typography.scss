@@ -143,6 +143,7 @@ ul {
 a {
 	color: $link-color;
 	text-decoration: none;
+	cursor: pointer;
 
 	&:hover {
 		color: $link-color-hover;

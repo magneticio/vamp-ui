@@ -1,3 +1,8 @@
 header.vamp-header {
-  background: #fff none;
+  background: white none;
+  display: flex;
+  align-items: center;
+  a {
+    margin-right: $gutter;
+  }
 }

@@ -3,10 +3,14 @@
   <h2 class="artifactHeader">{{ _store._artifact }}</h2>
 
   <ul class="itemList">
-    <li class="card" *ngFor="#item of _store.items | async">
-      {{item.name}}
-      <a class="btn" *ngIf="_store._artifact == 'blueprints'" (click)="deploy( item )">deploy</a>
-      <a class="btn" *ngIf="_store._artifact == 'deployments'" (click)="undeploy( item )">undeploy</a>
+    <li class="card row grid-full stretch-x" *ngFor="#item of _store.items | async">
+      <div class="content">
+        {{item.name}}
+      </div>
+      <div class="actions">
+        <a class="btn" *ngIf="_store._artifact == 'blueprints'" (click)="deploy( item )">deploy</a>
+        <a class="btn btn--destructive" *ngIf="_store._artifact == 'blueprints'" (click)="delete( item )">delete</a>
+      </div>
     </li>
   </ul>
 

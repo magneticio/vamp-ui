@@ -1,3 +1,16 @@
-<p>
-  artifacts/deployments Works!
-</p>
+<section class="space">
+
+  <h2 class="artifactHeader">{{ _store._artifact }}</h2>
+
+  <ul class="itemList">
+    <li class="card row grid-full stretch-x" *ngFor="#item of _store.items | async">
+      <div class="content">
+        {{item.name}}
+      </div>
+      <div class="actions">
+        <a class="btn" (click)="undeploy( item )">undeploy</a>
+      </div>
+    </li>
+  </ul>
+
+</section>

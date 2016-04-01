@@ -1,12 +1,20 @@
-$border-radius: 6px;
+
+
+/* Flex grid */
+$gutter: 2rem;
+$total-cols: 12;
+
+$border-radius: 3px;
 
 /* Brand colors */
 $blue: #308ed6;
 $blue-dark: #2e3b4c;
 $pink: #FF4081;
 $orange: #f15a24;
+$red: #E54D42;
 
 $grey-light: #f6f7fa;
+$grey: darken($grey-light, 10%);
 
 /* Couple various colors to UI elements */
 $color-bg: $grey-light;
@@ -14,6 +22,7 @@ $color-primary: $blue-dark;
 $color-action: $blue;
 $color-contrast: $pink;
 $color-highlight: $orange;
+$color-destructive: $red;
 
 /* Couple UI colors to components */
 $text-color: $color-primary;

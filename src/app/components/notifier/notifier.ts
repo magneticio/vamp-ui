@@ -6,7 +6,6 @@ import {Notification,NotificationStore} from '../../services/store/notifications
 @Component({
   selector: 'vamp-notifier',
   templateUrl: 'app/components/notifier/notifier.html',
-  styleUrls: ['app/components/notifier/notifier.css'],
   providers: [ NotificationStore ],
   directives: [],
   pipes: []
