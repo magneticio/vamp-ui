@@ -10,6 +10,7 @@
       <div class="actions">
         <a class="btn" *ngIf="_store._artifact == 'blueprints'" (click)="deploy( item )">deploy</a>
         <a class="btn btn--destructive" *ngIf="_store._artifact == 'blueprints'" (click)="delete( item )">delete</a>
+        <a class="btn btn--destructive" *ngIf="_store._artifact == 'breeds'" (click)="_store.delete( item )">delete</a>
       </div>
     </li>
   </ul>
