@@ -12,16 +12,21 @@ function serializeParams( params : RequestOptionsArgs = {} ) {
     'Content-Type' : 'application/json'
   };
 
-  let { headers } = params;
+  console.log( params );
 
-  if ( typeof params !== 'object ')
-    params = {};
+  let { body }    = params,
+      { headers } = params;
+
+  if ( typeof body !== 'string' )
+    params.body = JSON.stringify( body );
 
   if ( ! headers )
     params.headers = new Headers( defaults );
 
   if ( ! params.headers.has( 'Content-Type' ) )
     params.headers.set( 'Content-Type' , defaults['Content-Type'] );
+
+  console.log( params );
 
   return new RequestOptions( params );
 }
@@ -75,9 +80,9 @@ export class newApiService {
   }
 
   delete( artifact:string , id:string , payload = null ) {
-    let params = { body : JSON.stringify( payload ) };
+    let params = { body : payload };
 
-    return this._http.delete( this._endpoint + artifact + '/' + id , serializeParams( payload && params ) )
+    return this._http.delete( this._endpoint + artifact + '/' + id , serializeParams( params ) )
       .map( deserializeResponse )
       .share();
   }
