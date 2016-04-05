@@ -38,7 +38,7 @@ export class Blueprints {
   // TODO: Use the generated Deploymentstore to add the blueprint as deployment
   // instead of injecting the API service here.
   deploy( item ) {
-    return this._api.post( 'deployments' , null , item )
+    return this._api.put( 'deployments' , item.name , item )
       .subscribe();
   }
 

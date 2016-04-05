@@ -1,6 +1,6 @@
 import {Inject,Injectable} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
-import {Http, RequestOptions , RequestOptionsArgs, Response, Headers} from 'angular2/http'
+import {Http, RequestOptions , RequestOptionsArgs, Response, Headers , URLSearchParams} from 'angular2/http'
 import {Observable} from 'rxjs/Observable'
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/map';
@@ -46,6 +46,7 @@ function deserializeResponse( response : Response ) {
 }
 
 // New API
+// TODO: refactor the params to proper request objects.
 @Injectable()
 export class newApiService {
 
@@ -62,8 +63,8 @@ export class newApiService {
       .share();
   }
 
-  get( artifact:string , id:string ) {
-    return this._http.get( this._endpoint + artifact + '/' + id , serializeParams() )
+  get( artifact:string , id:string , params ) {
+    return this._http.get( this._endpoint + artifact + '/' + id , serializeParams( params ) )
       .map( deserializeResponse )
   }
 
@@ -79,9 +80,7 @@ export class newApiService {
       .share();
   }
 
-  delete( artifact:string , id:string , payload = null ) {
-    let params = { body : payload };
-
+  delete( artifact:string , id:string , params ) {
     return this._http.delete( this._endpoint + artifact + '/' + id , serializeParams( params ) )
       .map( deserializeResponse )
       .share();

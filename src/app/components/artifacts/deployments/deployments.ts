@@ -26,7 +26,8 @@ export class Deployments {
   ) { }
 
   undeploy( item ) {
-    return this._store.delete( item , true );
+    this._store._api.get( 'deployments' , item.name , { search: 'as_blueprint=true' } )
+      .subscribe( res => this._store.delete( item , { body: res } ) );
   }
 
   get deployments() {

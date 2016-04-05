@@ -26,7 +26,7 @@ export class Store {
   //    store will be modelled.
   constructor(
     _artifact : string,
-    @Inject( newApiService ) private _api?,
+    @Inject( newApiService ) public _api?,
     _capabilities? : Array<string>
   ) {
     this._artifact = _artifact;
@@ -70,7 +70,7 @@ export class Store {
   // 1. This removes an artifact of the initialized type from the store
   // 2. It communicates the newly deleted artifact to the API
   // 3. The Store notifes the observer of the remvoval
-  delete( artifact , withPayload = false ) {
+  delete( artifact , params = {} ) {
     if ( ! this._can( 'DELETE' ) )
       return null;
 
@@ -81,7 +81,7 @@ export class Store {
       items.splice( items.indexOf( item ) , 1 );
 
     if ( item && this._api )
-      this._api.delete( this._artifact , item.name , withPayload && item )
+      this._api.delete( this._artifact , item.name , params )
         .subscribe( res => this.items$.next( items ) );
     }
 
@@ -110,7 +110,7 @@ export class Store {
   // 1. Retrieve a single artifact from the store
   // 2. (optionally) GET's the single artifact from the API
   // Q:
-  get( artifact ) {
+  get( artifact , params = {} ) {
     if ( ! this._can( 'GET' ) )
       return null;
 
@@ -119,7 +119,7 @@ export class Store {
         item  = this.find( artifact );
 
     if ( this._api )
-      this._api.get( this._artifact , artifact.name )
+      this._api.get( this._artifact , item.name , params )
         .subscribe( res => {
           Object.assign( item , res );
           this.items$.next( items );
