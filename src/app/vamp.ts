@@ -4,9 +4,9 @@ import {Http, HTTP_PROVIDERS} from 'angular2/http';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
 // App components
-import {CrudListComponent} from './components/crud/crud-list.component';
-import {CrudRoot} from './components/crud/crud-root.component';
-import {Test} from './components/test/test';
+import { CrudListComponent } from './components/crud/crud-list.component';
+import { CrudRoot } from './components/crud/crud-root.component';
+import { Test } from './components/test/test';
 import { Notifier } from './components/notifier/notifier';
 
 // Vamp

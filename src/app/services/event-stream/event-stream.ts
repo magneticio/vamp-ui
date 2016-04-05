@@ -1,8 +1,10 @@
-import {Injectable} from 'angular2/core';
+import {Inject,Injectable} from 'angular2/core';
 import {Http, RequestOptionsArgs, Response, Headers} from 'angular2/http'
 import {Observable} from 'rxjs/Observable'
 
-// Declare EventSource object as magic
+import {newApiService} from '../api/api';
+
+// Declare EventSource object
 declare var EventSource:any;
 
 @Injectable()
@@ -45,7 +47,7 @@ export class EventStream {
     source.addEventListener('event', e => {
 
       // EmitEvents with data
-    
+
       // Deploying/undeploying
       //console.log('eventStream:event', e.data);
       this._eventStore.items.push(JSON.parse(e.data));
@@ -75,7 +77,7 @@ export class EventStream {
 
 
 @Injectable()
-export class newEventSteam {
+export class newEventStream {
   // The EvenStream service listens to the VAMP SSE enpoint for all events
   // and allows other services/components to subscribe to certain types of events.
   // The use-case for this service in VAMP's case is that the Artifact-specific
@@ -96,20 +98,37 @@ export class newEventSteam {
   // })
   //
   // In theory we could omit the data response from the listen fn if the second
-  // parameter in Store.update is `data` by default but makes for les clear code.
+  // parameter in Store.update is `data` by default but makes for less clear code.
   // JS should auto-hoist this var from the response:
   // newEventSteam.listen( 'event' , { tags: [] } , this.update( artifact || id );
 
-  private _endpoint = 'http://192.168.99.100:8080/api/v1/events/stream';
+  private _endpoint:string = 'http://192.168.99.100:8080/api/v1/events/stream';
+
+  private _source:any;
 
   // The subscriptions object
   private _subscriptions = {};
 
   // On init we expect the following parameters:
   // 1. the endpoint; default is given above.
-  constructor() {}
+  constructor(
+    @Inject( newApiService ) public _api?
+  ) {
+    this._endpoint = this._api._endpoint + 'events/stream';
+
+    this._source = new EventSource( this._endpoint );
+
+    console.log( 'Init SSE with' , this._source );
+  }
 
   //
-  listen() {}
+  listen( type , tag , callback ) {
+    this._source.addEventListener( type , event => {
+      let data = JSON.parse( event.data );
+
+      if ( data && data.tags && data.tags.indexOf( tag ) !== -1 )
+        callback( data );
+    } );
+  }
 
 }
