@@ -10,16 +10,16 @@ import {
   beforeEachProviders
 } from 'angular2/testing';
 import {provide} from 'angular2/core';
-import {Artifacts} from './artifacts';
+import {ArtifactsAction} from './artifacts-action';
 
 
-describe('Artifacts Component', () => {
+describe('ArtifactsAction Component', () => {
 
   beforeEachProviders((): any[] => []);
 
 
   it('should ...', injectAsync([TestComponentBuilder], (tcb:TestComponentBuilder) => {
-    return tcb.createAsync(Artifacts).then((fixture) => {
+    return tcb.createAsync(ArtifactsAction).then((fixture) => {
       fixture.detectChanges();
     });
   }));

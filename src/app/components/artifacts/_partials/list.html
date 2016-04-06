@@ -5,14 +5,16 @@
   <ul class="itemList">
     <li class="card row grid-full stretch-x" *ngFor="#item of resource.items | async">
       <div class="content">
-        {{item.name}}
-        <a>edit</a>
+        <a [routerLink]="['ArtifactsList' , { resource: selectedResource } , 'ArtifactsDetail' , { id: item.name } ]">{{ item.name }}</a>
+        <a [routerLink]="['ArtifactsList' , { resource: selectedResource } , 'ArtifactsAction' , { action: 'edit' , id: item.name } ]">edit</a>
       </div>
       <div class="actions">
         <a class="btn" *ngIf="selectedResource == 'blueprints'" (click)="resource.deploy( item )">deploy</a>
         <a class="btn btn--destructive" *ngIf="selectedResource == 'blueprints'" (click)="resource.delete( item )">delete</a>
         <a class="btn btn--destructive" *ngIf="selectedResource == 'breeds'" (click)="resource.delete( item )">delete</a>
       </div>
+
+      <router-outlet></router-outlet>
     </li>
   </ul>
 
