@@ -13,7 +13,7 @@ import { Gateways } from './gateways/gateways';
 // import { Slas } from './slas/slas';
 // import { Workflows } from './workflows/workflows';
 
-const VAMP_ARTIFACTS = [
+export const VAMP_ARTIFACTS = [
   Blueprints,
   Breeds,
   Deployments,
@@ -26,12 +26,10 @@ const VAMP_ARTIFACTS = [
 ];
 
 @Component({
-  selector: 'artifacts',
-  templateUrl: 'app/components/artifacts/_partials/list.html',
-  styleUrls: ['app/components/artifacts/artifacts.css'],
-  providers: [ VAMP_ARTIFACTS ],
-  directives: [ ROUTER_DIRECTIVES ],
-  pipes: []
+  directives  : [ ROUTER_DIRECTIVES ],
+  providers   : [ VAMP_ARTIFACTS ],
+  selector    : 'artifacts-list',
+  templateUrl : 'app/components/artifacts/_partials/list.html',
 })
 export class ArtifactsList {
 

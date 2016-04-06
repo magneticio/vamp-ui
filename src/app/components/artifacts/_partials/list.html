@@ -2,13 +2,13 @@
 
   <h2 class="artifactHeader">{{ selectedResource }}</h2>
 
-  <ul class="itemList">
-    <li class="card row grid-full stretch-x" *ngFor="#item of resource.items | async">
-      <div class="content">
-        <a [routerLink]="['ArtifactsList' , { resource: selectedResource } , 'ArtifactsDetail' , { id: item.name } ]">{{ item.name }}</a>
-        <a [routerLink]="['ArtifactsList' , { resource: selectedResource } , 'ArtifactsAction' , { action: 'edit' , id: item.name } ]">edit</a>
+  <ul class="list-clear">
+    <li class="card" *ngFor="#item of resource.items | async">
+      <div class="content push-left">
+        <a [routerLink]="['ArtifactsDetail'       , { resource: selectedResource , id: item.name } ]">{{ item.name }}</a>
+        <a [routerLink]="['ArtifactsDetailAction' , { resource: selectedResource , id: item.name , action: 'edit' } ]">edit</a>
       </div>
-      <div class="actions">
+      <div class="actions push-right">
         <a class="btn" *ngIf="selectedResource == 'blueprints'" (click)="resource.deploy( item )">deploy</a>
         <a class="btn btn--destructive" *ngIf="selectedResource == 'blueprints'" (click)="resource.delete( item )">delete</a>
         <a class="btn btn--destructive" *ngIf="selectedResource == 'breeds'" (click)="resource.delete( item )">delete</a>
