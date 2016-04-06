@@ -1,13 +1,21 @@
+.notifier {
+  box-sizing: border-box;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+}
+
 .notification {
   background-color: $color-action;
   color: white;
   padding: 1rem;
+
+  &.error { background-color: $pink; }
+  &.info { background-color: $blue; }
+  &.warn { background-color: $orange; }
 }
 
 .notification a {
   color: rgba( 255, 255, 255, 0.75 );
 }
-
-.notification.error { background-color: $pink; }
-.notification.info { background-color: $blue; }
-.notification.warn { background-color: $orange; }

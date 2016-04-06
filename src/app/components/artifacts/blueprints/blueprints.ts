@@ -1,7 +1,9 @@
-import {Component , provide} from 'angular2/core';
+import {Component , Inject , provide} from 'angular2/core';
 
-import {newApiService} from '../../../services/api/api'
-import {Store} from '../../../services/store/store'
+import {newApiService} from '../../../services/api/api';
+import {newEventStream} from '../../../services/event-stream/event-stream';
+import {NotificationStore} from '../../../services/store/notifications';
+import {Store} from '../../../services/store/store';
 
 @Component({
   selector: 'vamp-blueprints',
@@ -13,7 +15,7 @@ import {Store} from '../../../services/store/store'
       useFactory: newApiService => {
         return new Store( 'blueprints' , newApiService , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] );
       },
-      deps: [ newApiService ]
+      deps: [ newApiService , newEventStream ]
     } )
   ],
   directives: [],
@@ -24,9 +26,13 @@ export class Blueprints {
   // Add requirements specific to Blueprints here.
   constructor(
     private _store : Store,
-    private _api   : newApiService
+    @Inject( newApiService ) private _api,
+    @Inject( newEventStream ) private _events,
+    @Inject( NotificationStore ) private _notifier
   ) {
-    this._store = _store;
+    this._events.listen( 'event' , ['deployments:','synchronization:deployed'] , data => {
+      this._notifier.addNotification( { message: data.value['_1'].name + ' is deployed' , type: 'info' } );
+    } )
   }
 
   get blueprints() {
