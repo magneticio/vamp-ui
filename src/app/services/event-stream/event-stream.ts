@@ -122,13 +122,26 @@ export class newEventStream {
   }
 
   //
-  listen( type , tag , callback ) {
+  listen( type , tags:Array<string> , callback ) {
     this._source.addEventListener( type , event => {
-      let data = JSON.parse( event.data );
+      let data    = JSON.parse( event.data ),
+          hasTags = false;
 
-      if ( data && data.tags && data.tags.indexOf( tag ) !== -1 )
+      console.log( 'Fetched event with' , data );
+
+      if ( data && data.tags ) {
+        tags.forEach( tag => {
+          hasTags = data.tags.indexOf( tag ) !== -1
+        } )
+      }
+
+      if ( hasTags )
         callback( data );
     } );
+  }
+
+  remove( type , callback ) {
+    this._source.removeEventListener( type , callback );
   }
 
 }

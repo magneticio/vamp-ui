@@ -1,10 +1,10 @@
-<aside class="space notifier">
+<aside class="notifier">
 
   <ul class="itemList">
     <li class="notification" *ngFor="#notification of notifications | async"
       [ngClass]="notification.type">
       {{ notification.message }}
-      <a (click)="remove( notification )">remove</a>
+      <a class="push-right" (click)="remove( notification )">remove</a>
     </li>
   </ul>
 

@@ -13,7 +13,7 @@ export interface Notification {
 export class NotificationStore extends Store {
 
   public items$ : BehaviorSubject<Array<Notification>> = new BehaviorSubject([]);
-  public timeoutDuration : number = 7500;
+  public timeoutDuration : number = 6000;
 
   constructor() {
     super( 'notifications' );
