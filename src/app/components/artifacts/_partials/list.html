@@ -1,16 +1,17 @@
 <section class="space">
 
-  <h2 class="artifactHeader">{{ _store._artifact }}</h2>
+  <h2 class="artifactHeader">{{ selectedResource }}</h2>
 
   <ul class="itemList">
-    <li class="card row grid-full stretch-x" *ngFor="#item of _store.items | async">
+    <li class="card row grid-full stretch-x" *ngFor="#item of resource.items | async">
       <div class="content">
         {{item.name}}
+        <a>edit</a>
       </div>
       <div class="actions">
-        <a class="btn" *ngIf="_store._artifact == 'blueprints'" (click)="deploy( item )">deploy</a>
-        <a class="btn btn--destructive" *ngIf="_store._artifact == 'blueprints'" (click)="delete( item )">delete</a>
-        <a class="btn btn--destructive" *ngIf="_store._artifact == 'breeds'" (click)="_store.delete( item )">delete</a>
+        <a class="btn" *ngIf="selectedResource == 'blueprints'" (click)="resource.deploy( item )">deploy</a>
+        <a class="btn btn--destructive" *ngIf="selectedResource == 'blueprints'" (click)="resource.delete( item )">delete</a>
+        <a class="btn btn--destructive" *ngIf="selectedResource == 'breeds'" (click)="resource.delete( item )">delete</a>
       </div>
     </li>
   </ul>
