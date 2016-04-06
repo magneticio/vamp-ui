@@ -4,8 +4,7 @@ import {Editor} from '../editor/editor';
 
 @Component({
   selector: 'artifacts-detail',
-  templateUrl: 'app/components/artifacts/_partials/list.html',
-  styleUrls: ['app/components/artifacts/artifacts.css'],
+  templateUrl: 'app/components/artifacts/_partials/detail.html',
   providers: [ ],
   directives: [ ],
   pipes: []

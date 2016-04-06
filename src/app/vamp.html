@@ -8,10 +8,10 @@
 </a>
 
 <ul class="navigation">
-  <li><a [routerLink]="['ArtifactsList', { resource: 'deployments' } ]">Deployments</a></li>
-  <li><a [routerLink]="['ArtifactsList', { resource: 'gateways' } ]">Gateways</a></li>
-  <li><a [routerLink]="['ArtifactsList', { resource: 'blueprints' } ]">Blueprints</a></li>
-  <li><a [routerLink]="['ArtifactsList', { resource: 'breeds' } ]">Breeds</a></li>
+  <li><a [routerLink]="['Artifacts', 'ArtifactsList', { resource: 'deployments' } ]">Deployments</a></li>
+  <li><a [routerLink]="['Artifacts', 'ArtifactsList', { resource: 'gateways' } ]">Gateways</a></li>
+  <li><a [routerLink]="['Artifacts', 'ArtifactsList', { resource: 'blueprints' } ]">Blueprints</a></li>
+  <li><a [routerLink]="['Artifacts', 'ArtifactsList', { resource: 'breeds' } ]">Breeds</a></li>
   <!--li><a [routerLink]="['Escalations']">Escalations</a></li>
   <li><a [routerLink]="['Filters']">Filters</a></li>
   <li><a [routerLink]="['Scales']">Scales</a></li>
@@ -21,6 +21,6 @@
 
 </header>
 
-<router-outlet></router-outlet>
+<vamp-artifacts></vamp-artifacts>
 
 <vamp-notifier></vamp-notifier>
