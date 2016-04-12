@@ -10,6 +10,7 @@
       </div>
       <div class="actions push-right">
         <a class="btn" *ngIf="selectedResource == 'blueprints'" (click)="resource.deploy( item )">deploy</a>
+        <a class="btn" *ngIf="selectedResource == 'deployments'" (click)="resource.undeploy( item )">undeploy</a>
         <a class="btn btn--destructive" *ngIf="selectedResource == 'blueprints'" (click)="resource.delete( item )">delete</a>
         <a class="btn btn--destructive" *ngIf="selectedResource == 'breeds'" (click)="resource.delete( item )">delete</a>
       </div>
