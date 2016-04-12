@@ -164,6 +164,12 @@ body {
 }
 
 .push {
+  &-clear {
+    clear: both;
+    float: none;
+    width: 100%;
+  }
+
   &-left { float: left; }
   &-right { float: right; }
 }

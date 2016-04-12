@@ -61,7 +61,7 @@ import {AceEditor} from './aceEditor';
  *
  **/
 @Component({
-    selector: 'editor',
+    selector: 'vamp-editor',
     inputs: [
         'initialContent',
         'editable',
