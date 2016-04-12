@@ -24,6 +24,8 @@ export class ArtifactsList {
     console.log( this , ArtifactsStore );
     this.selectedResource = RouteParams.get('resource') || 'deployments';
     this.resource = ArtifactsStore[ this.selectedResource ];
+    // Reload resources when switching artifacts.
+    this.resource.load();
   }
 
   edit( item ) {
