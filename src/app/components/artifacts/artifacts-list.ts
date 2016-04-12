@@ -24,7 +24,7 @@ export class ArtifactsList {
     this.resource = ArtifactsStore[ this.selectedResource ];
   }
 
-  edit() {
+  edit( item ) {
 
   }
 
