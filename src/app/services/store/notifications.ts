@@ -1,5 +1,4 @@
 import { Injectable } from 'angular2/core';
-import { NgClass } from 'angular2/common';
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { Store } from './store';
