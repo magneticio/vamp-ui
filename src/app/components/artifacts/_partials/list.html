@@ -7,7 +7,7 @@
       <div class="content push-left">
         <a [routerLink]="['ArtifactsDetail'       , { resource: selectedResource , id: item.name } ]">{{ item.name }}</a>
         <!-- <a [routerLink]="['ArtifactsDetailAction' , { resource: selectedResource , id: item.name , action: 'edit' } ]">edit</a> -->
-        <a class="btn" (click)="edit( item )">edit</a>
+        <a (click)="edit( item )">edit</a>
       </div>
       <div class="actions push-right">
         <a class="btn" *ngIf="selectedResource == 'blueprints'" (click)="resource.deploy( item )">deploy</a>
@@ -16,7 +16,9 @@
         <a class="btn btn--destructive" *ngIf="selectedResource == 'breeds'" (click)="resource.delete( item )">delete</a>
       </div>
 
-      <router-outlet></router-outlet>
+      <div class="push-clear" *ngIf="editedResource.name == item.name && editedResource.yaml">
+        <vamp-editor [initialContent]="editedResource.yaml"></vamp-editor>
+      </div>
     </li>
   </ul>
 

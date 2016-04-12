@@ -17,11 +17,10 @@ function serializeParams( params : RequestOptionsArgs = {} ) {
   let { body }    = params,
       { headers } = params;
 
+  params.headers = new Headers( headers || defaults );
+
   if ( typeof body !== 'string' )
     params.body = JSON.stringify( body );
-
-  if ( ! headers )
-    params.headers = new Headers( defaults );
 
   if ( ! params.headers.has( 'Content-Type' ) )
     params.headers.set( 'Content-Type' , defaults['Content-Type'] );
@@ -35,11 +34,11 @@ function serializeParams( params : RequestOptionsArgs = {} ) {
 function deserializeResponse( response : Response ) {
   let contentType = response && response.headers && (response.headers.get('content-type') || response.headers.get('Content-Type'));
 
-  if (/json/.test(contentType))
+  if ( /json/.test(contentType) )
     return response.json();
-  else if (/text/.test(contentType))
+  else if ( /text/.test(contentType) || /yaml/.test(contentType) )
     return response.text();
-  else if (/blob/.test(contentType))
+  else if ( /blob/.test(contentType) )
     return response.blob();
 
   return response
@@ -64,24 +63,24 @@ export class newApiService {
   }
 
   get( artifact:string , id:string , params ) {
-    return this._http.get( this._endpoint + artifact + '/' + id , serializeParams( params ) )
+    return this._http.get( this._endpoint + artifact + '/' + encodeURIComponent( id ) , serializeParams( params ) )
       .map( deserializeResponse )
   }
 
   post( artifact:string , id:string , payload ) {
-    return this._http.post( this._endpoint + artifact + ( id ? '/' + id : '' ) , JSON.stringify( payload ) , serializeParams() )
+    return this._http.post( this._endpoint + artifact + ( id ? '/' + encodeURIComponent( id ) : '' ) , JSON.stringify( payload ) , serializeParams() )
       .map( deserializeResponse )
       .share();
   }
 
   put( artifact:string , id:string , payload ) {
-    return this._http.put( this._endpoint + artifact + '/' + id , JSON.stringify( payload ) , serializeParams() )
+    return this._http.put( this._endpoint + artifact + '/' + encodeURIComponent( id ) , JSON.stringify( payload ) , serializeParams() )
       .map( deserializeResponse )
       .share();
   }
 
   delete( artifact:string , id:string , params ) {
-    return this._http.delete( this._endpoint + artifact + '/' + id , serializeParams( params ) )
+    return this._http.delete( this._endpoint + artifact + '/' + encodeURIComponent( id ) , serializeParams( params ) )
       .map( deserializeResponse )
       .share();
   }
