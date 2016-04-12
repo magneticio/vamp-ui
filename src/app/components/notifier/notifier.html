@@ -1,6 +1,6 @@
 <aside class="notifier">
 
-  <ul class="itemList">
+  <ul class="list-clear">
     <li class="notification" *ngFor="#notification of notifications | async"
       [ngClass]="notification.type">
       {{ notification.message }}
