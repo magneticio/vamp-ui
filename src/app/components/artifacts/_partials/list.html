@@ -6,7 +6,8 @@
     <li class="card" *ngFor="#item of resource.items | async">
       <div class="content push-left">
         <a [routerLink]="['ArtifactsDetail'       , { resource: selectedResource , id: item.name } ]">{{ item.name }}</a>
-        <a [routerLink]="['ArtifactsDetailAction' , { resource: selectedResource , id: item.name , action: 'edit' } ]">edit</a>
+        <!-- <a [routerLink]="['ArtifactsDetailAction' , { resource: selectedResource , id: item.name , action: 'edit' } ]">edit</a> -->
+        <a class="btn" (click)="edit( item )">edit</a>
       </div>
       <div class="actions push-right">
         <a class="btn" *ngIf="selectedResource == 'blueprints'" (click)="resource.deploy( item )">deploy</a>
