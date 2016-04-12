@@ -62,8 +62,10 @@ body {
 
 .btn {
   @include btn-color($grey, $color-primary);
+
   border-radius: $border-radius;
-  padding: $gutter/4 $gutter/2;
+  padding: $gutter/4 $gutter/2 $gutter/3;
+
   &:hover {
     text-decoration: none;
   }
