@@ -9,7 +9,7 @@ import { CrudRoot } from './components/crud/crud-root.component';
 import { Test } from './components/test/test';
 import { Notifier } from './components/notifier/notifier';
 
-import { Artifacts , ArtifactsStore } from './components/artifacts/artifacts-root';
+import { Artifacts } from './components/artifacts/artifacts-root';
 
 @RouteConfig([
   { path: '/...'  , name: 'Artifacts' , component: Artifacts , useAsDefault: true },
@@ -18,7 +18,7 @@ import { Artifacts , ArtifactsStore } from './components/artifacts/artifacts-roo
 
 @Component({
   selector: 'vamp-app',
-  providers: [ ArtifactsStore , HTTP_PROVIDERS ],
+  providers: [ HTTP_PROVIDERS ],
   templateUrl: 'app/vamp.html',
   directives: [ Artifacts , Notifier , ROUTER_DIRECTIVES ],
   pipes: []
