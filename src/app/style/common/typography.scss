@@ -248,9 +248,9 @@ dl {
 }
 
 .text {
-	&-center {
-		text-align: center;
-	}
+	&-center { text-align: center; }
+	&-left { text-align: left; }
+	&-right { text-align: right; }
 
 	// Not sure if we're going to use this but its handy to keep
 	// around maybe
