@@ -1,6 +1,12 @@
 <section class="space">
 
-  <h2 class="artifactHeader">{{ selectedResource }}</h2>
+  <header class="row">
+    <h2 class="artifactHeader grid-content half">{{ selectedResource }}</h2>
+
+    <div class="grid-content half  text-right">
+      <a class="btn btn--contrast">create</a>
+    </div>
+  </header>
 
   <ul class="list-clear">
     <li class="card" *ngFor="#item of resource.items | async">
