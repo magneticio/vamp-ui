@@ -32,7 +32,11 @@ export class Blueprints extends Store {
   ) {
     super( 'blueprints' , _api , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] );
 
-    this._events.listen( 'event' , ['deployments:','synchronization:deployed'] , data => {
+    // this._events.listen( 'event' , [this._artifact,'archive:create'] , data => {
+    //   this.load();
+    // } )
+
+    this._events.listen( 'event' , ['deployments','synchronization:deployed'] , data => {
       this._notifier.addNotification( { message: data.value['_1'].name + ' is deployed' , type: 'info' } );
     } )
   }

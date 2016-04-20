@@ -67,14 +67,20 @@ export class newApiService {
       .map( deserializeResponse )
   }
 
-  post( artifact:string , id:string , payload ) {
-    return this._http.post( this._endpoint + artifact + ( id ? '/' + encodeURIComponent( id ) : '' ) , JSON.stringify( payload ) , serializeParams() )
+  post( artifact:string , id:string , payload , params ) {
+    if ( typeof payload !== 'string' )
+      payload = JSON.stringify( payload );
+
+    return this._http.post( this._endpoint + artifact + ( id ? '/' + encodeURIComponent( id ) : '' ) , payload , serializeParams( params ) )
       .map( deserializeResponse )
       .share();
   }
 
-  put( artifact:string , id:string , payload ) {
-    return this._http.put( this._endpoint + artifact + '/' + encodeURIComponent( id ) , JSON.stringify( payload ) , serializeParams() )
+  put( artifact:string , id:string , payload , params ) {
+    if ( typeof payload !== 'string' )
+      payload = JSON.stringify( payload );
+
+    return this._http.put( this._endpoint + artifact + '/' + encodeURIComponent( id ) , payload , serializeParams( params ) )
       .map( deserializeResponse )
       .share();
   }

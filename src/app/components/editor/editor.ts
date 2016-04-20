@@ -1,5 +1,6 @@
 import {Component, EventEmitter} from 'angular2/core';
 import {CORE_DIRECTIVES} from 'angular2/common';
+import {RouterLink} from 'angular2/router';
 import {AceEditor} from './aceEditor';
 
 /**
@@ -67,11 +68,14 @@ import {AceEditor} from './aceEditor';
         'editable',
     ],
     outputs: [
-        'saveHandler: save',
+      // These triggers the following 'dehydrated change detector' bug:
+      // https://github.com/angular/angular/issues/6786
+
+        // 'saveHandler: save',
         'changeHandler: change'
     ],
     templateUrl: 'app///components/editor/editor.html',
-    directives: [CORE_DIRECTIVES, AceEditor],
+    directives: [CORE_DIRECTIVES , RouterLink , AceEditor],
     styles: []
 })
 export class Editor {

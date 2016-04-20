@@ -1,5 +1,5 @@
-import {Component, Inject} from 'angular2/core';
-import { RouteConfig , RouteParams , ROUTER_DIRECTIVES } from 'angular2/router';
+import {Component, Inject, ViewChild} from 'angular2/core';
+import { RouteParams , ROUTER_DIRECTIVES } from 'angular2/router';
 
 import { ArtifactsStore } from '../../services/store/artifacts';
 import { Editor } from '../editor/editor';
@@ -12,9 +12,12 @@ import { Editor } from '../editor/editor';
 })
 
 export class ArtifactsList {
+  @ViewChild( Editor ) editorRef;
+
+  private _artifacts;
 
   resource;
-  editedResource = { name: null , yaml: null };
+  editedResource = { name: null , original: null , modified: null };
   selectedResource;
 
   constructor(
@@ -22,6 +25,8 @@ export class ArtifactsList {
     @Inject( RouteParams ) RouteParams
   ) {
     console.log( this , ArtifactsStore );
+    this._artifacts = ArtifactsStore;
+
     this.selectedResource = RouteParams.get('resource') || 'deployments';
     this.resource = ArtifactsStore[ this.selectedResource ];
     // Reload resources when switching artifacts.
@@ -30,7 +35,26 @@ export class ArtifactsList {
 
   edit( item ) {
     this.resource._api.get( this.selectedResource , item.name , { headers: {'Accept' : 'application/x-yaml'} } )
-      .subscribe( res => this.editedResource = { name: item.name , yaml: res } );
+      .subscribe( res => this.editedResource = { name: item.name , original: res , modified: null } );
+  }
+
+  updateEditedResource( yaml ) {
+    if ( this.editedResource.original != yaml ) {
+      this.editedResource.modified = yaml;
+    } else {
+      this.editedResource.modified = null;
+    }
+  }
+
+  save( item , yaml ) {
+
+    if ( yaml ) {
+      this.editedResource.original = yaml;
+
+      this._artifacts[ this.selectedResource ]
+        .update( item , yaml , { headers: {'Accept' : 'application/x-yaml'} } );
+    }
+
   }
 
 }
