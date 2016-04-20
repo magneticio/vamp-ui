@@ -1,6 +1,7 @@
 import { Component , Inject , Injectable } from 'angular2/core'
 import { RouteConfig , RouterOutlet } from 'angular2/router'
 
+import { ArtifactsCreator } from './artifacts-creator'
 import { ArtifactsDetail } from './artifacts-detail'
 import { ArtifactsList } from './artifacts-list'
 
@@ -14,9 +15,9 @@ import { ArtifactsList } from './artifacts-list'
 
 @RouteConfig([
   { path: '/...' , redirectTo: ['ArtifactsList' , { resource: 'deployments' }] , useAsDefault: true },
-  { path: '/:resource'             , name: 'ArtifactsList'         , component: ArtifactsList   },
-  { path: '/:resource/:id'         , name: 'ArtifactsDetail'       , component: ArtifactsDetail },
-  { path: '/:resource/:id/:action' , name: 'ArtifactsDetailAction' , component: ArtifactsDetail },
+  { path: '/:resource'     , name: 'ArtifactsList'    , component: ArtifactsList   },
+  { path: '/:resource/add' , name: 'ArtifactsCreator' , component: ArtifactsCreator },
+  { path: '/:resource/:id' , name: 'ArtifactsDetail'  , component: ArtifactsDetail },
 ])
 
 export class Artifacts {

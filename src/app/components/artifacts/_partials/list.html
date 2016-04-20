@@ -3,26 +3,29 @@
   <header class="row">
     <h2 class="artifactHeader grid-content half">{{ selectedResource }}</h2>
 
-    <div class="grid-content half  text-right">
-      <a class="btn btn--contrast">create</a>
+    <div class="grid-content half  text-right" *ngIf="selectedResource != 'deployments'">
+      <a class="btn btn--contrast" [routerLink]="['ArtifactsCreator' , { resource: selectedResource }]">create {{ selectedResource | slice:0:-1 }}</a>
     </div>
   </header>
 
   <ul class="list-clear">
-    <li class="card" *ngFor="#item of resource.items | async">
-      <div class="content push-left">
-        <a [routerLink]="['ArtifactsDetail'       , { resource: selectedResource , id: item.name } ]">{{ item.name }}</a>
+    <li class="card  row" *ngFor="#item of resource.items | async">
+      <div class="grid-content half">
+        <a [routerLink]="['ArtifactsDetail', { resource: selectedResource , id: item.name }]">{{ item.name }}</a>
         <!-- <a [routerLink]="['ArtifactsDetailAction' , { resource: selectedResource , id: item.name , action: 'edit' } ]">edit</a> -->
         <a (click)="edit( item )">edit</a>
       </div>
-      <div class="actions push-right">
-        <a class="btn" *ngIf="selectedResource == 'blueprints'" (click)="resource.deploy( item )">deploy</a>
+
+      <div class="grid-content half  actions  text-right">
+        <a class="btn btn--contrast" *ngIf="editedResource.name == item.name && editedResource.modified" (click)="save( item , editedResource.modified )">save</a>
+
+        <a class="btn btn--contrast" *ngIf="selectedResource == 'blueprints'" (click)="resource.deploy( item )">deploy</a>
         <a class="btn" *ngIf="selectedResource == 'deployments'" (click)="resource.undeploy( item )">undeploy</a>
         <a class="btn btn--destructive" *ngIf="selectedResource != 'deployments'" (click)="resource.delete( item )">delete</a>
       </div>
 
-      <div class="push-clear" *ngIf="editedResource.name == item.name && editedResource.yaml">
-        <vamp-editor [initialContent]="editedResource.yaml"></vamp-editor>
+      <div class="grid-full  space vertical large" *ngIf="editedResource.name == item.name">
+        <vamp-editor [initialContent]="editedResource.original" (change)="updateEditedResource( $event )"></vamp-editor>
       </div>
     </li>
   </ul>

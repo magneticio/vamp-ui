@@ -1,8 +1,3 @@
-<div class="btn-group">
-    <button *ngIf="editMode" (click)="cancel()" class="btn btn-warning">Cancel</button>
-    <button *ngIf="editMode || unsavedChanges" (click)="save()" class="btn btn-default">Save</button>
-</div>
-
 <div ace-editor
   (change)="contentUpdate($event)"
   [content]="content"

@@ -13,8 +13,8 @@ export class Store {
   // observer instead of in the store methods. Seems like a more proper way
   // to deal with the observavle BehaviorSubject.
 
-  private _artifact : string
-  private _capabilities : Array<string> = [ 'GET' , 'POST' , 'PUT' , 'DELETE' ];
+  protected _artifact : string
+  protected _capabilities : Array<string> = [ 'GET' , 'POST' , 'PUT' , 'DELETE' ];
 
   // Store needs an observable which provides data corresponding to
   // the artifact(s) whith which it is initialized.
@@ -51,7 +51,7 @@ export class Store {
   // 1. This adds an artifact of the initialized type to the store
   // 2. It communicates the newly added artifact to the API
   // 3. The Store publishes the newly added artifact to the observer
-  add( artifact ) {
+  add( artifact , params = {} ) {
     if ( ! this._can( 'POST' ) || this.find( artifact ) )
       return null;
 
@@ -61,7 +61,7 @@ export class Store {
     items.push( artifact );
 
     if ( this._api )
-      this._api.post( this._artifact , null , artifact )
+      this._api.post( this._artifact , null , artifact , params )
         .subscribe( res => this.items$.next( items ) );
 
     return artifact;
@@ -130,7 +130,7 @@ export class Store {
 
   // 1. Updates an existing artifact in the store
   // 2. Communicates the udpated artifact to the API service
-  update( artifact ) {
+  update( artifact , payload = null , params = {} ) {
     if ( ! this._can( 'PUT' ) )
       return null;
 
@@ -141,7 +141,7 @@ export class Store {
       Object.assign( item , artifact );
 
       if ( this._api )
-        this._api.put( this._artifact , artifact.name , artifact )
+        this._api.put( this._artifact , artifact.name , payload , params )
           .subscribe( res => this.items$.next( items ) );
     }
 
