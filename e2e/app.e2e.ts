@@ -1,16 +1,14 @@
-/// <reference path="../typings/main.d.ts" />
+import { ReRevampUiPage } from './app.po';
 
-import { VampPage } from './app.po';
-
-describe('vamp App', function() {
-  let page: VampPage;
+describe('vamp-ui App', function() {
+  let page: ReRevampUiPage;
 
   beforeEach(() => {
-    page = new VampPage();
+    page = new ReRevampUiPage();
   })
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('vamp Works!');
+    expect(page.getParagraphText()).toEqual('vamp-ui works!');
   });
 });
