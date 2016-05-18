@@ -1,0 +1,17 @@
+{
+    "name": "frozen-eskimo:2.1.3",
+    "deployable": "magneticio/frozen-eskimo:2.1.3",
+    "ports": {
+        "port": "80/http"
+    },
+    "environment_variables": {},
+    "constants": {
+        "ICECUBES": "32",
+        "SEALS": "5"
+    },
+    "dependencies": {
+        "db":{ 
+            "ref": "mysql"
+        }
+    }
+}

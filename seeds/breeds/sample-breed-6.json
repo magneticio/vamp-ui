@@ -1,0 +1,10 @@
+{
+    "name": "lonesome-elephant:3.10.1",
+    "deployable": "magneticio/lonesome-elephant:3.10.1",
+    "ports": {
+        "port": "80/http"
+    },
+    "environment_variables": {},
+    "constants": {},
+    "dependencies": {}
+}
