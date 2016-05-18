@@ -1,0 +1,20 @@
+<section class="space">
+
+  <form (ngSubmit)="onSubmit()">
+
+    <header class="row">
+      <h2 class="artifactHeader grid-content half">{{ selectedResource }} › {{ name }}</h2>
+    </header>
+
+    <textarea [(ngModel)]="content" name="content" cols="80" rows="48"></textarea>
+
+    <div class="grid-content half  text-right">
+      <button type="submit" class="btn btn--contrast">save</button>
+      <a class="btn btn--warning" [routerLink]="['../']">cancel</a>
+    </div>
+
+    {{ content }}
+
+  </form>
+
+</section>

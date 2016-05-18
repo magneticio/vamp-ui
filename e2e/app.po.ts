@@ -1,9 +1,9 @@
-export class VampPage {
+export class ReRevampUiPage {
   navigateTo() {
     return browser.get('/');
   }
 
   getParagraphText() {
-    return element(by.css('vamp-app p')).getText();
+    return element(by.css('vamp-ui-app h1')).getText();
   }
 }
