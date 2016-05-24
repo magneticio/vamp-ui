@@ -9,9 +9,6 @@ function asObs( subject ) {
 
 @Injectable()
 export class StoreService {
-  // TODO: Respearch whether we could implement the API communication on the
-  // observer instead of in the store methods. Seems like a more proper way
-  // to deal with the observavle BehaviorSubject.
 
   protected _artifact : string
   protected _capabilities : Array<string> = [ 'GET' , 'POST' , 'PUT' , 'DELETE' ];
@@ -28,7 +25,7 @@ export class StoreService {
   //    store will be modelled.
   constructor(
     _artifact : string,
-    @Inject( ApiService ) public _api?,
+    public _api? : ApiService,
     _capabilities? : Array<string>
   ) {
     this._artifact = _artifact;
@@ -49,7 +46,10 @@ export class StoreService {
   // Load all data from the Store's initialzed artifact
   load() {
     this._api.getAll( this._artifact )
-      .subscribe( res => this.items$.next( res ) );
+      .subscribe(
+        res => this.items$.next( res ),
+        err => console.log( err )
+      );
   }
 
   initPolling() {
@@ -120,6 +120,8 @@ export class StoreService {
   update( artifact , payload = null , params = {} ) {
     if ( ! this._can( 'PUT' ) )
       return null;
+
+    console.log( artifact );
 
     let items = this.items$.getValue(),
         item  = this._find( artifact.name );
