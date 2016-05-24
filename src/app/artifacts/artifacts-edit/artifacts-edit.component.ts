@@ -89,8 +89,10 @@ export class ArtifactsEditComponent implements OnActivate {
       // .first()
       .subscribe(
         res => {
+          let name = res.name || res.map( val => val.name ).join(', ');
+
           this._notifier.addNotification( {
-            message: `Succesfully added new ${ this.selectedResource.slice( 0 , -1 ) } "${ res[0].name }"`,
+            message: `Succesfully added new ${ this.selectedResource.slice( 0 , -1 ) } "${ name }"`,
             type: 'success'
           } );
           this._router.navigate(['/' , this.selectedResource]);
@@ -109,11 +111,13 @@ export class ArtifactsEditComponent implements OnActivate {
       // .first()
       .subscribe(
         res => {
+          let name = res.name || res.map( val => val.name ).join(', ');
+
           this._notifier.addNotification( {
-            message: `Succesfully updated ${ this.selectedResource.slice( 0 , -1 ) } "${ res[0].name }"`,
+            message: `Succesfully updated ${ this.selectedResource.slice( 0 , -1 ) } "${ name }"`,
             type: 'success'
           } );
-          this._router.navigate(['/', this.selectedResource , encodeURIComponent( res[0].name ) ]);
+          this._router.navigate(['/', this.selectedResource , encodeURIComponent( name ) ]);
         },
         err => {
           this._notifier.addNotification( {
