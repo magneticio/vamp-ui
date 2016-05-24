@@ -17,6 +17,9 @@ export class ArtifactsDetailComponent implements OnInit {
   selectedName;
   selectedResource;
 
+  protected _interval;
+  protected _intervalTime = 10000;
+
   constructor(
     private _artifacts : ArtifactsService,
     private _router    : Router
@@ -26,11 +29,20 @@ export class ArtifactsDetailComponent implements OnInit {
     this.selectedResource = current.getParam( 'resource' );
     this.selectedName     = decodeURIComponent( current.getParam( 'name' ) );
 
+    this.load();
+    this.initPolling();
+  }
+
+  load() {
     if ( this.selectedName && this.selectedName != 'undefined' )
       this._artifacts[ this.selectedResource ].get( this.selectedName , { headers : { 'Accept' : 'application/x-yaml' } } )
         .subscribe(
           res => this.content = res
         );
+  }
+
+  initPolling() {
+    this._interval = setInterval( () => this.load() , this._intervalTime );
   }
 
   ngOnInit() {
