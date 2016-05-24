@@ -5,7 +5,7 @@ import { StoreService } from './store.service';
 
 export interface Notification {
   message : string,
-  type    : string
+  type?   : string
 }
 
 @Injectable()

@@ -4,7 +4,7 @@ import { OnActivate , Router , ROUTER_DIRECTIVES , RouteSegment } from '@angular
 import { Observable } from 'rxjs/Observable'
 
 import { ArtifactsService } from '../artifacts.service';
-// import { ApiService } from '../../shared/api.service';
+import { NotificationService } from '../../shared/notifications.service';
 
 @Component({
   moduleId: module.id,
@@ -16,6 +16,7 @@ import { ArtifactsService } from '../artifacts.service';
 })
 export class ArtifactsEditComponent implements OnActivate {
 
+  isNewArtifact = false;
   resource;
   selectedName;
   selectedResource;
@@ -26,25 +27,13 @@ export class ArtifactsEditComponent implements OnActivate {
   constructor(
     // private _api : ApiService,
     private _artifacts : ArtifactsService,
+    private _notifier : NotificationService,
     private _router : Router
   ) {
     console.log( this );
     // this.selectedResource = this._routeParams.get('resource') || 'deployments';
     // this.resource = this[ this.selectedResource ];
   }
-
-  // create( editorInstance ) {
-  //   if ( editorInstance.modified ) {
-  //     editorInstance.save();
-  //
-  //     this._artifacts[ this.selectedResource ]
-  //       .add( editorInstance.content , { headers: {'Accept' : 'application/x-yaml'} } );
-  //   }
-  //
-  //   this._router.navigate(['../ArtifactsList' , { resource : this.selectedResource }]);
-  // }
-
-
 
   onSubmit() {
     if ( this.content ) {
@@ -54,15 +43,37 @@ export class ArtifactsEditComponent implements OnActivate {
         this._artifacts[ this.selectedResource ].add( this.content , { headers : { 'Accept' : 'application/x-yaml' } } )
           // .first()
           .subscribe(
-            res => { console.log( 'Success with' , res ) },
-            err => { console.log( 'Failed with' , err ) }
+            res => {
+              this._notifier.addNotification( {
+                message: `Succesfully added new ${ this.selectedResource.slice( 0 , -1 ) } "${ res.name }"`,
+                type: 'success'
+              } );
+              this._router.navigate(['/' , this.selectedResource]);
+            },
+            err => {
+              this._notifier.addNotification( {
+                message: `Failed to add new ${ this.selectedResource.slice( 0 , -1 ) } because: "${ err }"`,
+                type: 'error'
+              } );
+            }
           );
       } else {
         this._artifacts[ this.selectedResource ].update( this.resource , this.content , { headers : { 'Accept' : 'application/x-yaml' } } )
           // .first()
           .subscribe(
-            res => { console.log( 'Success with' , res ) },
-            err => { console.log( 'Failed with' , err ) }
+            res => {
+              this._notifier.addNotification( {
+                message: `Succesfully updated ${ this.selectedResource.slice( 0 , -1 ) } "${ res.name }"`,
+                type: 'success'
+              } );
+              this._router.navigate(['/', this.selectedResource , encodeURIComponent( res.name ) ]);
+            },
+            err => {
+              this._notifier.addNotification( {
+                message: `Failed to update ${ this.selectedResource.slice( 0 , -1 ) } because: "${ err }"`,
+                type: 'error'
+              } );
+            }
           );
       }
     }
@@ -85,6 +96,7 @@ export class ArtifactsEditComponent implements OnActivate {
           err => { console.error( 'GET Failed with' , err ) }
         );
     } else {
+      this.isNewArtifact = true;
       this.selectedName = 'new ' + this.selectedResource.slice( 0 , -1 );
     }
   }
