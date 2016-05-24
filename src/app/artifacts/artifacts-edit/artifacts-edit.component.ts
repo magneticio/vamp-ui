@@ -4,27 +4,27 @@ import { OnActivate , Router , ROUTER_DIRECTIVES , RouteSegment } from '@angular
 import { Observable } from 'rxjs/Observable'
 
 import { ArtifactsService } from '../artifacts.service';
-import { ApiService } from '../../api.service';
+// import { ApiService } from '../../shared/api.service';
 
 @Component({
   moduleId: module.id,
   selector: 'app-artifacts-edit',
   templateUrl: 'artifacts-edit.component.html',
   styleUrls: ['artifacts-edit.component.css'],
-  providers: [ ApiService ],
+  providers: [ ],
   directives: [ ROUTER_DIRECTIVES ],
 })
 export class ArtifactsEditComponent implements OnActivate {
 
-  name;
   resource;
+  selectedName;
   selectedResource;
 
   content   = '';
   submitted = false;
 
   constructor(
-    private _api : ApiService,
+    // private _api : ApiService,
     private _artifacts : ArtifactsService,
     private _router : Router
   ) {
@@ -70,22 +70,22 @@ export class ArtifactsEditComponent implements OnActivate {
 
   routerOnActivate( current: RouteSegment ) {
     this.selectedResource = current.getParam( 'resource' );
-    this.name             = decodeURIComponent( current.getParam( 'name' ) );
+    this.selectedName     = decodeURIComponent( current.getParam( 'name' ) );
 
-    console.log( this.name , !!this.name , typeof this.name );
-
-    if ( this.name && this.name != 'undefined' ) {
-      this._api.get( this.selectedResource , this.name )
+    if ( this.selectedName && this.selectedName != 'undefined' ) {
+      this._artifacts[ this.selectedResource ].get( this.selectedName )
         .subscribe(
-          res => this.resource = res
+          res => this.resource = res,
+          err => { console.error( 'GET Failed with' , err ) }
         );
 
-      this._api.get( this.selectedResource , this.name , { headers : { 'Accept' : 'application/x-yaml' } } )
+      this._artifacts[ this.selectedResource ].get( this.selectedName , { headers : { 'Accept' : 'application/x-yaml' } } )
         .subscribe(
-          res => this.content = res
+          res => this.content = res,
+          err => { console.error( 'GET Failed with' , err ) }
         );
     } else {
-      this.name = 'new ' + this.selectedResource.slice( 0 , -1 );
+      this.selectedName = 'new ' + this.selectedResource.slice( 0 , -1 );
     }
   }
 
