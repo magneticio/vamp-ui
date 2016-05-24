@@ -9,3 +9,4 @@ export const SHARED_SERVICES = [
   NotificationService,
   StoreService
 ];
+export * from './notifier';

@@ -5,6 +5,9 @@ import { ArtifactsDetailComponent } from './artifacts/artifacts-detail'
 import { ArtifactsEditComponent }   from './artifacts/artifacts-edit'
 import { ArtifactsListComponent }   from './artifacts/artifacts-list'
 import { InfoComponent }            from './info'
+
+import { NotifierComponent }        from './shared/notifier'
+
 import { VAMP_ARTIFACTS , ArtifactsService } from './artifacts/artifacts.service'
 
 @Component({
@@ -13,7 +16,7 @@ import { VAMP_ARTIFACTS , ArtifactsService } from './artifacts/artifacts.service
   templateUrl: 'vamp-ui.component.html',
   styleUrls: ['vamp-ui.component.css'],
 
-  directives: [ ROUTER_DIRECTIVES , InfoComponent ],
+  directives: [ ROUTER_DIRECTIVES , InfoComponent , NotifierComponent ],
   providers : [ VAMP_ARTIFACTS , ArtifactsService ],
 })
 
