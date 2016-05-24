@@ -4,7 +4,7 @@ import { OnActivate , Router , ROUTER_DIRECTIVES , RouteSegment } from '@angular
 import { Observable } from 'rxjs/Observable'
 
 import { ArtifactsService } from '../artifacts.service';
-import { NotificationService } from '../../shared/notifications.service';
+import { NotificationsService } from '../../shared/notifications.service';
 
 @Component({
   moduleId: module.id,
@@ -30,7 +30,7 @@ export class ArtifactsEditComponent implements OnActivate {
   constructor(
     // private _api : ApiService,
     private _artifacts : ArtifactsService,
-    private _notifier : NotificationService,
+    private _notifier : NotificationsService,
     private _router : Router
   ) {
     console.log( this );

@@ -9,7 +9,7 @@ export interface Notification {
 }
 
 @Injectable()
-export class NotificationService extends StoreService {
+export class NotificationsService extends StoreService {
 
   public items$ : BehaviorSubject<Array<Notification>> = new BehaviorSubject([]);
   public timeoutDuration : number = 6000;

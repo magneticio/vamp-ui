@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {Notification,NotificationService} from '../notifications.service';
+import {Notification,NotificationsService} from '../notifications.service';
 
 @Component({
   moduleId: module.id,
@@ -11,7 +11,7 @@ import {Notification,NotificationService} from '../notifications.service';
 
 export class NotifierComponent implements OnInit {
   constructor(
-    private _store : NotificationService
+    private _store : NotificationsService
   ) {}
 
   get notifications() {

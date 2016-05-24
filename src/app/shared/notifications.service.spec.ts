@@ -5,13 +5,13 @@ import {
   expect,
   inject
 } from '@angular/core/testing';
-import { NotificationService } from './notifications.service';
+import { NotificationsService } from './notifications.service';
 
 describe('Notifications Service', () => {
-  beforeEachProviders(() => [NotificationService]);
+  beforeEachProviders(() => [NotificationsService]);
 
   it('should ...',
-      inject([NotificationService], (service: NotificationService) => {
+      inject([NotificationsService], (service: NotificationsService) => {
     expect(service).toBeTruthy();
   }));
 });

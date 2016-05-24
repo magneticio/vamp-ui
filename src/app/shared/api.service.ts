@@ -1,8 +1,8 @@
 import { Inject , Injectable } from '@angular/core';
 import { Http, RequestOptions , RequestOptionsArgs, Response, Headers , URLSearchParams} from '@angular/http'
 import { Observable } from 'rxjs/Observable'
-import 'rxjs/add/operator/share';
-import 'rxjs/add/operator/map';
+
+import { NotificationsService } from './notifications.service';
 
 function serializeParams( params : RequestOptionsArgs = {} ) {
   const defaults = {
@@ -43,11 +43,10 @@ function deserializeResponse( response : Response ) {
 export class ApiService {
 
   public _endpoint = 'http://192.168.99.100:8080/api/v1/';
-  private _http : Http;
 
-  constructor( @Inject( Http ) Http ) {
-    this._http = Http;
-  }
+  constructor(
+    private _http : Http
+  ) {}
 
   getAll( artifact:string ) {
     return this._http.get( this._endpoint + artifact , serializeParams() )
