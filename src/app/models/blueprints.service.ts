@@ -14,14 +14,6 @@ export class Blueprints extends StoreService {
     @Inject( NotificationsService ) private _notifier
   ) {
     super( 'blueprints' , _api , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] );
-
-    // this._events.listen( 'event' , [this._artifact,'archive:create'] , data => {
-    //   this.load();
-    // } )
-
-    this._events.listen( 'event' , ['deployments','synchronization:deployed'] , data => {
-      this._notifier.addNotification( { message: data.value['_1'].name + ' is deployed' , type: 'info' } );
-    } )
   }
 
   get blueprints() {
@@ -34,7 +26,22 @@ export class Blueprints extends StoreService {
   // instead of injecting the API service here.
   deploy( item ) {
     return this._api.put( 'deployments' , item.name , item )
-      .subscribe();
+      .subscribe(
+        res => {
+          let name = item.name; //res.name || res.map( val => val.name ).join(', ');
+
+          this._notifier.addNotification( {
+            message: `Succesfully deployed ${ name }`,
+            type: 'info'
+          } )
+        },
+        err => {
+          this._notifier.addNotification( {
+            message: `Could not deploy ${ item.name }: ${ err }`,
+            type: 'error'
+          } )
+        }
+      );
   }
 
   // This could add a cluster by providing a name and a JSON object.

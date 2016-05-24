@@ -14,18 +14,29 @@ export class Deployments extends StoreService {
     @Inject( NotificationsService ) private _notifier
   ) {
     super( 'deployments' , _api , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] );
-
-    this._events.listen( 'event' , ['deployments:','synchronization:undeployed'] , data => {
-      this._notifier.addNotification( { message: data.value['_1'].name + ' is undeployed' , type: 'info' } );
-    } )
   }
 
   undeploy( item ) {
     this._api.get( 'deployments' , item.name , { search: 'as_blueprint=true' } )
-      .subscribe( res => {
-        this.delete( item , { body: res } )
-          .subscribe();
-      } );
+      .subscribe(
+        res => {
+          let name = item.name;//res.name || res.map( val => val.name ).join(', ');
+
+          this.delete( item , { body: res } )
+            .subscribe();
+
+          this._notifier.addNotification( {
+            message: `Succesfully undeployed ${ name }`,
+            type: 'info'
+          } )
+        },
+        err => {
+          this._notifier.addNotification( {
+            message: `Could not undeploy ${ item.name }: ${ err }`,
+            type: 'error'
+          } )
+        }
+      );
   }
 
   get deployments() {
