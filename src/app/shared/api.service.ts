@@ -51,6 +51,7 @@ export class ApiService {
 
   getAll( artifact:string ) {
     return this._http.get( this._endpoint + artifact , serializeParams() )
+      .timeout( 5000 , new Error( 'API Timeout' ) )
       .map( deserializeResponse )
       .catch( this._onError )
       .share();
@@ -58,6 +59,7 @@ export class ApiService {
 
   get( artifact:string , id:string , params? ) {
     return this._http.get( this._endpoint + artifact + '/' + encodeURIComponent( id ) , serializeParams( params ) )
+      .timeout( 5000 , new Error( 'API Timeout' ) )
       .map( deserializeResponse )
       .catch( this._onError )
   }
@@ -67,17 +69,18 @@ export class ApiService {
       payload = JSON.stringify( payload );
 
     return this._http.post( this._endpoint + artifact + ( id ? '/' + encodeURIComponent( id ) : '' ) , payload , serializeParams( params ) )
-    // .catch( this._onError )
+      .timeout( 5000 , new Error( 'API Timeout' ) )
       .map( deserializeResponse )
       .catch( this._onError )
       .share();
   }
 
-  put( artifact:string , id:string , payload , params ) {
+  put( artifact:string , id:string , payload , params? ) {
     if ( typeof payload !== 'string' )
       payload = JSON.stringify( payload );
 
     return this._http.put( this._endpoint + artifact + '/' + encodeURIComponent( id ) , payload , serializeParams( params ) )
+      .timeout( 5000 , new Error( 'API Timeout' ) )
       .map( deserializeResponse )
       .catch( this._onError )
       .share();
@@ -85,6 +88,7 @@ export class ApiService {
 
   delete( artifact:string , id:string , params ) {
     return this._http.delete( this._endpoint + artifact + '/' + encodeURIComponent( id ) , serializeParams( params ) )
+      .timeout( 5000 , new Error( 'API Timeout' ) )
       .map( deserializeResponse )
       .catch( this._onError )
       .share();
@@ -94,7 +98,7 @@ export class ApiService {
     let error   = deserializeResponse( response )
       , message = error.message || error.statusText || 'Server error';
 
-    console.error( message );
+    // console.error( message );
 
     return Observable.throw( message );
   }
