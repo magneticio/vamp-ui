@@ -34,6 +34,11 @@ export class InfoComponent implements OnInit {
     this._interval = setInterval( () => this.load() , this._intervalTime );
   }
 
+  onEndpointChange( endpoint ) {
+    console.log( this , endpoint );
+    this.endpoint = this._api._endpoint = endpoint;
+  }
+
   ngOnInit() {
     this.load();
     this.initPolling();
