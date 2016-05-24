@@ -48,8 +48,8 @@ export class ApiService {
     private _http : Http
   ) {}
 
-  getAll( artifact:string ) {
-    return this._http.get( this._endpoint + artifact , serializeParams() )
+  getAll( artifact:string , params? ) {
+    return this._http.get( this._endpoint + artifact , serializeParams( params ) )
       .timeout( 5000 , new Error( 'API Timeout' ) )
       .map( deserializeResponse )
       .catch( this._onError )
@@ -57,17 +57,21 @@ export class ApiService {
   }
 
   get( artifact:string , id:string , params? ) {
-    return this._http.get( this._endpoint + artifact + '/' + encodeURIComponent( id ) , serializeParams( params ) )
+    let uri = artifact == 'gateways' ? id : encodeURIComponent( id ); // revert when revamp-ui/issues/33 can be resolved
+
+    return this._http.get( this._endpoint + artifact + '/' + uri , serializeParams( params ) )
       .timeout( 5000 , new Error( 'API Timeout' ) )
       .map( deserializeResponse )
       .catch( this._onError )
   }
 
   post( artifact:string , id:string , payload , params ) {
+    let uri = artifact == 'gateways' ? id : encodeURIComponent( id ); // revert when revamp-ui/issues/33 can be resolved
+
     if ( typeof payload !== 'string' )
       payload = JSON.stringify( payload );
 
-    return this._http.post( this._endpoint + artifact + ( id ? '/' + encodeURIComponent( id ) : '' ) , payload , serializeParams( params ) )
+    return this._http.post( this._endpoint + artifact + ( id ? '/' + uri : '' ) , payload , serializeParams( params ) )
       .timeout( 5000 , new Error( 'API Timeout' ) )
       .map( deserializeResponse )
       .catch( this._onError )
@@ -75,10 +79,12 @@ export class ApiService {
   }
 
   put( artifact:string , id:string , payload , params? ) {
+    let uri = artifact == 'gateways' ? id : encodeURIComponent( id ); // revert when revamp-ui/issues/33 can be resolved
+
     if ( typeof payload !== 'string' )
       payload = JSON.stringify( payload );
 
-    return this._http.put( this._endpoint + artifact + '/' + encodeURIComponent( id ) , payload , serializeParams( params ) )
+    return this._http.put( this._endpoint + artifact + '/' + uri , payload , serializeParams( params ) )
       .timeout( 5000 , new Error( 'API Timeout' ) )
       .map( deserializeResponse )
       .catch( this._onError )
@@ -86,7 +92,9 @@ export class ApiService {
   }
 
   delete( artifact:string , id:string , params ) {
-    return this._http.delete( this._endpoint + artifact + '/' + encodeURIComponent( id ) , serializeParams( params ) )
+    let uri = artifact == 'gateways' ? id : encodeURIComponent( id ); // revert when revamp-ui/issues/33 can be resolved
+
+    return this._http.delete( this._endpoint + artifact + '/' + uri , serializeParams( params ) )
       .timeout( 5000 , new Error( 'API Timeout' ) )
       .map( deserializeResponse )
       .catch( this._onError )
