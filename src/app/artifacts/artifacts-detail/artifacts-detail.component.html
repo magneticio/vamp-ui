@@ -1,3 +1,14 @@
-<p>
-  artifacts-detail works!
-</p>
+<section class="space">
+
+  <header class="row">
+    <h2 class="artifactHeader grid-content half"><a [routerLink]="['../']">{{ selectedResource }}</a> › {{ selectedName }}</h2>
+  </header>
+
+  <pre><code>{{ content }}</code></pre>
+
+  <div class="grid-content half  text-right">
+    <a class="btn btn--warning" [routerLink]="['./edit']">edit</a>
+    <a class="btn btn--warning" [routerLink]="['../']">back to list</a>
+  </div>
+
+</section>
