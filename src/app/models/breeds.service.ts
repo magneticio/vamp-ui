@@ -2,7 +2,7 @@ import {Inject , Injectable} from '@angular/core';
 
 import {ApiService} from '../shared/api.service';
 import {EventsService} from '../shared/events.service';
-import {NotificationService} from '../shared/notifications.service';
+import {NotificationsService} from '../shared/notifications.service';
 import {StoreService} from '../shared/store.service';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class Breeds extends StoreService {
   constructor(
     @Inject( ApiService ) public _api,
     @Inject( EventsService ) private _events,
-    @Inject( NotificationService ) private _notifier
+    @Inject( NotificationsService ) private _notifier
   ) {
     super( 'breeds' , _api , [ 'GET' , 'POST' , 'PUT' , 'DELETE' ] );
   }

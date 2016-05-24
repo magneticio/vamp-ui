@@ -81,7 +81,7 @@ export class StoreService {
       return null;
 
     let items = this.items$.getValue(),
-        item  = this._find( artifact.name );
+        item  = this._find( artifact.name || artifact );
 
     if ( item ) {
       items.splice( items.indexOf( item ) , 1 );
@@ -124,7 +124,7 @@ export class StoreService {
     console.log( artifact );
 
     let items = this.items$.getValue(),
-        item  = this._find( artifact.name );
+        item  = this._find( artifact.name || artifact );
 
     if ( item ) {
       Object.assign( item , artifact );
