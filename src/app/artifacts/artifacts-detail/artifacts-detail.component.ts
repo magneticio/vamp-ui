@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy } from '@angular/core';
 import { OnActivate , Router , ROUTER_DIRECTIVES , RouteSegment } from '@angular/router';
 
 import { ArtifactsService } from '../artifacts.service';
@@ -33,6 +33,11 @@ export class ArtifactsDetailComponent implements OnInit {
     this.initPolling();
   }
 
+  routerOnDeactivate() {
+    console.log( 'Clearing interval' , this._interval );
+    clearInterval( this._interval );
+  }
+
   load() {
     if ( this.selectedName && this.selectedName != 'undefined' )
       this._artifacts[ this.selectedResource ].get( this.selectedName , { headers : { 'Accept' : 'application/x-yaml' } } )
@@ -46,6 +51,14 @@ export class ArtifactsDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+
+  // Since routerOnDecactivate is not implemented yet in NG RC1, we must use
+  // the ngOnDestroy hook to clear the interval. Will switch this out when
+  // the router hook is available.
+  ngOnDestroy() {
+    this.routerOnDeactivate();
   }
 
 }
