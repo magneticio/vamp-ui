@@ -11,7 +11,10 @@ import {ApiService} from '../shared/api.service';
 export class InfoComponent implements OnInit {
 
   endpoint;
-  info;
+  content;
+
+  protected _interval;
+  protected _intervalTime = 30000; // 30s
 
   constructor(
     private _api : ApiService
@@ -19,12 +22,21 @@ export class InfoComponent implements OnInit {
     this.endpoint = this._api._endpoint;
   }
 
-  ngOnInit() {
-    this.info = this._api.getAll( 'info' )
+  load() {
+    this.content = this._api.getAll( 'info' )
       .subscribe(
-        res => this.info = res,
+        res => this.content = res,
         err => console.error( err )
       );
+  }
+
+  initPolling() {
+    this._interval = setInterval( () => this.load() , this._intervalTime );
+  }
+
+  ngOnInit() {
+    this.load();
+    this.initPolling();
   }
 
 }
