@@ -1,9 +1,9 @@
 import {Inject , Injectable} from '@angular/core';
 
-import {ApiService} from '../api.service';
-import {EventsService} from '../events.service';
-import {NotificationService} from '../notifications.service';
-import {StoreService} from '../store.service';
+import {ApiService} from '../shared/api.service';
+import {EventsService} from '../shared/events.service';
+import {NotificationService} from '../shared/notifications.service';
+import {StoreService} from '../shared/store.service';
 
 @Injectable()
 export class Gateways extends StoreService {
