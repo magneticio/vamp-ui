@@ -51,6 +51,7 @@ const barrels: string[] = [
   'app/artifacts/artifacts-list',
   'app/artifacts/artifacts-detail',
   'app/artifacts/artifacts-edit',
+  'app/info',
   /** @cli-barrel */
 ];
 

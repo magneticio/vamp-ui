@@ -2,8 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { ROUTER_DIRECTIVES, Router, Routes} from '@angular/router';
 
 import { ArtifactsDetailComponent } from './artifacts/artifacts-detail'
-import { ArtifactsEditComponent } from './artifacts/artifacts-edit'
-import { ArtifactsListComponent } from './artifacts/artifacts-list'
+import { ArtifactsEditComponent }   from './artifacts/artifacts-edit'
+import { ArtifactsListComponent }   from './artifacts/artifacts-list'
+import { InfoComponent }            from './info'
 import { VAMP_ARTIFACTS , ArtifactsService } from './artifacts/artifacts.service'
 
 @Component({
@@ -12,11 +13,12 @@ import { VAMP_ARTIFACTS , ArtifactsService } from './artifacts/artifacts.service
   templateUrl: 'vamp-ui.component.html',
   styleUrls: ['vamp-ui.component.css'],
 
-  directives: [ ROUTER_DIRECTIVES ],
+  directives: [ ROUTER_DIRECTIVES , InfoComponent ],
   providers : [ VAMP_ARTIFACTS , ArtifactsService ],
 })
 
 @Routes([
+  // { path: '/info'                 , component: InfoComponent },
   { path: '/:resource/add'        , component: ArtifactsEditComponent },
   { path: '/:resource/:name/edit' , component: ArtifactsEditComponent },
   { path: '/:resource/:name'      , component: ArtifactsDetailComponent },
@@ -32,4 +34,6 @@ export class VampUi {
   ) {
     // Router.navigate(['/', { resource: 'deployments' }]);
   }
+
+  toggleInfoPanel() {}
 }

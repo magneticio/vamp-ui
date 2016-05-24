@@ -11,7 +11,7 @@
   <ul class="list-clear">
     <li class="card  row" *ngFor="let item of resource.items | async">
       <div class="grid-content half">
-        <a [routerLink]="['/' , selectedResource , item.name ]">{{ item.name }}</a>
+        <a [routerLink]="['/' , selectedResource , encode( item.name ) ]">{{ item.name }}</a>
         <a [routerLink]="['/' , selectedResource , encode( item.name ) , 'edit' ]">edit</a>
       </div>
 
