@@ -6,7 +6,7 @@ import { ArtifactsService } from '../artifacts.service';
 @Component({
   moduleId: module.id,
   selector: 'app-artifacts-list',
-  templateUrl: 'artifacts-list.component.html',
+  templateUrl: 'artifacts-table.component.html',
   styleUrls: ['artifacts-list.component.css'],
   directives: [ ROUTER_DIRECTIVES ]
 })
