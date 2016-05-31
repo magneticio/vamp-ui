@@ -1,0 +1,7 @@
+// Import normalize scss for consistency between browsers
+@import '../../../node_modules/normalize-scss/sass/normalize/import-now';
+
+@import 'lib/variables';
+
+@import 'components/app';
+@import 'components/navigation';

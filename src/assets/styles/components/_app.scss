@@ -1,0 +1,21 @@
+// Because of the broccoli compiler we need to include the variables in each
+// file again?
+@import '../lib/variables';
+
+.vamp {
+  &-container {
+    background-color: $blue;
+  }
+
+   &-header {
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: 1em;
+  }
+
+  &-logo {
+    svg { display: block; }
+  }
+}
