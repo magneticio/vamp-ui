@@ -1,0 +1,64 @@
+.artifact {
+
+  &-item {
+    box-sizing: border-box;
+    background-color: lighten( $blue , 10% );
+
+    td {
+      padding: 0.5em;
+    }
+  }
+
+  &-table {
+    border-spacing: 0 10px;
+    text-align: left;
+    width: 100%;
+
+    a:not(.button) {
+      color: lighten( $blue , 40% );
+    }
+
+    thead {
+      margin-bottom: 1em;;
+    }
+
+    td:last-child,
+    th:last-child {
+      text-align: right;
+    }
+
+    td,
+    th {
+      padding: 1em;
+    }
+
+    td {
+      background-color: lighten( $blue , 10% );
+
+      &:first-child {
+        border-radius: 3px 0 0 3px;
+      }
+
+      &:last-child {
+        border-radius: 0 3px 3px 0;
+      }
+    }
+  }
+
+}
+
+.artifact {
+  &-name {
+    font-size: 1.25em;
+    font-weight: bold;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+  }
+
+  &-options {
+    text-align: right;
+  }
+}
