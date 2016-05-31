@@ -1,7 +1,3 @@
-// Because of the broccoli compiler we need to include the variables in each
-// file again?
-@import '../lib/variables';
-
 .navigation {
 
   list-style: none;
@@ -23,14 +19,14 @@
   display: block;
   font-weight: bold;
   margin: 0 1em;
-  padding: 1em 0;
+  padding: 1em 0 1.5em;
   text-decoration: none;
   transform: all 250ms ease;
 
   &.router-link-active {
     border-bottom: solid 2px;
     color: $pink;
-    padding-bottom: calc( 1em - 2px );
+    padding-bottom: calc( 1.5em - 2px );
   }
 
   &:hover {

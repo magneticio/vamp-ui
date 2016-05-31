@@ -1,18 +1,49 @@
-// Because of the broccoli compiler we need to include the variables in each
-// file again?
-@import '../lib/variables';
+body {
+  background-color: $blue;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
 
 .vamp {
   &-container {
-    background-color: $blue;
+    // background-color: $blue;
+    bottom: 0;
+    color: white;
+    left: 0;
+    overflow-x: hidden;
+    padding: 1em;
+    position: absolute;
+    right: 0;
+    top: 75px;
   }
 
    &-header {
-    align-items: center;
+    align-items: baseline;
+    background-color: white;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+    padding: 1em 1em 0;
+  }
+
+  &-info {
+    background-color: $black;
+    color: white;
+    height: 100%;
+    left: 100%;
+    overflow: scroll;
     padding: 1em;
+    position: absolute;
+    top: 0;
+    transition: transform 300ms ease;
+    width: 90%;
+
+    &.is-active {
+      transform: translate3d( -100% , 0 , 0 );
+    }
   }
 
   &-logo {
