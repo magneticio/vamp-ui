@@ -117,7 +117,7 @@ export class ArtifactsEditComponent implements OnActivate {
             message: `Succesfully updated ${ this.selectedResource.slice( 0 , -1 ) } "${ name }"`,
             type: 'success'
           } );
-          this._router.navigate(['/', this.selectedResource , encodeURIComponent( name ) ]);
+          this._router.navigate(['/', this.selectedResource , encodeURIComponent( this.selectedName ) ]);
         },
         err => {
           this._notifier.addNotification( {
