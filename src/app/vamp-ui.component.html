@@ -1,16 +1,16 @@
 <header class="vamp-header box horizontal">
 
-  <a href="/">
+  <a href="/" class="vamp-logo">
     <svg width="32px" height="30px" viewBox="0 0 32 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <path d="M23.34,20.64 L15.12,0 L31.39,0 L23.34,20.64 L23.34,20.64 Z M1.77635684e-15,0 L11.5,0 L21.56,25.13 L20.1,28.87 L11.4,28.87 L1.77635684e-15,0 L1.77635684e-15,0 Z" id="vamp-logo" fill="#FF4081"></path>
     </svg>
   </a>
 
   <ul class="navigation navigation-artifacts">
-    <li><a [routerLink]="['/', 'deployments']">Deployments</a></li>
-    <li><a [routerLink]="['/', 'gateways']">Gateways</a></li>
-    <li><a [routerLink]="['/', 'blueprints']">Blueprints</a></li>
-    <li><a [routerLink]="['/', 'breeds']">Breeds</a></li>
+    <li><a class="navigation-item" [routerLink]="['/', 'deployments']">Deployments</a></li>
+    <li><a class="navigation-item" [routerLink]="['/', 'gateways']">Gateways</a></li>
+    <li><a class="navigation-item" [routerLink]="['/', 'blueprints']">Blueprints</a></li>
+    <li><a class="navigation-item" [routerLink]="['/', 'breeds']">Breeds</a></li>
     <!--li><a [routerLink]="['Escalations']">Escalations</a></li>
     <li><a [routerLink]="['Filters']">Filters</a></li>
     <li><a [routerLink]="['Scales']">Scales</a></li>
@@ -24,7 +24,9 @@
 
 </header>
 
-<router-outlet></router-outlet>
+<main class="vamp-container">
+  <router-outlet></router-outlet>
+</main>
 
 <vamp-info></vamp-info>
 
