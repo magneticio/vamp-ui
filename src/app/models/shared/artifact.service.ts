@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 // services such as the store, api, events and notifications.
 
 @Injectable()
-export class ArtifactModel {
+export class ArtifactService {
 
   constructor(
 
