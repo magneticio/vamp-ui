@@ -10,11 +10,11 @@
       </h2>
     </header>
 
-    <textarea [(ngModel)]="content" name="content" cols="80" rows="48"></textarea>
+    <textarea class="editor editor-code" [(ngModel)]="content" name="content" cols="80" rows="24"></textarea>
 
     <div class="grid-content half  text-right">
-      <button type="submit" class="btn btn--contrast">save</button>
-      <a class="btn btn--warning" [routerLink]="['../']">cancel</a>
+      <button type="submit" class="button button-attention">save</button>
+      <a class="button" [routerLink]="['../']">cancel</a>
     </div>
 
   </form>
