@@ -21,7 +21,7 @@ export class NotificationsService extends StoreService {
   addNotification( notification : Notification ) {
     this.add( notification );
 
-    // setTimeout( () => this.delete( notification ) , this.timeoutDuration );
+    setTimeout( () => this.delete( notification ) , this.timeoutDuration );
   }
 
 }
