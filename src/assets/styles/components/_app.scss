@@ -17,16 +17,16 @@ body {
     padding: 1em;
     position: absolute;
     right: 0;
-    top: 75px;
+    top: 66px;
   }
 
    &-header {
-    align-items: baseline;
+    align-items: center;
     background-color: white;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    padding: 1em 1em 0;
+    padding: 0 1em;
   }
 
   &-info {

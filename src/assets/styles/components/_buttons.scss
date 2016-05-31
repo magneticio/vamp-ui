@@ -1,22 +1,36 @@
 .button {
   cursor: pointer;
   display: inline-block;
-  background-color: lighten( $blue , 40% );
+  background-color: $blue-mid;
   border: 0;
   border-radius: 99em;
   color: white;
   font-weight: bold;
-  padding: 0.25em 1em 0.3em;
+  padding: 0.375em 1em;
   text-decoration: none;
+  transition: all 250ms ease;
+
+  &:hover {
+    background-color: lighten( $blue-mid , 10% );
+  }
 
   &-attention {
     background-color: $pink;
+
+    &:hover {
+      background-color: lighten( $pink , 10% );
+    }
   }
 
   &-subtle {
     background-color: transparent;
     border: solid 1px;
     color: $blue-mid;
-    padding: calc( 0.25em - 1px ) calc( 1em - 1px ) calc( 0.3em - 1px );
+    padding: calc( 0.375em - 1px ) calc( 1em - 1px );
+
+    &:hover {
+      background-color: transparent;
+      color: white;
+    }
   }
 }

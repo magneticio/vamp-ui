@@ -20,9 +20,9 @@
   display: block;
   font-weight: bold;
   margin: 0 1em;
-  padding: 1em 0 1.5em;
+  padding: 1.5em 0;
   text-decoration: none;
-  transform: all 250ms ease;
+  transition: color 250ms ease;
 
   &.router-link-active {
     border-bottom: solid 2px;

@@ -1,14 +1,4 @@
 .artifact {
-
-  &-item {
-    box-sizing: border-box;
-    background-color: lighten( $blue , 10% );
-
-    td {
-      padding: 0.5em;
-    }
-  }
-
   &-table {
     border-spacing: 0 10px;
     text-align: left;
@@ -47,15 +37,31 @@
     th {
       color: $blue-mid;
     }
-
-    .button + .button {
-      margin-left: 0.5em;
-    }
   }
-
 }
 
 .artifact {
+  &-header {
+    align-items: baseline;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 1em;
+
+    &-link {
+      color: $blue-mid;
+      // text-decoration: none;
+    }
+
+    h2 {
+      font-size: 1rem;
+      margin: 0;
+    }
+  }
+
   &-name {
     color: white;
     font-size: 1.25em;
@@ -64,6 +70,12 @@
   }
 
   &-options {
+    min-width: 160px;
     text-align: right;
+
+    a + a,
+    .button + .button {
+      margin-left: 0.5em;
+    }
   }
 }
