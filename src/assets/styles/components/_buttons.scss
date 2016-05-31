@@ -1,10 +1,21 @@
 .button {
   cursor: pointer;
   display: inline-block;
-  background-color: $pink;
+  background-color: lighten( $blue , 40% );
   border-radius: 99em;
   color: white;
   font-weight: bold;
-  padding: 0.25em 0.75em 0.3em;
+  padding: 0.25em 1em 0.3em;
   text-decoration: none;
+
+  &-attention {
+    background-color: $pink;
+  }
+
+  &-subtle {
+    background-color: transparent;
+    border: solid 1px;
+    color: $blue-mid;
+    padding: calc( 0.25em - 1px ) calc( 1em - 1px ) calc( 0.3em - 1px );
+  }
 }
