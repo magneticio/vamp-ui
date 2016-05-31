@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import {ApiService} from '../shared/api.service';
 import {NotificationsService} from '../shared/notifications.service';
@@ -11,8 +11,9 @@ import {NotificationsService} from '../shared/notifications.service';
 })
 export class InfoComponent implements OnInit {
 
-  endpoint;
   content;
+  endpoint;
+  @Input() isActive = false;
 
   protected _interval;
   protected _intervalTime = 30000; // 30s

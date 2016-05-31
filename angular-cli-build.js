@@ -13,6 +13,9 @@ module.exports = function(defaults) {
       'rxjs/**/*.js',
       '@angular/**/*.js',
       'ng2-ace/index.js'
-    ]
+    ],
+    sassCompiler: {
+      cacheExclude: [/\/_[^\/]+$/]
+    }
   });
 };

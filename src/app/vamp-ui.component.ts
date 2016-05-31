@@ -31,6 +31,7 @@ import { VAMP_ARTIFACTS , ArtifactsService } from './artifacts/artifacts.service
 
 export class VampUi {
   title = 'vamp-ui works!';
+  infoPanelIsActive = false;
 
   constructor(
     // @Inject( Router ) Router
@@ -38,5 +39,8 @@ export class VampUi {
     // Router.navigate(['/', { resource: 'deployments' }]);
   }
 
-  toggleInfoPanel() {}
+  toggleInfoPanel() {
+    console.log( this.infoPanelIsActive );
+    this.infoPanelIsActive = !this.infoPanelIsActive;
+  }
 }

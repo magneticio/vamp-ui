@@ -1,10 +1,10 @@
-<aside class="notifier">
+<aside class="notifications">
 
-  <ul class="list-clear">
+  <ul class="notification-list">
     <li class="notification" *ngFor="let notification of notifications | async"
       [ngClass]="notification.type">
       {{ notification.message }}
-      <a class="push-right" (click)="remove( notification )">remove</a>
+      <a class="notification-close" (click)="remove( notification )">&times;</a>
     </li>
   </ul>
 

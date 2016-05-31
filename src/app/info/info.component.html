@@ -1,5 +1,5 @@
-<pre><code>{{ content }}</code></pre>
+<aside class="vamp-info" [ngClass]="{ 'is-active': isActive }">
+  <p><input type="text" [(ngModel)]="endpoint" (ngModelChange)="onEndpointChange( endpoint )"></p>
 
-<!-- <h1>{{ content.message }}</h1> -->
-
-<p><input type="text" [(ngModel)]="endpoint" (ngModelChange)="onEndpointChange( endpoint )"></p>
+  <pre><code>{{ content }}</code></pre>
+</aside>
