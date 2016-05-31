@@ -1,22 +1,22 @@
-<section class="space">
+<article class="space">
 
   <form (ngSubmit)="onSubmit()">
 
-    <header class="row">
-      <h2 class="artifactHeader grid-content half">
-        <a [routerLink]="['../../']">{{ selectedResource }}</a> ›
-        <a [routerLink]="['../']" *ngIf="!isNewArtifact">{{ selectedName }}</a>
+    <header class="artifact-header">
+      <div class="artifact-title">
+        <a class="artifact-type artifact-header-link" [routerLink]="['../../']">{{ selectedResource }}</a> ›
+        <a class="artifact-header-link" [routerLink]="['../']" *ngIf="!isNewArtifact">{{ selectedName }}</a>
         <span *ngIf="isNewArtifact">{{ selectedName }}</span>
-      </h2>
+      </div>
+
+      <div class="artifact-options">
+        <button type="submit" class="button button-attention">save</button>
+        <a class="button" [routerLink]="['../']">cancel</a>
+      </div>
     </header>
 
     <textarea class="editor editor-code" [(ngModel)]="content" name="content" cols="80" rows="24"></textarea>
 
-    <div class="grid-content half  text-right">
-      <button type="submit" class="button button-attention">save</button>
-      <a class="button" [routerLink]="['../']">cancel</a>
-    </div>
-
   </form>
 
-</section>
+</article>

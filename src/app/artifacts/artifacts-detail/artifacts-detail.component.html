@@ -1,14 +1,16 @@
-<section class="space">
+<article class="">
 
-  <header class="row">
-    <h2 class="artifactHeader grid-content half"><a [routerLink]="['../']">{{ selectedResource }}</a> › {{ selectedName }}</h2>
+  <header class="artifact-header">
+    <div class="artifact-title">
+      <a class="artifact-type artifact-header-link" [routerLink]="['../']">{{ selectedResource }}</a>
+      › {{ selectedName }}
+    </div>
+
+    <div class="artifact-options">
+      <a class="button button-attention" [routerLink]="['./edit']">edit</a>
+    </div>
   </header>
 
   <pre><code>{{ content }}</code></pre>
 
-  <div class="grid-content half  text-right">
-    <a class="button button-attention" [routerLink]="['./edit']">edit</a>
-    <a class="button" [routerLink]="['../']">back to list</a>
-  </div>
-
-</section>
+</article>

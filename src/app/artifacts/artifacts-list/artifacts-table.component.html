@@ -2,8 +2,8 @@
 
   <thead>
     <tr>
-      <th>{{ selectedResource }}</th>
-      <th><a class="button button-subtle" [routerLink]="[ 'add' ]">+ Add new<!-- {{ selectedResource | slice:0:-1 }}--></a></th>
+      <th class="artifact-col-name">{{ selectedResource }}</th>
+      <th class="artifact-options"><a class="button button-subtle" [routerLink]="[ 'add' ]">+ Add new<!-- {{ selectedResource | slice:0:-1 }}--></a></th>
     </tr>
   </thead>
 
@@ -11,9 +11,9 @@
     <tr *ngFor="let item of resource.items | async">
       <td>
         <a class="artifact-name" [routerLink]="['/' , selectedResource , encode( item.name ) ]">{{ item.name }}</a>
-        <a [routerLink]="['/' , selectedResource , encode( item.name ) , 'edit' ]">edit</a>
       </td>
-      <td>
+      <td class="artifact-options">
+        <a [routerLink]="['/' , selectedResource , encode( item.name ) , 'edit' ]">edit</a>
         <a class="button" *ngIf="selectedResource == 'blueprints'" (click)="resource.deploy( item )">deploy</a>
         <a class="button button-attention" *ngIf="selectedResource == 'deployments'" (click)="resource.undeploy( item )">undeploy</a>
         <a class="button button-attention" *ngIf="selectedResource != 'deployments'" (click)="delete( item )">delete</a>
