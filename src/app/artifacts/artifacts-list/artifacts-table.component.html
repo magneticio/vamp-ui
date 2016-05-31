@@ -3,20 +3,20 @@
   <thead>
     <tr>
       <th>{{ selectedResource }}</th>
-      <th><a class="button button--contrast" [routerLink]="[ 'add' ]">create {{ selectedResource | slice:0:-1 }}</a></th>
+      <th><a class="button button-subtle" [routerLink]="[ 'add' ]">+ Add new<!-- {{ selectedResource | slice:0:-1 }}--></a></th>
     </tr>
   </thead>
 
   <tbody>
     <tr *ngFor="let item of resource.items | async">
       <td>
-        {{ item.name }}
+        <a class="artifact-name" [routerLink]="['/' , selectedResource , encode( item.name ) ]">{{ item.name }}</a>
         <a [routerLink]="['/' , selectedResource , encode( item.name ) , 'edit' ]">edit</a>
       </td>
       <td>
-        <a class="button button--contrast" *ngIf="selectedResource == 'blueprints'" (click)="resource.deploy( item )">deploy</a>
-        <a class="button" *ngIf="selectedResource == 'deployments'" (click)="resource.undeploy( item )">undeploy</a>
-        <a class="button button--destructive" *ngIf="selectedResource != 'deployments'" (click)="delete( item )">delete</a>
+        <a class="button" *ngIf="selectedResource == 'blueprints'" (click)="resource.deploy( item )">deploy</a>
+        <a class="button button-attention" *ngIf="selectedResource == 'deployments'" (click)="resource.undeploy( item )">undeploy</a>
+        <a class="button button-attention" *ngIf="selectedResource != 'deployments'" (click)="delete( item )">delete</a>
       </td>
     </tr>
   </tbody>

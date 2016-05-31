@@ -14,8 +14,8 @@
     text-align: left;
     width: 100%;
 
-    a:not(.button) {
-      color: lighten( $blue , 40% );
+    a:not(.button):not(.artifact-name) {
+      color: $blue-mid;
     }
 
     thead {
@@ -43,19 +43,24 @@
         border-radius: 0 3px 3px 0;
       }
     }
+
+    th {
+      color: $blue-mid;
+    }
+
+    .button + .button {
+      margin-left: 0.5em;
+    }
   }
 
 }
 
 .artifact {
   &-name {
+    color: white;
     font-size: 1.25em;
     font-weight: bold;
-
-    a {
-      color: white;
-      text-decoration: none;
-    }
+    text-decoration: none;
   }
 
   &-options {
