@@ -1,0 +1,12 @@
+.info {
+  &-label {
+    color: $blue-mid;
+    display: block;
+    font-size: 0.9em;
+    font-weight: bold;
+  }
+
+  &-input {
+    min-width: 250px;
+  }
+}

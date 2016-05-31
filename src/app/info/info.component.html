@@ -1,5 +1,10 @@
 <aside class="vamp-info" [ngClass]="{ 'is-active': isActive }">
-  <p><input type="text" [(ngModel)]="endpoint" (ngModelChange)="onEndpointChange( endpoint )"></p>
+  <p>
+    <label>
+      <span class="info-label">API Endpoint</span>
+      <input class="info-input" type="text" [(ngModel)]="endpoint" (ngModelChange)="onEndpointChange( endpoint )">
+    </label>
+  </p>
 
   <pre><code>{{ content }}</code></pre>
 </aside>
