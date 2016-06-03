@@ -89,6 +89,8 @@ export class ArtifactsEditComponent implements OnActivate {
       // .first()
       .subscribe(
         res => {
+          // TODO: we might use a form like this to show all the artifacts which
+          // were created in the request later.
           let name = res.name || res.map( val => val.name ).join(', ');
 
           this._notifier.addNotification( {
@@ -111,10 +113,12 @@ export class ArtifactsEditComponent implements OnActivate {
       // .first()
       .subscribe(
         res => {
+          // TODO: we might use a form like this to show all the artifacts which
+          // were created in the request later.
           let name = res.name || res.map( val => val.name ).join(', ');
 
           this._notifier.addNotification( {
-            message: `Succesfully updated ${ this.selectedResource.slice( 0 , -1 ) } "${ name }"`,
+            message: `Succesfully updated ${ this.selectedResource.slice( 0 , -1 ) } "${ this.selectedName }"`,
             type: 'success'
           } );
           this._router.navigate(['/', this.selectedResource , encodeURIComponent( this.selectedName ) ]);
