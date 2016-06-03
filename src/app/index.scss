@@ -1,0 +1,95 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  box-sizing: inherit;
+  /* this disables font boosting on mobile chrome... */
+  max-height: 10000vh;
+  /* this might also do the same thing one day... */
+  -webkit-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+}
+​
+html {
+  font-size: 10px;
+  box-sizing: border-box;
+}
+
+.button {
+  padding: 0;
+  margin: 0;
+  border: 1px solid rgba(black, 0.5);
+  background-color: transparent;
+  min-height: 2rem;
+  cursor: pointer;
+  border-radius: 2px;
+
+  &.button--icon {
+    height: 2rem;
+    width: 2rem;
+    .fa {
+      color: rgba(black, 0.5);
+      line-height: 0.5;
+    }
+    
+
+
+  }
+}
+
+.table {
+  font-family: 'Muli', sans-serif;
+
+  width: 100%;
+
+  .table-head {
+    font-weight: normal;
+    text-transform: uppercase;
+    color: rgba(black, 0.7);
+    padding: 1rem 0;
+    line-height: 1;
+    border-bottom: 1px solid rgba(black, 0.7);
+    font-size: 0.8rem;
+  }
+
+  .table-row {
+    font-weight: lighter;
+    font-size: 1rem;
+    border-bottom: 1px solid rgba(black, 0.7);
+    padding: 0.8rem;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    opacity: 1;
+
+    &.ng-enter {
+        transition: all 0.3s ease-out;
+        opacity: 0;
+        transform: translateY(2rem);
+    }
+    &.ng-enter-active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .data {
+      display: flex;
+      width: 70%;
+
+      .column {
+        width: 30%;
+        padding: 0 0.8rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+      }
+    }
+  }
+}
