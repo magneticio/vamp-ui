@@ -5,13 +5,13 @@ import {
   expect,
   inject
 } from '@angular/core/testing';
-import { ArtifactService } from './artifact.service';
+import { ArtifactModel } from './artifact.model';
 
 describe('Artifact Service', () => {
-  beforeEachProviders(() => [ArtifactService]);
+  beforeEachProviders(() => [ArtifactModel]);
 
   it('should ...',
-      inject([ArtifactService], (service: ArtifactService) => {
+      inject([ArtifactModel], (service: ArtifactModel) => {
     expect(service).toBeTruthy();
   }));
 });
