@@ -31,7 +31,7 @@
     function ReadAllTableController($http, $interval) {
 
       var vm = this;
-      vm.edit = edit;
+      vm.editActive = false;
 
 
 
@@ -39,12 +39,9 @@
       var baseUrl = 'http://192.168.99.100:8080/api/v1/';
       getResults(vm.resource);
 
-      function edit(dataPoint) {
-        alert('dataPoint');
-      }
-
       function getResults(resource) {
         $http.get(baseUrl + resource).then(function(response) {
+          vm.yaml = YAML.stringify(response.data[0], 8);
           vm.data = response.data;
           console.log(vm.data);
         }, function(response){
@@ -52,12 +49,12 @@
         });
       }
 
-      $interval(function() {
-        var lol = vm.data;
-        lol.push({name: 'random', gateways: {lol:{}}, clusters: {lol: {}}});
+      // $interval(function() {
+      //   var lol = vm.data;
+      //   lol.push({name: 'random', gateways: {lol:{}}, clusters: {lol: {}}});
 
-        vm.data = lol;
-      }, 30000);
+      //   vm.data = lol;
+      // }, 30000);
     
     }
   }
