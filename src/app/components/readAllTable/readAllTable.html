@@ -11,8 +11,11 @@
       </div>
     </div>
 
-    <div id="{{dataPoint.name}}" class="row row--table row--table--content" ng-repeat="dataPoint in vm.data">
-      
+    <div  id="{{dataPoint.name}}" 
+          class="row row--table row--table--content"
+          ng-repeat="dataPoint in vm.data"
+          ng-class="{'edit-active': editActive}">
+          
       <div class="row row--data">
         <div class="data">
           <div class="column" ng-repeat="headerFunction in vm.parameters">
@@ -21,7 +24,7 @@
         </div>  
         
         <div class="actions">
-          <button ng-click="vm.edit(dataPoint)" class="button button--icon hvr-radial-out">
+          <button ng-click="editActive = !editActive" class="button button--icon hvr-radial-out">
             <i class="fa fa-lg fa-pencil"></i>
           </button>
           <button class="button button--icon hvr-radial-out">
@@ -30,10 +33,8 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="edit">
-          
-        </div>
+      <div class="row row--edit">
+        <edit-one yaml="{{vm.yaml}}"> </edit-one>
       </div>
 
     </div>

@@ -12,7 +12,9 @@
     "angular-toastr": "~1.5.0",
     "moment": "~2.10.6",
     "angular": "~1.5.3",
-    "hover": "Hover#^2.0.2"
+    "hover": "Hover#^2.0.2",
+    "angular-ui-ace": "bower",
+    "yaml.js": "^0.2.7"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.3"

@@ -44,7 +44,7 @@
       console.error('The resource ['+[$stateParams.resource]+'] has not been defined in the config file. Please add it.');
     }
 
-
+    
 
 
     vm.test = 'test';

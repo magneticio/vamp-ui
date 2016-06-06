@@ -2,6 +2,6 @@
   'use strict';
 
   angular
-    .module('revampUi', ['ngAnimate', 'ngTouch', 'ngMessages', 'ngAria', 'ui.router', 'toastr']);
+    .module('revampUi', ['ngAnimate', 'ngTouch', 'ngMessages', 'ngAria', 'ui.router', 'toastr', 'ui.ace']);
 
 })();
