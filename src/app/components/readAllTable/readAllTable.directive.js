@@ -29,10 +29,19 @@
 
     /** @ngInject */
     function ReadAllTableController($http, $interval) {
+
       var vm = this;
+      vm.edit = edit;
+
+
+
 
       var baseUrl = 'http://192.168.99.100:8080/api/v1/';
       getResults(vm.resource);
+
+      function edit(dataPoint) {
+        alert('dataPoint');
+      }
 
       function getResults(resource) {
         $http.get(baseUrl + resource).then(function(response) {
@@ -46,7 +55,7 @@
       $interval(function() {
         var lol = vm.data;
         lol.push({name: 'random', gateways: {lol:{}}, clusters: {lol: {}}});
-        
+
         vm.data = lol;
       }, 30000);
     
