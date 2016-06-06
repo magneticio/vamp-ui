@@ -1,6 +1,6 @@
 <div class="eaa">
   <div class="table">
-    <div class="table-head row">
+    <div class="row row--table row--table-head">
       <div class="data">
         <div class="column" ng-repeat="(headerName, headerFunction) in vm.parameters">
           {{headerName}}
@@ -11,20 +11,31 @@
       </div>
     </div>
 
-    <div class="table-row row" ng-repeat="dataPoint in vm.data">
-      <div class="data">
-        <div class="column" ng-repeat="headerFunction in vm.parameters">
-          {{headerFunction(dataPoint)}}
+    <div id="{{dataPoint.name}}" class="row row--table row--table--content" ng-repeat="dataPoint in vm.data">
+      
+      <div class="row row--data">
+        <div class="data">
+          <div class="column" ng-repeat="headerFunction in vm.parameters">
+            {{headerFunction(dataPoint)}}
+          </div>
+        </div>  
+        
+        <div class="actions">
+          <button ng-click="vm.edit(dataPoint)" class="button button--icon hvr-radial-out">
+            <i class="fa fa-lg fa-pencil"></i>
+          </button>
+          <button class="button button--icon hvr-radial-out">
+            <i class="fa fa-lg fa-times"></i>
+          </button>
         </div>
-      </div>  
-      <div class="actions">
-        <button class="button button--icon">
-          <i class="fa fa-lg fa-pencil"></i>
-        </button>
-        <button class="button button--icon button--delete">
-          <i class="fa fa-lg fa-times"></i>
-        </button>
       </div>
+
+      <div class="row">
+        <div class="edit">
+          
+        </div>
+      </div>
+
     </div>
 
 
