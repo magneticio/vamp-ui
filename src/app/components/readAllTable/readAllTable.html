@@ -1,28 +1,32 @@
 <div class="eaa">
   <div class="table">
     <div class="row row--table row--table-head">
+      <input type="text" ng-model="dataFilter.name">
+    </div>
+
+    <div class="row row--table row--table-head">
       <div class="data">
         <div class="column" ng-repeat="(headerName, headerFunction) in vm.parameters">
           {{headerName}}
         </div>
-      </div>  
+      </div>
       <div class="actions">
-        
+
       </div>
     </div>
 
-    <div  id="{{dataPoint.name}}" 
+    <div  id="{{dataPoint.name}}"
           class="row row--table row--table--content"
-          ng-repeat="dataPoint in vm.data"
+          ng-repeat="dataPoint in data = vm.data | filter:dataFilter"
           ng-class="{'edit-active': editActive}">
-          
+
       <div class="row row--data">
         <div class="data">
           <div class="column" ng-repeat="headerFunction in vm.parameters">
             {{headerFunction(dataPoint)}}
           </div>
-        </div>  
-        
+        </div>
+
         <div class="actions">
           <button ng-click="editActive = !editActive" class="button button--icon hvr-radial-out">
             <i class="fa fa-lg fa-pencil"></i>

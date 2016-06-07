@@ -41,7 +41,8 @@
 
       function getResults(resource) {
         $http.get(baseUrl + resource).then(function(response) {
-          vm.yaml = YAML.stringify(response.data[0], 8);
+          console.log( response );
+          vm.yaml = YAML.stringify(response.data, 8);
           vm.data = response.data;
           console.log(vm.data);
         }, function(response){
