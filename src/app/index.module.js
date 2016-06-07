@@ -2,6 +2,14 @@
   'use strict';
 
   angular
-    .module('revampUi', ['ngAnimate', 'ngTouch', 'ngMessages', 'ngAria', 'ui.router', 'toastr', 'ui.ace']);
+    .module('revampUi', [
+      'ngAnimate',
+      'ngTouch',
+      'ngMessages',
+      'ngAria',
+      'ui.router',
+      'toastr',
+      'ui.ace'
+  ]);
 
 })();
