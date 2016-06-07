@@ -22,20 +22,20 @@
               return object.name;
             },
             gateway: function(object) {
-              return Object.keys(object.gateways)[0];
+              return Object.keys(object.gateways).join(', ');
             },
             clusters: function(object) {
-              return Object.keys(object.clusters)[0];
+              return Object.keys(object.clusters).join(', ');
             }
           }
         }
-      }    
+      }
     }
 
 
 
 
-    var resourceParameters = resources[$stateParams.resource];
+    var resourceParameters = resources[$stateParams.resource || 'deployments'];
     console.log(resourceParameters);
     if(resourceParameters) {
       vm.params = resourceParameters.parameters.readAll;
@@ -44,7 +44,7 @@
       console.error('The resource ['+[$stateParams.resource]+'] has not been defined in the config file. Please add it.');
     }
 
-    
+
 
 
     vm.test = 'test';
