@@ -1,52 +1,19 @@
-<div class="eaa">
-  <div class="table">
-    <div class="row row--table row--table-head">
-      <div class="data">
-        <div class="column" ng-repeat="(headerName, headerFunction) in vm.parameters">
-          {{headerName}}
-        </div>
-      </div>  
-      <div class="actions">
-        
-      </div>
-    </div>
+<div class="read-all-table">
+  <table class="table" cellspacing="0">
+    <thead>
+      <tr>
+        <th ng-repeat="headerName in vm.headers">{{headerName}}</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
 
-    <div  id="{{dataPoint.name}}" 
-          class="row row--table row--table--content"
-          ng-repeat="dataPoint in vm.data"
-          ng-class="{'edit-active': editActive}">
-          
-      <div class="row row--data">
-        <div class="data">
-          <div class="column" ng-repeat="headerFunction in vm.parameters">
-            {{headerFunction(dataPoint)}}
-          </div>
-        </div>  
-        
-        <div class="actions">
-          <!-- CUSTOM ACTIONS -->
-          
-          <div ng-transclude="actions"></div>
-          
-          <!-- DEFAULT ACTIONS -->
-          <button ng-click="editActive = !editActive" class="button button--icon hvr-radial-out">
-            <i class="fa fa-lg fa-pencil"></i>
-          </button>
-          <button class="button button--icon hvr-radial-out">
-            <i class="fa fa-lg fa-times"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="row row--edit">
-        <edit-one yaml="{{vm.yaml}}"> </edit-one>
-      </div>
-
-    </div>
-
-
-
-  </div>
-
-
+    <tbody>
+      <tr ng-repeat="dataPoint in vm.data">
+        <td ng-repeat="columnContent in dataPoint.reduced">{{columnContent}}</td>
+        <td>
+          zeh actions
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
