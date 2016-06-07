@@ -14,6 +14,10 @@
           resource: '@',
           parameters: '='
       },
+      transclude: {
+        'actions': '?actions',
+        'datapoints': '?datapoints'
+      },
       controller: ReadAllTableController,
       controllerAs: 'vm',
       bindToController: true,
@@ -32,9 +36,6 @@
 
       var vm = this;
       vm.editActive = false;
-
-
-
 
       var baseUrl = 'http://192.168.99.100:8080/api/v1/';
       getResults(vm.resource || 'deployments');

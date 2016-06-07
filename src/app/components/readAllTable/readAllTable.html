@@ -24,6 +24,11 @@
         </div>  
         
         <div class="actions">
+          <!-- CUSTOM ACTIONS -->
+          
+          <div ng-transclude="actions"></div>
+          
+          <!-- DEFAULT ACTIONS -->
           <button ng-click="editActive = !editActive" class="button button--icon hvr-radial-out">
             <i class="fa fa-lg fa-pencil"></i>
           </button>

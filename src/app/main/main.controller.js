@@ -12,7 +12,6 @@
 
     var baseUrl = 'http://192.168.99.100:8080/api/v1/';
 
-
     var resources = {
       deployments: {
         actions: ['create', 'readAll', 'read', 'update', 'delete'],
@@ -32,14 +31,14 @@
       }
     }
 
-
-
-
     var resourceParameters = resources[$stateParams.resource || 'deployments'];
     console.log(resourceParameters);
     if(resourceParameters) {
       vm.params = resourceParameters.parameters.readAll;
       vm.resource = $stateParams.resource;
+      vm.actions = resourceParameters.parameters.actions;
+
+
     } else {
       console.error('The resource ['+[$stateParams.resource]+'] has not been defined in the config file. Please add it.');
     }
