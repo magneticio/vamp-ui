@@ -1,3 +1,17 @@
+$blue:       #14283C;
+$pink:       #FF3775;
+$orange:     #F15A24;
+
+$black:      darken( $blue , 10% );
+
+$blue-light: lighten( $blue , 25% );
+$blue-mid:   #6C8098;
+
+
+@import
+  'components/navigation/navigation',
+  'components/editOne/editOne';​
+
 *,
 *::before,
 *::after {
@@ -15,11 +29,12 @@
     -ms-text-size-adjust: none;
 }
 
-@import 'components/editOne/editOne.scss';​
-
 html {
-    font-size: 10px;
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
 }
 
 .button {
@@ -28,7 +43,7 @@ html {
     background-color: transparent;
     min-height: 3rem;
     cursor: pointer;
-    
+
     border: none;
     border-left: 1px solid black;
     padding: 0 2.5rem;
@@ -55,7 +70,7 @@ html {
 
 .row--table {
     border-bottom: 1px solid black;
-    display: flex;    
+    display: flex;
     position: relative;
     height: 3rem;
 
@@ -121,7 +136,7 @@ html {
 
 .table {
     font-family: 'Muli', sans-serif;
-    
+
     .data {
         display: flex;
         width: 70%;
@@ -142,5 +157,5 @@ html {
 
 // .ace_editor {
 //     width: 100%;
-//     height: 100%; 
+//     height: 100%;
 // }
