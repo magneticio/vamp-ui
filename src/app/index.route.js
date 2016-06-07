@@ -8,11 +8,17 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('home', {
-        url: '/:resource',
-        templateUrl: 'app/main/main.html',
-        controller: 'MainController',
-        controllerAs: 'main'
+      .state('root', {
+        abstract: true,
+        views   : {
+          'navigation' : {
+            controller : 'NavigationController as navigation',
+            templateUrl: 'app/components/navigation/navigation.html'
+          },
+          'main'       : {
+            template   : '<ui-view></ui-view>'
+          }
+        }
       });
 
     $urlRouterProvider.otherwise('/');
