@@ -1,0 +1,5 @@
+<ul>
+  <li ng-repeat="item in navigation.items" ui-sref-active="is-active">
+    <a ui-sref="root.main( { resource: item } )">{{ item }}</a>
+  </li>
+</ul>
