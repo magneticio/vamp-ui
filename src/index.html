@@ -1,43 +1,53 @@
 <!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>RevampUi</title>
+<html ng-app="revampUi">
+  <head>
+    <meta charset="utf-8">
+    <title>revampUi</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+    <!-- font-awesome -->
+    <script src="https://use.fontawesome.com/7e4a388e87.js"></script>
+    <!-- addding ace by hand -->
+    <script src="bower_components/ace-builds/src-min/ace.js"></script>
 
-  <base href="/">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-  {{content-for 'head'}}
+    <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- run `gulp inject` to automatically populate bower styles dependencies -->
+    <!-- endbower -->
+    <!-- endbuild -->
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- build:css({.tmp/serve,src}) styles/app.css -->
+    <!-- inject:css -->
+    <!-- css files will be automatically insert here -->
+    <!-- endinject -->
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="assets/styles/main.css">
+    <div ui-view></div>
 
-  <!-- Service worker support is disabled by default.
-       Install the worker script and uncomment to enable.
-       Only enable service workers in production.
-  <script type="text/javascript">
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/worker.js').catch(function(err) {
-        console.log('Error installing service worker: ', err);
-      });
-    }
-  </script>
-  -->
-</head>
-<body>
-  <vamp-ui-app>Loading...</vamp-ui-app>
+    <!-- build:js(src) scripts/vendor.js -->
+    <!-- bower:js -->
+    <!-- run `gulp inject` to automatically populate bower script dependencies -->
+    <!-- endbower -->
+    <!-- endbuild -->
 
-  <script src="vendor/es6-shim/es6-shim.js"></script>
-  <script src="vendor/reflect-metadata/Reflect.js"></script>
-  <script src="vendor/zone.js/dist/zone.js"></script>
-  <!-- <script src="vendor/systemjs/dist/system-polyfills.js"></script> -->
-  <script src="vendor/systemjs/dist/system.src.js"></script>
+    <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
+    <!-- inject:js -->
+    <!-- js files will be automatically insert here -->
+    <!-- endinject -->
 
-  <script>
-    System.import('system-config.js').then(function () {
-      System.import('main');
-    }).catch(console.error.bind(console));
-  </script>
-</body>
+    <!-- inject:partials -->
+    <!-- angular templates will be automatically converted in js and inserted here -->
+    <!-- endinject -->
+    <!-- endbuild -->
+
+  </body>
 </html>
