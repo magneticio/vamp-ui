@@ -21,7 +21,7 @@
         if(attrs.resource) {
           scope.resource = attrs.resource;
         }
-      
+
       }
     };
 
@@ -37,7 +37,7 @@
 
 
       var baseUrl = 'http://192.168.99.100:8080/api/v1/';
-      getResults(vm.resource);
+      getResults(vm.resource || 'deployments');
 
       function getResults(resource) {
         $http.get(baseUrl + resource).then(function(response) {
@@ -55,7 +55,7 @@
 
       //   vm.data = lol;
       // }, 30000);
-    
+
     }
   }
 
