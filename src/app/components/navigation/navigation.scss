@@ -1,0 +1,26 @@
+.navigation {
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  &__item {
+    display: inline-block;
+
+    &--active .navigation__link {
+      color: $pink;
+    }
+  }
+
+  &__link {
+    color: $black;
+    display: block;
+    padding: 1em;
+    text-decoration: none;
+
+    &:hover {
+      color: $blue;
+    }
+  }
+
+}
