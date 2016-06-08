@@ -45,7 +45,7 @@
           .then(responseHandler, errorHandler)
       },
 
-      get: function(resource) {
+      readAll: function(resource) {
         return $http.get( endpoint + resource )
           .then(responseHandler, errorHandler)
       },

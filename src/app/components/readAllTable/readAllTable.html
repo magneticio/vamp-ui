@@ -2,14 +2,18 @@
   <table class="table" cellspacing="0">
     <thead>
       <tr>
-        <th ng-repeat="headerName in vm.headers">{{headerName}}</th>
+        <th></th>
+        <th ng-repeat="header in vm.headers">{{header.name}}</th>
         <th>Actions</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr ng-repeat="dataPoint in vm.data">
-        <td ng-repeat="columnContent in dataPoint.reduced">{{columnContent}}</td>
+      <tr ng-repeat="dataRow in vm.dataRows">
+        <th><button>See details</button></th>
+        <td ng-repeat="columnContent in dataRow">
+          {{columnContent}}
+        </td>
         <td>
           <div ng-transclude="actions"> </div>
         </td>
