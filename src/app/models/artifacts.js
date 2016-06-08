@@ -15,7 +15,7 @@
     $httpProvider.defaults.headers.common = defaultHeaders;
     $httpProvider.defaults.headers.patch  = defaultHeaders;
     $httpProvider.defaults.headers.post   = defaultHeaders;
-    $httpProvider.defaults.headers.post   = defaultHeaders;
+    $httpProvider.defaults.headers.put    = defaultHeaders;
   }
 
   function Artifacts ($http) {
@@ -39,7 +39,7 @@
         return $http({
             url: endpoint + resource,
             method: 'DELETE',
-            data: data,
+            data: data || '',
             headers: defaultHeaders
           })
           .then(responseHandler, errorHandler)
