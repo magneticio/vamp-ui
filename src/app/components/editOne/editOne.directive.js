@@ -39,10 +39,6 @@
         mode: 'yaml',
         firstLineNumber: 1
       }
-
-      
- 
-    
     }
   }
 
