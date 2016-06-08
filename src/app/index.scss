@@ -1,3 +1,17 @@
+$blue:       #14283C;
+$pink:       #FF3775;
+$orange:     #F15A24;
+
+$black:      darken( $blue , 10% );
+
+$blue-light: lighten( $blue , 25% );
+$blue-mid:   #6C8098;
+
+
+@import
+  'components/navigation/navigation',
+  'components/editOne/editOne';​
+
 *,
 *::before,
 *::after {
@@ -15,11 +29,13 @@
     -ms-text-size-adjust: none;
 }
 
-@import 'components/editOne/editOne.scss','components/readAllTable/readAllTable.scss';​
-
 html {
     font-size: 10px;
     box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
 }
 
 .button {
@@ -28,7 +44,7 @@ html {
     background-color: transparent;
     min-height: 3rem;
     cursor: pointer;
-    
+
     border: none;
     border-left: 1px solid black;
     padding: 0 2.5rem;
