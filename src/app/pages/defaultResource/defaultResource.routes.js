@@ -8,10 +8,10 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('root.main', {
+      .state('root.default', {
         url: '/:resource',
-        templateUrl: 'app/main/main.html',
-        controller: 'MainController as main',
+        templateUrl: 'app/pages/defaultResource/defaultResource.html',
+        controller: 'DefaultResourceController as main',
       });
 
     $urlRouterProvider.otherwise('/');
