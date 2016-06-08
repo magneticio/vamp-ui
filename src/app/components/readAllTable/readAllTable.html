@@ -1,54 +1,23 @@
-<div class="eaa">
-  <div class="table">
-    <div class="row row--table row--table-head">
-
-      <input type="text" ng-model="dataFilter">
-
-    </div>
-
-    <div class="row row--table row--table-head">
-      <div class="data">
-        <div class="column" ng-repeat="(headerName, headerFunction) in vm.parameters">
-          {{headerName}}
-        </div>
-      </div>
-      <div class="actions">
-
-      </div>
-    </div>
-
-    <div  id="{{dataPoint.name}}"
-          class="row row--table row--table--content"
-          ng-repeat="dataPoint in vm.data | keySearch:'name':dataFilter track by dataPoint.name"
-          ng-class="{'edit-active': editActive}"
-          ng-animate-disable>
-
-      <div class="row row--data">
-        <div class="data">
-          <div class="column" ng-repeat="headerFunction in vm.parameters">
-            {{headerFunction(dataPoint)}}
-          </div>
-        </div>
-
-        <div class="actions">
-          <button ng-click="editActive = !editActive" class="button button--icon hvr-radial-out">
-            <i class="fa fa-lg fa-pencil"></i>
-          </button>
-          <button class="button button--icon hvr-radial-out">
-            <i class="fa fa-lg fa-times"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="row row--edit">
-        <edit-one yaml="{{vm.yaml}}"> </edit-one>
-      </div>
-
-    </div>
-
-
-
+<div class="read-all-table">
+  <div class="table__filter">
+    <input type="text" ng-model="dataFilter">
   </div>
 
+  <table class="table" cellspacing="0">
+    <thead>
+      <tr>
+        <th ng-repeat="headerName in vm.headers">{{headerName}}</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
 
+    <tbody>
+      <tr ng-repeat="dataPoint in vm.data | keySearch:'name':dataFilter track by dataPoint.name">
+        <td ng-repeat="columnContent in dataPoint.reduced">{{columnContent}}</td>
+        <td>
+          <div ng-transclude="actions"> </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

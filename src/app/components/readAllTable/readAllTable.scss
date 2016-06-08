@@ -1,0 +1,19 @@
+.read-all-table {
+    .table {
+        width: 100%;
+        font-family: 'Muli', sans-serif;
+
+        th {
+            text-align: left;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(black, 0.3);
+            padding: 0.6rem 0.4rem;
+        }
+
+        td {
+            padding: 1.2rem 0.4rem;
+            border-bottom: 1px solid rgba(black, 0.3);
+        }
+    }
+}
