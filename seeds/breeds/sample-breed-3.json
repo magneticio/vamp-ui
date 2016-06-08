@@ -1,0 +1,12 @@
+{
+    "name": "furry-robot:0.3.8",
+    "deployable": "magneticio/furry-robot:0.3.8",
+    "ports": {
+        "port": "80/http"
+    },
+    "environment_variables": {},
+    "constants": {
+        "FUR": "SO MUCH"
+    },
+    "dependencies": {}
+}
