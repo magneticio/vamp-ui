@@ -11,7 +11,12 @@
       <tr ng-repeat="dataPoint in vm.data">
         <td ng-repeat="columnContent in dataPoint.reduced">{{columnContent}}</td>
         <td>
-          zeh actions
+          <button>
+            Edit
+          </button>
+          <button>
+            Remove
+          </button>
         </td>
       </tr>
     </tbody>

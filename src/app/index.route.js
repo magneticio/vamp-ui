@@ -14,7 +14,7 @@
         controller: 'DefaultResource',
         controllerAs: 'main'
       })
-
+      
     $urlRouterProvider.otherwise('/');
   }
 
