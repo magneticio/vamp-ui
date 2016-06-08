@@ -11,12 +11,7 @@
       <tr ng-repeat="dataPoint in vm.data">
         <td ng-repeat="columnContent in dataPoint.reduced">{{columnContent}}</td>
         <td>
-          <button>
-            Edit
-          </button>
-          <button>
-            Remove
-          </button>
+          <div ng-transclude="actions"> </div>
         </td>
       </tr>
     </tbody>

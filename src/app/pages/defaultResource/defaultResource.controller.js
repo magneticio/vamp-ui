@@ -3,10 +3,10 @@
 
   angular
     .module('revampUi')
-    .controller('DefaultResource', DefaultResource);
+    .controller('DefaultResourceController', DefaultResourceController);
 
   /** @ngInject */
-  function DefaultResource($http, $stateParams) {
+  function DefaultResourceController($http, $stateParams) {
     var vm = this;
 
 
