@@ -41,8 +41,11 @@
 
       function getResults(resource) {
         $http.get(baseUrl + resource).then(function(response) {
-          console.log( response );
-          vm.yaml = YAML.stringify(response.data, 8);
+          // is response.data[0] the desired variable here? It seems like we
+          // should get the YAML for each of the results instead of the first
+          // also, we should use the Artifact resource here instead of a custom
+          // $http call
+          vm.yaml = YAML.stringify(response.data[0], 8);
           vm.data = response.data;
           console.log(vm.data);
         }, function(response){

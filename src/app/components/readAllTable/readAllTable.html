@@ -1,7 +1,9 @@
 <div class="eaa">
   <div class="table">
     <div class="row row--table row--table-head">
-      <input type="text" ng-model="dataFilter.name">
+
+      <input type="text" ng-model="dataFilter">
+
     </div>
 
     <div class="row row--table row--table-head">
@@ -17,8 +19,9 @@
 
     <div  id="{{dataPoint.name}}"
           class="row row--table row--table--content"
-          ng-repeat="dataPoint in data = vm.data | filter:dataFilter"
-          ng-class="{'edit-active': editActive}">
+          ng-repeat="dataPoint in vm.data | keySearch:'name':dataFilter track by dataPoint.name"
+          ng-class="{'edit-active': editActive}"
+          ng-animate-disable>
 
       <div class="row row--data">
         <div class="data">
