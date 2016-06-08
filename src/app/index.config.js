@@ -3,6 +3,18 @@
 
   angular
     .module('revampUi')
+    .constant('artifactsConfig', {
+      breeds     : false,
+      blueprints : true,
+      deployments: true,
+      escalations: false,
+      events     : false,
+      filter     : false,
+      gateways   : true,
+      scales     : false,
+      slas       : false,
+      workflow   : false
+    })
     .config(config);
 
   /** @ngInject */
