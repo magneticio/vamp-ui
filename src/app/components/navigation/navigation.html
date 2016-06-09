@@ -1,5 +1,5 @@
 <ul class="navigation">
   <li ng-repeat="item in navigation.items" ui-sref-active="navigation__item--active" class="navigation__item">
-    <a class="navigation__link" ui-sref="root.main( { resource: item } )">{{ item }}</a>
+    <a class="navigation__link" ui-sref="root.readall({resource: item})">{{ item }}</a>
   </li>
 </ul>

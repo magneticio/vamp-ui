@@ -1,11 +1,19 @@
 .navigation {
+  height: 6rem;
+  border-bottom: 1px solid $black;
 
   list-style: none;
   margin: 0;
   padding: 0;
 
+  display: flex;
+
+
   &__item {
-    display: inline-block;
+    display: block;
+    height: 100%;
+    
+    position: relative;
 
     &--active .navigation__link {
       color: $pink;
@@ -13,13 +21,24 @@
   }
 
   &__link {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1.8rem;
+    
+    padding: 0 1em;
+
     color: $black;
-    display: block;
-    padding: 1em;
     text-decoration: none;
 
+    cursor: pointer;
+
     &:hover {
-      color: $blue;
+      color: $pink;
     }
   }
 
