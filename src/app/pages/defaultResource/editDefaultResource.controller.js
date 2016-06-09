@@ -6,16 +6,36 @@
     .controller('EditDefaultResourceController', EditDefaultResourceController);
 
   /** @ngInject */
-  function EditDefaultResourceController($http, $stateParams) {
+  function EditDefaultResourceController($http, $stateParams, Artifacts) {
     var vm = this;
-    vm.resource = $stateParams.resource;
-    
+    vm.update = update;
+    vm.singularResource = $stateParams.resource.slice(0, -1);
 
+    console.log($stateParams);
 
-    var baseUrl = 'http://192.168.99.100:8080/api/v1/';
-    
-    vm.resource = $stateParams.resource;
+    Artifacts.read($stateParams.resource, $stateParams.id).then(success, function(){});
 
-    vm.test = 'test';
+    function success(data) {
+      vm.name = data.name;
+      vm.sourceCode = buildYaml(data);
+    }
+
+    function buildYaml(data) {
+      return YAML.stringify(data, 8);
+    }
+
+    function update(data) {
+      var jsonData = YAML.parse(data);
+      Artifacts.update($stateParams.resource, $stateParams.id, jsonData).then(editSuccess, editError);
+
+      function editSuccess(data) {
+        console.log(data);
+      }
+
+      function editError(data) {
+        console.log(error);
+      }
+    }
+  
   }
 })();

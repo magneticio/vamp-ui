@@ -11,19 +11,13 @@
       restrict: 'E',
       templateUrl: 'app/components/editOne/editOne.html',
       scope: {
-          resource: '@',
-          yaml: '@'
+          sourceCode: '@',
+          editAction: '&'
       },
       controller: EditOneController,
       controllerAs: 'vm',
       bindToController: true,
-      replace: true,
-      link: function(scope, element, attrs) {
-        if(attrs.resource) {
-          scope.resource = attrs.resource;
-        }
-      
-      }
+      replace: true
     };
 
     return directive;
@@ -32,6 +26,8 @@
     function EditOneController($http, $interval) {
 
       var vm = this;
+      vm.edit = edit;
+
       vm.aceOptions = {
         useWrapMode : true,
         showGutter: true,
@@ -39,6 +35,11 @@
         mode: 'yaml',
         firstLineNumber: 1
       }
+
+      function edit(data) {
+        vm.editAction({data: data});
+      }
+
     }
   }
 

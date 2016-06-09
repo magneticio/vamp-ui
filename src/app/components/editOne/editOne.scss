@@ -1,35 +1,18 @@
 .edit-one {
-    width: 100%;
-    height: 100%;
-
-    position: relative;
+    height: 500rem;
 
     .ide {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 3rem;
-        background-color: black;
+        width: 100%;
+        height: 80%;
     }
 
     .ace_editor {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 3rem;
-        right: 0;
+        height: 10%;
     }
 
     .row-buttons {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 3rem;
-
-        // width: 100%;
-        display: flex;
-        justify-content: flex-end;
+        height: 4rem;
+        align-self: flex-end;
     }
+
 }

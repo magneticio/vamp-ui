@@ -14,9 +14,9 @@
         controller: 'DefaultResourceController as main',
       })
       .state('root.update', {
-        url: '/:resource/:name/edit',
+        url: '/:resource/:id/edit',
         templateUrl: 'app/pages/defaultResource/editDefaultResource.html',
-        controller: 'EditDefaultResourceController as edit',
+        controller: 'EditDefaultResourceController as editResource',
 
       });
 

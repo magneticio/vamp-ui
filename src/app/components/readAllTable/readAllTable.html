@@ -10,12 +10,18 @@
 
     <tbody>
       <tr ng-repeat="dataRow in vm.dataRows">
-        <th><button>See details</button></th>
+        <th><button>See details</button>
+        </th>
         <td ng-repeat="columnContent in dataRow">
           {{columnContent}}
         </td>
         <td>
           <div ng-transclude="actions"> </div>
+          
+          <button class="edit" ui-sref="root.update({resource: vm.resource, id: dataRow.name})">
+            Edit
+          </button>
+
         </td>
       </tr>
     </tbody>
