@@ -1,1 +1,15 @@
-<edit-one> </edit-one>
+<div class="edit-default">
+    <div class="info">
+        <h1 class="title">
+            Edit a {{editResource.singularResource}}
+        </h1>
+        <h2>
+            {{editResource.singularResource}}:&nbsp;{{editResource.name}}
+        </h2>
+    </div>
+
+    <edit-one class="edit-one"
+        source-code="{{editResource.sourceCode}}"
+        edit-action="editResource.update(data)"> 
+    </edit-one>
+</div>

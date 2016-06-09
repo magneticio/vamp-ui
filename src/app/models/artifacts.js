@@ -48,10 +48,15 @@
       readAll: function(resource) {
         return $http.get( endpoint + resource )
           .then(responseHandler, errorHandler)
+      },      
+
+      read: function(resource, id) {
+        return $http.get( endpoint + resource + '/' + id)
+          .then(responseHandler, errorHandler)
       },
 
-      update: function(resource, data) {
-        return $http.put( endpoint + resource , data )
+      update: function(resource, id, data) {
+        return $http.put( endpoint + resource + '/' + id, data )
           .then(responseHandler, errorHandler)
       }
     }
