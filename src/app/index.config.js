@@ -7,7 +7,7 @@
       breeds     : true,
       blueprints : true,
       deployments: true,
-      escalations: true,
+      escalations: false,
       events     : true,
       filter     : true,
       gateways   : true,
