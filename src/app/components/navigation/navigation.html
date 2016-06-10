@@ -1,5 +1,18 @@
-<ul class="navigation">
-  <li ng-repeat="item in navigation.items" ui-sref-active="navigation__item--active" class="navigation__item">
-    <a class="navigation__link" ui-sref="root.readall({resource: item})">{{ item }}</a>
-  </li>
-</ul>
+<div class="navigation">
+    <div class="logo">
+        <img src="/assets/images/logo.svg" alt="Vamp.io logo" class="logo__image">
+    </div>
+
+    <ul class="navigation-items">
+      <li class="navigation-items__item"
+        ng-repeat="item in navigation.items" 
+        ui-sref-active="navigation-items__item--active">
+
+        <a class="navigation-items__link" 
+            ui-sref="root.readall({resource: item})">
+            {{ item }}
+        </a>
+
+      </li>
+    </ul>
+</div>
