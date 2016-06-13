@@ -4,16 +4,17 @@
   angular
     .module('revampUi')
     .constant('artifactsConfig', {
-      breeds     : true,
-      blueprints : true,
-      deployments: true,
-      escalations: true,
-      events     : true,
-      filter     : true,
-      gateways   : true,
-      scales     : true,
-      slas       : true,
-      workflow   : true
+      deployments          : true,
+      gateways             : true,
+      blueprints           : true,
+      breeds               : true,
+      workflows            : true,
+      "scheduled-workflows": true,
+      filters              : true,
+      scales               : true,
+      slas                 : false,
+      escalations          : false,
+      events               : false
     })
     .config(config);
 
