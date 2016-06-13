@@ -20,10 +20,8 @@
           {{columnContent}}
         </td>
         
-        <td>
-          <div ng-transclude="actions"> </div>
-          
-          <button class="button edit" ui-sref="root.update({resource: vm.resource, id: dataRow.name})">
+        <td>          
+          <button class="button edit" ng-click="vm.editPressed(dataRow.name)">
             <i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit
           </button>
 
