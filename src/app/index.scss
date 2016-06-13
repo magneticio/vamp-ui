@@ -7,6 +7,7 @@ $blue-light: lighten( $blue , 25% );
 $blue-mid:   #6C8098;
 
 $light-grey: #485365;
+$dark-grey: #313746;
 
 
 @import
@@ -44,7 +45,7 @@ body {
 }
 
 .main {
-    height: 90vh;
+    height: 100vh;
 }
 
 
