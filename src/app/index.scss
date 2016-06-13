@@ -15,7 +15,8 @@ $dark-grey: #313746;
   'components/editOne/editOne',
   'components/readAllTable/readAllTable',
   'pages/defaultResource/defaultResource',
-  'components/navigation/navigation';​
+  'components/navigation/navigation',
+  'components/readAllBlueprintsPanels/readAllBlueprintsPanels';​
 
 *,
 *::before,
@@ -58,9 +59,15 @@ body {
     background-color: $pink;
     color: white;
     font-weight: 300;
+    cursor: pointer;
 
     .fa {
         margin-left: -8px;
         font-size: 1.2rem;
+    }
+
+    &--ghost {
+      background-color: transparent;
+      border: 1px solid rgba(white, 0.7);
     }
 }
