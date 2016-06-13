@@ -11,7 +11,7 @@
       .state('root.readall', {
         url: '/:resource',
         templateUrl: 'app/pages/defaultResource/defaultResource.html',
-        controller: 'DefaultResourceController as main',
+        controller: 'DefaultResourceController as readAllResource',
       })
       .state('root.update', {
         url: '/:resource/:id/edit',

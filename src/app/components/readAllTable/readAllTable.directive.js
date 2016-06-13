@@ -11,11 +11,8 @@
       restrict: 'E',
       templateUrl: 'app/components/readAllTable/readAllTable.html',
       scope: {
-          resource: '@'      
-      },
-      transclude: {
-        'actions': '?actions',
-        'datapoints': '?datapoints'
+          data: '=',
+          editButtonPressed: '&'
       },
       controller: ReadAllTableController,
       controllerAs: 'vm',
@@ -31,20 +28,27 @@
     return directive;
 
     /** @ngInject */
-    function ReadAllTableController($http, $interval, Artifacts) {
+    function ReadAllTableController($scope, $interval, Artifacts) {
 
       var vm = this;
-      vm.editActive = false;
       vm.headers = {};
       vm.dataRows = {};
+      vm.editPressed = editPressed;
 
-      Artifacts.readAll(vm.resource).then(transformResult,function(test){});
 
-      function transformResult(data) {
-        vm.headers = createHeaders(data);
-        vm.dataRows = createDataRows(data);
-        console.log(vm.dataRows);
-      };
+      function editPressed(id) {
+        vm.editButtonPressed({id:id});
+      }
+
+
+      $scope.$watch('vm.data', dataChanged, true);
+
+      function dataChanged(changedData) {
+        if(changedData && !_.isEmpty(changedData)) {
+          vm.headers = createHeaders(changedData);
+          vm.dataRows = createDataRows(changedData);
+        }
+      }
 
       function createHeaders(data) {
         var headers = {};
