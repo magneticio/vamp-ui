@@ -1,15 +1,13 @@
-<div class="test">
-  <read-all-table 
-    parameters="main.params" 
-    resource="{{main.resource}}"> 
-        <actions> 
-<!--             <button>
-                Edit
-            </button>
-            <button >
-                Remove
-            </button> -->
-        </actions>
-
-  </read-all-table>
+<div class="page show-all-default">
+    <div class="info">
+        <h1 class="title">
+            {{readAllResource.resourceName}}
+        </h1>
+    </div>
+    
+    <read-all-table class="edit-one"
+        data="readAllResource.data"
+        edit-button-pressed="readAllResource.editButtonPressed(id)"
+        > 
+    </read-all-table>
 </div>

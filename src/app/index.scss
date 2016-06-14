@@ -3,9 +3,11 @@ $pink:       #FF3775;
 $orange:     #F15A24;
 
 $black:      darken( $blue , 10% );
-
 $blue-light: lighten( $blue , 25% );
 $blue-mid:   #6C8098;
+
+$light-grey: #485365;
+$dark-grey: #313746;
 
 
 @import
@@ -13,7 +15,8 @@ $blue-mid:   #6C8098;
   'components/editOne/editOne',
   'components/readAllTable/readAllTable',
   'pages/defaultResource/defaultResource',
-  'components/navigation/navigation';​
+  'components/navigation/navigation',
+  'components/readAllBlueprintsPanels/readAllBlueprintsPanels';​
 
 *,
 *::before,
@@ -43,30 +46,28 @@ body {
 }
 
 .main {
-    height: 90vh;
+    height: 100vh;
 }
 
+
 .button {
-    padding: 0;
-    margin: 0;
-    background-color: transparent;
-    min-height: 3rem;
+    height: 2.6rem;
+    min-width: 10rem;
+    border-radius: 2.6rem;
+    font-size: 1.4rem;
+    border: none;
+    background-color: $pink;
+    color: white;
+    font-weight: 300;
     cursor: pointer;
 
-    border: none;
-    border-left: 1px solid black;
-    padding: 0 2.5rem;
+    .fa {
+        margin-left: -8px;
+        font-size: 1.2rem;
+    }
 
-    font-size: 0.8rem;
-
-    &.button--icon {
-        padding: 0;
-        height: 3rem;
-        width: 3rem;
-
-        .fa {
-            color: rgba(black, 0.5);
-            line-height: 0.5;
-        }
+    &--ghost {
+      background-color: transparent;
+      border: 1px solid rgba(white, 0.7);
     }
 }

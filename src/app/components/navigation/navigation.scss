@@ -1,6 +1,5 @@
 .navigation {
-  height: 6rem;
-  border-bottom: 1px solid $black;
+  height: 5.6rem;
 
   list-style: none;
   margin: 0;
@@ -8,38 +7,51 @@
 
   display: flex;
 
+  overflow: hidden;
+}
 
+.logo {
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+
+
+  &__image {
+    height: 40%;
+    margin-top: 0.7rem;
+  }
+}
+
+.navigation-items {
+  width: 80%; //temp
+  height: 100%;
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+ 
   &__item {
     display: block;
     height: 100%;
-    
-    position: relative;
-
-    &--active .navigation__link {
-      color: $pink;
-    }
   }
 
   &__link {
+    display: block;
     height: 100%;
-    width: 100%;
-
+    padding: 0 2rem;
     display: flex;
-    justify-content: center;
     align-items: center;
-
-    font-size: 1.8rem;
-    
-    padding: 0 1em;
-
-    color: $black;
+    justify-content: center;
     text-decoration: none;
-
-    cursor: pointer;
-
-    &:hover {
-      color: $pink;
-    }
+    color: $black;
+    font-size: 1.4rem;
+    text-transform: capitalize;
+    line-height: 1;
   }
-
 }
+
+
