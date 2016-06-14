@@ -7,7 +7,10 @@
 
   /** @ngInject */
   function DefaultResourceController($state, $stateParams, Artifacts) {
+    console.info( 'Initiated DefaultResourceController' );
+
     var vm = this;
+
     vm.data = {};
     vm.resourceName = $stateParams.resource;
     vm.editButtonPressed = editButtonPressed;
