@@ -11,9 +11,9 @@
     vm.update = update;
     vm.singularResource = $stateParams.resource.slice(0, -1);
 
-    console.log($stateParams);
-
-    Artifacts.read($stateParams.resource, $stateParams.id).then(success, function(){});
+    if($stateParams.resource && $stateParams.resource !== '' && $stateParams.id && $stateParams.id) {
+      Artifacts.read($stateParams.resource, $stateParams.id).then(success, function(){});
+    }
 
     function success(data) {
       vm.name = data.name;

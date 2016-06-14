@@ -1,8 +1,4 @@
 <div class="read-all-table">
-  <div class="table__filter">
-    <input type="text" ng-model="dataFilter">
-  </div>
-
   <table class="table" cellspacing="0">
     <thead>
       <tr>
@@ -20,11 +16,9 @@
           {{columnContent}}
         </td>
         
-        <td>
-          <div ng-transclude="actions"> </div>
-          
-          <button class="edit" ui-sref="root.update({resource: vm.resource, id: dataRow.name})">
-            Edit
+        <td>          
+          <button class="button edit" ng-click="vm.editPressed(dataRow.name)">
+            <i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit
           </button>
 
         </td>
