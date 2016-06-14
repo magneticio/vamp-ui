@@ -19,6 +19,10 @@
     
         &:hover {
             box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
+            .panel__header {
+                background-color: $orange;
+            }
         }
 
         &__header {
@@ -26,7 +30,8 @@
             padding: 0 1rem;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid rgba(white, 0.1);
+            background-color: rgba($orange, 0.7);
+            transition: background-color 0.2s ease-out;
 
             .fa {
                 line-height: 1;
