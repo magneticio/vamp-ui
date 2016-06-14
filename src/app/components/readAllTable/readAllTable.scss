@@ -18,7 +18,7 @@
     // vertical-align: top;
   }
 
-  tr:hover {
+  tbody > tr:hover {
     background-color: rgba($blue-light,0.1);
   }
 
