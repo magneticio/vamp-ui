@@ -15,8 +15,8 @@
       })
       .state('root.detail', {
         url: '/:resource/:id',
-        templateUrl: 'app/pages/defaultResource/editDefaultResource.html',
-        controller: 'EditDefaultResourceController as editResource',
+        templateUrl: 'app/pages/defaultResource/detailDefaultResource.html',
+        controller: 'DetailDefaultResourceController as detailResource',
       })
       .state('root.update', {
         url: '/:resource/:id/edit',
