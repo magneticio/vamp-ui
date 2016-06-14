@@ -13,11 +13,15 @@
         templateUrl: 'app/pages/defaultResource/defaultResource.html',
         controller: 'DefaultResourceController as readAllResource',
       })
+      .state('root.detail', {
+        url: '/:resource/:id',
+        templateUrl: 'app/pages/defaultResource/editDefaultResource.html',
+        controller: 'EditDefaultResourceController as editResource',
+      })
       .state('root.update', {
         url: '/:resource/:id/edit',
         templateUrl: 'app/pages/defaultResource/editDefaultResource.html',
         controller: 'EditDefaultResourceController as editResource',
-
       });
 
     $urlRouterProvider.otherwise('/');
