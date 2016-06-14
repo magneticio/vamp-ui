@@ -1,12 +1,12 @@
 <div id="blueprints-panels" class="panels">
-    <div class="panel" ng-repeat="blueprint in vm.data">
+    <div class="panel" ng-repeat="blueprint in vm.data track by blueprint.name">
         <div class="panel__header">
             <i class="fa fa-lg fa-file-text-o"></i>&nbsp;&nbsp;
-            <h2 class="title">{{blueprint.name}}</h2>    
+            <h2 class="title">{{blueprint.name}}</h2>
         </div>
         <div class="panel__content">
             <div class="subheader">
-                This blueprint describes: 
+                This blueprint describes:
             </div>
             <div class="data-points">
                 <div class="data-point">
