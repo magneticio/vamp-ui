@@ -1,28 +1,23 @@
-<div class="read-all-table">
-  <table class="table" cellspacing="0">
-    <thead>
-      <tr>
-        <th></th>
-        <th ng-repeat="header in vm.headers">{{header.name}}</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
+<table class="read-all-table" cellspacing="0">
+  <thead>
+    <tr>
+      <th ng-repeat="header in vm.headers">{{header.name}}</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
 
-    <tbody>
-      <tr ng-repeat="dataRow in vm.dataRows">
-        <th><button>See details</button>
-        </th>
-        <td ng-repeat="columnContent in dataRow">
-          {{columnContent}}
-        </td>
-        
-        <td>          
-          <button class="button edit" ng-click="vm.editPressed(dataRow.name)">
-            <i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit
-          </button>
+  <tbody>
+    <tr ng-repeat="dataRow in vm.dataRows" ui-sref="root.detail({resource: vm.resource, id: columnContent})">
+      <td ng-repeat="(columnKey , columnContent) in dataRow"
+          ng-class="'read-all-table__' + columnKey">
+        {{columnContent}}
+      </td>
 
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+      <td class="read-all-table__actions">
+        <button class="button edit" ng-click="vm.editPressed(dataRow.name)">
+          <i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
