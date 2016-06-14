@@ -48,10 +48,19 @@
       readAll: function(resource) {
         return $http.get( endpoint + resource )
           .then(responseHandler, errorHandler)
-      },      
+      },
 
       read: function(resource, id) {
         return $http.get( endpoint + resource + '/' + id)
+          .then(responseHandler, errorHandler)
+      },
+
+      readYAML: function(resource, id) {
+        var httpConfig = {
+          headers: { 'Accept' : 'application/x-yaml' }
+        }
+
+        return $http.get( endpoint + resource + '/' + id , httpConfig )
           .then(responseHandler, errorHandler)
       },
 

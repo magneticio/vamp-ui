@@ -12,7 +12,7 @@
     vm.singularResource = vm.resourceName.slice(0, -1);
 
     if( $stateParams.resource && $stateParams.id ) {
-      Artifacts.read($stateParams.resource, $stateParams.id).then(success, function(){});)
+      Artifacts.readYAML($stateParams.resource, $stateParams.id).then(success, function(){});
     }
 
     function success(data) {
