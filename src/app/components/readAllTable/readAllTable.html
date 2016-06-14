@@ -7,8 +7,8 @@
   </thead>
 
   <tbody>
-    <tr ng-repeat="dataRow in vm.dataRows" ui-sref="root.detail({resource: vm.resource, id: dataRow.name})">
-      <td ng-repeat="(columnKey , columnContent) in dataRow"
+    <tr ng-repeat="dataRow in vm.dataRows track by dataRow.name" ui-sref="root.detail({resource: vm.resource, id: dataRow.name})">
+      <td ng-repeat="(columnKey , columnContent) in dataRow track by $index"
           ng-class="'read-all-table__' + columnKey">
         {{columnContent}}
       </td>
