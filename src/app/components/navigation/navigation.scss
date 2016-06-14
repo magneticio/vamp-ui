@@ -1,26 +1,57 @@
 .navigation {
+  height: 5.6rem;
 
   list-style: none;
   margin: 0;
   padding: 0;
 
-  &__item {
-    display: inline-block;
+  display: flex;
 
-    &--active .navigation__link {
-      color: $pink;
-    }
+  overflow: hidden;
+}
+
+.logo {
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+
+
+  &__image {
+    height: 40%;
+    margin-top: 0.7rem;
+  }
+}
+
+.navigation-items {
+  width: 80%; //temp
+  height: 100%;
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+ 
+  &__item {
+    display: block;
+    height: 100%;
   }
 
   &__link {
-    color: $black;
     display: block;
-    padding: 1em;
+    height: 100%;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-
-    &:hover {
-      color: $blue;
-    }
+    color: $black;
+    font-size: 1.4rem;
+    text-transform: capitalize;
+    line-height: 1;
   }
-
 }
+
+

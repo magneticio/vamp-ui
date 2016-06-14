@@ -8,10 +8,16 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('root.default', {
-        url: '/:resource',
+      .state('root.readall', {
+        url: ':resource',
         templateUrl: 'app/pages/defaultResource/defaultResource.html',
-        controller: 'DefaultResourceController as main',
+        controller: 'DefaultResourceController as readAllResource',
+      })
+      .state('root.update', {
+        url: ':resource/:id/edit',
+        templateUrl: 'app/pages/defaultResource/editDefaultResource.html',
+        controller: 'EditDefaultResourceController as editResource',
+
       });
 
     $urlRouterProvider.otherwise('/');

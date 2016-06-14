@@ -1,0 +1,207 @@
+#blueprints-panels {
+    padding: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+
+    .panel {
+        width: 30rem;
+        margin: 0 1rem;
+
+        background-color: yellow;
+        overflow: hidden;
+        background-color: rgba(white, 0.1);
+        border-radius: 2px;
+
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+        position: relative;
+    
+        &:hover {
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
+            .panel__header {
+                background-color: $orange;
+            }
+        }
+
+        &__header {
+            width: 100%;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            background-color: rgba($orange, 0.7);
+            transition: background-color 0.2s ease-out;
+
+            .fa {
+                line-height: 1;
+                color: white;
+            }
+
+            .title {
+                color: white;
+                font-size: 1.4rem;
+                font-weight: lighter;
+            }
+        }
+
+        &__content {
+            padding: 1rem 1rem 7.6rem 1rem;
+            display: flex;
+            flex-direction: column;
+
+            .subheader {
+                text-align: center;
+                margin: 1rem 0 2rem 0;
+                color: rgba(white, 0.7);
+                font-size: 1.4rem;
+                font-weight: 100;
+            }
+
+            .data-points {
+                width: 100%;
+                display: flex;
+                justify-content: space-around;
+            }
+
+            .data-point {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                .circle {
+                    border-radius: 50%;
+                    width: 6rem;
+                    height: 6rem;
+                    background-color: rgba(black, 0.3);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .number {
+                    font-size: 4rem;
+                    color: rgba(white, 0.7);
+                }
+
+                .label {
+                    margin: 1rem;
+                    color: rgba(white, 0.7);
+                }
+            }
+        }
+        
+        &__footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid rgba(white, 0.1);
+            .button {
+                margin: 0 0.5rem;
+                &:last-of-type {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+
+    .panel--create-new {
+            border: 1px dashed rgba(black, 0.3);
+            box-shadow: none;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            transition: 0.2s all ease-in;
+
+            .text {
+                padding: 0;
+                margin: 0;
+                line-height: 1;
+                font-size: 2rem;
+                font-weight: lighter;
+                color: rgba(black, 0.3);
+            }
+
+            .options {
+                width: 80%;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                opacity: 0;
+                margin-top: -8rem;
+                transition: 0.2s all ease-out;
+
+
+
+                .option {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    cursor: pointer;
+
+
+
+                    &__text {
+                        color: rgba(black, 0.3);
+                        font-size: 0.8;
+                    }
+
+                    &:hover {                        
+                        .circle {
+                            background-color: rgba($orange, 0.7);
+                            .fa {
+                                color: rgba(white, 0.7);
+                            }
+                        }
+
+                        .option__text {
+                            color: rgba($orange, 0.7);
+                        }
+                    }
+                }
+            }
+
+            .circle {
+                width: 5rem;
+                height: 5rem;
+                background-color: rgba(black, 0.3);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50%;
+                margin-top: 2.5rem;
+
+                .fa {
+                    font-size: 2rem;
+                    line-height: 1;
+                    color: $dark-grey;
+                    transition: 0.2s all ease-in-out;
+                }
+            }
+
+            &:hover {
+                border-color: rgba($orange, 0.7);
+                box-shadow: none;
+
+                .options {
+                    opacity: 1;
+                    margin-top: 0;
+                }
+
+                .text {
+                    color: rgba($orange, 0.7);
+                }
+
+
+            }
+        }
+}

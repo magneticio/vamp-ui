@@ -6,14 +6,21 @@
     .controller('DefaultResourceController', DefaultResourceController);
 
   /** @ngInject */
-  function DefaultResourceController($http, $stateParams) {
+  function DefaultResourceController($state, $stateParams, Artifacts) {
     var vm = this;
+    vm.data = {};
+    vm.resourceName = $stateParams.resource;
+    vm.editButtonPressed = editButtonPressed;
 
+    Artifacts.readAll(vm.resourceName).then(success, function(){});
 
-    var baseUrl = 'http://192.168.99.100:8080/api/v1/';
-    
-    vm.resource = $stateParams.resource;
+    function success(data) {
+      vm.data = data;
+    }
 
-    vm.test = 'test';
+    function editButtonPressed(id) {
+      $state.go('root.update', {resource: vm.resourceName, id: id});
+    }
+
   }
 })();

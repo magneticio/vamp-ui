@@ -1,21 +1,26 @@
 <div class="read-all-table">
-  <div class="table__filter">
-    <input type="text" ng-model="dataFilter">
-  </div>
-
   <table class="table" cellspacing="0">
     <thead>
       <tr>
-        <th ng-repeat="headerName in vm.headers">{{headerName}}</th>
+        <th></th>
+        <th ng-repeat="header in vm.headers">{{header.name}}</th>
         <th>Actions</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr ng-repeat="dataPoint in vm.data | keySearch:'name':dataFilter track by dataPoint.name">
-        <td ng-repeat="columnContent in dataPoint.reduced">{{columnContent}}</td>
-        <td>
-          <div ng-transclude="actions"> </div>
+      <tr ng-repeat="dataRow in vm.dataRows">
+        <th><button>See details</button>
+        </th>
+        <td ng-repeat="columnContent in dataRow">
+          {{columnContent}}
+        </td>
+        
+        <td>          
+          <button class="button edit" ng-click="vm.editPressed(dataRow.name)">
+            <i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit
+          </button>
+
         </td>
       </tr>
     </tbody>
