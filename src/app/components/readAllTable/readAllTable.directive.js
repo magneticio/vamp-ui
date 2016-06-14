@@ -90,7 +90,7 @@
             return anObject;
             break;
           case "boolean":
-            return anObject ? 'Waar' : 'Onwaar';
+            return anObject ? 'true' : 'false';
             break;
           case "object":
             if(_.isObject(anObject[Object.keys(anObject)[0]])) {
