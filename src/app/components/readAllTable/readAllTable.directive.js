@@ -12,6 +12,7 @@
       templateUrl: 'app/components/readAllTable/readAllTable.html',
       scope: {
           data: '=',
+          resource: '=',
           editButtonPressed: '&'
       },
       controller: ReadAllTableController,
@@ -52,9 +53,9 @@
 
       function createHeaders(data) {
         var headers = {};
-        
+
         var headerNames = Object.keys(data[0]);
-        
+
         headerNames.forEach(function(headerName) {
           headers[headerName] = {
             name: headerName,
@@ -70,15 +71,15 @@
 
         data.forEach(function(dataRow) {
           var transformedDataRow = {};
-          
+
           for(var key in dataRow) {
             var columnContent = dataRow[key];
             transformedDataRow[key] = parseObject(typeof columnContent, columnContent);
           }
-          
+
           transformedDataRows.push(transformedDataRow);
         });
-        
+
         return transformedDataRows;
       }
 
