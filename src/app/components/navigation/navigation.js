@@ -5,7 +5,7 @@
     .module('revampUi')
     .controller('NavigationController', NavigationController);
 
-  function NavigationController ( artifactsConfig ) {
+  function NavigationController ( artifactsConfig , $state ) {
     var vm = this;
 
     vm.items = [];
@@ -14,7 +14,19 @@
 
     angular.forEach(artifactsConfig, function ( artifactEnabled , artifactName ) {
       if ( artifactEnabled ) {
-        vm.items.push( artifactName );
+        var menuItem = {};
+
+        menuItem.name   = artifactName;
+        menuItem.state  = 'root.readall';
+        menuItem.params = { resource: artifactName };
+
+        if ($state.get('root.' + artifactName)) {
+          console.info( 'Found routeConfig for' , artifactName );
+          menuItem.state  = 'root.' + artifactName;
+          menuItem.params = {};
+        }
+
+        vm.items.push(menuItem);
       }
     });
   }

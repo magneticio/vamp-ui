@@ -18,24 +18,34 @@
       controller: ReadAllTableController,
       controllerAs: 'vm',
       bindToController: true,
-      link: function(scope, element, attrs) {
-        if(attrs.resource) {
-          scope.resource = attrs.resource;
-        }
-
-      }
+      // REVIEW: this seems superfluous since we're double-binding the
+      //         resource variable above?
+      // link: function(scope, element, attrs) {
+      //   if(attrs.resource) {
+      //     scope.resource = attrs.resource;
+      //   }
+      //
+      // }
     };
 
     return directive;
 
     /** @ngInject */
-    function ReadAllTableController($scope, $interval, Artifacts) {
+    function ReadAllTableController($scope, $state, $interval, Artifacts) {
 
-      var vm = this;
+      var vm = this,
+          detailRoute = 'root.detail',
+          updateRoute = 'root.update';
+
       vm.headers = {};
       vm.dataRows = {};
       vm.editPressed = editPressed;
 
+      if ($state.get('root.' + vm.resource.toLowerCase())) {
+        console.info( 'Fount routeConfig for' , vm.resource );
+        detailRoute = 'root.' + vm.resource.toLowerCase() + 'Detail';
+        updateRoute = 'root.' + vm.resource.toLowerCase() + 'Update';
+      }
 
       function editPressed(id) {
         vm.editButtonPressed({id:id});
