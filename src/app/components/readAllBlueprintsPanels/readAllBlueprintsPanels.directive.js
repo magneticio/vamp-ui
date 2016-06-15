@@ -26,6 +26,7 @@
 
     return directive;
 
+
     /** @ngInject */
     function ReadAllBlueprintsPanelsController($scope, $interval, Artifacts) {
 
@@ -38,23 +39,14 @@
         if(changedData && !_.isEmpty(changedData)) {
           changedData.forEach(function(dataPoint) {
             
-            //Count number of clusters
-            dataPoint.numberOfClusters = 0;
-            if(dataPoint.clusters) {
-              dataPoint.numberOfClusters = Object.keys(dataPoint.clusters).length;
-            }
-            
-            //Count number of Services
-            dataPoint.numberOfServices = 0;
-            for (var cluster in dataPoint.clusters) {
-              dataPoint.numberOfServices += Object.keys(dataPoint.clusters[cluster]).length;
-            }
+            dataPoint.viewData = {
+              letter: dataPoint.name.charAt(0),
+              name: dataPoint.name,
+              clusters: dataPoint.clusters
+            };
 
 
-            dataPoint.numberOfGateways = 0;
-            if(dataPoint.gateways) {
-              dataPoint.numberOfGateways = Object.keys(dataPoint.gateways).length;
-            }
+
           });
         }
       }

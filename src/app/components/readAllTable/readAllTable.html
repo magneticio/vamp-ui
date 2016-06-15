@@ -2,7 +2,6 @@
   <table class="table" cellspacing="0">
     <thead>
       <tr>
-        <th></th>
         <th ng-repeat="header in vm.headers">{{header.name}}</th>
         <th>Actions</th>
       </tr>
@@ -10,8 +9,6 @@
 
     <tbody>
       <tr ng-repeat="dataRow in vm.dataRows">
-        <th><button>See details</button>
-        </th>
         <td ng-repeat="columnContent in dataRow">
           {{columnContent}}
         </td>

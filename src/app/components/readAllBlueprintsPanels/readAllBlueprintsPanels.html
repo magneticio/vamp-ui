@@ -1,4 +1,40 @@
-<div id="blueprints-panels" class="panels">
+<div id="blueprint-panels" class="panels">
+    <div class="panel" ng-repeat="blueprint in vm.data">
+        <div class="panel__header">
+            <div class="row">
+                <div class="letter-icon">
+                    <p class="letter">
+                        {{blueprint.viewData.letter}}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <p class="name">
+                    {{blueprint.viewData.name}}
+                </p>
+            </div>
+        </div>
+        <div class="panel__content">
+            <div class="blueprint-data-table">
+                <div class="blueprint-data-table__row" ng-repeat="(clustername, cluster) in blueprint.viewData.clusters">
+                    <div class="blueprint-data-table__label" >
+                        {{clustername}}
+                    </div>
+                    <div class="blueprint-data-table__data-point" >
+                        <div class="tag" ng-repeat="service in cluster.services">{{service.breed.name}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel__footer">
+            <button class="button button--ghost">Show Blueprint</button>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <div id="blueprints-panels" class="panels">
     <div class="panel" ng-repeat="blueprint in vm.data">
         <div class="panel__header">
             <i class="fa fa-lg fa-file-text-o"></i>&nbsp;&nbsp;
@@ -70,4 +106,4 @@
         </div>
 
     </div>
-</div>
+</div> -->
