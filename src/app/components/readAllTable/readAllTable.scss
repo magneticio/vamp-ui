@@ -1,20 +1,79 @@
 .read-all-table {
-    
-    .table {
-        width: 100%;
-        font-family: 'Muli', sans-serif;
+  font-family: 'Muli', sans-serif;
+  padding: 1em;
+  width: 100%;
 
-        th {
-            text-align: left;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            border-bottom: 1px solid rgba(black, 0.3);
-            padding: 0.6rem 0.4rem;
-        }
+  th {
+    color: $blue-mid;
+    text-align: left;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba($black, 0.3);
+    padding: 0.5rem 1rem;
+  }
 
-        td {
-            padding: 1.2rem 0.4rem;
-            border-bottom: 1px solid rgba(black, 0.3);
-        }
+  td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba($black, 0.3);
+    min-width: 10%;
+    // vertical-align: top;
+  }
+
+  tbody > tr:hover {
+    background-color: rgba($blue-light,0.1);
+  }
+
+  td:not(:first-child) {
+    color: $blue-light;
+  }
+
+  [ui-sref] {
+    cursor: pointer;
+  }
+
+  &__name {
+    font-size: 1.2rem;
+    width: 50%;
+    white-space: nowrap;
+  }
+
+  // Specific screen sizes, etc.
+  th:not(:first-child):not(:last-child),
+  td:not(:first-child):not(:last-child) {
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    th:not(:first-child):not(:last-child):nth-child(2),
+    td:not(:first-child):not(:last-child):nth-child(2) {
+      display: table-cell;
     }
+  }
+
+  @media (min-width: 960px) {
+    th:not(:first-child):not(:last-child):nth-child(3),
+    td:not(:first-child):not(:last-child):nth-child(3) {
+      display: table-cell;
+    }
+  }
+
+  @media (min-width: 1080px) {
+    th:not(:first-child):not(:last-child):nth-child(4),
+    td:not(:first-child):not(:last-child):nth-child(4) {
+      display: table-cell;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    th:not(:first-child):not(:last-child):nth-child(5),
+    td:not(:first-child):not(:last-child):nth-child(5) {
+      display: table-cell;
+    }
+  }
+
+  @media (min-width: 1320px) {
+    th:not(:first-child):not(:last-child):nth-child(n+5),
+    td:not(:first-child):not(:last-child):nth-child(n+5) {
+      display: table-cell;
+    }
+  }
 }

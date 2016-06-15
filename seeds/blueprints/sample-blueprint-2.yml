@@ -1,0 +1,93 @@
+name: monarchs:1.5
+gateways:
+  9090/http: frontend/port
+clusters:
+  frontend:
+    routing:
+      port:
+        routes:
+          monarch_front:0.1:
+            weight: 75%
+          monarch_front:0.2:
+            weight: 5%
+          monarch_front:0.3:
+            weight: 10%
+          monarch_front:0.4:
+            weight: 10%
+
+    services:
+    - breed:
+        name: monarch_front:0.1
+        deployable: docker://magneticio/monarch:0.1
+        ports:
+          port: 8080/http
+        environment_variables:
+          backend[BACKEND]: http://$backend.host:$backend.ports.port/api/message
+        constants: {}
+        dependencies:
+          backend:
+            ref: monarch_backend:0.1
+      scale:
+        cpu: 0.5
+        memory: "128.0MB"
+        instances: 1
+      dialects: {}
+    - breed:
+        name: monarch_front:0.3
+        deployable: docker://magneticio/monarch:0.1
+        ports:
+          port: 8080/http
+        environment_variables:
+          backend[BACKEND]: http://$backend.host:$backend.ports.port/api/message
+        constants: {}
+        dependencies:
+          backend:
+            ref: monarch_backend:0.1
+      scale:
+        cpu: 0.5
+        memory: "128.0MB"
+        instances: 1
+      dialects: {}
+    - breed:
+        name: monarch_front:0.4
+        deployable: docker://magneticio/monarch:0.1
+        ports:
+          port: 8080/http
+        environment_variables:
+          backend[BACKEND]: http://$backend.host:$backend.ports.port/api/message
+        constants: {}
+        dependencies:
+          backend:
+            ref: monarch_backend:0.1
+      scale:
+        cpu: 0.5
+        memory: "128.0MB"
+        instances: 1
+      dialects: {}        
+    - breed:
+        name: monarch_front:0.2
+        deployable: docker://magneticio/monarch:0.2
+        ports:
+          port: 8080/http
+        environment_variables: {}
+        constants: {}
+        dependencies: {}
+      scale:
+        cpu: 0.5
+        memory: "256.0MB"
+        instances: 1
+      dialects: {}
+    dialects: {}
+  backend:
+    services:
+    - breed:
+        name: monarch_backend:0.1
+        deployable: docker://magneticio/monarch:0.2
+        ports:
+          port: 8080/http
+        environment_variables: {}
+        constants: {}
+        dependencies: {}
+      dialects: {}
+    dialects: {}
+environment_variables: {}

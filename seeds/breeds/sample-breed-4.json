@@ -1,0 +1,16 @@
+{
+    "name": "elected-danceoff:1.0.5",
+    "deployable": "magneticio/elected-danceoff:1.0.5",
+    "ports": {
+        "web": "80/http",
+        "secure": "443/tcp",
+    },
+    "environment_variables": {
+        "SHOES": "2",
+        "GIRLS": "A LOT",
+        "MUSIC": "GOOD",
+        "GUITARSOLOS": "AWESOME"
+    },
+    "constants": {},
+    "dependencies": {}
+}

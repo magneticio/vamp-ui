@@ -1,7 +1,12 @@
 .page {
-    height: 100%;
-    background-color: $dark-grey;
-    
+  height: 100%;
+  background-color: $dark-grey;
+
+  &__content,
+  &__footer {
+    margin: 1rem;
+  }
+
 
     .info {
         height: 4.6rem;
@@ -10,7 +15,7 @@
 
         display: flex;
         align-items: center;
-    
+
         .title {
             margin: 0;
             padding: 0;
