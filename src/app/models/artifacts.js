@@ -29,13 +29,35 @@
       console.log( error );
     }
 
+    function parseOptions (options) {
+      var httpConfig = {};
+
+      if ( options ) {
+        if (options.getAs == 'YAML') {
+          angular.extend( httpConfig , {
+            headers: { 'Accept' : 'application/x-yaml' }
+          });
+        }
+
+        if (options.sendAs == 'YAML') {
+          angular.extend( httpConfig , {
+            headers: { 'Content-Type' : 'application/x-yaml' }
+          });
+        }
+      }
+
+      return angular.equals( httpConfig , {} ) ? null : httpConfig;
+    }
+
     var Artifacts = {
-      create: function(resource, data) {
-        return $http.post( endpoint + resource , data )
+      create: function( resource , data , options ) {
+        var httpConfig = parseOptions( options );
+
+        return $http.post( endpoint + resource , data , httpConfig )
           .then(responseHandler, errorHandler)
       },
 
-      delete: function(resource, data) {
+      delete: function( resource , data ) {
         return $http({
             url: endpoint + resource,
             method: 'DELETE',
@@ -45,18 +67,24 @@
           .then(responseHandler, errorHandler)
       },
 
-      readAll: function(resource) {
-        return $http.get( endpoint + resource )
-          .then(responseHandler, errorHandler)
-      },      
+      readAll: function( resource , options ) {
+        var httpConfig = parseOptions( options );
 
-      read: function(resource, id) {
-        return $http.get( endpoint + resource + '/' + id)
+        return $http.get( endpoint + resource )
           .then(responseHandler, errorHandler)
       },
 
-      update: function(resource, id, data) {
-        return $http.put( endpoint + resource + '/' + id, data )
+      read: function( resource , id , options) {
+        var httpConfig = parseOptions( options );
+
+        return $http.get( endpoint + resource + '/' + id, httpConfig )
+          .then(responseHandler, errorHandler)
+      },
+
+      update: function( resource , id , data , options) {
+        var httpConfig = parseOptions( options );
+
+        return $http.put( endpoint + resource + '/' + id , data , httpConfig )
           .then(responseHandler, errorHandler)
       }
     }

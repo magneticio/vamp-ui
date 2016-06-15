@@ -12,29 +12,40 @@
       templateUrl: 'app/components/readAllTable/readAllTable.html',
       scope: {
           data: '=',
+          resource: '=',
           editButtonPressed: '&'
       },
       controller: ReadAllTableController,
       controllerAs: 'vm',
       bindToController: true,
-      link: function(scope, element, attrs) {
-        if(attrs.resource) {
-          scope.resource = attrs.resource;
-        }
-
-      }
+      // REVIEW: this seems superfluous since we're double-binding the
+      //         resource variable above?
+      // link: function(scope, element, attrs) {
+      //   if(attrs.resource) {
+      //     scope.resource = attrs.resource;
+      //   }
+      //
+      // }
     };
 
     return directive;
 
     /** @ngInject */
-    function ReadAllTableController($scope, $interval, Artifacts) {
+    function ReadAllTableController($scope, $state, $interval, Artifacts) {
 
-      var vm = this;
+      var vm = this,
+          detailRoute = 'root.detail',
+          updateRoute = 'root.update';
+
       vm.headers = {};
       vm.dataRows = {};
       vm.editPressed = editPressed;
 
+      if ($state.get('root.' + vm.resource.toLowerCase())) {
+        console.info( 'Fount routeConfig for' , vm.resource );
+        detailRoute = 'root.' + vm.resource.toLowerCase() + 'Detail';
+        updateRoute = 'root.' + vm.resource.toLowerCase() + 'Update';
+      }
 
       function editPressed(id) {
         vm.editButtonPressed({id:id});
@@ -52,9 +63,9 @@
 
       function createHeaders(data) {
         var headers = {};
-        
+
         var headerNames = Object.keys(data[0]);
-        
+
         headerNames.forEach(function(headerName) {
           headers[headerName] = {
             name: headerName,
@@ -70,15 +81,15 @@
 
         data.forEach(function(dataRow) {
           var transformedDataRow = {};
-          
+
           for(var key in dataRow) {
             var columnContent = dataRow[key];
             transformedDataRow[key] = parseObject(typeof columnContent, columnContent);
           }
-          
+
           transformedDataRows.push(transformedDataRow);
         });
-        
+
         return transformedDataRows;
       }
 

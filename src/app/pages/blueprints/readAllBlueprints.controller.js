@@ -6,9 +6,16 @@
     .controller('ReadAllBlueprints', ReadAllBlueprints);
 
   /** @ngInject */
-  function ReadAllBlueprints($state, $stateParams, Artifacts) {
+  function ReadAllBlueprints($state, $stateParams, Artifacts, Poller) {
+    console.info( 'Initiated ReadAllBlueprints' );
+
     var vm = this;
-    Artifacts.readAll('blueprints').then(success, function(){});
+
+    Poller( pollResource );
+
+    function pollResource() {
+      Artifacts.readAll('blueprints').then(success, function(){})
+    }
 
     function success(data) {
         vm.data = data;
