@@ -8,10 +8,10 @@
       gateways             : true,
       blueprints           : true,
       breeds               : true,
-      workflows            : true,
+      workflows            : false,
       "scheduled-workflows": true,
-      filters              : true,
-      scales               : true,
+      filters              : false,
+      scales               : false,
       slas                 : false,
       escalations          : false,
       events               : false

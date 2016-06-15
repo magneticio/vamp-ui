@@ -18,7 +18,7 @@
             <div class="blueprint-data-table">
                 <div class="blueprint-data-table__row" ng-repeat="(clustername, cluster) in blueprint.viewData.clusters">
                     <div class="blueprint-data-table__label" >
-                        {{clustername}}
+                        {{clustername}}:
                     </div>
                     <div class="blueprint-data-table__data-point" >
                         <div class="tag" ng-repeat="service in cluster.services">{{service.breed.name}}</div>
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="panel__footer">
-            <button class="button button--ghost">Show Blueprint</button>
+            <button class="button button--ghost" ui-sref="root.blueprints.read({id: blueprint.name})">Show Blueprint</button>
         </div>
     </div>
 </div>
