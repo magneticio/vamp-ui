@@ -1,0 +1,27 @@
+.page {
+  background-color: $dark-grey;
+  height: 100%;
+
+  &__content,
+  &__footer {
+    margin: 1rem;
+  }
+
+  .info {
+    background-color: $light-grey;
+    height: 4.6rem;
+    padding: 0 1rem;
+
+    display: flex;
+    align-items: center;
+
+    .title {
+      color: white;
+      font-size: 1.4rem;
+      font-weight: normal;
+      margin: 0;
+      padding: 0;
+      text-transform: capitalize;
+    }
+  }
+}
