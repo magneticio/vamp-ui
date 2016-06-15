@@ -17,7 +17,7 @@
         var menuItem = {};
 
         menuItem.name   = artifactName;
-        menuItem.state  = 'root.readall';
+        menuItem.state  = 'root.all';
         menuItem.params = { resource: artifactName };
 
         if ($state.get('root.' + artifactName)) {

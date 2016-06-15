@@ -34,8 +34,8 @@
     function ReadAllTableController($scope, $state, $interval, Artifacts) {
 
       var vm = this,
-          detailRoute = 'root.detail',
-          updateRoute = 'root.update';
+          detailRoute = 'root.all.read',
+          updateRoute = 'root.all.update';
 
       vm.headers = {};
       vm.dataRows = {};

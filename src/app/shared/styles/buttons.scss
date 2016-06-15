@@ -1,0 +1,23 @@
+.button {
+  background-color: $pink;
+  border-radius: 2.6rem;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1.4rem;
+  font-weight: 300;
+  height: 2.6rem;
+  min-width: 10rem;
+  padding: 0 1rem;
+
+  .fa {
+    margin-left: -8px;
+    font-size: 1.2rem;
+  }
+
+  &--ghost {
+    background-color: transparent;
+    border: 1px solid rgba(white, 0.7);
+  }
+}
