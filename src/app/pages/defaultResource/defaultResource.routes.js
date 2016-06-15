@@ -9,20 +9,28 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('root.readall', {
+      .state('root.all', {
         url: '/:resource',
         templateUrl: 'app/pages/defaultResource/defaultResource.html',
         controller: 'DefaultResourceController as readAllResource'
       })
-      .state('root.detail', {
-        url: '/:resource/:id',
-        templateUrl: 'app/pages/defaultResource/detailDefaultResource.html',
-        controller: 'DetailDefaultResourceController as detailResource',
+      .state('root.all.read', {
+        url: '/:id',
+        views: {
+          '@root' : {
+            templateUrl: 'app/pages/defaultResource/detailDefaultResource.html',
+            controller: 'DetailDefaultResourceController as detailResource'
+          }
+        }
       })
-      .state('root.update', {
-        url: '/:resource/:id/edit',
-        templateUrl: 'app/pages/defaultResource/editDefaultResource.html',
-        controller: 'EditDefaultResourceController as editResource',
+      .state('root.all.update', {
+        url: '/:id/edit',
+        views: {
+          '@root' : {
+            templateUrl: 'app/pages/defaultResource/editDefaultResource.html',
+            controller: 'EditDefaultResourceController as editResource'
+          }
+        }
       });
 
     $urlRouterProvider.otherwise('/');
@@ -37,13 +45,18 @@
   function beforeStateChange($rootScope, $state) {
     $rootScope.$on('$stateChangeStart', function( event , toState , toParams ) {
       // We only need this logic on states with one dot like root.blueprints.
-      if ( toState.name.split('.').length === 2 ) {
-        var checkState = 'root.' + toParams.resource;
-        // If the checkState has a configuration, initiate the reroute.
-        if ( $state.get( checkState ) ) {
-          event.preventDefault();
-          $state.go( checkState );
-        }
+      var stateParts = toState.name.split('.');
+
+      // The route config always has a custom route as the second part,
+      // therefore we can replace the second index of the array with the resource
+      stateParts[1] = toParams.resource;
+
+      var checkState = stateParts.join('.');
+
+      // If the checkState has a configuration, initiate the reroute.
+      if ( $state.get( checkState ) ) {
+        event.preventDefault();
+        $state.go( checkState );
       }
     });
   }
