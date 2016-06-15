@@ -11,7 +11,7 @@
       restrict: 'E',
       templateUrl: 'app/components/readOneBlueprint/readOneBlueprint.html',
       scope: {
-          data: '='
+          blueprint: '='
       },
       controller: ReadOneBlueprintController,
       controllerAs: 'vm',
@@ -32,23 +32,19 @@
 
       var vm = this;
 
-      $scope.$watch('vm.data', dataChanged, true);
+      vm.aceOptions = {
+        useWrapMode : true,
+        showGutter: true,
+        theme:'twilight',
+        mode: 'json',
+        firstLineNumber: 1
+      }
+
+      $scope.$watch('vm.blueprint', dataChanged, true);
 
       function dataChanged(changedData) {
-
-        if(changedData && !_.isEmpty(changedData)) {
-          changedData.forEach(function(dataPoint) {
-            
-            dataPoint.viewData = {
-              letter: dataPoint.name.charAt(0),
-              name: dataPoint.name,
-              clusters: dataPoint.clusters
-            };
-
-
-
-          });
-        }
+        vm.yaml = JSON.stringify(changedData);
+        console.log()
       }
     }
   }
