@@ -11,14 +11,17 @@
       .state('root.blueprints', {
         url: '/blueprints',
         templateUrl: 'app/pages/blueprints/readAllBlueprints.html',
-        controller: 'ReadAllBlueprints as readAllBlueprints',
+        controller: 'ReadAllBlueprints as readAllBlueprints'
       })
-      // .state('root.update', {
-      //   url: '/:resource/:id/edit',
-      //   templateUrl: 'app/pages/defaultResource/editDefaultResource.html',
-      //   controller: 'EditDefaultResourceController as editResource',
-
-      // });
+      .state('root.blueprints.read', {
+        url: '/:id',
+        views: {
+          '@root' : {
+            templateUrl: 'app/pages/blueprints/readOneBlueprint.html',
+            controller: 'ReadOneBlueprint as readOneBlueprint'
+          }
+        }
+      });
 
     // $urlRouterProvider.otherwise('/');
   }
