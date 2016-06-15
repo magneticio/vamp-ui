@@ -14,15 +14,15 @@
     
 
 
-    // Poller(pollResource);
+    Poller(pollResource);
 
-    // function pollResource() {
-    //   Artifacts.readAll('blueprints').then(success, function(){})
-    // }
+    function pollResource() {
+      Artifacts.read('blueprints', $stateParams.id).then(success, function(){})
+    }
 
-    // function success(data) {
-    //     vm.data = data;
-    // }
+    function success(data) {
+        vm.data = data;
+    }
 
   }
 })();

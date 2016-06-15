@@ -46,6 +46,7 @@
     $rootScope.$on('$stateChangeStart', function( event , toState , toParams ) {
       // We only need this logic on states with one dot like root.blueprints.
       var stateParts = toState.name.split('.');
+      console.log('TOOO params', toParams);
 
       // The route config always has a custom route as the second part,
       // therefore we can replace the second index of the array with the resource
