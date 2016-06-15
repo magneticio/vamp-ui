@@ -7,7 +7,7 @@
 
   function Poller ( $interval ) {
 
-    var intervalTime = 5000,
+    var intervalTime = 30000,
         pollingCache = null;
 
     return function( pollingFn , timeout ) {

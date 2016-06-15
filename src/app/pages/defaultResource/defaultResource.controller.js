@@ -26,7 +26,7 @@
     }
 
     function editButtonPressed(id) {
-      $state.go('root.update', {resource: vm.resourceName, id: id});
+      $state.go('root.all.update', {resource: vm.resourceName, id: id});
     }
 
   }

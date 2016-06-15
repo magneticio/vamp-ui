@@ -3,7 +3,7 @@
 
   var endpoint        = 'http://192.168.99.100:8080/api/v1/',
       defaultHeaders  = {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       };
 
   angular
@@ -87,7 +87,7 @@
         return $http.put( endpoint + resource + '/' + id , data , httpConfig )
           .then(responseHandler, errorHandler)
       }
-    }
+    };
 
     return Artifacts;
 

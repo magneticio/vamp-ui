@@ -11,6 +11,8 @@
 
     var vm = this;
 
+    
+
 
     // Poller(pollResource);
 
