@@ -3,6 +3,17 @@
         <h1 class="title">
             Blueprint {{readOneBlueprint.data.name}}
         </h1>
+
+        <div class="actions">
+            <div class="actions__section">
+                <button class="button">
+                    Edit
+                </button>
+            </div>
+            <div class="actions__section">
+                <dropdown-button options="readOneBlueprint.dropdownActions"> </dropdown-button>
+            </div>
+        </div>
     </div>
 
     <read-one-blueprint blueprint="readOneBlueprint.data">

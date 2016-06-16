@@ -1,0 +1,77 @@
+
+
+
+.dropdownButton {
+    $dropdownWidth: 24rem;
+    $mainDropdownButtonHeight: 2.7rem;
+    $toggleWidth: 2rem;
+
+    height: auto;
+
+    position: relative;
+    height:  $mainDropdownButtonHeight;
+    width: $dropdownWidth;
+    margin: 0.5rem;
+
+    &:last-of-type {
+        margin-right: 0;
+    }
+
+    .main-button {
+        position: absolute;
+        display: flex;
+        z-index: 50;
+    }
+    
+    .button {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        margin: 0 !important;
+        padding-left: $toggleWidth;
+
+        width: $dropdownWidth - $toggleWidth;
+    }
+
+    .toggle-dropdown {
+        // margin: 0.5rem 0;
+        border-left: 1px solid lighten($pink, 10%);
+        width: $toggleWidth;
+        background-color: $pink;
+        border-radius: 0 2.6rem 2.6rem 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .fa {
+            line-height: 0;
+            margin-right: 0.3rem;
+        }
+
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .dropdown {
+
+        position: absolute;
+        width: $dropdownWidth + 0.1rem;
+        top: $mainDropdownButtonHeight / 2;
+        padding-top: ($mainDropdownButtonHeight / 2);
+        background-color: rgba($pink, 0.7);
+        z-index: 40;
+        border-radius: 0 0 1.3rem 1.3rem;
+
+
+        &__item {
+            cursor: pointer;
+
+            padding: 1rem 1rem;
+            font-size: 1.2rem;
+            border-top: 1px solid rgba(white, 0.3);
+            &:first-of-type {
+                border: none;
+            }
+        }
+
+    }
+}

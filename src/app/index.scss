@@ -22,7 +22,8 @@ $dark-grey: #313746;
   'pages/defaultResource/defaultResource',
   'components/navigation/navigation',
   'components/readAllBlueprintsPanels/readAllBlueprintsPanels',
-  'components/readOneBlueprint/readOneBlueprint';​
+  'components/readOneBlueprint/readOneBlueprint',
+  'components/dropdownButton/dropdownButton';​
 
 *,
 *::before,
@@ -39,6 +40,10 @@ $dark-grey: #313746;
     -webkit-text-size-adjust: none;
     -moz-text-size-adjust: none;
     -ms-text-size-adjust: none;
+}
+
+*:focus {
+  outline:0 !important;
 }
 
 html {
