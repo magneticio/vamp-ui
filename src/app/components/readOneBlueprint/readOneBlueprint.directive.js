@@ -36,14 +36,14 @@
         useWrapMode : true,
         showGutter: true,
         theme:'twilight',
-        mode: 'json',
+        mode: 'yaml',
         firstLineNumber: 1
       }
 
       $scope.$watch('vm.blueprint', dataChanged, true);
 
       function dataChanged(changedData) {
-        vm.yaml = JSON.stringify(changedData);
+        vm.yaml = changedData;
         console.log()
       }
     }

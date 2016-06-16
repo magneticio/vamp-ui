@@ -11,13 +11,10 @@
 
     var vm = this;
 
-    
-
-
     Poller(pollResource);
 
     function pollResource() {
-      Artifacts.read('blueprints', $stateParams.id).then(success, function(){})
+      Artifacts.read('blueprints', $stateParams.id, {getAs: 'YAML'}).then(success, function(){})
     }
 
     function success(data) {
