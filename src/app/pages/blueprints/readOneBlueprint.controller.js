@@ -11,6 +11,33 @@
 
     var vm = this;
 
+    vm.dropdownActions = [
+      {
+        name: 'Deploy',
+        onClick: function() {
+          console.log('click deploy');
+        },
+        default: true
+      },
+      {
+        icon: 'plus',
+        name: 'Add to deployment',
+        onClick: function() {
+          console.log('click add to deployment');
+        }
+      },
+      {
+        icon: 'times',
+        name: 'Remove from deployment',
+        onClick: function() {
+          console.log('click remove from deployment');
+        }
+      }
+    ];
+
+
+
+
     Poller(pollResource);
 
     function pollResource() {
