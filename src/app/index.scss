@@ -23,7 +23,8 @@ $dark-grey: #313746;
   'components/navigation/navigation',
   'components/readAllBlueprintsPanels/readAllBlueprintsPanels',
   'components/readOneBlueprint/readOneBlueprint',
-  'components/dropdownButton/dropdownButton';​
+  'components/dropdownButton/dropdownButton',
+  'pages/blueprints/readAllBlueprints.scss';​
 
 *,
 *::before,
@@ -67,4 +68,16 @@ body {
   bottom: 0;
   padding-top: 5.6rem;
   z-index: 10;
+  overflow: hidden;
+}
+
+
+// ace editor settings
+
+.ace_scrollbar {
+  transition: opacity .3s ease-in-out;
+  opacity: 0;
+}
+.ace_editor:hover .ace_scrollbar {
+  opacity: 1;
 }

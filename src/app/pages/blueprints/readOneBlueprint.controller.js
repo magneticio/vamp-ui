@@ -6,16 +6,18 @@
     .controller('ReadOneBlueprint', ReadOneBlueprint);
 
   /** @ngInject */
-  function ReadOneBlueprint($state, $stateParams, Artifacts, Poller) {
+  function ReadOneBlueprint($state, $stateParams, Artifacts, Deployments, Poller) {
     console.info( 'Initiated ReadOneBlueprint' );
 
     var vm = this;
+    vm.state = 'READ';
 
     vm.dropdownActions = [
       {
         name: 'Deploy',
         onClick: function() {
-          console.log('click deploy');
+          vm.state = 'DEPLOY';
+          deployBlueprint($stateParams.id);
         },
         default: true
       },
@@ -37,6 +39,16 @@
 
 
 
+    function deployBlueprint(blueprintId) {
+      Artifacts.read('blueprints', blueprintId).then(createDeploymentWithBlueprint, function(){})
+
+      function createDeploymentWithBlueprint(data) {
+        Deployments.create(data).then(function(deployments){console.log(deployments), function(){}});
+      }
+    }
+
+
+
 
     Poller(pollResource);
 
@@ -47,6 +59,8 @@
     function success(data) {
         vm.data = data;
     }
+
+
 
   }
 })();

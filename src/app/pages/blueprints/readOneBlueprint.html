@@ -1,4 +1,4 @@
-<div class="page show-all-default">
+<div class="page read-one-blueprint-page">
     <div class="info">
         <h1 class="title">
             Blueprint {{readOneBlueprint.data.name}}
@@ -15,7 +15,14 @@
             </div>
         </div>
     </div>
+    <div class="bottom" ng-class="{'actions-pending': state !== 'READ'}">
+        <div class="left">        
+            <read-one-blueprint blueprint="readOneBlueprint.data">
+            </read-one-blueprint>
+        </div>
+        <div class="right">
+            lol
+        </div>
+    </div>
 
-    <read-one-blueprint blueprint="readOneBlueprint.data">
-    </read-one-blueprint>
 </div>
