@@ -56,7 +56,7 @@
       // If the checkState has a configuration, initiate the reroute.
       if ( $state.get( checkState ) ) {
         event.preventDefault();
-        $state.go( checkState );
+        $state.go( checkState, toParams );
       }
     });
   }

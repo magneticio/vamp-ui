@@ -10,6 +10,9 @@
   height: 2.6rem;
   min-width: 10rem;
   padding: 0 1rem;
+  &:focus {
+    outline:0 !important;
+  }
 
   .fa {
     margin-left: -8px;
