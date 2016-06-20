@@ -1,0 +1,32 @@
+.read-one-blueprint-page {
+    height: 100%;
+
+
+    .bottom {
+        height: 100%;
+        width: 100%;
+
+        display: flex;
+
+        .left {
+            height: 100%;
+            width: 100%;
+        }
+
+        .right {
+            height: 100%;
+            width: 0;
+        }
+
+        &.actions-pending {
+            .left {
+                width: 76%;
+            }
+
+            .right {
+                width: 24%;
+                background-color: grey;
+            }
+        }
+    }
+}

@@ -21,7 +21,10 @@ $dark-grey: #313746;
   'components/readAllTable/readAllTable',
   'pages/defaultResource/defaultResource',
   'components/navigation/navigation',
-  'components/readAllBlueprintsPanels/readAllBlueprintsPanels';​
+  'components/readAllBlueprintsPanels/readAllBlueprintsPanels',
+  'components/readOneBlueprint/readOneBlueprint',
+  'components/dropdownButton/dropdownButton',
+  'pages/blueprints/readAllBlueprints.scss';​
 
 *,
 *::before,
@@ -40,6 +43,10 @@ $dark-grey: #313746;
     -ms-text-size-adjust: none;
 }
 
+*:focus {
+  outline:0 !important;
+}
+
 html {
     font-size: 12px;
     box-sizing: border-box;
@@ -49,8 +56,28 @@ body {
   color: white;
   font-family: sans-serif;
   margin: 0;
+  height: 100vh;
+  // border: 1px solid red;
+  position: relative;
 }
 
 .main {
-    height: 100vh;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  padding-top: 5.6rem;
+  z-index: 10;
+  overflow: hidden;
+}
+
+
+// ace editor settings
+
+.ace_scrollbar {
+  transition: opacity .3s ease-in-out;
+  opacity: 0;
+}
+.ace_editor:hover .ace_scrollbar {
+  opacity: 1;
 }
