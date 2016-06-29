@@ -1,0 +1,77 @@
+<div>
+
+  <!-- Header of the blueprint page -->
+  <div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+      <h2>Blueprints</h2>
+      <ol class="breadcrumb">
+        <li>
+          <a ui-sref="index.blueprints"><strong>Blueprints</strong></a>
+        </li>
+      </ol>
+    </div>
+    <div class="col-lg-2">
+      <button class="btn btn-primary title-button" type="submit" ui-sref="index.createBlueprint">Create Blueprint</button>
+    </div>
+  </div>
+  <!-- End of header -->
+  
+  <!-- Table of blueprints -->
+  <div class="row">
+    <div class="ibox ibox float-e-margins">
+      <div class="ibox-content">
+        <table class="table footable">
+          <thead>
+            <tr>
+              <th data-type="numeric" data-sort-initial="true">
+                Name 
+              </th>
+              <th class="text-right">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="blueprint in blueprints.list">
+              <td>{{blueprint.name}}</td>
+              <td class="pull-right"> 
+                <button class="btn btn-success">
+                  Deploy
+                </button>
+                <button class="btn btn-info" ui-sref="index.editBlueprint({id: blueprint.name})">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                  Edit
+                </button>
+                <button class="btn btn-danger" 
+                  ng-click="blueprints.deleteBlueprint(blueprint.name)">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- End of table -->
+
+</div>
+
+<div class="modal fade" tabindex="-1" id="delete-modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
