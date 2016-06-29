@@ -35,7 +35,7 @@
             <tr ng-repeat="blueprint in blueprints.list">
               <td>{{blueprint.name}}</td>
               <td class="pull-right"> 
-                <button class="btn btn-success">
+                <button class="btn btn-success" ng-click="blueprints.deployBlueprint(blueprint.name)">
                   Deploy
                 </button>
                 <button class="btn btn-info" ui-sref="index.editBlueprint({id: blueprint.name})">
