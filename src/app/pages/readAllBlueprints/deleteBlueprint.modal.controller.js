@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('inspinia')
-  .controller('deleteBlueprintModalController', function ($uibModalInstance, $timeout
+  .controller('DeleteBlueprintModalController', function ($uibModalInstance, $timeout
 , Api, id) {
     var vm = this;
     vm.id = id;

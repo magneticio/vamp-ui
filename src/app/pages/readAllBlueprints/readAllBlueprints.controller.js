@@ -6,7 +6,7 @@ angular.module('inspinia')
     var vm = this;
     vm.list = [];
     vm.deleteBlueprint = deleteBlueprint;
-    vm.busyDeletingBlueprint = false;
+    vm.deployBlueprint = deployBlueprint;
 
     refreshBlueprints();
     setInterval(refreshBlueprints, 10000);
@@ -24,12 +24,41 @@ angular.module('inspinia')
       console.log(error);
     }
 
+    function deployBlueprint(id) {
+      //First of all get the bluprint with an id
+      Api.read('blueprints', id).then(blueprintRead, error);
+
+      function blueprintRead(data) {
+
+        //Config of the blueprint modal
+        var blueprintModalConfig = {
+          templateUrl: 'app/pages/readAllBlueprints/deployBlueprint.modal.html',
+          controller: 'DeployBlueprintModalController as deployBlueprint',
+          resolve: {
+            data: function() {
+              return data;
+            }
+          }
+        }
+
+        //Open the modal
+        var blueprintModalInstance = $uibModal.open(blueprintModalConfig);
+
+
+
+      }
+    }
+
+
+
+    function error() {
+      console.log('ERROR IS HERE');
+    }
+
     function deleteBlueprint(id) {
-      vm.busyDeletingBlueprint = true;
-      
-      var modalInstance = $uibModal.open({
+        var modalInstance = $uibModal.open({
         templateUrl: 'app/pages/readAllBlueprints/deleteBlueprint.modal.html',
-        controller: 'deleteBlueprintModalController as deleteBlueprint',
+        controller: 'DeleteBlueprintModalController as deleteBlueprint',
         resolve: {
           id: function () {
             return id;
