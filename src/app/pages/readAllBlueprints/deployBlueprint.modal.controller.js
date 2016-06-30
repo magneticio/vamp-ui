@@ -23,9 +23,9 @@ angular.module('inspinia')
       function blueprintDeployed(data) {
         $timeout(function() {
           vm.busyDeployingBlueprint = false;
+          $state.go('index.deployments');
+          $uibModalInstance.dismiss('cancel');
         }, 2000);
-        $state.go('index.deployments');
-        $uibModalInstance.dismiss('cancel');
       }
     
       function error(data) {

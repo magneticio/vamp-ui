@@ -1,7 +1,7 @@
 <div>
 
-  <!-- Header of the deployment page -->
-  <div class="row wrapper border-bottom white-bg page-heading">
+  <!-- Header of the readAlldeployment page -->
+  <div class="row wrapper white-bg page-heading">
     <div class="col-lg-10">
       <h2>Deployments</h2>
       <ol class="breadcrumb">
@@ -34,7 +34,9 @@
 
           <tbody>
             <tr ng-repeat="deployment in deployments.list">
-              <td>{{deployment.name}}</td>
+              <td>
+                <a ui-sref="index.readDeployment({id: deployment.name})">{{deployment.name}}</a>
+              </td>
               <td> 
                 <div class="pull-right">
                   <button class="btn btn-danger ladda=button"
