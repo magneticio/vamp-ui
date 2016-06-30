@@ -13,12 +13,7 @@
         abstract: true,
         url: '/index',
         templateUrl: 'app/components/common/content.html'
-      })
-      .state('index.dashboard', {
-        url: '/minor',
-        templateUrl: 'app/minor/minor.html',
-        data: { pageTitle: 'Example view' }
-      })        
+      }) 
       .state('index.blueprints', {
         url: '/blueprints',
         templateUrl: 'app/pages/readAllBlueprints/readAllBlueprints.html',
@@ -36,10 +31,11 @@
         templateUrl: 'app/pages/editBlueprint/editBlueprint.html',
         controller: 'EditBlueprintController as blueprint',
         data: { pageTitle: 'Example view' }
-      })      
+      })
       .state('index.deployments', {
-        url: '/minor',
-        templateUrl: 'app/minor/minor.html',
+        url: '/deployments',
+        templateUrl: 'app/pages/readAllDeployments/readAllDeployments.html',
+        controller: 'ReadAllDeploymentsController as deployments',
         data: { pageTitle: 'Example view' }
       })      
       .state('index.gateways', {
