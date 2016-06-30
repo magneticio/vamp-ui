@@ -37,7 +37,13 @@
         templateUrl: 'app/pages/readAllDeployments/readAllDeployments.html',
         controller: 'ReadAllDeploymentsController as deployments',
         data: { pageTitle: 'Example view' }
-      })      
+      })     
+      .state('index.readDeployment', {
+        url: '/deployments/:id',
+        templateUrl: 'app/pages/readDeployment/readDeployment.html',
+        controller: 'ReadDeploymentController as deployment',
+        data: { pageTitle: 'Example view' }
+      })
       .state('index.gateways', {
         url: '/minor',
         templateUrl: 'app/minor/minor.html',
