@@ -20,7 +20,9 @@ angular.module('inspinia')
 
     function createBlueprint(data) {
       vm.busyCreatingBlueprint = true;
-      Api.create('blueprints', data, {'sendAs': 'YAML'}).then(success, error); 
+      var parsedData = YAML.parse(data);
+
+      Api.create('blueprints', data).then(success, error); 
     }
 
     function success(data) {

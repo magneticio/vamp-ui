@@ -12,7 +12,7 @@ angular.module('inspinia')
 
     function deleteIt(id) {
       vm.busyDeletingBlueprint = true;
-      Api.delete('blueprints', {id: id}).then(blueprintDeleted);
+      Api.delete('blueprints', id).then(blueprintDeleted);
     }
 
     function blueprintDeleted() {
