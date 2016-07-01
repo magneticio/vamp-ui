@@ -1,12 +1,20 @@
 'use strict';
 
 angular.module('inspinia')
-    .controller('ReadDeploymentController', function (Api, $uibModal, $scope, $timeout, $stateParams) {
+    .controller('ReadDeploymentController', function (Api, $uibModal, $scope, $interval, $stateParams) {
 
         var vm = this;
         vm.instance = {};
+        vm.currentHealth = 0;
 
-        Api.read('deployments', $stateParams.id).then(deploymentLoaded, error);
+
+        refreshDeployment();
+        $interval(refreshDeployment, 5000);
+
+        function refreshDeployment() {
+          Api.read('deployments', $stateParams.id).then(deploymentLoaded, error);
+        }
+
 
         function deploymentLoaded(data) {
             vm.instance = data;
@@ -17,4 +25,7 @@ angular.module('inspinia')
         }
 
 
+        $interval(function() {
+          vm.currentHealth = Math.floor(Math.random()*100);
+        }, 3000);
     });
