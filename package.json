@@ -1,7 +1,9 @@
 {
   "name": "inspinia",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "angular-chart.js": "^1.0.0-alpha8"
+  },
   "scripts": {
     "test": "gulp test"
   },
