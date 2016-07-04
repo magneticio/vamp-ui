@@ -45,8 +45,9 @@
         data: { pageTitle: 'Example view' }
       })
       .state('index.gateways', {
-        url: '/minor',
-        templateUrl: 'app/minor/minor.html',
+        url: '/gateways',
+        templateUrl: 'app/pages/readAllGateways/readAllGateways.html',
+        controller: 'ReadAllGatewaysController as gateways',
         data: { pageTitle: 'Example view' }
       });
 

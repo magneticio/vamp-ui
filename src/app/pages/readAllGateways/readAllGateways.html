@@ -1,0 +1,58 @@
+<div>
+
+  <!-- Header of the readAlldeployment page -->
+  <div class="row wrapper white-bg page-heading">
+    <div class="col-lg-10">
+      <h2>Gateways</h2>
+      <ol class="breadcrumb">
+        <li>
+          <a ui-sref="index.deployments"><strong>Gateways</strong></a>
+        </li>
+      </ol>
+    </div>
+    <div class="col-lg-2">
+     
+    </div>
+  </div>
+  <!-- End of header -->
+  
+  <!-- Table of deployments -->
+  <div class="row">
+    <div class="ibox ibox float-e-margins">
+      <div class="ibox-content">
+        <table class="table footable">
+          <thead>
+            <tr>
+              <th data-type="numeric" data-sort-initial="true">
+                Name 
+              </th>
+              <th>
+                Port
+              </th>
+              <th>
+                Sticky
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr ng-repeat="gateway in gateways.list">
+              <td>
+                <a>{{gateway.name}}</a>
+              </td>
+              <td> 
+                {{gateway.port}}
+              </td>              
+              <td> 
+                <i ng-if="gateway.sticky" class="fa fa-lg fa-check green"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- End of table -->
+
+</div>
+
