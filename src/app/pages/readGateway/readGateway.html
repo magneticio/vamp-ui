@@ -1,0 +1,118 @@
+<div>
+  <div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+      <h2>Gateway</h2>
+      <ol class="breadcrumb">
+        <li>
+          <a ui-sref="index.deployments">Gateway</a>
+        </li>        
+        <li>
+          <a ui-sref="index.deployments"><strong>{{gateway.instance.name}}</strong></a>
+        </li>
+      </ol>
+    </div>
+    <div class="col-lg-2">
+     
+    </div>
+  </div>
+
+<!--   <div class="row border-bottom white-bg" style="height: 140px; display: flex; align-items: center;">
+    <div class="chart-col col-md-9" style="height: 100%;">
+      <barchart style="height: 100%;"> </barchart>
+    </div>
+    <div class="col-md-3">
+      <div class="widget style1 lazur-bg">
+        <div class="row">
+            <div class="col-xs-4">
+                <i class="fa fa-heart fa-5x"></i>
+            </div>
+            <div class="col-xs-8 text-right">
+                <span> Current Health </span>
+                <h2 class="font-bold">{{deployment.currentHealth}}%</h2>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  {{gateway.instance}}
+
+
+  <div class="row wrapper border-bottom white-bg">
+    <div class="ibox ibox float-e-margins">
+      <div class="ibox-content">
+        <table class="table footable">
+          <thead>
+            <tr>
+              <th data-type="numeric" data-sort-initial="true">
+                Name 
+              </th>
+              <th>
+                Gateway
+              </th>
+              <th class="text-right">
+                  
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr ng-repeat-start="(clustername, cluster) in deployment.instance.clusters">
+              <td>
+                 <h3><i class="fa fa-chevron-right" aria-hidden="true"></i> {{clustername}}</h3>
+              </td>
+              <td>
+                <!-- TODO -->
+                TODO GATEWAY
+              </td>
+              <td> 
+                <div class="pull-right">
+                  <!-- <button class="btn btn-danger ladda=button"
+                    ladda="deployments.busyUndeploying"  
+                    ng-click="deployments.undeploy(deployment.name)">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                    Undeploy
+                  </button> -->
+                </div>
+              </td>
+            </tr>
+            <tr ng-repeat-end>
+              <td colspan="2">
+                <div ng-repeat="service in cluster.services">
+                  <div class="col-md-4">
+                    <h3>{{service.breed.name}}</h3>
+                    <p>{{service.breed.deployable}}</p>
+                  </div>                  
+                  <div class="col-md-2">
+                    <h5>Scale</h5>
+                    <p>
+                      <strong>Instances: </strong>
+                      {{service.scale.instances}}
+                    </p>
+                    <p>
+                      <strong>CPU: </strong>
+                      {{service.scale.cpu}}
+                    </p>
+                    <p>
+                      <strong>Memory: </strong>
+                      {{service.scale.memory}}
+                    </p>
+                  </div>                  
+                  <div class="col-md-3">
+                    <h5>Instances</h5>
+                    <p ng-repeat="instance in service.instances">{{instance.host}}</p>
+                  </div>
+                  <div class="col-md-3">
+                    <div>
+                        <h5 class="m-b-md">Status</h5>
+                        <h2 class="text-warning">{{service.state.intention}} {{service.state.step.name}}</h2>
+                    </div>   
+                  </div>
+                </div>
+              </td>           
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

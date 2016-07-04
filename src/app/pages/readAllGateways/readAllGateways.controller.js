@@ -5,6 +5,7 @@ angular.module('inspinia')
 
         var vm = this;
         vm.list = [];
+        vm.deleteGateway = deleteGateway;
 
         refreshGatways();
         setInterval(refreshGatways, 10000);
@@ -19,5 +20,20 @@ angular.module('inspinia')
 
         function error(data) {
             console.log(error);
+        }
+
+        function deleteGateway(id) {
+            var deleteGatewayModalConfig = {
+              templateUrl: 'app/pages/readAllGateways/deleteGateway.modal.html',
+              controller: 'DeleteGatewayModalController as deleteGateway',
+              resolve: {
+                id: function() {
+                  return id;
+                }
+              }
+            }
+
+            //Open the modal
+            var blueprintModalInstance = $uibModal.open(deleteGatewayModalConfig);
         }
     });

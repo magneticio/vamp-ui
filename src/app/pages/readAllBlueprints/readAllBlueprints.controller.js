@@ -43,9 +43,6 @@ angular.module('inspinia')
 
         //Open the modal
         var blueprintModalInstance = $uibModal.open(blueprintModalConfig);
-
-
-
       }
     }
 
