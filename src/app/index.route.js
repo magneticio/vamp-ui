@@ -27,7 +27,7 @@
         data: { pageTitle: 'Example view' }
       })           
       .state('index.editBlueprint', {
-        url: '/blueprints/:id',
+        url: '/blueprints/edit/:id',
         templateUrl: 'app/pages/editBlueprint/editBlueprint.html',
         controller: 'EditBlueprintController as blueprint',
         data: { pageTitle: 'Example view' }
@@ -49,7 +49,25 @@
         templateUrl: 'app/pages/readAllGateways/readAllGateways.html',
         controller: 'ReadAllGatewaysController as gateways',
         data: { pageTitle: 'Example view' }
-      });
+      })
+      .state('index.editGateway', {
+        url: '/gateways/edit/:id',
+        templateUrl: 'app/pages/editGateway/editGateway.html',
+        controller: 'EditGatewayController as gateway',
+        data: { pageTitle: 'Example view' }
+      })
+      .state('index.createGateway', {
+        url: '/gateways/create',
+        templateUrl: 'app/pages/createGateway/createGateway.html',
+        controller: 'CreateGatewayController as gateway',
+        data: { pageTitle: 'Example view' }
+      })
+      .state('index.readGateway', {
+        url: '/gateways/:id',
+        templateUrl: 'app/pages/readGateway/readGateway.html',
+        controller: 'ReadGatewayController as gateway',
+        data: { pageTitle: 'Example view' }
+      })   
 
     $urlRouterProvider.otherwise('index/blueprints');
   }

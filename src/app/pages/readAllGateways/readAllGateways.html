@@ -11,7 +11,7 @@
       </ol>
     </div>
     <div class="col-lg-2">
-     
+     <button class="btn btn-primary title-button" type="submit" ui-sref="index.createGateway">Create Gateway</button>
     </div>
   </div>
   <!-- End of header -->
@@ -31,6 +31,9 @@
               </th>
               <th>
                 Sticky
+              </th>              
+              <th class="pull-right">
+                Actions
               </th>
             </tr>
           </thead>
@@ -38,13 +41,27 @@
           <tbody>
             <tr ng-repeat="gateway in gateways.list">
               <td>
-                <a>{{gateway.name}}</a>
+                <a ui-sref="index.readGateway({id: gateway.name})">{{gateway.name}}</a>
               </td>
               <td> 
                 {{gateway.port}}
               </td>              
               <td> 
-                <i ng-if="gateway.sticky" class="fa fa-lg fa-check green"></i>
+                <i ng-if="gateway.sticky !== 'none'" class="fa fa-lg fa-check green"></i>
+              </td>
+              <td>
+                <div class="pull-right">
+                  <button class="btn btn-info" ui-sref="index.editGateway({id: gateway.name})">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    Edit
+                  </button>
+                  <button class="btn btn-danger" 
+                    ng-click="gateways.deleteGateway(gateway.name)"
+                    ng-if="!gateway.inner">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                    Delete
+                  </button>
+                </div>
               </td>
             </tr>
           </tbody>

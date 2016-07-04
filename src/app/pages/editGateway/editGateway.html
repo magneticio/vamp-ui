@@ -1,0 +1,42 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+      <h2>Gateways</h2>
+      <ol class="breadcrumb">
+          <li>
+              <a ui-sref="index.gateways">Edit Gateways</a>
+          </li>
+          <li>
+              <a ui-sref="index.editGateway"><strong>Edit Gateway</strong></a>
+          </li>
+      </ol>
+    </div>
+    <div class="col-lg-2">
+      <button 
+        class="ladda-button btn btn-primary title-button pull-right" 
+        type="submit" 
+        ng-click="gateway.editGateway(gateway.id, gateway.sourceCode)"
+        ladda="gateway.busyEditingGateway">
+          Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row" ng-if="gateway.successMessage">
+  <div class="alert alert-success">
+    {{gateway.successMessage}}
+  </div>
+</div>
+
+<div class="row" ng-if="gateway.errorMessage">
+  <div class="alert alert-danger">
+    Could not create gateway: {{gateway.errorMessage}}
+  </div>
+</div>
+<div class="row" style="overflow: hidden">
+  <ui-codemirror 
+    ui-codemirror-opts="gateway.editorOptions" 
+    ng-model="gateway.sourceCode">
+    </ui-codemirror>
+
+</div>
