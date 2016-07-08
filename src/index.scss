@@ -1,0 +1,45 @@
+body {
+  background-color: lightgrey;
+}
+
+.page {
+  height: 100vh;
+}
+
+.clear-margin {
+  margin: 0;
+}
+
+.info-panel {
+  height: 100%;
+  .panel-body {
+    height: 140px;
+    display: flex;
+    align-items: center;
+  }
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+
+  .titles {
+    display: flex;
+    align-items: center;
+  }
+  
+  h1, h2 {
+    margin: 0;
+  }
+
+  h2 {
+    margin-left: 5px;
+    margin-top: 5px;
+  }
+}
