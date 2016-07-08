@@ -1,0 +1,26 @@
+<div class="container-fluid page">  
+  <page-header 
+    title="Blueprints"
+    title-addition="test"  
+    actions="$ctrl.actions">
+  </page-header>
+  
+  <table ng-table="$ctrl.tableParams" class="table table-striped" show-filter="false">
+      {{$data}}
+      <tr ng-repeat="blueprint in $data">
+          <td class="col-md-8" title="'Name'" filter="{name: 'text'}" sortable="'name'">
+            {{blueprint.name}}
+          </td>
+
+          <td>
+            <div class="pull-right">
+              <button class="btn btn-default">Deploy</button>
+              <button class="btn btn-info">Edit</button>
+              <button class="btn btn-danger">Delete</button>
+            </div>
+          </td>
+      </tr>
+  </table>
+
+
+</div>
