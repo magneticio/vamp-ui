@@ -2,6 +2,8 @@ function blueprintsController(NgTableParams, Api) {
   var self = this;
   self.actions = [];
 
+  // var dataset = [{ name: 'christian', age: 21 }, { name: 'anthony', age: 88 }];
+
   self.actions.push(createAction('Create', function () {
     alert('test')
   }));
@@ -14,10 +16,16 @@ function blueprintsController(NgTableParams, Api) {
     }
   }
 
-  
+  function getData(params) {
+    console.log(params);
+    return Api.readAll('blueprints').then(function (data) {
+      return data;
+    });
+  }
 
-  // var dataset = [{ name: 'christian', age: 21 }, { name: 'anthony', age: 88 }];
-  // var selfTableParams = new NgTableParams({}, { onLoad: dataset });
+  console.log('Dataaa', getData());
+
+  self.tableParams = new NgTableParams({}, {getData: getData});
 }
 
 angular
