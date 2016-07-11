@@ -1,9 +1,9 @@
-function blueprintsController(NgTableParams, Api, Action) {
+function blueprintsController(NgTableParams, Api, Action, $state) {
   var self = this;
   self.actions = [];
 
   self.actions.push(Action.create('Create', function () {
-    alert('test')
+    $state.go('createBlueprint');
   }));
 
   function getData(params) {

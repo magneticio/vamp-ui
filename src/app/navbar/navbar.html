@@ -14,12 +14,12 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
-        <li ng-repeat="navbarItem in $ctrl.navbarItems">
-            <a href="#">{{navbarItem.text}}</a>
+        <li ng-repeat="navbarItem in $ctrl.navbarItems" ui-sref-active="active">
+            <a href="#" ui-sref="{{navbarItem.goToState}}">{{navbarItem.text}}</a>
         </li>
       </ul>
 
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" ui-sref-active="active">
         <li><a href="#">Test</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
