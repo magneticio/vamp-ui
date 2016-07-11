@@ -1,18 +1,10 @@
-function blueprintsController(NgTableParams, Api) {
+function blueprintsController(NgTableParams, Api, Action) {
   var self = this;
   self.actions = [];
 
-  self.actions.push(createAction('Create', function () {
+  self.actions.push(Action.create('Create', function () {
     alert('test')
   }));
-
-  function createAction(text, onClick, icon) {
-    return {
-      text: text,
-      onClick: onClick,
-      icon: icon || undefined
-    }
-  }
 
   function getData(params) {
     console.log(params);
