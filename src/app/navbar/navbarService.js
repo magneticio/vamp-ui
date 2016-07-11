@@ -4,7 +4,7 @@ function NavbarService() {
   var navbarItems = [
     {
       text: 'Blueprints',
-      goToState: 'blueprints'
+      goToState: 'readAllBlueprints'
     },
     {
       text: 'Deployments',

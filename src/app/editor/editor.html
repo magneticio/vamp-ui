@@ -1,7 +1,5 @@
 <div class="editor">
-
   <page-header title="{{$ctrl.title}}" title-addition="{{$ctrl.subtitle}}" actions="$ctrl.actions"></page-header>
-  {{$ctrl.status}}
   <div ng-class="{'alert-success': $ctrl.status.type === 'SUCCESS', 'alert-danger': $ctrl.status.type === 'ERROR'}" class="alert" role="alert">{{$ctrl.status.message}}</div>
   <div ui-ace="$ctrl.editorConfig" ng-model="$ctrl.sourceCode" ng-change="$ctrl.change($ctrl.sourceCode)" ng-model-options='{ debounce: 500 }'></div>
 </div>

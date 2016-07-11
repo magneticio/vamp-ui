@@ -1,2 +1,2 @@
 angular
-  .module('app', ['ui.router', 'chart.js', 'ngTable', 'ui.ace', 'angular-ladda']);
+  .module('app', ['ui.router', 'chart.js', 'ngTable', 'ui.ace', 'angular-ladda', 'ui.bootstrap']);
