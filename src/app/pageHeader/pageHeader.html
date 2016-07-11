@@ -4,7 +4,7 @@
         <h2 ng-if="$ctrl.titleAddition">{{$ctrl.titleAddition}}</h2>
     </div>
     <div>
-        <button class="btn btn-default" ng-repeat="action in $ctrl.actions" ng-click="action.onClick()">
+        <button class="btn btn-default" ng-repeat="action in $ctrl.actions" ng-click="action.onClick()" ladda="action.busy">
            <i ng-if="action.icon" class="fa fa-{{action.icon}}"></i> {{action.text}}
         </button>
     </div>

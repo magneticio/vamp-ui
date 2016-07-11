@@ -19,5 +19,9 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('readAllBlueprints', {
       url: '/blueprints',
       template: '<navbar></navbar><blueprints></blueprints>'
+    })
+    .state('createBlueprint', {
+      url: '/blueprints/create',
+      template: '<navbar></navbar><blueprints-create></blueprints-create>'
     });
 }
