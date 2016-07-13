@@ -45,14 +45,18 @@ body {
 }
 
 .editor {
-  position: relative;
-  height: 100%;
+  position: absolute;
+  top: 112px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+
 }
 
 .ace_editor {
   position: absolute !important;
-  top: 112px;
-  bottom: 15px;
+  top: 52px;
+  bottom: 0;
   width: 100%;
 }
 

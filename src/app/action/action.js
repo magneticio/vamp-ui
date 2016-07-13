@@ -23,7 +23,6 @@ Action.prototype.createAsync = function (text, onClick, icon) {
     test: 'test'
   };
 
-  console.log(action);
 
   action.onClick = function(data) {
     action.busy = true;
@@ -39,7 +38,6 @@ Action.prototype.createAsync = function (text, onClick, icon) {
   };
   return action;
 };
-
 
 
 angular
