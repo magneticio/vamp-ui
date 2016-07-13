@@ -1,4 +1,4 @@
-function actionButtonController($timeout) {
+function actionButtonController($timeout, Popup) {
   var self = this;
   self.buttonClicked = buttonClicked;
 
@@ -6,22 +6,27 @@ function actionButtonController($timeout) {
 
 
   function buttonClicked() {
-    if(self.async) {
-      console.log('Action is Async')
-      self.busy = true;
-
-      $timeout(function() {
-        return self.onClick(self.data).then(done, done);
-      }, 500);
-
-      function done() {
-        self.busy = false;
-      }
-
+    if(self.confirm) {
+      Popup.openConfirmation(self.confirm.title, '', self.onClick, self.data, self.async);
+      return;
     } else {
-      console.log('Action is not Async. Doing action');
-      console.log(self);
-      self.onClick(self.data);
+      if (self.async) {
+        console.log('Action is Async')
+        self.busy = true;
+
+        $timeout(function () {
+          return self.onClick(self.data).then(done, done);
+        }, 3000);
+
+        function done() {
+          self.busy = false;
+        }
+
+      } else {
+        console.log('Action is not Async. Doing action');
+        console.log(self);
+        self.onClick(self.data);
+      }
     }
   }
 }
@@ -37,7 +42,8 @@ angular
       icon: '@',
       type: '@',
       async: '<',
-      data: '<'
+      data: '<',
+      confirm: '<'
     }
   });
 

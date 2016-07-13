@@ -2,9 +2,7 @@ function Popup($uibModal) {
   this.$uibModal = $uibModal;
 }
 
-Popup.prototype.openConfirmation = function (title, text, action) {
-  //Open the popup
-  console.log('THISSS', this);
+Popup.prototype.openConfirmation = function (title, text, action, data, async) {
 
   var modalInstance = this.$uibModal.open({
     animation: true,
@@ -14,7 +12,9 @@ Popup.prototype.openConfirmation = function (title, text, action) {
     resolve: {
       title: function() {return title;},
       text: function() {return text;},
-      action: function() {return action;}
+      action: function() {return action;},
+      data: function() {return data;},
+      async: function() {return async;}
     }
 
   });

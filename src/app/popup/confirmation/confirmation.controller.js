@@ -1,14 +1,18 @@
 angular.module('app')
-  .controller('ConfirmationController', function ($uibModalInstance, $scope, title, text, action) {
+  .controller('ConfirmationController', function ($uibModalInstance, $scope, title, text, action, data, async) {
     //console.log($modalInstance);
-    console.log('Title', title);
+    console.log('Data', data);
 
     $scope.title = title;
     $scope.text = text;
-    $scope.action = action;
+    $scope.clickAction = function() {
+      return action($scope.data).then($scope.ok);
+    }
+    $scope.data = data;
+    $scope.async = async;
 
     $scope.ok = function () {
-      $uibModalInstance.close();
+      $uibModalInstance.close($scope.data);
     };
 
     $scope.cancel = function () {
