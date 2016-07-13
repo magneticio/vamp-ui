@@ -1,26 +1,18 @@
-function blueprintsController(NgTableParams, Api, Action, Popup,  $state) {
+function blueprintsController(NgTableParams, Api,  $state, $interval) {
   var self = this;
 
   self.create = create;
   self.edit = edit;
   self.deleteIt = deleteIt;
   self.deploy = deploy;
-  self.deleteNot = deleteNot;
-
-  function deleteNot(data) {
-    console.log('TESTDELETE', data)
-  }
 
   function create() {
     $state.go('createBlueprint');
   }
 
-  function edit() {
-    console.log('Editing Blueprint pressed');
-  }
-
   function deleteIt(data) {
-    console.log('Deleting Blueprint pressed', data);
+    console.log(data);
+    return Api.delete('blueprints', data.name).then(refresh);
   }
 
   function edit() {
@@ -29,26 +21,23 @@ function blueprintsController(NgTableParams, Api, Action, Popup,  $state) {
 
 
   function deploy(blueprint) {
-    Popup.openConfirmation('test', 'test', function() {console.log('test')});
+    console.log('Deploying blueprint', blueprint);
   }
 
-
-
-  // self.actions.push(Action.create('Create', function () {
-  //   $state.go('createBlueprint');
-  // }));
-
   function getData(params) {
-    console.log(params);
     return Api.readAll('blueprints').then(function (data) {
-
       return data;
     });
   }
 
   self.tableParams = new NgTableParams({}, {getData: getData});
 
+  function refresh() {
+    self.tableParams.reload()
+  }
 
+
+  $interval(refresh, 5000);
 }
 
 angular
