@@ -1,14 +1,12 @@
 function blueprintsCreateController(Api, Action, $state) {
   var self = this;
-  self.action = Action.createAsync('Create', createBlueprint);
+  self.create = create;
 
-  function createBlueprint(data) {
-    console.log('Daaata', data);
-
-    return Api.create('blueprints', data).then(success);
+  function create() {
+    return Api.create('blueprints', self.data).then(success);
   }
 
-  function success (data) {
+  function success () {
     $state.go('readAllBlueprints');
   }
 }
