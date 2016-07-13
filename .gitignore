@@ -1,6 +1,7 @@
-.tmp/
-coverage/
-dist/
-node_modules/
-jspm_packages/
-bower_components/
+.idea
+.tmp
+dist
+release
+node_modules
+jspm_packages
+bower_components
