@@ -5,11 +5,8 @@ function editorController(Action) {
   };
 
   var self = this;
-  self.actionBusy = false;
   self.change = change;
   self.status = angular.copy(defaultStatus);
-
-
 
   self.editorConfig = {
     useWrapMode: true,
@@ -19,16 +16,8 @@ function editorController(Action) {
     firstLineNumber: 1,
   }
 
-  self.actions = [];
-
-  self.sourceCode = '#type your code here';
+  //self.sourceCode = '#type your code here';
   self.data = {};
-
-  self.mainAction = Action.createAsync(self.action.text, function() {
-    self.action.onClick(self.data);
-  }, self.action.icon);
-
-  self.actions.push(self.mainAction);
 
   function change(changedSourceCode) {
     try {
@@ -52,7 +41,8 @@ angular
     bindings: {
       title: '@',
       titleAddition: '@',
-      action: '<'
+      sourceCode: '@',
+      data: '='
     }
   });
 

@@ -13,6 +13,9 @@ angular
       title: '@',
       titleAddition: '@',
       actions: '<' 
+    },
+    transclude: {
+      buttons: '?buttons'
     }
   });
 
