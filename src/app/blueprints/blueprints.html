@@ -1,7 +1,8 @@
 <div class="container-fluid page">  
-  <page-header 
-    title="Blueprints"
-    actions="$ctrl.actions">
+  <page-header title="Blueprints">
+    <buttons>
+      <action-button text="Create" on-click="$ctrl.create"></action-button>
+    </buttons>
   </page-header>
 
   <table ng-table="$ctrl.tableParams" class="table table-striped" show-filter="false">
@@ -13,9 +14,9 @@
 
           <td>
             <div class="pull-right">
-              <button class="btn btn-default">Deploy</button>
+              <button ng-click="$ctrl.deploy(blueprint)" class="btn btn-default">Deploy</button>
               <button class="btn btn-info">Edit</button>
-              <button class="btn btn-danger">Delete</button>
+              <action-button text="Delete" async="false" on-click="$ctrl.deleteIt" data="blueprint"></action-button>
             </div>
           </td>
       </tr>
