@@ -1,3 +1,12 @@
-<div class="component">
-  <h2>{{$ctrl.text}}</h2>
+<div class="header">
+  <div class="container-fluid">
+    <div class="titles">
+      <h2>{{$ctrl.title}}</h2>
+      <h3 ng-if="$ctrl.titleAddition">&nbsp;&nbsp;{{$ctrl.titleAddition}}</h3>
+    </div>
+
+    <div class="buttons" ng-transclude="buttons">
+    </div>
+
+  </div>
 </div>
