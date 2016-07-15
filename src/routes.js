@@ -23,5 +23,9 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('createBlueprint', {
       url: '/blueprints/create',
       template: '<navbar></navbar><blueprints-create></blueprints-create>'
+    })
+    .state('updateBlueprint', {
+      url: '/blueprints/:id',
+      template: '<navbar></navbar><blueprints-update></blueprints-update>'
     });
 }
