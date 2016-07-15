@@ -14,7 +14,7 @@
 
           <td>
             <div class="pull-right">
-              <action-button text="Deploy" async="true" on-click="$ctrl.deploy" data="blueprint" confirm="{title: 'Deploy Blueprint'}"></action-button>
+              <action-button text="Deploy" async="true" on-click="$ctrl.deploy" data="blueprint" confirm="{title: 'Deploy Blueprint', inputs: [{id: 'blueprint.name', name: 'Name:', type: 'text'}]}"></action-button>
               <action-button text="Edit" async="false" on-click="$ctrl.edit" data="blueprint"></action-button>
               <action-button text="Delete" async="true" on-click="$ctrl.deleteIt" data="blueprint" confirm="{title: 'Delete Blueprint'}"></action-button>
             </div>
