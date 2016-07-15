@@ -1,5 +1,19 @@
 function menuController() {
-  this.text = 'My brand new component!';
+  var self = this;
+  self.menuItems = [
+    {
+      text: 'Blueprints',
+      goToState: 'readAllBlueprints'
+    },
+    {
+      text: 'Deployments',
+      goToState: 'readAllDeployments'
+    },
+    {
+      text: 'Gateways',
+      goToState: 'readAllGateways'
+    }
+  ]
 }
 
 angular
