@@ -10,43 +10,43 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
   $stateProvider
     .state('app', {
       url: '/',
-      template: '<navbar></navbar><app></app>'
+      template: '<menu></menu><navbar></navbar><app></app>'
     })
     .state('readAllBlueprints', {
       url: '/blueprints',
-      template: '<read-all-blueprints> </read-all-blueprints>'
+      template: '<menu></menu><read-all-blueprints> </read-all-blueprints>'
     })
     .state('createBlueprint', {
       url: '/blueprints/create',
-      template: '<create-blueprint> </create-blueprint>'
+      template: '<menu></menu><create-blueprint> </create-blueprint>'
     })
     .state('updateBlueprint', {
       url: '/blueprints/edit/:id',
-      template: '<update-blueprint> </update-blueprint>'
+      template: '<menu></menu><update-blueprint> </update-blueprint>'
     })
     .state('readAllDeployments', {
       url: '/deployments',
-      template: '<read-all-deployments> </read-all-deployments>'
+      template: '<menu></menu><read-all-deployments> </read-all-deployments>'
     })
     .state('readOneDeployment', {
       url: '/deployments/:id',
-      template: '<read-one-deployments> </read-one-deployments>'
+      template: '<menu></menu><read-one-deployments> </read-one-deployments>'
     })
     .state('readAllGateways', {
       url: '/gateways',
-      template: '<read-all-gateways> </read-all-gateways>'
+      template: '<menu></menu><read-all-gateways> </read-all-gateways>'
     })
     .state('readOneGateway', {
       url: '/gateways/:id',
-      template: '<read-one-gateways> </read-one-gateways>'
+      template: '<menu></menu><read-one-gateways> </read-one-gateways>'
     })
     .state('createGateway', {
       url: '/gateways/create',
-      template: '<create-gateway> </create-gateway>'
+      template: '<menu></menu><create-gateway> </create-gateway>'
     })
     .state('updateGateway', {
       url: '/gateways/edit/:id',
-      template: '<update-gateway> </update-gateway>'
+      template: '<menu></menu><update-gateway> </update-gateway>'
     })
 
 }
