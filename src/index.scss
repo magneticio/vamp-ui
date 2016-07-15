@@ -1,8 +1,33 @@
-body {
-  background-color: lightgrey;
-}
-
 menu {
   padding: 0;
   margin: 0;
+
+  .navbar {
+    margin-bottom: 0;
+  }
+}
+
+.header {
+  margin: 0;
+  padding: 20px 0;
+
+  background-color: rgba(black, 0.3);
+
+  .titles {
+    float: left;
+    display: flex;
+    align-items: center;
+
+    h1,h2,h3,h4,h5,h6 {
+      margin: 0;
+      padding: 0;
+    }
+
+
+  }
+
+  .buttons {
+    float: right;
+  }
+
 }

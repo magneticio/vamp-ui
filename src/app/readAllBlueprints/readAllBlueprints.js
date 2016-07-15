@@ -1,5 +1,9 @@
-function readAllBlueprintsController() {
-  this.text = 'My brand new component!';
+function readAllBlueprintsController(Api) {
+  var self = this;
+
+  
+
+
 }
 
 angular
