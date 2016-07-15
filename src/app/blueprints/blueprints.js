@@ -15,13 +15,16 @@ function blueprintsController(NgTableParams, Api,  $state, $interval) {
     return Api.delete('blueprints', data.name).then(refresh);
   }
 
-  function edit() {
-    console.log('Edit Bluprint pressed');
+  function edit(data) {
+    console.log('daaaataaa', data.name);
+    $state.go('updateBlueprint', {id: data.name});
   }
 
-
-  function deploy(blueprint) {
-    console.log('Deploying blueprint', blueprint);
+  function deploy(data) {
+    
+    return Api.update('deployments', 'test', blueprint).then(function() {
+      $state.go('deployments')
+    });
   }
 
   function getData(params) {
@@ -35,7 +38,6 @@ function blueprintsController(NgTableParams, Api,  $state, $interval) {
   function refresh() {
     self.tableParams.reload()
   }
-
 
   $interval(refresh, 5000);
 }

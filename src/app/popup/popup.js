@@ -2,8 +2,8 @@ function Popup($uibModal) {
   this.$uibModal = $uibModal;
 }
 
-Popup.prototype.openConfirmation = function (title, text, action, data, async) {
-
+Popup.prototype.openConfirmation = function (title, text, action, data, inputs, async) {
+  
   var modalInstance = this.$uibModal.open({
     animation: true,
     templateUrl: 'app/popup/confirmation/confirmation.html',
@@ -14,6 +14,7 @@ Popup.prototype.openConfirmation = function (title, text, action, data, async) {
       text: function() {return text;},
       action: function() {return action;},
       data: function() {return data;},
+      inputs: function() {return inputs;},
       async: function() {return async;}
     }
 

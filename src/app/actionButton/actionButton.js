@@ -7,7 +7,7 @@ function actionButtonController($timeout, Popup) {
 
   function buttonClicked() {
     if(self.confirm) {
-      Popup.openConfirmation(self.confirm.title, '', self.onClick, self.data, self.async);
+      Popup.openConfirmation(self.confirm.title, '', self.onClick, self.data, self.confirm.inputs, self.async);
       return;
     } else {
       if (self.async) {
@@ -24,7 +24,7 @@ function actionButtonController($timeout, Popup) {
 
       } else {
         console.log('Action is not Async. Doing action');
-        console.log(self);
+        console.log('Dit is de button action', self);
         self.onClick(self.data);
       }
     }
