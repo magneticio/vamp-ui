@@ -1,3 +1,4 @@
-<div class="component">
-  <h2>{{$ctrl.text}}</h2>
+<div class="editor">
+  <div ng-class="{'alert-success': $ctrl.status.type === 'SUCCESS', 'alert-danger': $ctrl.status.type === 'ERROR'}" class="alert" role="alert">{{$ctrl.status.message}}</div>
+  <div ui-ace="$ctrl.editorConfig" ng-model="$ctrl.sourceCode" ng-change="$ctrl.change($ctrl.sourceCode)" ng-model-options='{ debounce: 500 }'></div>
 </div>
