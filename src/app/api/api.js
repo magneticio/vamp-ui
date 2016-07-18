@@ -10,15 +10,14 @@ function artifactsRequestConfig($httpProvider) {
   $httpProvider.defaults.headers.put    = defaultHeaders;
 }
 
-function Api ($http, $location, $window, $q) {
+function Api ($http, $location, $q) {
 
   function responseHandler (response) {
-    console.log( response );
     return response.data;
   }
 
   function errorHandler (error) {
-    var message = error.message ? error.message : 'No message avaliable from API';
+    var message = error && error.data && error.data.message ? error.data.message : 'No message avaliable from API';
     return $q.reject(message);
   }
 
