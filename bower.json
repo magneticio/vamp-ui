@@ -11,7 +11,9 @@
     "angular-ui-ace": "bower",
     "angular-ladda": "^0.4.1",
     "yaml.js": "^0.2.8",
-    "sprintf": "^1.0.3"
+    "sprintf": "^1.0.3",
+    "angular-toastr": "^1.7.0",
+    "angular-animate": "^1.5.7"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.0"

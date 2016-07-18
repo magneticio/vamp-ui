@@ -7,7 +7,7 @@ menu {
   }
 }
 
-.header {
+.vamp-page-header {
   margin: 0;
   padding: 20px 0;
 
@@ -22,12 +22,38 @@ menu {
       margin: 0;
       padding: 0;
     }
-
-
   }
-
   .buttons {
     float: right;
   }
+}
 
+.editor {
+  position: absolute;
+  top: 126px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.ace_editor {
+  position: absolute !important;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.alert {
+  margin-bottom: 0 !important;
+  border-radius: 0 !important;
+}
+
+
+.toast-top-right {
+  box-shadow: none;
+  top: initial;
+  right: initial;
+  bottom: 15px;
+  right: 15px;
 }
