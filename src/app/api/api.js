@@ -18,6 +18,7 @@ function Api ($http, $location, $q) {
 
   function errorHandler (error) {
     var message = error && error.data && error.data.message ? error.data.message : 'No message avaliable from API';
+    
     return $q.reject(message);
   }
 
