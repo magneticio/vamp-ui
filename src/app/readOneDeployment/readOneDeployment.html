@@ -1,3 +1,43 @@
 <div class="component">
-  <h2>{{$ctrl.text}}</h2>
+  <p>{{$ctrl.data}}</p>
+</div>
+
+<div class="container-fluid">
+  <div class="panel panel-default" ng-repeat="(clustername, cluster) in $ctrl.data.clusters">
+    <div class="panel-heading">{{clustername}}</div>
+    <div class="panel-body">
+      <div class="row" ng-repeat="service in cluster.services">
+        <div class="col-md-3">
+          <h3 class="clear-margin">{{service.breed.name}}</h3>
+          <p>{{service.breed.deployable}}</p>
+        </div>
+        <div class="col-md-3">
+          <h4>Scale</h4>
+          <p>
+            <strong>Instances: </strong>
+            {{service.scale.instances}}
+          </p>
+          <p>
+            <strong>CPU: </strong>
+            {{service.scale.cpu}}
+          </p>
+          <p>
+            <strong>Memory: </strong>
+            {{service.scale.memory}}
+          </p>
+        </div>
+        <div class="col-md-3">
+          <h4>Instances</h4>
+          <p ng-repeat="instance in service.instances">{{instance.host}}</p>
+        </div>
+        <div class="col-md-3">
+          <div>
+            <h4 class="m-b-md">Status</h4>
+            <h2 class="text-warning">{{service.state.intention}} {{service.state.step.name}}</h2>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>

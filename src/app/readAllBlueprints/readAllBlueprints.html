@@ -13,7 +13,7 @@
 
       <td>
         <div class="pull-right">
-          <button class="btn btn-default">Deploy</button>
+          <button ng-click="$ctrl.openDeployModal(blueprint)" class="btn btn-default">Deploy</button>
           <button ui-sref="updateBlueprint({id: blueprint.name})" class="btn btn-default">Edit</button>
           <button ng-click="$ctrl.openDeleteModal(blueprint.name)" class="btn btn-default">Delete</button>
 
