@@ -19,7 +19,7 @@ function createBlueprintController(Api, $state, toastr) {
   }
 
   function blueprintNotCreated(error) {
-    toastr.error(error,'Could not create Blueprint');
+    toastr.error(error, 'Could not create Blueprint');
     self.creatingBlueprint = false;
   }
   
