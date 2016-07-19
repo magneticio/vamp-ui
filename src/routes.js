@@ -30,7 +30,7 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('readOneDeployment', {
       url: '/deployments/:id',
-      template: '<menu></menu><read-one-deployments> </read-one-deployments>'
+      template: '<menu></menu><read-one-deployment> </read-one-deployment>'
     })
     .state('readAllGateways', {
       url: '/gateways',
