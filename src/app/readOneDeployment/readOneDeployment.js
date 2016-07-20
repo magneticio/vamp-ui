@@ -1,4 +1,4 @@
-function readOneDeploymentController(Api, $stateParams, $state) {
+function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandler) {
   var self = this;
   self.data = {};
 
@@ -14,6 +14,11 @@ function readOneDeploymentController(Api, $stateParams, $state) {
     $state.go('readAllDeployments');
   }
 
+  EventStreamHandler.getStream('deployments:' + deploymentId, eventFired);
+
+  function eventFired(data) {
+    console.info('[Event has been fired] ' + data);
+  }
 }
 
 angular
