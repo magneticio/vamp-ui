@@ -1,6 +1,7 @@
-<div class="component">
-  <p>{{$ctrl.data}}</p>
-</div>
+<header title="Deployment" title-addition="{{$ctrl.data.name}}">
+
+</header>
+
 
 <div class="container-fluid">
   <div class="panel panel-default" ng-repeat="(clustername, cluster) in $ctrl.data.clusters">
