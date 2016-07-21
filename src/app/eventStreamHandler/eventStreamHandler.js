@@ -12,7 +12,7 @@ EventStreamHandler.prototype.getStream = function (tag, eventFiredCallback) {
   source.addEventListener('event', eventFired);
 
   function eventFired(event) {
-    eventFiredCallback(event.data);
+    eventFiredCallback(JSON.parse(event.data));
   }
 
 };
