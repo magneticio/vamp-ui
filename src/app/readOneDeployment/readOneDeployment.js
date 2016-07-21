@@ -1,6 +1,9 @@
-function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandler) {
+function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandler, $interval, $scope) {
   var self = this;
   self.data = {};
+  self.chart = {};
+  self.currentHealthValue = 0;
+
 
   var deploymentId = $stateParams.id;
 
@@ -17,8 +20,15 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   EventStreamHandler.getStream('deployments:' + deploymentId, eventFired);
 
   function eventFired(data) {
-    console.info('[Event has been fired] ' + data);
+    $scope.$broadcast('deployments:' + deploymentId + ':newHealthValue', data);
+    self.currentHealthValue = data.value * 100;
   }
+
+
+
+  $interval(function() {
+
+  }, 3000);
 }
 
 angular
