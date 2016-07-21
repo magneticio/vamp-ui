@@ -57,3 +57,60 @@ menu {
   bottom: 15px;
   right: 15px;
 }
+
+.live-bar-chart {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  margin: 20px 0;
+  background-color: rgba(black, 0.1);
+
+  .inner {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+
+    padding-top: 20px;
+
+    &.animate {
+      transition: all 1s ease-in;
+    }
+  }
+
+  .bars {
+    height: calc(100% - 20px);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .bar {
+    margin: 0 2px;
+    background-color: red;
+    align-self: flex-end;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    box-flex: 1;
+
+    .value {
+      padding: 6px;
+      color: white;
+    }
+  }
+
+  .labels {
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 2px;
+
+    border-top: 1px solid rgba(black, 0.3);
+
+    .label {
+      height: 100%;
+      color: black;
+    }
+  }
+}
