@@ -5,16 +5,10 @@
 
 
 <div class="container-fluid">
-  <div class="row">
-    <!--<live-bar-chart class="col-md-8" ng-if="$ctrl.data.name" base="deployments:{{$ctrl.data.name}}" bar-width="60"></live-bar-chart>-->
-    <bar-chart class="col-md-8 bar-chart">
-    </bar-chart>
+  <canvas id="ticks" class="chart chart-line" chart-data="$ctrl.chart.data"
+          chart-options="$ctrl.chart.options" chart-labels="$ctrl.chart.labels">
 
-    <div class="status-col">
-      <status value="$ctrl.currentHealthValue/100"></status>
-      <h3>{{$ctrl.currentHealthValue | number: 0}}%</h3>
-    </div>
-  </div>
+  </canvas>
 
   <div class="panel panel-default" ng-repeat="(clustername, cluster) in $ctrl.data.clusters">
     <div class="panel-heading">{{clustername}}</div>
