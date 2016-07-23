@@ -6,9 +6,11 @@
 
 <div class="container-fluid">
   <div class="row">
-    <live-bar-chart class="col-md-8" ng-if="$ctrl.data.name" base="deployments:{{$ctrl.data.name}}" bar-width="60"></live-bar-chart>
+    <!--<live-bar-chart class="col-md-8" ng-if="$ctrl.data.name" base="deployments:{{$ctrl.data.name}}" bar-width="60"></live-bar-chart>-->
+    <bar-chart class="col-md-8 bar-chart">
+    </bar-chart>
 
-    <div class="col-md-4" style="height: 200px; margin-top: 20px;">
+    <div class="col-md-4" style="height: 200px;">
       <div class="panel panel-default" style="height: 100%;">
         <div class="panel-body">
           <h3>{{$ctrl.currentHealthValue}}</h3>

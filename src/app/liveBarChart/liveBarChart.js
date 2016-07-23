@@ -22,7 +22,7 @@ function liveBarChartController($scope, $timeout, $timeout) {
 
     $timeout(function() {
       self.paddingRight = 0;
-      self.bars.push(new Bar(data.timestamp, data.value));
+      self.bars.push(new Bar(data.timestamp, Math.random()));
     }, 200);
 
 
