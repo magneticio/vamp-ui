@@ -1,6 +1,7 @@
 function barChart($interval, $timeout) {
   return {
     restrict: 'E',
+    template: '<div class="bars-container"></div>',
     scope: {
       data: '='
     },
@@ -8,17 +9,18 @@ function barChart($interval, $timeout) {
       var theElement = angular.element(element[0]);
       theElement.css('position', 'relative');
 
-      barsContainer = angular.element('<div class="bars-container"></div>')
+      var barsContainerElement = document.getElementsByClassName('bars-container');
+      var barsContainer = angular.element(barsContainerElement);
       theElement.append(barsContainer);
 
       //Constants
-      var noOfBars = 12;
-      var barMargin = 4;
-
+      var noOfBars = 40;
+      var barMargin = 1;
 
       //END of constants
-      var elementHeight = element[0].offsetHeight;
-      var elementWidth = element[0].offsetWidth;
+      var elementHeight = barsContainer[0].clientHeight;
+      var elementWidth = barsContainer[0].clientWidth;
+
 
       console.log(elementHeight + ' , ' + elementWidth);
 
@@ -26,32 +28,35 @@ function barChart($interval, $timeout) {
 
       $interval(function() {
         moveEverythingToTheLeft();
-        createNewBar(20);
+        createNewBar(Math.random());
       }, 1000);
 
-      createNewBar(20);
 
       function createNewBar(value) {
         moveEverythingToTheLeft();
 
         $timeout(function() {
-          var bar = angular.element('<div class="bar">bar</div>');
+          var bar = angular.element('<div class="bar"></div>');
           bar.css('position', 'absolute');
-          bar.css('top', 0);
+          bar.css('height', (value * 100) + '%');
           bar.css('bottom', 0);
           bar.css('width', barWidth);
           bar.css('right', 0);
-          bar.css('background-color', 'red');
-          theElement.append(bar);
+          var generatedColor = generateColor(value);
+
+
+          bar.css('background-color', 'rgb('+ generatedColor.r+','+ generatedColor.g + ',' + generatedColor.b + ')');
+          barsContainer.append(bar);
+
         }, 500);
 
-        if(theElement.children().length === noOfBars) {
+        if(barsContainer.children().length > noOfBars) {
           removeFirstBarAdded();
         }
       }
 
       function moveEverythingToTheLeft() {
-        angular.forEach(theElement.children(), function(value, key) {
+        angular.forEach(barsContainer.children(), function(value, key) {
           var toBeMovedElement = angular.element(value);
           toBeMovedElement.css('right', parseInt(toBeMovedElement.css('right')) + barWidth + (barMargin * 2));
         });
@@ -60,31 +65,18 @@ function barChart($interval, $timeout) {
       function removeFirstBarAdded() {
         var timeUntilRemove = 500;
         $timeout(function() {
-          theElement.children()[0].remove();
+          barsContainer.children()[0].remove();
         }, timeUntilRemove);
       }
 
-
-
-      // var framesPerSecond = 25;
-      // var frameLength = 1000 / framesPerSecond;
-      // var milliseconds = 3000;
-      // var numberOfFrames = milliseconds / frameLength;
-      // var moveDistanceTotal = barWidth;
-      // var moveDistancePerFrame = moveDistanceTotal / numberOfFrames;
-
-
-      //add new element on to the right
-
-
-
-      //Move everything to the left
-
-
-      //Remove the last element that was added
-
-
-
+      function generateColor(value) {
+        var n = 100 - (value * 100);
+        return {
+          r: Math.floor((255 * n) / 100),
+          g: Math.floor((255 * (100 - n)) / 100),
+          b: 0
+        }
+      }
 
       console.log(theElement.children());
 

@@ -7,7 +7,15 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
 
   var deploymentId = $stateParams.id;
 
-  Api.read('deployments', deploymentId).then(deploymentLoaded, deploymentCouldNotBeLoaded);
+
+  function refreshDeployment() {
+    Api.read('deployments', deploymentId).then(deploymentLoaded, deploymentCouldNotBeLoaded);
+  }
+
+  $interval(
+    function() { refreshDeployment() },
+    3000
+  );
 
   function deploymentLoaded(deployment) {
     self.data = deployment;
@@ -20,8 +28,8 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   EventStreamHandler.getStream('deployments:' + deploymentId, eventFired);
 
   function eventFired(data) {
-    $scope.$broadcast('deployments:' + deploymentId + ':newHealthValue', data);
-    self.currentHealthValue = data.value * 100;
+    //$scope.$broadcast('deployments:' + deploymentId + ':newHealthValue', data);
+    self.currentHealthValue = Math.random() * 100;
   }
 
 
