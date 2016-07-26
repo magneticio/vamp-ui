@@ -36,13 +36,13 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/gateways',
       template: '<menu></menu><read-all-gateways> </read-all-gateways>'
     })
-    .state('readOneGateway', {
-      url: '/gateways/:id',
-      template: '<menu></menu><read-one-gateways> </read-one-gateways>'
-    })
     .state('createGateway', {
       url: '/gateways/create',
       template: '<menu></menu><create-gateway> </create-gateway>'
+    })
+    .state('readOneGateway', {
+      url: '/gateways/:id',
+      template: '<menu></menu><read-one-gateways> </read-one-gateways>'
     })
     .state('updateGateway', {
       url: '/gateways/edit/:id',

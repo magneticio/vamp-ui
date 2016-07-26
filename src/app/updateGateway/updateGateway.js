@@ -1,5 +1,35 @@
-function updateGatewayController() {
-  this.text = 'My brand new component!';
+function updateGatewayController(Api, $state, $timeout, toastr, $stateParams) {
+  var self = this;
+  self.data = {};
+  self.updatingGateway = false;
+  self.gatewayId = $stateParams.id;
+  self.update = update;
+
+  self.canBeParsed = true;
+
+  Api.read('gateways', self.gatewayId).then(gatewayLoaded);
+
+
+  function update(gatewayData) {
+    self.updatingGateway = true;
+
+    Api.update('gateways', self.gatewayId, gatewayData).then(gatewayUpdated, gatewayNotUpdated)
+  }
+
+  function gatewayLoaded(data) {
+    self.sourceCode = YAML.stringify(data, 6);
+  }
+
+  function gatewayUpdated(data) {
+    self.updatingGateway = false;
+    toastr.success(self.gatewayId,'Updated Gateway');
+    $state.go('readAllGateways');
+  }
+
+  function gatewayNotUpdated(error) {
+    toastr.error(error,'Could not update Gateway');
+    self.updatingGateway = false;
+  }
 }
 
 angular

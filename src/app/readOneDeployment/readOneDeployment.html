@@ -10,12 +10,9 @@
     <bar-chart class="col-md-8 bar-chart">
     </bar-chart>
 
-    <div class="col-md-4" style="height: 200px;">
-      <div class="panel panel-default" style="height: 100%;">
-        <div class="panel-body">
-          <h3>{{$ctrl.currentHealthValue}}</h3>
-        </div>
-      </div>
+    <div class="status-col">
+      <status value="$ctrl.currentHealthValue/100"></status>
+      <h3>{{$ctrl.currentHealthValue | number: 0}}%</h3>
     </div>
   </div>
 
