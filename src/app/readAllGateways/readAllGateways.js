@@ -46,7 +46,7 @@ function readAllGatewaysController(Api, toastr, NgTableParams, $interval, $uibMo
     });
   }
 
-  // $interval(refresh, 5000);
+  $interval(refresh, 5000);
 
 }
 

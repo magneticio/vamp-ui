@@ -1,3 +1,77 @@
-<div class="component">
-  <h2>{{$ctrl.text}}</h2>
+<header title="Gateway" title-addition="{{$ctrl.data.name}}">
+
+</header>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <h4>Host</h4>
+      <p>{{$ctrl.data.service.host}}</p>
+
+    </div>
+    <div class="col-md-4">
+      <h4>Port</h4>
+      <p>{{$ctrl.data.service.port}}</p>
+    </div>
+
+    <div class="col-md-2">
+      <h4>Deployed</h4>
+      <span ng-if="$ctrl.data.deployed" class="label label-success"><i class="fa fa-check"></i>&nbsp;Deployed</span>
+      <span ng-if="!$ctrl.data.deployed" class="label label-default">Not Deployed</span>
+    </div>
+
+    <div class="col-md-2">
+      <h4>Sticky</h4>
+      <span ng-if="$ctrl.data.sticky !== 'none'" class="label label-success"><i class="fa fa-check"></i>&nbsp;Is sticky</span>
+      <span ng-if="$ctrl.data.sticky === 'none'" class="label label-default">Is Not Stikcy</span>
+    </div>
+
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+      <h4>Requests per second</h4>
+
+      <canvas id="line" class="chart chart-line" chart-data="$ctrl.rateChart.data"
+              chart-labels="$ctrl.rateChart.labels" chart-series="$ctrl.rateChart.series" chart-options="$ctrl.chartOptions">
+      </canvas>
+    </div>
+    <div class="col-md-4">
+      <h4>Response time (ms)</h4>
+      <canvas id="line" class="chart chart-line" chart-data="$ctrl.responseChart.data"
+              chart-labels="$ctrl.responseChart.labels" chart-series="$ctrl.responseChart.series" chart-options="$ctrl.chartOptions">
+      </canvas>
+    </div>
+  </div>
+
+  <h4>Routes</h4>
+
+  <div class="row" ng-repeat="(routename, route) in $ctrl.data.routes">
+    <div class="col-md-12" >
+      <div class="panel panel-default">
+        <div class="panel-heading">{{routename}}</div>
+        <div class="panel-body">
+          <div class="row">
+
+            <div class="col-md-4">
+              <h5>Weight:</h5>
+              <rzslider rz-slider-model="$ctrl.weights[routename]" rz-slider-options="{floor: 0, ceil: 100}"></rzslider>
+            </div>
+
+            <div class="col-md-4">
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

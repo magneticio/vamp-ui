@@ -1,4 +1,4 @@
-function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandler, $interval, $scope) {
+function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandler, $interval) {
   var self = this;
   self.data = {};
   self.chart = {};
