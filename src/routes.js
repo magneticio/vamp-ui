@@ -42,7 +42,7 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('readOneGateway', {
       url: '/gateways/:id',
-      template: '<menu></menu><read-one-gateways> </read-one-gateways>'
+      template: '<menu></menu><read-one-gateway> </read-one-gateway>'
     })
     .state('updateGateway', {
       url: '/gateways/edit/:id',

@@ -8,7 +8,7 @@
   <table ng-table="$ctrl.tableParams" class="table table-striped" show-filter="false">
     <tr ng-repeat="gateway in $data">
       <td class="col-md-6" title="'Name'" filter="{name: 'text'}" sortable="'name'">
-        {{gateway.name}}&nbsp;<span ng-if="!gateway.inner" class="label label-primary">External</span>
+        <a ui-sref="readOneGateway({id: gateway.name})">{{gateway.name}}&nbsp;<span ng-if="!gateway.inner" class="label label-primary">External</span></a>
       </td>
       <td class="col-md-2" title="'Port'" filter="{port: 'text'}" sortable="'port'">
         {{gateway.port}}

@@ -5,7 +5,7 @@
     "angular": "^1.5.0",
     "angular-ui-router": "^0.3.1",
     "jquery": "<3.0.0",
-    "angular-chart.js": "^0.10.2",
+    "angular-chart.js": "1.0.0-beta1",
     "ng-table": "^1.0.0",
     "angular-bootstrap": "^1.3.3",
     "angular-ui-ace": "bower",
@@ -13,7 +13,9 @@
     "yaml.js": "^0.2.8",
     "sprintf": "^1.0.3",
     "angular-toastr": "^1.7.0",
-    "angular-animate": "^1.5.7"
+    "angular-animate": "^1.5.7",
+    "angularjs-slider": "^5.4.1",
+    "lodash": "^4.14.0"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.0"
@@ -26,5 +28,8 @@
         "dist/js/bootstrap.js"
       ]
     }
+  },
+  "resolutions": {
+    "Chart.js": "2.x"
   }
 }
