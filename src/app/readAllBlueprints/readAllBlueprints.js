@@ -47,7 +47,8 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
       resolve: {
         id: function(){return theBlueprintId;},
         title: function(){return 'Are you sure?';},
-        text: function(){return 'You are about to delete [' + theBlueprintId + ']. Confirm the deletion.';}
+        text: function(){return 'You are about to delete [' + theBlueprintId + ']. Confirm the deletion.';},
+        buttonText: function() {return 'DELETE'}
       }
     });
 
