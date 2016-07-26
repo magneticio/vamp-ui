@@ -96,3 +96,7 @@ menu {
   border-radius: 50%;
   margin: 6px;
 }
+
+.table > tbody > tr > td {
+  vertical-align: middle !important;
+}
