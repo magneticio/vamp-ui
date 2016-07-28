@@ -1,4 +1,4 @@
-function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStreamHandler, $uibModal) {
+function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStreamHandler, $uibModal, $scope) {
   var noOfPoints = 250;
 
   var self = this;
@@ -15,6 +15,30 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
 
   self.editWeights = editWeights;
   self.getValueFromPercentage = getValueFromPercentage;
+
+  self.addConditionMode = {};
+  self.addCondition = addCondition;
+
+  var allowRefresh = true;
+
+  self.barChartOptions = {
+    scales: {
+      xAxes: [{
+        display: false
+      }],
+      yAxes: [{
+        display: true,
+        ticks: {
+          beginAtZero: true,
+          max: 100,
+          min:0
+        }
+      }],
+      gridLines: {
+        display: false
+      }
+    }
+  };
 
   self.chartOptions = {
     animation: {
@@ -45,12 +69,18 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
     }
   };
 
+  $scope.$on('chart-create', function (evt, chart) {
+    console.log('Chaaart', chart.data.datasets);
+  });
+
 
   var gatewayId = $stateParams.id;
 
   function createChartData() {
     var tempData = [];
     var tempLabels = [];
+
+
 
     for (var i = 0; i < noOfPoints; i++) {
       tempLabels.push('');
@@ -60,13 +90,31 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
     return {
       labels: tempLabels,
       series: ['serie'],
-      data: [tempData]
+      data: [tempData],
     }
   }
 
+  function addCondition(routename, condition) {
+    allowRefresh = false;
+    self.addConditionMode[routename] = false;
+    self.data.routes[routename].conditions.push({'condition': condition});
+    Api.update('gateways', self.data.name, self.data).then(conditionAdded, conditionAddedFailed);
 
-  function refreshDeployment() {
-    Api.read('gateways', gatewayId).then(gatewayLoaded, gatewayCouldNotBeLoaded);
+    function conditionAdded() {
+      toastr.success('Condition [' + condition + '] has been added to route [' + routename + '] of gateway [' + self.data.name + ']', 'Condition added');
+    }
+
+    function conditionAddedFailed() {
+      toastr.error('Could not add condition', 'Condition not added');
+    }
+
+  }
+
+
+  function refreshGateway() {
+    if(allowRefresh) {
+      Api.read('gateways', gatewayId).then(gatewayLoaded, gatewayCouldNotBeLoaded);
+    }
   }
 
   EventStreamHandler.getStream('gateways:' + gatewayId, eventFired);
@@ -74,33 +122,34 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
   function eventFired(data) {
 
     if(_.includes(data.tags, 'health')) {
-      self.currentHealth = data.value;
-      console.log('health: ', data);
+      self.currentHealth = data.value * 100;
     }
 
     if(_.includes(data.tags, 'metrics:rate')) {
       self.currentRate = data.value;
-      console.log('Rate: ', data);
     }
 
     if(_.includes(data.tags, 'metrics:responseTime')) {
       self.currentResponseTime = data.value;
-      console.log('Response Time: ', data);
     }
 
   }
 
   $interval(
-    function() { refreshDeployment() },
+    function() { refreshGateway() },
     3000
   );
 
   $interval(
     function() {
 
+      if(self.healthChart.data[0].length > noOfPoints) {
+        self.healthChart.labels.shift();
+        self.healthChart.data[0].shift();
+      }
 
-      // self.healthChart.labels.push('test');
-      // self.healthChart.data[0].push(self.currentHealth);
+      self.healthChart.labels.push('');
+      self.healthChart.data[0].push(self.currentHealth);
 
       if(self.rateChart.data[0].length > noOfPoints) {
         self.rateChart.labels.shift();
