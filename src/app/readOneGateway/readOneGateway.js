@@ -1,18 +1,19 @@
-function readOneGatewayController(Api, $interval, $stateParams, EventStreamHandler, $filter) {
-  var currentHealth = 0;
-  var currentRate = 0;
-  var currentResponseTime = 0;
-
+function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStreamHandler, $uibModal) {
   var noOfPoints = 250;
 
   var self = this;
   self.data = {};
   self.weights = {};
 
+  self.currentHealth = 0;
+  self.currentRate = 0;
+  self.currentResponseTime = 0;
+
   self.healthChart = createChartData();
   self.rateChart = createChartData();
   self.responseChart = createChartData();
 
+  self.editWeights = editWeights;
   self.getValueFromPercentage = getValueFromPercentage;
 
   self.chartOptions = {
@@ -73,17 +74,17 @@ function readOneGatewayController(Api, $interval, $stateParams, EventStreamHandl
   function eventFired(data) {
 
     if(_.includes(data.tags, 'health')) {
-      currentHealth = data.value;
+      self.currentHealth = data.value;
       console.log('health: ', data);
     }
 
     if(_.includes(data.tags, 'metrics:rate')) {
-      currentRate = data.value;
+      self.currentRate = data.value;
       console.log('Rate: ', data);
     }
 
     if(_.includes(data.tags, 'metrics:responseTime')) {
-      currentResponseTime = data.value;
+      self.currentResponseTime = data.value;
       console.log('Response Time: ', data);
     }
 
@@ -99,7 +100,7 @@ function readOneGatewayController(Api, $interval, $stateParams, EventStreamHandl
 
 
       // self.healthChart.labels.push('test');
-      // self.healthChart.data[0].push(currentHealth);
+      // self.healthChart.data[0].push(self.currentHealth);
 
       if(self.rateChart.data[0].length > noOfPoints) {
         self.rateChart.labels.shift();
@@ -107,7 +108,7 @@ function readOneGatewayController(Api, $interval, $stateParams, EventStreamHandl
       }
 
       self.rateChart.labels.push('');
-      self.rateChart.data[0].push(currentRate);
+      self.rateChart.data[0].push(self.currentRate);
 
       if(self.responseChart.data[0].length > noOfPoints) {
         self.responseChart.labels.shift();
@@ -115,7 +116,7 @@ function readOneGatewayController(Api, $interval, $stateParams, EventStreamHandl
       }
 
       self.responseChart.labels.push('');
-      self.responseChart.data[0].push(currentResponseTime);
+      self.responseChart.data[0].push(self.currentResponseTime);
 
     },
     40
@@ -137,6 +138,48 @@ function readOneGatewayController(Api, $interval, $stateParams, EventStreamHandl
   function getValueFromPercentage(percentage) {
     var withoutPercentage = percentage.substring(0, percentage.length - 1);
     return parseInt(withoutPercentage);
+  }
+
+  function editWeights() {
+    var weights = {};
+    for(var routeName in self.data.routes) {
+      weights[routeName] = getValueFromPercentage(self.data.routes[routeName].weight);
+    }
+
+    openEditWeightsModal(weights);
+  }
+
+  function openEditWeightsModal(weights) {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      templateUrl: 'app/editWeightsModal/editWeightsModal.html',
+      controller: 'editWeightsModal',
+      size: 'md',
+      resolve: {
+        weightValues: function() {
+          return weights;
+        }
+      }
+    });
+
+
+    modalInstance.result.then(function (weightValues) {
+
+      for(routeName in weightValues) {
+        var weightValue = weightValues[routeName];
+        self.data.routes[routeName].weight = weightValue + '%';
+      }
+
+      Api.update('gateways', self.data.name, self.data).then(gatewayWeightsAdjusted, gatewayWeightsAdjustedFailed);
+
+      function gatewayWeightsAdjusted() {
+        toastr.success('Gateway ' + self.data.name + ' route weights have been adjusted', 'Route weights adjusted');
+      }
+
+      function gatewayWeightsAdjustedFailed() {
+        toastr.error('Gateway route weights could not be adjusted', 'Route weights not adjusted');
+      }
+    });
   }
 }
 
