@@ -36,14 +36,14 @@
 
     </div>
     <div class="col-md-4">
-      <h4>Requests per second</h4>
+      <h4>{{$ctrl.currentRate}}&nbsp;Requests per second</h4>
 
       <canvas id="line" class="chart chart-line" chart-data="$ctrl.rateChart.data"
               chart-labels="$ctrl.rateChart.labels" chart-series="$ctrl.rateChart.series" chart-options="$ctrl.chartOptions">
       </canvas>
     </div>
     <div class="col-md-4">
-      <h4>Response time (ms)</h4>
+      <h4>{{$ctrl.currentResponseTime}}&nbsp;Response time (ms)</h4>
       <canvas id="line" class="chart chart-line" chart-data="$ctrl.responseChart.data"
               chart-labels="$ctrl.responseChart.labels" chart-series="$ctrl.responseChart.series" chart-options="$ctrl.chartOptions">
       </canvas>
@@ -52,26 +52,18 @@
 
   <h4>Routes</h4>
 
-  <div class="row" ng-repeat="(routename, route) in $ctrl.data.routes">
-    <div class="col-md-12" >
-      <div class="panel panel-default">
-        <div class="panel-heading">{{routename}}</div>
-        <div class="panel-body">
-          <div class="row">
-
-            <div class="col-md-4">
-              <h5>Weight:</h5>
-              <rzslider rz-slider-model="$ctrl.weights[routename]" rz-slider-options="{floor: 0, ceil: 100}"></rzslider>
-            </div>
-
-            <div class="col-md-4">
-
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <table class="table">
+    <tr>
+      <th>Name</th>
+      <th><a href="javascript:void(0)" ng-click="$ctrl.editWeights()">Weight <a class="fa fa-pencil" aria-hidden="true"></a></i></th>
+      <th>Conditions</th>
+      <th>Condition Strength</th>
+    </tr>
+    <tr ng-repeat="(routename, route) in $ctrl.data.routes">
+      <td>{{routename}}</td>
+      <td>{{route.weight}}</td>
+      <td>{{route.conditions}}</td>
+      <td>{{route.condition_strength}}</td>
+    </tr>
+  </table>
 </div>
