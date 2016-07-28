@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body">
   <p>You are about to deploy the blueprint {{blueprint.name}}. You should give it a name.</p>
-  <form name="deploymentForm">
+  <form novalidate name="deploymentForm">
     <div class="form-group" ng-class="{'has-error': deploymentForm.name.$invalid}">
       <label for="deployment-name">Deployment name</label>
       <input name="name" type="text" class="form-control" id="deployment-name" placeholder="Name" ng-model="deploymentName" ng-pattern="/^\S*$/" required>
