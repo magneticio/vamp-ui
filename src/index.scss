@@ -100,3 +100,16 @@ menu {
 .table > tbody > tr > td {
   vertical-align: middle !important;
 }
+
+.row-centered {
+  display: flex;
+  align-items: center;
+}
+
+.slider-fix {
+  margin-top: 28px;
+}
+
+.bar-fix {
+ padding: 10px 0;
+}

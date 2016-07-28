@@ -10,7 +10,7 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
   $stateProvider
     .state('app', {
       url: '/',
-      template: '<menu></menu><navbar></navbar><app></app>'
+      template: '<menu></menu><read-all-blueprints> </read-all-blueprints>'
     })
     .state('readAllBlueprints', {
       url: '/blueprints',
