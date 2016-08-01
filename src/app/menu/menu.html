@@ -14,15 +14,16 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li ui-sref-active="active" ng-repeat="menuItem in $ctrl.menuItems">
+        <li ng-class="{active: menuItem.activeState === $ctrl.active}" ng-repeat="menuItem in $ctrl.menuItems">
           <a ui-sref="{{menuItem.goToState}}" href="#">{{menuItem.text}}</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="#">Notifications</a>
+          <a href="#"></a>
         </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
