@@ -2,22 +2,32 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
   var self = this;
   self.openDeleteModal = openDeleteModal;
   self.openDeployModal = openDeployModal;
-  
-  self.tableParams = new NgTableParams({}, {getData: getData});
 
 
-  function getData() {
-    return Api.readAll('blueprints').then(function (data) {
-      return data;
+
+
+
+  self.tableParams = new NgTableParams({page:1, count: 1}, {counts: [],getData: getData});
+
+  function getData(params) {
+    return Api.readAll('blueprints', {page: params.page(),per_page: 1}).then(function (response) {
+
+    console.log(response.headers());
+
+      params.total(2);
+
+      return response.data;
     });
   }
 
-
+  $interval(refresh, 5000);
   function refresh() {
     self.tableParams.reload();
   }
 
+
   function openDeployModal(blueprint) {
+
     var theBlueprint = blueprint;
 
     var modalInstance = $uibModal.open({
@@ -33,11 +43,12 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
     modalInstance.result.then(function () {
 
     });
-
   }
 
   function openDeleteModal(blueprintId) {
+
     var theBlueprintId = blueprintId;
+
 
     var modalInstance = $uibModal.open({
       animation: true,
@@ -51,8 +62,6 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
         buttonText: function() {return 'DELETE'}
       }
     });
-
-
     modalInstance.result.then(function (id) {
       Api.delete('blueprints', id).then(blueprintDeleted, blueprintDeletedFailed);
 
@@ -66,8 +75,6 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
     });
   }
 
-
-  $interval(refresh, 5000);
 }
 
 angular
