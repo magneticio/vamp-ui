@@ -2,6 +2,8 @@ menu {
   padding: 0;
   margin: 0;
 
+  z-index: 999;
+  position: relative;
   .navbar {
     margin-bottom: 0;
   }
@@ -122,4 +124,34 @@ menu {
 
 .condition-form {
   display: inline-block;
+}
+
+
+.info-panel {
+  z-index: 100;
+  position: fixed;
+  top: 52px;
+  right: 0;
+  width: 25%;
+  bottom: 0;
+  background-color: white;
+  padding: 22px;
+  box-shadow: -4px 0px 4px 1px rgba(#aaaaaa, 0.3);
+
+  right: -25%;
+
+  transition: right 0.3s ease-in-out;
+
+  &.active {
+    right: 0;
+  }
+
+  h3 {
+    margin: 0 0 20px 0;
+
+  }
+}
+
+.clickable {
+  cursor: pointer;
 }

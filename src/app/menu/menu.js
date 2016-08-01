@@ -1,5 +1,6 @@
 function menuController($rootScope, $state) {
   var self = this;
+  self.toggleSettings = toggleSettings;
 
   console.log($state.current.name);
 
@@ -20,6 +21,11 @@ function menuController($rootScope, $state) {
       'updateGateway'
     ]
   };
+
+  function toggleSettings() {
+    $rootScope.infoPanelActive = !$rootScope.infoPanelActive;
+    console.log(!$rootScope.infoPanelActive);
+  }
 
   for(var activeState in activeTable) {
       if(_.includes(activeTable[activeState], $state.current.name)) {
