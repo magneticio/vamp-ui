@@ -6,7 +6,7 @@
 
 <div class="container-fluid">
   <table ng-table="$ctrl.tableParams" class="table table-striped" show-filter="false">
-    <tr ng-repeat="blueprint in $data">
+    <tr ng-repeat="blueprint in $data track by $index">
       <td class="col-md-8" title="'Name'" filter="{name: 'text'}" sortable="'name'">
         {{blueprint.name}}
       </td>

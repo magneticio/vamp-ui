@@ -13,7 +13,7 @@ function artifactsRequestConfig($httpProvider) {
 function Api ($http, $location, $q) {
 
   function responseHandler (response) {
-    return response.data;
+    return response;
   }
 
   function errorHandler (error) {
@@ -39,8 +39,8 @@ function Api ($http, $location, $q) {
         .then(responseHandler, errorHandler)
     },
 
-    readAll: function(resource) {
-      return $http.get( endpoint + resource )
+    readAll: function(resource, params) {
+      return $http.get( endpoint + resource,{params: params})
         .then(responseHandler, errorHandler)
     },
 
