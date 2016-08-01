@@ -10,13 +10,20 @@ function artifactsRequestConfig($httpProvider) {
   $httpProvider.defaults.headers.put    = defaultHeaders;
 }
 
-function Api ($http, $location, $q) {
+function Api ($http, $location, $q, toastr) {
 
   function responseHandler (response) {
     return response.data;
   }
 
   function errorHandler (error) {
+    console.log('EROOOR', error);
+
+    //Status is -1 if you can't connect to backend.
+    if(error.status === -1) {
+      toastr.error('Webinterface can\'t connect', 'Can\'t connect to Vamp');
+    }
+
     var message = error && error.data && error.data.message ? error.data.message : 'No message avaliable from API';
     
     return $q.reject(message);
