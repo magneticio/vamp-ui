@@ -9,6 +9,7 @@ function infoPanelController(Api, $rootScope) {
   
   function infoLoaded(response) {
     var data = response.data;
+    console.log('yooo',data);
     var info = {};
     info.version = data.version;
     info.persistence = data.persistence.database.type;
