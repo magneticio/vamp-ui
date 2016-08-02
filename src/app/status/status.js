@@ -9,7 +9,6 @@ function status() {
       var theElement = angular.element(element.children()[0]);
 
       scope.$watch('value', function(newValue) {
-        console.log('gogoog');
         var generatedColor = generateColor(newValue);
         theElement.css('background-color', 'rgb('+ generatedColor.r+','+ generatedColor.g + ',' + generatedColor.b + ')');
       });
