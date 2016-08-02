@@ -1,9 +1,9 @@
-function EventStreamHandler($http) {
-
+function EventStreamHandler($http, Environment) {
+  var enviroment = Environment;
 }
 
 EventStreamHandler.prototype.getStream = function (tag, eventFiredCallback) {
-  var source = new EventSource('http://192.168.99.100:8080/api/v1/events/stream?tag=' + tag);
+  var source = new EventSource(Environment.prototype.getApiBaseUrl() + 'events/stream?tag=' + tag);
 
   source.onopen = function() {
     console.log('Stream started');
