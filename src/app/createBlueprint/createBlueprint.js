@@ -12,7 +12,7 @@ function createBlueprintController(Api, $state, toastr) {
     Api.create('blueprints', blueprintData).then(blueprintCreated, blueprintNotCreated)
   }
 
-  function blueprintCreated(data) {
+  function blueprintCreated(response) { var data = response.data;
       self.creatingBlueprint = false;
       toastr.success(data[1].name,'Created Blueprint');
       $state.go('readAllBlueprints');

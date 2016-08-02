@@ -7,11 +7,9 @@ function infoPanelController(Api, $rootScope) {
 
   Api.readAll('info').then(infoLoaded, infoLoadedFailed);
   
-  function infoLoaded(data) {
-    console.log('INFO', data);
-
+  function infoLoaded(response) {
+    var data = response.data;
     var info = {};
-
     info.version = data.version;
     info.persistence = data.persistence.database.type;
     info.key_value_store = data.key_value.type;

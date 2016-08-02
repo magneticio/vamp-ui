@@ -2,12 +2,13 @@ function readAllGatewaysController(Api, toastr, NgTableParams, $interval, $uibMo
   var self = this;
   self.openDeleteModal = openDeleteModal;
 
-  self.tableParams = new NgTableParams({}, {getData: getData});
+  self.tableParams = new NgTableParams({page:1, count: 10}, {counts: [],getData: getData});
 
 
-  function getData() {
-    return Api.readAll('gateways').then(function (data) {
-      return data;
+  function getData(params) {
+    return Api.readAll('gateways', {page: params.page(), per_page: 10}).then(function (response) { var data = response.data;
+      params.total(response.headers()['x-total-count']);
+      return response.data;
     });
   }
 

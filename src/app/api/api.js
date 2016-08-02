@@ -17,7 +17,6 @@ function Api ($http, $location, $q, toastr) {
   }
 
   function errorHandler (error) {
-    console.log('EROOOR', error);
 
     //Status is -1 if you can't connect to backend.
     if(error.status === -1) {
