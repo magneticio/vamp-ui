@@ -52,3 +52,4 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+src/app/environment/
