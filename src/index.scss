@@ -1,19 +1,33 @@
+//COLORS
+$light-grey: #F2F2F2;
+$purple: #FF405E;
+$dark-blue: #1E0A3C;
+
+
+body {
+  background-color: $light-grey !important;
+}
+
 menu {
   padding: 0;
   margin: 0;
 
   z-index: 999;
   position: relative;
+  background-color: white;
+
+
   .navbar {
     margin-bottom: 0;
+    box-shadow: none !important;
+    border-radius: 0;
+    border-bottom: none;
   }
 }
 
 .vamp-page-header {
   margin: 0;
   padding: 20px 0;
-
-  background-color: rgba(black, 0.3);
 
   .titles {
     float: left;
@@ -23,6 +37,21 @@ menu {
     h1,h2,h3,h4,h5,h6 {
       margin: 0;
       padding: 0;
+    }
+
+    .title {
+      font-size: 30px;
+      text-transform: uppercase;
+      line-height: 1;
+      font-weight: 100;
+    }
+
+    .title-add {
+      font-size: 22px;
+      line-height: 1;
+      margin-top: 4px;
+      font-weight: 100;
+      color: $purple;
     }
   }
   .buttons {
@@ -154,4 +183,45 @@ menu {
 
 .clickable {
   cursor: pointer;
+}
+
+//Bootstrap overwrite
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Avenir';
+}
+p, div {
+  font-family: 'Avenir';
+}
+
+//Navbar text
+.navbar-default .navbar-nav>li>a {
+  color: $dark-blue !important;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.navbar-default .navbar-nav>.active>a {
+  background-color: transparent !important;
+  color: $purple !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+
+//buttons
+.btn {
+  font-size: 10px !important;
+  text-transform: uppercase;
+  border: none !important;
+  border-radius: 20px !important;
+  line-height: 1 !important;
+  background-color: $dark-blue !important;
+  background-image: none !important;
+  text-shadow: none !important;
+  padding: 9px 10px 7px 10px !important;
+  color: white !important;
+  font-weight: bold !important;
+  letter-spacing: 1px;
 }
