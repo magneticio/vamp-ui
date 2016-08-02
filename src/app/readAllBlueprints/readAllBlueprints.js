@@ -7,15 +7,11 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
 
 
 
-  self.tableParams = new NgTableParams({page:1, count: 1}, {counts: [],getData: getData});
+  self.tableParams = new NgTableParams({page:1, count: 10}, {counts: [],getData: getData});
 
   function getData(params) {
-    return Api.readAll('blueprints', {page: params.page(),per_page: 1}).then(function (response) {
-
-    console.log(response.headers());
-
-      params.total(2);
-
+    return Api.readAll('blueprints', {page: params.page(), per_page: 10}).then(function (response) {
+      params.total(response.headers()['x-total-count']);
       return response.data;
     });
   }

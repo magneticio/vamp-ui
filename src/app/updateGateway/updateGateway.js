@@ -16,11 +16,11 @@ function updateGatewayController(Api, $state, $timeout, toastr, $stateParams) {
     Api.update('gateways', self.gatewayId, gatewayData).then(gatewayUpdated, gatewayNotUpdated)
   }
 
-  function gatewayLoaded(data) {
+  function gatewayLoaded(response) { var data = response.data;
     self.sourceCode = YAML.stringify(data, 6);
   }
 
-  function gatewayUpdated(data) {
+  function gatewayUpdated(response) { var data = response.data;
     self.updatingGateway = false;
     toastr.success(self.gatewayId,'Updated Gateway');
     $state.go('readAllGateways');

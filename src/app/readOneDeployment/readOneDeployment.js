@@ -18,7 +18,7 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   );
 
   function deploymentLoaded(deployment) {
-    self.data = deployment;
+    self.data = deployment.data;
   }
 
   function deploymentCouldNotBeLoaded() {
