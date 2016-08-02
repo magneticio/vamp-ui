@@ -1,4 +1,4 @@
-var endpoint        = 'http://192.168.99.100:8080/api/v1/',
+var endpoint        = '',
     defaultHeaders  = {
       'Content-Type': 'application/json'
     };
@@ -10,7 +10,9 @@ function artifactsRequestConfig($httpProvider) {
   $httpProvider.defaults.headers.put    = defaultHeaders;
 }
 
-function Api ($http, $location, $q, toastr) {
+function Api ($http, $location, $q, toastr, Environment) {
+
+  endpoint = Environment.getApiBaseUrl();
 
   function responseHandler (response) {
     return response;
