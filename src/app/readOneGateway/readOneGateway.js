@@ -120,6 +120,7 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
   EventStreamHandler.getStream('gateways:' + gatewayId, eventFired);
 
   function eventFired(data) {
+    console.log(data);
 
     if(_.includes(data.tags, 'health')) {
       self.currentHealth = data.value * 100;
@@ -173,7 +174,7 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
 
 
   function gatewayLoaded(gateway) {
-    self.data = gateway;
+    self.data = gateway.data;
 
     for (var routeName in self.data.routes) {
       self.weights[routeName] = getValueFromPercentage(self.data.routes[routeName].weight);

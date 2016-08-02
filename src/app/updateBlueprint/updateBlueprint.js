@@ -16,11 +16,11 @@ function updateBlueprintController(Api, $state, $timeout, toastr, $stateParams) 
     Api.update('blueprints', self.blueprintId, blueprintData).then(blueprintUpdated, blueprintNotUpdated)
   }
 
-  function blueprintLoaded(data) {
+  function blueprintLoaded(response) { var data = response.data;
     self.sourceCode = YAML.stringify(data, 6);
   }
 
-  function blueprintUpdated(data) {
+  function blueprintUpdated(response) { var data = response.data;
       self.updatingBlueprint = false;
       toastr.success(self.blueprintId,'Updated Blueprint');
       $state.go('readAllBlueprints');
