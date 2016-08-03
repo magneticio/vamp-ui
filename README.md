@@ -34,6 +34,7 @@ $ gulp serve
 1) Install all the dependencies using bower and npm:
 
 ```sh
+$ npm install -g gulp gulp-cli
 $ npm install
 $ bower install
 ```
