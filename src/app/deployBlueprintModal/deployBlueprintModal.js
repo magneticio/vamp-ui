@@ -2,7 +2,6 @@ function deployBlueprintModal($scope, toastr, $uibModalInstance, blueprint, Api,
   $scope.blueprint = blueprint;
   $scope.deploymentName = angular.copy(blueprint.name);
   $scope.deployingBlueprint = false;
-  console.log('Blueprints', $scope.deploymentName);
 
   $scope.ok = function () {
     $scope.deployingBlueprint = true;

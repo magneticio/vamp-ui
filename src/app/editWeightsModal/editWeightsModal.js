@@ -19,17 +19,11 @@ function editWeightsModal($scope, $uibModalInstance, weightValues) {
     $scope.$watch('newWeightValues', function (newValue, oldValue) {
       var newValueArray = toArray(newValue);
       var oldValueArray = toArray(oldValue);
-
-      console.log(newValueArray);
-      console.log(oldValueArray);
-
       if (newValueArray[0].value !== oldValueArray[0].value) {
-        console.log('first slider changed');
         $scope.newWeightValues[newValueArray[1].name] = 100 - newValueArray[0].value;
       }
 
       if (newValueArray[1].value !== oldValueArray[1].value) {
-        console.log('second slider changed');
         $scope.newWeightValues[newValueArray[0].name] = 100 - newValueArray[1].value;
       }
     }, true);
