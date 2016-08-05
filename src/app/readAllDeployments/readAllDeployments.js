@@ -1,18 +1,16 @@
 function readAllDeploymentsController(Api, toastr, NgTableParams, $interval, $uibModal) {
+  /* eslint camelcase: ["error", {properties: "never"}]*/
   var self = this;
   self.openDeleteModal = openDeleteModal;
 
   self.tableParams = new NgTableParams({page: 1, count: 10}, {counts: [], getData: getData});
-
-
   function getData(params) {
+    /* jshint camelcase: false */
     return Api.readAll('deployments', {page: params.page(), per_page: 10}).then(function (response) {
-      var data = response.data;
       params.total(response.headers()['x-total-count']);
       return response.data;
     });
   }
-
 
   function refresh() {
     self.tableParams.reload();
@@ -37,15 +35,13 @@ function readAllDeploymentsController(Api, toastr, NgTableParams, $interval, $ui
           return 'You are about to updeploy [' + theDeploymentId + ']. Confirm the undeployment.';
         },
         buttonText: function () {
-          return 'Undeploy'
+          return 'Undeploy';
         }
       }
     });
 
-
     modalInstance.result.then(function (id) {
-      Api.read('deployments', id, {'as_blueprint': true}).then(deploymentExportedAsBlueprint, deploymentDeletedFailed);
-
+      Api.read('deployments', id, {as_blueprint: true}).then(deploymentExportedAsBlueprint, deploymentDeletedFailed);
 
       function deploymentExportedAsBlueprint(response) {
         var data = response.data;
@@ -61,7 +57,6 @@ function readAllDeploymentsController(Api, toastr, NgTableParams, $interval, $ui
       }
     });
   }
-
 
   $interval(refresh, 5000);
 }

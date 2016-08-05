@@ -8,7 +8,7 @@ function createGatewayController(Api, $state, toastr) {
 
   function create(gatewayData) {
     self.creatingGateway = true;
-    Api.create('gateways', gatewayData).then(gatewayCreated, gatewayNotCreated)
+    Api.create('gateways', gatewayData).then(gatewayCreated, gatewayNotCreated);
   }
 
   function gatewayCreated(response) {
@@ -22,7 +22,6 @@ function createGatewayController(Api, $state, toastr) {
     toastr.error(error, 'Could not create Gateway');
     self.creatingGateway = false;
   }
-
 }
 
 angular

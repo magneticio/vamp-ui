@@ -1,4 +1,5 @@
-function updateGatewayController(Api, $state, $timeout, toastr, $stateParams) {
+/* global YAML*/
+function updateGatewayController(Api, $state, toastr, $stateParams) {
   var self = this;
   self.data = {};
   self.updatingGateway = false;
@@ -9,11 +10,10 @@ function updateGatewayController(Api, $state, $timeout, toastr, $stateParams) {
 
   Api.read('gateways', self.gatewayId).then(gatewayLoaded);
 
-
   function update(gatewayData) {
     self.updatingGateway = true;
 
-    Api.update('gateways', self.gatewayId, gatewayData).then(gatewayUpdated, gatewayNotUpdated)
+    Api.update('gateways', self.gatewayId, gatewayData).then(gatewayUpdated, gatewayNotUpdated);
   }
 
   function gatewayLoaded(response) {
@@ -21,8 +21,7 @@ function updateGatewayController(Api, $state, $timeout, toastr, $stateParams) {
     self.sourceCode = YAML.stringify(data, 6);
   }
 
-  function gatewayUpdated(response) {
-    var data = response.data;
+  function gatewayUpdated() {
     self.updatingGateway = false;
     toastr.success(self.gatewayId, 'Updated Gateway');
     $state.go('readAllGateways');

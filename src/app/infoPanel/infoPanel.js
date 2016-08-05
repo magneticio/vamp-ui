@@ -1,3 +1,4 @@
+/* gloabl infokey_value_store */
 function infoPanelController(Api, $rootScope) {
   var self = this;
 
@@ -8,8 +9,8 @@ function infoPanelController(Api, $rootScope) {
   Api.readAll('info').then(infoLoaded, infoLoadedFailed);
 
   function infoLoaded(response) {
+    /* eslint camelcase: ["error", {properties: "never"}]*/
     var data = response.data;
-    console.log('yooo', data);
     var info = {};
     info.version = data.version;
     info.persistence = data.persistence.database.type;
@@ -19,7 +20,9 @@ function infoPanelController(Api, $rootScope) {
     info.workflow_driver = '';
 
     for (var name in data.workflow_driver) {
-      info["workflow_driver"] += info["workflow_driver"] === '' ? name : ', ' + name;
+      if (name) {
+        info.workflow_driver += info.workflow_driver === '' ? name : ', ' + name;
+      }
     }
 
     self.info = info;

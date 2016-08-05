@@ -1,5 +1,5 @@
-function EventStreamHandler($http, Environment) {
-  var enviroment = Environment;
+/* global Environment*/
+function EventStreamHandler() {
 }
 
 EventStreamHandler.prototype.getStream = function (tag, eventFiredCallback) {
@@ -7,14 +7,13 @@ EventStreamHandler.prototype.getStream = function (tag, eventFiredCallback) {
 
   source.onopen = function () {
     console.log('Stream started');
-  }
+  };
 
   source.addEventListener('event', eventFired);
 
   function eventFired(event) {
     eventFiredCallback(JSON.parse(event.data));
   }
-
 };
 
 angular
