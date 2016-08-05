@@ -15,28 +15,24 @@ function liveBarChartController($scope, $timeout, $timeout) {
     this.width = self.barWidth + 'px';
   }
 
-  $scope.$on(self.base + ':newHealthValue', function(event, data) {
-    $timeout(function() {
+  $scope.$on(self.base + ':newHealthValue', function (event, data) {
+    $timeout(function () {
       self.animate = false;
     }, 100);
 
-    $timeout(function() {
+    $timeout(function () {
       self.paddingRight = 0;
       self.bars.push(new Bar(data.timestamp, Math.random()));
     }, 200);
 
 
-
-    $timeout(function() {
+    $timeout(function () {
       self.animate = true;
     }, 2000);
 
-    $timeout(function() {
+    $timeout(function () {
       self.paddingRight = self.barWidth + 4 + 'px';
     }, 3000);
-
-
-
 
 
     // self.innerPadding = 0;

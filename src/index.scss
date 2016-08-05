@@ -3,7 +3,6 @@ $light-grey: #F2F2F2;
 $purple: #FF405E;
 $dark-blue: #1E0A3C;
 
-
 body {
   background-color: $light-grey !important;
 }
@@ -15,7 +14,6 @@ menu {
   z-index: 999;
   position: relative;
   background-color: white;
-
 
   .navbar {
     margin-bottom: 0;
@@ -34,7 +32,7 @@ menu {
     display: flex;
     align-items: center;
 
-    h1,h2,h3,h4,h5,h6 {
+    h1, h2, h3, h4, h5, h6 {
       margin: 0;
       padding: 0;
     }
@@ -80,7 +78,6 @@ menu {
   border-radius: 0 !important;
 }
 
-
 .toast-top-right {
   box-shadow: none;
   top: initial;
@@ -88,7 +85,6 @@ menu {
   bottom: 15px;
   right: 15px;
 }
-
 
 .bar-chart {
   height: 200px;
@@ -109,7 +105,6 @@ menu {
 .bar {
   transition: all ease-in-out 0.5s;
 }
-
 
 .status-col {
   * {
@@ -142,7 +137,7 @@ menu {
 }
 
 .bar-fix {
- padding: 10px 0;
+  padding: 10px 0;
 }
 
 .condition-labels {
@@ -154,7 +149,6 @@ menu {
 .condition-form {
   display: inline-block;
 }
-
 
 .info-panel {
   z-index: 100;
@@ -189,12 +183,13 @@ menu {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Avenir';
 }
+
 p, div {
   font-family: 'Avenir';
 }
 
 //Navbar text
-.navbar-default .navbar-nav>li>a {
+.navbar-default .navbar-nav > li > a {
   color: $dark-blue !important;
   font-size: 10px;
   text-transform: uppercase;
@@ -202,13 +197,12 @@ p, div {
   letter-spacing: 1px;
 }
 
-.navbar-default .navbar-nav>.active>a {
+.navbar-default .navbar-nav > .active > a {
   background-color: transparent !important;
   color: $purple !important;
   background-image: none !important;
   box-shadow: none !important;
 }
-
 
 //buttons
 .btn {

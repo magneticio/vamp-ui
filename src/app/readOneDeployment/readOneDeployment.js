@@ -20,7 +20,7 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
         ticks: {
           beginAtZero: true,
           max: 100,
-          min:0
+          min: 0
         }
       }],
       gridLines: {
@@ -32,7 +32,6 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   function createChartData() {
     var tempData = [];
     var tempLabels = [];
-
 
 
     for (var i = 0; i < noOfPoints; i++) {
@@ -49,9 +48,9 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
 
 
   $interval(
-    function() {
+    function () {
 
-      if(self.healthChart.data[0].length > noOfPoints) {
+      if (self.healthChart.data[0].length > noOfPoints) {
         self.healthChart.labels.shift();
         self.healthChart.data[0].shift();
       }
@@ -68,7 +67,9 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   }
 
   $interval(
-    function() { refreshDeployment() },
+    function () {
+      refreshDeployment()
+    },
     3000
   );
 
@@ -84,14 +85,13 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
 
   function eventFired(data) {
     console.log('whahhahaha', data);
-    if(_.includes(data.tags, 'health')) {
+    if (_.includes(data.tags, 'health')) {
       self.currentHealth = data.value * 100;
     }
   }
 
 
-
-  $interval(function() {
+  $interval(function () {
 
   }, 3000);
 }

@@ -6,15 +6,18 @@
   <form novalidate name="deploymentForm">
     <div class="form-group" ng-class="{'has-error': deploymentForm.name.$invalid}">
       <label for="deployment-name">Deployment name</label>
-      <input name="name" type="text" class="form-control" id="deployment-name" placeholder="Name" ng-model="deploymentName" ng-pattern="/^\S*$/" required>
+      <input name="name" type="text" class="form-control" id="deployment-name" placeholder="Name"
+             ng-model="deploymentName" ng-pattern="/^\S*$/" required>
       <span class="help-block" ng-show="deploymentForm.name.$error.required">Deployment should have a name.</span>
       <span class="help-block" ng-show="deploymentForm.name.$error.pattern">Deploymentname is not allowed to have spaces.</span>
     </div>
-   </form>
+  </form>
 
 
 </div>
 <div class="modal-footer">
-  <button class="btn btn-success" ladda="deployingBlueprint" ng-disabled="deploymentForm.$invalid" type="button" ng-click="ok()">Deploy</button>
+  <button class="btn btn-success" ladda="deployingBlueprint" ng-disabled="deploymentForm.$invalid" type="button"
+          ng-click="ok()">Deploy
+  </button>
   <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
 </div>

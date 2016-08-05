@@ -1,15 +1,15 @@
 function infoPanelController(Api, $rootScope) {
   var self = this;
 
-  $rootScope.$watch('infoPanelActive', function(newValue) {
+  $rootScope.$watch('infoPanelActive', function (newValue) {
     self.infoPanelActive = newValue;
   });
 
   Api.readAll('info').then(infoLoaded, infoLoadedFailed);
-  
+
   function infoLoaded(response) {
     var data = response.data;
-    console.log('yooo',data);
+    console.log('yooo', data);
     var info = {};
     info.version = data.version;
     info.persistence = data.persistence.database.type;
