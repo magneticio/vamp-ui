@@ -1,19 +1,15 @@
 function readAllGatewaysController(Api, toastr, NgTableParams, $interval, $uibModal) {
+  /* eslint camelcase: ["error", {properties: "never"}]*/
   var self = this;
   self.openDeleteModal = openDeleteModal;
 
   self.tableParams = new NgTableParams({page: 1, count: 10}, {counts: [], getData: getData});
-
-
   function getData(params) {
     return Api.readAll('gateways', {page: params.page(), per_page: 10}).then(function (response) {
-      var data = response.data;
       params.total(response.headers()['x-total-count']);
       return response.data;
     });
   }
-
-
   function refresh() {
     self.tableParams.reload();
   }
@@ -37,11 +33,10 @@ function readAllGatewaysController(Api, toastr, NgTableParams, $interval, $uibMo
           return 'You are about to delete [' + theGatewayId + ']. Confirm the deletion.';
         },
         buttonText: function () {
-          return 'DELETE'
+          return 'DELETE';
         }
       }
     });
-
 
     modalInstance.result.then(function (id) {
       Api.delete('gateways', id).then(gatewayDeleted, gatewayDeletedFailed);
@@ -57,7 +52,6 @@ function readAllGatewaysController(Api, toastr, NgTableParams, $interval, $uibMo
   }
 
   $interval(refresh, 5000);
-
 }
 
 angular

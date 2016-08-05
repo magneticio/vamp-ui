@@ -1,4 +1,5 @@
-function updateBlueprintController(Api, $state, $timeout, toastr, $stateParams) {
+/* global YAML*/
+function updateBlueprintController(Api, $state, toastr, $stateParams) {
   var self = this;
   self.data = {};
   self.updatingBlueprint = false;
@@ -9,11 +10,10 @@ function updateBlueprintController(Api, $state, $timeout, toastr, $stateParams) 
 
   Api.read('blueprints', self.blueprintId).then(blueprintLoaded);
 
-
   function update(blueprintData) {
     self.updatingBlueprint = true;
 
-    Api.update('blueprints', self.blueprintId, blueprintData).then(blueprintUpdated, blueprintNotUpdated)
+    Api.update('blueprints', self.blueprintId, blueprintData).then(blueprintUpdated, blueprintNotUpdated);
   }
 
   function blueprintLoaded(response) {
@@ -21,8 +21,7 @@ function updateBlueprintController(Api, $state, $timeout, toastr, $stateParams) 
     self.sourceCode = YAML.stringify(data, 6);
   }
 
-  function blueprintUpdated(response) {
-    var data = response.data;
+  function blueprintUpdated() {
     self.updatingBlueprint = false;
     toastr.success(self.blueprintId, 'Updated Blueprint');
     $state.go('readAllBlueprints');

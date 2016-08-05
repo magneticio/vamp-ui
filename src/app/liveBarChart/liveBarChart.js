@@ -1,4 +1,4 @@
-function liveBarChartController($scope, $timeout, $timeout) {
+function liveBarChartController($scope, $timeout) {
   var self = this;
   self.bars = [];
   console.log(self.base + ':newHealthValue');
@@ -8,7 +8,6 @@ function liveBarChartController($scope, $timeout, $timeout) {
   self.animate = true;
 
   function Bar(label, value) {
-
     this.label = label;
     this.value = value;
     this.height = value * 100 + '%';
@@ -25,7 +24,6 @@ function liveBarChartController($scope, $timeout, $timeout) {
       self.bars.push(new Bar(data.timestamp, Math.random()));
     }, 200);
 
-
     $timeout(function () {
       self.animate = true;
     }, 2000);
@@ -33,17 +31,7 @@ function liveBarChartController($scope, $timeout, $timeout) {
     $timeout(function () {
       self.paddingRight = self.barWidth + 4 + 'px';
     }, 3000);
-
-
-    // self.innerPadding = 0;
   });
-
-
-  // for(var i = 0; i < 24; i++) {
-  //   self.bars.push(new Bar('test', Math.random()));
-  // }
-
-
 }
 
 angular

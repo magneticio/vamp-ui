@@ -1,6 +1,6 @@
+/* global sprintf, YAML*/
 function editorController() {
   var self = this;
-
   var defaultStatus = {
     type: 'SUCCESS',
     message: 'YAML is parsed correctly'
@@ -16,24 +16,22 @@ function editorController() {
     showGutter: true,
     theme: 'twilight',
     mode: 'yaml',
-    firstLineNumber: 1,
-  }
+    firstLineNumber: 1
+  };
 
   function change(changedSourceCode) {
     try {
       self.data = YAML.parse(changedSourceCode);
       self.status = angular.copy(defaultStatus);
       self.canBeParsed = true;
-    }
-    catch (error) {
+    } catch (error) {
       self.status = {
         type: 'ERROR',
         message: sprintf('Not able to parse YAML. Check that the YAML syntax is correctly formatted. Line #%s [%s]', error.parsedLine, error.snippet)
-      }
+      };
       self.canBeParsed = false;
     }
   }
-
 }
 
 angular

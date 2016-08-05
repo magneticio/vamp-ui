@@ -1,3 +1,4 @@
+/* global _*/
 function menuController($rootScope, $state) {
   var self = this;
   self.toggleSettings = toggleSettings;
@@ -31,7 +32,6 @@ function menuController($rootScope, $state) {
     if (_.includes(activeTable[activeState], $state.current.name)) {
       self.active = activeState;
     }
-    ;
   }
 
   self.menuItems = [
@@ -50,7 +50,7 @@ function menuController($rootScope, $state) {
       activeState: 'gateways',
       goToState: 'readAllGateways'
     }
-  ]
+  ];
 }
 
 angular

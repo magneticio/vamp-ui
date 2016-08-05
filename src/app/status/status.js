@@ -3,9 +3,9 @@ function status() {
     restrict: 'E',
     template: '<div class="status"></div>',
     scope: {
-      value: '=',
+      value: '='
     },
-    link: function (scope, element, attrs) {
+    link: function (scope, element) {
       var theElement = angular.element(element.children()[0]);
 
       scope.$watch('value', function (newValue) {
@@ -19,7 +19,7 @@ function status() {
           r: Math.floor((255 * n) / 100),
           g: Math.floor((255 * (100 - n)) / 100),
           b: 0
-        }
+        };
       }
     },
     controller: function () {
