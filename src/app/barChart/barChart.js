@@ -26,7 +26,7 @@ function barChart($interval, $timeout) {
 
       var barWidth = (elementWidth / noOfBars) - (barMargin * 2);
 
-      $interval(function() {
+      $interval(function () {
         moveEverythingToTheLeft();
         createNewBar(Math.random());
       }, 1000);
@@ -35,7 +35,7 @@ function barChart($interval, $timeout) {
       function createNewBar(value) {
         moveEverythingToTheLeft();
 
-        $timeout(function() {
+        $timeout(function () {
           var bar = angular.element('<div class="bar"></div>');
           bar.css('position', 'absolute');
           bar.css('height', (value * 100) + '%');
@@ -45,18 +45,18 @@ function barChart($interval, $timeout) {
           var generatedColor = generateColor(value);
 
 
-          bar.css('background-color', 'rgb('+ generatedColor.r+','+ generatedColor.g + ',' + generatedColor.b + ')');
+          bar.css('background-color', 'rgb(' + generatedColor.r + ',' + generatedColor.g + ',' + generatedColor.b + ')');
           barsContainer.append(bar);
 
         }, 500);
 
-        if(barsContainer.children().length > noOfBars) {
+        if (barsContainer.children().length > noOfBars) {
           removeFirstBarAdded();
         }
       }
 
       function moveEverythingToTheLeft() {
-        angular.forEach(barsContainer.children(), function(value, key) {
+        angular.forEach(barsContainer.children(), function (value, key) {
           var toBeMovedElement = angular.element(value);
           toBeMovedElement.css('right', parseInt(toBeMovedElement.css('right')) + barWidth + (barMargin * 2));
         });
@@ -64,7 +64,7 @@ function barChart($interval, $timeout) {
 
       function removeFirstBarAdded() {
         var timeUntilRemove = 500;
-        $timeout(function() {
+        $timeout(function () {
           barsContainer.children()[0].remove();
         }, timeUntilRemove);
       }
@@ -81,7 +81,8 @@ function barChart($interval, $timeout) {
       console.log(theElement.children());
 
     },
-    controller: function () {},
+    controller: function () {
+    },
     controllerAs: 'ctrl'
   };
 }

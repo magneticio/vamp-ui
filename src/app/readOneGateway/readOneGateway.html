@@ -46,13 +46,15 @@
       <h4>{{$ctrl.currentRate}}&nbsp;Requests per second</h4>
 
       <canvas id="line" class="chart chart-line" chart-data="$ctrl.rateChart.data"
-              chart-labels="$ctrl.rateChart.labels" chart-series="$ctrl.rateChart.series" chart-options="$ctrl.chartOptions">
+              chart-labels="$ctrl.rateChart.labels" chart-series="$ctrl.rateChart.series"
+              chart-options="$ctrl.chartOptions">
       </canvas>
     </div>
     <div class="col-md-4">
       <h4>{{$ctrl.currentResponseTime}}&nbsp;Response time (ms)</h4>
       <canvas id="line" class="chart chart-line" chart-data="$ctrl.responseChart.data"
-              chart-labels="$ctrl.responseChart.labels" chart-series="$ctrl.responseChart.series" chart-options="$ctrl.chartOptions">
+              chart-labels="$ctrl.responseChart.labels" chart-series="$ctrl.responseChart.series"
+              chart-options="$ctrl.chartOptions">
       </canvas>
     </div>
   </div>
@@ -62,7 +64,8 @@
   <table class="table">
     <tr>
       <th>Name</th>
-      <th><a href="javascript:void(0)" ng-click="$ctrl.editWeights()">Weight <i class="fa fa-pencil" aria-hidden="true"></i></i></a></th>
+      <th><a href="javascript:void(0)" ng-click="$ctrl.editWeights()">Weight <i class="fa fa-pencil"
+                                                                                aria-hidden="true"></i></i></a></th>
       <th>Conditions</th>
       <th>Condition Strength</th>
     </tr>
@@ -73,16 +76,20 @@
         <span ng-repeat="condition in route.conditions" class="label label-success">{{condition.condition}}</span>
         <div class="condition-form" ng-if="$ctrl.addConditionMode[routename]">
 
-         <form novalidate class="form-inline" name="conditionForm">
-           <div class="form-group form-group-sm">
-             <input type="text" class="form-control" ng-model="condition" id="condition" placeholder="New condition" name="condition" required>
-           </div>
-           <button ng-disabled="conditionForm.$invalid"  ng-click="$ctrl.addCondition(routename, condition)" class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-           <button ng-click="$ctrl.addConditionMode[routename] = false" class="btn btn-danger btn-xs"><i class="fa fa-times"></i></button>
-         </form>
+          <form novalidate class="form-inline" name="conditionForm">
+            <div class="form-group form-group-sm">
+              <input type="text" class="form-control" ng-model="condition" id="condition" placeholder="New condition"
+                     name="condition" required>
+            </div>
+            <button ng-disabled="conditionForm.$invalid" ng-click="$ctrl.addCondition(routename, condition)"
+                    class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
+            <button ng-click="$ctrl.addConditionMode[routename] = false" class="btn btn-danger btn-xs"><i
+                class="fa fa-times"></i></button>
+          </form>
 
         </div>
-        <button ng-if="!$ctrl.addConditionMode[routename]" type="button" class="btn btn-success btn-xs" ng-click="$ctrl.addConditionMode[routename] = true"><i class="fa fa-plus"></i></button>
+        <button ng-if="!$ctrl.addConditionMode[routename]" type="button" class="btn btn-success btn-xs"
+                ng-click="$ctrl.addConditionMode[routename] = true"><i class="fa fa-plus"></i></button>
       </td>
       <td>{{route.condition_strength}}</td>
     </tr>

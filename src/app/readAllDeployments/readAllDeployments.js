@@ -2,11 +2,12 @@ function readAllDeploymentsController(Api, toastr, NgTableParams, $interval, $ui
   var self = this;
   self.openDeleteModal = openDeleteModal;
 
-  self.tableParams = new NgTableParams({page:1, count: 10}, {counts: [],getData: getData});
+  self.tableParams = new NgTableParams({page: 1, count: 10}, {counts: [], getData: getData});
 
 
   function getData(params) {
-    return Api.readAll('deployments', {page: params.page(), per_page: 10}).then(function (response) { var data = response.data;
+    return Api.readAll('deployments', {page: params.page(), per_page: 10}).then(function (response) {
+      var data = response.data;
       params.total(response.headers()['x-total-count']);
       return response.data;
     });
@@ -26,10 +27,18 @@ function readAllDeploymentsController(Api, toastr, NgTableParams, $interval, $ui
       controller: 'deleteResourceModal',
       size: 'sm',
       resolve: {
-        id: function(){return theDeploymentId;},
-        title: function(){return 'Are you sure?';},
-        text: function(){return 'You are about to updeploy [' + theDeploymentId + ']. Confirm the undeployment.';},
-        buttonText: function(){return 'Undeploy'}
+        id: function () {
+          return theDeploymentId;
+        },
+        title: function () {
+          return 'Are you sure?';
+        },
+        text: function () {
+          return 'You are about to updeploy [' + theDeploymentId + ']. Confirm the undeployment.';
+        },
+        buttonText: function () {
+          return 'Undeploy'
+        }
       }
     });
 
@@ -38,8 +47,8 @@ function readAllDeploymentsController(Api, toastr, NgTableParams, $interval, $ui
       Api.read('deployments', id, {'as_blueprint': true}).then(deploymentExportedAsBlueprint, deploymentDeletedFailed);
 
 
-
-      function deploymentExportedAsBlueprint(response) { var data = response.data;
+      function deploymentExportedAsBlueprint(response) {
+        var data = response.data;
         Api.delete('deployments', theDeploymentId, data).then(deploymentDeleted, deploymentDeletedFailed);
       }
 
@@ -48,7 +57,7 @@ function readAllDeploymentsController(Api, toastr, NgTableParams, $interval, $ui
       }
 
       function deploymentDeletedFailed(error) {
-        toastr.error('Deployment ' + id + ' could not be undeployed. ' + error , 'Deployment was not undeployed');
+        toastr.error('Deployment ' + id + ' could not be undeployed. ' + error, 'Deployment was not undeployed');
       }
     });
   }

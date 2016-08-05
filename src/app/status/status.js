@@ -8,9 +8,9 @@ function status() {
     link: function (scope, element, attrs) {
       var theElement = angular.element(element.children()[0]);
 
-      scope.$watch('value', function(newValue) {
+      scope.$watch('value', function (newValue) {
         var generatedColor = generateColor(newValue);
-        theElement.css('background-color', 'rgb('+ generatedColor.r+','+ generatedColor.g + ',' + generatedColor.b + ')');
+        theElement.css('background-color', 'rgb(' + generatedColor.r + ',' + generatedColor.g + ',' + generatedColor.b + ')');
       });
 
       function generateColor(value) {
@@ -22,7 +22,8 @@ function status() {
         }
       }
     },
-    controller: function () {},
+    controller: function () {
+    },
     controllerAs: 'ctrl'
   };
 }

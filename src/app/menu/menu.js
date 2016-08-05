@@ -27,12 +27,13 @@ function menuController($rootScope, $state) {
     console.log(!$rootScope.infoPanelActive);
   }
 
-  for(var activeState in activeTable) {
-      if(_.includes(activeTable[activeState], $state.current.name)) {
-        self.active = activeState;
-      };
+  for (var activeState in activeTable) {
+    if (_.includes(activeTable[activeState], $state.current.name)) {
+      self.active = activeState;
+    }
+    ;
   }
-  
+
   self.menuItems = [
     {
       text: 'Blueprints',
