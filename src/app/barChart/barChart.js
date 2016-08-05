@@ -5,7 +5,7 @@ function barChart($interval, $timeout) {
     scope: {
       data: '='
     },
-    link: function (scope, element, attrs) {
+    link: function (scope, element) {
       var theElement = angular.element(element[0]);
       theElement.css('position', 'relative');
 
@@ -13,15 +13,13 @@ function barChart($interval, $timeout) {
       var barsContainer = angular.element(barsContainerElement);
       theElement.append(barsContainer);
 
-      //Constants
+      // Constants
       var noOfBars = 40;
       var barMargin = 1;
 
-      //END of constants
+      // END of constants
       var elementHeight = barsContainer[0].clientHeight;
       var elementWidth = barsContainer[0].clientWidth;
-
-
       console.log(elementHeight + ' , ' + elementWidth);
 
       var barWidth = (elementWidth / noOfBars) - (barMargin * 2);
@@ -30,7 +28,6 @@ function barChart($interval, $timeout) {
         moveEverythingToTheLeft();
         createNewBar(Math.random());
       }, 1000);
-
 
       function createNewBar(value) {
         moveEverythingToTheLeft();
@@ -43,22 +40,18 @@ function barChart($interval, $timeout) {
           bar.css('width', barWidth);
           bar.css('right', 0);
           var generatedColor = generateColor(value);
-
-
           bar.css('background-color', 'rgb(' + generatedColor.r + ',' + generatedColor.g + ',' + generatedColor.b + ')');
           barsContainer.append(bar);
-
         }, 500);
-
         if (barsContainer.children().length > noOfBars) {
           removeFirstBarAdded();
         }
       }
 
       function moveEverythingToTheLeft() {
-        angular.forEach(barsContainer.children(), function (value, key) {
+        angular.forEach(barsContainer.children(), function (value) {
           var toBeMovedElement = angular.element(value);
-          toBeMovedElement.css('right', parseInt(toBeMovedElement.css('right')) + barWidth + (barMargin * 2));
+          toBeMovedElement.css('right', parseInt(toBeMovedElement.css('right'), 10) + barWidth + (barMargin * 2));
         });
       }
 
@@ -75,11 +68,10 @@ function barChart($interval, $timeout) {
           r: Math.floor((255 * n) / 100),
           g: Math.floor((255 * (100 - n)) / 100),
           b: 0
-        }
+        };
       }
 
       console.log(theElement.children());
-
     },
     controller: function () {
     },

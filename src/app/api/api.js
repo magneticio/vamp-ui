@@ -1,7 +1,7 @@
-var endpoint = '',
-  defaultHeaders = {
-    'Content-Type': 'application/json'
-  };
+var endpoint = '';
+var defaultHeaders = {
+  'Content-Type': 'application/json'
+};
 
 function artifactsRequestConfig($httpProvider) {
   $httpProvider.defaults.headers.common = defaultHeaders;
@@ -11,7 +11,6 @@ function artifactsRequestConfig($httpProvider) {
 }
 
 function Api($http, $location, $q, toastr, Environment) {
-
   endpoint = Environment.getApiBaseUrl();
 
   function responseHandler(response) {
@@ -19,8 +18,7 @@ function Api($http, $location, $q, toastr, Environment) {
   }
 
   function errorHandler(error) {
-
-    //Status is -1 if you can't connect to backend.
+    // Status is -1 if you can't connect to backend.
     if (error.status === -1) {
       toastr.error('Webinterface can\'t connect', 'Can\'t connect to Vamp');
     }
@@ -34,7 +32,7 @@ function Api($http, $location, $q, toastr, Environment) {
     create: function (resource, data) {
       var httpConfig = {};
       return $http.post(endpoint + resource, data, httpConfig)
-        .then(responseHandler, errorHandler)
+        .then(responseHandler, errorHandler);
     },
 
     delete: function (resource, id, data) {
@@ -44,26 +42,26 @@ function Api($http, $location, $q, toastr, Environment) {
         data: data || '',
         headers: defaultHeaders
       })
-        .then(responseHandler, errorHandler)
+        .then(responseHandler, errorHandler);
     },
 
     readAll: function (resource, params) {
       return $http.get(endpoint + resource, {params: params})
-        .then(responseHandler, errorHandler)
+        .then(responseHandler, errorHandler);
     },
 
     read: function (resource, id, params) {
-      var httpConfig = {}
+      var httpConfig = {};
       httpConfig.params = params;
 
       return $http.get(endpoint + resource + '/' + id, httpConfig)
-        .then(responseHandler, errorHandler)
+        .then(responseHandler, errorHandler);
     },
 
     update: function (resource, id, data) {
-      var httpConfig = {}
+      var httpConfig = {};
       return $http.put(endpoint + resource + '/' + id, data, httpConfig)
-        .then(responseHandler, errorHandler)
+        .then(responseHandler, errorHandler);
     },
 
     getEndpoint: function () {

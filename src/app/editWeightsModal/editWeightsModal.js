@@ -1,22 +1,20 @@
+/* global _*/
 function editWeightsModal($scope, $uibModalInstance, weightValues) {
-
   $scope.sliderOptions = {
     floor: 0,
     ceil: 100
-  }
-
-
+  };
   $scope.newWeightValues = angular.copy(weightValues);
 
   function toArray(weightValues) {
     var theArray = _.map(weightValues, function (value, prop) {
-      return {name: prop, value: value}
+      return {name: prop, value: value};
     });
 
     return theArray;
   }
 
-  //This function seems to complicated. Might have to refactor in the future.
+  // This function seems to complicated. Might have to refactor in the future.
   if (_.size($scope.newWeightValues) === 2) {
     $scope.$watch('newWeightValues', function (newValue, oldValue) {
       var newValueArray = toArray(newValue);
@@ -26,15 +24,14 @@ function editWeightsModal($scope, $uibModalInstance, weightValues) {
       console.log(oldValueArray);
 
       if (newValueArray[0].value !== oldValueArray[0].value) {
-        console.log('first slider changed')
+        console.log('first slider changed');
         $scope.newWeightValues[newValueArray[1].name] = 100 - newValueArray[0].value;
       }
 
       if (newValueArray[1].value !== oldValueArray[1].value) {
-        console.log('second slider changed')
+        console.log('second slider changed');
         $scope.newWeightValues[newValueArray[0].name] = 100 - newValueArray[1].value;
       }
-
     }, true);
   }
 
@@ -50,12 +47,14 @@ function editWeightsModal($scope, $uibModalInstance, weightValues) {
     var totalValue = 0;
 
     for (var routeName in $scope.newWeightValues) {
-      var value = $scope.newWeightValues[routeName];
-      totalValue += value;
+      if (routeName) {
+        var value = $scope.newWeightValues[routeName];
+        totalValue += value;
+      }
     }
 
     return totalValue;
-  }
+  };
 }
 
 angular

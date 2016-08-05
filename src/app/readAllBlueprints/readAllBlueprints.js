@@ -1,4 +1,6 @@
 function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uibModal) {
+  /* eslint camelcase: ["error", {properties: "never"}]*/
+
   var self = this;
   self.openDeleteModal = openDeleteModal;
   self.openDeployModal = openDeployModal;
@@ -17,9 +19,7 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
     self.tableParams.reload();
   }
 
-
   function openDeployModal(blueprint) {
-
     var theBlueprint = blueprint;
 
     var modalInstance = $uibModal.open({
@@ -30,7 +30,7 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
       resolve: {
         blueprint: function () {
           return theBlueprint;
-        },
+        }
       }
     });
 
@@ -40,9 +40,7 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
   }
 
   function openDeleteModal(blueprintId) {
-
     var theBlueprintId = blueprintId;
-
 
     var modalInstance = $uibModal.open({
       animation: true,
@@ -60,7 +58,7 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
           return 'You are about to delete [' + theBlueprintId + ']. Confirm the deletion.';
         },
         buttonText: function () {
-          return 'DELETE'
+          return 'DELETE';
         }
       }
     });
@@ -76,7 +74,6 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
       }
     });
   }
-
 }
 
 angular
