@@ -3,8 +3,6 @@ function menuController($rootScope, $state) {
   var self = this;
   self.toggleSettings = toggleSettings;
 
-  console.log($state.current.name);
-
   var activeTable = {
     blueprints: [
       'readAllBlueprints',
@@ -25,7 +23,6 @@ function menuController($rootScope, $state) {
 
   function toggleSettings() {
     $rootScope.infoPanelActive = !$rootScope.infoPanelActive;
-    console.log(!$rootScope.infoPanelActive);
   }
 
   for (var activeState in activeTable) {

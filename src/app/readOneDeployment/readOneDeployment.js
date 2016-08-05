@@ -156,7 +156,6 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
 
 
   function eventFired(data) {
-    console.log('whahhahaha', data);
     if (_.includes(data.tags, 'health')) {
       self.currentHealth = data.value * 100;
     }

@@ -1,7 +1,6 @@
 function liveBarChartController($scope, $timeout) {
   var self = this;
   self.bars = [];
-  console.log(self.base + ':newHealthValue');
   self.innerPadding = 0;
   self.overflowMargin = -self.barWidth - 8 + 'px';
   self.paddingRight = 0;
