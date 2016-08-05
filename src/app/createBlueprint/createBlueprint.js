@@ -9,7 +9,7 @@ function createBlueprintController(Api, $state, toastr) {
   function create(blueprintData) {
     self.creatingBlueprint = true;
 
-    Api.create('blueprints', blueprintData).then(blueprintCreated, blueprintNotCreated)
+    Api.create('blueprints', blueprintData).then(blueprintCreated, blueprintNotCreated);
   }
 
   function blueprintCreated(response) {
@@ -23,7 +23,6 @@ function createBlueprintController(Api, $state, toastr) {
     toastr.error(error, 'Could not create Blueprint');
     self.creatingBlueprint = false;
   }
-
 }
 
 angular

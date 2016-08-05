@@ -1,3 +1,4 @@
+/* global _*/
 function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandler, $interval) {
   var noOfPoints = 250;
 
@@ -6,7 +7,6 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   self.chart = {};
   self.currentHealth = 0;
   self.healthChart = createChartData();
-
 
   var deploymentId = $stateParams.id;
 
@@ -33,7 +33,6 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
     var tempData = [];
     var tempLabels = [];
 
-
     for (var i = 0; i < noOfPoints; i++) {
       tempLabels.push('');
       tempData.push(0);
@@ -42,14 +41,12 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
     return {
       labels: tempLabels,
       series: ['serie'],
-      data: [tempData],
-    }
+      data: [tempData]
+    };
   }
-
 
   $interval(
     function () {
-
       if (self.healthChart.data[0].length > noOfPoints) {
         self.healthChart.labels.shift();
         self.healthChart.data[0].shift();
@@ -61,14 +58,13 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
     40
   );
 
-
   function refreshDeployment() {
     Api.read('deployments', deploymentId).then(deploymentLoaded, deploymentCouldNotBeLoaded);
   }
 
   $interval(
     function () {
-      refreshDeployment()
+      refreshDeployment();
     },
     3000
   );
@@ -89,7 +85,6 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
       self.currentHealth = data.value * 100;
     }
   }
-
 
   $interval(function () {
 

@@ -1,5 +1,4 @@
 function deployBlueprintModal($scope, toastr, $uibModalInstance, blueprint, Api, $state) {
-
   $scope.blueprint = blueprint;
   $scope.deploymentName = angular.copy(blueprint.name);
   $scope.deployingBlueprint = false;
@@ -20,7 +19,6 @@ function deployBlueprintModal($scope, toastr, $uibModalInstance, blueprint, Api,
       toastr.error(error, 'Blueprint could not be deployed');
       $scope.deployingBlueprint = false;
     }
-
   };
 
   $scope.cancel = function () {

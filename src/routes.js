@@ -3,7 +3,7 @@ angular
   .config(routesConfig);
 
 /** @ngInject */
-function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
+function routesConfig($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
@@ -46,6 +46,5 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('updateGateway', {
       url: '/gateways/edit/:id',
       template: '<menu></menu><update-gateway> </update-gateway>'
-    })
-
+    });
 }
