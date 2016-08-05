@@ -8,14 +8,16 @@
   <table ng-table="$ctrl.tableParams" class="table table-striped" show-filter="false">
     <tr ng-repeat="gateway in $data">
       <td class="col-md-6" title="'Name'" filter="{name: 'text'}" sortable="'name'">
-        <a ui-sref="readOneGateway({id: gateway.name})">{{gateway.name}}&nbsp;<span ng-if="!gateway.inner" class="label label-primary">External</span></a>
+        <a ui-sref="readOneGateway({id: gateway.name})">{{gateway.name}}&nbsp;<span ng-if="!gateway.inner"
+                                                                                    class="label label-primary">External</span></a>
       </td>
       <td class="col-md-2" title="'Port'" filter="{port: 'text'}" sortable="'port'">
         {{gateway.port}}
       <td>
         <div class="pull-right">
           <button ui-sref="updateGateway({id: gateway.name})" class="btn btn-default">Edit</button>
-          <button ng-if="!gateway.inner" ng-click="$ctrl.openDeleteModal(gateway.name)" class="btn btn-default">Delete</button>
+          <button ng-if="!gateway.inner" ng-click="$ctrl.openDeleteModal(gateway.name)" class="btn btn-default">Delete
+          </button>
         </div>
       </td>
     </tr>

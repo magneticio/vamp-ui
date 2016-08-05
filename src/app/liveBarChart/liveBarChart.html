@@ -1,5 +1,6 @@
 <div class="live-bar-chart">
-  <div class="inner" ng-class="{animate: $ctrl.animate}" ng-style="{'margin-right': $ctrl.overflowMargin, 'padding-right': $ctrl.paddingRight}">
+  <div class="inner" ng-class="{animate: $ctrl.animate}"
+       ng-style="{'margin-right': $ctrl.overflowMargin, 'padding-right': $ctrl.paddingRight}">
     <div class="bars">
       <div class="bar" style="height:{{bar.height}}; width:{{bar.width}}" ng-repeat="bar in $ctrl.bars track by $index">
         <div class="value">

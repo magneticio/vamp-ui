@@ -22,7 +22,7 @@ function deployBlueprintModal($scope, toastr, $uibModalInstance, blueprint, Api,
     }
 
   };
-  
+
   $scope.cancel = function () {
     $uibModalInstance.dismiss('cancel');
   };
