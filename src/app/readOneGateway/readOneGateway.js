@@ -69,13 +69,7 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
       }
     }
   };
-
-  $scope.$on('chart-create', function (evt, chart) {
-    console.log('Chaaart', chart.data.datasets);
-  });
-
   var gatewayId = $stateParams.id;
-
   function createChartData() {
     var tempData = [];
     var tempLabels = [];
@@ -116,8 +110,6 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
   EventStreamHandler.getStream('gateways:' + gatewayId, eventFired);
 
   function eventFired(data) {
-    console.log(data);
-
     if (_.includes(data.tags, 'health')) {
       self.currentHealth = data.value * 100;
     }
