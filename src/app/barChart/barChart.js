@@ -18,9 +18,7 @@ function barChart($interval, $timeout) {
       var barMargin = 1;
 
       // END of constants
-      var elementHeight = barsContainer[0].clientHeight;
       var elementWidth = barsContainer[0].clientWidth;
-      console.log(elementHeight + ' , ' + elementWidth);
 
       var barWidth = (elementWidth / noOfBars) - (barMargin * 2);
 
@@ -70,8 +68,6 @@ function barChart($interval, $timeout) {
           b: 0
         };
       }
-
-      console.log(theElement.children());
     },
     controller: function () {
     },
