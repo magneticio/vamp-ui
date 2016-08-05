@@ -11,9 +11,10 @@ function createGatewayController(Api, $state, toastr) {
     Api.create('gateways', gatewayData).then(gatewayCreated, gatewayNotCreated)
   }
 
-  function gatewayCreated(response) { var data = response.data;
+  function gatewayCreated(response) {
+    var data = response.data;
     self.creatingGateway = false;
-    toastr.success(data.name,'Created Gateway');
+    toastr.success(data.name, 'Created Gateway');
     $state.go('readAllGateways');
   }
 

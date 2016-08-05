@@ -5,7 +5,7 @@ function EventStreamHandler($http, Environment) {
 EventStreamHandler.prototype.getStream = function (tag, eventFiredCallback) {
   var source = new EventSource(Environment.prototype.getApiBaseUrl() + 'events/stream?tag=' + tag);
 
-  source.onopen = function() {
+  source.onopen = function () {
     console.log('Stream started');
   }
 

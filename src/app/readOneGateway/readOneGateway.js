@@ -31,7 +31,7 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
         ticks: {
           beginAtZero: true,
           max: 100,
-          min:0
+          min: 0
         }
       }],
       gridLines: {
@@ -81,7 +81,6 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
     var tempLabels = [];
 
 
-
     for (var i = 0; i < noOfPoints; i++) {
       tempLabels.push('');
       tempData.push(0);
@@ -112,7 +111,7 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
 
 
   function refreshGateway() {
-    if(allowRefresh) {
+    if (allowRefresh) {
       Api.read('gateways', gatewayId).then(gatewayLoaded, gatewayCouldNotBeLoaded);
     }
   }
@@ -122,29 +121,31 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
   function eventFired(data) {
     console.log(data);
 
-    if(_.includes(data.tags, 'health')) {
+    if (_.includes(data.tags, 'health')) {
       self.currentHealth = data.value * 100;
     }
 
-    if(_.includes(data.tags, 'metrics:rate')) {
+    if (_.includes(data.tags, 'metrics:rate')) {
       self.currentRate = data.value;
     }
 
-    if(_.includes(data.tags, 'metrics:responseTime')) {
+    if (_.includes(data.tags, 'metrics:responseTime')) {
       self.currentResponseTime = data.value;
     }
 
   }
 
   $interval(
-    function() { refreshGateway() },
+    function () {
+      refreshGateway()
+    },
     3000
   );
 
   $interval(
-    function() {
+    function () {
 
-      if(self.healthChart.data[0].length > noOfPoints) {
+      if (self.healthChart.data[0].length > noOfPoints) {
         self.healthChart.labels.shift();
         self.healthChart.data[0].shift();
       }
@@ -152,7 +153,7 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
       self.healthChart.labels.push('');
       self.healthChart.data[0].push(self.currentHealth);
 
-      if(self.rateChart.data[0].length > noOfPoints) {
+      if (self.rateChart.data[0].length > noOfPoints) {
         self.rateChart.labels.shift();
         self.rateChart.data[0].shift();
       }
@@ -160,7 +161,7 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
       self.rateChart.labels.push('');
       self.rateChart.data[0].push(self.currentRate);
 
-      if(self.responseChart.data[0].length > noOfPoints) {
+      if (self.responseChart.data[0].length > noOfPoints) {
         self.responseChart.labels.shift();
         self.responseChart.data[0].shift();
       }
@@ -192,7 +193,7 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
 
   function editWeights() {
     var weights = {};
-    for(var routeName in self.data.routes) {
+    for (var routeName in self.data.routes) {
       weights[routeName] = getValueFromPercentage(self.data.routes[routeName].weight);
     }
 
@@ -206,7 +207,7 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
       controller: 'editWeightsModal',
       size: 'md',
       resolve: {
-        weightValues: function() {
+        weightValues: function () {
           return weights;
         }
       }
@@ -215,7 +216,7 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
 
     modalInstance.result.then(function (weightValues) {
 
-      for(routeName in weightValues) {
+      for (routeName in weightValues) {
         var weightValue = weightValues[routeName];
         self.data.routes[routeName].weight = weightValue + '%';
       }

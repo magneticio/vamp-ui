@@ -3,11 +3,7 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
   self.openDeleteModal = openDeleteModal;
   self.openDeployModal = openDeployModal;
 
-
-
-
-
-  self.tableParams = new NgTableParams({page:1, count: 10}, {counts: [],getData: getData});
+  self.tableParams = new NgTableParams({page: 1, count: 10}, {counts: [], getData: getData});
 
   function getData(params) {
     return Api.readAll('blueprints', {page: params.page(), per_page: 10}).then(function (response) {
@@ -32,7 +28,9 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
       controller: 'deployBlueprintModal',
       size: 'sm',
       resolve: {
-        blueprint: function(){return theBlueprint;},
+        blueprint: function () {
+          return theBlueprint;
+        },
       }
     });
 
@@ -52,10 +50,18 @@ function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uib
       controller: 'deleteResourceModal',
       size: 'sm',
       resolve: {
-        id: function(){return theBlueprintId;},
-        title: function(){return 'Are you sure?';},
-        text: function(){return 'You are about to delete [' + theBlueprintId + ']. Confirm the deletion.';},
-        buttonText: function() {return 'DELETE'}
+        id: function () {
+          return theBlueprintId;
+        },
+        title: function () {
+          return 'Are you sure?';
+        },
+        text: function () {
+          return 'You are about to delete [' + theBlueprintId + ']. Confirm the deletion.';
+        },
+        buttonText: function () {
+          return 'DELETE'
+        }
       }
     });
     modalInstance.result.then(function (id) {
