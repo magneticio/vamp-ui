@@ -1,0 +1,42 @@
+/* global YAML*/
+function updateGatewayController(Api, $state, toastr, $stateParams) {
+  var self = this;
+  self.data = {};
+  self.updatingGateway = false;
+  self.gatewayId = $stateParams.id;
+  self.update = update;
+
+  self.canBeParsed = true;
+
+  Api.read('gateways', self.gatewayId).then(gatewayLoaded);
+
+  function update(gatewayData) {
+    self.updatingGateway = true;
+
+    Api.update('gateways', self.gatewayId, gatewayData).then(gatewayUpdated, gatewayNotUpdated);
+  }
+
+  function gatewayLoaded(response) {
+    var data = response.data;
+    self.sourceCode = YAML.stringify(data, 6);
+  }
+
+  function gatewayUpdated() {
+    self.updatingGateway = false;
+    toastr.success(self.gatewayId, 'Updated Gateway');
+    $state.go('readAllGateways');
+  }
+
+  function gatewayNotUpdated(error) {
+    toastr.error(error, 'Could not update Gateway');
+    self.updatingGateway = false;
+  }
+}
+
+angular
+  .module('app')
+  .component('updateGateway', {
+    templateUrl: 'app/updateGateway/updateGateway.html',
+    controller: updateGatewayController
+  });
+

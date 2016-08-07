@@ -1,0 +1,11 @@
+<header title="Update Gateway">
+  <buttons>
+    <button ng-disabled="!$ctrl.canBeParsed" ng-click="$ctrl.update($ctrl.data)" ladda="$ctrl.updatingGateway"
+            class="btn btn-default" type="submit">Save
+    </button>
+  </buttons>
+</header>
+
+<div class="fluid-container">
+  <editor data="$ctrl.data" source-code="{{$ctrl.sourceCode}}" can-be-parsed="$ctrl.canBeParsed"></editor>
+</div>

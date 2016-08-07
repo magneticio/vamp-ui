@@ -1,0 +1,14 @@
+createBlueprint
+updateBlueprint
+readAllBlueprints
+readAllDeployments
+readOneDeployment
+createGateway
+readAllGateways
+readOneGateway
+updateGateway
+menu
+menuItem
+header
+editor
+actionButton
