@@ -51,5 +51,17 @@ $ ./setEnvironment.sh
 3) Then build the frontend with gulp. Gulp will make a `build` directory and all the files can be found there.
 
 ```sh
-gulp build
+$ gulp build
+```
+
+### Building Docker image with Vamp and Vamp UI
+
+```sh
+$ git clone https://github.com/magneticio/vamp-docker.git
+$ cd vamp-docker
+$ ./build.sh -c -b -i=quick-start
+
+# let's run it
+
+$ ./run.sh quick-start
 ```
