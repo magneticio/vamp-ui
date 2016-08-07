@@ -1,5 +1,7 @@
 # Vamp UI
 
+[![Build Status](https://travis-ci.org/magneticio/vamp-ui.svg?branch=master)](https://travis-ci.org/magneticio/vamp-ui)
+
 ## How to start up Vamp frontend
 
 First clone the frontend with git. Master branch should be checked out.
