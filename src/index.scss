@@ -1,0 +1,221 @@
+//COLORS
+$light-grey: #F2F2F2;
+$purple: #FF405E;
+$dark-blue: #1E0A3C;
+
+body {
+  background-color: $light-grey !important;
+}
+
+menu {
+  padding: 0;
+  margin: 0;
+
+  z-index: 999;
+  position: relative;
+  background-color: white;
+
+  .navbar {
+    margin-bottom: 0;
+    box-shadow: none !important;
+    border-radius: 0;
+    border-bottom: none;
+  }
+}
+
+.vamp-page-header {
+  margin: 0;
+  padding: 20px 0;
+
+  .titles {
+    float: left;
+    display: flex;
+    align-items: center;
+
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0;
+      padding: 0;
+    }
+
+    .title {
+      font-size: 30px;
+      text-transform: uppercase;
+      line-height: 1;
+      font-weight: 100;
+    }
+
+    .title-add {
+      font-size: 22px;
+      line-height: 1;
+      margin-top: 4px;
+      font-weight: 100;
+      color: $purple;
+    }
+  }
+  .buttons {
+    float: right;
+  }
+}
+
+.editor {
+  position: absolute;
+  top: 126px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.ace_editor {
+  position: absolute !important;
+  top: 50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.alert {
+  margin-bottom: 0 !important;
+  border-radius: 0 !important;
+}
+
+.toast-top-right {
+  box-shadow: none;
+  top: initial;
+  right: initial;
+  bottom: 15px;
+  right: 15px;
+}
+
+.bar-chart {
+  height: 200px;
+}
+
+.bars-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+
+  background-color: rgba(black, 0.1);
+
+  overflow: hidden;
+}
+
+.bar {
+  transition: all ease-in-out 0.5s;
+}
+
+.status-col {
+  * {
+    margin: 0;
+  }
+
+  display: flex;
+  align-items: center;
+
+}
+
+.status {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  margin: 6px;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle !important;
+}
+
+.row-centered {
+  display: flex;
+  align-items: center;
+}
+
+.slider-fix {
+  margin-top: 28px;
+}
+
+.bar-fix {
+  padding: 10px 0;
+}
+
+.condition-labels {
+  .label {
+    margin-right: 4px;
+  }
+}
+
+.condition-form {
+  display: inline-block;
+}
+
+.info-panel {
+  z-index: 100;
+  position: fixed;
+  top: 52px;
+  right: 0;
+  width: 25%;
+  bottom: 0;
+  background-color: white;
+  padding: 22px;
+  box-shadow: -4px 0 4px 1px rgba(#aaaaaa, 0.3);
+
+  right: -25%;
+
+  transition: right 0.3s ease-in-out;
+
+  &.active {
+    right: 0;
+  }
+
+  h3 {
+    margin: 0 0 20px 0;
+
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+//Bootstrap overwrite
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Avenir';
+}
+
+p, div {
+  font-family: 'Avenir';
+}
+
+//Navbar text
+.navbar-default .navbar-nav > li > a {
+  color: $dark-blue !important;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.navbar-default .navbar-nav > .active > a {
+  background-color: transparent !important;
+  color: $purple !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+//buttons
+.btn {
+  font-size: 10px !important;
+  text-transform: uppercase;
+  border: none !important;
+  border-radius: 20px !important;
+  line-height: 1 !important;
+  background-color: $dark-blue !important;
+  background-image: none !important;
+  text-shadow: none !important;
+  padding: 9px 10px 7px 10px !important;
+  color: white !important;
+  font-weight: bold !important;
+  letter-spacing: 1px;
+}

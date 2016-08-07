@@ -1,0 +1,24 @@
+<header title="Blueprints">
+  <buttons>
+    <button ui-sref="createBlueprint" class="btn btn-default" type="submit">Create</button>
+  </buttons>
+</header>
+
+<div class="container-fluid">
+  <table ng-table="$ctrl.tableParams" class="table table-striped" show-filter="false">
+    <tr ng-repeat="blueprint in $data track by $index">
+      <td class="col-md-8" title="'Name'" filter="{name: 'text'}" sortable="'name'">
+        {{blueprint.name}}
+      </td>
+
+      <td>
+        <div class="pull-right">
+          <button ng-click="$ctrl.openDeployModal(blueprint)" class="btn btn-default">Deploy</button>
+          <button ui-sref="updateBlueprint({id: blueprint.name})" class="btn btn-default">Edit</button>
+          <button ng-click="$ctrl.openDeleteModal(blueprint.name)" class="btn btn-default">Delete</button>
+
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

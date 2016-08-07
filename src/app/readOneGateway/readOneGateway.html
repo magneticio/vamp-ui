@@ -1,0 +1,97 @@
+<header title="Gateway" title-addition="{{$ctrl.data.name}}">
+
+</header>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <h4>Host</h4>
+      <p>{{$ctrl.data.service.host}}</p>
+
+    </div>
+    <div class="col-md-4">
+      <h4>Port</h4>
+      <p>{{$ctrl.data.service.port}}</p>
+    </div>
+
+    <div class="col-md-2">
+      <h4>Deployed</h4>
+      <span ng-if="$ctrl.data.deployed" class="label label-success"><i class="fa fa-check"></i>&nbsp;Deployed</span>
+      <span ng-if="!$ctrl.data.deployed" class="label label-default">Not Deployed</span>
+    </div>
+
+    <div class="col-md-2">
+      <h4>Sticky</h4>
+      <span ng-if="$ctrl.data.sticky !== 'none'" class="label label-success"><i class="fa fa-check"></i>&nbsp;Is sticky</span>
+      <span ng-if="$ctrl.data.sticky === 'none'" class="label label-default">Is Not Stikcy</span>
+    </div>
+
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-4">
+      <h4>{{$ctrl.currentHealth}}&nbsp;Health</h4>
+
+      <canvas id="healthbarchart" class="chart chart-bar"
+              chart-data="$ctrl.healthChart.data"
+              chart-labels="$ctrl.healthChart.labels"
+              chart-series="$ctrl.healthChart.series"
+              chart-options="$ctrl.barChartOptions">
+      </canvas>
+    </div>
+    <div class="col-md-4">
+      <h4>{{$ctrl.currentRate}}&nbsp;Requests per second</h4>
+
+      <canvas id="line" class="chart chart-line" chart-data="$ctrl.rateChart.data"
+              chart-labels="$ctrl.rateChart.labels" chart-series="$ctrl.rateChart.series"
+              chart-options="$ctrl.chartOptions">
+      </canvas>
+    </div>
+    <div class="col-md-4">
+      <h4>{{$ctrl.currentResponseTime}}&nbsp;Response time (ms)</h4>
+      <canvas id="line" class="chart chart-line" chart-data="$ctrl.responseChart.data"
+              chart-labels="$ctrl.responseChart.labels" chart-series="$ctrl.responseChart.series"
+              chart-options="$ctrl.chartOptions">
+      </canvas>
+    </div>
+  </div>
+
+  <h4>Routes</h4>
+
+  <table class="table">
+    <tr>
+      <th>Name</th>
+      <th><a href="javascript:void(0)" ng-click="$ctrl.editWeights()">Weight <i class="fa fa-pencil"
+                                                                                aria-hidden="true"></i></i></a></th>
+      <th>Conditions</th>
+      <th>Condition Strength</th>
+    </tr>
+    <tr ng-repeat="(routename, route) in $ctrl.data.routes">
+      <td>{{routename}}</td>
+      <td>{{route.weight}}</td>
+      <td class="condition-labels">
+        <span ng-repeat="condition in route.conditions" class="label label-success">{{condition.condition}}</span>
+        <div class="condition-form" ng-if="$ctrl.addConditionMode[routename]">
+
+          <form novalidate class="form-inline" name="conditionForm">
+            <div class="form-group form-group-sm">
+              <input type="text" class="form-control" ng-model="condition" id="condition" placeholder="New condition"
+                     name="condition" required>
+            </div>
+            <button ng-disabled="conditionForm.$invalid" ng-click="$ctrl.addCondition(routename, condition)"
+                    class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
+            <button ng-click="$ctrl.addConditionMode[routename] = false" class="btn btn-danger btn-xs"><i
+                class="fa fa-times"></i></button>
+          </form>
+
+        </div>
+        <button ng-if="!$ctrl.addConditionMode[routename]" type="button" class="btn btn-success btn-xs"
+                ng-click="$ctrl.addConditionMode[routename] = true"><i class="fa fa-plus"></i></button>
+      </td>
+      <td>{{route.condition_strength}}</td>
+    </tr>
+  </table>
+</div>
