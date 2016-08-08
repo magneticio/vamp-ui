@@ -1,14 +1,17 @@
-# Vamp Open Source Frontend
+# Vamp UI
+
+[![Build Status](https://travis-ci.org/magneticio/vamp-ui.svg?branch=master)](https://travis-ci.org/magneticio/vamp-ui)
 
 ## How to start up Vamp frontend
 
 First clone the frontend with git. Master branch should be checked out.
 
-### In development
+### Development
 
 1) Install all the dependencies using bower and npm:
 
 ```sh
+$ npm install -g gulp gulp-cli
 $ npm install
 $ bower install
 ```
@@ -29,7 +32,7 @@ $ ./setEnvironment.sh 192.168.99.100:8080
 $ gulp serve
 ```
 
-### In production
+### Release
 
 1) Install all the dependencies using bower and npm:
 
@@ -45,8 +48,20 @@ $ bower install
 $ ./setEnvironment.sh
 ```
 
-3) Then build the frontend with gulp. Gulp will make a "build" map and all the files can be found there.
+3) Then build the frontend with gulp. Gulp will make a `build` directory and all the files can be found there.
 
 ```sh
-gulp build
+$ gulp build
+```
+
+### Building Docker image with Vamp and Vamp UI
+
+```sh
+$ git clone https://github.com/magneticio/vamp-docker.git
+$ cd vamp-docker
+$ ./build.sh -c -b -i=quick-start
+
+# let's run it
+
+$ ./run.sh quick-start
 ```
