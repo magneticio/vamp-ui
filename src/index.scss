@@ -219,3 +219,8 @@ p, div {
   font-weight: bold !important;
   letter-spacing: 1px;
 }
+.ace_editor {
+  div {
+    font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  }
+}

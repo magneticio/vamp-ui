@@ -5,15 +5,15 @@ function readAllBlueprintsController(Api, toastr, $uibModal, DataManager) {
   self.openDeleteModal = openDeleteModal;
   self.openDeployModal = openDeployModal;
 
+  self.blueprints = [];
+
   var blueprintsResource = DataManager.resource('blueprints');
   blueprintsResource.subscribe(blueprintReloaded);
-  blueprintsResource.create({test: 'test'});
+  blueprintsResource.startPolling();
+
   function blueprintReloaded(data) {
-    console.log(data);
+    self.blueprints = data;
   }
-
-  blueprintsResource.create({test: 'test2'});
-
   function openDeployModal(blueprint) {
     var theBlueprint = blueprint;
 
