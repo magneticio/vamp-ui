@@ -1,23 +1,18 @@
-function readAllBlueprintsController(Api, toastr, NgTableParams, $interval, $uibModal) {
+function readAllBlueprintsController(Api, toastr, $uibModal, DataManager) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
 
   var self = this;
   self.openDeleteModal = openDeleteModal;
   self.openDeployModal = openDeployModal;
 
-  self.tableParams = new NgTableParams({page: 1, count: 10}, {counts: [], getData: getData});
-
-  function getData(params) {
-    return Api.readAll('blueprints', {page: params.page(), per_page: 10}).then(function (response) {
-      params.total(response.headers()['x-total-count']);
-      return response.data;
-    });
+  var blueprintsResource = DataManager.resource('blueprints');
+  blueprintsResource.subscribe(blueprintReloaded);
+  blueprintsResource.create({test: 'test'});
+  function blueprintReloaded(data) {
+    console.log(data);
   }
 
-  $interval(refresh, 5000);
-  function refresh() {
-    self.tableParams.reload();
-  }
+  blueprintsResource.create({test: 'test2'});
 
   function openDeployModal(blueprint) {
     var theBlueprint = blueprint;

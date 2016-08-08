@@ -78,16 +78,8 @@ function Api($http, $location, $q, toastr, Environment) {
       url += $location.port() ? ':' + $location.port() : '';
       url += '/';
     }
-
-    console.info('Setting API endpoint to...', url);
-    // $window.localStorage.setItem( 'vampApiEndpoint' , url );
     endpoint = url;
   }
-
-  // if ( $location.host() !== 'localhost' ) {
-  //   setApiEndpoint();
-  // }
-
   return Api;
 }
 
