@@ -1,4 +1,4 @@
-function createBlueprintController(Api, $state, toastr) {
+function createBlueprintController($state, DataManager) {
   var self = this;
   self.data = {};
   self.creatingBlueprint = false;
@@ -9,19 +9,11 @@ function createBlueprintController(Api, $state, toastr) {
   function create(blueprintData) {
     self.creatingBlueprint = true;
 
-    Api.create('blueprints', blueprintData).then(blueprintCreated, blueprintNotCreated);
-  }
-
-  function blueprintCreated(response) {
-    var data = response.data;
-    self.creatingBlueprint = false;
-    toastr.success(data[1].name, 'Created Blueprint');
+    var blueprintsResource = DataManager.resource('blueprints');
+    blueprintsResource.create(blueprintData);
     $state.go('readAllBlueprints');
-  }
 
-  function blueprintNotCreated(error) {
-    toastr.error(error, 'Could not create Blueprint');
-    self.creatingBlueprint = false;
+    // Api.create('blueprints', blueprintData).then(blueprintCreated, blueprintNotCreated);
   }
 }
 

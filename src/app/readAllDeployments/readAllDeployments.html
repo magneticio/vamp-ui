@@ -3,8 +3,12 @@
 </header>
 
 <div class="container-fluid">
-  <table ng-table="$ctrl.tableParams" class="table table-striped" show-filter="false">
-    <tr ng-repeat="deployment in $data">
+  <table class="table table-striped">
+    <tr>
+      <td>Name</td>
+      <td></td>
+    </tr>
+    <tr ng-repeat="deployment in $ctrl.deployments">
       <td class="col-md-8" title="'Name'" filter="{name: 'text'}" sortable="'name'">
         <a ui-sref="readOneDeployment({id: deployment.name})">{{deployment.name}}</a>
       </td>

@@ -1,4 +1,4 @@
-function readAllBlueprintsController(Api, toastr, $uibModal, DataManager) {
+function readAllBlueprintsController($state, $uibModal, DataManager, Modal) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
 
   var self = this;
@@ -8,65 +8,39 @@ function readAllBlueprintsController(Api, toastr, $uibModal, DataManager) {
   self.blueprints = [];
 
   var blueprintsResource = DataManager.resource('blueprints');
-  blueprintsResource.subscribe(blueprintReloaded);
-  blueprintsResource.startPolling();
+  var deploymentsResource = DataManager.resource('deployments');
+
+  blueprintsResource.subscribe(blueprintReloaded).readAll().startPolling();
 
   function blueprintReloaded(data) {
     self.blueprints = data;
   }
+
   function openDeployModal(blueprint) {
-    var theBlueprint = blueprint;
+    var resolves = {
+      blueprint: blueprint
+    };
 
-    var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: 'app/deployBlueprintModal/deployBlueprintModal.html',
-      controller: 'deployBlueprintModal',
-      size: 'sm',
-      resolve: {
-        blueprint: function () {
-          return theBlueprint;
-        }
-      }
-    });
+    var modalInstance = $uibModal.open(Modal.create('deployBlueprintModal', resolves));
 
-    modalInstance.result.then(function () {
-
+    modalInstance.result.then(function (data) {
+      deploymentsResource.update(data.deploymentName, data.blueprint);
+      $state.go('readAllDeployments');
     });
   }
 
   function openDeleteModal(blueprintId) {
-    var theBlueprintId = blueprintId;
+    var resolves = {
+      id: blueprintId,
+      title: 'Are you sure?',
+      text: 'You are about to delete [' + blueprintId + ']. Confirm the deletion.',
+      buttonText: 'DELETE'
+    };
 
-    var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: 'app/deleteResourceModal/deleteResourceModal.html',
-      controller: 'deleteResourceModal',
-      size: 'sm',
-      resolve: {
-        id: function () {
-          return theBlueprintId;
-        },
-        title: function () {
-          return 'Are you sure?';
-        },
-        text: function () {
-          return 'You are about to delete [' + theBlueprintId + ']. Confirm the deletion.';
-        },
-        buttonText: function () {
-          return 'DELETE';
-        }
-      }
-    });
+    var modalInstance = $uibModal.open(Modal.create('deleteResourceModal', resolves));
+
     modalInstance.result.then(function (id) {
-      Api.delete('blueprints', id).then(blueprintDeleted, blueprintDeletedFailed);
-
-      function blueprintDeleted() {
-        toastr.success(id + ' has been deleted.', 'Blueprint deleted');
-      }
-
-      function blueprintDeletedFailed() {
-        toastr.error('Blueprint ' + id + ' could not be deleted', 'Blueprint not deleted');
-      }
+      blueprintsResource.remove(id);
     });
   }
 }
