@@ -1,0 +1,23 @@
+<header title="Breeds">
+  <buttons>
+    <button ui-sref="createBreed" class="btn btn-default" type="submit">Create</button>
+  </buttons>
+</header>
+
+<div class="container-fluid">
+  <table class="table">
+    <tr>
+      <th>Name:</th>
+      <th></th>
+    </tr>
+    <tr ng-repeat="breed in $ctrl.breeds">
+      <td>{{breed.name}}</td>
+      <td>
+        <div class="pull-right">
+          <button ui-sref="updateBreed({id: breed.name})" class="btn btn-default">Edit</button>
+          <button ng-click="$ctrl.openDeleteModal(breed.name)" class="btn btn-default">Delete</button>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

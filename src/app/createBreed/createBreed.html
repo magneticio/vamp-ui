@@ -1,0 +1,11 @@
+<header title="Create Breed">
+  <buttons>
+    <button ng-disabled="!$ctrl.canBeParsed" ng-click="$ctrl.create($ctrl.data)" ladda="$ctrl.creatingBreed"
+            class="btn btn-default" type="submit">Create
+    </button>
+  </buttons>
+</header>
+
+<div class="fluid-container">
+  <editor data="$ctrl.data" can-be-parsed="$ctrl.canBeParsed"></editor>
+</div>

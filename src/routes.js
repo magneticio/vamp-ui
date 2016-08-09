@@ -46,5 +46,17 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('updateGateway', {
       url: '/gateways/edit/:id',
       template: '<menu></menu><update-gateway> </update-gateway>'
+    })
+    .state('readAllBreeds', {
+      url: '/breeds',
+      template: '<menu></menu><read-all-breeds> </read-all-breeds>'
+    })
+    .state('createBreed', {
+      url: '/breeds/create',
+      template: '<menu></menu><create-breed> </create-breed>'
+    })
+    .state('updateBreed', {
+      url: '/breeds/edit/:id',
+      template: '<menu></menu><update-breed> </update-breed>'
     });
 }

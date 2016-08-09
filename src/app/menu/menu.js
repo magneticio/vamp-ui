@@ -18,6 +18,12 @@ function menuController($rootScope, $state) {
       'createGateway',
       'readOneGateway',
       'updateGateway'
+    ],
+    breeds: [
+      'readAllBreeds',
+      'createBreed',
+      'readOneBreed',
+      'updateBreed'
     ]
   };
 
@@ -46,6 +52,11 @@ function menuController($rootScope, $state) {
       text: 'Gateways',
       activeState: 'gateways',
       goToState: 'readAllGateways'
+    },
+    {
+      text: 'Breeds',
+      activeState: 'breeds',
+      goToState: 'readAllBreeds'
     }
   ];
 }
