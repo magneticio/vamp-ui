@@ -9,7 +9,7 @@ function editorController() {
   self.data = {};
   self.change = change;
   self.status = angular.copy(defaultStatus);
-  self.canBeParsed = true;
+  self.canBeParsed = false;
 
   self.editorConfig = {
     useWrapMode: true,
