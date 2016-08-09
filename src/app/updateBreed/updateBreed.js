@@ -10,10 +10,10 @@ function updateBreedController(Api, $state, toastr, $stateParams) {
 
   Api.read('breeds', self.breedId).then(breedLoaded);
 
-  function update(blueprintData) {
+  function update(breedData) {
     self.updatingBreed = true;
 
-    Api.update('blueprints', self.blueprintId, breedData).then(breedUpdated, breedNotUpdated);
+    Api.update('breeds', self.breedId, breedData).then(breedUpdated, breedNotUpdated);
   }
 
   function breedLoaded(response) {
