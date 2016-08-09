@@ -18,7 +18,7 @@
     "angularjs-slider": "^5.4.1",
     "lodash": "^4.14.0",
     "ace-builds": "master",
-    "bootstrap": "^3.3.7"
+    "bootstrap-sass": "^3.3.7"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.0"
@@ -27,6 +27,11 @@
     "ace-builds": {
       "main": [
         "./src/ace.js"
+      ]
+    },
+    "bootstrap-sass": {
+      "main": [
+        "./assets/javascripts/bootstrap.js"
       ]
     }
   },
