@@ -48,7 +48,7 @@ $ bower install
 $ ./setEnvironment.sh
 ```
 
-3) Then build the frontend with gulp. Gulp will make a `build` directory and all the files can be found there.
+3) Then build the frontend with gulp. Gulp will make a `dist` directory and all the files can be found there.
 
 ```sh
 $ gulp build
