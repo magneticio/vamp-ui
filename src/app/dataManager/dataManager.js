@@ -52,6 +52,11 @@ function DataManager(Api, $interval, toastr) {
       return self;
     };
 
+    self.unsubscribe = function() {
+      self.dataUpdated = function () {};
+      return self;
+    }
+
     self.readAll = function () {
       if (self.entries.length > 0) {
         self.dataUpdated(self.entries);

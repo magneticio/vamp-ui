@@ -8,10 +8,19 @@
   <table class="table">
     <tr>
       <th>Name</th>
+      <th>
+        <p>Deploy</p>
+      </th>
       <th></th>
     </tr>
     <tr ng-repeat="blueprint in $ctrl.blueprints">
       <td>{{blueprint.name}}</td>
+      <td>
+        <div>
+          <button ng-click="$ctrl.openDeployModal(blueprint)" class="btn btn-default">Deploy</button>
+          <button ng-click="$ctrl.openMergeDeploymentModal(blueprint)" class="btn btn-default">Merge</button>
+        </div>
+      </td>
       <td>
         <div class="pull-right">
           <button ui-sref="updateBlueprint({id: blueprint.name})" class="btn btn-default">Edit</button>

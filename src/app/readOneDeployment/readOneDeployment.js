@@ -71,7 +71,7 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
     function () {
       refreshDeployment();
     },
-    3000
+    10000
   );
 
   function deploymentLoaded(deployment) {
