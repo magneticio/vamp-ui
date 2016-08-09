@@ -5,6 +5,7 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal, Api)
   self.openDeleteModal = openDeleteModal;
   self.openDeployModal = openDeployModal;
   self.openMergeDeploymentModal = openMergeDeploymentModal;
+  self.openSliceDeploymentModal = openSliceDeploymentModal;
   self.blueprints = [];
 
   var blueprintsResource = DataManager.resource('blueprints');
@@ -61,6 +62,42 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal, Api)
 
       modalInstance.result.then(function (data) {
         deploymentsResource.update(data.deployment.name, data.blueprint);
+      });
+    }
+  }
+
+  function openSliceDeploymentModal(blueprint) {
+    deploymentsResource.subscribe(deploymentsLoaded).readAll();
+
+    function deploymentsLoaded(deployments) {
+      deploymentsResource.unsubscribe();
+
+      var possibleDeployments = [];
+
+
+      deployments.forEach(function (deployment) {
+        console.log(deployment);
+        var areAllClustersThere = true;
+
+        for (var clusterName in deployment.clusters) {
+          blueprint.clusters[clusterName] ? areAllClustersThere = true : areAllClustersThere = false;
+        }
+
+        areAllClustersThere ? possibleDeployments.push(deployment) : '';
+      });
+
+      var resolves = {
+        blueprint: blueprint,
+        deployments: _.sortBy(possibleDeployments, 'name'),
+        title: 'Remove blueprint [' + blueprint.name + '] from deployment',
+        text: 'Which deployment should [' + blueprint.name + '] be removed off?',
+        buttonText: 'Remove'
+      };
+
+      var modalInstance = $uibModal.open(Modal.create('sliceDeploymentModal', resolves));
+
+      modalInstance.result.then(function (data) {
+        deploymentsResource.remove(data.deployment.name, data.blueprint);
       });
     }
   }
