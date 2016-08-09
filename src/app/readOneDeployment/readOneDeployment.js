@@ -1,20 +1,16 @@
 /* global _*/
-function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandler, $interval, ngProgressFactory) {
+function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandler, $interval, DataManager) {
   var noOfPoints = 250;
 
   var self = this;
-  self.data = undefined;
+  var gatewaysResource = DataManager.resource('deployments');
+  self.data = gatewaysResource.readOne($stateParams.id);
   self.chart = {};
   self.currentHealth = 0;
   self.healthChart = createChartData();
 
   var deploymentId = $stateParams.id;
 
-  var firstLoad = true;
-  if (firstLoad) {
-    self.progressbar = ngProgressFactory.createInstance();
-    self.progressbar.start();
-  }
   self.barChartOptions = {
     scales: {
       xAxes: [{
@@ -76,10 +72,6 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
 
   function deploymentLoaded(deployment) {
     self.data = deployment.data;
-    if (firstLoad) {
-      self.progressbar.complete();
-      firstLoad = false;
-    }
   }
 
   function deploymentCouldNotBeLoaded() {
