@@ -1,10 +1,10 @@
-function readAllBlueprintsController($state, $uibModal, DataManager, Modal) {
+function readAllBlueprintsController($state, $uibModal, DataManager, Modal, Api) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
 
   var self = this;
   self.openDeleteModal = openDeleteModal;
   self.openDeployModal = openDeployModal;
-
+  self.openMergeDeploymentModal = openMergeDeploymentModal;
   self.blueprints = [];
 
   var blueprintsResource = DataManager.resource('blueprints');
@@ -42,6 +42,27 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal) {
     modalInstance.result.then(function (id) {
       blueprintsResource.remove(id);
     });
+  }
+
+  function openMergeDeploymentModal(blueprint) {
+    deploymentsResource.subscribe(deploymentsLoaded).readAll();
+
+    function deploymentsLoaded(data) {
+      deploymentsResource.unsubscribe();
+      var resolves = {
+        blueprint: blueprint,
+        deployments: _.sortBy(data, 'name'),
+        title: 'Merge blueprint [' + blueprint.name + ']',
+        text: 'Which deployment should [' + blueprint.name + '] be merged with?',
+        buttonText: 'Merge'
+      };
+
+      var modalInstance = $uibModal.open(Modal.create('mergeDeploymentModal', resolves));
+
+      modalInstance.result.then(function (data) {
+        deploymentsResource.update(data.deployment.name, data.blueprint);
+      });
+    }
   }
 }
 
