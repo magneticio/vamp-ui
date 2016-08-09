@@ -6,6 +6,11 @@
 
 <div class="container-fluid">
   <table class="table">
+    <tr>
+      <th>Name:</th>
+      <th>Port:</th>
+      <th></th>
+    </tr>
     <tr ng-repeat="gateway in $ctrl.gateways">
       <td class="col-md-6" title="'Name'" filter="{name: 'text'}" sortable="'name'">
         <a ui-sref="readOneGateway({id: gateway.name})">{{gateway.name}}&nbsp;<span ng-if="!gateway.inner"
