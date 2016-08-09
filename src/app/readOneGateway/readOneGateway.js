@@ -1,9 +1,10 @@
 /* global _*/
-function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStreamHandler, $uibModal, ngProgressFactory, $state) {
+function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStreamHandler, $uibModal, $state, DataManager) {
   var noOfPoints = 250;
 
   var self = this;
-  self.data = undefined;
+  var gatewaysResource = DataManager.resource('gateways');
+  self.data = gatewaysResource.readOne($stateParams.id);
   self.weights = {};
 
   self.currentHealth = 0;
@@ -21,12 +22,6 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
   self.addCondition = addCondition;
 
   var allowRefresh = true;
-
-  var firstLoad = true;
-  if (firstLoad) {
-    self.progressbar = ngProgressFactory.createInstance();
-    self.progressbar.start();
-  }
 
   self.barChartOptions = {
     scales: {
@@ -166,15 +161,7 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
   );
 
   function gatewayLoaded(gateway) {
-    if (firstLoad) {
-      self.progressbar.complete();
-      firstLoad = false;
-    }
-
     self.data = gateway.data;
-
-
-
     for (var routeName in self.data.routes) {
       if (routeName) {
         self.weights[routeName] = getValueFromPercentage(self.data.routes[routeName].weight);

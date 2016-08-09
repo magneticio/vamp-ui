@@ -1,5 +1,5 @@
 /* global _, sprintf*/
-function DataManager(Api, $interval, toastr) {
+function DataManager(Api, $interval, toastr, $rootScope) {
   var self = this;
   self.resource = resource;
   self.resources = {};
@@ -24,7 +24,8 @@ function DataManager(Api, $interval, toastr) {
     var self = this;
     self.entries = [];
     self.pollingTime = 5000;
-    self.dataUpdated = function () {};
+    self.dataUpdated = function () {
+    };
     self.intervalId = -1;
 
     self.poll = function () {
@@ -34,6 +35,7 @@ function DataManager(Api, $interval, toastr) {
         self.entries = response.data;
         self.dataUpdated(self.entries);
       }
+
       return self;
     };
 
@@ -52,8 +54,9 @@ function DataManager(Api, $interval, toastr) {
       return self;
     };
 
-    self.unsubscribe = function() {
-      self.dataUpdated = function () {};
+    self.unsubscribe = function () {
+      self.dataUpdated = function () {
+      };
       return self;
     }
 
@@ -65,6 +68,11 @@ function DataManager(Api, $interval, toastr) {
       }
       return this;
     };
+
+    self.readOne = function (id) {
+      console.log(id);
+      return _.find(self.entries, {name: id});
+    }
 
     self.create = function (data) {
       self.stopPolling();
@@ -93,6 +101,7 @@ function DataManager(Api, $interval, toastr) {
         toastr.success(sprintf('[%s] updated from %s', id, resourceName), 'Updated');
         self.dataUpdated(self.entries);
       }
+
       self.startPolling();
       return this;
     };
@@ -109,10 +118,21 @@ function DataManager(Api, $interval, toastr) {
         toastr.success(sprintf('[%s] deleted from %s', id, resourceName), 'Deleted');
         self.dataUpdated(self.entries);
       }
+
       self.startPolling();
       return this;
     };
   }
+
+  // If a state changes it means a other page was opened. It should stop all polling.
+  $rootScope.$on('$stateChangeStart',
+    function () {
+      for (var resourceName in self.resources) {
+        if (resourceName) {
+          self.resources[resourceName].stopPolling();
+        }
+      }
+    });
 }
 
 angular
