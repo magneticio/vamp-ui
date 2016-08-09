@@ -54,14 +54,7 @@ $ ./setEnvironment.sh
 $ gulp build
 ```
 
-### Building Docker image with Vamp and Vamp UI
+### Building and running Docker image with Vamp and Vamp UI
 
-```sh
-$ git clone https://github.com/magneticio/vamp-docker.git
-$ cd vamp-docker
-$ ./build.sh -c -b -i=quick-start
-
-# let's run it
-
-$ ./run.sh quick-start
-```
+- [building](https://github.com/magneticio/vamp-docker#example-1-building-vamp-quick-start)
+- [running](https://github.com/magneticio/vamp-docker#running)
