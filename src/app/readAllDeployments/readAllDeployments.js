@@ -1,19 +1,16 @@
-function readAllDeploymentsController(Api, toastr, NgTableParams, $interval, $uibModal) {
+function readAllDeploymentsController(Api, toastr, DataManager, $interval, $uibModal) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
   var self = this;
   self.openDeleteModal = openDeleteModal;
 
-  self.tableParams = new NgTableParams({page: 1, count: 10}, {counts: [], getData: getData});
-  function getData(params) {
-    /* jshint camelcase: false */
-    return Api.readAll('deployments', {page: params.page(), per_page: 10}).then(function (response) {
-      params.total(response.headers()['x-total-count']);
-      return response.data;
-    });
-  }
+  self.deployments = [];
 
-  function refresh() {
-    self.tableParams.reload();
+  var deploymentsResource = DataManager.resource('deployments');
+
+  deploymentsResource.subscribe(deploymentReloaded).readAll().startPolling();
+
+  function deploymentReloaded(data) {
+    self.deployments = data;
   }
 
   function openDeleteModal(deploymentId) {
@@ -57,8 +54,6 @@ function readAllDeploymentsController(Api, toastr, NgTableParams, $interval, $ui
       }
     });
   }
-
-  $interval(refresh, 5000);
 }
 
 angular

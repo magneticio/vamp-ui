@@ -4,6 +4,11 @@ function deleteResourceModal($scope, $uibModalInstance, id, title, text, buttonT
   $scope.text = text;
   $scope.buttonText = buttonText ? buttonText : 'DELETE';
 
+  console.log(id);
+  console.log(title);
+  console.log(text);
+  console.log(buttonText);
+
   $scope.ok = function () {
     $uibModalInstance.close(id);
   };

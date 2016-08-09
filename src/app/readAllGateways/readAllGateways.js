@@ -1,57 +1,32 @@
-function readAllGatewaysController(Api, toastr, NgTableParams, $interval, $uibModal) {
+function readAllGatewaysController(Modal, DataManager, $uibModal) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
   var self = this;
   self.openDeleteModal = openDeleteModal;
 
-  self.tableParams = new NgTableParams({page: 1, count: 10}, {counts: [], getData: getData});
-  function getData(params) {
-    return Api.readAll('gateways', {page: params.page(), per_page: 10}).then(function (response) {
-      params.total(response.headers()['x-total-count']);
-      return response.data;
-    });
-  }
-  function refresh() {
-    self.tableParams.reload();
+  self.gateways = [];
+
+  var gatewaysResource = DataManager.resource('gateways');
+
+  gatewaysResource.subscribe(gatewayReloaded).readAll().startPolling();
+
+  function gatewayReloaded(data) {
+    self.gateways = data;
   }
 
   function openDeleteModal(gatewayId) {
-    var theGatewayId = gatewayId;
+    var resolves = {
+      id: gatewayId,
+      title: 'Are you sure?',
+      text: 'You are about to delete [' + gatewayId + ']. Confirm the deletion.',
+      buttonText: 'DELETE'
+    };
 
-    var modalInstance = $uibModal.open({
-      animation: true,
-      templateUrl: 'app/deleteResourceModal/deleteResourceModal.html',
-      controller: 'deleteResourceModal',
-      size: 'sm',
-      resolve: {
-        id: function () {
-          return theGatewayId;
-        },
-        title: function () {
-          return 'Are you sure?';
-        },
-        text: function () {
-          return 'You are about to delete [' + theGatewayId + ']. Confirm the deletion.';
-        },
-        buttonText: function () {
-          return 'DELETE';
-        }
-      }
-    });
+    var modalInstance = $uibModal.open(Modal.create('deleteResourceModal', resolves));
 
     modalInstance.result.then(function (id) {
-      Api.delete('gateways', id).then(gatewayDeleted, gatewayDeletedFailed);
-
-      function gatewayDeleted() {
-        toastr.success(id + ' has been deleted.', 'Gateway deleted');
-      }
-
-      function gatewayDeletedFailed() {
-        toastr.error('Gateway ' + id + ' could not be deleted', 'Gateway not deleted');
-      }
+      gatewaysResource.remove(id);
     });
   }
-
-  $interval(refresh, 5000);
 }
 
 angular
