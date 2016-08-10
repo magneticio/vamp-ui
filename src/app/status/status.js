@@ -14,12 +14,20 @@ function status() {
       });
 
       function generateColor(value) {
-        var n = 100 - (value * 100);
-        return {
-          r: Math.floor((255 * n) / 100),
-          g: Math.floor((255 * (100 - n)) / 100),
-          b: 0
-        };
+        if (value) {
+          var n = 100 - (value * 100);
+          return {
+            r: Math.floor((255 * n) / 100),
+            g: Math.floor((255 * (100 - n)) / 100),
+            b: 0
+          };
+        } else {
+          return {
+            r: 150,
+            g: 150,
+            b: 150
+          };
+        }
       }
     },
     controller: function () {

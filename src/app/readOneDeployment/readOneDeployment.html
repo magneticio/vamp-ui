@@ -6,14 +6,19 @@
   <div class="row chart-row">
     <!--<live-bar-chart class="col-md-8" ng-if="$ctrl.data.name" base="deployments:{{$ctrl.data.name}}" bar-width="60"></live-bar-chart>-->
     <div class="col-md-4">
-      <h4>{{$ctrl.currentHealth}}%&nbsp;Health</h4>
+      <h4>&nbsp;Health (%)</h4>
 
-      <canvas id="healthbarchart" class="chart chart-bar"
-              chart-data="$ctrl.healthChart.data"
-              chart-labels="$ctrl.healthChart.labels"
-              chart-series="$ctrl.healthChart.series"
-              chart-options="$ctrl.barChartOptions">
+      <!--<canvas id="healthbarchart" class="chart chart-bar"-->
+              <!--chart-data="$ctrl.healthChart.data"-->
+              <!--chart-labels="$ctrl.healthChart.labels"-->
+              <!--chart-series="$ctrl.healthChart.series"-->
+              <!--chart-options="$ctrl.barChartOptions">-->
+      <!--</canvas>-->
+
+      <canvas id="bar" class="chart chart-bar"
+              chart-data="$ctrl.chart.data" chart-options="$ctrl.chart.options" chart-labels="$ctrl.chart.labels" chart-series="$ctrl.chart.series" chart-colors="$ctrl.chart.colors">
       </canvas>
+
     </div>
 
     <div class="status-col">
