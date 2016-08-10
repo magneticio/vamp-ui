@@ -124,12 +124,13 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
     }
   }
 
-  $interval(
+  var intervalId = $interval(
     function () {
       refreshGateway();
     },
-    3000
+    5000
   );
+  gatewaysResource.registerInterval(intervalId);
 
   $interval(
     function () {
