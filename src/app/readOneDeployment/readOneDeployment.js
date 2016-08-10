@@ -9,6 +9,47 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   self.currentHealth = 0;
   self.healthChart = createChartData();
 
+  self.editNumberOfInstances = editNumberOfInstances;
+  self.editNumberOfCpus = editNumberOfCpus;
+  self.editSizeOfMemory = editSizeOfMemory;
+
+  self.saveNumberOfInstances = saveNumberOfInstances;
+  self.saveNumberOfCpus = saveNumberOfCpus;
+  self.saveSizeOfMemory = saveSizeOfMemory;
+
+  function editNumberOfInstances(number) {
+    self.editInstances = true;
+    self.initialNumberOfInstances = angular.copy(number);
+  }
+
+  function editNumberOfCpus(number) {
+    self.editCpu = true;
+    self.initialNumberOfCpus = angular.copy(number);
+  }
+
+  function editSizeOfMemory(number) {
+    self.editMemory = true;
+    self.initialSizeOfMemory = angular.copy(number);
+  }
+
+  function saveNumberOfInstances(serviceScale, number) {
+    self.editInstances = false;
+    serviceScale.instances = number;
+    gatewaysResource.update($stateParams.id, self.data);
+  }
+
+  function saveNumberOfCpus(serviceScale, number) {
+    self.editCpu = false;
+    serviceScale.cpu = number;
+    gatewaysResource.update($stateParams.id, self.data);
+  }
+
+  function saveSizeOfMemory(serviceScale, number) {
+    self.editMemory = false;
+    serviceScale.memory = number;
+    gatewaysResource.update($stateParams.id, self.data);
+  }
+
   var deploymentId = $stateParams.id;
 
   self.barChartOptions = {
@@ -63,12 +104,14 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
     Api.read('deployments', deploymentId).then(deploymentLoaded, deploymentCouldNotBeLoaded);
   }
 
-  $interval(
+  refreshDeployment();
+  var intervalId = $interval(
     function () {
       refreshDeployment();
     },
-    10000
+    3000
   );
+  gatewaysResource.registerInterval(intervalId);
 
   function deploymentLoaded(deployment) {
     self.data = deployment.data;
@@ -85,10 +128,6 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
       self.currentHealth = data.value * 100;
     }
   }
-
-  $interval(function () {
-
-  }, 3000);
 }
 
 angular
