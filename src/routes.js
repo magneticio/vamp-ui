@@ -58,5 +58,17 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('updateBreed', {
       url: '/breeds/edit/:id',
       template: '<menu></menu><update-breed> </update-breed>'
+    })
+    .state('readAllWorkflows', {
+      url: '/workflows',
+      template: '<menu></menu><read-all-workflows> </read-all-workflows>'
+    })
+    .state('createWorkflow', {
+      url: '/workflows/create',
+      template: '<menu></menu><create-workflow> </create-workflow>'
+    })
+    .state('updateWorkflow', {
+      url: '/workflows/edit/:id',
+      template: '<menu></menu><update-workflow> </update-workflow>'
     });
 }

@@ -1,0 +1,23 @@
+<header title="Workflows">
+  <buttons>
+    <button ui-sref="createWorkflow" class="btn btn-default" type="submit">Create</button>
+  </buttons>
+</header>
+
+<div class="container-fluid">
+  <table class="table">
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+    <tr ng-repeat="workflow in $ctrl.workflows">
+      <td>{{workflow.name}}</td>
+      <td>
+        <div class="pull-right">
+          <button ui-sref="updateWorkflow({id: workflow.name})" class="btn btn-default">Edit</button>
+          <button ng-click="$ctrl.openDeleteModal(workflow.name)" class="btn btn-default">Delete</button>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
