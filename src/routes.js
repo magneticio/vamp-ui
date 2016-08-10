@@ -4,13 +4,9 @@ angular
 
 /** @ngInject */
 function routesConfig($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/blueprints');
 
   $stateProvider
-    .state('app', {
-      url: '/',
-      template: '<menu></menu><read-all-blueprints> </read-all-blueprints>'
-    })
     .state('readAllBlueprints', {
       url: '/blueprints',
       template: '<menu></menu><read-all-blueprints> </read-all-blueprints>'

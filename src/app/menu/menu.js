@@ -26,10 +26,10 @@ function menuController($rootScope, $state) {
       'updateBreed'
     ],
     workflows: [
-      'readAllBreeds',
-      'createBreed',
-      'readOneBreed',
-      'updateBreed'
+      'readAllWorkflows',
+      'createWorkflow',
+      'readOneWorkflow',
+      'updateWorkflow'
     ]
   };
 
@@ -66,7 +66,7 @@ function menuController($rootScope, $state) {
     },
     {
       text: 'Workflows',
-      activeState: 'worflows',
+      activeState: 'workflows',
       goToState: 'readAllWorkflows'
     }
   ];
