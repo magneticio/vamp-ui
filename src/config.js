@@ -2,7 +2,7 @@ angular
   .module('app')
   .config(pluginsConfig);
 
-function pluginsConfig(toastrConfig) {
+function pluginsConfig(toastrConfig, ChartJsProvider) {
   // Configuration of the angular-toastr plugin. See: https://github.com/Foxandxss/angular-toastr
   angular.extend(toastrConfig, {
     autoDismiss: false,
@@ -14,4 +14,6 @@ function pluginsConfig(toastrConfig) {
     positionClass: 'toast-top-right',
     preventDuplicates: true
   });
+
+  // ChartJsProvider
 }

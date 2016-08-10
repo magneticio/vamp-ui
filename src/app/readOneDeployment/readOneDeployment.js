@@ -1,13 +1,12 @@
 /* global _*/
-function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandler, $interval, DataManager) {
+function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandler, $interval, $filter, DataManager) {
   var noOfPoints = 250;
 
   var self = this;
   var gatewaysResource = DataManager.resource('deployments');
   self.data = gatewaysResource.readOne($stateParams.id);
   self.chart = {};
-  self.currentHealth = 0;
-  self.healthChart = createChartData();
+  self.currentHealth = undefined;
 
   self.editNumberOfInstances = editNumberOfInstances;
   self.editNumberOfCpus = editNumberOfCpus;
@@ -52,56 +51,13 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
 
   var deploymentId = $stateParams.id;
 
-  self.barChartOptions = {
-    scales: {
-      xAxes: [{
-        display: false
-      }],
-      yAxes: [{
-        display: true,
-        ticks: {
-          beginAtZero: true,
-          max: 100,
-          min: 0
-        }
-      }],
-      gridLines: {
-        display: false
-      }
-    }
-  };
-
-  function createChartData() {
-    var tempData = [];
-    var tempLabels = [];
-
-    for (var i = 0; i < noOfPoints; i++) {
-      tempLabels.push('');
-      tempData.push(0);
-    }
-
-    return {
-      labels: tempLabels,
-      series: ['serie'],
-      data: [tempData]
-    };
-  }
-
-  $interval(
-    function () {
-      if (self.healthChart.data[0].length > noOfPoints) {
-        self.healthChart.labels.shift();
-        self.healthChart.data[0].shift();
-      }
-
-      self.healthChart.labels.push('');
-      self.healthChart.data[0].push(self.currentHealth);
-    },
-    40
-  );
-
   function refreshDeployment() {
     Api.read('deployments', deploymentId).then(deploymentLoaded, deploymentCouldNotBeLoaded);
+  }
+
+
+  function deploymentLoaded(deployment) {
+    self.data = deployment.data;
   }
 
   refreshDeployment();
@@ -113,10 +69,6 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   );
   gatewaysResource.registerInterval(intervalId);
 
-  function deploymentLoaded(deployment) {
-    self.data = deployment.data;
-  }
-
   function deploymentCouldNotBeLoaded() {
     $state.go('readAllDeployments');
   }
@@ -126,7 +78,44 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   function eventFired(data) {
     if (_.includes(data.tags, 'health')) {
       self.currentHealth = data.value * 100;
+      self.parsedData = $filter('date')(data.timestamp, "HH:mm:ss");
+
+      addHealthStat(self.parsedData, self.currentHealth);
     }
+  }
+
+  // Tryout
+  self.chart.labels = [];
+  self.chart.data = [[]];
+  for (var i = 0; i < 20; i++) {
+
+    self.chart.labels.push('');
+    self.chart.data[0].push(undefined);
+  }
+
+  self.chart.series = ['Series A'];
+
+  self.chart.colors = ['#00FF00'];
+  self.chart.options = {
+    animation: false,
+    scales: {
+      yAxes: [{
+        display: true,
+        ticks: {
+          beginAtZero: true,
+          max: 100,
+          min: 0
+        }
+      }]
+    }
+  }
+
+  function addHealthStat(label, value) {
+    self.chart.labels.shift();
+    self.chart.labels.push(label);
+
+    self.chart.data[0].shift();
+    self.chart.data[0].push(value);
   }
 }
 
