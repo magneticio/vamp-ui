@@ -5,16 +5,8 @@
 <div class="container-fluid" ng-show="$ctrl.data">
   <div class="row chart-row">
     <!--<live-bar-chart class="col-md-8" ng-if="$ctrl.data.name" base="deployments:{{$ctrl.data.name}}" bar-width="60"></live-bar-chart>-->
-    <div class="col-md-4">
+    <div class="col-md-6">
       <h4>&nbsp;Health (%)</h4>
-
-      <!--<canvas id="healthbarchart" class="chart chart-bar"-->
-              <!--chart-data="$ctrl.healthChart.data"-->
-              <!--chart-labels="$ctrl.healthChart.labels"-->
-              <!--chart-series="$ctrl.healthChart.series"-->
-              <!--chart-options="$ctrl.barChartOptions">-->
-      <!--</canvas>-->
-
       <canvas id="bar" class="chart chart-bar"
               chart-data="$ctrl.chart.data" chart-options="$ctrl.chart.options" chart-labels="$ctrl.chart.labels" chart-series="$ctrl.chart.series" chart-colors="$ctrl.chart.colors">
       </canvas>

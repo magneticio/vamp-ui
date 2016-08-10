@@ -78,7 +78,7 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   function eventFired(data) {
     if (_.includes(data.tags, 'health')) {
       self.currentHealth = data.value * 100;
-      self.parsedData = $filter('date')(data.timestamp, "HH:mm:ss");
+      self.parsedData = $filter('date')(data.timestamp, "mm:ss");
 
       addHealthStat(self.parsedData, self.currentHealth);
     }
