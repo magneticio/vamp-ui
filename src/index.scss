@@ -224,3 +224,65 @@ p, div {
     font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
   }
 }
+
+.panel-default {
+  border: none !important;
+  box-shadow: none !important;;
+
+  .panel-label {
+    font-size: 14px;
+    color: rgba($dark-blue, 0.7);
+    line-height: 1;
+  }
+
+}
+
+.panel-default > .panel-heading {
+  background-image: none !important;
+  background-color: white !important;
+  padding: 0 10px 12px 10px;
+
+  .column {
+    height: 40px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .head {
+    font-size: 28px;
+    color: $dark-blue;
+    font-weight: normal;
+    line-height: 1;
+  }
+
+  .category {
+    font-size: 12px;
+    font-weight: lighter;
+    color: rgba($dark-blue, 0.7);
+  }
+}
+
+.panel-body {
+  .head {
+    font-size: 28px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .sub-head {
+    font-size: 12px;
+    color: rgba($dark-blue, 0.7);
+    line-height: 1;
+    padding-top: 0;
+  }
+
+}
+
+.chart-row {
+  padding-bottom: 40px;
+}
+
+.input-small {
+  width: 70px;
+  font-size: 12px;
+}

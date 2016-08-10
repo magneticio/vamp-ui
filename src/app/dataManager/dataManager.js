@@ -24,6 +24,8 @@ function DataManager(Api, $interval, toastr, $rootScope) {
     var self = this;
     self.entries = [];
     self.pollingTime = 5000;
+    self.intervals = [];
+
     self.dataUpdated = function () {
     };
     self.intervalId = -1;
@@ -70,8 +72,12 @@ function DataManager(Api, $interval, toastr, $rootScope) {
     };
 
     self.readOne = function (id) {
-      console.log(id);
       return _.find(self.entries, {name: id});
+    }
+
+    self.registerInterval = function (intervalId) {
+      console.log(intervalId);
+      self.intervals.push(intervalId);
     }
 
     self.create = function (data) {
@@ -130,6 +136,9 @@ function DataManager(Api, $interval, toastr, $rootScope) {
       for (var resourceName in self.resources) {
         if (resourceName) {
           self.resources[resourceName].stopPolling();
+          self.resources[resourceName].intervals.forEach(function (interval) {
+            $interval.cancel(interval);
+          });
         }
       }
     });
