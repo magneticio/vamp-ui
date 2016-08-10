@@ -12,6 +12,6 @@ function pluginsConfig(toastrConfig) {
     progressBar: false,
     tapToDismiss: true,
     positionClass: 'toast-top-right',
-    maxOpened: 1
+    preventDuplicates: true
   });
 }
