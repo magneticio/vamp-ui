@@ -1,6 +1,6 @@
-sudo: false
-language: node_js
-node_js: "5"
-install:        npm install -g "gulpjs/gulp#4.0"
-before_script:  gulp --version
-script:         npm install && bower install && ./setEnvironment.sh && gulp build
+sudo          : false
+language      : node_js
+node_js       : 5
+install       : npm install -g "gulpjs/gulp#4.0"
+before_script : gulp --version
+script        : npm install && bower install && ./setEnvironment.sh && gulp build
