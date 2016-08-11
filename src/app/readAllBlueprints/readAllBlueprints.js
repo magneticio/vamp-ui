@@ -73,11 +73,8 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal, Api)
       deploymentsResource.unsubscribe();
 
       var possibleDeployments = [];
-
-
       deployments.forEach(function (deployment) {
         console.log(deployment);
-        var areAllClustersThere = true;
 
         for (var clusterName in deployment.clusters) {
           blueprint.clusters[clusterName] ? areAllClustersThere = true : areAllClustersThere = false;
