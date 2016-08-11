@@ -6,6 +6,14 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   self.chart = {};
   self.currentHealth = undefined;
 
+  self.editInstances = {};
+  self.editCpu = {};
+  self.editMemory = {};
+
+  self.initialNumberOfCpus = {};
+  self.initialSizeOfMemory = {};
+  self.initialNumberOfInstances = {};
+
   self.editNumberOfInstances = editNumberOfInstances;
   self.editNumberOfCpus = editNumberOfCpus;
   self.editSizeOfMemory = editSizeOfMemory;
@@ -13,6 +21,8 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   self.saveNumberOfInstances = saveNumberOfInstances;
   self.saveNumberOfCpus = saveNumberOfCpus;
   self.saveSizeOfMemory = saveSizeOfMemory;
+
+  self.editCancel = editCancel;
 
   var polling = true;
 
@@ -28,40 +38,51 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
 
   deploymentsResource.registerInterval(intervalId);
 
-  function editNumberOfInstances(number) {
+  function editNumberOfInstances(serviceName, number) {
+    console.log('whaaat');
     polling = false;
-    self.editInstances = true;
-    self.initialNumberOfInstances = angular.copy(number);
+    self.editInstances[serviceName] = true;
+    self.initialNumberOfInstances[serviceName]  = angular.copy(number);
   }
 
-  function editNumberOfCpus(number) {
+  function editNumberOfCpus(serviceName, number) {
     polling = false;
-    self.editCpu = true;
-    self.initialNumberOfCpus = angular.copy(number);
+    self.editCpu[serviceName] = true;
+    self.initialNumberOfCpus[serviceName] = angular.copy(number);
   }
 
-  function editSizeOfMemory(number) {
+  function editSizeOfMemory(serviceName, number) {
     polling = false;
-    self.editMemory = true;
-    self.initialSizeOfMemory = angular.copy(number);
+    self.editMemory[serviceName] = true;
+    self.initialSizeOfMemory[serviceName] = angular.copy(number);
   }
 
-  function saveNumberOfInstances(serviceScale, number) {
-    self.editInstances = false;
+  function saveNumberOfInstances(serviceName, serviceScale, number) {
+    self.editInstances[serviceName] = false;
     serviceScale.instances = number;
     deploymentsResource.update($stateParams.id, self.data);
+    deploymentsResource.stopPolling();
+    polling = true;
   }
 
-  function saveNumberOfCpus(serviceScale, number) {
-    self.editCpu = false;
+  function saveNumberOfCpus(serviceName, serviceScale, number) {
+    self.editCpu[serviceName]  = false;
     serviceScale.cpu = number;
     deploymentsResource.update($stateParams.id, self.data);
+    deploymentsResource.stopPolling();
+    polling = true;
   }
 
-  function saveSizeOfMemory(serviceScale, number) {
-    self.editMemory = false;
+  function saveSizeOfMemory(serviceName, serviceScale, number) {
+    self.editMemory[serviceName]  = false;
     serviceScale.memory = number;
     deploymentsResource.update($stateParams.id, self.data);
+    deploymentsResource.stopPolling();
+    polling = true;
+  }
+
+  function editCancel() {
+    polling = true;
   }
 
   function refreshDeployment() {
@@ -69,6 +90,7 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   }
 
   function deploymentLoaded(deployment) {
+    console.log('Ja updated');
     self.data = deployment.data;
   }
 
