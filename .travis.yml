@@ -1,9 +1,6 @@
 sudo: false
 language: node_js
 node_js: "5"
-script: |
-  npm install -g gulp gulp-cli
-  npm install
-  bower install
-  ./setEnvironment.sh
-  gulp build
+install:        npm install -g gulp gulp-cli
+before_script:  node --version && npm --version && bower --version && gulp --version
+script:         npm install && bower install && ./setEnvironment.sh && gulp build
