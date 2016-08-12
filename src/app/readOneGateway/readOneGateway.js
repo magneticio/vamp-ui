@@ -71,6 +71,7 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
     }
   };
   var gatewayId = $stateParams.id;
+
   function createChartData() {
     var tempData = [];
     var tempLabels = [];
@@ -108,11 +109,47 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
     }
   }
 
+  //S etting up the health chart
+  self.healthChart.labels = [];
+  self.healthChart.data = [[]];
+  for (var i = 0; i < 20; i++) {
+
+    self.healthChart.labels.push('');
+    self.healthChart.data[0].push(undefined);
+  }
+
+  self.healthChart.series = ['Series A'];
+
+  self.healthChart.colors = ['#00FF00'];
+  self.healthChart.options = {
+    animation: false,
+    scales: {
+      yAxes: [{
+        display: true,
+        ticks: {
+          beginAtZero: true,
+          max: 100,
+          min: 0
+        }
+      }]
+    }
+  };
+
+  function addHealthStat(label, value) {
+    self.healthChart.labels.shift();
+    self.healthChart.labels.push(label);
+
+    self.healthChart.data[0].shift();
+    self.healthChart.data[0].push(value);
+  };
+
   EventStreamHandler.getStream('gateways:' + gatewayId, eventFired);
 
   function eventFired(data) {
     if (_.includes(data.tags, 'health')) {
       self.currentHealth = data.value * 100;
+      self.parsedData = $filter('date')(data.timestamp, "mm:ss");
+      addHealthStat(self.parsedData, self.currentHealth);
     }
 
     if (_.includes(data.tags, 'metrics:rate')) {
@@ -134,14 +171,6 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
 
   $interval(
     function () {
-      if (self.healthChart.data[0].length > noOfPoints) {
-        self.healthChart.labels.shift();
-        self.healthChart.data[0].shift();
-      }
-
-      self.healthChart.labels.push('');
-      self.healthChart.data[0].push(self.currentHealth);
-
       if (self.rateChart.data[0].length > noOfPoints) {
         self.rateChart.labels.shift();
         self.rateChart.data[0].shift();
