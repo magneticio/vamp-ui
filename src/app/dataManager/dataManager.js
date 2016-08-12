@@ -94,16 +94,24 @@ function DataManager(Api, $interval, toastr, $rootScope) {
       return this;
     };
 
-    self.update = function (id, data) {
+    self.update = function (id, data, updateWithResponse) {
       self.stopPolling();
 
       Api.update(resourceName, id, data).then(resourceUpdated, error);
 
-      function resourceUpdated() {
+      function resourceUpdated(response) {
         _.remove(self.entries, {
           name: id
         });
-        self.entries.push(data);
+
+        console.log(updateWithResponse);
+
+        if(updateWithResponse) {
+          self.entries.push(response.data.name ? response.data : response.data[1][0]);
+        } else {
+          self.entries.push(data);
+        }
+
         toastr.success(sprintf('[%s] updated from %s', id, resourceName), 'Updated');
         self.dataUpdated(self.entries);
       }
