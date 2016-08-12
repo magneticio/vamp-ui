@@ -32,10 +32,14 @@
             <div class="col-md-3 column">
               <span class="panel-label">Scale</span>
             </div>
-            <div class="col-md-3 column">
+            <div class="col-md-2 column">
               <span class="panel-label">Instances</span>
             </div>
-            <div class="col-md-3 column">
+            <div class="col-md-2 column">
+              <span class="panel-label">Gateway</span>
+            </div>
+
+            <div class="col-md-2 column">
               <span class="panel-label">Status</span>
             </div>
           </div>
@@ -108,10 +112,14 @@
               </p>
 
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
               <p ng-repeat="instance in service.instances">{{instance.host}}</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2 column">
+                <a ui-sref="readOneGateway({id: '{{$ctrl.data.name}}/{{clustername}}/port'})" href="">{{$ctrl.data.name}}/{{clustername}}/port</a>
+            </div>
+
+            <div class="col-md-2">
               <div>
                 <h2 class="text-warning">{{service.state.intention}} {{service.state.step.name}}</h2>
               </div>
