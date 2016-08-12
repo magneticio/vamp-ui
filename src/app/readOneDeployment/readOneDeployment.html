@@ -44,10 +44,11 @@
         <div class="panel-body">
           <div class="row" ng-repeat="service in cluster.services">
             <div class="col-md-3">
-              <!--<p class="head">{{service.breed.name}}</p>-->
-              <!--<p class="sub-head">{{service.breed.deployable}}</p>-->
-              {{service.breed.name}}
-
+              <p class="head">{{service.breed.name}}</p>
+              <p class="sub-head">
+                {{service.breed.deployable.type}}:&nbsp;
+                {{service.breed.deployable.definition}}
+              </p>
             </div>
             <div class="col-md-3">
               <p>
