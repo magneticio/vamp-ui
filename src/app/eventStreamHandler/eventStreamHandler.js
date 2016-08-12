@@ -3,7 +3,13 @@ function EventStreamHandler() {
 }
 
 EventStreamHandler.prototype.getStream = function (tag, eventFiredCallback) {
-  var source = new EventSource(Environment.prototype.getApiBaseUrl() + 'events/stream?tag=' + tag);
+  
+  var url = Environment.prototype.getApiBaseUrl() + 'events/stream';
+  if (tag) {
+    url = Environment.prototype.getApiBaseUrl() + 'events/stream?tag=' + tag;
+  }
+
+  var source = new EventSource(url);
 
   source.onopen = function () {
   };

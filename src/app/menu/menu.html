@@ -20,6 +20,9 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li ng-class="{active: menuItem.activeState === $ctrl.active}">
+          <a ui-sref="readAllEvents" href="#">Events</a>
+        </li>
         <li class="clickable" ng-click="$ctrl.toggleSettings()">
           <a><i class="fa fa-2x fa-info" aria-hidden="true"></i>
           </a>

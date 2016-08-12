@@ -1,0 +1,24 @@
+<header title="Events">
+  <buttons>
+  </buttons>
+</header>
+
+<div class="container-fluid">
+  <table class="table">
+    <tr>
+      <th>Time</th>
+      <th>Tags</th>
+      <th>Value</th>
+    </tr>
+    <tr ng-repeat="event in $ctrl.events">
+      <td>{{event.timestamp | date:'HH:mm:ss'}}</td>
+      <td>
+        <span ng-repeat="tag in event.tags">
+          <span class="label label-primary">{{tag}}</span>
+          &nbsp;
+        </span>
+      </td>
+      <td>{{event.value}}</td>
+    </tr>
+  </table>
+</div>

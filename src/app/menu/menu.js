@@ -30,6 +30,9 @@ function menuController($rootScope, $state) {
       'createWorkflow',
       'readOneWorkflow',
       'updateWorkflow'
+    ],
+    events: [
+      'readAlEvents'
     ]
   };
 
