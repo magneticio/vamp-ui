@@ -1,5 +1,9 @@
 <div class="info-panel" ng-class="{'active': $ctrl.infoPanelActive}">
   <h3>Info-Panel</h3>
+  <p>{{$ctrl.info.message}}</p>
+
+  <label>Running since</label>
+  <p>{{$ctrl.info.running_since | date: 'HH:mm:ss dd-MM-yyyy'}}</p>
 
   <label>Version:</label>
   <p>{{$ctrl.info.version}}</p>
