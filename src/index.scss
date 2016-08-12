@@ -20,6 +20,13 @@ menu {
     box-shadow: none !important;
     border-radius: 0;
     border-bottom: none;
+
+
+    .stats {
+      display: flex;
+      align-items: center;
+      height: 50px;
+    }
   }
 }
 

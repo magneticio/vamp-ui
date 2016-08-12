@@ -23,6 +23,15 @@
         <li ng-class="{active: menuItem.activeState === $ctrl.active}">
           <a ui-sref="readAllEvents" href="#">Events</a>
         </li>
+        <li class="stats">
+          <div class="CPU">
+
+          </div>
+          <div class="memory">
+            M&nbsp;({{$ctrl.jvmData.memory.heap.used/1024/1024 | number: 0}}Mb/{{$ctrl.jvmData.memory.heap.max/1024/1024 | number: 0}}Mb)
+            &nbsp;{{($ctrl.jvmData.memory.heap.used/$ctrl.jvmData.memory.heap.max)*100 | number: 1}}%
+          </div>
+        </li>
         <li class="clickable" ng-click="$ctrl.toggleSettings()">
           <a><i class="fa fa-2x fa-info" aria-hidden="true"></i>
           </a>
