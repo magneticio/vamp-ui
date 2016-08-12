@@ -23,13 +23,22 @@
         <li ng-class="{active: menuItem.activeState === $ctrl.active}">
           <a ui-sref="readAllEvents" href="#">Events</a>
         </li>
-        <li class="stats">
-          <div class="CPU">
+        <li class="divider-vertical"></li>
 
+        <li class="stats" ng-show="$ctrl.jvmData.memory">
+          <div class="CPU">
+            <span class="stat-label">System Load:</span>
+            {{$ctrl.jvmData['operating_system']['system_load_average'] | number: 2}}%
           </div>
+          &nbsp;&nbsp;
           <div class="memory">
-            M&nbsp;({{$ctrl.jvmData.memory.heap.used/1024/1024 | number: 0}}Mb/{{$ctrl.jvmData.memory.heap.max/1024/1024 | number: 0}}Mb)
-            &nbsp;{{($ctrl.jvmData.memory.heap.used/$ctrl.jvmData.memory.heap.max)*100 | number: 1}}%
+            <span class="stat-label">Memory:</span>
+            <span class="stat-content">
+              {{($ctrl.jvmData.memory.heap.used/$ctrl.jvmData.memory.heap.max)*100 | number: 1}}%
+              <span class="detail">
+                &nbsp;({{$ctrl.jvmData.memory.heap.used/1024/1024 | number: 0}}Mb/{{$ctrl.jvmData.memory.heap.max/1024/1024 | number: 0}}Mb)
+              </span>
+            </span>
           </div>
         </li>
         <li class="clickable" ng-click="$ctrl.toggleSettings()">

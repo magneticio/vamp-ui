@@ -3,7 +3,6 @@ function EventStreamHandler() {
 }
 
 EventStreamHandler.prototype.getStream = function (tag, eventFiredCallback) {
-  
   var url = Environment.prototype.getApiBaseUrl() + 'events/stream';
   if (tag) {
     url = Environment.prototype.getApiBaseUrl() + 'events/stream?tag=' + tag;
