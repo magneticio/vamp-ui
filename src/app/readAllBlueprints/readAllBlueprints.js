@@ -25,7 +25,7 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal, Api)
     var modalInstance = $uibModal.open(Modal.create('deployBlueprintModal', resolves));
 
     modalInstance.result.then(function (data) {
-      deploymentsResource.update(data.deploymentName, data.blueprint);
+      deploymentsResource.update(data.deploymentName, data.blueprint, true);
       $state.go('readAllDeployments');
     });
   }
