@@ -112,6 +112,7 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   // Tryout
   self.chart.labels = [];
   self.chart.data = [[]];
+  var noOfBars = 20;
   for (var i = 0; i < 20; i++) {
 
     self.chart.labels.push('');
@@ -132,6 +133,14 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
           min: 0
         }
       }]
+    }
+  }
+
+  Api.readAll('events', {tag: 'deployments:' + $stateParams.id}).then(eventsLoaded);
+
+  function eventsLoaded(response) {
+    for (var i = response.data.length - 1; i >= 0; i--) {
+      eventFired(response.data[i]);
     }
   }
 

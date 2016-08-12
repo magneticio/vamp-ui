@@ -1,5 +1,5 @@
 /* global _*/
-function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStreamHandler, $uibModal, $state, DataManager) {
+function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr, EventStreamHandler, $uibModal, $state, DataManager) {
   var noOfPoints = 250;
 
   var self = this;
@@ -141,7 +141,15 @@ function readOneGatewayController(Api, $interval, $stateParams, toastr, EventStr
 
     self.healthChart.data[0].shift();
     self.healthChart.data[0].push(value);
-  };
+  }
+
+  Api.readAll('events', {tag: 'gateways:' + $stateParams.id}).then(eventsLoaded);
+
+  function eventsLoaded(response) {
+    for (var i = response.data.length - 1; i >= 0; i--) {
+      eventFired(response.data[i]);
+    }
+  }
 
   EventStreamHandler.getStream('gateways:' + gatewayId, eventFired);
 
