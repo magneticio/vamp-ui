@@ -317,6 +317,8 @@ p, div {
   right: 0;
   left: 0;
 
+  z-index: 9999;
+
   transition: 0.3s height ease-in-out;
 
   &.show {
