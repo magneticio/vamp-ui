@@ -102,7 +102,7 @@
 
                 <span ng-show="$ctrl.editMemory[service.breed.name]">
                   <input  maxlength="10" size="10" type="input" min="0" ng-model="$ctrl.initialSizeOfMemory[service.breed.name]">
-                  
+
                   <button ng-disabled="$ctrl.memoryToNumber($ctrl.initialSizeOfMemory[service.breed.name]) < 1" ng-click="$ctrl.saveSizeOfMemory(service.breed.name, service.scale, $ctrl.initialSizeOfMemory[service.breed.name])">
                     <i class="fa fa-check"></i>
                   </button>

@@ -104,10 +104,8 @@ function DataManager(Api, $interval, toastr, $rootScope) {
           name: id
         });
 
-        console.log(updateWithResponse);
-
-        if(updateWithResponse) {
-          self.entries.push(response.data.name ? response.data : response.data[1][0]);
+        if (updateWithResponse) {
+          self.entries.push(response.data.name ? response.data : response.data[response.data.length - 1][0]);
         } else {
           self.entries.push(data);
         }
