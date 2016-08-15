@@ -15,7 +15,7 @@ function Events(EventStreamHandler, $interval) {
 
   function cacheToScope() {
     var tempEvents = self.events.concat(eventCache);
-    while (tempEvents.length > 25) {
+    while (tempEvents.length > 50) {
       tempEvents.shift();
     }
     self.events = tempEvents;
@@ -31,7 +31,7 @@ function Events(EventStreamHandler, $interval) {
 
   function start() {
     $interval(function () {
-      cacheToScope()
+      cacheToScope();
     }, 1000);
   }
 }

@@ -300,10 +300,61 @@ p, div {
 }
 
 .chart-row {
+
   padding-bottom: 40px;
 }
 
 .input-small {
   width: 70px;
   font-size: 12px;
+}
+
+.event-panel-content {
+  box-shadow: -4px 0 4px 1px rgba(#aaaaaa, 0.3);
+  height: 40px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  transition: 0.3s height ease-in-out;
+
+  &.show {
+    height: 400px;
+  }
+
+  .head {
+    height: 40px;
+    padding: 0 15px;
+    width: 100%;
+    border-bottom: 1px solid rgba($dark-blue, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+
+    .closeButton {
+
+      cursor: pointer;
+    }
+
+    .category {
+      cursor: pointer;
+      margin: 0;
+      line-height: 1;
+
+      &:hover {
+       color: $purple;
+      }
+    }
+  }
+
+
+
+
+  .container-fluid {
+    background-color: white;
+    height: 360px;
+    overflow: scroll;
+  }
 }

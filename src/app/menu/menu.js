@@ -33,9 +33,6 @@ function menuController($rootScope, Events, $interval, Api) {
       'createWorkflow',
       'readOneWorkflow',
       'updateWorkflow'
-    ],
-    events: [
-      'readAlEvents'
     ]
   };
 
