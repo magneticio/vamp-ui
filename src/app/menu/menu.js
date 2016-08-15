@@ -37,14 +37,19 @@ function menuController($rootScope, $state, $interval, Api) {
     ]
   };
 
-  function toggleSettings() {
-    $rootScope.infoPanelActive = !$rootScope.infoPanelActive;
+  $rootScope.$on('$stateChangeStart', stateChanged);
+
+  function stateChanged(event, toState) {
+    for (var activeState in activeTable) {
+      if (_.includes(activeTable[activeState], toState.name)) {
+        self.active = activeState;
+      }
+    }
   }
 
-  for (var activeState in activeTable) {
-    if (_.includes(activeTable[activeState], $state.current.name)) {
-      self.active = activeState;
-    }
+
+  function toggleSettings() {
+    $rootScope.infoPanelActive = !$rootScope.infoPanelActive;
   }
 
   self.menuItems = [
@@ -77,8 +82,8 @@ function menuController($rootScope, $state, $interval, Api) {
 
   $interval(function() {
     Api.readAll('info', {for: 'jvm'}).then(jvmDataLoaded);
-  }, 1000);
-  
+  }, 30000);
+
   function jvmDataLoaded(response) {
     self.jvmData = response.data.jvm;
   }
