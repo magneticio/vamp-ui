@@ -61,7 +61,8 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal) {
       var modalInstance = $uibModal.open(Modal.create('mergeDeploymentModal', resolves));
 
       modalInstance.result.then(function (data) {
-        deploymentsResource.update(data.deployment.name, data.blueprint);
+        deploymentsResource.update(data.deployment.name, data.blueprint, true);
+        $state.go('readAllDeployments');
       });
     }
   }
