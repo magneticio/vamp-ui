@@ -1,8 +1,10 @@
 /* global _*/
-function menuController($rootScope, $state, $interval, Api) {
+function menuController($rootScope, Events, $interval, Api) {
   var self = this;
   self.toggleSettings = toggleSettings;
   self.jvmData = {};
+
+  Events.start();
 
   var activeTable = {
     blueprints: [
@@ -79,6 +81,7 @@ function menuController($rootScope, $state, $interval, Api) {
     }
   ];
 
+  Api.readAll('info', {for: 'jvm'}).then(jvmDataLoaded);
   $interval(function() {
     Api.readAll('info', {for: 'jvm'}).then(jvmDataLoaded);
   }, 30000);
