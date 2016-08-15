@@ -12,6 +12,8 @@ function infoPanelController(Api, $rootScope) {
     /* eslint camelcase: ["error", {properties: "never"}]*/
     var data = response.data;
     var info = {};
+    info.message = data.message;
+    info.running_since = data.running_since;
     info.version = data.version;
     info.persistence = data.persistence.database.type;
     info.key_value_store = data.key_value.type;

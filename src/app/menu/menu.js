@@ -47,7 +47,6 @@ function menuController($rootScope, $state, $interval, Api) {
     }
   }
 
-
   function toggleSettings() {
     $rootScope.infoPanelActive = !$rootScope.infoPanelActive;
   }
