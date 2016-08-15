@@ -1,27 +1,13 @@
-function readAllEventsController(EventStreamHandler, $interval) {
+function readAllEventsController(Events) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
-
   var self = this;
   self.events = [];
 
-  var eventCache = [];
+  Events.setEventsUpdated(eventsUpdated);
 
-  EventStreamHandler.getStream(undefined, eventFired);
-
-  function eventFired(data) {
-    eventCache.push(data);
+  function eventsUpdated(events) {
+    self.events = events;
   }
-
-  function cacheToScope() {
-    var tempEvents = self.events.concat(eventCache);
-    while (tempEvents.length > 25) {
-      tempEvents.shift();
-    }
-    self.events = tempEvents;
-    eventCache = [];
-  }
-
-  $interval(function(){cacheToScope()}, 1000);
 }
 
 angular

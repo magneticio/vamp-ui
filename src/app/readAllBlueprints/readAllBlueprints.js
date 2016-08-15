@@ -1,4 +1,4 @@
-function readAllBlueprintsController($state, $uibModal, DataManager, Modal, Api) {
+function readAllBlueprintsController($state, $uibModal, DataManager, Modal) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
 
   var self = this;
