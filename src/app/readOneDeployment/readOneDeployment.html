@@ -64,8 +64,8 @@
                 </span>
 
                 <span ng-show="$ctrl.editInstances[service.breed.name]">
-                  <input class="input-small" maxlength="2" step="1" type="number" min="0" ng-model="$ctrl.initialNumberOfInstances[service.breed.name]">
-                  <button ng-click="$ctrl.saveNumberOfInstances(service.breed.name, service.scale, $ctrl.initialNumberOfInstances[service.breed.name])">
+                  <input class="input-small" maxlength="2" step="1" type="number" min="1" ng-model="$ctrl.initialNumberOfInstances[service.breed.name]">
+                  <button ng-disabled="!$ctrl.initialNumberOfInstances[service.breed.name]" ng-click="$ctrl.saveNumberOfInstances(service.breed.name, service.scale, $ctrl.initialNumberOfInstances[service.breed.name])">
                     <i class="fa fa-check"></i>
                   </button>
                   <button ng-click="$ctrl.editInstances[service.breed.name] = false; $ctrl.editCancel()">
@@ -102,7 +102,8 @@
 
                 <span ng-show="$ctrl.editMemory[service.breed.name]">
                   <input  maxlength="10" size="10" type="input" min="0" ng-model="$ctrl.initialSizeOfMemory[service.breed.name]">
-                  <button ng-click="$ctrl.saveSizeOfMemory(service.breed.name, service.scale, $ctrl.initialSizeOfMemory[service.breed.name])">
+                  
+                  <button ng-disabled="$ctrl.memoryToNumber($ctrl.initialSizeOfMemory[service.breed.name]) < 1" ng-click="$ctrl.saveSizeOfMemory(service.breed.name, service.scale, $ctrl.initialSizeOfMemory[service.breed.name])">
                     <i class="fa fa-check"></i>
                   </button>
                   <button ng-click="$ctrl.editMemory[service.breed.name] = false; $ctrl.editCancel()">

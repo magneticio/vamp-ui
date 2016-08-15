@@ -24,6 +24,8 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
 
   self.editCancel = editCancel;
 
+  self.memoryToNumber = memoryToNumber;
+
   var polling = true;
 
   refreshDeployment();
@@ -107,6 +109,10 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
 
       addHealthStat(self.parsedData, self.currentHealth);
     }
+  }
+
+  function memoryToNumber(memoryString) {
+    return parseInt(memoryString.substring(0, memoryString.length - 2), 10);
   }
 
   // Tryout
