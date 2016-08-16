@@ -17,9 +17,19 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
 
   self.editWeights = editWeights;
   self.getValueFromPercentage = getValueFromPercentage;
+  self.updateGateway = updateGateway;
 
-  self.addConditionMode = {};
-  self.addCondition = addCondition;
+  function updateGateway() {
+    Api.update('gateways', self.data.name, self.data).then(gatewayUpdated, gatewayUpdatedFailed);
+  }
+
+  function gatewayUpdated() {
+    toastr.success('Gateway ' + self.data.name + ' has been updated with the new values.');
+  }
+
+  function gatewayUpdatedFailed(error) {
+    toastr.error(error.message, 'Gateway ' + self.data.name + 'could not be updated')
+  }
 
   var allowRefresh = true;
 
@@ -87,22 +97,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
       data: [tempData]
     };
   }
-
-  function addCondition(routename, condition) {
-    allowRefresh = false;
-    self.addConditionMode[routename] = false;
-    self.data.routes[routename].conditions.push({condition: condition});
-    Api.update('gateways', self.data.name, self.data).then(conditionAdded, conditionAddedFailed);
-
-    function conditionAdded() {
-      toastr.success('Condition [' + condition + '] has been added to route [' + routename + '] of gateway [' + self.data.name + ']', 'Condition added');
-    }
-
-    function conditionAddedFailed() {
-      toastr.error('Could not add condition', 'Condition not added');
-    }
-  }
-
+  
   function refreshGateway() {
     if (allowRefresh) {
       Api.read('gateways', gatewayId).then(gatewayLoaded, gatewayCouldNotBeLoaded);

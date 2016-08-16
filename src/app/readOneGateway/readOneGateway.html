@@ -69,24 +69,12 @@
     <tr ng-repeat="(routename, route) in $ctrl.data.routes">
       <td>{{routename}}</td>
       <td>{{route.weight}}</td>
-      <td class="condition-labels">
-        <span ng-repeat="condition in route.conditions" class="label label-success">{{condition.condition}}</span>
-        <div class="condition-form" ng-if="$ctrl.addConditionMode[routename]">
-
-          <form novalidate class="form-inline" name="conditionForm">
-            <div class="form-group form-group-sm">
-              <input type="text" class="form-control" ng-model="condition" id="condition" placeholder="New condition"
-                     name="condition" required>
-            </div>
-            <button ng-disabled="conditionForm.$invalid" ng-click="$ctrl.addCondition(routename, condition)"
-                    class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-            <button ng-click="$ctrl.addConditionMode[routename] = false" class="btn btn-danger btn-xs"><i
-                class="fa fa-times"></i></button>
-          </form>
-
-        </div>
-        <button ng-if="!$ctrl.addConditionMode[routename]" type="button" class="btn btn-success btn-xs"
-                ng-click="$ctrl.addConditionMode[routename] = true"><i class="fa fa-plus"></i></button>
+      <td>
+        <a  href="#"
+            editable-text="route.condition.condition"
+            onaftersave="$ctrl.updateGateway()">
+          {{route.condition.condition || 'Empty'}}
+        </a>
       </td>
       <td>{{route.condition_strength}}</td>
     </tr>
