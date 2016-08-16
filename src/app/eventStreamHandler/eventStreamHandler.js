@@ -1,5 +1,6 @@
 /* global Environment*/
 function EventStreamHandler() {
+  this.streams = [];
 }
 
 EventStreamHandler.prototype.getStream = function (tag, eventFiredCallback) {
@@ -10,8 +11,13 @@ EventStreamHandler.prototype.getStream = function (tag, eventFiredCallback) {
 
   var source = new EventSource(url);
 
-  source.onopen = function () {
-  };
+  // Close all the streams
+  if (tag) {
+    this.streams.forEach(function(stream) {
+      stream.close();
+    });
+    this.streams.push(source);
+  }
 
   source.addEventListener('event', eventFired);
 
