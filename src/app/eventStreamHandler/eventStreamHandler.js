@@ -1,29 +1,29 @@
 /* global Environment*/
 function EventStreamHandler() {
-  this.streams = [];
+  var self = this;
+  self.events = {};
+  self.everyEventCallback;
+  var url = Environment.prototype.getApiBaseUrl() + 'events/stream';
+  this.source = new EventSource(url);
+  this.source.addEventListener('event', eventFired);
+  function eventFired (event) {
+    var parsedData = JSON.parse(event.data);
+
+    var tags = parsedData.tags;
+    tags.forEach(function(tag) {
+      self.events && self.events[tag] &&  self.events[tag](parsedData);
+    });
+    self.everyEventCallback && self.everyEventCallback(parsedData);
+  }
 }
 
 EventStreamHandler.prototype.getStream = function (tag, eventFiredCallback) {
-  var url = Environment.prototype.getApiBaseUrl() + 'events/stream';
-  if (tag) {
-    url = Environment.prototype.getApiBaseUrl() + 'events/stream?tag=' + tag;
+  if(tag) {
+    this.events[tag] = eventFiredCallback;
+  } else {
+    this.everyEventCallback = eventFiredCallback;
   }
 
-  var source = new EventSource(url);
-
-  // Close all the streams
-  if (tag) {
-    this.streams.forEach(function(stream) {
-      stream.close();
-    });
-    this.streams.push(source);
-  }
-
-  source.addEventListener('event', eventFired);
-
-  function eventFired(event) {
-    eventFiredCallback(JSON.parse(event.data));
-  }
 };
 
 angular
