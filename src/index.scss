@@ -7,6 +7,16 @@ body {
   background-color: $light-grey !important;
 }
 
+.the-page {
+  height: 100vh;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+}
+
 menu {
   padding: 0;
   margin: 0;
@@ -44,6 +54,7 @@ menu {
     }
   }
 }
+
 .vamp-page-header {
   margin: 0;
   padding: 20px 0;
@@ -172,11 +183,11 @@ menu {
 }
 
 .info-panel {
-  z-index: 100;
   position: fixed;
   top: 52px;
   right: 0;
   width: 25%;
+  max-width: 400px;
   bottom: 0;
   background-color: white;
   padding: 22px;
@@ -312,11 +323,8 @@ p, div {
 .event-panel-content {
   box-shadow: -4px 0 4px 1px rgba(#aaaaaa, 0.3);
   height: 40px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
 
+  position: relative;
   z-index: 9999;
 
   transition: 0.3s height ease-in-out;
@@ -368,4 +376,10 @@ p, div {
   &:last-of-type {
     border-bottom: none;
   }
+}
+
+.app-center {
+  position: relative;
+  overflow: scroll;
+  flex: 1;
 }
