@@ -114,7 +114,8 @@
 
             </div>
             <div class="col-md-2">
-              <p ng-repeat="instance in service.instances">{{instance.host}}</p>
+
+              <p ng-repeat="instance in service.instances">{{instance.host}}:{{instance.ports.port}}</p>
             </div>
             <div class="col-md-2 column">
                 <a ui-sref="readOneGateway({id: '{{$ctrl.data.name}}/{{clustername}}/port'})" href="">{{$ctrl.data.name}}/{{clustername}}/port</a>
