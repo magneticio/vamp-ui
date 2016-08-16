@@ -112,7 +112,7 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   }
 
   function memoryToNumber(memoryString) {
-    return parseInt(memoryString.substring(0, memoryString.length - 2), 10);
+    return memoryString ? parseInt(memoryString.substring(0, memoryString.length - 2), 10) : undefined;
   }
 
   // Tryout
