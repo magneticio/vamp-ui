@@ -104,7 +104,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
       data: [tempData]
     };
   }
-  
+
   refreshGateway();
   function refreshGateway() {
     if (allowRefresh) {
