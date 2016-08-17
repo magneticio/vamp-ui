@@ -67,16 +67,30 @@
       <th>Condition Strength</th>
     </tr>
     <tr ng-repeat="(routename, route) in $ctrl.data.routes">
-      <td>{{routename}}</td>
-      <td>{{route.weight}}</td>
-      <td>
+      <td class="col-md-3">{{routename}}</td>
+      <td class="col-md-2">{{route.weight}}</td>
+      <td class="col-md-4">
         <a  href="#"
             editable-text="route.condition.condition"
             onaftersave="$ctrl.updateGateway()">
           {{route.condition.condition || 'Empty'}}
         </a>
       </td>
-      <td>{{route.condition_strength}}</td>
+      <td class="condition-weights col-md-3" ng-init="edit = false">
+        <div class="value" ng-if="!edit">
+          <span>{{route.condition_strength}}</span>&nbsp;
+          <span ng-click="$ctrl.editConditionStrength(routename, route.condition_strength); $parent.edit = true"><fa class="fa fa-pencil"></fa></span>
+        </div>
+        <div class="edit" ng-if="edit" class="slider">
+          <rzslider
+              class="slider"
+              rz-slider-model="$ctrl.conditionStrengths[routename]"
+              rz-slider-options="{floor: 0, ceil: 100}">
+          </rzslider>
+          <button><i class="fa fa-check" ng-click="$ctrl.saveConditionWeightChange(routename, $ctrl.conditionStrengths[routename]); $parent.edit = false"></i></button>
+          <button ng-click="$parent.edit = false"><i class="fa fa-times" ></i></button>
+        </div>
+      </td>
     </tr>
   </table>
 </div>

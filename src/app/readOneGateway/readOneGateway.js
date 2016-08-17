@@ -4,7 +4,6 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
 
   var self = this;
   var gatewaysResource = DataManager.resource('gateways');
-  self.data = gatewaysResource.readOne($stateParams.id);
   self.weights = {};
 
   self.currentHealth = 0;
@@ -19,6 +18,14 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
   self.getValueFromPercentage = getValueFromPercentage;
   self.updateGateway = updateGateway;
 
+  self.editConditionStrength = editConditionStrength;
+  self.saveConditionWeightChange = saveConditionWeightChange;
+
+  function saveConditionWeightChange(routeName, conditionStrength) {
+    self.data.routes[routeName].condition_strength = conditionStrength + '%';
+    updateGateway();
+  }
+
   function updateGateway() {
     Api.update('gateways', self.data.name, self.data).then(gatewayUpdated, gatewayUpdatedFailed);
   }
@@ -28,7 +35,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
   }
 
   function gatewayUpdatedFailed(error) {
-    toastr.error(error.message, 'Gateway ' + self.data.name + 'could not be updated')
+    toastr.error(error.message, 'Gateway ' + self.data.name + 'could not be updated');
   }
 
   var allowRefresh = true;
@@ -220,6 +227,13 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
     }
 
     openEditWeightsModal(weights);
+  }
+
+  self.conditionStrengths = {};
+  function editConditionStrength(routeName, weightPercentage) {
+    console.log(routeName);
+    console.log(getValueFromPercentage(weightPercentage));
+    self.conditionStrengths[routeName] = getValueFromPercentage(weightPercentage);
   }
 
   function openEditWeightsModal(weights) {
