@@ -105,6 +105,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
     };
   }
   
+  refreshGateway();
   function refreshGateway() {
     if (allowRefresh) {
       Api.read('gateways', gatewayId).then(gatewayLoaded, gatewayCouldNotBeLoaded);
