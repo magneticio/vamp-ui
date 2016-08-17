@@ -26,11 +26,6 @@
     "angular-mocks": "^1.5.0"
   },
   "overrides": {
-    "ace-builds": {
-      "main": [
-        "./src/ace.js"
-      ]
-    },
     "bootstrap-sass": {
       "main": [
         "./assets/javascripts/bootstrap.js"
