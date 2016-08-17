@@ -383,3 +383,14 @@ p, div {
   overflow: scroll;
   flex: 1;
 }
+
+.condition-weights {
+  .fa-pencil {
+    cursor: pointer;
+  }
+
+  .slider {
+    width: 70%;
+  }
+
+}
