@@ -11,9 +11,10 @@
           style="color:white; white-space:nowrap;">{{getTotal()}} / 100%</span></uib-progressbar>
     </div>
   </div>
+
   <div class="row row-centered" ng-repeat="(weightName, weightValue) in newWeightValues">
-    <div class="col-md-4">
-      <h5 class="pull-right slider-fix">
+    <div class="col-md-6">
+      <h5 class=" slider-fix">
         {{weightName}}:&nbsp;
       </h5>
     </div>
@@ -24,6 +25,7 @@
       </rzslider>
     </div>
   </div>
+
 </div>
 <div class="modal-footer">
   <button class="btn btn-danger" ng-disabled="getTotal() !== 100" type="button" ng-click="ok()">Save</button>
