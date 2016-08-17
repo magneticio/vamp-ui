@@ -17,6 +17,8 @@ function pluginsConfig(toastrConfig) {
 }
 angular
   .module('app')
-  .run(function(editableOptions) {
-    editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+  .run(function(editableOptions, editableThemes) {
+    editableOptions.theme = 'default';
+    editableThemes.default.submitTpl = '<button type="submit"><i class="fa fa-check"></i></button>';
+    editableThemes.default.cancelTpl = '<button type="button"  ng-click="$form.$cancel()"><i class="fa fa-times"></i></button>';
   });

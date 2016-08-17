@@ -394,3 +394,20 @@ p, div {
   }
 
 }
+
+a.editable-click {
+  color: #337ab7;
+  border-bottom: none;
+  font-style: normal;
+  font-weight: bold;
+
+
+}
+
+
+a.editable-click:hover {
+  color: #337ab7;
+  text-decoration: underline;
+  font-style: normal;
+  font-weight: bold;
+}
