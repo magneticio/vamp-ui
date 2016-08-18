@@ -9,7 +9,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Vamp</a>
+      <a class="navbar-brand" href="#">
+        <img class="nav-logo" src="../img/logo.svg">
+      </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -25,7 +27,7 @@
             <span class="stat-label">System Load:</span>
             {{$ctrl.jvmData['operating_system']['system_load_average'] | number: 2}}%
           </div>
-          &nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;
           <div class="memory">
             <span class="stat-label">Memory:</span>
             <span class="stat-content">
@@ -37,7 +39,8 @@
           </div>
         </li>
         <li class="clickable" ng-click="$ctrl.toggleSettings()">
-          <a><i class="fa fa-2x fa-info" aria-hidden="true"></i>
+          <a class="info-button">
+            <i class="fa fa-info" aria-hidden="true"></i>
           </a>
         </li>
       </ul>

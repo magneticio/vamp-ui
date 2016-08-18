@@ -17,9 +17,9 @@ function status() {
         if (value) {
           var n = 100 - (value * 100);
           return {
-            r: Math.floor((255 * n) / 100),
-            g: Math.floor((255 * (100 - n)) / 100),
-            b: 0
+            r: Math.floor((235 * n) / 100) + 20,
+            g: Math.floor((220 * (100 - n)) / 100),
+            b: value === 100 ? 180 : 180 - n
           };
         } else {
           return {

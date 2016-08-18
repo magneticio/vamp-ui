@@ -3,6 +3,17 @@ $light-grey: #F2F2F2;
 $purple: #FF405E;
 $dark-blue: #1E0A3C;
 
+$green: #15D9B2;
+
+$font-small: 14px;
+$font-medium: 18px;
+$font-big: 24px;
+$font-really-big: 32px;
+
+$font-weight-light: 300;
+$font-weight-regular: 500;
+$font-weight-bold: 700;
+
 body {
   background-color: $light-grey !important;
 }
@@ -38,17 +49,17 @@ menu {
       height: 50px;
 
       .stat-label {
-        text-transform: uppercase;
-        font-weight: bold;
-        color: rgba($dark-blue, 0.7);
-        font-size: 10px;
+        color: rgba(30, 10, 60, 0.5);
+        border-top: none !important;
+        font-size: 11px !important;
+        font-weight: 500;
       }
 
       .stat-content {
         .detail {
           font-size: 10px;
           font-weight: bold;
-          color: rgba($purple, 0.7);
+          color: rgba($dark-blue, 0.7);
         }
       }
     }
@@ -70,17 +81,18 @@ menu {
     }
 
     .title {
-      font-size: 30px;
+      margin-top: 10px;
+      font-size: 18px;
       text-transform: uppercase;
-      line-height: 1;
-      font-weight: 100;
+
+      font-weight: 300;
     }
 
     .title-add {
-      font-size: 22px;
+      font-size: 32px;
       line-height: 1;
       margin-top: 4px;
-      font-weight: 100;
+      font-weight: 300;
       color: $purple;
     }
   }
@@ -143,8 +155,17 @@ menu {
     margin: 0;
   }
 
+  margin-top: 35px;
+
+
   display: flex;
   align-items: center;
+
+  .status-text {
+    height: 100%;
+    line-height: 1;
+    font-size: 24px;
+  }
 
 }
 
@@ -157,6 +178,19 @@ menu {
 
 .table > tbody > tr > td {
   vertical-align: middle !important;
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: $dark-blue;
+}
+
+.table > tbody > tr > th {
+  padding: 8px 0px 2px 8px;
+  vertical-align: middle !important;
+  color: rgba($dark-blue, 0.5);
+  border-top: none !important;
+  font-size: 14px !important;
+  font-weight: 500;
 }
 
 .row-centered {
@@ -213,19 +247,19 @@ menu {
 
 //Bootstrap overwrite
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Avenir';
+  font-family: 'Roboto', sans-serif;
 }
 
 p, div {
-  font-family: 'Avenir';
+  font-family: 'Roboto', sans-serif;
 }
 
 //Navbar text
 .navbar-default .navbar-nav > li > a {
   color: $dark-blue !important;
-  font-size: 10px;
-  text-transform: uppercase;
-  font-weight: bold;
+  font-size: 14px;
+  //text-transf3rm: lowercase;
+  font-weight: 300;
   letter-spacing: 1px;
 }
 
@@ -238,19 +272,41 @@ p, div {
 
 //buttons
 .btn {
-  font-size: 10px !important;
-  text-transform: uppercase;
+  font-size: 12px !important;
+  //text-transform: uppercase;
   border: none !important;
   border-radius: 20px !important;
   line-height: 1 !important;
   background-color: $dark-blue !important;
   background-image: none !important;
   text-shadow: none !important;
-  padding: 9px 10px 7px 10px !important;
+  padding: 9px 20px 7px 20px !important;
   color: white !important;
-  font-weight: bold !important;
+  font-weight: $font-weight-light !important;
   letter-spacing: 1px;
+
+
+  &.blue{
+    background-color: rgba($dark-blue, 0.5) !important;
+    &:hover {
+      background-color: red;
+      //background-color: darken(rgba($dark-blue, 0.5), 10%);
+    }
+  }
+
+  &.red {
+    background-color: $purple !important;
+  }
+
+  &.ghost {
+    background-color: transparent !important;
+    border: 1px solid $dark-blue !important;
+    color: $dark-blue !important;
+    font-weight: $font-weight-regular !important;
+  }
 }
+
+
 .ace_editor {
   div {
     font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
@@ -404,10 +460,42 @@ a.editable-click {
 
 }
 
+.navbar-nav {
+  margin-left: -10px;
+}
 
 a.editable-click:hover {
   color: #337ab7;
   text-decoration: underline;
   font-style: normal;
   font-weight: bold;
+}
+
+.chart-header {
+  padding: 8px 0px 2px 8px;
+  vertical-align: middle !important;
+  color: rgba($dark-blue, 0.5);
+  border-top: none !important;
+  font-size: 14px !important;
+  font-weight: 500;
+}
+
+.info-button {
+  margin-right: -15px;
+  width: 57px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  border-left: 2px solid $light-grey;
+  margin-left: 15px;
+
+}
+
+.fa-info {
+  font-size: 22px;
+}
+
+.nav-logo {
+  height: 20px;
+  width: 20px;
 }

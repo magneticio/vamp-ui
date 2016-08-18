@@ -127,7 +127,7 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
 
   self.chart.series = ['Series A'];
 
-  self.chart.colors = ['#00FF00'];
+  self.chart.colors = ['#15D9B2'];
   self.chart.options = {
     animation: false,
     scales: {
