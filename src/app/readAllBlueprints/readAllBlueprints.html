@@ -1,6 +1,6 @@
 <header title="Blueprints">
   <buttons>
-    <button ui-sref="createBlueprint" class="btn btn-default" type="submit">Create</button>
+    <button ui-sref="createBlueprint" class="btn ghost" type="submit"><i class="fa fa-plus"></i>&nbsp;&nbsp;Create</button>
   </buttons>
 </header>
 
@@ -9,7 +9,7 @@
     <tr>
       <th>Name</th>
       <th>
-        <p>Deploy</p>
+        Deploy
       </th>
       <th></th>
     </tr>
@@ -24,8 +24,8 @@
       </td>
       <td>
         <div class="pull-right">
-          <button ui-sref="updateBlueprint({id: blueprint.name})" class="btn btn-default">Edit</button>
-          <button ng-click="$ctrl.openDeleteModal(blueprint.name)" class="btn btn-default">Delete</button>
+          <button ui-sref="updateBlueprint({id: blueprint.name})" class="btn blue"><i class="fa fa-lg fa-pencil"></i>&nbsp;&nbsp;Edit</button>
+          <button ng-click="$ctrl.openDeleteModal(blueprint.name)" class="btn red"><i class="fa fa-lg fa-trash-o"></i>&nbsp;&nbsp;Delete</button>
         </div>
       </td>
     </tr>
