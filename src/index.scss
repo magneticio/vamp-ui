@@ -81,11 +81,14 @@ menu {
     }
 
     .title {
-      margin-top: 10px;
       font-size: 18px;
       text-transform: uppercase;
 
       font-weight: 300;
+
+      &.with-add {
+        margin-top: 10px;
+      }
     }
 
     .title-add {
