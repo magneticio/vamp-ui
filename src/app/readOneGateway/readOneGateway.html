@@ -25,7 +25,7 @@
     <div class="col-md-2">
       <h4>Sticky</h4>
       <span ng-if="$ctrl.data.sticky !== 'none'" class="label label-success"><i class="fa fa-check"></i>&nbsp;Is sticky</span>
-      <span ng-if="$ctrl.data.sticky === 'none'" class="label label-default">Is Not Stikcy</span>
+      <span ng-if="$ctrl.data.sticky === 'none'" class="label label-default">Is not sticky</span>
     </div>
 
   </div>
@@ -90,7 +90,7 @@
               rz-slider-options="{floor: 0, ceil: 100}">
           </rzslider>
           <button><i class="fa fa-check" ng-click="$ctrl.saveConditionWeightChange(routename, $ctrl.conditionStrengths[routename]); $parent.edit = false"></i></button>
-          <button ng-click="$parent.edit = false"><i class="fa fa-times" ></i></button>
+          <button ng-click="$parent.edit = false"><i class="fa fa-times"></i></button>
         </div>
       </td>
     </tr>

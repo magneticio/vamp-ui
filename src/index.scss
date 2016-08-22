@@ -426,10 +426,10 @@ p, div {
 }
 .service-row {
   &:first-of-type {
-    padding: 20px 0;
+    padding: 10px 0;
   }
 
-  padding: 50px 0;
+  padding: 40px 0;
   border-bottom: 1px solid $light-grey;
 
   &:last-of-type {
@@ -501,4 +501,25 @@ a.editable-click:hover {
 .nav-logo {
   height: 20px;
   width: 20px;
+}
+
+.deploy-status {
+  display: block;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  background-color: darkgrey;
+
+  &.red {
+    background-color: $purple;
+  }
+
+  &.green {
+    background-color: $green;
+  }
+
+  &.yellow {
+    background-color: #f1c40f;
+  }
+
 }
