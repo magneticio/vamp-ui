@@ -1,10 +1,11 @@
 <div class="vamp-page-header">
   <div class="container-fluid">
     <div class="titles">
-      <h3 class="title-add" ng-if="$ctrl.titleAddition">{{$ctrl.titleAddition}}</h3>
-      &nbsp;
-      &nbsp;
-      <h2 class="title">{{$ctrl.title}}</h2>
+      <h3 class="title-add" ng-if="$ctrl.titleAddition">
+        {{$ctrl.titleAddition}}
+        &nbsp;
+       </h3>
+      <h2 class="title" ng-class="{'with-add': $ctrl.titleAddition}">{{$ctrl.title}}</h2>
     </div>
 
     <div class="buttons" ng-transclude="buttons">
