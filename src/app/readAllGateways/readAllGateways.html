@@ -7,20 +7,20 @@
 <div class="container-fluid">
   <table class="table">
     <tr>
-      <th></th>
       <th>Name</th>
+      <th>External</th>
       <th>Port</th>
       <th></th>
     </tr>
     <tr ng-repeat="gateway in $ctrl.gateways">
+      <td class="col-md-3" title="'Name'" filter="{name: 'text'}" sortable="'name'">
+        <a ui-sref="readOneGateway({id: gateway.name})">{{gateway.name}}</a>
+      </td>
       <td>
         <span ng-if="!gateway.inner"
               class="label label-primary">External</span>
       </td>
-      <td class="col-md-6" title="'Name'" filter="{name: 'text'}" sortable="'name'">
-        <a ui-sref="readOneGateway({id: gateway.name})">{{gateway.name}}</a>
-      </td>
-      <td class="col-md-2" title="'Port'" filter="{port: 'text'}" sortable="'port'">
+      <td class="col-md-1" title="'Port'" filter="{port: 'text'}" sortable="'port'">
         {{gateway.port}}
       <td>
         <div class="pull-right">
