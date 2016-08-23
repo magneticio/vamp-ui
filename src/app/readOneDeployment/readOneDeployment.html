@@ -39,7 +39,7 @@
               <span class="panel-label">Environment Variables</span>
             </div>
             <div class="col-md-2 column">
-              <span class="panel-label">Gateway</span>
+              <span class="panel-label">Ports</span>
             </div>
 
             <div class="col-md-1 column">
@@ -117,7 +117,13 @@
             </div>
             <div class="col-md-2">
 
-              <p ng-repeat="instance in service.instances">{{instance.host}}:{{instance.ports.port}}</p>
+              <div class="instance" ng-repeat="instance in service.instances">
+                <div>{{instance.host}}:</div>
+
+
+                  <span ng-repeat="(portname, port) in instance.ports">{{port}}<span ng-if="!$last">/</span></span>
+
+              </div>
             </div>
             <div class="col-md-2">
               <div ng-repeat="(evKey, evVariable) in service.environment_variables">
@@ -125,7 +131,9 @@
               </div>
             </div>
             <div class="col-md-2">
-                <a ui-sref="readOneGateway({id: '{{$ctrl.data.name}}/{{clustername}}/port'})" href="">{{$ctrl.data.name}}/{{clustername}}/port</a>
+              <p ng-repeat="(portName, port) in service.breed.ports">
+                <a  ui-sref="readOneGateway({id: '{{$ctrl.data.name}}/{{clustername}}/{{portName}}'})" href="">{{portName}}</a>
+              </p>
             </div>
 
             <div class="col-md-1">

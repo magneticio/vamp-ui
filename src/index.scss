@@ -588,6 +588,22 @@ input[type=number]{
   width: 34px;
 }
 
+.instance {
+  margin-bottom: 8px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.not-available {
+  color: rgba($dark-blue, 0.3);
+  cursor: default;
+
+  &:hover {
+    color: rgba($dark-blue, 0.3);
+  }
+}
 
 
 

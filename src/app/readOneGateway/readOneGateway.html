@@ -60,7 +60,7 @@
       <th>Name</th>
       <th>
         Weight
-        <a ng-if="$ctrl.getObjectSize($ctrl.data.routes) > 1" href="javascript:void(0)" ng-click="$ctrl.editWeights()">
+        <a ng-class="{'not-available': $ctrl.getObjectSize($ctrl.data.routes) < 2}" href="javascript:void(0)" ng-click="$ctrl.getObjectSize($ctrl.data.routes) < 2 || $ctrl.editWeights()">
           <i class="fa fa-pencil small-top-icon" aria-hidden="true"></i>
         </a>
       </th>
@@ -84,8 +84,6 @@
            <span ng-click="$ctrl.editConditionStrength(routename, route.condition_strength); $parent.edit = true"><fa class="fa fa-pencil"></fa></span>
           </a>
         </div>
-
-
 
         <div class="edit" ng-if="edit" class="slider">
 
