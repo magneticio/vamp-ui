@@ -21,6 +21,16 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
   self.editConditionStrength = editConditionStrength;
   self.saveConditionWeightChange = saveConditionWeightChange;
 
+  self.sliderOptions = {
+    floor: 0,
+    ceil: 30,
+    showSelectionBar: true,
+    translate: function (value) {
+      console.log(value);
+      return value + '%';
+    }
+  };
+
   function saveConditionWeightChange(routeName, conditionStrength) {
     self.data.routes[routeName].condition_strength = conditionStrength + '%';
     updateGateway();

@@ -1,3 +1,12 @@
+//RESET
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+span:focus {
+  outline: none !important;
+}
+
 // COLORS
 $light-grey: #F2F2F2;
 $purple: #FF405E;
@@ -524,3 +533,60 @@ a.editable-click:hover {
   }
 
 }
+
+//Slider style
+.rzslider {
+  .rz-bar {
+    height: 10px;
+    border-radius: 2px;
+    background-color: rgba(black, 0.2);
+    box-shadow: inset 0px 0px 4px -2px rgba(0,0,0,0.3);
+  }
+
+
+  .rz-bubble {
+    color: $dark-blue;
+    font-size: 14px;
+  }
+
+
+  .rz-limit {
+    color: white !important;
+    font-size: 12px;
+    background-color: rgba(black, 0.2);
+    min-width: 30px;
+    text-align: center;
+    line-height: 1.5;
+    border-radius: 2px;
+
+  }
+
+  .rz-selection {
+    background-color: $purple;
+    height: 10px;
+  }
+
+  .rz-pointer {
+    background-color: $purple;
+    border: 2px solid $light-grey;
+    top: -7px;
+    width: 23px;
+    height: 23px;
+
+    &:after {
+      display: none;
+    }
+  }
+
+  .rz-selection {
+    background-color: $purple !important;
+  }
+
+}
+
+
+
+
+
+
+
