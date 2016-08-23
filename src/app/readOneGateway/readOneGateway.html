@@ -1,15 +1,15 @@
 <header title="Gateway" title-addition="{{$ctrl.data.name}}">
-
 </header>
 
 <div class="container-fluid" ng-if="$ctrl.data">
+  {{$ctrl.sliderOptions}};
+
 
   <div class="row">
 
     <div class="col-md-4">
       <h4>Host</h4>
       <p>{{$ctrl.data.service.host}}</p>
-
     </div>
     <div class="col-md-4">
       <h4>Port</h4>
@@ -83,11 +83,15 @@
           <span>{{route.condition_strength}}</span>&nbsp;
           <span ng-click="$ctrl.editConditionStrength(routename, route.condition_strength); $parent.edit = true"><fa class="fa fa-pencil"></fa></span>
         </div>
+
+
+
         <div class="edit" ng-if="edit" class="slider">
+
           <rzslider
               class="slider"
               rz-slider-model="$ctrl.conditionStrengths[routename]"
-              rz-slider-options="{floor: 0, ceil: 100}">
+              rz-slider-options="$ctrl.sliderOptions">
           </rzslider>
           <button><i class="fa fa-check" ng-click="$ctrl.saveConditionWeightChange(routename, $ctrl.conditionStrengths[routename]); $parent.edit = false"></i></button>
           <button ng-click="$parent.edit = false"><i class="fa fa-times"></i></button>
