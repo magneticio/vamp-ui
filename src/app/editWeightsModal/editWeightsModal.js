@@ -2,7 +2,12 @@
 function editWeightsModal($scope, $uibModalInstance, weightValues) {
   $scope.sliderOptions = {
     floor: 0,
-    ceil: 100
+    ceil: 100,
+    showSelectionBar: true,
+    translate: function (value) {
+      console.log(value);
+      return value + '%';
+    }
   };
   $scope.newWeightValues = angular.copy(weightValues);
 
