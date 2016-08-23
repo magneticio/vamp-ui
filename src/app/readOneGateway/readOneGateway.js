@@ -21,9 +21,13 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
   self.editConditionStrength = editConditionStrength;
   self.saveConditionWeightChange = saveConditionWeightChange;
 
+  self.getObjectSize = function (theObject) {
+    return Object.keys(theObject).length;
+  }
+
   self.sliderOptions = {
     floor: 0,
-    ceil: 30,
+    ceil: 100,
     showSelectionBar: true,
     translate: function (value) {
       console.log(value);
