@@ -66,7 +66,7 @@
                 </span>
 
                 <span ng-show="$ctrl.editInstances[service.breed.name]">
-                  <input class="input-small" maxlength="2" step="1" type="number" min="1" ng-model="$ctrl.initialNumberOfInstances[service.breed.name]">
+                  <input class="input-small" size="2" maxlength="2" step="1" type="number" min="1" ng-model="$ctrl.initialNumberOfInstances[service.breed.name]">
                   <button ng-disabled="!$ctrl.initialNumberOfInstances[service.breed.name]" ng-click="$ctrl.saveNumberOfInstances(service.breed.name, service.scale, $ctrl.initialNumberOfInstances[service.breed.name])">
                     <i class="fa fa-check"></i>
                   </button>
