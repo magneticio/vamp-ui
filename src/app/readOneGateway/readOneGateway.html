@@ -2,9 +2,6 @@
 </header>
 
 <div class="container-fluid" ng-if="$ctrl.data">
-  {{$ctrl.sliderOptions}};
-
-
   <div class="row">
 
     <div class="col-md-4">
@@ -61,9 +58,11 @@
   <table class="table">
     <tr>
       <th>Name</th>
-      <th><a href="javascript:void(0)" ng-click="$ctrl.editWeights()">Weight</a>
-
-        <i class="fa fa-pencil small-top-icon" aria-hidden="true"></i>
+      <th>
+        Weight
+        <a ng-if="$ctrl.getObjectSize($ctrl.data.routes) > 1" href="javascript:void(0)" ng-click="$ctrl.editWeights()">
+          <i class="fa fa-pencil small-top-icon" aria-hidden="true"></i>
+        </a>
       </th>
       <th>Conditions</th>
       <th>Condition Strength</th>
