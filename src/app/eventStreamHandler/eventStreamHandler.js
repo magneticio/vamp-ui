@@ -79,10 +79,10 @@ function EventStreamHandler(Api, $http) {
   }
 }
 
-EventStreamHandler.prototype.getStream = function (tags, eventFiredCallback) {
+EventStreamHandler.prototype.getStream = function (eventFiredCallback, tags) {
   var self = this;
 
-  if (Array.isArray(tags)) {
+  if (tags && Array.isArray(tags)) {
     var tagsComboId = tags.join('/');
     if (self.cacheEvents[tagsComboId]) {
       // The combination of tags exists. This means we can get the values and trigger the callback for it

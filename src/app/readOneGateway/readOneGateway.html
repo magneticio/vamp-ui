@@ -1,16 +1,18 @@
-<header title="Gateway" title-addition="{{$ctrl.data.name}}">
+<header title="Gateway" title-addition="{{$ctrl.gateway.name}}">
 </header>
 
-<div class="container-fluid" ng-if="$ctrl.data">
-  <div class="row">
 
+<div class="container-fluid">
+
+  <div class="row">
     <div class="col-md-4">
       <h4>Host</h4>
-      <p>{{$ctrl.data.service.host}}</p>
+      <p>{{$ctrl.gateway.service.host}}</p>
     </div>
+
     <div class="col-md-4">
       <h4>Port</h4>
-      <p>{{$ctrl.data.service.port}}</p>
+      <p>{{$ctrl.gateway.service.port}}</p>
     </div>
 
     <div class="col-md-2">
@@ -24,80 +26,109 @@
       <span ng-if="$ctrl.data.sticky !== 'none'" class="label label-success"><i class="fa fa-check"></i>&nbsp;Is sticky</span>
       <span ng-if="$ctrl.data.sticky === 'none'" class="label label-default">Is not sticky</span>
     </div>
-
   </div>
-
 
   <div class="row">
-    <div class="col-md-4">
-      <h4>&nbsp;Health (%)</h4>
-
-      <canvas id="bar" class="chart chart-bar"
-              chart-data="$ctrl.healthChart.data" chart-options="$ctrl.healthChart.options" chart-labels="$ctrl.healthChart.labels" chart-series="$ctrl.healthChart.series" chart-colors="$ctrl.healthChart.colors">
-      </canvas>
-    </div>
-    <div class="col-md-4">
-      <h4>{{$ctrl.currentRate}}&nbsp;Requests per second</h4>
-
-      <canvas id="line" class="chart chart-line" chart-data="$ctrl.rateChart.data"
-              chart-labels="$ctrl.rateChart.labels" chart-series="$ctrl.rateChart.series"
-              chart-options="$ctrl.chartOptions">
-      </canvas>
-    </div>
-    <div class="col-md-4">
-      <h4>{{$ctrl.currentResponseTime}}&nbsp;Response time (ms)</h4>
-      <canvas id="line" class="chart chart-line" chart-data="$ctrl.responseChart.data"
-              chart-labels="$ctrl.responseChart.labels" chart-series="$ctrl.responseChart.series"
-              chart-options="$ctrl.chartOptions">
-      </canvas>
-    </div>
+    {{$ctrl.gateway}}
   </div>
 
-  <h4>Routes</h4>
 
-  <table class="table">
-    <tr>
-      <th>Name</th>
-      <th>
-        Weight
-        <a ng-class="{'not-available': $ctrl.getObjectSize($ctrl.data.routes) < 2}" href="javascript:void(0)" ng-click="$ctrl.getObjectSize($ctrl.data.routes) < 2 || $ctrl.editWeights()">
-          <i class="fa fa-pencil small-top-icon" aria-hidden="true"></i>
-        </a>
-      </th>
-      <th>Conditions</th>
-      <th>Condition Strength</th>
-    </tr>
-    <tr ng-repeat="(routename, route) in $ctrl.data.routes">
-      <td class="col-md-3">{{routename}}
-        <bar-chart data="$ctrl.BarChart.data" options="$ctrl.BarChart.options"></bar-chart>
-      </td>
-      <td class="col-md-2">{{route.weight}}</td>
-      <td class="col-md-4">
-        <a  href="#"
-            editable-text="route.condition.condition"
-            onaftersave="$ctrl.updateGateway()">
-          {{route.condition.condition || 'Empty'}}
-        </a>
-      </td>
-      <td class="condition-weights col-md-3" ng-init="edit = false">
-        <div class="value" ng-if="!edit">
-          <span>{{route.condition_strength}}</span>&nbsp;
-          <a>
-           <span ng-click="$ctrl.editConditionStrength(routename, route.condition_strength); $parent.edit = true"><fa class="fa fa-pencil"></fa></span>
-          </a>
-        </div>
+  <!--<div class="row">-->
 
-        <div class="edit" ng-if="edit" class="slider">
+    <!--<div class="col-md-4">-->
+      <!--<h4>Host</h4>-->
+      <!--<p>{{$ctrl.data.service.host}}</p>-->
+    <!--</div>-->
+    <!--<div class="col-md-4">-->
+      <!--<h4>Port</h4>-->
+      <!--<p>{{$ctrl.data.service.port}}</p>-->
+    <!--</div>-->
 
-          <rzslider
-              class="slider"
-              rz-slider-model="$ctrl.conditionStrengths[routename]"
-              rz-slider-options="$ctrl.sliderOptions">
-          </rzslider>
-          <button><i class="fa fa-check" ng-click="$ctrl.saveConditionWeightChange(routename, $ctrl.conditionStrengths[routename]); $parent.edit = false"></i></button>
-          <button ng-click="$parent.edit = false"><i class="fa fa-times"></i></button>
-        </div>
-      </td>
-    </tr>
-  </table>
+    <!--<div class="col-md-2">-->
+      <!--<h4>Deployed</h4>-->
+      <!--<span ng-if="$ctrl.data.deployed" class="label label-success"><i class="fa fa-check"></i>&nbsp;Deployed</span>-->
+      <!--<span ng-if="!$ctrl.data.deployed" class="label label-default">Not Deployed</span>-->
+    <!--</div>-->
+
+    <!--<div class="col-md-2">-->
+      <!--<h4>Sticky</h4>-->
+      <!--<span ng-if="$ctrl.data.sticky !== 'none'" class="label label-success"><i class="fa fa-check"></i>&nbsp;Is sticky</span>-->
+      <!--<span ng-if="$ctrl.data.sticky === 'none'" class="label label-default">Is not sticky</span>-->
+    <!--</div>-->
+
+  <!--</div>-->
+
+
+  <!--<div class="row">-->
+    <!--<div class="col-md-4">-->
+      <!--<h4>&nbsp;Health (%)</h4>-->
+
+      <!--<canvas id="bar" class="chart chart-bar"-->
+              <!--chart-data="$ctrl.healthChart.data" chart-options="$ctrl.healthChart.options" chart-labels="$ctrl.healthChart.labels" chart-series="$ctrl.healthChart.series" chart-colors="$ctrl.healthChart.colors">-->
+      <!--</canvas>-->
+    <!--</div>-->
+    <!--<div class="col-md-4">-->
+      <!--<h4>{{$ctrl.currentRate}}&nbsp;Requests per second</h4>-->
+
+      <!--<canvas id="line" class="chart chart-line" chart-data="$ctrl.rateChart.data"-->
+              <!--chart-labels="$ctrl.rateChart.labels" chart-series="$ctrl.rateChart.series"-->
+              <!--chart-options="$ctrl.chartOptions">-->
+      <!--</canvas>-->
+    <!--</div>-->
+    <!--<div class="col-md-4">-->
+      <!--<h4>{{$ctrl.currentResponseTime}}&nbsp;Response time (ms)</h4>-->
+      <!--<canvas id="line" class="chart chart-line" chart-data="$ctrl.responseChart.data"-->
+              <!--chart-labels="$ctrl.responseChart.labels" chart-series="$ctrl.responseChart.series"-->
+              <!--chart-options="$ctrl.chartOptions">-->
+      <!--</canvas>-->
+    <!--</div>-->
+  <!--</div>-->
+
+  <!--<h4>Routes</h4>-->
+
+  <!--<table class="table">-->
+    <!--<tr>-->
+      <!--<th>Name</th>-->
+      <!--<th>-->
+        <!--Weight-->
+        <!--<a ng-class="{'not-available': $ctrl.getObjectSize($ctrl.data.routes) < 2}" href="javascript:void(0)" ng-click="$ctrl.getObjectSize($ctrl.data.routes) < 2 || $ctrl.editWeights()">-->
+          <!--<i class="fa fa-pencil small-top-icon" aria-hidden="true"></i>-->
+        <!--</a>-->
+      <!--</th>-->
+      <!--<th>Conditions</th>-->
+      <!--<th>Condition Strength</th>-->
+    <!--</tr>-->
+    <!--<tr ng-repeat="(routename, route) in $ctrl.data.routes">-->
+      <!--<td class="col-md-3">{{routename}}-->
+        <!--<bar-chart data="$ctrl.BarChart.data" options="$ctrl.BarChart.options"></bar-chart>-->
+      <!--</td>-->
+      <!--<td class="col-md-2">{{route.weight}}</td>-->
+      <!--<td class="col-md-4">-->
+        <!--<a  href="#"-->
+            <!--editable-text="route.condition.condition"-->
+            <!--onaftersave="$ctrl.updateGateway()">-->
+          <!--{{route.condition.condition || 'Empty'}}-->
+        <!--</a>-->
+      <!--</td>-->
+      <!--<td class="condition-weights col-md-3" ng-init="edit = false">-->
+        <!--<div class="value" ng-if="!edit">-->
+          <!--<span>{{route.condition_strength}}</span>&nbsp;-->
+          <!--<a>-->
+           <!--<span ng-click="$ctrl.editConditionStrength(routename, route.condition_strength); $parent.edit = true"><fa class="fa fa-pencil"></fa></span>-->
+          <!--</a>-->
+        <!--</div>-->
+
+        <!--<div class="edit" ng-if="edit" class="slider">-->
+
+          <!--<rzslider-->
+              <!--class="slider"-->
+              <!--rz-slider-model="$ctrl.conditionStrengths[routename]"-->
+              <!--rz-slider-options="$ctrl.sliderOptions">-->
+          <!--</rzslider>-->
+          <!--<button><i class="fa fa-check" ng-click="$ctrl.saveConditionWeightChange(routename, $ctrl.conditionStrengths[routename]); $parent.edit = false"></i></button>-->
+          <!--<button ng-click="$parent.edit = false"><i class="fa fa-times"></i></button>-->
+        <!--</div>-->
+      <!--</td>-->
+    <!--</tr>-->
+  <!--</table>-->
 </div>
