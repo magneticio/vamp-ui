@@ -1,40 +1,3 @@
-function CappedArray(size) {
-  var self = this;
-  // Is variable filled in
-  if (!size) {
-    var exception = {
-      message: 'No size was specified.',
-      name: 'CappedArrayException'
-    };
-
-    throw exception;
-  }
-
-  // Variables
-  self.size = size;
-  self.theArray = [];
-
-  self.getAll = function () {
-    return self.theArray;
-  };
-
-  self.getOne = function (index) {
-    return self.theArray[index];
-  };
-
-  self.push = function (data) {
-    if (self.theArray.length >= 50) {
-      self.theArray.shift();
-    }
-
-    self.theArray.push(data);
-  };
-
-  self.isEmpty = function () {
-    return self.theArray.length < 1;
-  };
-}
-
 /* global Environment*/
 function EventStreamHandler(Api, $http) {
   var self = this;
@@ -109,7 +72,6 @@ EventStreamHandler.prototype.getStream = function (eventFiredCallback, tags) {
 
       self.$http.get(url).then(function (response) {
         var sortedData = _.sortBy(response.data, 'timestamp');
-        console.log(sortedData);
 
         sortedData.forEach(function (dataPoint) {
           self.cacheEvents[tagsComboId].values.push(dataPoint);
