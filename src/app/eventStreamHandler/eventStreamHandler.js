@@ -1,29 +1,123 @@
-/* global Environment*/
-function EventStreamHandler() {
+function CappedArray(size) {
   var self = this;
-  self.events = {};
-  self.everyEventCallback;
+  // Is variable filled in
+  if (!size) {
+    var exception = {
+      message: 'No size was specified.',
+      name: 'CappedArrayException'
+    };
+
+    throw exception;
+  }
+
+  // Variables
+  self.size = size;
+  self.theArray = [];
+
+  self.getAll = function () {
+    return self.theArray;
+  };
+
+  self.getOne = function (index) {
+    return self.theArray[index];
+  };
+
+  self.push = function (data) {
+    if (self.theArray.length >= 50) {
+      self.theArray.shift();
+    }
+
+    self.theArray.push(data);
+  };
+
+  self.isEmpty = function () {
+    return self.theArray.length < 1;
+  };
+}
+
+/* global Environment*/
+function EventStreamHandler(Api, $http) {
+  var self = this;
+  self.$http = $http;
+  // Constants;
+  var allEventsCacheSize = 50;
+
+  // All events are stored here
+  var allEvents = new CappedArray(allEventsCacheSize);
+
+  // Events of a certain combination of tags.
+  self.cacheEvents = {};
+
+  // If there are no events stored, fill it up from the backend
+  if (allEvents.isEmpty()) {
+    Api.readAll('events', {page: 0, per_page: allEventsCacheSize}).then(eventsRead);
+  }
+
+  function eventsRead(response) {
+    response.data.forEach(function (event) {
+      eventFired(event);
+    });
+  }
+
+  // Get the events stream and attach a event listener
   var url = Environment.prototype.getApiBaseUrl() + 'events/stream';
   this.source = new EventSource(url);
-  this.source.addEventListener('event', eventFired);
-  function eventFired (event) {
-    var parsedData = JSON.parse(event.data);
+  this.source.addEventListener('event', function (event) {
+    // The event is send as a string so we need to parse it before sending it to the eventFired function
+    eventFired(JSON.parse(event.data));
+  });
 
-    var tags = parsedData.tags;
-    tags.forEach(function(tag) {
-      self.events && self.events[tag] &&  self.events[tag](parsedData);
-    });
-    self.everyEventCallback && self.everyEventCallback(parsedData);
+  function eventFired(data) {
+    // First push the data on the global array
+    allEvents.push(data);
+    // Check if the combo of tags has an entry
+    var tagsComboId = data.tags.join('/');
+    if (self.cacheEvents[tagsComboId]) {
+      self.cacheEvents[tagsComboId].values.push(data);
+      self.cacheEvents[tagsComboId].callback(data);
+    }
   }
 }
 
-EventStreamHandler.prototype.getStream = function (tag, eventFiredCallback) {
-  if(tag) {
-    this.events[tag] = eventFiredCallback;
-  } else {
-    this.everyEventCallback = eventFiredCallback;
-  }
+EventStreamHandler.prototype.getStream = function (tags, eventFiredCallback) {
+  var self = this;
 
+  if (Array.isArray(tags)) {
+    var tagsComboId = tags.join('/');
+    if (self.cacheEvents[tagsComboId]) {
+      // The combination of tags exists. This means we can get the values and trigger the callback for it
+      self.cacheEvents[tagsComboId].callback = eventFiredCallback;
+      self.cacheEvents[tagsComboId].values.getAll().forEach(function (value) {
+        eventFiredCallback(value);
+      });
+    } else {
+      // Let's create the cache object
+      self.cacheEvents[tagsComboId] = {
+        callback: eventFiredCallback,
+        values: new CappedArray(30)
+      };
+
+      // Now let's fill it up with data
+      var url = Environment.prototype.getApiBaseUrl();
+      url += 'events?';
+      var tagsParams = [];
+      tags.forEach(function (tag) {
+        tagsParams.push('tag=' + tag);
+      });
+
+      url += tagsParams.join('&');
+
+      self.$http.get(url).then(function (response) {
+        var sortedData = _.sortBy(response.data, 'timestamp');
+        console.log(sortedData);
+
+        sortedData.forEach(function (dataPoint) {
+          self.cacheEvents[tagsComboId].values.push(dataPoint);
+          eventFiredCallback(dataPoint);
+        });
+      });
+    }
+  }
 };
 
 angular

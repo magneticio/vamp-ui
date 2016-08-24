@@ -68,7 +68,9 @@
       <th>Condition Strength</th>
     </tr>
     <tr ng-repeat="(routename, route) in $ctrl.data.routes">
-      <td class="col-md-3">{{routename}}</td>
+      <td class="col-md-3">{{routename}}
+        <bar-chart data="$ctrl.BarChart.data" options="$ctrl.BarChart.options"></bar-chart>
+      </td>
       <td class="col-md-2">{{route.weight}}</td>
       <td class="col-md-4">
         <a  href="#"
