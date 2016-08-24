@@ -1,5 +1,53 @@
 /* global _*/
 function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr, EventStreamHandler, $uibModal, $state, DataManager) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   var noOfPoints = 250;
 
   var self = this;
@@ -20,6 +68,18 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
 
   self.editConditionStrength = editConditionStrength;
   self.saveConditionWeightChange = saveConditionWeightChange;
+
+
+  self.routeHealthStats = {};
+
+  self.BarChart = {
+    data: [1, 2, 3, 4],
+    options: {
+      width: 150,
+      height: 150
+    }
+  };
+
 
   self.getObjectSize = function (theObject) {
     return Object.keys(theObject).length;
@@ -124,6 +184,8 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
     if (allowRefresh) {
       Api.read('gateways', gatewayId).then(gatewayLoaded, gatewayCouldNotBeLoaded);
     }
+
+
   }
 
   //S etting up the health chart
@@ -169,7 +231,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
   }
 
   EventStreamHandler.getStream('gateways:' + gatewayId, eventFired);
-
+  
   function eventFired(data) {
     if (_.includes(data.tags, 'health')) {
       self.currentHealth = data.value * 100;

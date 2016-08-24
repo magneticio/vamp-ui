@@ -92,7 +92,6 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   }
 
   function deploymentLoaded(deployment) {
-    console.log('Ja updated');
     self.data = deployment.data;
   }
 
@@ -100,24 +99,9 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
     $state.go('readAllDeployments');
   }
 
-  EventStreamHandler.getStream('deployments:' + $stateParams.id, eventFired);
-
-  function eventFired(data) {
-    if (_.includes(data.tags, 'health')) {
-      self.currentHealth = data.value * 100;
-      self.parsedData = $filter('date')(data.timestamp, "mm:ss");
-
-      addHealthStat(self.parsedData, self.currentHealth);
-    }
-  }
-
-  function memoryToNumber(memoryString) {
-    return memoryString ? parseInt(memoryString.substring(0, memoryString.length - 2), 10) : undefined;
-  }
-
-  // Tryout
   self.chart.labels = [];
   self.chart.data = [[]];
+
   var noOfBars = 20;
   for (var i = 0; i < 20; i++) {
 
@@ -142,12 +126,16 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
     }
   }
 
-  Api.readAll('events', {tag: 'deployments:' + $stateParams.id}).then(eventsLoaded);
+  EventStreamHandler.getStream(['deployments', 'deployments:' + $stateParams.id, 'health'], eventFired);
 
-  function eventsLoaded(response) {
-    for (var i = response.data.length - 1; i >= 0; i--) {
-      eventFired(response.data[i]);
-    }
+  function eventFired(data) {
+    self.currentHealth = data.value * 100;
+    self.parsedData = $filter('date')(data.timestamp, "mm:ss");
+    addHealthStat(self.parsedData, self.currentHealth);
+  }
+
+  function memoryToNumber(memoryString) {
+    return memoryString ? parseInt(memoryString.substring(0, memoryString.length - 2), 10) : undefined;
   }
 
   function addHealthStat(label, value) {
