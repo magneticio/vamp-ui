@@ -18,59 +18,86 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
     EventStreamHandler.getStream(newResponseTimeEvent, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:responseTime']);
     EventStreamHandler.getStream(newRateEvent, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:rate']);
 
-
     gateway._$stats = {
-
+      health: {
+        data: new CappedArray(20),
+        labels: new CappedArray(20)
+      },
+      responseTime: {
+        data: new CappedArray(20),
+        labels: new CappedArray(20)
+      },
+      rate: {
+        data: new CappedArray(20),
+        labels: new CappedArray(20)
+      }
     };
 
+
+    for(var routeName in gateway.routes) {
+      var route = gateway.routes[routeName];
+
+      route._$stats = {
+        health: new Stats(6),
+        responseTime: new Stats(20),
+        rate: new Stats(20)
+      }
+
+      function Stats(size) {
+        var self = this;
+        self.values = new CappedArray(size);
+
+        self.callback = function (event) {
+          self.values.push(event.value);
+        };
+      }
+
+      EventStreamHandler.getStream(route._$stats.health.callback, ['gateways', 'gateways:' + routeName, 'health']);
+      EventStreamHandler.getStream(route._$stats.responseTime.callback, ['gateways', 'gateways:' + routeName, 'metrics', 'metrics:responseTime']);
+      EventStreamHandler.getStream(route._$stats.rate.callback, ['gateways', 'gateways:' + routeName, 'metrics', 'metrics:rate']);
+
+      console.log(route);
+    }
 
     return gateway;
   }
 
-
   function newHealthStatEvent(event) {
-    console.log('New Health', event);
+    self.gateway._$stats.health.data.push(event.value * 100);
+    self.gateway._$stats.health.labels.push($filter('date')(event.timestamp, "mm:ss"));
   }
 
   function newResponseTimeEvent(event) {
-    console.log('New ResponseTime', event);
+    self.gateway._$stats.responseTime.data.push(event.value);
+    self.gateway._$stats.responseTime.labels.push(event.timestamp);
   }
 
   function newRateEvent(event) {
-    console.log('New rate event', event);
+    self.gateway._$stats.rate.data.push(event.value);
+    self.gateway._$stats.rate.labels.push(event.timestamp);
   }
 
 
 
+  //CONST
 
+  self.healthChart = {};
+  self.healthChart.series = ['Series A'];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  self.healthChart.colors = ['#00FF00'];
+  self.healthChart.options = {
+    animation: false,
+    scales: {
+      yAxes: [{
+        display: true,
+        ticks: {
+          beginAtZero: true,
+          max: 100,
+          min: 0
+        }
+      }]
+    }
+  };
 
 
   //

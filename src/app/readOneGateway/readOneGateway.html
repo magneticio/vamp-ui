@@ -29,8 +29,47 @@
   </div>
 
   <div class="row">
-    {{$ctrl.gateway}}
+    <div class="col-md-4" ng-if="!$ctrl.gateway._$stats.health.data.isEmpty()">
+      <h4>&nbsp;Health (%)</h4>
+      <canvas id="bar" class="chart chart-bar"
+        chart-data="[$ctrl.gateway._$stats.health.data.getAll()]" chart-options="$ctrl.healthChart.options" chart-labels="$ctrl.gateway._$stats.health.labels.getAll()" chart-series="$ctrl.healthChart.series" chart-colors="$ctrl.healthChart.colors">
+      </canvas>
+    </div>
   </div>
+
+  <!--{{$ctrl.gateway}}-->
+  
+  <table class="table">
+    <tr>
+      <th>Name:</th>
+      <th></th>
+      <th>Weight:</th>
+      <th>Conditions</th>
+      <th>Condition Strength</th>
+    </tr>
+    <tr ng-repeat="(routename, route) in $ctrl.gateway.routes">
+      <td>{{routename}}</td>
+      <td>
+        <!--{{route._$stats.health.values.getAll()}}-->
+        <div class="sparklines">
+          <div class="sparkchart-container">
+            <bar-chart class="sparkchart" data="route._$stats.health.values.getAll()" options="{height: 30, width: 60}"></bar-chart>
+          </div>
+
+          <div class="sparkchart-container">
+            <line-chart class="sparkchart"  data="route._$stats.responseTime.values.getAll()" options="{stroke: '#FF405E', height: 30, width: 60}"></line-chart>
+          </div>
+
+          <div class="sparkchart-container">
+            <line-chart class="sparkchart"  data="route._$stats.rate.values.getAll()" options="{stroke: '#FF405E', height: 30, width: 60}"></line-chart>
+          </div>
+        </div>
+      </td>
+      <td>{{route.weight}}</td>
+      <td>{{route.condition.condition || 'Empty'}}</td>
+      <td>{{route.condition_strength}}</td>
+    </tr>
+  </table>
 
 
   <!--<div class="row">-->
