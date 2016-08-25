@@ -28,11 +28,33 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-4" ng-if="!$ctrl.gateway._$stats.health.data.isEmpty()">
+  <div class="row" ng-if="$ctrl.gateway._$stats">
+    <!--Health Chart-->
+    <div class="col-md-4">
       <h4>&nbsp;Health (%)</h4>
       <canvas id="bar" class="chart chart-bar"
         chart-data="[$ctrl.gateway._$stats.health.data.getAll()]" chart-options="$ctrl.healthChart.options" chart-labels="$ctrl.gateway._$stats.health.labels.getAll()" chart-series="$ctrl.healthChart.series" chart-colors="$ctrl.healthChart.colors">
+      </canvas>
+    </div>
+
+
+    <div class="col-md-4 chart-fix">
+      <h4>{{$ctrl.responseTimeFlowingValues.values.getLast()}}&nbsp;Requests per second</h4>
+      <canvas id="line" class="chart chart-line"
+                chart-data="[$ctrl.responseTimeFlowingValues.values.getAll()]"
+                chart-labels="$ctrl.responseTimeFlowingValues.labels.getAll()"
+                chart-series="['']"
+                chart-options="$ctrl.chartOptions">
+      </canvas>
+    </div>
+
+    <div class="col-md-4 chart-fix">
+      <h4>{{$ctrl.rateFlowingValues.values.getLast()}}&nbsp;Response time (ms)</h4>
+      <canvas id="line" class="chart chart-line"
+              chart-data="[$ctrl.rateFlowingValues.values.getAll()]"
+              chart-labels="$ctrl.rateFlowingValues.labels.getAll()"
+              chart-series="['']"
+              chart-options="$ctrl.chartOptions">
       </canvas>
     </div>
   </div>
@@ -43,7 +65,10 @@
     <tr>
       <th>Name:</th>
       <th></th>
-      <th>Weight:</th>
+      <th>
+        {{$ctrl.getObjectLength($ctrl.gateway.routes)}}
+        <editable-label on-click="$ctrl.test()" active="$ctrl.getObjectLength($ctrl.gateway.routes) > 1">Weight</editable-label>
+      </th>
       <th>Conditions</th>
       <th>Condition Strength</th>
     </tr>

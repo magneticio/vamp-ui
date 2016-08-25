@@ -14,6 +14,8 @@ $dark-blue: #1E0A3C;
 
 $green: #15D9B2;
 
+$blue: rgb(77, 137, 249);
+
 $font-small: 14px;
 $font-medium: 18px;
 $font-big: 24px;
@@ -620,6 +622,30 @@ input[type=number]{
       position: absolute;
     }
 
+  }
+}
+
+.editable-label {
+  display: flex;
+
+
+
+  .editable-icon {
+    //margin-left: 6px;
+    padding: 0 6px;
+    cursor: pointer;
+
+    i {
+      transform: translate(0, -1px);
+      color: $blue;
+    }
+
+    &.disabled {
+      cursor: default;
+      i {
+        color: rgba($dark-blue, 0.2);
+      }
+    }
   }
 }
 
