@@ -33,6 +33,10 @@ function CappedArray(size) {
   self.isEmpty = function () {
     return self.theArray.length < 1;
   };
+
+  self.getLast = function () {
+    return self.theArray[self.theArray.length - 1];
+  };
 }
 
 angular

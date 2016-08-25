@@ -4,20 +4,32 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
 
   self.gateway = {};
 
+  self.responseTimeFlowingValues = {
+    values: new CappedArray(360),
+    labels: new CappedArray(360)
+  };
+
+  self.rateFlowingValues = {
+    values: new CappedArray(360),
+    labels: new CappedArray(360)
+  };
+
   Api.read('gateways', $stateParams.id).then(resourceLoaded);
 
   function resourceLoaded(response) {
+    //Get's the data and generate the metadata
     var gateway = response.data;
-    gateway = addMetaData(gateway);
+    addMetaData(gateway);
     self.gateway = gateway;
+
+    //Add stream handlers
+    EventStreamHandler.getStream(newHealthStatEvent, ['gateways', 'gateways:' + gateway.name, 'health']);
+    EventStreamHandler.getStream(newResponseTimeEvent, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:responseTime']);
+    EventStreamHandler.getStream(newRateEvent, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:rate']);
   }
 
   function addMetaData(gateway) {
     // get health stats
-    EventStreamHandler.getStream(newHealthStatEvent, ['gateways', 'gateways:' + gateway.name, 'health']);
-    EventStreamHandler.getStream(newResponseTimeEvent, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:responseTime']);
-    EventStreamHandler.getStream(newRateEvent, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:rate']);
-
     gateway._$stats = {
       health: {
         data: new CappedArray(20),
@@ -33,17 +45,16 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
       }
     };
 
-
-    for(var routeName in gateway.routes) {
+    for (var routeName in gateway.routes) {
       var route = gateway.routes[routeName];
 
       route._$stats = {
-        health: new Stats(6),
-        responseTime: new Stats(20),
-        rate: new Stats(20)
+        health: new SparklineStats(6),
+        responseTime: new SparklineStats(20),
+        rate: new SparklineStats(20)
       }
 
-      function Stats(size) {
+      function SparklineStats(size) {
         var self = this;
         self.values = new CappedArray(size);
 
@@ -58,8 +69,6 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
 
       console.log(route);
     }
-
-    return gateway;
   }
 
   function newHealthStatEvent(event) {
@@ -73,11 +82,26 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
   }
 
   function newRateEvent(event) {
+
+
     self.gateway._$stats.rate.data.push(event.value);
     self.gateway._$stats.rate.labels.push(event.timestamp);
   }
 
 
+  // This will update the data for the repsonsetime and rate chart 25 times per second for a flowing look;
+  $interval(function () {
+   if (self.gateway._$stats) {
+     var currentResponseTimeValue = self.gateway._$stats.responseTime.data.getLast();
+     var currentRateValue = self.gateway._$stats.rate.data.getLast();
+
+     self.responseTimeFlowingValues.values.push(currentResponseTimeValue);
+     self.responseTimeFlowingValues.labels.push('');
+
+     self.rateFlowingValues.values.push(currentRateValue);
+     self.rateFlowingValues.labels.push('');
+   }
+  }, 25);
 
   //CONST
 
@@ -98,8 +122,50 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
       }]
     }
   };
+  
+  self.chartOptions = {
+    animation: {
+      duration: 0
+    },
+    elements: {
+      line: {
+        borderWidth: 0.5
+      },
+      point: {
+        radius: 0
+      }
+    },
+    scales: {
+      xAxes: [{
+        display: false
+      }],
+      yAxes: [{
+        display: true,
+        ticks: {
+          beginAtZero: true,
+          suggestedMax: 3
+        }
+      }],
+      gridLines: {
+        display: false
+      }
+    }
+  };
 
 
+  self.test = function (test) {
+    alert('test');
+  }
+
+  self.getObjectLength = function (obj) {
+    var length = -1;
+
+    if (obj) {
+      length = Object.keys(obj).length;
+    }
+
+    return length;
+  }
   //
   //
   //
