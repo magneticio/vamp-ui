@@ -17,7 +17,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
   Api.read('gateways', $stateParams.id).then(resourceLoaded);
 
   function resourceLoaded(response) {
-    //Get's the data and generate the metadata
+    // Get the data and generate the metadata
     var gateway = response.data;
     addMetaData(gateway);
     self.gateway = gateway;
@@ -26,6 +26,15 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
     EventStreamHandler.getStream(newHealthStatEvent, ['gateways', 'gateways:' + gateway.name, 'health']);
     EventStreamHandler.getStream(newResponseTimeEvent, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:responseTime']);
     EventStreamHandler.getStream(newRateEvent, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:rate']);
+
+    //Define modals
+    var routeWeights = {};
+    for (var routeName in self.gateway.routes) {
+      routeWeights[routeName] = parseInt(self.gateway.routes[routeName].weight);
+    }
+
+    var weightsModal = new Modal('editWeightsModal', function() {alert('test')}, {weightValues: routeWeights});
+    weightsModal.open();
   }
 
   function addMetaData(gateway) {
@@ -66,8 +75,6 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
       EventStreamHandler.getStream(route._$stats.health.callback, ['gateways', 'gateways:' + routeName, 'health']);
       EventStreamHandler.getStream(route._$stats.responseTime.callback, ['gateways', 'gateways:' + routeName, 'metrics', 'metrics:responseTime']);
       EventStreamHandler.getStream(route._$stats.rate.callback, ['gateways', 'gateways:' + routeName, 'metrics', 'metrics:rate']);
-
-      console.log(route);
     }
   }
 
@@ -82,13 +89,10 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
   }
 
   function newRateEvent(event) {
-
-
     self.gateway._$stats.rate.data.push(event.value);
     self.gateway._$stats.rate.labels.push(event.timestamp);
   }
-
-
+  
   // This will update the data for the repsonsetime and rate chart 25 times per second for a flowing look;
   $interval(function () {
    if (self.gateway._$stats) {
@@ -102,6 +106,14 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
      self.rateFlowingValues.labels.push('');
    }
   }, 25);
+
+
+
+
+
+  self.openWeightsModal = function() {
+  
+  }
 
   //CONST
 
@@ -166,6 +178,73 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
 
     return length;
   }
+
+   //modal.open();
+
+
+  function Modal(templateName, resultCallback, resolves) {
+    var self = this;
+
+    self.modalData = {
+      animation: true,
+      controller: templateName,
+      templateUrl: 'app/' + templateName + '/' + templateName + '.html',
+      size: 'md',
+      resolve: {}
+    };
+
+    console.log(self.modalData);
+
+    if (resolves) {
+      for (var attribute in resolves) {
+        self.modalData.resolve[attribute] = function () {
+          return resolves[attribute];
+        };
+      }
+    }
+
+    self.open = function () {
+      self.instance = $uibModal.open(self.modalData);
+      self.instance.result.then(resultCallback);
+    };
+
+  }
+
+
+
+
+  // function openEditWeightsModal(weights) {
+    //   var modalInstance = $uibModal.open({
+    //     animation: true,
+    //     templateUrl: 'app/editWeightsModal/editWeightsModal.html',
+    //     controller: 'editWeightsModal',
+    //     size: 'md',
+    //     resolve: {
+    //       weightValues: function () {
+    //         return weights;
+    //       }
+    //     }
+    //   });
+    //
+    //   modalInstance.result.then(function (weightValues) {
+    //     for (var routeName in weightValues) {
+    //       if (routeName) {
+    //         var weightValue = weightValues[routeName];
+    //         self.data.routes[routeName].weight = weightValue + '%';
+    //       }
+    //     }
+    //
+    //     Api.update('gateways', self.data.name, self.data).then(gatewayWeightsAdjusted, gatewayWeightsAdjustedFailed);
+    //
+    //     function gatewayWeightsAdjusted() {
+    //       toastr.success('Gateway ' + self.data.name + ' route weights have been adjusted', 'Route weights adjusted');
+    //     }
+    //
+    //     function gatewayWeightsAdjustedFailed() {
+    //       toastr.error('Gateway route weights could not be adjusted', 'Route weights not adjusted');
+    //     }
+    //   });
+
   //
   //
   //
@@ -225,9 +304,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
   //   updateGateway();
   // }
   //
-  // function updateGateway() {
-  //   Api.update('gateways', self.data.name, self.data).then(gatewayUpdated, gatewayUpdatedFailed);
-  // }
+  //
   //
   // function gatewayUpdated() {
   //   toastr.success('Gateway ' + self.data.name + ' has been updated with the new values.');

@@ -5,34 +5,55 @@ function editWeightsModal($scope, $uibModalInstance, weightValues) {
     ceil: 100,
     showSelectionBar: true,
     translate: function (value) {
-      console.log(value);
       return value + '%';
-    }
+    },
   };
+
   $scope.newWeightValues = angular.copy(weightValues);
 
-  function toArray(weightValues) {
-    var theArray = _.map(weightValues, function (value, prop) {
-      return {name: prop, value: value};
-    });
+  if (Object.keys($scope.newWeightValues).length === 2) {
 
-    return theArray;
-  }
+    console.log('there are two!');
+    var firstRouteName = Object.keys($scope.newWeightValues)[0];
+    var secondRouteName = Object.keys($scope.newWeightValues)[1];
 
-  // This function seems to complicated. Might have to refactor in the future.
-  if (_.size($scope.newWeightValues) === 2) {
-    $scope.$watch('newWeightValues', function (newValue, oldValue) {
-      var newValueArray = toArray(newValue);
-      var oldValueArray = toArray(oldValue);
-      if (newValueArray[0].value !== oldValueArray[0].value) {
-        $scope.newWeightValues[newValueArray[1].name] = 100 - newValueArray[0].value;
-      }
+    $scope.firstRoute = $scope.newWeightValues[firstRouteName];
+    console.log()
 
-      if (newValueArray[1].value !== oldValueArray[1].value) {
-        $scope.newWeightValues[newValueArray[0].name] = 100 - newValueArray[1].value;
-      }
+    $scope.$watch('firstRoute', function (newValue) {
+      console.log(newValue);
     }, true);
+
+
   }
+
+
+
+
+  // $scope.newWeightValues = angular.copy(weightValues);
+  //
+  // function toArray(weightValues) {
+  //   var theArray = _.map(weightValues, function (value, prop) {
+  //     return {name: prop, value: value};
+  //   });
+  //
+  //   return theArray;
+  // }
+  //
+  // // This function seems to complicated. Might have to refactor in the future.
+  // if (_.size($scope.newWeightValues) === 2) {
+  //   $scope.$watch('newWeightValues', function (newValue, oldValue) {
+  //     var newValueArray = toArray(newValue);
+  //     var oldValueArray = toArray(oldValue);
+  //     if (newValueArray[0].value !== oldValueArray[0].value) {
+  //       $scope.newWeightValues[newValueArray[1].name] = 100 - newValueArray[0].value;
+  //     }
+  //
+  //     if (newValueArray[1].value !== oldValueArray[1].value) {
+  //       $scope.newWeightValues[newValueArray[0].name] = 100 - newValueArray[1].value;
+  //     }
+  //   }, true);
+  // }
 
   $scope.ok = function () {
     $uibModalInstance.close($scope.newWeightValues);
