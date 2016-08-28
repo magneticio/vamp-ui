@@ -5,7 +5,8 @@ function EventStreamHandler() {
   self.everyEventCallback;
   var url = Environment.prototype.getApiBaseUrl() + 'events/stream';
   this.source = new EventSource(url);
-  this.source.addEventListener('event', eventFired);
+  this.source.addEventListener('health', eventFired);
+  this.source.addEventListener('metrics', eventFired);
   function eventFired (event) {
     var parsedData = JSON.parse(event.data);
 
