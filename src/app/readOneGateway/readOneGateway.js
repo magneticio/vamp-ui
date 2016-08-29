@@ -1,5 +1,5 @@
 /* global _*/
-function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr, EventStreamHandler, $uibModal, $state, DataManager) {
+function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr, EventStreamHandler, $uibModal, $mixpanel) {
   var weightsModal;
 
 
@@ -71,19 +71,23 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
       var routeWeight = routeWeights[routeName];
       self.gateway.routes[routeName].weight = routeWeight + '%';
     }
-
     updateGateway(self.gateway);
+    $mixpanel.track('Weights of routes of gateway edited');
   }
 
   self.conditionsChanged = function (routeName, newConditions) {
     self.gateway.routes[routeName].condition = {'condition': newConditions};
     updateGateway(self.gateway);
+    $mixpanel.track('Condition of route of gateway edited');
+
   };
 
   self.conditionsWeightChanged = function (routeName, newWeight) {
 
     self.gateway.routes[routeName].condition_strength = newWeight + '%';
     updateGateway(self.gateway);
+    $mixpanel.track('Condition weigth of route of gateway edited');
+
   };
 
   function addMetaData(gateway) {

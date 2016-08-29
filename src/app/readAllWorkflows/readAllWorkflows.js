@@ -1,4 +1,4 @@
-function readAllWorkflowsController($state, $uibModal, DataManager, Modal) {
+function readAllWorkflowsController($state, $uibModal, DataManager, Modal, $mixpanel) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
 
   var self = this;
@@ -38,9 +38,11 @@ function readAllWorkflowsController($state, $uibModal, DataManager, Modal) {
     };
 
     var modalInstance = $uibModal.open(Modal.create('deleteResourceModal', resolves));
+    $mixpanel.track('Delete Workflow button clicked');
 
     modalInstance.result.then(function (id) {
       workflowsResource.remove(id);
+      $mixpanel.track('Workflow removed');
     });
   }
 }

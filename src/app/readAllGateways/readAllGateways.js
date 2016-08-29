@@ -1,4 +1,4 @@
-function readAllGatewaysController(Modal, DataManager, $uibModal) {
+function readAllGatewaysController(Modal, DataManager, $uibModal, $mixpanel) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
   var self = this;
   self.openDeleteModal = openDeleteModal;
@@ -22,9 +22,11 @@ function readAllGatewaysController(Modal, DataManager, $uibModal) {
     };
 
     var modalInstance = $uibModal.open(Modal.create('deleteResourceModal', resolves));
+    $mixpanel.track('Delete gateway button clicked');
 
     modalInstance.result.then(function (id) {
       gatewaysResource.remove(id);
+      $mixpanel.track('Gateway removed');
     });
   }
 }

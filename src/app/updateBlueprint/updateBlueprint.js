@@ -1,5 +1,5 @@
 /* global YAML*/
-function updateBlueprintController(Api, $state, DataManager, $stateParams) {
+function updateBlueprintController(Api, $state, DataManager, $stateParams, $mixpanel) {
   var self = this;
   self.data = {};
   self.updatingBlueprint = false;
@@ -12,9 +12,12 @@ function updateBlueprintController(Api, $state, DataManager, $stateParams) {
 
   Api.read('blueprints', self.blueprintId).then(blueprintLoaded);
 
+  $mixpanel.track('Update Blueprint button clicked');
+
   function update(blueprintData) {
     self.updatingBlueprint = true;
     blueprintsResource.update(self.blueprintId, blueprintData);
+    $mixpanel.track('Blueprint updated');
     $state.go('readAllBlueprints');
   }
 

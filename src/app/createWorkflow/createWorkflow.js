@@ -1,4 +1,4 @@
-function createWorkflowController($state, DataManager) {
+function createWorkflowController($state, DataManager, $mixpanel) {
   var self = this;
   self.data = {};
   self.creatingWorkflow = false;
@@ -6,11 +6,14 @@ function createWorkflowController($state, DataManager) {
 
   self.canBeParsed = true;
 
+  $mixpanel.track('Create workflow button clicked');
+
   function create(workflowData) {
     self.creatingWorkflow = true;
 
     var workflowsResource = DataManager.resource('workflows');
     workflowsResource.create(workflowData);
+    $mixpanel.track('Workflow created');
     $state.go('readAllWorkflows');
   }
 }

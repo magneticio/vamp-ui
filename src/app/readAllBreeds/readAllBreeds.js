@@ -1,4 +1,4 @@
-function readAllBreedsController($state, $uibModal, DataManager, Modal) {
+function readAllBreedsController($state, $uibModal, DataManager, Modal, $mixpanel) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
 
   var self = this;
@@ -38,8 +38,10 @@ function readAllBreedsController($state, $uibModal, DataManager, Modal) {
     };
 
     var modalInstance = $uibModal.open(Modal.create('deleteResourceModal', resolves));
+    $mixpanel.track('Delete breed button clicked');
 
     modalInstance.result.then(function (id) {
+      $mixpanel.track('Breed removed');
       breedsResource.remove(id);
     });
   }

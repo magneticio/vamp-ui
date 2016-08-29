@@ -1,5 +1,5 @@
 /* global YAML*/
-function updateDeploymentController(Api, $state, toastr, $stateParams) {
+function updateDeploymentController(Api, $state, toastr, $stateParams, $mixpanel) {
   var self = this;
   self.data = {};
   self.updatingDeployment = false;
@@ -9,6 +9,9 @@ function updateDeploymentController(Api, $state, toastr, $stateParams) {
   self.canBeParsed = true;
 
   Api.read('deployments', self.deploymentId).then(deploymentLoaded);
+
+  $mixpanel.track('Update Deployments button clicked');
+
 
   function update(deploymentData) {
     self.updatingDeployment = true;
@@ -24,6 +27,9 @@ function updateDeploymentController(Api, $state, toastr, $stateParams) {
   function deploymentUpdated() {
     self.updatingDeployment = false;
     toastr.success(self.deploymentId, 'Updated Deployment');
+    $mixpanel.track('Deployment updated trough UI');
+    $mixpanel.track('Deployment updated');
+
     $state.go('readAllDeployments');
   }
 
@@ -39,4 +45,3 @@ angular
     templateUrl: 'app/updateDeployment/updateDeployment.html',
     controller: updateDeploymentController
   });
-

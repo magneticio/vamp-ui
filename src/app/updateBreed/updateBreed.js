@@ -1,5 +1,5 @@
 /* global YAML*/
-function updateBreedController(Api, $state, toastr, $stateParams) {
+function updateBreedController(Api, $state, toastr, $stateParams, $mixpanel) {
   var self = this;
   self.data = {};
   self.updatingBreed = false;
@@ -9,6 +9,9 @@ function updateBreedController(Api, $state, toastr, $stateParams) {
   self.canBeParsed = true;
 
   Api.read('breeds', self.breedId).then(breedLoaded);
+
+  $mixpanel.track('Update Breeds button clicked');
+
 
   function update(breedData) {
     self.updatingBreed = true;
@@ -24,6 +27,8 @@ function updateBreedController(Api, $state, toastr, $stateParams) {
   function breedUpdated() {
     self.updatingBreed = false;
     toastr.success(self.breedId, 'Updated Breed');
+    $mixpanel.track('Breed updated');
+
     $state.go('readAllBreeds');
   }
 

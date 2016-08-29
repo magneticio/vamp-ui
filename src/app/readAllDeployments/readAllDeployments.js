@@ -1,4 +1,4 @@
-function readAllDeploymentsController(Api, toastr, DataManager, $interval, $uibModal) {
+function readAllDeploymentsController(Api, toastr, DataManager, $mixpanel, $uibModal) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
   var self = this;
   self.openDeleteModal = openDeleteModal;
@@ -37,6 +37,8 @@ function readAllDeploymentsController(Api, toastr, DataManager, $interval, $uibM
       }
     });
 
+    $mixpanel.track('Undeploy deployment button clicked.');
+
     modalInstance.result.then(function (id) {
       Api.read('deployments', id, {as_blueprint: true}).then(deploymentExportedAsBlueprint, deploymentDeletedFailed);
 
@@ -47,6 +49,7 @@ function readAllDeploymentsController(Api, toastr, DataManager, $interval, $uibM
 
       function deploymentDeleted() {
         toastr.success(id + ' has been undeployed.', 'Deployement undeployed');
+        $mixpane.track('Deployment undeployed');
       }
 
       function deploymentDeletedFailed(error) {
