@@ -1,0 +1,10 @@
+<header title="Update Deployment">
+  <buttons>
+    <button ng-disabled="!$ctrl.canBeParsed" ng-click="$ctrl.update($ctrl.data)" ladda="$ctrl.updatingDeployment"
+            class="btn ghost" type="submit"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;Save</button>
+  </buttons>
+</header>
+
+<div class="fluid-container">
+  <editor data="$ctrl.data" source-code="{{$ctrl.sourceCode}}" can-be-parsed="$ctrl.canBeParsed"></editor>
+</div>
