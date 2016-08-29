@@ -1,5 +1,5 @@
 /* global YAML*/
-function updateGatewayController(Api, $state, toastr, $stateParams) {
+function updateGatewayController(Api, $state, toastr, $stateParams, $mixpanel) {
   var self = this;
   self.data = {};
   self.updatingGateway = false;
@@ -9,6 +9,9 @@ function updateGatewayController(Api, $state, toastr, $stateParams) {
   self.canBeParsed = true;
 
   Api.read('gateways', self.gatewayId).then(gatewayLoaded);
+
+  $mixpanel.track('Update Gateways button clicked');
+
 
   function update(gatewayData) {
     self.updatingGateway = true;

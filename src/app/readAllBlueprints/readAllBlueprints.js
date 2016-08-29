@@ -1,4 +1,4 @@
-function readAllBlueprintsController($state, $uibModal, DataManager, Modal) {
+function readAllBlueprintsController($state, $uibModal, DataManager, Modal, $mixpanel) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
 
   var self = this;
@@ -24,8 +24,11 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal) {
 
     var modalInstance = $uibModal.open(Modal.create('deployBlueprintModal', resolves));
 
+    $mixpanel.track('Blueprint deploy button clicked')
+
     modalInstance.result.then(function (data) {
       deploymentsResource.update(data.deploymentName, data.blueprint, true);
+      $mixpanel.track('Blueprint deployed');
       $state.go('readAllDeployments');
     });
   }
@@ -40,8 +43,11 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal) {
 
     var modalInstance = $uibModal.open(Modal.create('deleteResourceModal', resolves));
 
+    $mixpanel.track('Blueprint delete button clicked');
+
     modalInstance.result.then(function (id) {
       blueprintsResource.remove(id);
+      $mixpanel.track('Blueprint deleted');
     });
   }
 
@@ -60,8 +66,11 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal) {
 
       var modalInstance = $uibModal.open(Modal.create('mergeDeploymentModal', resolves));
 
+      $mixpanel.track('Merge-to deployment button clicked');
+
       modalInstance.result.then(function (data) {
         deploymentsResource.update(data.deployment.name, data.blueprint, true);
+        $mixpanel.track('Blueprint merged to deployment');
         $state.go('readAllDeployments');
       });
     }
@@ -94,8 +103,11 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal) {
 
       var modalInstance = $uibModal.open(Modal.create('sliceDeploymentModal', resolves));
 
+      $mixpanel.track('Remove-from deployment button clicked');
+
       modalInstance.result.then(function (data) {
         deploymentsResource.remove(data.deployment.name, data.blueprint);
+        $mixpanel.track('Blueprint removed from deployment');
       });
     }
   }

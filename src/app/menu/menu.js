@@ -1,9 +1,11 @@
 /* global _*/
-function menuController($rootScope, $interval, Api) {
+function menuController($rootScope, $interval, Api, $mixpanel) {
   var self = this;
   self.toggleSettings = toggleSettings;
   self.jvmData = {};
-  
+
+  $mixpanel.track('UI loaded');
+
   var activeTable = {
     blueprints: [
       'readAllBlueprints',
@@ -46,6 +48,7 @@ function menuController($rootScope, $interval, Api) {
 
   function toggleSettings() {
     $rootScope.infoPanelActive = !$rootScope.infoPanelActive;
+    $mixpanel.track('Options pane toggled');
   }
 
   self.menuItems = [

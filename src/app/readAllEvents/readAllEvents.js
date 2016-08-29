@@ -1,4 +1,4 @@
-function readAllEventsController(EventStreamHandler) {
+function readAllEventsController(EventStreamHandler, $mixpanel) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
   var self = this;
   self.events = [];
@@ -8,6 +8,7 @@ function readAllEventsController(EventStreamHandler) {
 
   function toggle() {
     self.showPanel = ! self.showPanel;
+    $mixpanel.track('Events panel toggled');
   }
 
   function closeMe() {

@@ -65,6 +65,8 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
     deploymentsResource.update($stateParams.id, self.data);
     deploymentsResource.stopPolling();
     polling = true;
+    $mixpanel.track('Number of instances of service edited');
+
   }
 
   function saveNumberOfCpus(serviceName, serviceScale, number) {
@@ -73,13 +75,16 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
     deploymentsResource.update($stateParams.id, self.data);
     deploymentsResource.stopPolling();
     polling = true;
+    $mixpanel.track('Number of cpus of service edited');
+
   }
 
-  function saveSizeOfMemory(serviceName, serviceScale, number) {
+  function saveSizeOfMemory(serviceName, serviceScale, number, $mixpanel) {
     self.editMemory[serviceName]  = false;
     serviceScale.memory = number;
     deploymentsResource.update($stateParams.id, self.data);
     deploymentsResource.stopPolling();
+    $mixpanel.track('Size of memory of service edited');
     polling = true;
   }
 

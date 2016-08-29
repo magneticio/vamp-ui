@@ -1,5 +1,5 @@
 /* global YAML*/
-function updateWorkflowController(Api, $state, toastr, $stateParams) {
+function updateWorkflowController(Api, $state, toastr, $stateParams, $mixpanel) {
   var self = this;
   self.data = {};
   self.updatingWorkflow = false;
@@ -9,10 +9,11 @@ function updateWorkflowController(Api, $state, toastr, $stateParams) {
   self.canBeParsed = true;
 
   Api.read('workflows', self.workflowId).then(workflowLoaded);
+  $mixpanel.track('Update Workflow button clicked');
+
 
   function update(workflowData) {
     self.updatingWorkflow = true;
-
     Api.update('workflows', self.workflowId, workflowData).then(workflowUpdated, workflowNotUpdated);
   }
 
@@ -24,6 +25,7 @@ function updateWorkflowController(Api, $state, toastr, $stateParams) {
   function workflowUpdated() {
     self.updatingWorkflow = false;
     toastr.success(self.workflowId, 'Updated Workflow');
+    $mixpanel.track('Workflow updated');
     $state.go('readAllWorkflows');
   }
 
