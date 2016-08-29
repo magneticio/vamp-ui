@@ -60,7 +60,7 @@ function DataManager(Api, $interval, toastr, $rootScope) {
       self.dataUpdated = function () {
       };
       return self;
-    }
+    };
 
     self.readAll = function () {
       if (self.entries.length > 0) {
@@ -73,12 +73,12 @@ function DataManager(Api, $interval, toastr, $rootScope) {
 
     self.readOne = function (id) {
       return _.find(self.entries, {name: id});
-    }
+    };
 
     self.registerInterval = function (intervalId) {
       console.log(intervalId);
       self.intervals.push(intervalId);
-    }
+    };
 
     self.create = function (data) {
       self.stopPolling();

@@ -10,8 +10,6 @@ function updateWorkflowController(Api, $state, toastr, $stateParams, $mixpanel) 
 
   Api.read('workflows', self.workflowId).then(workflowLoaded);
   $mixpanel.track('Update Workflow button clicked');
-
-
   function update(workflowData) {
     self.updatingWorkflow = true;
     Api.update('workflows', self.workflowId, workflowData).then(workflowUpdated, workflowNotUpdated);

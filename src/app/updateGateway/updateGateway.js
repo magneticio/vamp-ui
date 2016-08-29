@@ -11,8 +11,6 @@ function updateGatewayController(Api, $state, toastr, $stateParams, $mixpanel) {
   Api.read('gateways', self.gatewayId).then(gatewayLoaded);
 
   $mixpanel.track('Update Gateways button clicked');
-
-
   function update(gatewayData) {
     self.updatingGateway = true;
 

@@ -8,7 +8,7 @@ function sliceDeploymentModal($scope, $uibModalInstance, blueprint, deployments,
 
   $scope.deploymentChosen = function (deployment) {
     $scope.chosenDeployment = deployment;
-  }
+  };
 
   $scope.ok = function () {
     $uibModalInstance.close({deployment: $scope.chosenDeployment, blueprint: $scope.blueprint});

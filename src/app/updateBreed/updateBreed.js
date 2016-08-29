@@ -11,8 +11,6 @@ function updateBreedController(Api, $state, toastr, $stateParams, $mixpanel) {
   Api.read('breeds', self.breedId).then(breedLoaded);
 
   $mixpanel.track('Update Breeds button clicked');
-
-
   function update(breedData) {
     self.updatingBreed = true;
 

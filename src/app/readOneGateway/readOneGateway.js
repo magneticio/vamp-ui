@@ -1,10 +1,7 @@
 /* global _*/
 function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr, EventStreamHandler, $uibModal, $mixpanel) {
   var weightsModal;
-
-
   var self = this;
-
   self.gateway = {};
 
   self.responseTimeFlowingValues = {
@@ -33,8 +30,8 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
     // Define modals
     var routeWeights = {};
     for (var routeName in self.gateway.routes) {
-      if(routeName) {
-        routeWeights[routeName] = parseInt(self.gateway.routes[routeName].weight);
+      if (routeName) {
+        routeWeights[routeName] = parseInt(self.gateway.routes[routeName].weight, 10);
       }
     }
 
@@ -60,7 +57,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
 
     Api.update('gateways', gatewayData.name, pureData).then(gatewayUpdated);
 
-    function gatewayUpdated(response) {
+    function gatewayUpdated() {
       toastr.success('Weights of routes of gateway' + self.gateway.name + ' updated');
     }
   }
@@ -76,19 +73,25 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
   }
 
   self.conditionsChanged = function (routeName, newConditions) {
-    self.gateway.routes[routeName].condition = {'condition': newConditions};
+    self.gateway.routes[routeName].condition = {condition: newConditions};
     updateGateway(self.gateway);
     $mixpanel.track('Condition of route of gateway edited');
-
   };
 
   self.conditionsWeightChanged = function (routeName, newWeight) {
-
     self.gateway.routes[routeName].condition_strength = newWeight + '%';
     updateGateway(self.gateway);
     $mixpanel.track('Condition weigth of route of gateway edited');
-
   };
+
+  function SparklineStats(size) {
+    var self = this;
+    self.values = new CappedArray(size);
+
+    self.callback = function (event) {
+      self.values.push(event.value);
+    };
+  }
 
   function addMetaData(gateway) {
     // get health stats
@@ -109,21 +112,11 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
 
     for (var routeName in gateway.routes) {
       var route = gateway.routes[routeName];
-
       route._$stats = {
         health: new SparklineStats(6),
         responseTime: new SparklineStats(20),
         rate: new SparklineStats(20)
-      }
-
-      function SparklineStats(size) {
-        var self = this;
-        self.values = new CappedArray(size);
-
-        self.callback = function (event) {
-          self.values.push(event.value);
-        };
-      }
+      };
 
       EventStreamHandler.getStream(route._$stats.health.callback, ['gateways', 'gateways:' + gateway.name, 'health', 'routes', 'routes:' + routeName]);
       EventStreamHandler.getStream(route._$stats.responseTime.callback, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:responseTime', 'routes', 'routes:' + routeName]);
@@ -162,10 +155,9 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
 
   self.openWeightsModal = function () {
     weightsModal.open();
-  }
+  };
 
-  //CONST
-
+  // Chartconfig
   self.healthChart = {};
   self.healthChart.series = ['Series A'];
 
@@ -222,7 +214,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
     }
 
     return length;
-  }
+  };
 
   function Modal(templateName, resultCallback, resolves) {
     var self = this;

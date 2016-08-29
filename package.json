@@ -64,7 +64,10 @@
   "eslintConfig": {
     "globals": {
       "expect": true,
-      "angular": true
+      "angular": true,
+      "CappedArray": true,
+      "_": true,
+      "areAllClustersThere": true
     },
     "root": true,
     "env": {
@@ -73,7 +76,12 @@
     },
     "extends": [
       "xo-space"
-    ]
+    ],
+    "rules": {
+      "guard-for-in": "off",
+      "camelcase": "off",
+      "no-loop-func": "off"
+    }
   },
   "dependencies": {
     "jasmine-core": "^2.4.1"

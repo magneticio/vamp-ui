@@ -49,7 +49,7 @@ function readAllDeploymentsController(Api, toastr, DataManager, $mixpanel, $uibM
 
       function deploymentDeleted() {
         toastr.success(id + ' has been undeployed.', 'Deployement undeployed');
-        $mixpane.track('Deployment undeployed');
+        $mixpanel.track('Deployment undeployed');
       }
 
       function deploymentDeletedFailed(error) {

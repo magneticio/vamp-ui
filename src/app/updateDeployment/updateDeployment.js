@@ -11,8 +11,6 @@ function updateDeploymentController(Api, $state, toastr, $stateParams, $mixpanel
   Api.read('deployments', self.deploymentId).then(deploymentLoaded);
 
   $mixpanel.track('Update Deployments button clicked');
-
-
   function update(deploymentData) {
     self.updatingDeployment = true;
 
