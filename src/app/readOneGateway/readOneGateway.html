@@ -104,9 +104,14 @@
             {{route._$stats.responseTime.values.getLast()}} ms
           </span>
       </td>
-      <td>{{route.weight}}</td>
-      <td>{{route.condition.condition || 'Empty'}}</td>
-      <td>{{route.condition_strength}}</td>
+      <td>{{route.weight}}
+
+      <td>
+        <editable-text active="true" text="{{route.condition.condition}}" edited="$ctrl.conditionsChanged(routename, newConditions)"></editable-text>
+      </td>
+      <td>
+        <editable-number active="true" postfix="%" min="0" max="100" number="route.condition_strength" edited="$ctrl.conditionsWeightChanged(routename, newConditionWeight)"></editable-number>
+      </td>
     <!--</tr>-->
   </table>
 

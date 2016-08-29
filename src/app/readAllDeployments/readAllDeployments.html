@@ -15,6 +15,7 @@
 
       <td>
         <div class="pull-right">
+          <button ui-sref="updateDeployment({id: deployment.name})" class="btn blue"><i class="fa fa-lg fa-pencil"></i>&nbsp;&nbsp;Edit</button>
           <button ng-click="$ctrl.openDeleteModal(deployment.name)" class="btn btn-defaul red"><i class="fa fa-lg fa-ban"></i>&nbsp;&nbsp;Undeploy</button>
         </div>
       </td>

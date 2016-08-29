@@ -75,6 +75,17 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
     updateGateway(self.gateway);
   }
 
+  self.conditionsChanged = function (routeName, newConditions) {
+    self.gateway.routes[routeName].condition = {'condition': newConditions};
+    updateGateway(self.gateway);
+  };
+
+  self.conditionsWeightChanged = function (routeName, newWeight) {
+
+    self.gateway.routes[routeName].condition_strength = newWeight + '%';
+    updateGateway(self.gateway);
+  };
+
   function addMetaData(gateway) {
     // get health stats
     gateway._$stats = {
