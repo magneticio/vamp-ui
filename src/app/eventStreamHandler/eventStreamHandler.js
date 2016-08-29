@@ -12,7 +12,6 @@ function EventStreamHandler(Api, $http) {
   // Events of a certain combination of tags.
   self.cacheEvents = {};
 
-
   // If there are no events stored, fill it up from the backend
   if (allEvents.isEmpty()) {
     Api.readAll('events', {page: 0, per_page: allEventsCacheSize}).then(eventsRead);
@@ -27,23 +26,29 @@ function EventStreamHandler(Api, $http) {
   // Get the events stream and attach a event listener
   var url = Environment.prototype.getApiBaseUrl() + 'events/stream';
   this.source = new EventSource(url);
-  this.source.addEventListener('event', function (event) {
-    // The event is send as a string so we need to parse it before sending it to the eventFired function
-    eventFired(JSON.parse(event.data));
-  });
 
-  function eventFired(data) {
+  this.source.addEventListener('health', eventFired);
+  this.source.addEventListener('event', eventFired);
+  this.source.addEventListener('metrics', eventFired);
+
+  function eventFired(event) {
+    var parsedData = event;
+
+    if(typeof event.data === 'string') {
+      parsedData = JSON.parse(event.data);
+    }
+
     // First push the data on the global array
-    allEvents.push(data);
+    allEvents.push(parsedData);
     if (self.allEventCallback) {
-      self.allEventCallback(data);
+      self.allEventCallback(parsedData);
     }
     // Check if the combo of tags has an entry
-    data.tags.sort();
-    var tagsComboId = data.tags.join('/');
+    parsedData.tags.sort();
+    var tagsComboId = parsedData.tags.join('/');
     if (self.cacheEvents[tagsComboId]) {
-      self.cacheEvents[tagsComboId].values.push(data);
-      self.cacheEvents[tagsComboId].callback(data);
+      self.cacheEvents[tagsComboId].values.push(parsedData);
+      self.cacheEvents[tagsComboId].callback(parsedData);
     }
   }
 }

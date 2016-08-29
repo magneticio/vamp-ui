@@ -25,20 +25,21 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
     addMetaData(gateway);
     self.gateway = gateway;
 
-    //Add stream handlers
+    // Add stream handlers
     EventStreamHandler.getStream(newHealthStatEvent, ['gateways', 'gateways:' + gateway.name, 'health']);
     EventStreamHandler.getStream(newResponseTimeEvent, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:responseTime']);
     EventStreamHandler.getStream(newRateEvent, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:rate']);
 
-    //Define modals
+    // Define modals
     var routeWeights = {};
     for (var routeName in self.gateway.routes) {
-      routeWeights[routeName] = parseInt(self.gateway.routes[routeName].weight);
+      if(routeName) {
+        routeWeights[routeName] = parseInt(self.gateway.routes[routeName].weight);
+      }
     }
 
     weightsModal = new Modal('editWeightsModal', routeWeightsAdjusted, {weightValues: routeWeights});
   }
-
 
   function removeMetaData(data) {
     for (var attribute in data) {
@@ -56,7 +57,6 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
 
   function updateGateway(gatewayData) {
     var pureData = removeMetaData(angular.copy(gatewayData));
-    console.log('pureData', pureData);
 
     Api.update('gateways', gatewayData.name, pureData).then(gatewayUpdated);
 
@@ -72,7 +72,6 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
       self.gateway.routes[routeName].weight = routeWeight + '%';
     }
 
-    console.log('prefilter', self.gateway);
     updateGateway(self.gateway);
   }
 
@@ -80,8 +79,8 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
     // get health stats
     gateway._$stats = {
       health: {
-        data: new CappedArray(20),
-        labels: new CappedArray(20)
+        data: new CappedArray(20, true),
+        labels: new CappedArray(20, true)
       },
       responseTime: {
         data: new CappedArray(20),
@@ -138,7 +137,6 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
       var currentResponseTimeValue = self.gateway._$stats.responseTime.data.getLast();
       var currentRateValue = self.gateway._$stats.rate.data.getLast();
 
-      console.log(self.responseTimeFlowingValues.values);
       self.responseTimeFlowingValues.labels.push('');
       self.responseTimeFlowingValues.values.push(currentResponseTimeValue);
 
@@ -221,8 +219,6 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
       size: 'md',
       resolve: {}
     };
-
-    console.log(self.modalData);
 
     if (resolves) {
       for (var attribute in resolves) {
