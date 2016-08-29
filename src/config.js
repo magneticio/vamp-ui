@@ -2,7 +2,7 @@ angular
   .module('app')
   .config(pluginsConfig);
 
-function pluginsConfig(toastrConfig) {
+function pluginsConfig(toastrConfig, $mixpanelProvider) {
   // Configuration of the angular-toastr plugin. See: https://github.com/Foxandxss/angular-toastr
   angular.extend(toastrConfig, {
     autoDismiss: true,
@@ -14,6 +14,8 @@ function pluginsConfig(toastrConfig) {
     positionClass: 'toast-top-right',
     preventOpenDuplicates: true
   });
+
+  $mixpanelProvider.apiKey('3dc73f826819c8e11d0d9898ca4291c8');
 }
 angular
   .module('app')
