@@ -7,9 +7,11 @@ function EventStreamHandler(Api, $http) {
 
   // All events are stored here
   var allEvents = new CappedArray(allEventsCacheSize);
+  self.allEventCallback;
 
   // Events of a certain combination of tags.
   self.cacheEvents = {};
+
 
   // If there are no events stored, fill it up from the backend
   if (allEvents.isEmpty()) {
@@ -33,7 +35,11 @@ function EventStreamHandler(Api, $http) {
   function eventFired(data) {
     // First push the data on the global array
     allEvents.push(data);
+    if (self.allEventCallback) {
+      self.allEventCallback(data);
+    }
     // Check if the combo of tags has an entry
+    data.tags.sort();
     var tagsComboId = data.tags.join('/');
     if (self.cacheEvents[tagsComboId]) {
       self.cacheEvents[tagsComboId].values.push(data);
@@ -46,6 +52,7 @@ EventStreamHandler.prototype.getStream = function (eventFiredCallback, tags) {
   var self = this;
 
   if (tags && Array.isArray(tags)) {
+    tags.sort();
     var tagsComboId = tags.join('/');
     if (self.cacheEvents[tagsComboId]) {
       // The combination of tags exists. This means we can get the values and trigger the callback for it
@@ -79,6 +86,8 @@ EventStreamHandler.prototype.getStream = function (eventFiredCallback, tags) {
         });
       });
     }
+  } else {
+    self.allEventCallback = eventFiredCallback;
   }
 };
 

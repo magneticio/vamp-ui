@@ -1,11 +1,9 @@
 /* global _*/
-function menuController($rootScope, Events, $interval, Api) {
+function menuController($rootScope, $interval, Api) {
   var self = this;
   self.toggleSettings = toggleSettings;
   self.jvmData = {};
-
-  Events.start();
-
+  
   var activeTable = {
     blueprints: [
       'readAllBlueprints',

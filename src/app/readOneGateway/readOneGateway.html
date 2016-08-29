@@ -37,26 +37,30 @@
       </canvas>
     </div>
 
+    <div class="col-md-4 chart-fix">
+      <div>
+        <h4>{{$ctrl.rateFlowingValues.values.getLast()}}&nbsp;Requests per second</h4>
+        <canvas id="line" class="chart chart-line"
+                chart-data="[$ctrl.rateFlowingValues.values.getAll()]"
+                chart-labels="$ctrl.rateFlowingValues.labels.getAll()"
+                chart-series="['test']"
+                chart-options="$ctrl.chartOptions">
+        </canvas>
+      </div>
+    </div>
+
 
     <div class="col-md-4 chart-fix">
-      <h4>{{$ctrl.responseTimeFlowingValues.values.getLast()}}&nbsp;Requests per second</h4>
+      <h4>{{$ctrl.responseTimeFlowingValues.values.getLast()}}&nbsp;Respones time (ms)</h4>
       <canvas id="line" class="chart chart-line"
                 chart-data="[$ctrl.responseTimeFlowingValues.values.getAll()]"
                 chart-labels="$ctrl.responseTimeFlowingValues.labels.getAll()"
-                chart-series="['']"
+                chart-series="['test']"
                 chart-options="$ctrl.chartOptions">
       </canvas>
     </div>
 
-    <div class="col-md-4 chart-fix">
-      <h4>{{$ctrl.rateFlowingValues.values.getLast()}}&nbsp;Response time (ms)</h4>
-      <canvas id="line" class="chart chart-line"
-              chart-data="[$ctrl.rateFlowingValues.values.getAll()]"
-              chart-labels="$ctrl.rateFlowingValues.labels.getAll()"
-              chart-series="['']"
-              chart-options="$ctrl.chartOptions">
-      </canvas>
-    </div>
+
   </div>
 
   <!--{{$ctrl.gateway}}-->
@@ -64,9 +68,11 @@
   <table class="table">
     <tr>
       <th>Name:</th>
-      <th></th>
+      <th>Health (%)</th>
+      <th>Req./sec</th>
+      <th>Response time (ms)</th>
       <th>
-        <editable-label on-click="$ctrl.test()" active="$ctrl.getObjectLength($ctrl.gateway.routes) > 1">Weight</editable-label>
+        <editable-label on-click="$ctrl.openWeightsModal()" active="$ctrl.getObjectLength($ctrl.gateway.routes) > 1">Weight</editable-label>
       </th>
       <th>Conditions</th>
       <th>Condition Strength</th>
@@ -74,25 +80,34 @@
     <tr ng-repeat="(routename, route) in $ctrl.gateway.routes">
       <td>{{routename}}</td>
       <td>
-        <!--{{route._$stats.health.values.getAll()}}-->
-        <div class="sparklines">
           <div class="sparkchart-container">
-            <bar-chart class="sparkchart" data="route._$stats.health.values.getAll()" options="{height: 30, width: 60}"></bar-chart>
-          </div>
+            <bar-chart class="sparkchart" data="route._$stats.health.values.getAll()" options="{fill: ['#15D9B2'],height: 30, width: 60}"></bar-chart>
 
-          <div class="sparkchart-container">
-            <line-chart class="sparkchart"  data="route._$stats.responseTime.values.getAll()" options="{stroke: '#FF405E', height: 30, width: 60}"></line-chart>
           </div>
-
-          <div class="sparkchart-container">
-            <line-chart class="sparkchart"  data="route._$stats.rate.values.getAll()" options="{stroke: '#FF405E', height: 30, width: 60}"></line-chart>
-          </div>
+          <span>
+            {{route._$stats.health.values.getLast() * 100}}%
+          </span>
+        </td>
+      <td>
+        <div class="sparkchart-container">
+          <line-chart class="sparkchart"  data="route._$stats.rate.values.getAll()" options="{stroke: '#4d89f9', height: 30, width: 60}"></line-chart>
         </div>
+        <span>
+            {{route._$stats.rate.values.getLast()}} req/sec
+          </span>
+      </td>
+      <td>
+        <div class="sparkchart-container">
+          <line-chart class="sparkchart"  data="route._$stats.responseTime.values.getAll()" options="{stroke: '#4d89f9', height: 30, width: 60}"></line-chart>
+        </div>
+        <span>
+            {{route._$stats.responseTime.values.getLast()}} ms
+          </span>
       </td>
       <td>{{route.weight}}</td>
       <td>{{route.condition.condition || 'Empty'}}</td>
       <td>{{route.condition_strength}}</td>
-    </tr>
+    <!--</tr>-->
   </table>
 
 

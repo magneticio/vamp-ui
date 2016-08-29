@@ -1,4 +1,4 @@
-function readAllEventsController(Events) {
+function readAllEventsController(EventStreamHandler) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
   var self = this;
   self.events = [];
@@ -14,10 +14,10 @@ function readAllEventsController(Events) {
     self.showPanel = false;
   }
 
-  Events.setEventsUpdated(eventsUpdated);
+  EventStreamHandler.getStream(eventTriggered);
 
-  function eventsUpdated(events) {
-    self.events = events;
+  function eventTriggered(data) {
+    self.events.push(data);
   }
 }
 

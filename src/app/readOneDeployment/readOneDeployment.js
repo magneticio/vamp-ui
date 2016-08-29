@@ -126,7 +126,7 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
     }
   }
 
-  EventStreamHandler.getStream(['deployments', 'deployments:' + $stateParams.id, 'health'], eventFired);
+  EventStreamHandler.getStream(eventFired, ['deployments', 'deployments:' + $stateParams.id, 'health']);
 
   function eventFired(data) {
     self.currentHealth = data.value * 100;

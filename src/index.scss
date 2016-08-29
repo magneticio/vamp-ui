@@ -14,7 +14,7 @@ $dark-blue: #1E0A3C;
 
 $green: #15D9B2;
 
-$blue: rgb(77, 137, 249);
+$blue: #4d89f9;
 
 $font-small: 14px;
 $font-medium: 18px;
@@ -607,23 +607,20 @@ input[type=number]{
   }
 }
 
-.sparklines {
-  display: flex;
-  justify-content: space-around;
 
   .sparkchart-container {
     width: 60px;
-    height: 30px;
+    height: 31px;
     position: relative;
 
-    background-color: rgba(black, 0.1);
+    border-left: 1px solid rgba($dark-blue, 0.2);
+    border-bottom: 1px solid rgba($dark-blue, 0.2);
 
     .sparkchart {
       position: absolute;
     }
 
   }
-}
 
 .editable-label {
   display: flex;
