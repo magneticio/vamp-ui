@@ -1,11 +1,11 @@
 function createGatewayController(Api, $state, toastr, $mixpanel) {
   var self = this;
+
   self.data = {};
   self.creatingGateway = false;
   self.create = create;
-
   self.canBeParsed = true;
-  
+
   $mixpanel.track('Create gateway button clicked');
 
   function create(gatewayData) {

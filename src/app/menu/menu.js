@@ -80,7 +80,7 @@ function menuController($rootScope, $interval, Api, $mixpanel) {
   ];
 
   Api.readAll('info', {on: 'jvm'}).then(jvmDataLoaded);
-  $interval(function() {
+  $interval(function () {
     Api.readAll('info', {on: 'jvm'}).then(jvmDataLoaded);
   }, 30000);
 

@@ -24,7 +24,7 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal, $mix
 
     var modalInstance = $uibModal.open(Modal.create('deployBlueprintModal', resolves));
 
-    $mixpanel.track('Blueprint deploy button clicked')
+    $mixpanel.track('Blueprint deploy button clicked');
 
     modalInstance.result.then(function (data) {
       deploymentsResource.update(data.deploymentName, data.blueprint, true);
@@ -87,10 +87,12 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal, $mix
         console.log(deployment);
 
         for (var clusterName in deployment.clusters) {
-          blueprint.clusters[clusterName] ? areAllClustersThere = true : areAllClustersThere = false;
+          areAllClustersThere = blueprint.clusters[clusterName];
         }
 
-        areAllClustersThere ? possibleDeployments.push(deployment) : '';
+        if (areAllClustersThere) {
+          possibleDeployments.push(deployment);
+        }
       });
 
       var resolves = {

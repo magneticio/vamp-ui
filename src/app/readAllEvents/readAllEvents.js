@@ -7,7 +7,7 @@ function readAllEventsController(EventStreamHandler, $mixpanel) {
   self.toggle = toggle;
 
   function toggle() {
-    self.showPanel = ! self.showPanel;
+    self.showPanel = !self.showPanel;
     $mixpanel.track('Events panel toggled');
   }
 

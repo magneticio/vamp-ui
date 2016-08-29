@@ -13,7 +13,7 @@ function createBlueprintController($state, DataManager, $mixpanel) {
 
     var blueprintsResource = DataManager.resource('blueprints');
     blueprintsResource.create(blueprintData);
-    $mixpanel.track('New blueprint added')
+    $mixpanel.track('New blueprint added');
     $state.go('readAllBlueprints');
 
     // Api.create('blueprints', blueprintData).then(blueprintCreated, blueprintNotCreated);

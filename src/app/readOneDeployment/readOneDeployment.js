@@ -1,5 +1,5 @@
 /* global _*/
-function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandler, $interval, $filter, DataManager) {
+function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandler, $interval, $filter, DataManager, $mixpanel) {
   var self = this;
   var deploymentsResource = DataManager.resource('deployments');
   self.data = deploymentsResource.readOne($stateParams.id);
@@ -44,7 +44,7 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
     console.log('whaaat');
     polling = false;
     self.editInstances[serviceName] = true;
-    self.initialNumberOfInstances[serviceName]  = angular.copy(number);
+    self.initialNumberOfInstances[serviceName] = angular.copy(number);
   }
 
   function editNumberOfCpus(serviceName, number) {
@@ -66,21 +66,19 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
     deploymentsResource.stopPolling();
     polling = true;
     $mixpanel.track('Number of instances of service edited');
-
   }
 
   function saveNumberOfCpus(serviceName, serviceScale, number) {
-    self.editCpu[serviceName]  = false;
+    self.editCpu[serviceName] = false;
     serviceScale.cpu = number;
     deploymentsResource.update($stateParams.id, self.data);
     deploymentsResource.stopPolling();
     polling = true;
     $mixpanel.track('Number of cpus of service edited');
-
   }
 
   function saveSizeOfMemory(serviceName, serviceScale, number, $mixpanel) {
-    self.editMemory[serviceName]  = false;
+    self.editMemory[serviceName] = false;
     serviceScale.memory = number;
     deploymentsResource.update($stateParams.id, self.data);
     deploymentsResource.stopPolling();
@@ -108,8 +106,7 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   self.chart.data = [[]];
 
   var noOfBars = 20;
-  for (var i = 0; i < 20; i++) {
-
+  for (var i = 0; i < noOfBars; i++) {
     self.chart.labels.push('');
     self.chart.data[0].push(undefined);
   }
@@ -129,7 +126,7 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
         }
       }]
     }
-  }
+  };
 
   EventStreamHandler.getStream(eventFired, ['deployments', 'deployments:' + $stateParams.id, 'health']);
 

@@ -6,7 +6,7 @@ function editWeightsModal($scope, $uibModalInstance, weightValues) {
     showSelectionBar: true,
     translate: function (value) {
       return value + '%';
-    },
+    }
   };
 
   $scope.newWeightValues = angular.copy(weightValues);

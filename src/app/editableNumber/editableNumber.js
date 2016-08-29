@@ -1,6 +1,6 @@
 function editableNumberController() {
   var self = this;
-  self.getParsedNumber = function() {
+  self.getParsedNumber = function () {
     return parseInt(self.number, 10);
   };
 

@@ -7,7 +7,6 @@ function EventStreamHandler(Api, $http) {
 
   // All events are stored here
   var allEvents = new CappedArray(allEventsCacheSize);
-  self.allEventCallback;
 
   // Events of a certain combination of tags.
   self.cacheEvents = {};
@@ -34,7 +33,7 @@ function EventStreamHandler(Api, $http) {
   function eventFired(event) {
     var parsedData = event;
 
-    if(typeof event.data === 'string') {
+    if (typeof event.data === 'string') {
       parsedData = JSON.parse(event.data);
     }
 

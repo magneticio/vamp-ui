@@ -32,7 +32,7 @@ function editorController() {
       self.canBeParsed = false;
     }
 
-    if(changedSourceCode === '') {
+    if (changedSourceCode === '') {
       self.status = {
         type: 'ERROR',
         message: 'No content present'
