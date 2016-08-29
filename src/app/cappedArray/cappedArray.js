@@ -1,4 +1,4 @@
-function CappedArray(size) {
+function CappedArray(size, fillUp) {
   var self = this;
   // Is variable filled in
   if (!size) {
@@ -13,6 +13,12 @@ function CappedArray(size) {
   // Variables
   self.size = size;
   self.theArray = [];
+
+  if (fillUp) {
+    for (var i = 0; i < size; i++) {
+      self.theArray[i] = undefined;
+    }
+  }
 
   self.getAll = function () {
     return self.theArray;
