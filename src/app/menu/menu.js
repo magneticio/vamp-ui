@@ -76,9 +76,9 @@ function menuController($rootScope, $interval, Api) {
     }
   ];
 
-  Api.readAll('info', {for: 'jvm'}).then(jvmDataLoaded);
+  Api.readAll('info', {on: 'jvm'}).then(jvmDataLoaded);
   $interval(function() {
-    Api.readAll('info', {for: 'jvm'}).then(jvmDataLoaded);
+    Api.readAll('info', {on: 'jvm'}).then(jvmDataLoaded);
   }, 30000);
 
   function jvmDataLoaded(response) {
