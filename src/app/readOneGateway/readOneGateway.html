@@ -2,7 +2,7 @@
 </header>
 
 
-<div class="container-fluid">
+<div class="container-fluid" ng-if="$ctrl.gateway">
 
   <div class="row">
     <div class="col-md-4">
@@ -16,15 +16,15 @@
     </div>
 
     <div class="col-md-2">
-      <h4>Deployed</h4>
-      <span ng-if="$ctrl.data.deployed" class="label label-success"><i class="fa fa-check"></i>&nbsp;Deployed</span>
-      <span ng-if="!$ctrl.data.deployed" class="label label-default">Not Deployed</span>
+      <h4>Deployed </h4>
+      <span ng-if="$ctrl.gateway.deployed" class="label label-success"><i class="fa fa-check"></i>&nbsp;Deployed</span>
+      <span ng-if="!$ctrl.gateway.deployed" class="label label-default">Not Deployed</span>
     </div>
 
     <div class="col-md-2">
       <h4>Sticky</h4>
-      <span ng-if="$ctrl.data.sticky !== 'none'" class="label label-success"><i class="fa fa-check"></i>&nbsp;Is sticky</span>
-      <span ng-if="$ctrl.data.sticky === 'none'" class="label label-default">Is not sticky</span>
+      <span ng-if="$ctrl.gateway.sticky !== 'none'" class="label label-success"><i class="fa fa-check"></i>&nbsp;Is sticky</span>
+      <span ng-if="$ctrl.gateway.sticky === 'none'" class="label label-default">Is not sticky</span>
     </div>
   </div>
 

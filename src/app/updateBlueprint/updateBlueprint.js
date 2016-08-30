@@ -23,7 +23,7 @@ function updateBlueprintController(Api, $state, DataManager, $stateParams, $mixp
 
   function blueprintLoaded(response) {
     var data = response.data;
-    self.sourceCode = YAML.stringify(data, 6);
+    self.sourceCode = YAML.stringify(data, 20);
   }
 }
 

@@ -10,9 +10,30 @@ function readAllDeploymentsController(Api, toastr, DataManager, $mixpanel, $uibM
   deploymentsResource.subscribe(deploymentReloaded).readAll().startPolling();
 
   function deploymentReloaded(data) {
+    addMetaData(data);
+
     self.deployments = data;
   }
 
+  function addMetaData(data) {
+    console.log(data);
+    data.forEach(function (deployment) {
+      deployment.totalInstances = 0;
+      deployment.totalCpu = 0;
+      deployment.totalMemory = 0;
+
+      for(var clusterName in deployment.clusters) {
+        var cluster = deployment.clusters[clusterName];
+        cluster.services.forEach(function (service) {
+          var scale = service.scale;
+          console.log(parseInt(scale.memory, 10));
+          deployment.totalInstances += scale.instances;
+          deployment.totalCpu += scale.cpu;
+          deployment.totalMemory += parseInt(scale.memory, 10);
+        });
+      }
+    });
+  }
   function openDeleteModal(deploymentId) {
     var theDeploymentId = deploymentId;
 

@@ -6,13 +6,24 @@
   <table class="table">
     <tr>
       <th>Name</th>
+      <th>Instances</th>
+      <th>Cpu</th>
+      <th>Memory</th>
       <th></th>
     </tr>
     <tr ng-repeat="deployment in $ctrl.deployments">
-      <td class="col-md-8" title="'Name'" filter="{name: 'text'}" sortable="'name'">
+      <td class="col-md-5" title="'Name'" filter="{name: 'text'}" sortable="'name'">
         <a ui-sref="readOneDeployment({id: deployment.name})">{{deployment.name}}</a>
       </td>
-
+      <td class="col-md-1">
+        {{deployment.totalInstances}}
+      </td>
+      <td class="col-md-1">
+        {{deployment.totalCpu | number:2}}
+      </td>
+      <td class="col-md-1">
+        {{deployment.totalMemory}}
+      </td>
       <td>
         <div class="pull-right">
           <button ui-sref="updateDeployment({id: deployment.name})" class="btn blue"><i class="fa fa-lg fa-pencil"></i>&nbsp;&nbsp;Edit</button>

@@ -20,6 +20,8 @@ function DataManager(Api, $interval, toastr, $rootScope) {
     return theResource;
   }
 
+  
+
   function DataResource(resourceName) {
     var self = this;
     self.entries = [];

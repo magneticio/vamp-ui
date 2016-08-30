@@ -1,10 +1,15 @@
 /* global _*/
-function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, toastr, EventStreamHandler, $uibModal, $mixpanel) {
+function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, toastr, EventStreamHandler, $uibModal, $mixpanel, IntervalManager) {
   var weightsModal;
   var self = this;
   self.gateway = {};
 
-  Api.read('gateways', $stateParams.id).then(resourceLoaded);
+  refreshGateway();
+  IntervalManager.addInterval($interval(refreshGateway, 5000));
+
+  function refreshGateway() {
+    Api.read('gateways', $stateParams.id).then(resourceLoaded);
+  }
 
   self.currentRate = 0;
   self.rateData = [[0]];
@@ -58,6 +63,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, 
 
   function resourceLoaded(response) {
     // Get the data and generate the metadata
+    console.log(response.data);
     var gateway = response.data;
     addMetaData(gateway);
     self.gateway = gateway;
