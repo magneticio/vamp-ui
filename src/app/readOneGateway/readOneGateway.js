@@ -112,7 +112,11 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, 
   }
 
   self.conditionsChanged = function (routeName, newConditions) {
-    self.gateway.routes[routeName].condition = {condition: newConditions};
+    if (newConditions === '') {
+      self.gateway.routes[routeName].condition = null;
+    } else {
+      self.gateway.routes[routeName].condition = {condition: newConditions};
+    }
     updateGateway(self.gateway);
     $mixpanel.track('Condition of route of gateway edited');
   };
