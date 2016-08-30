@@ -13,7 +13,7 @@
         <th>Tags</th>
         <th>Value</th>
       </tr>
-      <tr ng-repeat="event in $ctrl.events | orderBy: 'timestamp':true">
+      <tr ng-repeat="event in $ctrl.events.getAll() | orderBy: 'timestamp':true">
         <td>{{event.timestamp | date:'HH:mm:ss'}}</td>
         <td>
           <span ng-repeat="tag in event.tags">

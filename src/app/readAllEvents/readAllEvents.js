@@ -1,7 +1,7 @@
 function readAllEventsController(EventStreamHandler, $mixpanel) {
   /* eslint camelcase: ["error", {properties: "never"}]*/
   var self = this;
-  self.events = [];
+  self.events = new CappedArray(50);
   self.showPanel = false;
   self.closeMe = closeMe;
   self.toggle = toggle;
