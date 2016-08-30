@@ -96,6 +96,14 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
 
   function deploymentLoaded(deployment) {
     self.data = deployment.data;
+
+    for (var clusterName in self.data.clusters) {
+      var cluster = self.data.clusters[clusterName];
+      cluster.services.forEach(function (service) {
+        var serviceName = service.breed.name;
+        EventStreamHandler.getStream(eventFired, ['deployments', 'deployments:' + $stateParams.id, 'health', 'clusters:' + clusterName, 'clusters', 'service', 'services', 'services:' + serviceName]);
+      });
+    }
   }
 
   function deploymentCouldNotBeLoaded() {
@@ -127,8 +135,18 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
       }]
     }
   };
+  //
+  // "deployments:sava:1.0",
+  //   "health",
+  //   "services",
+  //   "clusters:sava",
+  //   "clusters",
+  //   "service",
+  //   "services:sava:1.0.0",
+  //   "deployments"
 
-  EventStreamHandler.getStream(eventFired, ['deployments', 'deployments:' + $stateParams.id, 'health']);
+
+  //EventStreamHandler.getStream(eventFired, ['deployments', 'deployments:' + $stateParams.id, 'health']);
 
   function eventFired(data) {
     self.currentHealth = data.value * 100;

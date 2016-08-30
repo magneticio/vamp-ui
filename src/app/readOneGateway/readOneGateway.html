@@ -39,22 +39,21 @@
 
     <div class="col-md-4 chart-fix">
       <div>
-        <h4>{{$ctrl.rateFlowingValues.values.getLast()}}&nbsp;Requests per second</h4>
+        <h4>{{$ctrl.currentRate}}&nbsp;Requests per second</h4>
         <canvas id="line" class="chart chart-line"
-                chart-data="[$ctrl.rateFlowingValues.values.getAll()]"
-                chart-labels="$ctrl.rateFlowingValues.labels.getAll()"
+                chart-data="$ctrl.rateData"
+                chart-labels="$ctrl.rateLabels"
                 chart-series="['test']"
                 chart-options="$ctrl.chartOptions">
         </canvas>
       </div>
     </div>
 
-
     <div class="col-md-4 chart-fix">
-      <h4>{{$ctrl.responseTimeFlowingValues.values.getLast()}}&nbsp;Respones time (ms)</h4>
+      <h4>{{$ctrl.currentResponseTime}}&nbsp;Response time (ms)</h4>
       <canvas id="line" class="chart chart-line"
-                chart-data="[$ctrl.responseTimeFlowingValues.values.getAll()]"
-                chart-labels="$ctrl.responseTimeFlowingValues.labels.getAll()"
+                chart-data="$ctrl.responseTimeData"
+                chart-labels="$ctrl.responseTimeLabels"
                 chart-series="['test']"
                 chart-options="$ctrl.chartOptions">
       </canvas>

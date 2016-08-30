@@ -1,20 +1,60 @@
 /* global _*/
-function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr, EventStreamHandler, $uibModal, $mixpanel) {
+function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, toastr, EventStreamHandler, $uibModal, $mixpanel) {
   var weightsModal;
   var self = this;
   self.gateway = {};
 
-  self.responseTimeFlowingValues = {
-    values: new CappedArray(360, true),
-    labels: new CappedArray(360, true)
-  };
-
-  self.rateFlowingValues = {
-    values: new CappedArray(360, true),
-    labels: new CappedArray(360, true)
-  };
-
   Api.read('gateways', $stateParams.id).then(resourceLoaded);
+
+  self.currentRate = 0;
+  self.rateData = [[0]];
+  self.rateLabels = [''];
+
+  self.currentResponseTime = 0;
+  self.responseTimeData = [[0]];
+  self.responseTimeLabels = [''];
+  // TODO Remove, is temp
+  function getFromRest(tags, callback) {
+    var url = Environment.prototype.getApiBaseUrl();
+    url += 'events?';
+    var tagsParams = [];
+    tags.forEach(function (tag) {
+      tagsParams.push('tag=' + tag);
+    });
+
+    url += tagsParams.join('&');
+
+    $http.get(url).then(function (response) {
+      var sortedData = _.sortBy(response.data, 'timestamp');
+      callback(sortedData);
+    });
+  }
+
+  getFromRest(['gateway', 'gateways', 'gateways:' + $stateParams.id, 'metrics', 'metrics:responseTime'], function (response) {
+    var tempData = [];
+    var tempLabels = [];
+
+    response.forEach(function (data) {
+      tempData.push(data.value);
+      tempLabels.push('');
+    });
+
+    self.responseTimeData[0] = tempData;
+    self.responseTimeLabels = tempLabels;
+  });
+
+  getFromRest(['gateway', 'gateways', 'gateways:' + $stateParams.id, 'metrics', 'metrics:rate'], function (response) {
+    var tempData = [];
+    var tempLabels = [];
+
+    response.forEach(function (data) {
+      tempData.push(data.value);
+      tempLabels.push('');
+    });
+
+    self.rateData[0] = tempData;
+    self.rateLabels = tempLabels;
+  });
 
   function resourceLoaded(response) {
     // Get the data and generate the metadata
@@ -23,10 +63,9 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
     self.gateway = gateway;
 
     // Add stream handlers
-    EventStreamHandler.getStream(newHealthStatEvent, ['gateways', 'gateways:' + gateway.name, 'health']);
-    EventStreamHandler.getStream(newResponseTimeEvent, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:responseTime']);
-    EventStreamHandler.getStream(newRateEvent, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:rate']);
-
+    EventStreamHandler.getStream(newHealthStatEvent, ['gateway', 'gateways', 'gateways:' + gateway.name, 'health']);
+    EventStreamHandler.getStream(newResponseTimeEvent, ['gateway', 'gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:responseTime']);
+    EventStreamHandler.getStream(newRateEvent, ['gateway', 'gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:rate']);
     // Define modals
     var routeWeights = {};
     for (var routeName in self.gateway.routes) {
@@ -119,17 +158,17 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
       };
 
       EventStreamHandler.getStream(route._$stats.health.callback, ['gateways', 'gateways:' + gateway.name, 'health', 'routes', 'routes:' + routeName]);
-      EventStreamHandler.getStream(route._$stats.responseTime.callback, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:responseTime', 'routes', 'routes:' + routeName]);
-      EventStreamHandler.getStream(route._$stats.rate.callback, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:rate', 'routes', 'routes:' + routeName]);
+      EventStreamHandler.getStream(route._$stats.responseTime.callback, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:responseTime', 'route', 'routes', 'routes:' + routeName]);
+      EventStreamHandler.getStream(route._$stats.rate.callback, ['gateways', 'gateways:' + gateway.name, 'metrics', 'metrics:rate', 'routes', 'route', 'routes:' + routeName]);
     }
   }
-
   function newHealthStatEvent(event) {
     self.gateway._$stats.health.data.push(event.value * 100);
     self.gateway._$stats.health.labels.push($filter('date')(event.timestamp, "mm:ss"));
   }
 
   function newResponseTimeEvent(event) {
+    // console.log(event);
     self.gateway._$stats.responseTime.data.push(event.value);
     self.gateway._$stats.responseTime.labels.push(event.timestamp);
   }
@@ -139,23 +178,33 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, toastr,
     self.gateway._$stats.rate.labels.push(event.timestamp);
   }
 
-  // This will update the data for the repsonsetime and rate chart 25 times per second for a flowing look;
-  $interval(function () {
-    if (self.gateway._$stats) {
-      var currentResponseTimeValue = self.gateway._$stats.responseTime.data.getLast();
-      var currentRateValue = self.gateway._$stats.rate.data.getLast();
-
-      self.responseTimeFlowingValues.labels.push('');
-      self.responseTimeFlowingValues.values.push(currentResponseTimeValue);
-
-      self.rateFlowingValues.values.push(currentRateValue);
-      self.rateFlowingValues.labels.push('');
-    }
-  }, 25);
-
   self.openWeightsModal = function () {
     weightsModal.open();
   };
+  $interval(function () {
+    getLiveData();
+  }, 5000);
+
+  function getLiveData() {
+
+    if (self.rateData[0].length > 30) {
+      self.rateLabels = self.rateLabels.slice(1);
+      self.rateData[0] = self.rateData[0].slice(1);
+    }
+
+    self.rateLabels.push('');
+    self.rateData[0].push(self.gateway._$stats.rate.data.getLast());
+    self.currentRate = self.gateway._$stats.rate.data.getLast();
+
+    if (self.responseTimeData[0].length > 30) {
+      self.responseTimeLabels = self.responseTimeLabels.slice(1);
+      self.responseTimeData[0] = self.responseTimeData[0].slice(1);
+    }
+
+    self.responseTimeLabels.push('');
+    self.responseTimeData[0].push(self.gateway._$stats.responseTime.data.getLast());
+    self.currentResponseTime = self.gateway._$stats.responseTime.data.getLast();
+  }
 
   // Chartconfig
   self.healthChart = {};

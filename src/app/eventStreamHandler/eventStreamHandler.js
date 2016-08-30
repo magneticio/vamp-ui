@@ -98,4 +98,3 @@ EventStreamHandler.prototype.getStream = function (eventFiredCallback, tags) {
 angular
   .module('app')
   .service('EventStreamHandler', EventStreamHandler);
-
