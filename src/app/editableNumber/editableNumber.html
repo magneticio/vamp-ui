@@ -1,5 +1,7 @@
 <div>
-  <editable-label ng-if="!$ctrl.editMode" active="$ctrl.active" on-click="$ctrl.setEditModeActive()">{{$ctrl.number}} </editable-label>
+  <editable-label ng-if="!$ctrl.editMode" active="$ctrl.active" on-click="$ctrl.setEditModeActive()">
+    <span highlighter="$ctrl.number">{{$ctrl.number}}</span>
+  </editable-label>
   <div ng-if="$ctrl.editMode">
     <rzslider
       class="slider"

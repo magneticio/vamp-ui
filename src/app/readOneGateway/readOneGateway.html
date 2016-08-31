@@ -33,7 +33,9 @@
     <div class="col-md-4">
       <h4>&nbsp;Health (%)</h4>
       <canvas id="bar" class="chart chart-bar"
-        chart-data="[$ctrl.gateway._$stats.health.data.getAll()]" chart-options="$ctrl.healthChart.options" chart-labels="$ctrl.gateway._$stats.health.labels.getAll()" chart-series="$ctrl.healthChart.series" chart-colors="$ctrl.healthChart.colors">
+              chart-data="[$ctrl.gateway._$stats.health.data.getAll()]" chart-options="$ctrl.healthChart.options"
+              chart-labels="$ctrl.gateway._$stats.health.labels.getAll()" chart-series="$ctrl.healthChart.series"
+              chart-colors="$ctrl.healthChart.colors">
       </canvas>
     </div>
 
@@ -52,18 +54,14 @@
     <div class="col-md-4 chart-fix">
       <h4>{{$ctrl.currentResponseTime}}&nbsp;Response time (ms)</h4>
       <canvas id="line" class="chart chart-line"
-                chart-data="$ctrl.responseTimeData"
-                chart-labels="$ctrl.responseTimeLabels"
-                chart-series="['test']"
-                chart-options="$ctrl.chartOptions">
+              chart-data="$ctrl.responseTimeData"
+              chart-labels="$ctrl.responseTimeLabels"
+              chart-series="['test']"
+              chart-options="$ctrl.chartOptions">
       </canvas>
     </div>
-
-
   </div>
 
-  <!--{{$ctrl.gateway}}-->
-  
   <table class="table">
     <tr>
       <th>Name:</th>
@@ -71,7 +69,9 @@
       <th>Req./sec</th>
       <th>Response time (ms)</th>
       <th>
-        <editable-label on-click="$ctrl.openWeightsModal()" active="$ctrl.getObjectLength($ctrl.gateway.routes) > 1">Weight</editable-label>
+        <editable-label on-click="$ctrl.openWeightsModal()" active="$ctrl.getObjectLength($ctrl.gateway.routes) > 1">
+          Weight
+        </editable-label>
       </th>
       <th>Conditions</th>
       <th>Condition Strength</th>
@@ -79,17 +79,19 @@
     <tr ng-repeat="(routename, route) in $ctrl.gateway.routes">
       <td>{{routename}}</td>
       <td>
-          <div class="sparkchart-container">
-            <bar-chart class="sparkchart" data="route._$stats.health.values.getAll()" options="{fill: ['#15D9B2'],height: 30, width: 60}"></bar-chart>
+        <div class="sparkchart-container">
+          <bar-chart class="sparkchart" data="route._$stats.health.values.getAll()"
+                     options="{fill: ['#15D9B2'],height: 30, width: 60}"></bar-chart>
 
-          </div>
+        </div>
           <span>
             {{route._$stats.health.values.getLast() * 100}}%
           </span>
-        </td>
+      </td>
       <td>
         <div class="sparkchart-container">
-          <line-chart class="sparkchart"  data="route._$stats.rate.values.getAll()" options="{stroke: '#4d89f9', height: 30, width: 60}"></line-chart>
+          <line-chart class="sparkchart" data="route._$stats.rate.values.getAll()"
+                      options="{stroke: '#4d89f9', height: 30, width: 60}"></line-chart>
         </div>
         <span>
             {{route._$stats.rate.values.getLast()}} req/sec
@@ -97,120 +99,29 @@
       </td>
       <td>
         <div class="sparkchart-container">
-          <line-chart class="sparkchart"  data="route._$stats.responseTime.values.getAll()" options="{stroke: '#4d89f9', height: 30, width: 60}"></line-chart>
+          <line-chart class="sparkchart" data="route._$stats.responseTime.values.getAll()"
+                      options="{stroke: '#4d89f9', height: 30, width: 60}"></line-chart>
         </div>
         <span>
             {{route._$stats.responseTime.values.getLast()}} ms
           </span>
       </td>
-      <td>{{route.weight}}
-
       <td>
-        <editable-text active="true" text="{{route.condition.condition}}" edited="$ctrl.conditionsChanged(routename, newConditions)"></editable-text>
+        <span highlighter="route.weight">{{route.weight}}</span>
       </td>
       <td>
-        <editable-number active="true" postfix="%" min="0" max="100" number="route.condition_strength" edited="$ctrl.conditionsWeightChanged(routename, newConditionWeight)"></editable-number>
+        <editable-text active="true" text="{{route.condition.condition}}"
+                       edited="$ctrl.conditionsChanged(routename, newConditions)"></editable-text>
       </td>
-    <!--</tr>-->
+      <td>
+        <editable-number active="true"
+                         postfix="%"
+                         min="0"
+                         max="100"
+                         number="route.condition_strength"
+                         edited="$ctrl.conditionsWeightChanged(routename, newConditionWeight)">
+        </editable-number>
+      </td>
+    </tr>
   </table>
-
-
-  <!--<div class="row">-->
-
-    <!--<div class="col-md-4">-->
-      <!--<h4>Host</h4>-->
-      <!--<p>{{$ctrl.data.service.host}}</p>-->
-    <!--</div>-->
-    <!--<div class="col-md-4">-->
-      <!--<h4>Port</h4>-->
-      <!--<p>{{$ctrl.data.service.port}}</p>-->
-    <!--</div>-->
-
-    <!--<div class="col-md-2">-->
-      <!--<h4>Deployed</h4>-->
-      <!--<span ng-if="$ctrl.data.deployed" class="label label-success"><i class="fa fa-check"></i>&nbsp;Deployed</span>-->
-      <!--<span ng-if="!$ctrl.data.deployed" class="label label-default">Not Deployed</span>-->
-    <!--</div>-->
-
-    <!--<div class="col-md-2">-->
-      <!--<h4>Sticky</h4>-->
-      <!--<span ng-if="$ctrl.data.sticky !== 'none'" class="label label-success"><i class="fa fa-check"></i>&nbsp;Is sticky</span>-->
-      <!--<span ng-if="$ctrl.data.sticky === 'none'" class="label label-default">Is not sticky</span>-->
-    <!--</div>-->
-
-  <!--</div>-->
-
-
-  <!--<div class="row">-->
-    <!--<div class="col-md-4">-->
-      <!--<h4>&nbsp;Health (%)</h4>-->
-
-      <!--<canvas id="bar" class="chart chart-bar"-->
-              <!--chart-data="$ctrl.healthChart.data" chart-options="$ctrl.healthChart.options" chart-labels="$ctrl.healthChart.labels" chart-series="$ctrl.healthChart.series" chart-colors="$ctrl.healthChart.colors">-->
-      <!--</canvas>-->
-    <!--</div>-->
-    <!--<div class="col-md-4">-->
-      <!--<h4>{{$ctrl.currentRate}}&nbsp;Requests per second</h4>-->
-
-      <!--<canvas id="line" class="chart chart-line" chart-data="$ctrl.rateChart.data"-->
-              <!--chart-labels="$ctrl.rateChart.labels" chart-series="$ctrl.rateChart.series"-->
-              <!--chart-options="$ctrl.chartOptions">-->
-      <!--</canvas>-->
-    <!--</div>-->
-    <!--<div class="col-md-4">-->
-      <!--<h4>{{$ctrl.currentResponseTime}}&nbsp;Response time (ms)</h4>-->
-      <!--<canvas id="line" class="chart chart-line" chart-data="$ctrl.responseChart.data"-->
-              <!--chart-labels="$ctrl.responseChart.labels" chart-series="$ctrl.responseChart.series"-->
-              <!--chart-options="$ctrl.chartOptions">-->
-      <!--</canvas>-->
-    <!--</div>-->
-  <!--</div>-->
-
-  <!--<h4>Routes</h4>-->
-
-  <!--<table class="table">-->
-    <!--<tr>-->
-      <!--<th>Name</th>-->
-      <!--<th>-->
-        <!--Weight-->
-        <!--<a ng-class="{'not-available': $ctrl.getObjectSize($ctrl.data.routes) < 2}" href="javascript:void(0)" ng-click="$ctrl.getObjectSize($ctrl.data.routes) < 2 || $ctrl.editWeights()">-->
-          <!--<i class="fa fa-pencil small-top-icon" aria-hidden="true"></i>-->
-        <!--</a>-->
-      <!--</th>-->
-      <!--<th>Conditions</th>-->
-      <!--<th>Condition Strength</th>-->
-    <!--</tr>-->
-    <!--<tr ng-repeat="(routename, route) in $ctrl.data.routes">-->
-      <!--<td class="col-md-3">{{routename}}-->
-        <!--<bar-chart data="$ctrl.BarChart.data" options="$ctrl.BarChart.options"></bar-chart>-->
-      <!--</td>-->
-      <!--<td class="col-md-2">{{route.weight}}</td>-->
-      <!--<td class="col-md-4">-->
-        <!--<a  href="#"-->
-            <!--editable-text="route.condition.condition"-->
-            <!--onaftersave="$ctrl.updateGateway()">-->
-          <!--{{route.condition.condition || 'Empty'}}-->
-        <!--</a>-->
-      <!--</td>-->
-      <!--<td class="condition-weights col-md-3" ng-init="edit = false">-->
-        <!--<div class="value" ng-if="!edit">-->
-          <!--<span>{{route.condition_strength}}</span>&nbsp;-->
-          <!--<a>-->
-           <!--<span ng-click="$ctrl.editConditionStrength(routename, route.condition_strength); $parent.edit = true"><fa class="fa fa-pencil"></fa></span>-->
-          <!--</a>-->
-        <!--</div>-->
-
-        <!--<div class="edit" ng-if="edit" class="slider">-->
-
-          <!--<rzslider-->
-              <!--class="slider"-->
-              <!--rz-slider-model="$ctrl.conditionStrengths[routename]"-->
-              <!--rz-slider-options="$ctrl.sliderOptions">-->
-          <!--</rzslider>-->
-          <!--<button><i class="fa fa-check" ng-click="$ctrl.saveConditionWeightChange(routename, $ctrl.conditionStrengths[routename]); $parent.edit = false"></i></button>-->
-          <!--<button ng-click="$parent.edit = false"><i class="fa fa-times"></i></button>-->
-        <!--</div>-->
-      <!--</td>-->
-    <!--</tr>-->
-  <!--</table>-->
 </div>

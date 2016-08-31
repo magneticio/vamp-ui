@@ -61,7 +61,7 @@
                 <span class="panel-label">Instances: </span>
 
                 <span ng-hide="$ctrl.editInstances[service.breed.name]">
-                  {{service.scale.instances}}&nbsp;
+                  <span highlighter="service.scale.instances">{{service.scale.instances}}</span>&nbsp;
                   <i ng-click="$ctrl.editNumberOfInstances(service.breed.name, service.scale.instances)" class="fa fa-pencil" aria-hidden="true"></i>
                 </span>
 
@@ -80,7 +80,7 @@
                 <span class="panel-label">Cpu: </span>
 
                 <span ng-hide="$ctrl.editCpu[service.breed.name]">
-                  {{service.scale.cpu}}&nbsp;
+                  <span highlighter="service.scale.cpu">{{service.scale.cpu}}</span>&nbsp;
                   <i ng-click="$ctrl.editNumberOfCpus(service.breed.name, service.scale.cpu)" class="fa fa-pencil" aria-hidden="true"></i>
                 </span>
 
@@ -98,7 +98,7 @@
                 <span class="panel-label">Memory: </span>
 
                 <span ng-hide="$ctrl.editMemory[service.breed.name]">
-                  {{service.scale.memory}}&nbsp;
+                  <span highlighter="service.scale.memory">{{service.scale.memory}}</span>&nbsp;
                   <i ng-click="$ctrl.editSizeOfMemory(service.breed.name, service.scale.memory)" class="fa fa-pencil" aria-hidden="true"></i>
                 </span>
 

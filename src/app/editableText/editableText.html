@@ -1,5 +1,7 @@
 <div>
-  <editable-label ng-if="!$ctrl.editMode" active="$ctrl.active" on-click="$ctrl.setEditModeActive()">{{$ctrl.text || 'Empty'}} </editable-label>
+  <editable-label ng-if="!$ctrl.editMode" active="$ctrl.active" on-click="$ctrl.setEditModeActive()">
+    <span highlighter="$ctrl.text">{{$ctrl.text || 'Empty'}}</span>
+  </editable-label>
 
   <div ng-if="$ctrl.editMode">
     <input ng-model="$ctrl.tempText" type="text">

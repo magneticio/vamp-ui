@@ -628,8 +628,8 @@ input[type=number]{
 
 
   .editable-icon {
-    //margin-left: 6px;
-    padding: 0 6px;
+    margin-left: 6px;
+
     cursor: pointer;
 
     i {
@@ -644,6 +644,29 @@ input[type=number]{
       }
     }
   }
+}
+
+
+
+@keyframes fadeOutGreen{
+  0% {
+    background-color: rgba($green, 1);
+  }
+  100% {
+    background-color: rgba($green, 0);
+  }
+}
+
+.can-be-highlighted {
+  padding: 2px;
+}
+
+.highlight {
+  background-color: $green !important;
+  animation-name: fadeOutGreen;
+  animation-duration: 5s;
+  animation-timing-function: ease-out;
+  animation-fil-mode: forwards;
 }
 
 

@@ -16,13 +16,13 @@
         <a ui-sref="readOneDeployment({id: deployment.name})">{{deployment.name}}</a>
       </td>
       <td class="col-md-1">
-        {{deployment.totalInstances}}
+        <span highlighter="deployment.totalInstance">{{deployment.totalInstances}}</span>
       </td>
       <td class="col-md-1">
-        {{deployment.totalCpu | number:2}}
+        <span highlighter="deployment.totalCpu | number:2">{{deployment.totalCpu | number:2}}</span>
       </td>
       <td class="col-md-1">
-        {{deployment.totalMemory}} MB
+        <span highlighter="deployment.totalMemory">{{deployment.totalMemory}} MB</span>
       </td>
       <td>
         <div class="pull-right">
