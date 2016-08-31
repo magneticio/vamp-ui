@@ -22,14 +22,14 @@ function readAllDeploymentsController(Api, toastr, DataManager, $mixpanel, $uibM
       deployment.totalCpu = 0;
       deployment.totalMemory = 0;
 
-      for(var clusterName in deployment.clusters) {
+      for (var clusterName in deployment.clusters) {
         var cluster = deployment.clusters[clusterName];
         cluster.services.forEach(function (service) {
           var scale = service.scale;
           console.log(parseInt(scale.memory, 10));
           deployment.totalInstances += scale.instances;
-          deployment.totalCpu += scale.cpu;
-          deployment.totalMemory += parseInt(scale.memory, 10);
+          deployment.totalCpu += scale.instances * scale.cpu;
+          deployment.totalMemory += scale.instances * parseInt(scale.memory, 10);
         });
       }
     });
