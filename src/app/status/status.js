@@ -16,12 +16,25 @@ function status() {
         var colors;
 
         if (value) {
-          var n = 100 - (value * 100);
-          colors = {
-            r: Math.floor((235 * n) / 100) + 20,
-            g: Math.floor((220 * (100 - n)) / 100),
-            b: value === 100 ? 180 : 180 - n
-          };
+          if (value > 0.99) {
+            colors = {
+              r: 21,
+              g: 217,
+              b: 178
+            };
+          } else if (value <= 0.99 && value > 0) {
+            colors = {
+              r: 243,
+              g: 156,
+              b: 18
+            };
+          } else {
+            colors = {
+              r: 231,
+              g: 76,
+              b: 60
+            };
+          }
         } else {
           colors = {
             r: 150,
