@@ -16,8 +16,8 @@ function updateWorkflowController(Api, $state, toastr, $stateParams, $mixpanel) 
   }
 
   function workflowLoaded(response) {
-    var data = response.data;
-    self.sourceCode = YAML.stringify(data, 6);
+    self.data = response.data;
+    self.sourceCode = YAML.stringify(self.data, 20);
   }
 
   function workflowUpdated() {

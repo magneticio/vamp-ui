@@ -18,8 +18,8 @@ function updateDeploymentController(Api, $state, toastr, $stateParams, $mixpanel
   }
 
   function deploymentLoaded(response) {
-    var data = response.data;
-    self.sourceCode = YAML.stringify(data, 6);
+    self.data = response.data;
+    self.sourceCode = YAML.stringify(self.data, 20);
   }
 
   function deploymentUpdated() {

@@ -1,4 +1,4 @@
-<header title="Update Gateway">
+<header title="Update Gateway" title-addition="{{$ctrl.data.name}}">
   <buttons>
     <button ng-disabled="!$ctrl.canBeParsed" ng-click="$ctrl.update($ctrl.data)" ladda="$ctrl.updatingGateway"
             class="btn ghost" type="submit"><i class="fa fa-floppy-o"></i>&nbsp;&nbsp;Save</button>

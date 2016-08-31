@@ -18,8 +18,8 @@ function updateBreedController(Api, $state, toastr, $stateParams, $mixpanel) {
   }
 
   function breedLoaded(response) {
-    var data = response.data;
-    self.sourceCode = YAML.stringify(data, 6);
+    self.data = response.data;
+    self.sourceCode = YAML.stringify(self.data, 20);
   }
 
   function breedUpdated() {
