@@ -241,7 +241,8 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, 
     },
     elements: {
       line: {
-        borderWidth: 0.5
+        borderWidth: 0.5,
+        tension: 0.1
       },
       point: {
         radius: 0
