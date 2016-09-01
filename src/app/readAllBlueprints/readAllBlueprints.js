@@ -71,7 +71,6 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal, $mix
       modalInstance.result.then(function (data) {
         deploymentsResource.update(data.deployment.name, data.blueprint, true);
         $mixpanel.track('Blueprint merged to deployment');
-        $state.go('readAllDeployments');
       });
     }
   }
