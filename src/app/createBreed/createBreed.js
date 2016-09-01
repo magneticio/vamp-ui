@@ -1,18 +1,17 @@
 function createBreedController($state, DataManager, $mixpanel) {
   var self = this;
-  self.data = {};
-  self.creatingBreed = false;
-  self.create = create;
-
   self.canBeParsed = true;
+  self.data = {};
+  self.create = create;
 
   $mixpanel.track('Create breed button clicked');
 
   function create(breedData) {
-    self.creatingBreed = true;
-
     var breedsResource = DataManager.resource('breeds');
-    breedsResource.create(breedData);
+    breedsResource.create(breedData, breedCreated);
+  }
+
+  function breedCreated() {
     $mixpanel.track('Breed created');
     $state.go('readAllBreeds');
   }

@@ -2,7 +2,6 @@
 function updateDeploymentController(Api, $state, toastr, $stateParams, $mixpanel) {
   var self = this;
   self.data = {};
-  self.updatingDeployment = false;
   self.deploymentId = $stateParams.id;
   self.update = update;
 
@@ -12,8 +11,6 @@ function updateDeploymentController(Api, $state, toastr, $stateParams, $mixpanel
 
   $mixpanel.track('Update Deployments button clicked');
   function update(deploymentData) {
-    self.updatingDeployment = true;
-
     Api.update('deployments', self.deploymentId, deploymentData).then(deploymentUpdated, deploymentNotUpdated);
   }
 
@@ -23,17 +20,14 @@ function updateDeploymentController(Api, $state, toastr, $stateParams, $mixpanel
   }
 
   function deploymentUpdated() {
-    self.updatingDeployment = false;
     toastr.success(self.deploymentId, 'Updated Deployment');
     $mixpanel.track('Deployment updated trough UI');
     $mixpanel.track('Deployment updated');
-
     $state.go('readAllDeployments');
   }
 
   function deploymentNotUpdated(error) {
     toastr.error(error, 'Could not update Deployment');
-    self.updatingDeployment = false;
   }
 }
 

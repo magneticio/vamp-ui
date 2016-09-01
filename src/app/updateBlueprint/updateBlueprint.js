@@ -2,7 +2,6 @@
 function updateBlueprintController(Api, $state, DataManager, $stateParams, $mixpanel) {
   var self = this;
   self.data = {};
-  self.updatingBlueprint = false;
   self.blueprintId = $stateParams.id;
   self.update = update;
 
@@ -15,8 +14,10 @@ function updateBlueprintController(Api, $state, DataManager, $stateParams, $mixp
   $mixpanel.track('Update Blueprint button clicked');
 
   function update(blueprintData) {
-    self.updatingBlueprint = true;
-    blueprintsResource.update(self.blueprintId, blueprintData);
+    blueprintsResource.update(self.blueprintId, blueprintData, false, blueprintUpdated);
+  }
+
+  function blueprintUpdated() {
     $mixpanel.track('Blueprint updated');
     $state.go('readAllBlueprints');
   }

@@ -2,7 +2,7 @@
 function updateBreedController(Api, $state, toastr, $stateParams, $mixpanel) {
   var self = this;
   self.data = {};
-  self.updatingBreed = false;
+  
   self.breedId = $stateParams.id;
   self.update = update;
 
@@ -12,8 +12,6 @@ function updateBreedController(Api, $state, toastr, $stateParams, $mixpanel) {
 
   $mixpanel.track('Update Breeds button clicked');
   function update(breedData) {
-    self.updatingBreed = true;
-
     Api.update('breeds', self.breedId, breedData).then(breedUpdated, breedNotUpdated);
   }
 
@@ -23,7 +21,6 @@ function updateBreedController(Api, $state, toastr, $stateParams, $mixpanel) {
   }
 
   function breedUpdated() {
-    self.updatingBreed = false;
     toastr.success(self.breedId, 'Updated Breed');
     $mixpanel.track('Breed updated');
 
@@ -32,7 +29,6 @@ function updateBreedController(Api, $state, toastr, $stateParams, $mixpanel) {
 
   function breedNotUpdated(error) {
     toastr.error(error, 'Could not update Breed');
-    self.updatingBreed = false;
   }
 }
 

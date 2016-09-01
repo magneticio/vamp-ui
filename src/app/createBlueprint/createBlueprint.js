@@ -1,22 +1,20 @@
 function createBlueprintController($state, DataManager, $mixpanel) {
   var self = this;
   self.data = {};
-  self.creatingBlueprint = false;
-  self.create = create;
-
   self.canBeParsed = true;
+
+  self.create = create;
 
   $mixpanel.track('Create blueprint button clicked');
 
   function create(blueprintData) {
-    self.creatingBlueprint = true;
-
     var blueprintsResource = DataManager.resource('blueprints');
-    blueprintsResource.create(blueprintData);
+    blueprintsResource.create(blueprintData, blueprintCreated);
+  }
+
+  function blueprintCreated() {
     $mixpanel.track('New blueprint added');
     $state.go('readAllBlueprints');
-
-    // Api.create('blueprints', blueprintData).then(blueprintCreated, blueprintNotCreated);
   }
 }
 

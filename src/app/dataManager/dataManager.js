@@ -20,8 +20,6 @@ function DataManager(Api, $interval, toastr, $rootScope) {
     return theResource;
   }
 
-  
-
   function DataResource(resourceName) {
     var self = this;
     self.entries = [];
@@ -82,7 +80,7 @@ function DataManager(Api, $interval, toastr, $rootScope) {
       self.intervals.push(intervalId);
     };
 
-    self.create = function (data) {
+    self.create = function (data, onSuccess) {
       self.stopPolling();
       Api.create(resourceName, data).then(resourceCreated, error);
 
@@ -90,16 +88,17 @@ function DataManager(Api, $interval, toastr, $rootScope) {
         self.entries.push(data);
         toastr.success(sprintf('%s created with id: [%s]', resourceName, data.name), 'Created');
         self.dataUpdated(self.entries);
+        onSuccess && onSuccess(data);
       }
 
       self.startPolling();
       return this;
     };
 
-    self.update = function (id, data, updateWithResponse) {
+    self.update = function (id, data, updateWithResponse, onUpdate) {
       self.stopPolling();
 
-      Api.update(resourceName, id, data).then(resourceUpdated, error);
+      Api.update(resourceName, id, data, onUpdate).then(resourceUpdated, error);
 
       function resourceUpdated(response) {
         _.remove(self.entries, {
@@ -114,6 +113,7 @@ function DataManager(Api, $interval, toastr, $rootScope) {
 
         toastr.success(sprintf('[%s] updated from %s', id, resourceName), 'Updated');
         self.dataUpdated(self.entries);
+        onUpdate && onUpdate(data);
       }
 
       self.startPolling();

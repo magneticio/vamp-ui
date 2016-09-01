@@ -2,7 +2,6 @@
 function updateGatewayController(Api, $state, toastr, $stateParams, $mixpanel) {
   var self = this;
   self.data = {};
-  self.updatingGateway = false;
   self.gatewayId = $stateParams.id;
   self.update = update;
 
@@ -12,8 +11,6 @@ function updateGatewayController(Api, $state, toastr, $stateParams, $mixpanel) {
 
   $mixpanel.track('Update Gateways button clicked');
   function update(gatewayData) {
-    self.updatingGateway = true;
-
     Api.update('gateways', self.gatewayId, gatewayData).then(gatewayUpdated, gatewayNotUpdated);
   }
 
@@ -23,14 +20,12 @@ function updateGatewayController(Api, $state, toastr, $stateParams, $mixpanel) {
   }
 
   function gatewayUpdated() {
-    self.updatingGateway = false;
     toastr.success(self.gatewayId, 'Updated Gateway');
     $state.go('readAllGateways');
   }
 
   function gatewayNotUpdated(error) {
     toastr.error(error, 'Could not update Gateway');
-    self.updatingGateway = false;
   }
 }
 
