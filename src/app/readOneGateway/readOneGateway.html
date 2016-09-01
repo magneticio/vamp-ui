@@ -5,14 +5,24 @@
 <div class="container-fluid" ng-if="$ctrl.gateway">
 
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-2">
       <h4>Host</h4>
       <p>{{$ctrl.gateway.service.host}}</p>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-2">
       <h4>Port</h4>
       <p>{{$ctrl.gateway.service.port}}</p>
+    </div>
+
+    <div class="col-md-4">
+      <h4>Virtual hosts</h4>
+      <p ng-if="!$ctrl.gateway.virtual_hosts">
+        None
+      </p>
+      <p ng-if="$ctrl.gateway.virtual_hosts">
+        {{$ctrl.gateway.virtual_hosts.join(', ')}}
+      </p>
     </div>
 
     <div class="col-md-2">
