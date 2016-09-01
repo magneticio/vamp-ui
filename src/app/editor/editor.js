@@ -16,8 +16,13 @@ function editorController() {
     showGutter: true,
     theme: 'twilight',
     mode: 'yaml',
-    firstLineNumber: 1
+    firstLineNumber: 1,
+    onLoad: aceLoaded
   };
+
+  function aceLoaded(editor) {
+    editor.focus();
+  }
 
   function change(changedSourceCode) {
     try {
