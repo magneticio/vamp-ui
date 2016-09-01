@@ -51,7 +51,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, 
   getFromRest(['gateway', 'gateways', 'gateways:' + $stateParams.id, 'metrics', 'metrics:rate'], function (response) {
     var tempData = [];
     var tempLabels = [];
-git
+
     response.forEach(function (data) {
       tempData.push(data.value);
       tempLabels.push('');
