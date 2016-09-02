@@ -85,6 +85,11 @@ function DataManager(Api, $interval, toastr, $rootScope) {
       Api.create(resourceName, data).then(resourceCreated, error);
 
       function resourceCreated() {
+        if (_.find(self.entries, {name: data.name})) {
+          _.remove(self.entries, {
+            name: data.name
+          });
+        }
         self.entries.push(data);
         toastr.success(sprintf('%s created with id: [%s]', resourceName, data.name), 'Created');
         self.dataUpdated(self.entries);

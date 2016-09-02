@@ -264,7 +264,8 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, 
     }
   };
 
-  // REST
+  // TODO abstract this away
+
   self.getObjectLength = function (obj) {
     var length = -1;
 
@@ -275,6 +276,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, 
     return length;
   };
 
+  // TODO abstract this away
   function Modal(templateName, resultCallback, resolves) {
     var self = this;
 

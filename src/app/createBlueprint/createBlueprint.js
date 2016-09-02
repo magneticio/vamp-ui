@@ -1,4 +1,4 @@
-function createBlueprintController($state, DataManager, $mixpanel) {
+function createBlueprintController($state, DataManager, $uibModal, $mixpanel) {
   var self = this;
   self.data = {};
   self.canBeParsed = true;
@@ -9,12 +9,53 @@ function createBlueprintController($state, DataManager, $mixpanel) {
 
   function create(blueprintData) {
     var blueprintsResource = DataManager.resource('blueprints');
-    blueprintsResource.create(blueprintData, blueprintCreated);
+    // Check if there is a blueprint already with this name
+    blueprintsResource.subscribe(currentResources).poll();
+    function currentResources(blueprints) {
+      blueprintsResource.unsubscribe();
+
+      if (_.find(blueprints, {name: blueprintData.name})) {
+        var blueprintExistModal = new Modal('blueprintNameExistsModal', replaceBlueprint, {name: blueprintData.name});
+        blueprintExistModal.open();
+      } else {
+        blueprintsResource.create(blueprintData, blueprintCreated);
+      }
+    }
+
+    function replaceBlueprint() {
+      blueprintsResource.create(blueprintData, blueprintCreated);
+    }
   }
 
   function blueprintCreated() {
     $mixpanel.track('New blueprint added');
     $state.go('readAllBlueprints');
+  }
+
+  // TODO abstract this away
+  function Modal(templateName, resultCallback, resolves) {
+    var self = this;
+
+    self.modalData = {
+      animation: true,
+      controller: templateName,
+      templateUrl: 'app/' + templateName + '/' + templateName + '.html',
+      size: 'md',
+      resolve: {}
+    };
+
+    if (resolves) {
+      for (var attribute in resolves) {
+        self.modalData.resolve[attribute] = function () {
+          return resolves[attribute];
+        };
+      }
+    }
+
+    self.open = function () {
+      self.instance = $uibModal.open(self.modalData);
+      self.instance.result.then(resultCallback);
+    };
   }
 }
 
