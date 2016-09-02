@@ -41,7 +41,6 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   deploymentsResource.registerInterval(intervalId);
 
   function editNumberOfInstances(serviceName, number) {
-    console.log('whaaat');
     polling = false;
     self.editInstances[serviceName] = true;
     self.initialNumberOfInstances[serviceName] = angular.copy(number);

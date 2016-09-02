@@ -16,7 +16,6 @@ function readAllDeploymentsController(Api, toastr, DataManager, $mixpanel, $uibM
   }
 
   function addMetaData(data) {
-    console.log(data);
     data.forEach(function (deployment) {
       deployment.totalInstances = 0;
       deployment.totalCpu = 0;
@@ -26,7 +25,6 @@ function readAllDeploymentsController(Api, toastr, DataManager, $mixpanel, $uibM
         var cluster = deployment.clusters[clusterName];
         cluster.services.forEach(function (service) {
           var scale = service.scale;
-          console.log(parseInt(scale.memory, 10));
           deployment.totalInstances += scale.instances;
           deployment.totalCpu += scale.instances * scale.cpu;
           deployment.totalMemory += scale.instances * parseInt(scale.memory, 10);

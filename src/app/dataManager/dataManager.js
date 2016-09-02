@@ -76,7 +76,6 @@ function DataManager(Api, $interval, toastr, $rootScope) {
     };
 
     self.registerInterval = function (intervalId) {
-      console.log(intervalId);
       self.intervals.push(intervalId);
     };
 
