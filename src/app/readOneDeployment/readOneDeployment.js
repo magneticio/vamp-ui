@@ -134,18 +134,6 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
       }]
     }
   };
-  //
-  // "deployments:sava:1.0",
-  //   "health",
-  //   "services",
-  //   "clusters:sava",
-  //   "clusters",
-  //   "service",
-  //   "services:sava:1.0.0",
-  //   "deployments"
-
-
-  //EventStreamHandler.getStream(eventFired, ['deployments', 'deployments:' + $stateParams.id, 'health']);
 
   function eventFired(data) {
     self.currentHealth = data.value * 100;

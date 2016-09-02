@@ -1,4 +1,4 @@
 describe('highlighter directive', function () {
-  it('should...', angular.mock.inject(function ($rootScope, $compile) {
+  it('should...', angular.mock.inject(function () {
   }));
 });

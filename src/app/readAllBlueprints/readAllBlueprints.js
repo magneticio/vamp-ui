@@ -83,7 +83,6 @@ function readAllBlueprintsController($state, $uibModal, DataManager, Modal, $mix
 
       var possibleDeployments = [];
       deployments.forEach(function (deployment) {
-
         for (var clusterName in deployment.clusters) {
           areAllClustersThere = blueprint.clusters[clusterName];
         }
