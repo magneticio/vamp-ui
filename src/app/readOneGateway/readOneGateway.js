@@ -177,7 +177,6 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, 
   }
 
   function newResponseTimeEvent(event) {
-    // console.log(event);
     self.gateway._$stats.responseTime.data.push(event.value);
     self.gateway._$stats.responseTime.labels.push(event.timestamp);
   }

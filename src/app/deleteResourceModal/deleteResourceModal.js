@@ -16,4 +16,3 @@ function deleteResourceModal($scope, $uibModalInstance, id, title, text, buttonT
 angular
   .module('app')
   .controller('deleteResourceModal', deleteResourceModal);
-
