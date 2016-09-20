@@ -1,3 +1,4 @@
+/* global Environment */
 angular
   .module('app')
   .config(pluginsConfig);
@@ -15,7 +16,7 @@ function pluginsConfig(toastrConfig, $mixpanelProvider) {
     preventOpenDuplicates: true
   });
 
-  $mixpanelProvider.apiKey('3dc73f826819c8e11d0d9898ca4291c8');
+  $mixpanelProvider.apiKey(Environment.prototype.mixpanelApiKey());
 }
 angular
   .module('app')

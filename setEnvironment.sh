@@ -12,10 +12,12 @@ BASE_URL=$1
 if [ -z "$BASE_URL" ]; then
   BASE_URL="window.location.origin"
   ENDPOINT_URL="${BASE_URL} + '/api/v1/'"
+  MIXPANEL_API_KEY="3dc73f826819c8e11d0d9898ca4291c8"
   echo "${green}Base URL not passed as an argument, using: ${yellow}${BASE_URL}${reset}"
 else
   BASE_URL="http://${BASE_URL}"
   ENDPOINT_URL="'${BASE_URL}/api/v1/'"
+  MIXPANEL_API_KEY=""
   echo "${green}Base URL                                 : ${yellow}${BASE_URL}${reset}"
 fi
 
@@ -32,6 +34,10 @@ function Environment() {
 
 Environment.prototype.getApiBaseUrl = function () {
   return ${ENDPOINT_URL};
+};
+
+Environment.prototype.mixpanelApiKey = function () {
+  return '${MIXPANEL_API_KEY}';
 };
 
 angular.module('app').service('Environment', Environment);
