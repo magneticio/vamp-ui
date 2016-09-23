@@ -32,7 +32,6 @@ function createBlueprintController($state, DataManager, $uibModal, $mixpanel) {
     $state.go('readAllBlueprints');
   }
 
-  // TODO abstract this away
   function Modal(templateName, resultCallback, resolves) {
     var self = this;
 

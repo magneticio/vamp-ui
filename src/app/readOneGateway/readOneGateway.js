@@ -1,4 +1,4 @@
-/* global _*/
+/* global Environment */
 function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, toastr, EventStreamHandler, $uibModal, $mixpanel, IntervalManager) {
   var weightsModal;
   var self = this;
@@ -18,7 +18,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, 
   self.currentResponseTime = 0;
   self.responseTimeData = [[0]];
   self.responseTimeLabels = [''];
-  // TODO Remove, is temp
+
   function getFromRest(tags, callback) {
     var url = Environment.prototype.getApiBaseUrl();
     url += 'events?';
@@ -194,7 +194,6 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, 
   }, 5000);
 
   function getLiveData() {
-
     if (self.rateData[0].length > 30) {
       self.rateLabels = self.rateLabels.slice(1);
       self.rateData[0] = self.rateData[0].slice(1);
@@ -263,8 +262,6 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, 
     }
   };
 
-  // TODO abstract this away
-
   self.getObjectLength = function (obj) {
     var length = -1;
 
@@ -275,7 +272,6 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, 
     return length;
   };
 
-  // TODO abstract this away
   function Modal(templateName, resultCallback, resolves) {
     var self = this;
 

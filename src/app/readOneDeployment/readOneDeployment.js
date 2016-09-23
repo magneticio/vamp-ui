@@ -41,7 +41,6 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
   deploymentsResource.registerInterval(intervalId);
 
   function editNumberOfInstances(serviceName, number) {
-    console.log('whaaat');
     polling = false;
     self.editInstances[serviceName] = true;
     self.initialNumberOfInstances[serviceName] = angular.copy(number);
@@ -135,18 +134,6 @@ function readOneDeploymentController(Api, $stateParams, $state, EventStreamHandl
       }]
     }
   };
-  //
-  // "deployments:sava:1.0",
-  //   "health",
-  //   "services",
-  //   "clusters:sava",
-  //   "clusters",
-  //   "service",
-  //   "services:sava:1.0.0",
-  //   "deployments"
-
-
-  //EventStreamHandler.getStream(eventFired, ['deployments', 'deployments:' + $stateParams.id, 'health']);
 
   function eventFired(data) {
     self.currentHealth = data.value * 100;

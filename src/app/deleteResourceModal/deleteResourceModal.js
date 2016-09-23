@@ -3,7 +3,7 @@ function deleteResourceModal($scope, $uibModalInstance, id, title, text, buttonT
   $scope.title = title;
   $scope.text = text;
   $scope.buttonText = buttonText ? buttonText : 'DELETE';
-  
+
   $scope.ok = function () {
     $uibModalInstance.close(id);
   };

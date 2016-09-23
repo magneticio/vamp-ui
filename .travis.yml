@@ -1,6 +1,14 @@
-sudo          : false
-language      : node_js
-node_js       : 5
-install       : npm install -g "gulpjs/gulp#4.0"
-before_script : gulp --version
-script        : npm install && bower install && ./setEnvironment.sh && gulp build
+sudo: false
+language: node_js
+node_js: 6
+install: npm install -g "gulpjs/gulp#4.0"
+before_script: gulp --version
+script: npm install && bower install && ./setEnvironment.sh && gulp build
+after_success: |
+  if [ -n "TRAVIS_TAG" ] && [ "$(git describe --tags)" = "$(git describe --abbrev=0)" ]; then
+    bash $TRAVIS_BUILD_DIR/.travis-bintray.sh
+  fi
+env:
+  global:
+  - secure: K2zTSjk5iztPYVSX2Sdvbd3/YFcN3Q0TPrtdPaWG8ln2NHgbN4TjLThBOfqdlRxXTl5nRwVjoEcLEuZFPOlaC/S1ZcHKohoj2jva0h3PVQzrb0JTqLxwKXba3bZqzaeen4C5mqNwCPpuuOPkW01rNGL5LU8qWiioDqWcO+/EVUc=
+  - secure: LPQDJnjlydyuSIS8PM5hvTOLrAZfAGodgbLbJIYXXhU8XJud2dnLQOi+Te4JpCROzO1ZHk5WnStqsHkTf7gNQ8qJpryO36kYj6aawT0hWwcm9SvVGB9d+TJAGEn6lqvbOXpVpCEXdzpvlAWM6oaf5YsKGGJLt1SFpesHsmv42tg=

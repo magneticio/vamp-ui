@@ -2,7 +2,7 @@
 function updateBreedController(Api, $state, toastr, $stateParams, $mixpanel) {
   var self = this;
   self.data = {};
-  
+
   self.breedId = $stateParams.id;
   self.update = update;
 

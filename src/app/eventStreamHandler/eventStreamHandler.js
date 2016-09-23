@@ -1,4 +1,4 @@
-/* global Environment*/
+/* global Environment */
 function EventStreamHandler(Api, $http) {
   var self = this;
   self.$http = $http;

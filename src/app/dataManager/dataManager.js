@@ -76,7 +76,6 @@ function DataManager(Api, $interval, toastr, $rootScope) {
     };
 
     self.registerInterval = function (intervalId) {
-      console.log(intervalId);
       self.intervals.push(intervalId);
     };
 
@@ -93,7 +92,9 @@ function DataManager(Api, $interval, toastr, $rootScope) {
         self.entries.push(data);
         toastr.success(sprintf('%s created with id: [%s]', resourceName, data.name), 'Created');
         self.dataUpdated(self.entries);
-        onSuccess && onSuccess(data);
+        if (onSuccess) {
+          onSuccess(data);
+        }
       }
 
       self.startPolling();
@@ -118,7 +119,9 @@ function DataManager(Api, $interval, toastr, $rootScope) {
 
         toastr.success(sprintf('[%s] updated from %s', id, resourceName), 'Updated');
         self.dataUpdated(self.entries);
-        onUpdate && onUpdate(data);
+        if (onUpdate) {
+          onUpdate(data);
+        }
       }
 
       self.startPolling();
