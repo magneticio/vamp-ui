@@ -11,7 +11,7 @@ BASE_URL=$1
 
 if [ -z "$BASE_URL" ]; then
   BASE_URL="window.location.origin + window.location.pathname"
-  ENDPOINT_URL="${BASE_URL} + '/api/v1/'"
+  ENDPOINT_URL="${BASE_URL} + 'api/v1/'"
   MIXPANEL_API_KEY="3dc73f826819c8e11d0d9898ca4291c8"
   echo "${green}Base URL not passed as an argument, using: ${yellow}${BASE_URL}${reset}"
 else
