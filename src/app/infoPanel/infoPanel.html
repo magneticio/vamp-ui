@@ -8,6 +8,9 @@
   <label>Version:</label>
   <p>{{$ctrl.info.version}}</p>
 
+  <label ng-if="$ctrl.info.ui_version !== $ctrl.info.version">UI version:</label>
+  <p ng-if="$ctrl.info.ui_version !== $ctrl.info.version">{{$ctrl.info.ui_version}}</p>
+
   <label>Persistence:</label>
   <p>{{$ctrl.info.persistence}}</p>
 

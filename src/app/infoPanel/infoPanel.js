@@ -1,4 +1,4 @@
-/* gloabl infokey_value_store */
+/* global Environment */
 function infoPanelController(Api, $rootScope) {
   var self = this;
 
@@ -15,6 +15,7 @@ function infoPanelController(Api, $rootScope) {
     info.message = data.message;
     info.running_since = data.running_since;
     info.version = data.version;
+    info.ui_version = Environment.prototype.version();
     info.persistence = data.persistence.database.type;
     info.key_value_store = data.key_value.type;
     info.gateway_driver = 'haproxy ' + data.gateway_driver.marshaller.haproxy;
