@@ -42,7 +42,7 @@ function DataManager(Api, $interval, toastr, $rootScope) {
     };
 
     self.startPolling = function () {
-      self.intervalId = $interval(self.poll, self.pollingTime);
+      // self.intervalId = $interval(self.poll, self.pollingTime);
       return self;
     };
 
@@ -63,11 +63,11 @@ function DataManager(Api, $interval, toastr, $rootScope) {
     };
 
     self.readAll = function () {
-      if (self.entries.length > 0) {
-        self.dataUpdated(self.entries);
-      } else {
-        self.poll();
-      }
+      // if (self.entries.length > 0) {
+      //   self.dataUpdated(self.entries);
+      // } else {
+      //   self.poll();
+      // }
       return this;
     };
 

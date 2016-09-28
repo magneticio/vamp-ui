@@ -27,12 +27,6 @@ function menuController($rootScope, $interval, Api, $mixpanel) {
       'createBreed',
       'readOneBreed',
       'updateBreed'
-    ],
-    workflows: [
-      'readAllWorkflows',
-      'createWorkflow',
-      'readOneWorkflow',
-      'updateWorkflow'
     ]
   };
 
@@ -71,11 +65,6 @@ function menuController($rootScope, $interval, Api, $mixpanel) {
       text: 'Breeds',
       activeState: 'breeds',
       goToState: 'readAllBreeds'
-    },
-    {
-      text: 'Workflows',
-      activeState: 'workflows',
-      goToState: 'readAllWorkflows'
     }
   ];
 

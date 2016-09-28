@@ -1,6 +1,8 @@
 angular
   .module(
     'app', [
+      'ngWebSocket',
+
       'ui.router',
       'chart.js',
       'ngTable',

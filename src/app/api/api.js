@@ -11,7 +11,7 @@ function artifactsRequestConfig($httpProvider) {
 }
 
 function Api($http, $location, $q, toastr, Environment) {
-  endpoint = Environment.getApiBaseUrl();
+  endpoint = Environment.endpoint();
 
   function responseHandler(response) {
     return response;

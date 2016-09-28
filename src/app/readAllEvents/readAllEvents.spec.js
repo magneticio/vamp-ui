@@ -1,14 +1,14 @@
-describe('readAllWorkflows component', function () {
+describe('readAllEvents component', function () {
   beforeEach(module('app', function ($provide) {
-    $provide.factory('readAllWorkflows', function () {
+    $provide.factory('readAllEvents', function () {
       return {
-        templateUrl: 'app/readAllWorkflows.html'
+        templateUrl: 'app/readAllEvents.html'
       };
     });
   }));
 
   it('should...', angular.mock.inject(function ($rootScope, $compile) {
-    var element = $compile('<readAllWorkflows></readAllWorkflows>')($rootScope);
+    var element = $compile('<readAllEvents></readAllEvents>')($rootScope);
     $rootScope.$digest();
     expect(element).not.toBeNull();
   }));

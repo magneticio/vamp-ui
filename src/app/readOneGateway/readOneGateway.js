@@ -20,7 +20,7 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, 
   self.responseTimeLabels = [''];
 
   function getFromRest(tags, callback) {
-    var url = Environment.prototype.getApiBaseUrl();
+    var url = Environment.prototype.endpoint();
     url += 'events?';
     var tagsParams = [];
     tags.forEach(function (tag) {

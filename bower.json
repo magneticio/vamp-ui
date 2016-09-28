@@ -24,7 +24,8 @@
     "components-font-awesome": "^4.6.3",
     "angular-peity": "^0.0.5",
     "angular-mixpanel": "^1.1.2",
-    "ng-focus-if": "^1.0.7"
+    "ng-focus-if": "^1.0.7",
+    "angular-websocket": "^2.0.0"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.0"

@@ -23,7 +23,7 @@ function EventStreamHandler(Api, $http) {
   }
 
   // Get the events stream and attach a event listener
-  var url = Environment.prototype.getApiBaseUrl() + 'events/stream';
+  var url = Environment.prototype.endpoint() + 'events/stream';
   this.source = new EventSource(url);
 
   this.source.addEventListener('health', eventFired);
@@ -72,7 +72,7 @@ EventStreamHandler.prototype.getStream = function (eventFiredCallback, tags) {
       };
 
       // Now let's fill it up with data
-      var url = Environment.prototype.getApiBaseUrl();
+      var url = Environment.prototype.endpoint();
       url += 'events?';
       var tagsParams = [];
       tags.forEach(function (tag) {
