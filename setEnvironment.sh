@@ -26,10 +26,10 @@ fi
 
 echo "${green}Vamp API endpoint URL : ${yellow}${ENDPOINT}${reset}"
 
-rm -rf ${dir}/src/app/environment 2> /dev/null
-mkdir -p ${dir}/src/app/environment && touch ${dir}/src/app/environment/environment.js
+rm -rf ${dir}/src/app/environment.js 2> /dev/null
+touch ${dir}/src/app/environment.js
 
-echo "${green}Creating file         : ${yellow}src/app/environment/environment.js${reset}"
+echo "${green}Creating file         : ${yellow}src/app/environment.js${reset}"
 
 cat > ${dir}/src/app/environment.js << EOF
 function Environment() {
