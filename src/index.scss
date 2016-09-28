@@ -75,6 +75,15 @@ menu {
         }
       }
     }
+
+    .disconnected {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      font-size: 14px !important;
+      font-weight: 500;
+      color: rgba(255, 0, 0, 0.5);
+    }
   }
 }
 

@@ -1,16 +1,26 @@
 /* global Environment */
-function infoPanelController(Api, $rootScope) {
-  var self = this;
+angular.module('app').component('info', {
+  templateUrl: 'app/info/info.html',
+  controller: infoController
+});
 
-  $rootScope.$watch('infoPanelActive', function (newValue) {
-    self.infoPanelActive = newValue;
+function infoController($rootScope, $scope, vamp) {
+  $rootScope.$on('vamp:connection', function (event, connection) {
+    if (connection === 'opened') {
+      vamp.peek('/info');
+    }
   });
 
-  Api.readAll('info').then(infoLoaded, infoLoadedFailed);
+  $rootScope.$watch('infoPanelActive', function (newValue) {
+    $scope.infoPanelActive = newValue;
+  });
 
-  function infoLoaded(response) {
-    /* eslint camelcase: ["error", {properties: "never"}]*/
-    var data = response.data;
+  $rootScope.$on('/info', function (event, data) {
+    /* eslint camelcase: ["error", {properties: "never"}] */
+    if (!data.persistence || !data.key_value || !data.gateway_driver || !data.container_driver || !data.workflow_driver) {
+      return;
+    }
+
     var info = {};
     info.message = data.message;
     info.running_since = data.running_since;
@@ -23,23 +33,11 @@ function infoPanelController(Api, $rootScope) {
     info.workflow_driver = '';
 
     for (var name in data.workflow_driver) {
-      if (name) {
+      if (name && data.workflow_driver.hasOwnProperty(name)) {
         info.workflow_driver += info.workflow_driver === '' ? name : ', ' + name;
       }
     }
 
-    self.info = info;
-  }
-
-  function infoLoadedFailed() {
-
-  }
-}
-
-angular
-  .module('app')
-  .component('infoPanel', {
-    templateUrl: 'app/infoPanel/infoPanel.html',
-    controller: infoPanelController
+    $scope.info = info;
   });
-
+}

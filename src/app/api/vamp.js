@@ -16,7 +16,7 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
     $rootScope.$emit(response.path, JSON.parse(response.data));
   };
 
-  this.peek = function (path) {
+  this.peek = function (path, params) {
     if (!stream) {
       return;
     }
@@ -29,7 +29,7 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
       content: 'JSON',
       transaction: String(transaction++),
       data: "",
-      parameters: {}
+      parameters: params ? params : {}
     });
   };
 

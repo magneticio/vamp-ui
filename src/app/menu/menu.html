@@ -1,50 +1,55 @@
 <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-              data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">
-        <img class="nav-logo" src="img/logo.svg">
-      </a>
-    </div>
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <img class="nav-logo" src="img/logo.svg">
+            </a>
+        </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li ng-class="{active: menuItem.activeState === $ctrl.active}" ng-repeat="menuItem in $ctrl.menuItems">
-          <a ui-sref="{{menuItem.goToState}}" href="#">{{menuItem.text}}</a>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="stats" ng-show="$ctrl.jvmData.memory">
-          <div class="CPU">
-            <span class="stat-label">System Load:</span>
-            {{$ctrl.jvmData['operating_system']['system_load_average'] | number: 2}}%
-          </div>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <div class="memory">
-            <span class="stat-label">Memory:</span>
-            <span class="stat-content">
-              {{($ctrl.jvmData.memory.heap.used/$ctrl.jvmData.memory.heap.max)*100 | number: 1}}%
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li ng-class="{active: menuItem.activeState === active}" ng-repeat="menuItem in menuItems">
+                    <a ui-sref="{{menuItem.goToState}}" href="#">{{menuItem.text}}</a>
+                </li>
+            </ul>
+            <!-- disconnected -->
+            <ul class="nav navbar-nav navbar-right" ng-show="!connected">
+                <li class="disconnected">
+                    DISCONNECTED FROM VAMP
+                </li>
+            </ul>
+            <!-- connected -->
+            <ul class="nav navbar-nav navbar-right" ng-show="connected">
+                <li class="stats" ng-show="jvm">
+                    <div class="CPU">
+                        <span class="stat-label">System Load:</span>
+                        {{ jvm.systemLoad | number: 2 }}%
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="memory">
+                        <span class="stat-label">Memory:</span>
+                        <span class="stat-content">
+              {{ (jvm.heapCurrent/jvm.heapMax) * 100 | number: 1 }}%
               <span class="detail">
-                &nbsp;({{$ctrl.jvmData.memory.heap.used/1024/1024 | number: 0}}Mb/{{$ctrl.jvmData.memory.heap.max/1024/1024 | number: 0}}Mb)
+                &nbsp;({{ jvm.heapCurrent | number: 0}}MB/{{ jvm.heapMax | number: 0 }}MB)
               </span>
             </span>
-          </div>
-        </li>
-        <li class="clickable" ng-click="$ctrl.toggleSettings()">
-          <a class="info-button">
-            <i class="fa fa-info" aria-hidden="true"></i>
-          </a>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+                    </div>
+                </li>
+                <li class="clickable" ng-click="toggleSettings()">
+                    <a class="info-button">
+                        <i class="fa fa-info" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>
-

@@ -10,9 +10,7 @@ function list($rootScope, $scope, vamp) {
   });
 }
 
-angular
-  .module('app')
-  .component('list', {
-    templateUrl: 'app/crud/list.html',
-    controller: list
-  });
+angular.module('app').component('list', {
+  templateUrl: 'app/crud/list.html',
+  controller: list
+});
