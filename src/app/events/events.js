@@ -1,9 +1,9 @@
 angular.module('app').component('events', {
   templateUrl: 'app/events/events.html',
-  controller: eventController
+  controller: EventController
 });
 
-function eventController($rootScope, $scope, vamp) {
+function EventController($rootScope, $scope, vamp) {
   $scope.events = [];
   $scope.showPanel = false;
 

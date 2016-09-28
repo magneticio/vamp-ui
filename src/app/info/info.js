@@ -1,10 +1,10 @@
 /* global Environment */
 angular.module('app').component('info', {
   templateUrl: 'app/info/info.html',
-  controller: infoController
+  controller: InfoController
 });
 
-function infoController($rootScope, $scope, vamp) {
+function InfoController($rootScope, $scope, vamp) {
   $rootScope.$on('vamp:connection', function (event, connection) {
     if (connection === 'opened') {
       vamp.peek('/info');
