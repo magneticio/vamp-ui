@@ -58,9 +58,5 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('updateBreed', {
       url: '/breeds/edit/:id',
       template: '<update-breed> </update-breed>'
-    })
-    .state('readAllEvents', {
-      url: '/events',
-      template: '<read-all-events> </read-all-events>'
     });
 }

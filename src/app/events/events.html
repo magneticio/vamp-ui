@@ -1,0 +1,37 @@
+<div ng-class="{'show': showPanel}" class="event-panel-content">
+    <div class="head" ng-click="toggle()">
+        <p class="category">Events</p>
+        <a class="closeButton" ng-show="showPanel">
+            <i class="fa fa-times"></i>
+        </a>
+    </div>
+
+    <div class="container-fluid" ng-if="showPanel">
+        <table class="table">
+            <tr>
+                <th>Time</th>
+                <th>Type</th>
+                <th>Tags</th>
+                <th>Value</th>
+            </tr>
+            <tr ng-repeat="event in events">
+                <td>
+                    <span class="label label-default">
+                        {{ :: event.timestamp | date:'HH:mm:ss.sss'}}
+                    </span>
+                <td>
+                    <span class="label label-success">
+                        {{ :: event.type}}
+                    </span>
+                </td>
+                <td>
+                  <span ng-repeat="tag in event.tags">
+                    <span class="label label-primary">{{ :: tag}}</span>
+                    &nbsp;
+                  </span>
+                </td>
+                <td>{{ :: event.value}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
