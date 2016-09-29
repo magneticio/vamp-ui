@@ -1,16 +1,20 @@
-function list($rootScope, $scope, vamp) {
-  /* eslint camelcase: ["error", {properties: "never"}]*/
-
-  $scope.breeds = [];
-
-  vamp.peek('/breeds');
-
-  $rootScope.$on('/breeds', function (event, breeds) {
-    $scope.breeds = breeds;
-  });
-}
-
 angular.module('app').component('list', {
   templateUrl: 'app/crud/list.html',
-  controller: list
+  controller: CrudList
 });
+
+function CrudList($rootScope, $scope, vamp) {
+  /* eslint camelcase: ["error", {properties: "never"}]*/
+
+  $scope.blueprints = [];
+
+  $rootScope.$on('vamp:connection', function (e, connection) {
+    if (connection === 'opened') {
+      vamp.peek('/blueprints');
+    }
+  });
+
+  $rootScope.$on('/blueprints', function (e, blueprints) {
+    $scope.blueprints = blueprints;
+  });
+}

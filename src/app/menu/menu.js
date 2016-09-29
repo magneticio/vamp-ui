@@ -5,39 +5,38 @@ angular.module('app').component('menu', {
 });
 
 function MenuController($rootScope, $scope, $interval, vamp) {
-  // var activeTable = {
-  //   blueprints: [
-  //     'readAllBlueprints',
-  //     'createBlueprint',
-  //     'updateBlueprint'
-  //   ],
-  //   deployments: [
-  //     'readAllDeployments',
-  //     'readOneDeployment'
-  //   ],
-  //   gateways: [
-  //     'readAllGateways',
-  //     'createGateway',
-  //     'readOneGateway',
-  //     'updateGateway'
-  //   ],
-  //   breeds: [
-  //     'readAllBreeds',
-  //     'createBreed',
-  //     'readOneBreed',
-  //     'updateBreed'
-  //   ]
-  // };
+  var activeTable = {
+    blueprints: [
+      'list'
+    ]
+    // ,
+    // deployments: [
+    //   'readAllDeployments',
+    //   'readOneDeployment'
+    // ],
+    // gateways: [
+    //   'readAllGateways',
+    //   'createGateway',
+    //   'readOneGateway',
+    //   'updateGateway'
+    // ],
+    // breeds: [
+    //   'readAllBreeds',
+    //   'createBreed',
+    //   'readOneBreed',
+    //   'updateBreed'
+    // ]
+  };
 
-  // $rootScope.$on('$stateChangeStart', stateChanged);
+  $rootScope.$on('$stateChangeStart', stateChanged);
 
-  // function stateChanged(event, toState) {
-  //   for (var activeState in activeTable) {
-  //     if (_.includes(activeTable[activeState], toState.name)) {
-  //       self.active = activeState;
-  //     }
-  //   }
-  // }
+  function stateChanged(event, toState) {
+    for (var activeState in activeTable) {
+      if (_.includes(activeTable[activeState], toState.name)) {
+        self.active = activeState;
+      }
+    }
+  }
 
   $scope.connected = false;
 
@@ -48,24 +47,25 @@ function MenuController($rootScope, $scope, $interval, vamp) {
   $scope.menuItems = [
     {
       text: 'Blueprints',
-      activeState: 'blueprints',
-      goToState: 'readAllBlueprints'
-    },
-    {
-      text: 'Deployments',
-      activeState: 'deployments',
-      goToState: 'readAllDeployments'
-    },
-    {
-      text: 'Gateways',
-      activeState: 'gateways',
-      goToState: 'readAllGateways'
-    },
-    {
-      text: 'Breeds',
-      activeState: 'breeds',
-      goToState: 'readAllBreeds'
+      activeState: 'list',
+      goToState: 'list'
     }
+    // ,
+    // {
+    //   text: 'Deployments',
+    //   activeState: 'deployments',
+    //   goToState: 'readAllDeployments'
+    // },
+    // {
+    //   text: 'Gateways',
+    //   activeState: 'gateways',
+    //   goToState: 'readAllGateways'
+    // },
+    // {
+    //   text: 'Breeds',
+    //   activeState: 'breeds',
+    //   goToState: 'readAllBreeds'
+    // }
   ];
 
   function info() {

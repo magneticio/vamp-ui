@@ -1,4 +1,3 @@
-/* global Environment */
 function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, toastr, EventStreamHandler, $uibModal, $mixpanel, IntervalManager) {
   var weightsModal;
   var self = this;
@@ -19,20 +18,21 @@ function readOneGatewayController(Api, $interval, $stateParams, $filter, $http, 
   self.responseTimeData = [[0]];
   self.responseTimeLabels = [''];
 
-  function getFromRest(tags, callback) {
-    var url = Environment.prototype.endpoint();
-    url += 'events?';
-    var tagsParams = [];
-    tags.forEach(function (tag) {
-      tagsParams.push('tag=' + tag);
-    });
-
-    url += tagsParams.join('&');
-
-    $http.get(url).then(function (response) {
-      var sortedData = _.sortBy(response.data, 'timestamp');
-      callback(sortedData);
-    });
+  function getFromRest() {
+    // tags, callback) {
+    // var url = Environment.prototype.endpoint();
+    // url += 'events?';
+    // var tagsParams = [];
+    // tags.forEach(function (tag) {
+    //   tagsParams.push('tag=' + tag);
+    // });
+    //
+    // url += tagsParams.join('&');
+    //
+    // $http.get(url).then(function (response) {
+    //   var sortedData = _.sortBy(response.data, 'timestamp');
+    //   callback(sortedData);
+    // });
   }
 
   getFromRest(['gateway', 'gateways', 'gateways:' + $stateParams.id, 'metrics', 'metrics:responseTime'], function (response) {

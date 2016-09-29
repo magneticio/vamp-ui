@@ -1,6 +1,6 @@
-'use strict';
 /* global Environment */
-/* eslint camelcase: ["error", {properties: "never"}]*/
+/* eslint camelcase: ["error", {properties: "never"}] */
+'use strict';
 
 angular.module('app').factory('vamp', ['$log', '$rootScope', '$websocket', '$timeout', function ($log, $rootScope, $websocket, $timeout) {
   return new Vamp($log, $rootScope, $websocket, $timeout);

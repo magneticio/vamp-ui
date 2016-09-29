@@ -9,35 +9,30 @@ yellow=`tput setaf 3`
 
 ORIGIN=$1
 VERSION=`git describe --tags`
-echo "${green}Version               : ${yellow}${VERSION}${reset}"
+echo "${green}Version         : ${yellow}${VERSION}${reset}"
 
 if [ -z "$ORIGIN" ]; then
   DEBUG='false'
   ORIGIN="window.location.origin + window.location.pathname"
-  ENDPOINT="${ORIGIN} + 'api/v1/'"
   MIXPANEL="3dc73f826819c8e11d0d9898ca4291c8"
-  echo "${green}No base URL, using    : ${yellow}${ORIGIN}${reset}"
 else
   DEBUG='true'
-  ENDPOINT="'http://${ORIGIN}/api/v1/'"
   MIXPANEL=""
-  echo "${green}Base URL              : ${yellow}${ORIGIN}${reset}"
 fi
 
-echo "${green}Vamp API endpoint URL : ${yellow}${ENDPOINT}${reset}"
+
+echo "${green}Debug mode      : ${yellow}${DEBUG}${reset}"
+echo "${green}Vamp API origin : ${yellow}${ORIGIN}${reset}"
+echo "${green}Mixpanel key    : ${yellow}${MIXPANEL}${reset}"
 
 rm -rf ${dir}/src/app/environment.js 2> /dev/null
 touch ${dir}/src/app/environment.js
 
-echo "${green}Creating file         : ${yellow}src/app/environment.js${reset}"
+echo "${green}Creating file   : ${yellow}src/app/environment.js${reset}"
 
 cat > ${dir}/src/app/environment.js << EOF
 function Environment() {
 }
-
-Environment.prototype.endpoint = function () {
-  return ${ENDPOINT};
-};
 
 Environment.prototype.origin = function () {
   return '${ORIGIN}';
@@ -54,8 +49,6 @@ Environment.prototype.version = function () {
 Environment.prototype.debug = function () {
   return ${DEBUG};
 };
-
-angular.module('app').service('Environment', Environment);
 EOF
 
 echo "${green}Done.${reset}"

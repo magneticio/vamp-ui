@@ -1,12 +1,12 @@
-<div ng-class="{'show': showPanel}" class="event-panel-content">
+<div ng-class="{'show': show}" class="event-panel-content">
     <div class="head" ng-click="toggle()">
         <p class="category">Events</p>
-        <a class="closeButton" ng-show="showPanel">
+        <a ng-show="show">
             <i class="fa fa-times"></i>
         </a>
     </div>
 
-    <div class="container-fluid" ng-if="showPanel">
+    <div class="container-fluid" ng-if="show">
         <table class="table">
             <tr>
                 <th>Time</th>
@@ -14,7 +14,7 @@
                 <th>Tags</th>
                 <th>Value</th>
             </tr>
-            <tr ng-repeat="event in events">
+            <tr ng-repeat="event in events | orderBy: 'timestamp':true">
                 <td>
                     <span class="label label-default">
                         {{ :: event.timestamp | date:'HH:mm:ss.sss'}}

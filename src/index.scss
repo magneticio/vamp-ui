@@ -25,7 +25,6 @@ $font-weight-light: 300;
 $font-weight-regular: 500;
 $font-weight-bold: 700;
 
-
 body {
   background-color: $light-grey !important;
 }
@@ -53,7 +52,6 @@ menu {
     box-shadow: none !important;
     border-radius: 0;
     border-bottom: none;
-
 
     .stats {
       display: flex;
@@ -180,7 +178,6 @@ menu {
   }
 
   margin-top: 35px;
-
 
   display: flex;
   align-items: center;
@@ -309,8 +306,7 @@ p, div {
   font-weight: $font-weight-light !important;
   letter-spacing: 1px;
 
-
-  &.blue{
+  &.blue {
     background-color: rgba($dark-blue, 0.5) !important;
     &:hover {
       background-color: red;
@@ -329,7 +325,6 @@ p, div {
     font-weight: $font-weight-regular !important;
   }
 }
-
 
 .ace_editor {
   div {
@@ -430,7 +425,7 @@ p, div {
       line-height: 1;
 
       &:hover {
-       color: $purple;
+        color: $purple;
       }
     }
   }
@@ -441,6 +436,7 @@ p, div {
     overflow: scroll;
   }
 }
+
 .service-row {
   &:first-of-type {
     padding: 10px 0;
@@ -476,7 +472,6 @@ a.editable-click {
   border-bottom: none;
   font-style: normal;
   font-weight: bold;
-
 
 }
 
@@ -547,15 +542,13 @@ a.editable-click:hover {
     height: 10px;
     border-radius: 2px;
     background-color: rgba(black, 0.2);
-    box-shadow: inset 0px 0px 4px -2px rgba(0,0,0,0.3);
+    box-shadow: inset 0px 0px 4px -2px rgba(0, 0, 0, 0.3);
   }
-
 
   .rz-bubble {
     color: $dark-blue;
     font-size: 14px;
   }
-
 
   .rz-limit {
     color: white !important;
@@ -591,7 +584,7 @@ a.editable-click:hover {
 
 }
 
-input[type=number]{
+input[type=number] {
   width: 34px;
 }
 
@@ -612,25 +605,22 @@ input[type=number]{
   }
 }
 
+.sparkchart-container {
+  width: 60px;
+  height: 31px;
+  position: relative;
 
-  .sparkchart-container {
-    width: 60px;
-    height: 31px;
-    position: relative;
+  border-left: 1px solid rgba($dark-blue, 0.2);
+  border-bottom: 1px solid rgba($dark-blue, 0.2);
 
-    border-left: 1px solid rgba($dark-blue, 0.2);
-    border-bottom: 1px solid rgba($dark-blue, 0.2);
-
-    .sparkchart {
-      position: absolute;
-    }
-
+  .sparkchart {
+    position: absolute;
   }
+
+}
 
 .editable-label {
   display: flex;
-
-
 
   .editable-icon {
     margin-left: 6px;
@@ -651,9 +641,7 @@ input[type=number]{
   }
 }
 
-
-
-@keyframes fadeOutGreen{
+@keyframes fadeOutGreen {
   0% {
     background-color: rgba($green, 1);
   }
@@ -674,7 +662,20 @@ input[type=number]{
   animation-fil-mode: forwards;
 }
 
+//
 
+.table {
 
+  thead tr th {
+    border: none;
+  }
 
+  tbody tr:hover {
+    background-color: aliceblue;
+    cursor: pointer;
+  }
 
+  .selection {
+    width: 32px;
+  }
+}

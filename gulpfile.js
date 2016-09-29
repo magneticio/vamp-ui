@@ -32,6 +32,7 @@ function watch(done) {
 
   gulp.watch(conf.path.src('app/**/*.html'), reloadBrowserSync);
   gulp.watch([
+    conf.path.src('**/*.html'),
     conf.path.src('**/*.scss'),
     conf.path.src('**/*.css'),
     conf.path.src('**/*.js')

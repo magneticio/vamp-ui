@@ -1,23 +1,23 @@
-<header title="Breeds">
-  <buttons>
-    <button ui-sref="createBreed" class="btn ghost" type="submit"><i class="fa fa-plus"></i>Create</button>
-  </buttons>
+<header title="Blueprints">
+    <buttons>
+        <button ui-sref="createBlueprint" class="btn ghost" type="submit"><i class="fa fa-plus"></i>&nbsp;&nbsp;Create
+        </button>
+    </buttons>
 </header>
 
 <div class="container-fluid">
-  <table class="table">
-    <tr>
-      <th>Name</th>
-      <th></th>
-    </tr>
-    <tr ng-repeat="breed in $ctrl.breeds">
-      <td>{{breed.name}}</td>
-      <td>
-        <div class="pull-right">
-          <button ui-sref="updateBreed({id: breed.name})" class="btn blue"><i class="fa fa-lg fa-pencil"></i>Edit</button>
-          <button ng-click="$ctrl.openDeleteModal(breed.name)" class="btn red"><i class="fa fa-lg fa-trash"></i>Delete</button>
-        </div>
-      </td>
-    </tr>
-  </table>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="selection">*</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="blueprint in blueprints">
+            <td class="selection">*</td>
+            <td>{{ blueprint.name }}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>

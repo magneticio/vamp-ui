@@ -1,14 +1,18 @@
 angular.module('app').component('events', {
+  bindings: {
+    obj: '<',
+    prim: '<'
+  },
   templateUrl: 'app/events/events.html',
   controller: EventController
 });
 
 function EventController($rootScope, $scope, vamp) {
   $scope.events = [];
-  $scope.showPanel = false;
+  $scope.show = false;
 
   $scope.toggle = function () {
-    $scope.showPanel = !$scope.showPanel;
+    $scope.show = !$scope.show;
   };
 
   $rootScope.$on('vamp:connection', function (e, connection) {
@@ -20,6 +24,8 @@ function EventController($rootScope, $scope, vamp) {
   });
 
   function onEvent(event) {
+    var maxLength = 50;
+
     var combined = _.filter(event.tags, function (tag) {
       return tag.indexOf(':') !== -1;
     });
@@ -36,7 +42,8 @@ function EventController($rootScope, $scope, vamp) {
       timestamp: event.timestamp,
       tags: _.concat(combined, single)
     });
-    while ($scope.events.length > 50) {
+
+    while ($scope.events.length > maxLength) {
       $scope.events.shift();
     }
   }
