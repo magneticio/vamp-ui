@@ -19,20 +19,14 @@ gulp.task('serve:dist', gulp.series('default', 'browsersync:dist'));
 gulp.task('default', gulp.series('clean', 'build'));
 gulp.task('watch', watch);
 
-function reloadBrowserSync(cb) {
-  browserSync.reload();
-  cb();
-}
-
 function watch(done) {
   gulp.watch([
     conf.path.src('index.html'),
     'bower.json'
   ], gulp.parallel('inject'));
 
-  gulp.watch(conf.path.src('app/**/*.html'), reloadBrowserSync);
+  gulp.watch(conf.path.src('app/**/*.html')).on('change', browserSync.reload);
   gulp.watch([
-    conf.path.src('**/*.html'),
     conf.path.src('**/*.scss'),
     conf.path.src('**/*.css'),
     conf.path.src('**/*.js')

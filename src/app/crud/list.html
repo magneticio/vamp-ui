@@ -1,10 +1,9 @@
-<header title="Blueprints">
+<header title="{{ list }}">
     <buttons>
         <button ui-sref="createBlueprint" class="btn ghost" type="submit"><i class="fa fa-plus"></i>&nbsp;&nbsp;Create
         </button>
     </buttons>
 </header>
-
 <div class="container-fluid">
     <table class="table">
         <thead>
@@ -14,9 +13,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="blueprint in blueprints">
+        <tr ng-repeat="artifact in artifacts">
             <td class="selection">*</td>
-            <td>{{ blueprint.name }}</td>
+            <td>{{ artifact.name }}</td>
         </tr>
         </tbody>
     </table>

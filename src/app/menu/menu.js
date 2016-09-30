@@ -7,7 +7,7 @@ angular.module('app').component('menu', {
 function MenuController($rootScope, $scope, $interval, vamp) {
   var activeTable = {
     blueprints: [
-      'list'
+      'blueprints'
     ]
     // ,
     // deployments: [
@@ -47,8 +47,8 @@ function MenuController($rootScope, $scope, $interval, vamp) {
   $scope.menuItems = [
     {
       text: 'Blueprints',
-      activeState: 'list',
-      goToState: 'list'
+      activeState: 'blueprints',
+      goToState: 'blueprints'
     }
     // ,
     // {

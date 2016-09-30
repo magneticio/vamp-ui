@@ -80,7 +80,7 @@ menu {
       height: 50px;
       font-size: 14px !important;
       font-weight: 500;
-      color: rgba(255, 0, 0, 0.5);
+      color: rgba(255, 0, 0, 1);
     }
   }
 }
@@ -659,7 +659,7 @@ input[type=number] {
   animation-name: fadeOutGreen;
   animation-duration: 5s;
   animation-timing-function: ease-out;
-  animation-fil-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 //

@@ -1,9 +1,12 @@
 angular.module('app').component('header', {
-  templateUrl: 'app/common/header.html',
-  bindings: {
+  scope: {
     title: '@'
   },
   transclude: {
     buttons: '?buttons'
+  },
+  templateUrl: 'app/common/header.html',
+  controller: function ($scope, $attrs) {
+    $scope.title = $attrs.title;
   }
 });
