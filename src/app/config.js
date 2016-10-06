@@ -16,9 +16,3 @@ angular.module('app').config(function ($logProvider, toastrConfig, $mixpanelProv
 
   $mixpanelProvider.apiKey(Environment.prototype.mixpanel());
 });
-
-angular.module('app').run(function (editableOptions, editableThemes) {
-  editableOptions.theme = 'default';
-  editableThemes.default.submitTpl = '<button type="submit"><i class="fa fa-check"></i></button>';
-  editableThemes.default.cancelTpl = '<button type="button"  ng-click="$form.$cancel()"><i class="fa fa-times"></i></button>';
-});

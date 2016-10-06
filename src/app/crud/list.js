@@ -15,18 +15,6 @@ function CrudList($rootScope, $scope, $attrs, vamp) {
   // naive pluralization
   $scope.list = $scope.artifact + 's';
 
-  $scope.artifacts = [
-    {
-      name: 'test 1'
-    },
-    {
-      name: 'test 2'
-    },
-    {
-      name: 'test 3'
-    }
-  ];
-
   $rootScope.$on('vamp:connection', function (e, connection) {
     if (connection === 'opened') {
       vamp.peek('/' + $scope.list);

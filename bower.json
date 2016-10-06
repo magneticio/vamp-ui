@@ -5,26 +5,12 @@
     "angular": "^1.5.0",
     "angular-ui-router": "^0.3.1",
     "jquery": "<3.0.0",
-    "Chart.js": "2.1.6",
-    "angular-chart.js": "1.0.0-beta1",
-    "ng-table": "^1.0.0",
     "angular-bootstrap": "^1.3.3",
-    "angular-ui-ace": "bower",
-    "angular-ladda": "^0.4.1",
-    "yaml.js": "^0.2.8",
-    "sprintf": "^1.0.3",
     "angular-toastr": "^1.7.0",
-    "angular-animate": "^1.5.7",
-    "angularjs-slider": "^5.4.1",
     "lodash": "^4.14.0",
-    "ace-builds": "master",
-    "ngprogress": "^1.1.3",
-    "angular-xeditable": "^0.2.0",
     "bootstrap": "^3.3.7",
     "components-font-awesome": "^4.6.3",
-    "angular-peity": "^0.0.5",
     "angular-mixpanel": "^1.1.2",
-    "ng-focus-if": "^1.0.7",
     "angular-websocket": "^2.0.0"
   },
   "devDependencies": {
@@ -38,8 +24,6 @@
     }
   },
   "resolutions": {
-    "Chart.js": "2.x",
-    "ace-builds": "^1",
     "angular": "1.5.8"
   }
 }
