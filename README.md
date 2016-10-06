@@ -19,11 +19,11 @@ $ bower install
 2) First set the environment variables. [baseURL] should be the url that the frontend is running on.
 
 ```sh
-$ ./setEnvironment.sh [baseUrl]
+$ ./environment.sh [baseUrl]
 
 # example
 
-$ ./setEnvironment.sh 192.168.99.100:8080
+$ ./environment.sh 192.168.99.100:8080
 ```
 
 3) Then serve the frontend with gulp. Gulp will set up a web server with all the goodies like `browsersync` etc.

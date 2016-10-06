@@ -1,22 +1,13 @@
-<header title="ctrl.list">
+<header title="{{ $ctrl.list }}">
     <buttons>
-        <button ui-sref="createBlueprint" class="btn ghost" type="submit"><i class="fa fa-plus"></i>&nbsp;&nbsp;Create
-        </button>
+        <button class="btn btn-lg btn-success btn-circle" type="submit"><i class="fa fa-square-o"></i></button>
+        <button class="btn btn-lg btn-success btn-circle" type="submit"><i class="fa fa-check-square-o"></i></button>
+        <button class="btn btn-lg btn-primary btn-circle" type="submit"><i class="fa fa-plus"></i></button>
+        <button class="btn btn-lg btn-danger btn-circle" type="submit"><i class="fa fa-trash-o"></i></button>
     </buttons>
 </header>
 <div class="container-fluid">
-    <table class="table">
-        <thead>
-        <tr>
-            <th class="selection">*</th>
-            <th>Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="artifact in artifacts">
-            <td class="selection">*</td>
-            <td>{{ artifact.name }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="items">
+        <item ng-repeat="artifact in $ctrl.artifacts" item="artifact"></item>
+    </div>
 </div>

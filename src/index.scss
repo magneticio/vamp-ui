@@ -291,41 +291,6 @@ p, div {
   box-shadow: none !important;
 }
 
-//buttons
-.btn {
-  font-size: 12px !important;
-  //text-transform: uppercase;
-  border: none !important;
-  border-radius: 20px !important;
-  line-height: 1 !important;
-  background-color: $dark-blue !important;
-  background-image: none !important;
-  text-shadow: none !important;
-  padding: 9px 20px 7px 20px !important;
-  color: white !important;
-  font-weight: $font-weight-light !important;
-  letter-spacing: 1px;
-
-  &.blue {
-    background-color: rgba($dark-blue, 0.5) !important;
-    &:hover {
-      background-color: red;
-      //background-color: darken(rgba($dark-blue, 0.5), 10%);
-    }
-  }
-
-  &.red {
-    background-color: $purple !important;
-  }
-
-  &.ghost {
-    background-color: transparent !important;
-    border: 1px solid $dark-blue !important;
-    color: $dark-blue !important;
-    font-weight: $font-weight-regular !important;
-  }
-}
-
 .ace_editor {
   div {
     font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
@@ -664,18 +629,70 @@ input[type=number] {
 
 //
 
-.table {
-
-  thead tr th {
-    border: none;
-  }
-
-  tbody tr:hover {
-    background-color: aliceblue;
-    cursor: pointer;
-  }
-
-  .selection {
-    width: 32px;
-  }
+.items {
+  margin: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
+
+.item {
+  height: 24rem;
+  width: 24rem;
+  border: 1px solid lightgray;
+  border-radius: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+  background: aliceblue url('img/blueprint.png');
+}
+
+.item-h3 {
+  font-size: 2rem;
+  margin: 0 0 2rem 0;
+}
+
+//
+
+.btn-circle, .btn-circle-3d{
+  border-radius: 50% !important;
+  margin-left: 2rem;
+}
+
+.btn-primary.btn-circle{
+  -webkit-box-shadow: 0px 0px 3px 1px #245580;
+  -moz-box-shadow:    0px 0px 3px 1px #245580;
+  box-shadow:         0px 0px 3px 1px #245580;
+}
+
+.btn-info.btn-circle{
+  -webkit-box-shadow: 0px 0px 3px 1px #28a4c9;
+  -moz-box-shadow:    0px 0px 3px 1px #28a4c9;
+  box-shadow:         0px 0px 3px 1px #28a4c9;
+}
+
+.btn-success.btn-circle{
+  -webkit-box-shadow: 0px 0px 3px 1px #3e8f3e;
+  -moz-box-shadow:    0px 0px 3px 1px #3e8f3e;
+  box-shadow:         0px 0px 3px 1px #3e8f3e;
+}
+
+.btn-danger.btn-circle{
+  -webkit-box-shadow: 0px 0px 3px 1px #b92c28;
+  -moz-box-shadow:    0px 0px 3px 1px #b92c28;
+  box-shadow:         0px 0px 3px 1px #b92c28;
+}
+
+.btn-warning.btn-circle{
+  -webkit-box-shadow: 0px 0px 3px 1px #e38d13;
+  -moz-box-shadow:    0px 0px 3px 1px #e38d13;
+  box-shadow:         0px 0px 3px 1px #e38d13;
+}
+
+.btn-default.btn-circle{
+  -webkit-box-shadow: 0px 0px 3px 1px #ccc;
+  -moz-box-shadow:    0px 0px 3px 1px #ccc;
+  box-shadow:         0px 0px 3px 1px #ccc;
+}
+
