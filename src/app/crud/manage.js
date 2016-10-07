@@ -1,10 +1,10 @@
-angular.module('app').component('view', {
+angular.module('app').component('manage', {
   restrict: 'E',
-  controller: ArtifactViewController,
-  templateUrl: 'app/crud/view.html'
+  controller: ArtifactManageController,
+  templateUrl: 'app/crud/manage.html'
 });
 
-function ArtifactViewController($scope, $attrs, $stateParams, $location, toastr, alert, vamp) {
+function ArtifactManageController($scope, $attrs, $stateParams, $location, toastr, alert, vamp) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
@@ -62,9 +62,9 @@ function ArtifactViewController($scope, $attrs, $stateParams, $location, toastr,
     }
   });
 
-  this.validate = function (data) {
+  this.validate = _.debounce(function (data) {
     vamp.put(path, data, {validate_only: true}, 'JSON');
-  };
+  }, 1500);
 
   this.isModified = function () {
     return !($ctrl.base === null || $ctrl.base === $ctrl.source);

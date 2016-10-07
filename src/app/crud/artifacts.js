@@ -70,8 +70,8 @@ function ArtifactsController($scope, $location, $attrs, toastr, alert, vamp) {
 
   // operations
 
-  this.view = function (artifact) {
-    $location.path($ctrl.kind + '/view/' + artifact.name);
+  this.manage = function (artifact) {
+    $location.path($ctrl.kind + '/manage/' + artifact.name);
   };
 
   this.deleteSelected = function () {
