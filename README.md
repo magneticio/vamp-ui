@@ -45,7 +45,7 @@ $ bower install
 2) First set the environment variables. By default `window.location.origin` will be used for backend endpoint which makes sense because UI files are served by Vamp itself.
 
 ```sh
-$ ./setEnvironment.sh
+$ ./environment.sh
 ```
 
 3) Then build the frontend with gulp. Gulp will make a `dist` directory and all the files can be found there.

@@ -10,6 +10,8 @@ function ArtifactsController($rootScope, $attrs, vamp) {
   this.kind = $attrs.kind;
   this.artifacts = [];
 
+  vamp.peek('/' + this.kind);
+
   $rootScope.$on('vamp:connection', function (e, connection) {
     if (connection === 'opened') {
       vamp.peek('/' + self.kind);
@@ -35,7 +37,7 @@ function ArtifactsController($rootScope, $attrs, vamp) {
   };
 
   this.isSelectedAll = function () {
-    return self.artifacts.length === self.selected.length;
+    return self.artifacts.length > 0 && self.artifacts.length === self.selected.length;
   };
 
   this.isSelected = function (artifact) {

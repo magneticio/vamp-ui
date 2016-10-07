@@ -15,35 +15,37 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li ng-class="{active: menuItem.activeState === active}" ng-repeat="menuItem in menuItems">
-                    <a ui-sref="{{menuItem.goToState}}" href="#">{{menuItem.text}}</a>
+                <li ng-class="{active: $ctrl.isActive(artifact)}" ng-repeat="artifact in $ctrl.artifacts">
+                    <a ui-sref="{{ artifact.kind }}" href="#">
+                        {{artifact.kind | capitalize}}&nbsp;<i class="fa fa-flash" ng-show="artifact.deployable"></i>
+                    </a>
                 </li>
             </ul>
             <!-- disconnected -->
-            <ul class="nav navbar-nav navbar-right" ng-show="!connected">
+            <ul class="nav navbar-nav navbar-right" ng-show="!$ctrl.connected">
                 <li class="disconnected">
                     DISCONNECTED FROM VAMP
                 </li>
             </ul>
             <!-- connected -->
-            <ul class="nav navbar-nav navbar-right" ng-show="connected">
-                <li class="stats" ng-show="jvm">
+            <ul class="nav navbar-nav navbar-right" ng-show="$ctrl.connected">
+                <li class="stats" ng-show="$ctrl.jvm">
                     <div class="CPU">
                         <span class="stat-label">System Load:</span>
-                        {{ jvm.systemLoad | number: 2 }}%
+                        {{ $ctrl.jvm.systemLoad | number: 2 }}%
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="memory">
                         <span class="stat-label">Memory:</span>
                         <span class="stat-content">
-              {{ (jvm.heapCurrent/jvm.heapMax) * 100 | number: 1 }}%
+              {{ ($ctrl.jvm.heapCurrent / $ctrl.jvm.heapMax) * 100 | number: 1 }}%
               <span class="detail">
-                &nbsp;({{ jvm.heapCurrent | number: 0}}MB/{{ jvm.heapMax | number: 0 }}MB)
+                &nbsp;({{ $ctrl.jvm.heapCurrent | number: 0}}MB/{{ $ctrl.jvm.heapMax | number: 0 }}MB)
               </span>
             </span>
                     </div>
                 </li>
-                <li class="clickable" ng-click="toggleSettings()">
+                <li class="clickable" ng-click="$ctrl.toggleSettings()">
                     <a class="info-button">
                         <i class="fa fa-info" aria-hidden="true"></i>
                     </a>
