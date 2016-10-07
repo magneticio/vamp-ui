@@ -85,6 +85,8 @@ function ArtifactsController($scope, $location, $attrs, toastr, alert, vamp) {
 
     if ($ctrl.isSelectedAny()) {
       alert.show('Warning', 'Are you sure you want to delete: ' + bracketNames.join(', ') + '?', 'Delete', 'Cancel', function () {
+        $ctrl.selected.length = 0;
+
         _.forEach(names, function (name) {
           vamp.await(function () {
             vamp.remove(path + '/' + name);

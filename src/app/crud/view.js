@@ -30,6 +30,8 @@ function ArtifactViewController($scope, $attrs, $stateParams, $location, toastr,
   this.base = null;
   this.source = null;
 
+  this.ignoreUpdate = false;
+
   vamp.peek(path, {}, 'YAML');
 
   $scope.$on(path, function (e, response) {
@@ -43,6 +45,19 @@ function ArtifactViewController($scope, $attrs, $stateParams, $location, toastr,
       } else {
         $ctrl.headerClass = '';
         $ctrl.headerMessage = '';
+      }
+    }
+  });
+
+  $scope.$on('/events/stream', function (e, response) {
+    if (_.includes(response.data.tags, $ctrl.kind + ':' + $ctrl.name)) {
+      if (_.includes(response.data.tags, 'archive:delete')) {
+        alert.show('Warning', '\'' + $ctrl.name + '\' has been deleted in background. If you save the content, \'' + $ctrl.name + '\' will be recreated.', 'OK');
+      } else if (!$ctrl.ignoreUpdate && _.includes(response.data.tags, 'archive:update')) {
+        alert.show('Warning', '\'' + $ctrl.name + '\' has been updated in background. Do you want to reload changed?', 'Reload', 'Keep', function () {
+          $ctrl.base = $ctrl.source = null;
+          vamp.peek(path, {}, 'YAML');
+        });
       }
     }
   });
@@ -64,12 +79,16 @@ function ArtifactViewController($scope, $attrs, $stateParams, $location, toastr,
   };
 
   this.save = function () {
+    $ctrl.ignoreUpdate = true;
+
     vamp.await(function () {
       vamp.put(path, $ctrl.source, {}, 'JSON');
     }).then(function () {
       goBack();
       toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');
     }).catch(function (response) {
+      $ctrl.ignoreUpdate = false;
+
       if (response) {
         toastr.error(response.data.message, 'Save failed.');
       } else {
