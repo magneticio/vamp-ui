@@ -16,11 +16,9 @@ function MenuController($rootScope, $scope, $interval, vamp) {
     return $ctrl.active ? $ctrl.active.startsWith(artifact.kind) : false;
   };
 
-  $scope.$on('$stateChangeStart', stateChanged);
-
-  function stateChanged(event, state) {
+  $scope.$on('$stateChangeSuccess', function (event, state) {
     $ctrl.active = state.name;
-  }
+  });
 
   // info panel
 

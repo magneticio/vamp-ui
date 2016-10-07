@@ -4,7 +4,7 @@ angular.module('app').component('edit', {
   templateUrl: 'app/crud/edit.html'
 });
 
-function ArtifactEditController($scope, $attrs, $stateParams, $location, toastr, alert, vamp) {
+function ArtifactEditController($scope, $attrs, $state, $stateParams, $location, toastr, alert, vamp) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
@@ -60,6 +60,16 @@ function ArtifactEditController($scope, $attrs, $stateParams, $location, toastr,
           vamp.peek(path, {}, 'YAML');
         });
       }
+    }
+  });
+
+  $scope.$on('$stateChangeStart', function (event, toState, toParams) {
+    if ($ctrl.isModified()) {
+      event.preventDefault();
+      alert.show('Warning', '\'' + $ctrl.name + '\' has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel', function () {
+        $ctrl.base = $ctrl.source = null;
+        $state.go(toState, toParams);
+      });
     }
   });
 
