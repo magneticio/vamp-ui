@@ -42,7 +42,7 @@ function MenuController($rootScope, $scope, $interval, vamp) {
     if (connection === 'opened') {
       info();
       if (!polling) {
-        polling = $interval(info, 3600000);
+        polling = $interval(info, 15000);
       }
       $ctrl.connected = true;
     } else {

@@ -1,14 +1,15 @@
-angular.module('app').component('manage', {
+angular.module('app').component('edit', {
   restrict: 'E',
-  controller: ArtifactManageController,
-  templateUrl: 'app/crud/manage.html'
+  controller: ArtifactEditController,
+  templateUrl: 'app/crud/edit.html'
 });
 
-function ArtifactManageController($scope, $attrs, $stateParams, $location, toastr, alert, vamp) {
+function ArtifactEditController($scope, $attrs, $stateParams, $location, toastr, alert, vamp) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
   this.name = $stateParams.name;
+  this.title = this.name;
 
   this.headerClass = '';
   this.headerMessage = '';
