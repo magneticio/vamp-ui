@@ -24,7 +24,7 @@ function MenuController($rootScope, $scope, $interval, vamp) {
 
   // info panel
 
-  this.toggleSettings = function () {
+  this.toggleInfoPanel = function () {
     $rootScope.infoPanelActive = !$rootScope.infoPanelActive;
   };
 
