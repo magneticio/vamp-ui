@@ -5,7 +5,7 @@ angular.module('app').component('menu', {
   controller: MenuController
 });
 
-function MenuController($rootScope, $interval, vamp) {
+function MenuController($rootScope, $scope, $interval, vamp) {
   var $ctrl = this;
 
   // menu
@@ -16,7 +16,7 @@ function MenuController($rootScope, $interval, vamp) {
     return $ctrl.active ? $ctrl.active.startsWith(artifact.kind) : false;
   };
 
-  $rootScope.$on('$stateChangeStart', stateChanged);
+  $scope.$on('$stateChangeStart', stateChanged);
 
   function stateChanged(event, state) {
     $ctrl.active = state.name;
@@ -38,7 +38,7 @@ function MenuController($rootScope, $interval, vamp) {
     vamp.peek('/info', {on: 'jvm'});
   }
 
-  $rootScope.$on('vamp:connection', function (event, connection) {
+  $scope.$on('vamp:connection', function (event, connection) {
     if (connection === 'opened') {
       info();
       if (!polling) {
@@ -52,7 +52,7 @@ function MenuController($rootScope, $interval, vamp) {
     }
   });
 
-  $rootScope.$on('/info', function (event, data) {
+  $scope.$on('/info', function (event, data) {
     var info = data.data;
     $ctrl.jvm = {
       systemLoad: info.jvm['operating_system']['system_load_average'],

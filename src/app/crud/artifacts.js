@@ -4,7 +4,7 @@ angular.module('app').component('artifacts', {
   templateUrl: 'app/crud/artifacts.html'
 });
 
-function ArtifactsController($rootScope, $location, $attrs, vamp) {
+function ArtifactsController($scope, $location, $attrs, toastr, alert, vamp) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
@@ -14,21 +14,21 @@ function ArtifactsController($rootScope, $location, $attrs, vamp) {
 
   vamp.peek(path);
 
-  $rootScope.$on('vamp:connection', function (e, connection) {
+  $scope.$on('vamp:connection', function (e, connection) {
     if (connection === 'opened') {
       vamp.peek(path);
     }
   });
 
-  $rootScope.$on(path, function (e, response) {
-    $ctrl.artifacts = response.data;
+  $scope.$on(path, function (e, response) {
+    $ctrl.artifacts = _.sortBy(response.data, ['name']);
   });
 
-  // view
-
-  this.view = function (artifact) {
-    $location.path($ctrl.kind + '/view/' + artifact.name);
-  };
+  $scope.$on('/events/stream', function (e, response) {
+    if (_.includes(response.data.tags, 'archive') && _.includes(response.data.tags, $ctrl.kind)) {
+      vamp.peek(path);
+    }
+  });
 
   // selections
 
@@ -48,6 +48,10 @@ function ArtifactsController($rootScope, $location, $attrs, vamp) {
     return $ctrl.artifacts.length > 0 && $ctrl.artifacts.length === $ctrl.selected.length;
   };
 
+  this.isSelectedAny = function () {
+    return $ctrl.selected.length > 0;
+  };
+
   this.isSelected = function (artifact) {
     return _.find($ctrl.selected, function (a) {
       return a.name === artifact.name;
@@ -61,6 +65,40 @@ function ArtifactsController($rootScope, $location, $attrs, vamp) {
     });
     if ($event.target.checked) {
       $ctrl.selected.push(artifact);
+    }
+  };
+
+  // operations
+
+  this.view = function (artifact) {
+    $location.path($ctrl.kind + '/view/' + artifact.name);
+  };
+
+  this.deleteSelected = function () {
+    var names = _.map(_.sortBy($ctrl.selected, ['name']), function (a) {
+      return a.name;
+    });
+
+    var bracketNames = _.map(names, function (name) {
+      return '\'' + name + '\'';
+    });
+
+    if ($ctrl.isSelectedAny()) {
+      alert.show('Warning', 'Are you sure you want to delete: ' + bracketNames.join(', ') + '?', 'Delete', 'Cancel', function () {
+        _.forEach(names, function (name) {
+          vamp.await(function () {
+            vamp.remove(path + '/' + name);
+          }).then(function () {
+            toastr.success('\'' + name + '\' has been successfully removed.');
+          }).catch(function (response) {
+            if (response) {
+              toastr.error(response.data.message, 'Removal of \'' + name + '\' failed.');
+            } else {
+              toastr.error('Server timeout.', 'Removal of \'' + name + '\' failed.');
+            }
+          });
+        });
+      });
     }
   };
 }

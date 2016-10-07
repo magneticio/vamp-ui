@@ -12,7 +12,7 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
 
   var notify = function (name, value) {
     $log.debug('websocket notify: ' + name + ' :: ' + JSON.stringify(value));
-    $rootScope.$emit(name, value);
+    $rootScope.$broadcast(name, value);
   };
 
   var awaiting = [];
@@ -21,7 +21,7 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
     $log.debug('websocket message: ' + message);
     var response = JSON.parse(message);
 
-    if (response.content === 'JSON') {
+    if (response.content === 'JSON' && response.data) {
       response.data = JSON.parse(response.data);
     }
 
@@ -44,6 +44,10 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
 
   this.put = function (path, data, params, accept) {
     request(path, 'PUT', data, params ? params : {}, accept ? accept : 'JSON');
+  };
+
+  this.remove = function (path, data, params, accept) {
+    request(path, 'REMOVE', data, params ? params : {}, accept ? accept : 'JSON');
   };
 
   this.await = function (request) {

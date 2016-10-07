@@ -7,7 +7,7 @@ angular.module('app').component('events', {
   controller: EventController
 });
 
-function EventController($rootScope, $scope, vamp) {
+function EventController($scope, vamp) {
   $scope.events = [];
   $scope.show = false;
 
@@ -15,7 +15,7 @@ function EventController($rootScope, $scope, vamp) {
     $scope.show = !$scope.show;
   };
 
-  $rootScope.$on('vamp:connection', function (e, connection) {
+  $scope.$on('vamp:connection', function (e, connection) {
     if (connection === 'opened') {
       $scope.events.length = 0;
       vamp.peek('/events');
@@ -48,13 +48,13 @@ function EventController($rootScope, $scope, vamp) {
     }
   }
 
-  $rootScope.$on('/events', function (e, response) {
+  $scope.$on('/events', function (e, response) {
     _.forEach(response.data, function (event) {
       onEvent(event);
     });
   });
 
-  $rootScope.$on('/events/stream', function (e, response) {
+  $scope.$on('/events/stream', function (e, response) {
     onEvent(response.data);
   });
 }

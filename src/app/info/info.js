@@ -4,18 +4,18 @@ angular.module('app').component('info', {
   controller: InfoController
 });
 
-function InfoController($rootScope, $scope, vamp) {
-  $rootScope.$on('vamp:connection', function (event, connection) {
+function InfoController($scope, vamp) {
+  $scope.$on('vamp:connection', function (event, connection) {
     if (connection === 'opened') {
       vamp.peek('/info');
     }
   });
 
-  $rootScope.$watch('infoPanelActive', function (newValue) {
+  $scope.$watch('infoPanelActive', function (newValue) {
     $scope.infoPanelActive = newValue;
   });
 
-  $rootScope.$on('/info', function (event, data) {
+  $scope.$on('/info', function (event, data) {
     /* eslint camelcase: ["error", {properties: "never"}] */
     data = data.data;
     if (!data.persistence || !data.key_value || !data.gateway_driver || !data.container_driver || !data.workflow_driver) {

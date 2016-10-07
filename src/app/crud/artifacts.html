@@ -8,7 +8,9 @@
         <button class="btn btn-lg btn-primary btn-circle" type="submit" title="Add">
             <i class="fa fa-plus"></i>
         </button>
-        <button class="btn btn-lg btn-danger btn-circle" type="submit" title="Delete">
+        <button class="btn btn-lg btn-danger btn-circle" type="submit" title="Delete"
+                ng-disabled="!$ctrl.isSelectedAny()"
+                ng-click="$ctrl.deleteSelected()">
             <i class="fa fa-trash-o"></i>
         </button>
     </buttons>

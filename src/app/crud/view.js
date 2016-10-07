@@ -4,7 +4,7 @@ angular.module('app').component('view', {
   templateUrl: 'app/crud/view.html'
 });
 
-function ArtifactViewController($rootScope, $attrs, $stateParams, $location, toastr, alert, vamp) {
+function ArtifactViewController($scope, $attrs, $stateParams, $location, toastr, alert, vamp) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
@@ -32,7 +32,7 @@ function ArtifactViewController($rootScope, $attrs, $stateParams, $location, toa
 
   vamp.peek(path, {}, 'YAML');
 
-  $rootScope.$on(path, function (e, response) {
+  $scope.$on(path, function (e, response) {
     if ($ctrl.base === null && response.status === 'OK' && response.content === 'YAML') {
       $ctrl.base = $ctrl.source = response.data;
     }
@@ -68,7 +68,7 @@ function ArtifactViewController($rootScope, $attrs, $stateParams, $location, toa
       vamp.put(path, $ctrl.source, {}, 'JSON');
     }).then(function () {
       goBack();
-      toastr.success('\'' + $ctrl.name + '\' successfully saved.');
+      toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');
     }).catch(function (response) {
       if (response) {
         toastr.error(response.data.message, 'Save failed.');
