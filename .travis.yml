@@ -3,7 +3,7 @@ language: node_js
 node_js: 6
 install: npm install -g "gulpjs/gulp#4.0"
 before_script: gulp --version
-script: npm install && bower install && ./setEnvironment.sh && gulp build
+script: npm install && bower install && ./environment.sh && gulp build
 after_success: |
   if [ -n "TRAVIS_TAG" ] && [ "$(git describe --tags)" = "$(git describe --abbrev=0)" ]; then
     bash $TRAVIS_BUILD_DIR/.travis-bintray.sh
