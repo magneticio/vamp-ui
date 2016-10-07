@@ -1,0 +1,8 @@
+<div class="artifact" ng-class="{artifactSelected: $ctrl.artifacts.isSelected($ctrl.artifact)}">
+    <h3 class="artifact-h3">
+        {{ $ctrl.artifact.name }}
+        <input type="checkbox" class="pull-right"
+               ng-checked="$ctrl.artifacts.isSelected($ctrl.artifact)"
+               ng-click="$ctrl.artifacts.updateSelection($event, $ctrl.artifact)">
+    </h3>
+</div>

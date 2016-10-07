@@ -6,6 +6,6 @@ function routesConfig($stateProvider, $urlRouterProvider) {
 
   $stateProvider.state('blueprints', {
     url: '/blueprints',
-    template: '<list artifact="blueprint"> </list>'
+    template: '<artifacts kind="blueprints"> </artifacts>'
   });
 }

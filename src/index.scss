@@ -61,13 +61,13 @@ menu {
       .stat-label {
         color: rgba(30, 10, 60, 0.5);
         border-top: none !important;
-        font-size: 11px !important;
+        font-size: 16px !important;
         font-weight: 500;
       }
 
       .stat-content {
         .detail {
-          font-size: 10px;
+          font-size: 14px;
           font-weight: bold;
           color: rgba($dark-blue, 0.7);
         }
@@ -78,7 +78,7 @@ menu {
       display: flex;
       align-items: center;
       height: 50px;
-      font-size: 14px !important;
+      font-size: 16px !important;
       font-weight: 500;
       color: rgba(255, 0, 0, 1);
     }
@@ -278,7 +278,7 @@ p, div {
 //Navbar text
 .navbar-default .navbar-nav > li > a {
   color: $dark-blue !important;
-  font-size: 14px;
+  font-size: 18px;
   //text-transf3rm: lowercase;
   font-weight: 300;
   letter-spacing: 1px;
@@ -629,7 +629,7 @@ input[type=number] {
 
 //
 
-.items {
+.artifacts {
   margin: 1rem;
   display: flex;
   flex-direction: row;
@@ -637,7 +637,7 @@ input[type=number] {
   justify-content: flex-start;
 }
 
-.item {
+.artifact {
   height: 24rem;
   width: 24rem;
   border: 1px solid lightgray;
@@ -648,12 +648,20 @@ input[type=number] {
   background: aliceblue url('img/blueprint.png');
 }
 
-.item-h3 {
+.artifactSelected {
+  border: 2px solid cornflowerblue;
+}
+
+.artifact-h3 {
   font-size: 2rem;
   margin: 0 0 2rem 0;
 }
 
 //
+
+input[type="checkbox"] {
+  transform:scale(1.25, 1.25);
+}
 
 .btn-circle, .btn-circle-3d{
   border-radius: 50% !important;
