@@ -8,37 +8,62 @@ angular.module('app').factory('vamp', ['$log', '$rootScope', '$websocket', '$tim
 
 function Vamp($log, $rootScope, $websocket, $timeout) {
   var stream;
-  var transaction = 0;
+  var transaction = 1;
 
   var notify = function (name, value) {
     $log.debug('websocket notify: ' + name + ' :: ' + JSON.stringify(value));
     $rootScope.$emit(name, value);
   };
 
+  var awaiting = [];
+
   var process = function (message) {
     $log.debug('websocket message: ' + message);
     var response = JSON.parse(message);
-    notify(response.path, JSON.parse(response.data));
-  };
 
-  this.peek = function (path, params) {
-    if (!stream) {
-      return;
+    if (response.content === 'JSON') {
+      response.data = JSON.parse(response.data);
     }
 
-    var message = {
-      api: 'v1',
-      path: path,
-      action: 'PEEK',
-      accept: 'JSON',
-      content: 'JSON',
-      transaction: String(transaction++),
-      data: "",
-      parameters: params ? params : {}
-    };
+    if (awaiting[response.transaction]) {
+      if (response.status === 'ERROR') {
+        awaiting[response.transaction].reject(response);
+      } else {
+        awaiting[response.transaction].resolve(response);
+      }
 
-    $log.debug('websocket send: ' + JSON.stringify(message));
-    stream.send(message);
+      delete awaiting[response.transaction];
+    }
+
+    notify(response.path, response);
+  };
+
+  this.peek = function (path, params, accept) {
+    request(path, 'PEEK', '', params ? params : {}, accept ? accept : 'JSON');
+  };
+
+  this.put = function (path, data, params, accept) {
+    request(path, 'PUT', data, params ? params : {}, accept ? accept : 'JSON');
+  };
+
+  this.await = function (request) {
+    var current = transaction;
+    awaiting[current] = {};
+
+    var promise = new Promise(function (resolve, reject) {
+      awaiting[current].reject = reject;
+      awaiting[current].resolve = resolve;
+      $timeout(function () {
+        if (awaiting[current]) {
+          awaiting[current].reject();
+        }
+      }, 5000);
+      request();
+    });
+
+    awaiting[current].promise = promise;
+
+    return promise;
   };
 
   this.init = function () {
@@ -67,6 +92,25 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
 
     websocket();
   };
+
+  function request(path, action, data, params, accept) {
+    if (!stream) {
+      return null;
+    }
+    var message = {
+      api: 'v1',
+      path: path,
+      action: action,
+      accept: accept,
+      content: 'JSON',
+      transaction: String(transaction++),
+      data: data,
+      parameters: params
+    };
+
+    $log.debug('websocket send: ' + JSON.stringify(message));
+    stream.send(message);
+  }
 }
 
 angular.module('app').run(["vamp", function (vamp) {

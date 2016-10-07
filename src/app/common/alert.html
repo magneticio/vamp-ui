@@ -1,0 +1,10 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">{{ $ctrl.title }}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    {{ $ctrl.message }}
+</div>
+<div class="modal-footer">
+    <button class="btn {{ $ctrl.button1Class }}" type="button" ng-click="$ctrl.ok()">{{ $ctrl.button1 }}</button>
+    <button class="btn {{ $ctrl.button2Class }}" type="button" ng-click="$ctrl.cancel()">{{ $ctrl.button2 }}</button>
+</div>

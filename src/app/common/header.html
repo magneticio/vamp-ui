@@ -1,7 +1,8 @@
-<div class="vamp-page-header">
+<div class="vamp-page-header {{ $ctrl.clazz }}">
     <div class="container-fluid">
         <div class="titles">
             <h2 class="title">{{ $ctrl.title }}</h2>
+            <h2 class="title message">{{ $ctrl.message }}</h2>
         </div>
         <div class="buttons" ng-transclude="buttons">
         </div>

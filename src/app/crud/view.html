@@ -1,0 +1,19 @@
+<header title="{{ $ctrl.name }}" message="{{ $ctrl.headerMessage }}" clazz="{{ $ctrl.headerClass }}">
+    <buttons>
+        <button class="btn btn-lg btn-primary btn-circle" type="submit" title="Save" ng-click="$ctrl.save()">
+            <i class="fa fa-floppy-o"></i>
+        </button>
+        <button class="btn btn-lg btn-warning btn-circle" type="submit" title="Cancel" ng-click="$ctrl.cancel()">
+            <i class="fa fa-times"></i>
+        </button>
+    </buttons>
+</header>
+
+<div class="fluid-container">
+    <div class="editor">
+        <div ui-ace="$ctrl.editor"
+             ng-model="$ctrl.source"
+             ng-change="$ctrl.validate($ctrl.source)"
+             ng-model-options='{ debounce: 1500 }'></div>
+    </div>
+</div>

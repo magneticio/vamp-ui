@@ -4,54 +4,63 @@ angular.module('app').component('artifacts', {
   templateUrl: 'app/crud/artifacts.html'
 });
 
-function ArtifactsController($rootScope, $attrs, vamp) {
-  var self = this;
+function ArtifactsController($rootScope, $location, $attrs, vamp) {
+  var $ctrl = this;
 
   this.kind = $attrs.kind;
   this.artifacts = [];
 
-  vamp.peek('/' + this.kind);
+  var path = '/' + this.kind;
+
+  vamp.peek(path);
 
   $rootScope.$on('vamp:connection', function (e, connection) {
     if (connection === 'opened') {
-      vamp.peek('/' + self.kind);
+      vamp.peek(path);
     }
   });
 
-  $rootScope.$on('/' + this.kind, function (e, artifacts) {
-    self.artifacts = artifacts;
+  $rootScope.$on(path, function (e, response) {
+    $ctrl.artifacts = response.data;
   });
+
+  // view
+
+  this.view = function (artifact) {
+    $location.path($ctrl.kind + '/view/' + artifact.name);
+  };
 
   // selections
 
   this.selected = [];
 
   this.toggleSelection = function () {
-    var all = self.isSelectedAll();
-    self.selected.length = 0;
+    var all = $ctrl.isSelectedAll();
+    $ctrl.selected.length = 0;
     if (!all) {
-      _.forEach(self.artifacts, function (a) {
-        self.selected.push(a);
+      _.forEach($ctrl.artifacts, function (a) {
+        $ctrl.selected.push(a);
       });
     }
   };
 
   this.isSelectedAll = function () {
-    return self.artifacts.length > 0 && self.artifacts.length === self.selected.length;
+    return $ctrl.artifacts.length > 0 && $ctrl.artifacts.length === $ctrl.selected.length;
   };
 
   this.isSelected = function (artifact) {
-    return _.find(self.selected, function (a) {
+    return _.find($ctrl.selected, function (a) {
       return a.name === artifact.name;
     });
   };
 
   this.updateSelection = function ($event, artifact) {
-    _.remove(self.selected, function (a) {
+    $event.stopPropagation();
+    _.remove($ctrl.selected, function (a) {
       return a.name === artifact.name;
     });
     if ($event.target.checked) {
-      self.selected.push(artifact);
+      $ctrl.selected.push(artifact);
     }
   };
 }

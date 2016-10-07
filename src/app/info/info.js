@@ -17,6 +17,7 @@ function InfoController($rootScope, $scope, vamp) {
 
   $rootScope.$on('/info', function (event, data) {
     /* eslint camelcase: ["error", {properties: "never"}] */
+    data = data.data;
     if (!data.persistence || !data.key_value || !data.gateway_driver || !data.container_driver || !data.workflow_driver) {
       return;
     }

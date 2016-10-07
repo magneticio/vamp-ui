@@ -5,13 +5,16 @@
     "angular": "^1.5.0",
     "angular-ui-router": "^0.3.1",
     "jquery": "<3.0.0",
-    "angular-bootstrap": "^1.3.3",
+    "angular-bootstrap": "^2.1.4",
     "angular-toastr": "^1.7.0",
     "lodash": "^4.14.0",
     "bootstrap": "^3.3.7",
     "components-font-awesome": "^4.6.3",
     "angular-mixpanel": "^1.1.2",
-    "angular-websocket": "^2.0.0"
+    "angular-websocket": "^2.0.0",
+    "ace-builds": "^1.2.5",
+    "angular-ui-ace": "bower",
+    "angular-animate": "^1.5.8"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.0"
@@ -21,9 +24,17 @@
       "main": [
         "./assets/javascripts/bootstrap.js"
       ]
+    },
+    "ace-builds": {
+      "main": [
+        "src-min-noconflict/ace.js",
+        "src-min-noconflict/mode-yaml.js",
+        "src-min-noconflict/theme-chrome.js"
+      ]
     }
   },
   "resolutions": {
-    "angular": "1.5.8"
+    "angular": "1.5.8",
+    "angular-bootstrap": "^2.1.4"
   }
 }

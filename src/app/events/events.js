@@ -48,13 +48,13 @@ function EventController($rootScope, $scope, vamp) {
     }
   }
 
-  $rootScope.$on('/events', function (e, events) {
-    _.forEach(events, function (event) {
+  $rootScope.$on('/events', function (e, response) {
+    _.forEach(response.data, function (event) {
       onEvent(event);
     });
   });
 
-  $rootScope.$on('/events/stream', function (e, event) {
-    onEvent(event);
+  $rootScope.$on('/events/stream', function (e, response) {
+    onEvent(response.data);
   });
 }

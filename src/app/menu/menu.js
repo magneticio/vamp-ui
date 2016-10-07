@@ -6,20 +6,20 @@ angular.module('app').component('menu', {
 });
 
 function MenuController($rootScope, $interval, vamp) {
-  var self = this;
+  var $ctrl = this;
 
   // menu
 
   this.artifacts = Artifacts.prototype.all();
 
   this.isActive = function (artifact) {
-    return self.active ? self.active === artifact.kind : false;
+    return $ctrl.active ? $ctrl.active.startsWith(artifact.kind) : false;
   };
 
   $rootScope.$on('$stateChangeStart', stateChanged);
 
   function stateChanged(event, state) {
-    self.active = state.name;
+    $ctrl.active = state.name;
   }
 
   // info panel
@@ -44,16 +44,17 @@ function MenuController($rootScope, $interval, vamp) {
       if (!polling) {
         polling = $interval(info, 3600000);
       }
-      self.connected = true;
+      $ctrl.connected = true;
     } else {
-      self.connected = false;
+      $ctrl.connected = false;
       $interval.cancel(polling);
       polling = undefined;
     }
   });
 
-  $rootScope.$on('/info', function (event, info) {
-    self.jvm = {
+  $rootScope.$on('/info', function (event, data) {
+    var info = data.data;
+    $ctrl.jvm = {
       systemLoad: info.jvm['operating_system']['system_load_average'],
       heapCurrent: info.jvm.memory.heap.used / (1024 * 1024),
       heapMax: info.jvm.memory.heap.max / (1024 * 1024)

@@ -100,32 +100,30 @@ menu {
     }
 
     .title {
-      font-size: 18px;
+      font-size: 24px;
       text-transform: uppercase;
-
-      font-weight: 300;
-
-      &.with-add {
-        margin-top: 10px;
-      }
-    }
-
-    .title-add {
-      font-size: 32px;
-      line-height: 1;
-      margin-top: 4px;
-      font-weight: 300;
       color: $purple;
+      font-weight: 300;
+
+      &.message {
+        text-transform: none;
+        margin-left: 10px;
+        font-size: 18px;
+      }
     }
   }
   .buttons {
     float: right;
   }
+
+  &.error {
+    background-color: rgba($purple, 0.2);
+  }
 }
 
 .editor {
   position: absolute;
-  top: 70px;
+  top: 80px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -133,7 +131,7 @@ menu {
 
 .ace_editor {
   position: absolute !important;
-  top: 50px;
+  top: 0px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -640,7 +638,7 @@ input[type=number] {
 .artifact {
   height: 24rem;
   width: 24rem;
-  border: 1px solid lightgray;
+  border: 2px solid lightskyblue;
   border-radius: 1rem;
   margin: 1rem;
   padding: 1rem;
@@ -658,10 +656,6 @@ input[type=number] {
 }
 
 //
-
-input[type="checkbox"] {
-  transform:scale(1.25, 1.25);
-}
 
 .btn-circle, .btn-circle-3d{
   border-radius: 50% !important;
