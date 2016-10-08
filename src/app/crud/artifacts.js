@@ -95,12 +95,12 @@ function ArtifactsController($scope, $location, $attrs, toastr, alert, vamp) {
           vamp.await(function () {
             vamp.remove(path + '/' + name);
           }).then(function () {
-            toastr.success('\'' + name + '\' has been successfully removed.');
+            toastr.success('\'' + name + '\' has been successfully deleted.');
           }).catch(function (response) {
             if (response) {
-              toastr.error(response.data.message, 'Removal of \'' + name + '\' failed.');
+              toastr.error(response.data.message, 'Deletion of \'' + name + '\' failed.');
             } else {
-              toastr.error('Server timeout.', 'Removal of \'' + name + '\' failed.');
+              toastr.error('Server timeout.', 'Deletion of \'' + name + '\' failed.');
             }
           });
         });

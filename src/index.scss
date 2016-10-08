@@ -658,45 +658,61 @@ input[type=number] {
 
 //
 
-.btn-circle, .btn-circle-3d {
-  width: 5rem;
-  border-radius: 50% !important;
-  margin-left: 2rem;
-}
+.btn {
 
-.btn-primary.btn-circle {
-  -webkit-box-shadow: 0px 0px 3px 1px #245580;
-  -moz-box-shadow: 0px 0px 3px 1px #245580;
-  box-shadow: 0px 0px 3px 1px #245580;
-}
+  font-size: 14px !important;
+  border: none !important;
+  border-radius: 20px !important;
+  line-height: 1 !important;
+  background: $dark-blue none !important;
+  text-shadow: none !important;
+  padding: 9px 20px 7px 20px !important;
+  color: white !important;
+  font-weight: $font-weight-regular !important;
+  letter-spacing: 1px;
 
-.btn-info.btn-circle {
-  -webkit-box-shadow: 0px 0px 3px 1px #28a4c9;
-  -moz-box-shadow: 0px 0px 3px 1px #28a4c9;
-  box-shadow: 0px 0px 3px 1px #28a4c9;
-}
+  &.btn-circle, &.btn-circle-3d {
+    width: 5rem;
+    height: 5rem;
+    font-size: 18px !important;
+    border-radius: 50% !important;
+    margin-left: 2rem;
+    padding: 0 !important;
+  }
 
-.btn-success.btn-circle {
-  -webkit-box-shadow: 0px 0px 3px 1px #3e8f3e;
-  -moz-box-shadow: 0px 0px 3px 1px #3e8f3e;
-  box-shadow: 0px 0px 3px 1px #3e8f3e;
-}
+  &.blue{
+    background-color: rgba($dark-blue, 0.5) !important;
+    &:hover {
+      background-color: red;
+    }
 
-.btn-danger.btn-circle {
-  -webkit-box-shadow: 0px 0px 3px 1px #b92c28;
-  -moz-box-shadow: 0px 0px 3px 1px #b92c28;
-  box-shadow: 0px 0px 3px 1px #b92c28;
-}
+    &.btn-circle {
+      -webkit-box-shadow: 0px 0px 3px 1px #245580;
+      -moz-box-shadow: 0px 0px 3px 1px #245580;
+      box-shadow: 0px 0px 3px 1px #245580;
+    }
+  }
 
-.btn-warning.btn-circle {
-  -webkit-box-shadow: 0px 0px 3px 1px #e38d13;
-  -moz-box-shadow: 0px 0px 3px 1px #e38d13;
-  box-shadow: 0px 0px 3px 1px #e38d13;
-}
+  &.red {
+    background-color: $purple !important;
 
-.btn-default.btn-circle {
-  -webkit-box-shadow: 0px 0px 3px 1px #ccc;
-  -moz-box-shadow: 0px 0px 3px 1px #ccc;
-  box-shadow: 0px 0px 3px 1px #ccc;
-}
+    &.btn-circle {
+      -webkit-box-shadow: 0px 0px 3px 1px #b92c28;
+      -moz-box-shadow: 0px 0px 3px 1px #b92c28;
+      box-shadow: 0px 0px 3px 1px #b92c28;
+    }
+  }
 
+  &.ghost {
+    background-color: transparent !important;
+    border: 1px solid $dark-blue !important;
+    color: $dark-blue !important;
+    font-weight: $font-weight-regular !important;
+
+    &.btn-circle {
+      -webkit-box-shadow: 0px 0px 3px 1px #ccc;
+      -moz-box-shadow: 0px 0px 3px 1px #ccc;
+      box-shadow: 0px 0px 3px 1px #ccc;
+    }
+  }
+}
