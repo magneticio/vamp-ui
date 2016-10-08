@@ -15,10 +15,9 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li ng-class="{active: $ctrl.isActive(artifact)}" ng-repeat="artifact in $ctrl.artifacts">
-                    <a ui-sref="{{ artifact.kind }}" href="#">
-                        {{artifact.kind | capitalize}}&nbsp;<i class="fa fa-flash" ng-show="artifact.deployable"></i>
-                    </a>
+                <li ng-class="{active : $ctrl.isActive(artifact), deployable : artifact.deployable}"
+                    ng-repeat="artifact in $ctrl.artifacts">
+                    <a ui-sref="{{ artifact.kind }}" href="#">{{artifact.kind | capitalize}}</a>
                 </li>
             </ul>
             <!-- disconnected -->

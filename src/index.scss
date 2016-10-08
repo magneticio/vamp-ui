@@ -239,16 +239,13 @@ menu {
   z-index: 999;
   position: fixed;
   top: 52px;
-  right: 0;
   width: 25%;
   max-width: 400px;
   bottom: 0;
   background-color: white;
   padding: 22px;
   box-shadow: -4px 0 4px 1px rgba(#aaaaaa, 0.3);
-
   right: -25%;
-
   transition: right 0.3s ease-in-out;
 
   &.active {
@@ -257,7 +254,6 @@ menu {
 
   h3 {
     margin: 0 0 20px 0;
-
   }
 }
 
@@ -288,6 +284,11 @@ p, div {
   color: $purple !important;
   background-image: none !important;
   box-shadow: none !important;
+}
+
+.navbar-default .navbar-nav > .deployable > a {
+  text-decoration: underline;
+  text-decoration-style: double;
 }
 
 .ace_editor {
@@ -467,7 +468,6 @@ a.editable-click:hover {
   justify-content: center;
   border-left: 2px solid $light-grey;
   margin-left: 15px;
-
 }
 
 .fa-info {
