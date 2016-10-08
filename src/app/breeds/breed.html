@@ -1,16 +1,16 @@
 <artifacts kind="breeds">
-    <div class="artifact-properties" ng-controller="BreedController as $ctrl">
+    <div class="artifact-properties" ng-controller="ArtifactController as $ctrl">
         <div class="list">
             <p>deployable :</p>
             <ul>
-                <li>{{ $ctrl.breed.deployable.type }}</li>
-                <li ng-if="$ctrl.breed.deployable.type !== 'application/javascript'">{{ $ctrl.breed.deployable.definition }}</li>
+                <li>{{ $ctrl.artifact.deployable.type }}</li>
+                <li ng-if="$ctrl.artifact.deployable.type !== 'application/javascript'">{{ $ctrl.artifact.deployable.definition }}</li>
             </ul>
         </div>
-        <div class="list" ng-if="!($ctrl.breed.ports | isEmpty)">
+        <div class="list" ng-if="!($ctrl.artifact.ports | isEmpty)">
             <p>ports :</p>
             <ul>
-                <li ng-repeat="(name, value) in $ctrl.breed.ports">{{ name }} : {{ value }}</li>
+                <li ng-repeat="(name, value) in $ctrl.artifact.ports">{{ name }} : {{ value }}</li>
             </ul>
         </div>
     </div>

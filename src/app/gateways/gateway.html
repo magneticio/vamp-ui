@@ -1,18 +1,18 @@
 <artifacts kind="gateways">
-    <div class="artifact-properties" ng-controller="GatewayController as $ctrl">
-        <span class="label label-primary">port : {{ $ctrl.gateway.port }}</span>
-        <span ng-if="$ctrl.gateway.inner" class="label label-primary">inner</span>
+    <div class="artifact-properties" ng-controller="ArtifactController as $ctrl">
+        <span class="label label-primary">port : {{ $ctrl.artifact.port }}</span>
+        <span ng-if="$ctrl.artifact.inner" class="label label-primary">inner</span>
         <p></p>
         <div class="list">
             <p>virtual hosts :</p>
             <ul>
-                <li ng-repeat="host in $ctrl.gateway.virtual_hosts">{{ host }}</li>
+                <li ng-repeat="host in $ctrl.artifact.virtual_hosts">{{ host }}</li>
             </ul>
         </div>
         <div class="list">
             <p>routes :</p>
             <ul>
-                <li ng-repeat="(route, value) in $ctrl.gateway.routes">{{ route }}</li>
+                <li ng-repeat="(route, value) in $ctrl.artifact.routes">{{ route }}</li>
             </ul>
         </div>
     </div>

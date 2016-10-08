@@ -28,7 +28,8 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "scales",
-      deployable: false
+      deployable: false,
+      artifactsTemplate: 'app/scales/scale.html'
     }
   ];
 };
