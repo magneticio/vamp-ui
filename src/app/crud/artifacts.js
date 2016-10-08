@@ -15,11 +15,15 @@ function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, 
 
   var path = '/' + this.kind;
 
-  vamp.peek(path);
+  this.peek = function () {
+    vamp.peek(path);
+  };
+
+  this.peek();
 
   $scope.$on('vamp:connection', function (e, connection) {
     if (connection === 'opened') {
-      vamp.peek(path);
+      $ctrl.peek();
     }
   });
 
@@ -29,7 +33,7 @@ function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, 
 
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'archive') && _.includes(response.data.tags, $ctrl.kind)) {
-      vamp.peek(path);
+      $ctrl.peek();
     }
   });
 
