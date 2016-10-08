@@ -7,7 +7,7 @@ angular.module('app').component('artifact', {
     artifact: '<'
   },
   transclude: {
-    div: '?div'
+    body: '?div'
   },
   controller: function () {
     var $ctrl = this;

@@ -3,7 +3,7 @@ angular.module('app').component('artifacts', {
   controller: ArtifactsController,
   templateUrl: 'app/crud/artifacts.html',
   transclude: {
-    div: '?div'
+    body: '?div'
   }
 });
 

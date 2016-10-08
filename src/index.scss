@@ -647,6 +647,10 @@ input[type=number] {
   cursor: pointer;
   background: aliceblue url('img/blueprint.png');
 
+  &:hover {
+    background-color: rgba(lightblue, 0.2);
+  }
+
   &.selected {
     border: 2px solid $dark-blue;
   }
@@ -680,6 +684,10 @@ input[type=number] {
   font-weight: $font-weight-light !important;
   letter-spacing: 1px;
 
+  &:hover {
+    background-color: rgba($dark-blue, 0.9) !important;
+  }
+
   &.btn-circle, &.btn-circle-3d {
     width: 5rem;
     height: 5rem;
@@ -689,19 +697,6 @@ input[type=number] {
     padding: 0 !important;
   }
 
-  &.blue {
-    background-color: rgba($dark-blue, 0.5) !important;
-    &:hover {
-      background-color: red;
-    }
-
-    &.btn-circle {
-      -webkit-box-shadow: 0px 0px 3px 1px #245580;
-      -moz-box-shadow: 0px 0px 3px 1px #245580;
-      box-shadow: 0px 0px 3px 1px #245580;
-    }
-  }
-
   &.red {
     background-color: $purple !important;
 
@@ -709,6 +704,10 @@ input[type=number] {
       -webkit-box-shadow: 0px 0px 3px 1px #b92c28;
       -moz-box-shadow: 0px 0px 3px 1px #b92c28;
       box-shadow: 0px 0px 3px 1px #b92c28;
+    }
+
+    &:hover {
+      background-color: rgba($purple, 0.9) !important;
     }
   }
 
@@ -735,7 +734,7 @@ input[type=number] {
   justify-content: center;
 
   button {
-    margin: 5px 15px 5px 15px;
+    margin: 5px 30px 5px 30px;
     text-align: left;
   }
 }

@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 class="modal-title">Deploy blueprint '{{ blueprint.name }}'</h3>
+</div>
+<form novalidate name="form" ng-submit="ok()">
+    <div class="modal-body">
+        <p>You are about to deploy the blueprint '{{ blueprint.name }}'. You should give a name to deployment.</p>
+
+        <div class="form-group" ng-class="{'has-error': form.name.$invalid}">
+            <label for="deployment-name">Deployment name</label>
+            <input name="name" type="text" class="form-control" id="deployment-name" placeholder="Name"
+                   ng-model="deploymentName" ng-pattern="/^\S*$/" required>
+            <span class="help-block" ng-show="form.name.$error.required">Deployment should have a name.</span>
+            <span class="help-block" ng-show="form.name.$error.pattern">Deployment name can have only non-whitespace characters.</span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-disabled="form.$invalid" type="submit">Deploy
+        </button>
+        <button class="btn ghost" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</form>
