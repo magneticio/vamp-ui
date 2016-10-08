@@ -7,6 +7,5 @@ function ScaleController($scope) {
 
   this.cpu = this.scale.cpu;
   this.instances = this.scale.instances;
-
-  this.memory = parseInt(this.scale.memory , 10);
+  this.memory = parseInt(this.scale.memory, 10);
 }

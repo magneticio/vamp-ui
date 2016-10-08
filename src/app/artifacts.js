@@ -15,7 +15,8 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "workflows",
-      deployable: true
+      deployable: true,
+      artifactsTemplate: 'app/workflows/workflow.html'
     },
     {
       kind: "blueprints",

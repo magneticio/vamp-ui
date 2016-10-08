@@ -23,9 +23,6 @@ angular.module('app')
         $ctrl.hover = false;
       };
     }
-  }).controller('ArtifactController', ArtifactController);
-
-/** @ngInject */
-function ArtifactController($scope) {
-  this.artifact = $scope.$parent.$parent.artifact;
-}
+  }).controller('ArtifactController', function ($scope) {
+    this.artifact = $scope.$parent.$parent.artifact;
+  });

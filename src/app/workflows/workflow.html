@@ -1,0 +1,19 @@
+<artifacts kind="workflows">
+    <div class="artifact-properties" ng-controller="ArtifactController as $ctrl">
+        <span ng-if="$ctrl.artifact.schedule === 'daemon'" class="label label-primary">schedule : daemon</span>
+        <div class="list" ng-if="!($ctrl.artifact.schedule.event | isEmpty)">
+            <p>event schedule: </p>
+            <ul>
+                <li ng-repeat="tag in $ctrl.artifact.schedule.event.tags">{{ tag }}</li>
+            </ul>
+        </div>
+        <div class="list" ng-if="!($ctrl.artifact.schedule.time | isEmpty)">
+            <p>time schedule: </p>
+            <ul>
+                <li ng-if="$ctrl.artifact.schedule.time.period">period : {{ $ctrl.artifact.schedule.time.period }}</li>
+                <li ng-if="$ctrl.artifact.schedule.time.start">start  : {{ $ctrl.artifact.schedule.time.start }}</li>
+                <li ng-if="$ctrl.artifact.schedule.time.repeat">repeat : {{ $ctrl.artifact.schedule.time.repeat }}</li>
+            </ul>
+        </div>
+    </div>
+</artifacts>

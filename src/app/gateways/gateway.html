@@ -3,7 +3,7 @@
         <span class="label label-primary">port : {{ $ctrl.artifact.port }}</span>
         <span ng-if="$ctrl.artifact.inner" class="label label-primary">inner</span>
         <p></p>
-        <div class="list">
+        <div class="list" ng-if="!($ctrl.artifact.virtual_hosts | isEmpty)">
             <p>virtual hosts :</p>
             <ul>
                 <li ng-repeat="host in $ctrl.artifact.virtual_hosts">{{ host }}</li>
