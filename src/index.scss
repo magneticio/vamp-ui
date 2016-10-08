@@ -656,7 +656,7 @@ input[type=number] {
   }
 
   input[type="checkbox"] {
-    -moz-transform:scale(1.25, 1.25);
+    -moz-transform: scale(1.25, 1.25);
 
     &:hover {
       cursor: pointer;
@@ -666,7 +666,7 @@ input[type=number] {
 
 .artifact-title {
   font-size: 2rem;
-  margin: 0 0 2rem 0;
+  margin: 0 0 1.5rem 0;
 }
 
 //
@@ -725,7 +725,7 @@ input[type=number] {
   }
 }
 
-// blueprint
+// blueprints
 
 .blueprint-actions {
   margin-top: 40px;
@@ -736,5 +736,36 @@ input[type=number] {
   button {
     margin: 5px 30px 5px 30px;
     text-align: left;
+  }
+}
+
+// gateways
+
+.gateway-properties {
+  span {
+    font-size: 14px !important;
+    font-weight: $font-weight-regular;
+    background-color: rgba(lightblue, .5);
+    color: inherit;
+    border-radius: .3em;
+  }
+
+  .list {
+    margin: .6rem 0 .6rem 0;
+    background-color: rgba(lightblue, .5);
+    border-radius: .3em;
+    font-size: 14px !important;
+    font-weight: $font-weight-regular;
+    color: inherit;
+    padding: .2em .6em 0;
+
+    p {
+      margin: 0;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0 10px;
+    }
   }
 }

@@ -9,7 +9,8 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "gateways",
-      deployable: true
+      deployable: true,
+      artifactsTemplate: 'app/gateways/gateway.html'
     },
     {
       kind: "workflows",
@@ -18,7 +19,7 @@ Artifacts.prototype.all = function () {
     {
       kind: "blueprints",
       deployable: false,
-      artifactsTemplate: 'app/blueprints/blueprints.html'
+      artifactsTemplate: 'app/blueprints/blueprint.html'
     },
     {
       kind: "breeds",

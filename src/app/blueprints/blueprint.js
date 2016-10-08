@@ -1,10 +1,10 @@
 angular.module('app')
-  .controller('BlueprintsController', BlueprintsController)
+  .controller('BlueprintController', BlueprintController)
   .controller('DeployBlueprintController', DeployBlueprintController)
   .controller('UpdateDeploymentController', UpdateDeploymentController);
 
 /** @ngInject */
-function BlueprintsController($scope, $location, $uibModal, toastr, vamp) {
+function BlueprintController($scope, $location, $uibModal, toastr, vamp) {
   var $ctrl = this;
   this.blueprint = $scope.$parent.$parent.artifact;
 

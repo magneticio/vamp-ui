@@ -1,0 +1,19 @@
+<artifacts kind="gateways">
+    <div class="gateway-properties" ng-controller="GatewayController as $ctrl">
+        <span class="label label-primary">port : {{ $ctrl.gateway.port }}</span>
+        <span ng-if="$ctrl.gateway.inner" class="label label-primary">inner</span>
+        <p></p>
+        <div class="list">
+            <p>virtual hosts :</p>
+            <ul>
+                <li ng-repeat="host in $ctrl.gateway.virtual_hosts">{{ host }}</li>
+            </ul>
+        </div>
+        <div class="list">
+            <p>routes :</p>
+            <ul>
+                <li ng-repeat="(route, value) in $ctrl.gateway.routes">{{ route }}</li>
+            </ul>
+        </div>
+    </div>
+</artifacts>
