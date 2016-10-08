@@ -17,7 +17,8 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "blueprints",
-      deployable: false
+      deployable: false,
+      artifactsTemplate: 'app/blueprints/blueprints.html'
     },
     {
       kind: "breeds",

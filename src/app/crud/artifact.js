@@ -6,6 +6,9 @@ angular.module('app').component('artifact', {
   bindings: {
     artifact: '<'
   },
+  transclude: {
+    div: '?div'
+  },
   controller: function () {
     var $ctrl = this;
 

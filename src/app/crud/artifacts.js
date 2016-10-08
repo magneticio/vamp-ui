@@ -1,7 +1,10 @@
 angular.module('app').component('artifacts', {
   restrict: 'E',
   controller: ArtifactsController,
-  templateUrl: 'app/crud/artifacts.html'
+  templateUrl: 'app/crud/artifacts.html',
+  transclude: {
+    div: '?div'
+  }
 });
 
 function ArtifactsController($scope, $location, $attrs, toastr, alert, vamp) {

@@ -17,6 +17,8 @@
 </header>
 <div class="container-fluid">
     <div class="artifacts">
-        <artifact ng-repeat="artifact in $ctrl.artifacts" artifact="artifact"></artifact>
+        <artifact ng-repeat="artifact in $ctrl.artifacts" artifact="artifact">
+            <div ng-transclude="div"></div>
+        </artifact>
     </div>
 </div>

@@ -640,7 +640,7 @@ input[type=number] {
 .artifact {
   height: 24rem;
   width: 24rem;
-  border: 2px solid lightskyblue;
+  border: 2px solid lightblue;
   border-radius: 1rem;
   margin: 1rem;
   padding: 1rem;
@@ -648,7 +648,7 @@ input[type=number] {
   background: aliceblue url('img/blueprint.png');
 
   &.selected {
-    border: 2px solid cornflowerblue;
+    border: 2px solid $dark-blue;
   }
 
   input[type="checkbox"] {
@@ -677,7 +677,7 @@ input[type=number] {
   text-shadow: none !important;
   padding: 9px 20px 7px 20px !important;
   color: white !important;
-  font-weight: $font-weight-regular !important;
+  font-weight: $font-weight-light !important;
   letter-spacing: 1px;
 
   &.btn-circle, &.btn-circle-3d {
@@ -723,5 +723,19 @@ input[type=number] {
       -moz-box-shadow: 0px 0px 3px 1px #ccc;
       box-shadow: 0px 0px 3px 1px #ccc;
     }
+  }
+}
+
+// blueprint
+
+.blueprint-actions {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  button {
+    margin: 5px 15px 5px 15px;
+    text-align: left;
   }
 }
