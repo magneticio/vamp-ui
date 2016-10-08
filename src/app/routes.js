@@ -21,6 +21,11 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       template: '<add kind="' + artifact.kind + '"></add>'
     };
 
+    var artifactViewData = {
+      url: '/' + artifact.kind + '/view/:name',
+      template: '<edit kind="' + artifact.kind + '"></edit>'
+    };
+
     var artifactEditData = {
       url: '/' + artifact.kind + '/edit/:name',
       template: '<edit kind="' + artifact.kind + '"></edit>'
@@ -29,6 +34,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state(artifact.kind, artifactsData)
       .state(artifact.kind + '/add', artifactAddData)
-      .state(artifact.kind + '/edit/:name', artifactEditData);
+      .state(artifact.kind + '/view/:name*', artifactViewData)
+      .state(artifact.kind + '/edit/:name*', artifactEditData);
   });
 }

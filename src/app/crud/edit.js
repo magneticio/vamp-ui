@@ -4,12 +4,12 @@ angular.module('app').component('edit', {
   templateUrl: 'app/crud/edit.html'
 });
 
-function ArtifactEditController($scope, $attrs, $state, $stateParams, $location, toastr, alert, vamp) {
+function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $location, toastr, alert, vamp) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
   this.name = $stateParams.name;
-  this.title = this.name;
+  this.title = $filter('decodeName')(this.name);
 
   this.headerClass = '';
   this.headerMessage = '';
@@ -31,7 +31,7 @@ function ArtifactEditController($scope, $attrs, $state, $stateParams, $location,
   this.base = null;
   this.source = null;
 
-  this.ignoreUpdate = false;
+  this.ignoreChange = false;
 
   vamp.peek(path, {}, 'YAML');
 
@@ -54,7 +54,7 @@ function ArtifactEditController($scope, $attrs, $state, $stateParams, $location,
     if (_.includes(response.data.tags, $ctrl.kind + ':' + $ctrl.name)) {
       if (_.includes(response.data.tags, 'archive:delete')) {
         alert.show('Warning', '\'' + $ctrl.name + '\' has been deleted in background. If you save the content, \'' + $ctrl.name + '\' will be recreated.', 'OK');
-      } else if (!$ctrl.ignoreUpdate && _.includes(response.data.tags, 'archive:update')) {
+      } else if (!$ctrl.ignoreChange && _.includes(response.data.tags, 'archive:update')) {
         alert.show('Warning', '\'' + $ctrl.name + '\' has been updated in background. Do you want to reload changed?', 'Reload', 'Keep', function () {
           $ctrl.base = $ctrl.source = null;
           vamp.peek(path, {}, 'YAML');
@@ -64,7 +64,7 @@ function ArtifactEditController($scope, $attrs, $state, $stateParams, $location,
   });
 
   $scope.$on('$stateChangeStart', function (event, toState, toParams) {
-    if ($ctrl.isModified()) {
+    if (!$ctrl.ignoreChange && $ctrl.isModified()) {
       event.preventDefault();
       alert.show('Warning', '\'' + $ctrl.name + '\' has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel', function () {
         $ctrl.base = $ctrl.source = null;
@@ -90,7 +90,7 @@ function ArtifactEditController($scope, $attrs, $state, $stateParams, $location,
   };
 
   this.save = function () {
-    $ctrl.ignoreUpdate = true;
+    $ctrl.ignoreChange = true;
 
     vamp.await(function () {
       vamp.put(path, $ctrl.source, {}, 'JSON');
@@ -98,7 +98,7 @@ function ArtifactEditController($scope, $attrs, $state, $stateParams, $location,
       goBack();
       toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');
     }).catch(function (response) {
-      $ctrl.ignoreUpdate = false;
+      $ctrl.ignoreChange = false;
 
       if (response) {
         toastr.error(response.data.message, 'Save failed.');

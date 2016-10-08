@@ -4,7 +4,7 @@ angular.module('app')
   .controller('UpdateDeploymentController', UpdateDeploymentController);
 
 /** @ngInject */
-function BlueprintsController($scope, $uibModal) {
+function BlueprintsController($scope, $location, $uibModal, toastr, vamp) {
   var $ctrl = this;
   this.blueprint = $scope.$parent.$parent.artifact;
 
@@ -35,7 +35,20 @@ function BlueprintsController($scope, $uibModal) {
         }
       }
     }).result.then(function (data) {
-      console.log('deployment name: ' + data.deploymentName);
+      var deployment = data.deploymentName;
+
+      vamp.await(function () {
+        vamp.put('/deployments/' + deployment, angular.toJson($ctrl.blueprint));
+      }).then(function () {
+        showDeployment(deployment);
+        toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully deployed as \'' + deployment + '\'.');
+      }).catch(function (response) {
+        if (response) {
+          toastr.error(response.data.message, 'Deployment failed.');
+        } else {
+          toastr.error('Server timeout.', 'Deployment failed.');
+        }
+      });
     });
   };
 
@@ -70,6 +83,10 @@ function BlueprintsController($scope, $uibModal) {
       console.log('deployment: ' + JSON.stringify(data.deployment));
     });
   };
+
+  function showDeployment(name) {
+    $location.path('deployments/view/' + name);
+  }
 
   function updateDeployment(deployments, title, text, buttonText, buttonClass) {
     return $uibModal.open({

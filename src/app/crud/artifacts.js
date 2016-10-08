@@ -7,7 +7,7 @@ angular.module('app').component('artifacts', {
   }
 });
 
-function ArtifactsController($scope, $location, $attrs, toastr, alert, vamp) {
+function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, vamp) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
@@ -77,8 +77,8 @@ function ArtifactsController($scope, $location, $attrs, toastr, alert, vamp) {
     $location.path($ctrl.kind + '/add');
   };
 
-  this.edit = function (artifact) {
-    $location.path($ctrl.kind + '/edit/' + artifact.name);
+  this.view = function (artifact) {
+    $location.path($ctrl.kind + '/view/' + $filter('encodeName')(artifact.name));
   };
 
   this.deleteSelected = function () {
