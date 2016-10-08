@@ -15,11 +15,19 @@ function EventController($scope, vamp) {
     $scope.show = !$scope.show;
   };
 
+  function start() {
+    $scope.events.length = 0;
+    vamp.peek('/events');
+    vamp.peek('/events/stream');
+  }
+
+  if (vamp.connected()) {
+    start();
+  }
+
   $scope.$on('vamp:connection', function (e, connection) {
     if (connection === 'opened') {
-      $scope.events.length = 0;
-      vamp.peek('/events');
-      vamp.peek('/events/stream');
+      start();
     }
   });
 

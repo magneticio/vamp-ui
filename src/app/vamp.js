@@ -38,6 +38,10 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
     notify(response.path, response);
   };
 
+  this.connected = function () {
+    return !_.isEmpty(stream);
+  };
+
   this.peek = function (path, params, accept) {
     request(path, 'PEEK', '', params ? params : {}, accept ? accept : 'JSON');
   };

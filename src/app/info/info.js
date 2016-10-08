@@ -5,11 +5,15 @@ angular.module('app').component('info', {
 });
 
 function InfoController($rootScope, $scope, vamp) {
-  $scope.$on('vamp:connection', function (event, connection) {
-    if (connection === 'opened') {
-      vamp.peek('/info');
-    }
-  });
+  if (vamp.connected()) {
+    vamp.peek('/info');
+  } else {
+    $scope.$on('vamp:connection', function (event, connection) {
+      if (connection === 'opened') {
+        vamp.peek('/info');
+      }
+    });
+  }
 
   $rootScope.$watch('infoPanelActive', function (newValue) {
     $scope.infoPanelActive = newValue;

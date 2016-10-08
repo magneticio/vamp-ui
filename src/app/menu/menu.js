@@ -36,17 +36,29 @@ function MenuController($rootScope, $scope, $interval, vamp) {
     vamp.peek('/info', {on: 'jvm'});
   }
 
+  function start() {
+    info();
+    if (!polling) {
+      polling = $interval(info, 15000);
+    }
+    $ctrl.connected = true;
+  }
+
+  function stop() {
+    $ctrl.connected = false;
+    $interval.cancel(polling);
+    polling = undefined;
+  }
+
+  if (vamp.connected()) {
+    start();
+  }
+
   $scope.$on('vamp:connection', function (event, connection) {
     if (connection === 'opened') {
-      info();
-      if (!polling) {
-        polling = $interval(info, 15000);
-      }
-      $ctrl.connected = true;
+      start();
     } else {
-      $ctrl.connected = false;
-      $interval.cancel(polling);
-      polling = undefined;
+      stop();
     }
   });
 
