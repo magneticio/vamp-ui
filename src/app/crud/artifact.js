@@ -5,5 +5,18 @@ angular.module('app').component('artifact', {
   templateUrl: 'app/crud/artifact.html',
   bindings: {
     artifact: '<'
+  },
+  controller: function () {
+    var $ctrl = this;
+
+    this.hover = false;
+
+    this.hoverIn = function () {
+      $ctrl.hover = true;
+    };
+
+    this.hoverOut = function () {
+      $ctrl.hover = false;
+    };
   }
 });

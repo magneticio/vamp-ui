@@ -501,6 +501,7 @@ a.editable-click:hover {
 }
 
 //Slider style
+
 .rzslider {
   .rz-bar {
     height: 10px;
@@ -645,13 +646,21 @@ input[type=number] {
   padding: 1rem;
   cursor: pointer;
   background: aliceblue url('img/blueprint.png');
+
+  &.selected {
+    border: 2px solid cornflowerblue;
+  }
+
+  input[type="checkbox"] {
+    -moz-transform:scale(1.25, 1.25);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
-.artifactSelected {
-  border: 2px solid cornflowerblue;
-}
-
-.artifact-h3 {
+.artifact-title {
   font-size: 2rem;
   margin: 0 0 2rem 0;
 }
@@ -680,7 +689,7 @@ input[type=number] {
     padding: 0 !important;
   }
 
-  &.blue{
+  &.blue {
     background-color: rgba($dark-blue, 0.5) !important;
     &:hover {
       background-color: red;
