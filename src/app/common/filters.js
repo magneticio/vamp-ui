@@ -13,4 +13,9 @@ angular.module('app')
     return function (input) {
       return input ? input.replace(/~2F/g, '/') : '';
     };
+  })
+  .filter('isEmpty', function () {
+    return function (obj) {
+      return _.isEmpty(obj);
+    };
   });

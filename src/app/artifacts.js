@@ -23,7 +23,8 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "breeds",
-      deployable: false
+      deployable: false,
+      artifactsTemplate: 'app/breeds/breed.html'
     },
     {
       kind: "scales",
