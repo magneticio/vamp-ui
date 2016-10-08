@@ -24,7 +24,7 @@ function DeploymentController($scope) {
   this.instances = instances;
 
   $scope.$on('/events/stream', function (e, response) {
-    if (_.includes(response.data.tags, 'synchronization:undeployed') || _.includes(response.data.tags, 'synchronization:deployed')) {
+    if (_.includes(response.data.tags, 'synchronization')) {
       deployments.peek();
     }
   });

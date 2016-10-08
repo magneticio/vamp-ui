@@ -1,26 +1,29 @@
 angular.module('app')
   .controller('BlueprintController', BlueprintController)
   .controller('DeployBlueprintController', DeployBlueprintController)
-  .controller('UpdateDeploymentController', UpdateDeploymentController);
+  .controller('UpdateDeploymentController', UpdateDeploymentController)
+  .factory('blueprint', ['$rootScope', 'vamp', function ($rootScope, vamp) {
+    return new BlueprintService($rootScope, vamp);
+  }]);
 
 /** @ngInject */
-function BlueprintController($scope, $location, $uibModal, toastr, vamp) {
+function BlueprintController($scope, $location, $uibModal, toastr, vamp, blueprint) {
   var $ctrl = this;
   this.blueprint = $scope.$parent.$parent.artifact;
 
-  this.deployments = [{
-    name: 'deployment1'
-  }, {
-    name: 'deployment2'
-  }];
+  this.mergeWith = [];
+  this.removeFrom = [];
 
-  this.mergeWith = function () {
-    return $ctrl.deployments;
-  };
+  function peekDeployments() {
+    blueprint.mergeWithDeployments($ctrl.mergeWith, $ctrl.blueprint);
+    blueprint.removeFromDeployments($ctrl.removeFrom, $ctrl.blueprint);
+  }
 
-  this.removeFrom = function () {
-    return $ctrl.deployments;
-  };
+  peekDeployments();
+
+  $scope.$on('deployments', function () {
+    peekDeployments();
+  });
 
   this.deploy = function ($event) {
     $event.stopPropagation();
@@ -36,11 +39,10 @@ function BlueprintController($scope, $location, $uibModal, toastr, vamp) {
       }
     }).result.then(function (data) {
       var deployment = data.deploymentName;
-
       vamp.await(function () {
         vamp.put('/deployments/' + deployment, angular.toJson($ctrl.blueprint));
       }).then(function () {
-        showDeployment(deployment);
+        gotoDeployment(deployment);
         toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully deployed as \'' + deployment + '\'.');
       }).catch(function (response) {
         if (response) {
@@ -56,7 +58,7 @@ function BlueprintController($scope, $location, $uibModal, toastr, vamp) {
     $event.stopPropagation();
 
     var modal = updateDeployment(
-      $ctrl.mergeWith(),
+      $ctrl.mergeWith,
       'Merge blueprint \'' + $ctrl.blueprint.name + '\' to deployment',
       'Which deployment should [' + $ctrl.blueprint.name + '] be merged to?',
       'Merge',
@@ -64,7 +66,19 @@ function BlueprintController($scope, $location, $uibModal, toastr, vamp) {
     );
 
     modal.result.then(function (data) {
-      console.log('deployment: ' + JSON.stringify(data.deployment));
+      var name = data.deployment.name;
+      vamp.await(function () {
+        vamp.put('/deployments/' + name, angular.toJson($ctrl.blueprint));
+      }).then(function () {
+        gotoDeployment(name);
+        toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully merged to \'' + name + '\'.');
+      }).catch(function (response) {
+        if (response) {
+          toastr.error(response.data.message, 'Merge failed.');
+        } else {
+          toastr.error('Server timeout.', 'Merge failed.');
+        }
+      });
     });
   };
 
@@ -72,7 +86,7 @@ function BlueprintController($scope, $location, $uibModal, toastr, vamp) {
     $event.stopPropagation();
 
     var modal = updateDeployment(
-      $ctrl.removeFrom(),
+      $ctrl.removeFrom,
       'Remove blueprint \'' + $ctrl.blueprint.name + '\' from deployment',
       'Which deployment should [' + $ctrl.blueprint.name + '] be removed from?',
       'Remove',
@@ -80,11 +94,23 @@ function BlueprintController($scope, $location, $uibModal, toastr, vamp) {
     );
 
     modal.result.then(function (data) {
-      console.log('deployment: ' + JSON.stringify(data.deployment));
+      var name = data.deployment.name;
+      vamp.await(function () {
+        vamp.remove('/deployments/' + name, angular.toJson($ctrl.blueprint));
+      }).then(function () {
+        gotoDeployment(name);
+        toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully removed from \'' + name + '\'.');
+      }).catch(function (response) {
+        if (response) {
+          toastr.error(response.data.message, 'Removal failed.');
+        } else {
+          toastr.error('Server timeout.', 'Removal failed.');
+        }
+      });
     });
   };
 
-  function showDeployment(name) {
+  function gotoDeployment(name) {
     $location.path('deployments/view/' + name);
   }
 
@@ -152,4 +178,57 @@ function UpdateDeploymentController($scope, $uibModalInstance, blueprint, deploy
   $scope.cancel = function () {
     $uibModalInstance.dismiss('cancel');
   };
+}
+
+function BlueprintService($rootScope, vamp) {
+  var deployments = [];
+
+  var peek = _.debounce(function () {
+    vamp.peek('/deployments');
+  }, 3000, {
+    leading: true,
+    trailing: false
+  });
+
+  peek();
+
+  $rootScope.$on('/deployments', function (e, response) {
+    deployments = _.sortBy(response.data, ['name']);
+    $rootScope.$broadcast('deployments');
+  });
+
+  this.mergeWithDeployments = function (list) {
+    list.length = 0;
+    _.forEach(deployments, function (deployment) {
+      list.unshift(deployment);
+    });
+  };
+
+  this.removeFromDeployments = function (list, blueprint) {
+    list.length = 0;
+
+    var filtered = _.filter(deployments, function (deployment) {
+      return _.find(blueprint.clusters, function (bc, name) {
+        var dc = deployment.clusters[name];
+        if (_.isEmpty(dc)) {
+          return false;
+        }
+        return _.find(bc.services, function (bs) {
+          return _.find(dc.services, function (ds) {
+            return bs.breed.name === ds.breed.name;
+          });
+        });
+      });
+    });
+
+    _.forEach(filtered, function (deployment) {
+      list.unshift(deployment);
+    });
+  };
+
+  $rootScope.$on('/events/stream', function (e, response) {
+    if (_.includes(response.data.tags, 'synchronization')) {
+      peek();
+    }
+  });
 }
