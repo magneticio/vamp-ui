@@ -31,7 +31,8 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   this.base = null;
   this.source = null;
 
-  this.ignoreChange = false;
+  var validation = true;
+  var ignoreChange = false;
 
   vamp.peek(path, {}, 'YAML');
 
@@ -54,7 +55,7 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
     if (_.includes(response.data.tags, $ctrl.kind + ':' + $ctrl.name)) {
       if (_.includes(response.data.tags, 'archive:delete')) {
         alert.show('Warning', '\'' + $ctrl.name + '\' has been deleted in background. If you save the content, \'' + $ctrl.name + '\' will be recreated.', 'OK');
-      } else if (!$ctrl.ignoreChange && _.includes(response.data.tags, 'archive:update')) {
+      } else if (!ignoreChange && _.includes(response.data.tags, 'archive:update')) {
         alert.show('Warning', '\'' + $ctrl.name + '\' has been updated in background. Do you want to reload changed?', 'Reload', 'Keep', function () {
           $ctrl.base = $ctrl.source = null;
           vamp.peek(path, {}, 'YAML');
@@ -64,7 +65,7 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   });
 
   $scope.$on('$stateChangeStart', function (event, toState, toParams) {
-    if (!$ctrl.ignoreChange && $ctrl.isModified()) {
+    if (!ignoreChange && $ctrl.isModified()) {
       event.preventDefault();
       alert.show('Warning', '\'' + $ctrl.name + '\' has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel', function () {
         $ctrl.base = $ctrl.source = null;
@@ -74,7 +75,9 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   });
 
   this.validate = _.debounce(function (data) {
-    vamp.put(path, data, {validate_only: true}, 'JSON');
+    if (validation) {
+      vamp.put(path, data, {validate_only: true}, 'JSON');
+    }
   }, 1500);
 
   this.isModified = function () {
@@ -90,7 +93,8 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   };
 
   this.save = function () {
-    $ctrl.ignoreChange = true;
+    validation = false;
+    ignoreChange = true;
 
     vamp.await(function () {
       vamp.put(path, $ctrl.source, {}, 'JSON');
@@ -98,7 +102,8 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
       goBack();
       toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');
     }).catch(function (response) {
-      $ctrl.ignoreChange = false;
+      validation = true;
+      ignoreChange = false;
 
       if (response) {
         toastr.error(response.data.message, 'Save failed.');
@@ -109,6 +114,7 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   };
 
   function goBack() {
+    validation = false;
     $location.path($ctrl.kind);
   }
 }

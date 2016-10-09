@@ -25,6 +25,16 @@ function EventController($scope, vamp) {
     }
     $event.stopPropagation();
     $ctrl.filters[type] = !$ctrl.filters[type];
+
+    if ($ctrl.filters[type]) {
+      var filtered = _.filter($ctrl.events, function (event) {
+        return event.type !== type;
+      });
+      $ctrl.events.length = 0;
+      _.forEach(filtered, function (event) {
+        $ctrl.events.unshift(event);
+      });
+    }
   };
 
   function start() {

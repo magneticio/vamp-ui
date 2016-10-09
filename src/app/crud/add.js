@@ -31,6 +31,8 @@ function ArtifactAddController($scope, $attrs, $location, toastr, alert, vamp) {
 
   this.source = null;
 
+  var validation = true;
+
   $scope.$on(path, function (e, response) {
     if (response.content === 'JSON') {
       if (response.status === 'ERROR') {
@@ -44,7 +46,9 @@ function ArtifactAddController($scope, $attrs, $location, toastr, alert, vamp) {
   });
 
   this.validate = _.debounce(function (data) {
-    vamp.put(path, data, {validate_only: true}, 'JSON');
+    if (validation) {
+      vamp.put(path, data, {validate_only: true}, 'JSON');
+    }
   }, 1500);
 
   this.isModified = function () {
@@ -60,12 +64,14 @@ function ArtifactAddController($scope, $attrs, $location, toastr, alert, vamp) {
   };
 
   this.save = function () {
+    validation = false;
     vamp.await(function () {
       vamp.put(path, $ctrl.source, {}, 'JSON');
     }).then(function () {
       goBack();
       toastr.success('New ' + $ctrl.singular + ' has been successfully created.');
     }).catch(function (response) {
+      validation = true;
       if (response) {
         toastr.error(response.data.message, 'Creation failed.');
       } else {
@@ -75,6 +81,7 @@ function ArtifactAddController($scope, $attrs, $location, toastr, alert, vamp) {
   };
 
   function goBack() {
+    validation = false;
     $location.path($ctrl.kind);
   }
 }
