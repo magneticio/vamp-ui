@@ -43,8 +43,9 @@
             <div class="col-md-4 chart-fix">
                 <div>
                     <p>health
-                        <span ng-if="$ctrl.charts.health.last != null" class="label label-primary">{{ $ctrl.charts.health.last }} %</span>
-                        <span ng-if="$ctrl.gateway && $ctrl.charts.health.last == null" class="label label-danger">none</span>
+                        <span ng-if="$ctrl.charts.health.last != null && $ctrl.charts.health.last != 'none'"
+                              class="label label-primary">{{ $ctrl.charts.health.last }} %</span>
+                        <span ng-if="$ctrl.charts.health.last == 'none'" class="label label-danger">none</span>
                     </p>
                     <canvas class="chart" id="health"></canvas>
                 </div>
@@ -52,16 +53,18 @@
             <div class="col-md-4 chart-fix">
                 <div>
                     <p>requests per second
-                        <span ng-if="$ctrl.charts.rate.last != null" class="label label-primary">{{ $ctrl.charts.rate.last }}</span>
-                        <span ng-if="$ctrl.gateway && $ctrl.charts.rate.last == null" class="label label-danger">none</span>
+                        <span ng-if="$ctrl.charts.rate.last != null && $ctrl.charts.rate.last != 'none'"
+                              class="label label-primary">{{ $ctrl.charts.rate.last }}</span>
+                        <span ng-if="$ctrl.charts.rate.last == 'none'" class="label label-danger">none</span>
                     </p>
                     <canvas class="chart" id="rate"></canvas>
                 </div>
             </div>
             <div class="col-md-4 chart-fix">
                 <p>response time
-                    <span ng-if="$ctrl.charts.responseTime.last != null" class="label label-primary">{{ $ctrl.charts.responseTime.last }} ms</span>
-                    <span ng-if="$ctrl.gateway && $ctrl.charts.responseTime.last == null" class="label label-danger">none</span>
+                    <span ng-if="$ctrl.charts.responseTime.last != null && $ctrl.charts.responseTime.last != 'none'"
+                          class="label label-primary">{{ $ctrl.charts.responseTime.last }} ms</span>
+                    <span ng-if="$ctrl.charts.responseTime.last == 'none'" class="label label-danger">none</span>
                 </p>
                 <canvas class="chart" id="responseTime"></canvas>
             </div>
@@ -89,27 +92,27 @@
                 <td>
                     <div class="sparkchart-container">
                         <canvas class="chart" id="health-{{route.lookup_name}}" width="75" height="40"></canvas>
-                        <span ng-show="$ctrl.charts['health-' + route.lookup_name].last != null"
+                        <span ng-show="$ctrl.charts['health-' + route.lookup_name].last != null && $ctrl.charts['health-' + route.lookup_name].last != 'none'"
                               class="label label-primary">{{ $ctrl.charts['health-' + route.lookup_name].last }} %</span>
-                        <span ng-show="$ctrl.gateway && $ctrl.charts['health-' + route.lookup_name].last == null"
+                        <span ng-show="$ctrl.charts['health-' + route.lookup_name].last == 'none'"
                               class="label label-danger">none</span>
                     </div>
                 </td>
                 <td>
                     <div class="sparkchart-container">
                         <canvas class="chart" id="rate-{{route.lookup_name}}" width="75" height="40"></canvas>
-                        <span ng-show="$ctrl.charts['rate-' + route.lookup_name].last != null"
+                        <span ng-show="$ctrl.charts['rate-' + route.lookup_name].last != null && $ctrl.charts['rate-' + route.lookup_name].last != 'none'"
                               class="label label-primary">{{ $ctrl.charts['rate-' + route.lookup_name].last }}</span>
-                        <span ng-show="$ctrl.gateway && $ctrl.charts['rate-' + route.lookup_name].last == null"
+                        <span ng-show="$ctrl.charts['rate-' + route.lookup_name].last == 'none'"
                               class="label label-danger">none</span>
                     </div>
                 </td>
                 <td>
                     <div class="sparkchart-container">
                         <canvas class="chart" id="responseTime-{{route.lookup_name}}" width="75" height="40"></canvas>
-                        <span ng-show="$ctrl.charts['responseTime-' + route.lookup_name].last != null"
+                        <span ng-show="$ctrl.charts['responseTime-' + route.lookup_name].last != null && $ctrl.charts['responseTime-' + route.lookup_name].last != 'none'"
                               class="label label-primary">{{ $ctrl.charts['responseTime-' + route.lookup_name].last }} ms</span>
-                        <span ng-show="$ctrl.gateway && $ctrl.charts['responseTime-' + route.lookup_name].last == null"
+                        <span ng-show="$ctrl.charts['responseTime-' + route.lookup_name].last == 'none'"
                               class="label label-danger">none</span>
                     </div>
                 </td>

@@ -593,25 +593,23 @@ input[type=number] {
   }
 }
 
-@keyframes fadeOutGreen {
+@keyframes highlightChange {
   0% {
-    background-color: rgba($green, 1);
+    background-color: #5cb85c;
+  }
+  50% {
+    background-color: $dark-blue;
   }
   100% {
-    background-color: rgba($green, 0);
+    background-color: #5cb85c;
   }
-}
-
-.can-be-highlighted {
-  padding: 2px;
 }
 
 .highlight {
-  background-color: $green !important;
-  animation-name: fadeOutGreen;
-  animation-duration: 5s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
+  background-color: #5cb85c;
+  animation-name: highlightChange;
+  animation-duration: 1s;
+  animation-iteration-count: 5;
 }
 
 //
