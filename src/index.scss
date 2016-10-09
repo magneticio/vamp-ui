@@ -149,10 +149,6 @@ menu {
   right: 15px;
 }
 
-.bar-chart {
-  height: 200px;
-}
-
 .bars-container {
   position: absolute;
   top: 20px;
@@ -196,16 +192,9 @@ menu {
 
 .table > tbody > tr > td {
   vertical-align: middle !important;
-  font-size: 16px;
-  font-weight: 300;
   letter-spacing: 0.05em;
   color: $dark-blue;
-}
-
-.table > tbody > tr > th {
-  padding: 8px 0px 2px 8px;
-  vertical-align: middle !important;
-  color: rgba($dark-blue, 0.5);
+  padding: 8px 0 2px 8px;
   border-top: none !important;
   font-size: 14px !important;
   font-weight: 500;
