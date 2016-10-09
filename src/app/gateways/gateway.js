@@ -2,19 +2,12 @@
 angular.module('app').controller('GatewayController', GatewayController);
 
 /** @ngInject */
-function GatewayController($scope, $filter, $stateParams, $location, vamp, alert, toastr) {
+function GatewayController($scope, $filter, $stateParams, $timeout, $location, vamp, alert, toastr) {
   var $ctrl = this;
   var path = '/gateways/' + $stateParams.name;
 
   this.gateway = null;
   this.title = $filter('decodeName')($stateParams.name);
-
-  this.rate = null;
-  var rateChart = new Chart('rate');
-  this.health = null;
-  var healthChart = new Chart('health');
-  this.responseTime = null;
-  var responseTimeChart = new Chart('response-time');
 
   this.edit = function () {
     var encoded = $filter('encodeName')(this.gateway.name);
@@ -42,13 +35,70 @@ function GatewayController($scope, $filter, $stateParams, $location, vamp, alert
     vamp.peek(path);
   }
 
+  function peekEvents() {
+    var requests = [{
+      tags: [
+        'gateways:' + $ctrl.gateway.name,
+        'health'
+      ]
+    }, {
+      tags: [
+        'gateways:' + $ctrl.gateway.name,
+        'metrics:rate'
+      ]
+    }, {
+      tags: [
+        'gateways:' + $ctrl.gateway.name,
+        'metrics:responseTime'
+      ]
+    }];
+
+    _.forEach(requests, function (request) {
+      vamp.peek('/events', JSON.stringify(request));
+    });
+  }
+
   peek();
 
+  this.charts = {};
+
+  function updateCharts() {
+    var sparkline = {
+      millisPerPixel: 300, labels: {
+        disabled: true
+      },
+      timestampFormatter: function () {
+        return '';
+      }
+    };
+
+    var list = _.flatMap([['rate', 'health', 'responseTime'], _.flatMap(_.map($ctrl.gateway.routes, function (route) {
+      return ['rate-' + route.lookup_name, 'health-' + route.lookup_name, 'responseTime-' + route.lookup_name];
+    }))]);
+
+    var remove = _.filter(_.map($ctrl.charts, function (v, n) {
+      return n;
+    }), function (entry) {
+      return !_.includes(list, entry);
+    });
+
+    _.forEach(remove, function (entry) {
+      delete $ctrl.charts[entry];
+    });
+
+    _.forEach(list, function (name) {
+      if (!$ctrl.charts[name] || !$ctrl.charts[name].chart) {
+        $ctrl.charts[name] = {
+          chart: new Chart(name, name.indexOf('-') === -1 ? {} : sparkline)
+        };
+      }
+    });
+  }
+
   $scope.$on(path, function (e, response) {
-    if (!$ctrl.gateway) {
-      vamp.peek('/events', {tag: 'gateways:' + response.data.name, per_page: 1000});
-    }
     $ctrl.gateway = response.data;
+    $timeout(updateCharts, 0);
+    peekEvents();
   });
 
   $scope.$on('/events/stream', function (e, response) {
@@ -63,6 +113,8 @@ function GatewayController($scope, $filter, $stateParams, $location, vamp, alert
       } else {
         processForCharts(event);
       }
+    } else if (_.includes(response.data.tags, 'synchronization')) {
+      peek();
     }
   });
 
@@ -77,14 +129,30 @@ function GatewayController($scope, $filter, $stateParams, $location, vamp, alert
   function processForCharts(event) {
     if (_.includes(event.tags, 'gateway')) {
       if (_.includes(event.tags, 'health')) {
-        $ctrl.health = 100 * Number(event.value);
-        healthChart.series.append(new Date(event.timestamp).getTime(), $ctrl.health);
+        $ctrl.charts.health.last = 100 * Number(event.value);
+        $ctrl.charts.health.chart.append(new Date(event.timestamp).getTime(), $ctrl.charts.health.last);
       } else if (_.includes(event.tags, 'metrics:rate')) {
-        $ctrl.rate = Number(event.value);
-        rateChart.series.append(new Date(event.timestamp).getTime(), $ctrl.rate);
+        $ctrl.charts.rate.last = Number(event.value);
+        $ctrl.charts.rate.chart.append(new Date(event.timestamp).getTime(), $ctrl.charts.rate.last);
       } else if (_.includes(event.tags, 'metrics:responseTime')) {
-        $ctrl.responseTime = Number(event.value);
-        responseTimeChart.series.append(new Date(event.timestamp).getTime(), $ctrl.responseTime);
+        $ctrl.charts.responseTime.last = Number(event.value);
+        $ctrl.charts.responseTime.chart.append(new Date(event.timestamp).getTime(), $ctrl.charts.responseTime.last);
+      }
+    } else if (_.includes(event.tags, 'route')) {
+      var route = _.find($ctrl.gateway.routes, function (v, n) {
+        return _.includes(event.tags, 'routes:' + n);
+      });
+      if (route) {
+        if (_.includes(event.tags, 'health')) {
+          $ctrl.charts['health-' + route.lookup_name].last = 100 * Number(event.value);
+          $ctrl.charts['health-' + route.lookup_name].chart.append(new Date(event.timestamp).getTime(), $ctrl.charts['health-' + route.lookup_name].last);
+        } else if (_.includes(event.tags, 'metrics:rate')) {
+          $ctrl.charts['rate-' + route.lookup_name].last = Number(event.value);
+          $ctrl.charts['rate-' + route.lookup_name].chart.append(new Date(event.timestamp).getTime(), $ctrl.charts['rate-' + route.lookup_name].last);
+        } else if (_.includes(event.tags, 'metrics:responseTime')) {
+          $ctrl.charts['responseTime-' + route.lookup_name].last = Number(event.value);
+          $ctrl.charts['responseTime-' + route.lookup_name].chart.append(new Date(event.timestamp).getTime(), $ctrl.charts['responseTime-' + route.lookup_name].last);
+        }
       }
     }
   }

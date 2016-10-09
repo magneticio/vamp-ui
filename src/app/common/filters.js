@@ -18,4 +18,16 @@ angular.module('app')
     return function (obj) {
       return _.isEmpty(obj);
     };
+  })
+  .filter('orderByKeys', function () {
+    return function (items) {
+      var keys = _.map(items, function (v, n) {
+        return n;
+      }).sort();
+      var result = {};
+      _.forEach(keys, function (key) {
+        result[key] = items[key];
+      });
+      return result;
+    };
   });

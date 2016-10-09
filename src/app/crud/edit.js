@@ -34,7 +34,7 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   var validation = true;
   var ignoreChange = false;
 
-  vamp.peek(path, {}, 'YAML');
+  vamp.peek(path, '', {}, 'YAML');
 
   $scope.$on(path, function (e, response) {
     if ($ctrl.base === null && response.status === 'OK' && response.content === 'YAML') {
@@ -58,7 +58,7 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
       } else if (!ignoreChange && _.includes(response.data.tags, 'archive:update')) {
         alert.show('Warning', '\'' + $ctrl.name + '\' has been updated in background. Do you want to reload changed?', 'Reload', 'Keep', function () {
           $ctrl.base = $ctrl.source = null;
-          vamp.peek(path, {}, 'YAML');
+          vamp.peek(path, '', {}, 'YAML');
         });
       }
     }

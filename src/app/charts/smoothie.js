@@ -1,8 +1,9 @@
 /* global SmoothieChart,TimeSeries */
-function Chart(id) { // eslint-disable-line no-unused-vars
-  this.canvas = document.getElementById(id);
-  this.series = new TimeSeries();
-  this.chart = new SmoothieChart({
+function Chart(id, options) { // eslint-disable-line no-unused-vars
+  var canvas = document.getElementById(id);
+  var series = new TimeSeries();
+
+  var config = _.merge({
     maxValueScale: 1,
     interpolation: 'step',
     grid: {
@@ -10,7 +11,8 @@ function Chart(id) { // eslint-disable-line no-unused-vars
       strokeStyle: '#b3b3b3',
       millisPerLine: 10000,
       verticalSections: 5
-    }, labels: {
+    },
+    labels: {
       fillStyle: '#191919',
       fontSize: 10,
       precision: 0
@@ -18,11 +20,18 @@ function Chart(id) { // eslint-disable-line no-unused-vars
     timestampFormatter: SmoothieChart.timeFormatter,
     minValue: 0,
     millisPerPixel: 100
-  });
-  this.chart.addTimeSeries(this.series, {
+  }, options || {});
+
+  var chart = new SmoothieChart(config);
+
+  chart.addTimeSeries(series, {
     lineWidth: 2,
     strokeStyle: '#0080ff',
     fillStyle: 'rgba(0,128,255,0.5)'
   });
-  this.chart.streamTo(this.canvas, 0);
+  chart.streamTo(canvas, 0);
+
+  this.append = function (timestamp, value) {
+    series.append(timestamp, value);
+  }
 }

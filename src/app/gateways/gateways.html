@@ -6,13 +6,13 @@
         <div class="list" ng-if="!($ctrl.gateway.virtual_hosts | isEmpty)">
             <p>virtual hosts :</p>
             <ul>
-                <li ng-repeat="host in $ctrl.gateway.virtual_hosts">{{ host }}</li>
+                <li ng-repeat="host in $ctrl.gateway.virtual_hosts | orderBy:'length'">{{ host }}</li>
             </ul>
         </div>
         <div class="list">
             <p>routes :</p>
             <ul>
-                <li ng-repeat="(route, value) in $ctrl.gateway.routes">{{ route }}</li>
+                <li ng-repeat="(route, value) in $ctrl.gateway.routes | orderByKeys">{{ route }}</li>
             </ul>
         </div>
     </div>

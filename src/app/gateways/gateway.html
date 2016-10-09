@@ -42,22 +42,22 @@
         <div class="row">
             <div class="col-md-4 chart-fix">
                 <div>
-                    <p>health <span ng-if="$ctrl.health !== null" class="label label-primary">{{ $ctrl.health }}%</span>
+                    <p>health <span ng-if="$ctrl.charts.health.last != null" class="label label-primary">{{ $ctrl.charts.health.last }} %</span>
                     </p>
                     <canvas class="chart" id="health"></canvas>
                 </div>
             </div>
             <div class="col-md-4 chart-fix">
                 <div>
-                    <p>requests per second <span ng-if="$ctrl.rate !== null" class="label label-primary">{{ $ctrl.rate }}</span>
+                    <p>requests per second <span ng-if="$ctrl.charts.rate.last != null" class="label label-primary">{{ $ctrl.charts.rate.last }}</span>
                     </p>
                     <canvas class="chart" id="rate"></canvas>
                 </div>
             </div>
             <div class="col-md-4 chart-fix">
-                <p>response time <span ng-if="$ctrl.responseTime !== null" class="label label-primary">{{ $ctrl.responseTime }}ms</span>
+                <p>response time <span ng-if="$ctrl.charts.responseTime.last != null" class="label label-primary">{{ $ctrl.charts.responseTime.last }} ms</span>
                 </p>
-                <canvas class="chart" id="response-time"></canvas>
+                <canvas class="chart" id="responseTime"></canvas>
             </div>
         </div>
         <br>
@@ -76,28 +76,28 @@
                 <th>condition</th>
                 <th>condition strength</th>
             </tr>
-            <tr ng-repeat="(name, route) in $ctrl.gateway.routes">
+            <tr ng-repeat="(name, route) in $ctrl.gateway.routes | orderByKeys ">
                 <td>{{name}}</td>
                 <td>
                     <div class="sparkchart-container">
-                        <bar-chart class="sparkchart" data="route._$stats.health.values.getAll()"
-                                   options="{fill: ['#15D9B2'],height: 30, width: 60}"></bar-chart>
+                        <canvas class="chart" id="health-{{route.lookup_name}}" width="75" height="40"></canvas>
+                        <span ng-show="$ctrl.charts['health-' + route.lookup_name].last != null"
+                              class="label label-primary">{{ $ctrl.charts['health-' + route.lookup_name].last }} %</span>
                     </div>
-                    <span>{{route._$stats.health.values.getLast() * 100}}%</span>
                 </td>
                 <td>
                     <div class="sparkchart-container">
-                        <line-chart class="sparkchart" data="route._$stats.rate.values.getAll()"
-                                    options="{stroke: '#4d89f9', height: 30, width: 60}"></line-chart>
+                        <canvas class="chart" id="rate-{{route.lookup_name}}" width="75" height="40"></canvas>
+                        <span ng-show="$ctrl.charts['rate-' + route.lookup_name].last != null"
+                              class="label label-primary">{{ $ctrl.charts['rate-' + route.lookup_name].last }}</span>
                     </div>
-                    <span>{{route._$stats.rate.values.getLast()}} req/sec</span>
                 </td>
                 <td>
                     <div class="sparkchart-container">
-                        <line-chart class="sparkchart" data="route._$stats.responseTime.values.getAll()"
-                                    options="{stroke: '#4d89f9', height: 30, width: 60}"></line-chart>
+                        <canvas class="chart" id="responseTime-{{route.lookup_name}}" width="75" height="40"></canvas>
+                        <span ng-show="$ctrl.charts['responseTime-' + route.lookup_name].last != null"
+                              class="label label-primary">{{ $ctrl.charts['responseTime-' + route.lookup_name].last }} ms</span>
                     </div>
-                    <span>{{route._$stats.responseTime.values.getLast()}} ms</span>
                 </td>
                 <td>
                     <span highlighter="route.weight">{{route.weight}}</span>

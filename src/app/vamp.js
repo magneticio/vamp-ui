@@ -42,8 +42,8 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
     return !_.isEmpty(stream);
   };
 
-  this.peek = function (path, params, accept) {
-    request(path, 'PEEK', '', params ? params : {}, accept ? accept : 'JSON');
+  this.peek = function (path, data, params, accept) {
+    request(path, 'PEEK', data, params ? params : {}, accept ? accept : 'JSON');
   };
 
   this.put = function (path, data, params, accept) {

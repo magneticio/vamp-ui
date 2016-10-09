@@ -33,7 +33,7 @@ function MenuController($rootScope, $scope, $interval, vamp) {
   this.connected = false;
 
   function info() {
-    vamp.peek('/info', {on: 'jvm'});
+    vamp.peek('/info', '', {on: 'jvm'});
   }
 
   function start() {

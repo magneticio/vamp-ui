@@ -560,17 +560,15 @@ input[type=number] {
 }
 
 .sparkchart-container {
-  width: 60px;
-  height: 31px;
+  width: 150px;
+  height: 36px;
   position: relative;
+  vertical-align: top;
 
-  border-left: 1px solid rgba($dark-blue, 0.2);
-  border-bottom: 1px solid rgba($dark-blue, 0.2);
-
-  .sparkchart {
+  span {
     position: absolute;
+    margin: 10px 0 0 5px;
   }
-
 }
 
 .editable-label {
