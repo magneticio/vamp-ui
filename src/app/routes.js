@@ -13,7 +13,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     if (artifact.artifactsTemplate) {
       artifactsData.templateUrl = artifact.artifactsTemplate;
     } else {
-      artifactsData.template = '<artifacts kind="' + artifact.kind + '"></artifacts>';
+      artifactsData.templateUrl = 'app/' + artifact.kind + '/' + artifact.kind + '.html';
     }
 
     var artifactAddData = {

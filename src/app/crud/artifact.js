@@ -23,7 +23,7 @@ angular.module('app')
         $ctrl.hover = false;
       };
     }
-  }).controller('ArtifactController', function ($scope) {
+  }).controller('ArtifactsController', function ($scope) {
     this.kind = $scope.$parent.$parent.$ctrl.kind;
     this.artifact = $scope.$parent.$parent.artifact;
   });

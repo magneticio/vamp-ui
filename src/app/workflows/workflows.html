@@ -1,5 +1,5 @@
 <artifacts kind="workflows">
-    <div class="artifact-properties" ng-controller="ArtifactController as $ctrl">
+    <div class="artifact-properties" ng-controller="ArtifactsController as $ctrl">
         <span ng-if="$ctrl.artifact.schedule === 'daemon'" class="label label-primary">schedule : daemon</span>
         <div class="list" ng-if="!($ctrl.artifact.schedule.event | isEmpty)">
             <p>event schedule: </p>

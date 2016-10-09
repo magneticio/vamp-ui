@@ -1,9 +1,9 @@
 angular.module('app')
-  .controller('DeploymentController', DeploymentController);
+  .controller('DeploymentsController', DeploymentsController);
 
 /** @ngInject */
-function DeploymentController($scope, $filter) {
-  var deployments = $scope.$parent.$parent.$ctrl;
+function DeploymentsController($scope, $filter) {
+  var $parent = $scope.$parent.$parent.$ctrl;
   this.deployment = $scope.$parent.$parent.artifact;
 
   var cpu = 0;
@@ -25,7 +25,7 @@ function DeploymentController($scope, $filter) {
 
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'synchronization')) {
-      deployments.peek();
+      $parent.peek();
     }
   });
 }

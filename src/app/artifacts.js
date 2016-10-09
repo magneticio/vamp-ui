@@ -5,33 +5,24 @@ Artifacts.prototype.all = function () {
   return [
     {
       kind: "deployments",
-      deployable: true,
-      artifactsTemplate: 'app/deployments/deployment.html'
+      deployable: true
     },
     {
       kind: "gateways",
-      deployable: true,
-      artifactsTemplate: 'app/gateways/gateway.html'
+      deployable: true
     },
     {
       kind: "workflows",
-      deployable: true,
-      artifactsTemplate: 'app/workflows/workflow.html'
+      deployable: true
     },
     {
-      kind: "blueprints",
-      deployable: false,
-      artifactsTemplate: 'app/blueprints/blueprint.html'
+      kind: "blueprints"
     },
     {
-      kind: "breeds",
-      deployable: false,
-      artifactsTemplate: 'app/breeds/breed.html'
+      kind: "breeds"
     },
     {
-      kind: "scales",
-      deployable: false,
-      artifactsTemplate: 'app/scales/scale.html'
+      kind: "scales"
     }
   ];
 };

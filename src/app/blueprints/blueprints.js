@@ -1,13 +1,13 @@
 angular.module('app')
-  .controller('BlueprintController', BlueprintController)
+  .controller('BlueprintsController', BlueprintsController)
   .controller('DeployBlueprintController', DeployBlueprintController)
   .controller('UpdateDeploymentController', UpdateDeploymentController)
   .factory('blueprint', ['$rootScope', 'vamp', function ($rootScope, vamp) {
-    return new BlueprintService($rootScope, vamp);
+    return new BlueprintsService($rootScope, vamp);
   }]);
 
 /** @ngInject */
-function BlueprintController($scope, $location, $uibModal, toastr, vamp, blueprint) {
+function BlueprintsController($scope, $location, $uibModal, toastr, vamp, blueprint) {
   var $ctrl = this;
   this.blueprint = $scope.$parent.$parent.artifact;
 
@@ -180,7 +180,7 @@ function UpdateDeploymentController($scope, $uibModalInstance, blueprint, deploy
   };
 }
 
-function BlueprintService($rootScope, vamp) {
+function BlueprintsService($rootScope, vamp) {
   var deployments = [];
 
   var peek = _.debounce(function () {

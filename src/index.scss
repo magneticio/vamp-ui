@@ -269,13 +269,15 @@ p, div {
   font-family: 'Roboto', sans-serif;
 }
 
-//Navbar text
+// Navbar text
+
 .navbar-default .navbar-nav > li > a {
   color: $dark-blue !important;
   font-size: 18px;
-  //text-transf3rm: lowercase;
   font-weight: 300;
   letter-spacing: 1px;
+  text-decoration: underline;
+  text-decoration-style: double;
 }
 
 .navbar-default .navbar-nav > .active > a {
@@ -286,7 +288,7 @@ p, div {
 }
 
 .navbar-default .navbar-nav > .deployable > a {
-  text-decoration: underline;
+  text-decoration: overline;
   text-decoration-style: double;
 }
 
