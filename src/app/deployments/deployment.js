@@ -2,7 +2,7 @@ angular.module('app')
   .controller('DeploymentController', DeploymentController);
 
 /** @ngInject */
-function DeploymentController($scope) {
+function DeploymentController($scope, $filter) {
   var deployments = $scope.$parent.$parent.$ctrl;
   this.deployment = $scope.$parent.$parent.artifact;
 
@@ -19,8 +19,8 @@ function DeploymentController($scope) {
     });
   });
 
-  this.cpu = cpu;
-  this.memory = memory;
+  this.cpu = Number($filter('number')(cpu, 2));
+  this.memory = Number($filter('number')(memory, 2));
   this.instances = instances;
 
   $scope.$on('/events/stream', function (e, response) {

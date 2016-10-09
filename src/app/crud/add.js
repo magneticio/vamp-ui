@@ -8,7 +8,9 @@ function ArtifactAddController($scope, $attrs, $location, toastr, alert, vamp) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
-  this.title = 'create new';
+  // naive singularization
+  this.singular = this.kind.substring(0, this.kind.length - 1);
+  this.title = 'new ' + this.singular;
 
   var path = '/' + this.kind;
 
@@ -28,7 +30,6 @@ function ArtifactAddController($scope, $attrs, $location, toastr, alert, vamp) {
   };
 
   this.source = null;
-  this.ignoreUpdate = false;
 
   $scope.$on(path, function (e, response) {
     if (response.content === 'JSON') {
@@ -59,15 +60,12 @@ function ArtifactAddController($scope, $attrs, $location, toastr, alert, vamp) {
   };
 
   this.save = function () {
-    $ctrl.ignoreUpdate = true;
-
     vamp.await(function () {
       vamp.put(path, $ctrl.source, {}, 'JSON');
     }).then(function () {
       goBack();
-      toastr.success('Artifact has been successfully created.');
+      toastr.success('New ' + $ctrl.singular + ' has been successfully created.');
     }).catch(function (response) {
-      $ctrl.ignoreUpdate = false;
       if (response) {
         toastr.error(response.data.message, 'Creation failed.');
       } else {

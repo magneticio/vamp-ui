@@ -131,7 +131,7 @@ menu {
 
 .ace_editor {
   position: absolute !important;
-  top: 0px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
@@ -145,7 +145,6 @@ menu {
 .toast-top-right {
   box-shadow: none;
   top: initial;
-  right: initial;
   bottom: 15px;
   right: 15px;
 }
@@ -351,7 +350,6 @@ p, div {
 }
 
 .chart-row {
-
   padding-bottom: 40px;
 }
 
@@ -686,6 +684,20 @@ input[type=number] {
 
   &:hover {
     background-color: rgba($dark-blue, 0.9) !important;
+  }
+
+  &.toggle-on {
+    background: $dark-blue none !important;
+    border: 0 !important;
+  }
+
+  &.toggle-off {
+    background: $purple none !important;
+    border: 0 !important;
+  }
+
+  &.toggle-handle {
+    background: aliceblue none !important;
   }
 
   &.btn-circle, &.btn-circle-3d {

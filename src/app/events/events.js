@@ -1,22 +1,34 @@
 angular.module('app').component('events', {
-  bindings: {
-    obj: '<',
-    prim: '<'
-  },
   templateUrl: 'app/events/events.html',
   controller: EventController
 });
 
 function EventController($scope, vamp) {
-  $scope.events = [];
-  $scope.show = false;
+  var $ctrl = this;
 
-  $scope.toggle = function () {
-    $scope.show = !$scope.show;
+  var maxLength = 50;
+
+  this.events = [];
+  this.show = false;
+
+  this.filters = {};
+
+  this.toggle = function ($event) {
+    if (!$event || !$event.ignore) {
+      $ctrl.show = !$ctrl.show;
+    }
+  };
+
+  $scope.filter = function ($event, type) {
+    if (!type) {
+      return;
+    }
+    $event.stopPropagation();
+    $ctrl.filters[type] = !$ctrl.filters[type];
   };
 
   function start() {
-    $scope.events.length = 0;
+    $ctrl.events.length = 0;
     vamp.peek('/events');
     vamp.peek('/events/stream');
   }
@@ -32,27 +44,30 @@ function EventController($scope, vamp) {
   });
 
   function onEvent(event) {
-    var maxLength = 50;
+    if ($ctrl.filters[event.type]) {
+      return;
+    }
 
     var combined = _.filter(event.tags, function (tag) {
       return tag.indexOf(':') !== -1;
     });
 
     var single = _.filter(event.tags, function (tag) {
-      return tag !== event.type && !_.find(combined, function (c) {
+      var found = _.find(combined, function (c) {
         return c.indexOf(tag + ':') !== -1 || c === tag;
       });
+      return tag !== event.type && !found;
     });
 
-    $scope.events.push({
+    $ctrl.events.push({
       type: event.type,
       value: event.value,
       timestamp: event.timestamp,
       tags: _.concat(combined, single)
     });
 
-    while ($scope.events.length > maxLength) {
-      $scope.events.shift();
+    while ($ctrl.events.length > maxLength) {
+      $ctrl.events.shift();
     }
   }
 

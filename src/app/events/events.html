@@ -1,12 +1,28 @@
-<div ng-class="{'show': show}" class="event-panel-content">
-    <div class="head" ng-click="toggle()">
+<div ng-class="{'show': $ctrl.show}" class="event-panel-content">
+    <div class="head" ng-click="$ctrl.toggle()">
         <p class="category">Events</p>
-        <a ng-show="show">
+        <div>
+            <button type="button" class="btn"
+                    ng-model="$ctrl.filters.health" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
+                    ng-class="{red: $ctrl.filters['health']}" ng-click="filter($event, 'health')" ng-show="$ctrl.show">
+                <i class="fa fa-check-circle" ng-if="!$ctrl.filters['health']"></i>
+                <i class="fa fa-times-circle" ng-if="$ctrl.filters['health']"></i>
+                &nbsp;health
+            </button>
+            <button type="button" class="btn"
+                    ng-model="$ctrl.filters.metrics" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
+                    ng-class="{red: $ctrl.filters['metrics']}" ng-click="filter($event, 'metrics')" ng-show="$ctrl.show">
+                <i class="fa fa-check-circle" ng-if="!$ctrl.filters['metrics']"></i>
+                <i class="fa fa-times-circle" ng-if="$ctrl.filters['metrics']"></i>
+                &nbsp;metrics
+            </button>
+        </div>
+        <a ng-show="$ctrl.show">
             <i class="fa fa-times"></i>
         </a>
     </div>
 
-    <div class="container-fluid" ng-if="show">
+    <div class="container-fluid" ng-if="$ctrl.show">
         <table class="table">
             <tr>
                 <th>Time</th>
@@ -14,23 +30,22 @@
                 <th>Tags</th>
                 <th>Value</th>
             </tr>
-            <tr ng-repeat="event in events | orderBy: 'timestamp':true">
+            <tr ng-repeat="event in $ctrl.events | orderBy: 'timestamp':true">
                 <td>
                     <span class="label label-default">
-                        {{ :: event.timestamp | date:'HH:mm:ss.sss'}}
+                        {{ event.timestamp | date:'HH:mm:ss.sss'}}
                     </span>
                 <td>
                     <span class="label label-success">
-                        {{ :: event.type}}
+                        {{ event.type}}
                     </span>
                 </td>
                 <td>
                   <span ng-repeat="tag in event.tags">
-                    <span class="label label-primary">{{ :: tag}}</span>
-                    &nbsp;
+                    <span class="label label-primary">{{ tag}}</span>
                   </span>
                 </td>
-                <td>{{ :: event.value}}</td>
+                <td>{{ event.value}}</td>
             </tr>
         </table>
     </div>
