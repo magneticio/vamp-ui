@@ -1,0 +1,143 @@
+<div class="gateway" ng-controller="GatewayController as $ctrl">
+    <header title="{{$ctrl.title}}">
+        <buttons>
+            <button class="btn btn-lg btn-circle" type="submit" title="Edit" ng-click="$ctrl.edit()">
+                <i class="fa fa-pencil"></i>
+            </button>
+            <button class="btn btn-lg btn-circle red" type="submit" title="Delete"
+                    ng-if="!$ctrl.gateway.inner"
+                    ng-click="$ctrl.delete()">
+                <i class="fa fa-trash-o"></i>
+            </button>
+        </buttons>
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <h4>host</h4>
+                <span class="label label-success">{{$ctrl.gateway.service.host}}</span>
+            </div>
+            <div class="col-md-2">
+                <h4>port</h4>
+                <span class="label label-success">{{$ctrl.gateway.service.port}}</span>
+            </div>
+            <div class="col-md-4">
+                <h4>virtual hosts</h4>
+                <p ng-repeat="host in $ctrl.gateway.virtual_hosts | orderBy:'length'">
+                    <span class="label label-primary">{{host}}</span>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <h4>deployed </h4>
+                <span ng-if="$ctrl.gateway.deployed" class="label label-success"><i class="fa fa-check"></i>&nbsp;deployed</span>
+                <span ng-if="!$ctrl.gateway.deployed" class="label label-default">not deployed</span>
+            </div>
+            <div class="col-md-2">
+                <h4>sticky</h4>
+                <span ng-if="$ctrl.gateway.sticky !== 'none'" class="label label-success"><i class="fa fa-check"></i>&nbsp;{{ $ctrl.gateway.sticky }}</span>
+                <span ng-if="$ctrl.gateway.sticky === 'none'" class="label label-default">not sticky</span>
+            </div>
+        </div>
+
+
+        <div class="row" ng-if="$ctrl.gateway._$stats">
+            <!--Health Chart-->
+            <div class="col-md-4">
+                <h4>&nbsp;Health (%)</h4>
+                <canvas id="bar" class="chart chart-bar"
+                        chart-data="[$ctrl.gateway._$stats.health.data.getAll()]"
+                        chart-options="$ctrl.healthChart.options"
+                        chart-labels="$ctrl.gateway._$stats.health.labels.getAll()"
+                        chart-series="$ctrl.healthChart.series"
+                        chart-colors="$ctrl.healthChart.colors">
+                </canvas>
+            </div>
+
+            <div class="col-md-4 chart-fix">
+                <div>
+                    <h4>{{$ctrl.currentRate}}&nbsp;Requests per second</h4>
+                    <canvas id="line" class="chart chart-line"
+                            chart-data="$ctrl.rateData"
+                            chart-labels="$ctrl.rateLabels"
+                            chart-series="['test']"
+                            chart-options="$ctrl.chartOptions">
+                    </canvas>
+                </div>
+            </div>
+
+            <div class="col-md-4 chart-fix">
+                <h4>{{$ctrl.currentResponseTime}}&nbsp;Response time (ms)</h4>
+                <canvas id="line" class="chart chart-line"
+                        chart-data="$ctrl.responseTimeData"
+                        chart-labels="$ctrl.responseTimeLabels"
+                        chart-series="['test']"
+                        chart-options="$ctrl.chartOptions">
+                </canvas>
+            </div>
+        </div>
+
+        <table class="table">
+            <tr>
+                <th>route</th>
+                <th>health (%)</th>
+                <th>request per sec</th>
+                <th>response time (ms)</th>
+                <th>
+                    <editable-label on-click="$ctrl.openWeightsModal()"
+                                    active="$ctrl.getObjectLength($ctrl.gateway.routes) > 1">
+                        weight
+                    </editable-label>
+                </th>
+                <th>condition</th>
+                <th>condition strength</th>
+            </tr>
+            <tr ng-repeat="(name, route) in $ctrl.gateway.routes">
+                <td>{{name}}</td>
+                <td>
+                    <div class="sparkchart-container">
+                        <bar-chart class="sparkchart" data="route._$stats.health.values.getAll()"
+                                   options="{fill: ['#15D9B2'],height: 30, width: 60}"></bar-chart>
+
+                    </div>
+                    <span>
+            {{route._$stats.health.values.getLast() * 100}}%
+          </span>
+                </td>
+                <td>
+                    <div class="sparkchart-container">
+                        <line-chart class="sparkchart" data="route._$stats.rate.values.getAll()"
+                                    options="{stroke: '#4d89f9', height: 30, width: 60}"></line-chart>
+                    </div>
+                    <span>
+            {{route._$stats.rate.values.getLast()}} req/sec
+          </span>
+                </td>
+                <td>
+                    <div class="sparkchart-container">
+                        <line-chart class="sparkchart" data="route._$stats.responseTime.values.getAll()"
+                                    options="{stroke: '#4d89f9', height: 30, width: 60}"></line-chart>
+                    </div>
+                    <span>
+            {{route._$stats.responseTime.values.getLast()}} ms
+          </span>
+                </td>
+                <td>
+                    <span highlighter="route.weight">{{route.weight}}</span>
+                </td>
+                <td>
+                    <editable-text active="true" text="{{route.condition.condition}}"
+                                   edited="$ctrl.conditionsChanged(routename, newConditions)"></editable-text>
+                </td>
+                <td>
+                    <editable-number active="true"
+                                     postfix="%"
+                                     min="0"
+                                     max="100"
+                                     number="route.condition_strength"
+                                     edited="$ctrl.conditionsWeightChanged(routename, newConditionWeight)">
+                    </editable-number>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -1,5 +1,4 @@
-angular.module('app')
-  .controller('DeploymentsController', DeploymentsController);
+angular.module('app').controller('DeploymentsController', DeploymentsController);
 
 /** @ngInject */
 function DeploymentsController($scope, $filter) {

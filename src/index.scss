@@ -783,3 +783,13 @@ input[type=number] {
     }
   }
 }
+
+// gateway
+
+.gateway {
+
+  p, span {
+    font-size: 14px !important;
+    font-weight: $font-weight-regular;
+  }
+}

@@ -9,7 +9,8 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "gateways",
-      deployable: true
+      deployable: true,
+      artifactViewTemplate: 'app/gateways/gateway.html'
     },
     {
       kind: "workflows",

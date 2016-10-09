@@ -16,14 +16,17 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       artifactsData.templateUrl = 'app/' + artifact.kind + '/' + artifact.kind + '.html';
     }
 
+    var artifactViewData = {url: '/' + artifact.kind + '/view/:name'};
+
+    if (artifact.artifactViewTemplate) {
+      artifactViewData.templateUrl = artifact.artifactViewTemplate;
+    } else {
+      artifactViewData.template = '<edit kind="' + artifact.kind + '"></edit>';
+    }
+
     var artifactAddData = {
       url: '/' + artifact.kind + '/add',
       template: '<add kind="' + artifact.kind + '"></add>'
-    };
-
-    var artifactViewData = {
-      url: '/' + artifact.kind + '/view/:name',
-      template: '<edit kind="' + artifact.kind + '"></edit>'
     };
 
     var artifactEditData = {
