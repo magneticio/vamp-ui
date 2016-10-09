@@ -129,14 +129,11 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
   function processForCharts(event) {
     if (_.includes(event.tags, 'gateway')) {
       if (_.includes(event.tags, 'health')) {
-        $ctrl.charts.health.last = 100 * Number(event.value);
-        $ctrl.charts.health.chart.append(new Date(event.timestamp).getTime(), $ctrl.charts.health.last);
+        appendToChart('health', 100 * Number(event.value), event.timestamp);
       } else if (_.includes(event.tags, 'metrics:rate')) {
-        $ctrl.charts.rate.last = Number(event.value);
-        $ctrl.charts.rate.chart.append(new Date(event.timestamp).getTime(), $ctrl.charts.rate.last);
+        appendToChart('rate', Number(event.value), event.timestamp);
       } else if (_.includes(event.tags, 'metrics:responseTime')) {
-        $ctrl.charts.responseTime.last = Number(event.value);
-        $ctrl.charts.responseTime.chart.append(new Date(event.timestamp).getTime(), $ctrl.charts.responseTime.last);
+        appendToChart('responseTime', Number(event.value), event.timestamp);
       }
     } else if (_.includes(event.tags, 'route')) {
       var route = _.find($ctrl.gateway.routes, function (v, n) {
@@ -144,16 +141,20 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
       });
       if (route) {
         if (_.includes(event.tags, 'health')) {
-          $ctrl.charts['health-' + route.lookup_name].last = 100 * Number(event.value);
-          $ctrl.charts['health-' + route.lookup_name].chart.append(new Date(event.timestamp).getTime(), $ctrl.charts['health-' + route.lookup_name].last);
+          appendToChart('health-' + route.lookup_name, 100 * Number(event.value), event.timestamp);
         } else if (_.includes(event.tags, 'metrics:rate')) {
-          $ctrl.charts['rate-' + route.lookup_name].last = Number(event.value);
-          $ctrl.charts['rate-' + route.lookup_name].chart.append(new Date(event.timestamp).getTime(), $ctrl.charts['rate-' + route.lookup_name].last);
+          appendToChart('rate-' + route.lookup_name, Number(event.value), event.timestamp);
         } else if (_.includes(event.tags, 'metrics:responseTime')) {
-          $ctrl.charts['responseTime-' + route.lookup_name].last = Number(event.value);
-          $ctrl.charts['responseTime-' + route.lookup_name].chart.append(new Date(event.timestamp).getTime(), $ctrl.charts['responseTime-' + route.lookup_name].last);
+          appendToChart('responseTime-' + route.lookup_name, Number(event.value), event.timestamp);
         }
       }
     }
+  }
+
+  function appendToChart(name, value, timestamp) {
+    $ctrl.charts[name].last = value;
+    $ctrl.charts[name].chart.append(new Date(timestamp).getTime(), value, 0, 10000, function () {
+      $ctrl.charts[name].last = null;
+    });
   }
 }

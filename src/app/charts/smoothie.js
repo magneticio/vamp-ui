@@ -31,7 +31,20 @@ function Chart(id, options) { // eslint-disable-line no-unused-vars
   });
   chart.streamTo(canvas, 0);
 
-  this.append = function (timestamp, value) {
+  var timer = null;
+
+  this.append = function (timestamp, value, reset, after, callback) {
+    if (timer != null) {
+      clearTimeout(timer);
+    }
+    if (reset != null && after != null) {
+      timer = setTimeout(function () {
+        series.append(timestamp + after, reset);
+        if (callback) {
+          callback();
+        }
+      }, after);
+    }
     series.append(timestamp, value);
   }
 }
