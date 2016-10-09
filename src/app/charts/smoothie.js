@@ -34,10 +34,10 @@ function Chart(id, options) { // eslint-disable-line no-unused-vars
   var timer = null;
 
   this.append = function (timestamp, value, reset, after, callback) {
-    if (timer != null) {
+    if (timer !== null) {
       clearTimeout(timer);
     }
-    if (reset != null && after != null) {
+    if (reset !== null && after !== null) {
       timer = setTimeout(function () {
         series.append(timestamp + after, reset);
         if (callback) {
@@ -46,5 +46,5 @@ function Chart(id, options) { // eslint-disable-line no-unused-vars
       }, after);
     }
     series.append(timestamp, value);
-  }
+  };
 }

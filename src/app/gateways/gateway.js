@@ -62,6 +62,20 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
 
   this.charts = {};
 
+  function chartEntries() {
+    return _.flatMap([['rate', 'health', 'responseTime'], _.flatMap(_.map($ctrl.gateway.routes, function (route) {
+      return ['rate-' + route.lookup_name, 'health-' + route.lookup_name, 'responseTime-' + route.lookup_name];
+    }))]);
+  }
+
+  function updateLast() {
+    _.forEach(chartEntries(), function (name) {
+      $ctrl.charts[name] = {
+        last: 0
+      };
+    });
+  }
+
   function updateCharts() {
     var sparkline = {
       millisPerPixel: 300, labels: {
@@ -72,24 +86,23 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
       }
     };
 
-    var list = _.flatMap([['rate', 'health', 'responseTime'], _.flatMap(_.map($ctrl.gateway.routes, function (route) {
-      return ['rate-' + route.lookup_name, 'health-' + route.lookup_name, 'responseTime-' + route.lookup_name];
-    }))]);
+    var entries = chartEntries();
 
     var remove = _.filter(_.map($ctrl.charts, function (v, n) {
       return n;
     }), function (entry) {
-      return !_.includes(list, entry);
+      return !_.includes(entries, entry);
     });
 
     _.forEach(remove, function (entry) {
       delete $ctrl.charts[entry];
     });
 
-    _.forEach(list, function (name) {
+    _.forEach(entries, function (name) {
       if (!$ctrl.charts[name] || !$ctrl.charts[name].chart) {
         $ctrl.charts[name] = {
-          chart: new Chart(name, name.indexOf('-') === -1 ? {} : sparkline)
+          chart: new Chart(name, name.indexOf('-') === -1 ? {} : sparkline),
+          last: 0
         };
       }
     });
@@ -97,6 +110,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
 
   $scope.$on(path, function (e, response) {
     $ctrl.gateway = response.data;
+    updateLast();
     $timeout(updateCharts, 0);
     peekEvents();
   });

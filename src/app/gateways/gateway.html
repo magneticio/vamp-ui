@@ -44,7 +44,7 @@
                 <div>
                     <p>health
                         <span ng-if="$ctrl.charts.health.last != null" class="label label-primary">{{ $ctrl.charts.health.last }} %</span>
-                        <span ng-if="$ctrl.charts.health.last == null" class="label label-danger">none</span>
+                        <span ng-if="$ctrl.gateway && $ctrl.charts.health.last == null" class="label label-danger">none</span>
                     </p>
                     <canvas class="chart" id="health"></canvas>
                 </div>
@@ -53,7 +53,7 @@
                 <div>
                     <p>requests per second
                         <span ng-if="$ctrl.charts.rate.last != null" class="label label-primary">{{ $ctrl.charts.rate.last }}</span>
-                        <span ng-if="$ctrl.charts.rate.last == null" class="label label-danger">none</span>
+                        <span ng-if="$ctrl.gateway && $ctrl.charts.rate.last == null" class="label label-danger">none</span>
                     </p>
                     <canvas class="chart" id="rate"></canvas>
                 </div>
@@ -61,7 +61,7 @@
             <div class="col-md-4 chart-fix">
                 <p>response time
                     <span ng-if="$ctrl.charts.responseTime.last != null" class="label label-primary">{{ $ctrl.charts.responseTime.last }} ms</span>
-                    <span ng-if="$ctrl.charts.responseTime.last == null" class="label label-danger">none</span>
+                    <span ng-if="$ctrl.gateway && $ctrl.charts.responseTime.last == null" class="label label-danger">none</span>
                 </p>
                 <canvas class="chart" id="responseTime"></canvas>
             </div>
@@ -83,13 +83,15 @@
                 <th>condition strength</th>
             </tr>
             <tr ng-repeat="(name, route) in $ctrl.gateway.routes | orderByKeys ">
-                <td>{{name}}</td>
+                <td>
+                    <span class="label label-success">{{name}}</span>
+                </td>
                 <td>
                     <div class="sparkchart-container">
                         <canvas class="chart" id="health-{{route.lookup_name}}" width="75" height="40"></canvas>
                         <span ng-show="$ctrl.charts['health-' + route.lookup_name].last != null"
                               class="label label-primary">{{ $ctrl.charts['health-' + route.lookup_name].last }} %</span>
-                        <span ng-show="$ctrl.charts['health-' + route.lookup_name].last == null"
+                        <span ng-show="$ctrl.gateway && $ctrl.charts['health-' + route.lookup_name].last == null"
                               class="label label-danger">none</span>
                     </div>
                 </td>
@@ -98,7 +100,7 @@
                         <canvas class="chart" id="rate-{{route.lookup_name}}" width="75" height="40"></canvas>
                         <span ng-show="$ctrl.charts['rate-' + route.lookup_name].last != null"
                               class="label label-primary">{{ $ctrl.charts['rate-' + route.lookup_name].last }}</span>
-                        <span ng-show="$ctrl.charts['rate-' + route.lookup_name].last == null"
+                        <span ng-show="$ctrl.gateway && $ctrl.charts['rate-' + route.lookup_name].last == null"
                               class="label label-danger">none</span>
                     </div>
                 </td>
@@ -107,12 +109,12 @@
                         <canvas class="chart" id="responseTime-{{route.lookup_name}}" width="75" height="40"></canvas>
                         <span ng-show="$ctrl.charts['responseTime-' + route.lookup_name].last != null"
                               class="label label-primary">{{ $ctrl.charts['responseTime-' + route.lookup_name].last }} ms</span>
-                        <span ng-show="$ctrl.charts['responseTime-' + route.lookup_name].last == null"
+                        <span ng-show="$ctrl.gateway && $ctrl.charts['responseTime-' + route.lookup_name].last == null"
                               class="label label-danger">none</span>
                     </div>
                 </td>
                 <td>
-                    <span highlighter="route.weight">{{route.weight}}</span>
+                    <span highlighter="route.weight" class="label label-success">{{route.weight}}</span>
                 </td>
                 <td>
                     <editable-text active="true" text="{{route.condition.condition}}"
