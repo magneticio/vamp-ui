@@ -56,8 +56,10 @@ function EditWeights($scope) {
   }, true);
 
   $scope.$on('/gateways/' + gateway.name, function (e, response) {
-    gateway = response.data;
-    $ctrl.$onInit();
+    if (response.status === 'OK') {
+      gateway = response.data;
+      $ctrl.$onInit();
+    }
   });
 
   this.$onInit = function () {

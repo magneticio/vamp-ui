@@ -117,25 +117,23 @@
                     <span highlighter="route.weight" class="label label-success">{{route.weight}}</span>
                 </td>
                 <td>
-                    <editable-text active="true"
-                                   text="{{route.condition.condition}}"
+                    <editable-text active="true" text="{{route.condition.condition}}"
                                    edited="$ctrl.saveCondition(name, value)">
                         <span highlighter="route.condition.condition" class="label"
                               ng-class="{'label-success': route.condition.condition, 'label-default': !label-default}">
-                        {{route.condition.condition || 'none'}}
+                            {{route.condition.condition || 'none'}}
                         </span>
                     </editable-text>
                 </td>
                 <td>
-                    <span highlighter="route.condition_strength" class="label label-success">{{route.condition_strength}}</span>
 
-                    <!--<editable-number active="true"-->
-                    <!--postfix="%"-->
-                    <!--min="0"-->
-                    <!--max="100"-->
-                    <!--number="route.condition_strength"-->
-                    <!--edited="$ctrl.conditionsWeightChanged(routename, newConditionWeight)">-->
-                    <!--</editable-number>-->
+                    <editable-number-slider active="route.condition.condition" postfix="%" min="0" max="100"
+                                            number="route.condition_strength"
+                                            edited="$ctrl.saveConditionStrength(name, value)">
+                        <span highlighter="route.condition_strength" class="label label-success">
+                            {{route.condition_strength}}
+                        </span>
+                    </editable-number-slider>
                 </td>
             </tr>
         </table>

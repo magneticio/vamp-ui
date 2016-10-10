@@ -9,7 +9,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   this.gateway = null;
   this.title = $filter('decodeName')($stateParams.name);
 
-  var charts = new TimeSeriesCharts();
+  var charts = null;
 
   this.last = [];
 
@@ -53,15 +53,34 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
       _.forEach(weights, function (weight, route) {
         gateway.routes[route].weight = weight;
       });
-      $vamp.put(path, JSON.stringify(gateway));
+      save(gateway);
     });
   };
 
   this.saveCondition = function (route, condition) {
     var gateway = angular.copy($ctrl.gateway);
-    gateway.routes[route].condition = condition;
-    $vamp.put(path, JSON.stringify(gateway));
+    if (!condition || condition.trim.length === 0) {
+      gateway.routes[route].condition = null;
+      gateway.routes[route].condition_strength = '0%';
+    } else {
+      gateway.routes[route].condition = condition;
+    }
+    save(gateway);
   };
+
+  this.saveConditionStrength = function (route, strength) {
+    var gateway = angular.copy($ctrl.gateway);
+    gateway.routes[route].condition_strength = strength + '%';
+    save(gateway);
+  };
+
+  function save(gateway) {
+    $vamp.await(function () {
+      $vamp.put(path, JSON.stringify(gateway));
+    }).catch(function (response) {
+      toastr.error(response.data.message, 'Update of gateway \'' + $ctrl.gateway.name + '\' failed.');
+    });
+  }
 
   var addedRoutes = [];
 
@@ -69,11 +88,22 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     return _.includes(addedRoutes, route.lookup_name);
   };
 
-  $vamp.peek(path);
+  $vamp.await(function () {
+    $vamp.peek(path);
+  }).catch(function () {
+    $location.path('/gateways');
+    alert.show('Error', 'Gateway \'' + $stateParams.name + '\' cannot be found.', 'OK', null, function () {
+    });
+  });
 
   $scope.$on(path, function (e, response) {
+    if (response.status === 'ERROR') {
+      return;
+    }
     if ($ctrl.gateway) {
       addedRoutes = _.difference(_.map(response.data.routes, 'lookup_name'), _.map($ctrl.gateway.routes, 'lookup_name'));
+    } else {
+      charts = new TimeSeriesCharts();
     }
     $ctrl.gateway = response.data;
     $timeout(updateCharts, 0);

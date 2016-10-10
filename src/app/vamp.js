@@ -22,7 +22,10 @@ function $vamp($log, $rootScope, $websocket, $timeout) {
     var response = JSON.parse(message);
 
     if (response.content === 'JSON' && response.data) {
-      response.data = JSON.parse(response.data);
+      try {
+        response.data = JSON.parse(response.data);
+      } catch (e) {
+      }
     }
 
     if (awaiting[response.transaction]) {
