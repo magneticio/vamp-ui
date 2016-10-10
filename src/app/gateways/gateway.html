@@ -43,28 +43,28 @@
             <div class="col-md-4 chart-fix">
                 <div>
                     <p>health
-                        <span ng-if="$ctrl.charts.health.last != null && $ctrl.charts.health.last != 'none'"
-                              class="label label-primary">{{ $ctrl.charts.health.last }} %</span>
-                        <span ng-if="$ctrl.charts.health.last == 'none'" class="label label-danger">none</span>
+                        <span ng-if="$ctrl.last['health'] != null && $ctrl.last['health'] != 'none'"
+                              class="label label-primary">{{ $ctrl.last['health'] }} %</span>
+                        <span ng-if="$ctrl.last['health'] == 'none'" class="label label-danger">none</span>
                     </p>
                     <canvas class="chart" id="health"></canvas>
                 </div>
             </div>
             <div class="col-md-4 chart-fix">
                 <div>
-                    <p>requests per second
-                        <span ng-if="$ctrl.charts.rate.last != null && $ctrl.charts.rate.last != 'none'"
-                              class="label label-primary">{{ $ctrl.charts.rate.last }}</span>
-                        <span ng-if="$ctrl.charts.rate.last == 'none'" class="label label-danger">none</span>
+                    <p>requests / second
+                        <span ng-if="$ctrl.last['rate'] != null && $ctrl.last['rate'] != 'none'"
+                              class="label label-primary">{{ $ctrl.last['rate'] }}</span>
+                        <span ng-if="$ctrl.last['rate'] == 'none'" class="label label-danger">none</span>
                     </p>
                     <canvas class="chart" id="rate"></canvas>
                 </div>
             </div>
             <div class="col-md-4 chart-fix">
                 <p>response time
-                    <span ng-if="$ctrl.charts.responseTime.last != null && $ctrl.charts.responseTime.last != 'none'"
-                          class="label label-primary">{{ $ctrl.charts.responseTime.last }} ms</span>
-                    <span ng-if="$ctrl.charts.responseTime.last == 'none'" class="label label-danger">none</span>
+                    <span ng-if="$ctrl.last['responseTime'] != null && $ctrl.last['responseTime'] != 'none'"
+                          class="label label-primary">{{ $ctrl.last['responseTime'] }} ms</span>
+                    <span ng-if="$ctrl.last['responseTime'] == 'none'" class="label label-danger">none</span>
                 </p>
                 <canvas class="chart" id="responseTime"></canvas>
             </div>
@@ -73,14 +73,11 @@
         <table class="table">
             <tr>
                 <th>route</th>
-                <th>health (%)</th>
-                <th>request per sec</th>
-                <th>response time (ms)</th>
+                <th>health</th>
+                <th>requests / sec</th>
+                <th>response time</th>
                 <th>
-                    <editable-label on-click="$ctrl.openWeightsModal()"
-                                    active="$ctrl.getObjectLength($ctrl.gateway.routes) > 1">
-                        weight
-                    </editable-label>
+                    <editable on-click="$ctrl.editWeights()" active="$ctrl.routeCount() > 1"> weight</editable>
                 </th>
                 <th>condition</th>
                 <th>condition strength</th>
@@ -92,27 +89,27 @@
                 <td>
                     <div class="sparkchart-container">
                         <canvas class="chart" id="health-{{route.lookup_name}}" width="75" height="40"></canvas>
-                        <span ng-show="$ctrl.charts['health-' + route.lookup_name].last != null && $ctrl.charts['health-' + route.lookup_name].last != 'none'"
-                              class="label label-primary">{{ $ctrl.charts['health-' + route.lookup_name].last }} %</span>
-                        <span ng-show="$ctrl.charts['health-' + route.lookup_name].last == 'none'"
+                        <span ng-show="$ctrl.last['health-' + route.lookup_name] != null && $ctrl.last['health-' + route.lookup_name] != 'none'"
+                              class="label label-primary">{{ $ctrl.last['health-' + route.lookup_name] }} %</span>
+                        <span ng-show="$ctrl.last['health-' + route.lookup_name] == 'none'"
                               class="label label-danger">none</span>
                     </div>
                 </td>
                 <td>
                     <div class="sparkchart-container">
                         <canvas class="chart" id="rate-{{route.lookup_name}}" width="75" height="40"></canvas>
-                        <span ng-show="$ctrl.charts['rate-' + route.lookup_name].last != null && $ctrl.charts['rate-' + route.lookup_name].last != 'none'"
-                              class="label label-primary">{{ $ctrl.charts['rate-' + route.lookup_name].last }}</span>
-                        <span ng-show="$ctrl.charts['rate-' + route.lookup_name].last == 'none'"
+                        <span ng-show="$ctrl.last['rate-' + route.lookup_name] != null && $ctrl.last['rate-' + route.lookup_name] != 'none'"
+                              class="label label-primary">{{ $ctrl.last['rate-' + route.lookup_name] }}</span>
+                        <span ng-show="$ctrl.last['rate-' + route.lookup_name] == 'none'"
                               class="label label-danger">none</span>
                     </div>
                 </td>
                 <td>
                     <div class="sparkchart-container">
                         <canvas class="chart" id="responseTime-{{route.lookup_name}}" width="75" height="40"></canvas>
-                        <span ng-show="$ctrl.charts['responseTime-' + route.lookup_name].last != null && $ctrl.charts['responseTime-' + route.lookup_name].last != 'none'"
-                              class="label label-primary">{{ $ctrl.charts['responseTime-' + route.lookup_name].last }} ms</span>
-                        <span ng-show="$ctrl.charts['responseTime-' + route.lookup_name].last == 'none'"
+                        <span ng-show="$ctrl.last['responseTime-' + route.lookup_name] != null && $ctrl.last['responseTime-' + route.lookup_name] != 'none'"
+                              class="label label-primary">{{ $ctrl.last['responseTime-' + route.lookup_name] }} ms</span>
+                        <span ng-show="$ctrl.last['responseTime-' + route.lookup_name] == 'none'"
                               class="label label-danger">none</span>
                     </div>
                 </td>
@@ -120,17 +117,21 @@
                     <span highlighter="route.weight" class="label label-success">{{route.weight}}</span>
                 </td>
                 <td>
-                    <editable-text active="true" text="{{route.condition.condition}}"
-                                   edited="$ctrl.conditionsChanged(routename, newConditions)"></editable-text>
+                    <span highlighter="route.condition.condition" class="label label-success">{{route.condition.condition}}</span>
+
+                    <!--<editable-text active="true" text="{{route.condition.condition}}"-->
+                    <!--edited="$ctrl.conditionsChanged(routename, newConditions)"></editable-text>-->
                 </td>
                 <td>
-                    <editable-number active="true"
-                                     postfix="%"
-                                     min="0"
-                                     max="100"
-                                     number="route.condition_strength"
-                                     edited="$ctrl.conditionsWeightChanged(routename, newConditionWeight)">
-                    </editable-number>
+                    <span highlighter="route.condition_strength" class="label label-success">{{route.condition_strength}}</span>
+
+                    <!--<editable-number active="true"-->
+                    <!--postfix="%"-->
+                    <!--min="0"-->
+                    <!--max="100"-->
+                    <!--number="route.condition_strength"-->
+                    <!--edited="$ctrl.conditionsWeightChanged(routename, newConditionWeight)">-->
+                    <!--</editable-number>-->
                 </td>
             </tr>
         </table>

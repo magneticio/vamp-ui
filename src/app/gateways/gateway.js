@@ -1,4 +1,4 @@
-/* global Chart */
+/* global TimeSeriesCharts */
 angular.module('app').controller('GatewayController', GatewayController);
 
 /** @ngInject */
@@ -8,6 +8,14 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
 
   this.gateway = null;
   this.title = $filter('decodeName')($stateParams.name);
+
+  var charts = new TimeSeriesCharts();
+
+  this.last = [];
+
+  this.routeCount = function () {
+    return $ctrl.gateway ? _.size($ctrl.gateway.routes) : 0;
+  };
 
   this.edit = function () {
     var encoded = $filter('encodeName')(this.gateway.name);
@@ -31,74 +39,20 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
     });
   };
 
-  function peek() {
-    vamp.peek(path);
-  }
+  this.editWeights = function () {
+    console.log('edit weights');
+  };
 
-  function peekEvents() {
-    var requests = [{
-      tags: [
-        'gateways:' + $ctrl.gateway.name,
-        'health'
-      ]
-    }, {
-      tags: [
-        'gateways:' + $ctrl.gateway.name,
-        'metrics:rate'
-      ]
-    }, {
-      tags: [
-        'gateways:' + $ctrl.gateway.name,
-        'metrics:responseTime'
-      ]
-    }];
-
-    _.forEach(requests, function (request) {
-      vamp.peek('/events', JSON.stringify(request));
-    });
-  }
-
-  peek();
-
-  this.charts = {};
-
-  function updateCharts() {
-    var sparkline = {
-      millisPerPixel: 300, labels: {
-        disabled: true
-      },
-      timestampFormatter: function () {
-        return '';
-      }
-    };
-
-    var list = _.flatMap([['rate', 'health', 'responseTime'], _.flatMap(_.map($ctrl.gateway.routes, function (route) {
-      return ['rate-' + route.lookup_name, 'health-' + route.lookup_name, 'responseTime-' + route.lookup_name];
-    }))]);
-
-    var remove = _.filter(_.map($ctrl.charts, function (v, n) {
-      return n;
-    }), function (entry) {
-      return !_.includes(list, entry);
-    });
-
-    _.forEach(remove, function (entry) {
-      delete $ctrl.charts[entry];
-    });
-
-    _.forEach(list, function (name) {
-      if (!$ctrl.charts[name] || !$ctrl.charts[name].chart) {
-        $ctrl.charts[name] = {
-          chart: new Chart(name, name.indexOf('-') === -1 ? {} : sparkline)
-        };
-      }
-    });
-  }
+  vamp.peek(path);
 
   $scope.$on(path, function (e, response) {
     $ctrl.gateway = response.data;
     $timeout(updateCharts, 0);
     peekEvents();
+  });
+
+  $scope.$on('$destroy', function () {
+    charts.destroy();
   });
 
   $scope.$on('/events/stream', function (e, response) {
@@ -109,24 +63,63 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
           $location.path('/gateways');
         });
       } else if (_.includes(event.tags, 'archive:update')) {
-        peek();
+        vamp.peek(path);
       } else {
-        processForCharts(event);
+        chartUpdate(event);
       }
     } else if (_.includes(response.data.tags, 'synchronization')) {
-      peek();
+      vamp.peek(path);
     }
   });
 
   $scope.$on('/events', function (e, response) {
     _.forEach(response.data, function (event) {
       if ($ctrl.gateway && _.includes(event.tags, 'gateways:' + $ctrl.gateway.name)) {
-        processForCharts(event);
+        chartUpdate(event);
       }
     });
   });
 
-  function processForCharts(event) {
+  function peekEvents() {
+    var nameTag = 'gateways:' + $ctrl.gateway.name;
+    var requests = [
+      {tags: [nameTag, 'health']},
+      {tags: [nameTag, 'metrics:rate']},
+      {tags: [nameTag, 'metrics:responseTime']}
+    ];
+    _.forEach(requests, function (request) {
+      vamp.peek('/events', JSON.stringify(request));
+    });
+  }
+
+  function updateCharts() {
+    var chartConfig = {
+      millisPerPixel: 100
+    };
+    var sparkLineConfig = {
+      millisPerPixel: 300, labels: {disabled: true},
+      timestampFormatter: function () {
+        return '';
+      }
+    };
+    var definitions = _.concat(
+      [
+        {canvasId: 'rate', chartOptions: chartConfig},
+        {canvasId: 'health', chartOptions: chartConfig},
+        {canvasId: 'responseTime', chartOptions: chartConfig}
+      ],
+      _.flatMap(_.map($ctrl.gateway.routes, function (route) {
+        return [
+          {canvasId: 'rate-' + route.lookup_name, chartOptions: sparkLineConfig},
+          {canvasId: 'health-' + route.lookup_name, chartOptions: sparkLineConfig},
+          {canvasId: 'responseTime-' + route.lookup_name, chartOptions: sparkLineConfig}
+        ];
+      }))
+    );
+    charts.define(definitions);
+  }
+
+  function chartUpdate(event) {
     if (_.includes(event.tags, 'gateway')) {
       if (_.includes(event.tags, 'health')) {
         appendToChart('health', 100 * Number(event.value), event.timestamp);
@@ -151,10 +144,12 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
     }
   }
 
-  function appendToChart(name, value, timestamp) {
-    $ctrl.charts[name].last = value;
-    $ctrl.charts[name].chart.append(new Date(timestamp).getTime(), value, 0, 10000, function () {
-      $ctrl.charts[name].last = 'none';
+  function appendToChart(id, value, timestamp) {
+    var ts = new Date(timestamp).getTime();
+    $ctrl.last[id] = value;
+    charts.append(id, ts, value);
+    charts.timeout(id, ts, 0, 10000).then(function () {
+      $ctrl.last[id] = 'none';
     });
   }
 }

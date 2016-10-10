@@ -30,12 +30,12 @@
             <ul class="nav navbar-nav navbar-right" ng-show="$ctrl.connected">
                 <li class="stats" ng-show="$ctrl.jvm">
                     <div class="CPU">
-                        <span class="stat-label">System Load:</span>
+                        <span class="stat-label">system load:</span>
                         {{ $ctrl.jvm.systemLoad | number: 2 }}%
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="memory">
-                        <span class="stat-label">Memory:</span>
+                        <span class="stat-label">memory:</span>
                         <span class="stat-content">
               {{ ($ctrl.jvm.heapCurrent / $ctrl.jvm.heapMax) * 100 | number: 1 }}%
               <span class="detail">
