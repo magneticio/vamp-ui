@@ -3,7 +3,7 @@ angular.module('app').component('events', {
   controller: EventController
 });
 
-function EventController($scope, vamp) {
+function EventController($scope, $vamp) {
   var $ctrl = this;
 
   var maxLength = 50;
@@ -39,15 +39,15 @@ function EventController($scope, vamp) {
 
   function start() {
     $ctrl.events.length = 0;
-    vamp.peek('/events');
-    vamp.peek('/events/stream');
+    $vamp.peek('/events');
+    $vamp.peek('/events/stream');
   }
 
-  if (vamp.connected()) {
+  if ($vamp.connected()) {
     start();
   }
 
-  $scope.$on('vamp:connection', function (e, connection) {
+  $scope.$on('$vamp:connection', function (e, connection) {
     if (connection === 'opened') {
       start();
     }

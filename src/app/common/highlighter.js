@@ -4,13 +4,18 @@ angular.module('app').directive('highlighter', function ($timeout) {
     scope: {
       model: '=highlighter'
     },
-    link: function (scope, element) {
-      scope.$watch('model', function (newValue, oldValue) {
+    link: function ($scope, $element) {
+      $scope.$watch('model', function (newValue, oldValue) {
         if (newValue !== oldValue) {
-          element.addClass('highlight');
+          $element.removeClass('highlight');
           $timeout(function () {
-            element.removeClass('highlight');
-          }, 7000);
+            $element.addClass('highlight');
+          }, 0);
+          $timeout(function () {
+            if ($scope.model === newValue) {
+              $element.removeClass('highlight');
+            }
+          }, 5000);
         }
       });
     }

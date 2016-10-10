@@ -2,7 +2,7 @@
 angular.module('app').controller('GatewayController', GatewayController);
 
 /** @ngInject */
-function GatewayController($scope, $filter, $stateParams, $timeout, $location, vamp, alert, toastr) {
+function GatewayController($scope, $filter, $stateParams, $timeout, $location, $vamp, alert, toastr, $uibModal) {
   var $ctrl = this;
   var path = '/gateways/' + $stateParams.name;
 
@@ -24,8 +24,8 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
 
   this.delete = function () {
     alert.show('Warning', 'Are you sure you want to delete gateway \'' + $ctrl.gateway.name + '\'?', 'Delete', 'Cancel', function () {
-      vamp.await(function () {
-        vamp.remove(path);
+      $vamp.await(function () {
+        $vamp.remove(path);
       }).then(function () {
         $location.path('/gateways');
         toastr.success('Gateway \'' + $ctrl.gateway.name + '\' has been successfully deleted.');
@@ -40,7 +40,21 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
   };
 
   this.editWeights = function () {
-    console.log('edit weights');
+    $uibModal.open({
+      animation: true,
+      component: 'editWeights',
+      resolve: {
+        gateway: function () {
+          return $ctrl.gateway;
+        }
+      }
+    }).result.then(function (weights) {
+      var gateway = angular.copy($ctrl.gateway);
+      _.forEach(weights, function (weight, route) {
+        gateway.routes[route].weight = weight;
+      });
+      $vamp.put(path, JSON.stringify(gateway));
+    });
   };
 
   var addedRoutes = [];
@@ -49,7 +63,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
     return _.includes(addedRoutes, route.lookup_name);
   };
 
-  vamp.peek(path);
+  $vamp.peek(path);
 
   $scope.$on(path, function (e, response) {
     if ($ctrl.gateway) {
@@ -72,12 +86,12 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
           $location.path('/gateways');
         });
       } else if (_.includes(event.tags, 'archive:update')) {
-        vamp.peek(path);
+        $vamp.peek(path);
       } else {
         chartUpdate(event);
       }
     } else if (_.includes(response.data.tags, 'synchronization')) {
-      vamp.peek(path);
+      $vamp.peek(path);
     }
   });
 
@@ -97,7 +111,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
       {tags: [nameTag, 'metrics:responseTime']}
     ];
     _.forEach(requests, function (request) {
-      vamp.peek('/events', JSON.stringify(request));
+      $vamp.peek('/events', JSON.stringify(request));
     });
   }
 

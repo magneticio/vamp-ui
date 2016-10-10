@@ -2,11 +2,11 @@
 /* eslint camelcase: ["error", {properties: "never"}] */
 'use strict';
 
-angular.module('app').factory('vamp', ['$log', '$rootScope', '$websocket', '$timeout', function ($log, $rootScope, $websocket, $timeout) {
-  return new Vamp($log, $rootScope, $websocket, $timeout);
+angular.module('app').factory('$vamp', ['$log', '$rootScope', '$websocket', '$timeout', function ($log, $rootScope, $websocket, $timeout) {
+  return new $vamp($log, $rootScope, $websocket, $timeout);
 }]);
 
-function Vamp($log, $rootScope, $websocket, $timeout) {
+function $vamp($log, $rootScope, $websocket, $timeout) {
   var stream;
   var transaction = 1;
 
@@ -83,12 +83,12 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
 
       stream.onOpen(function () {
         $log.debug('websocket is opened');
-        notify('vamp:connection', 'opened');
+        notify('$vamp:connection', 'opened');
       });
 
       stream.onClose(function () {
         $log.info('websocket closed, will try to reconnect in 5 seconds...');
-        notify('vamp:connection', 'closed');
+        notify('$vamp:connection', 'closed');
         stream = null;
         $timeout(websocket, 5000);
       });
@@ -121,6 +121,6 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
   }
 }
 
-angular.module('app').run(["vamp", function (vamp) {
-  vamp.init();
+angular.module('app').run(["$vamp", function ($vamp) {
+  $vamp.init();
 }]);

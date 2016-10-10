@@ -5,5 +5,6 @@ angular.module('app', [
   'analytics.mixpanel',
   'ui.ace',
   'toastr',
-  'ngAnimate'
+  'ngAnimate',
+  'rzModule'
 ]);

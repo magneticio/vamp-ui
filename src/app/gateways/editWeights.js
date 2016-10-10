@@ -1,7 +1,19 @@
-/* global _*/
-angular.module('app').controller('editWeights', editWeights);
+angular.module('app').component('editWeights', {
+  restrict: 'E',
+  templateUrl: 'app/gateways/editWeights.html',
+  controller: EditWeights,
+  bindings: {
+    resolve: '<',
+    close: '&',
+    dismiss: '&'
+  }
+});
 
-function editWeights($scope, $uibModalInstance, weightValues) {
+/** @ngInject */
+function EditWeights($scope) {
+  var $ctrl = this;
+  var gateway = this.resolve.gateway;
+
   $scope.sliderOptions = {
     floor: 0,
     ceil: 100,
@@ -11,49 +23,59 @@ function editWeights($scope, $uibModalInstance, weightValues) {
     }
   };
 
-  $scope.newWeightValues = angular.copy(weightValues);
+  $scope.total = function () {
+    return _.reduce($scope.weights, function (sum, weight) {
+      return sum + weight;
+    }, 0);
+  };
 
-  function toArray(weightValues) {
-    var theArray = _.map(weightValues, function (value, prop) {
-      return {name: prop, value: value};
+  $scope.valid = function () {
+    return $scope.total() === 100;
+  };
+
+  this.save = function () {
+    $ctrl.close({
+      $value: _.reduce($scope.weights, function (weights, weight, route) {
+        weights[route] = weight + '%';
+        return weights;
+      }, {})
     });
-
-    return theArray;
-  }
-
-  // This function seems to complicated. Might have to refactor in the future.
-  if (_.size($scope.newWeightValues) === 2) {
-    $scope.$watch('newWeightValues', function (newValue, oldValue) {
-      var newValueArray = toArray(newValue);
-      var oldValueArray = toArray(oldValue);
-      if (newValueArray[0].value !== oldValueArray[0].value) {
-        $scope.newWeightValues[newValueArray[1].name] = 100 - newValueArray[0].value;
-      }
-
-      if (newValueArray[1].value !== oldValueArray[1].value) {
-        $scope.newWeightValues[newValueArray[0].name] = 100 - newValueArray[1].value;
-      }
-    }, true);
-  }
-
-  $scope.ok = function () {
-    $uibModalInstance.close($scope.newWeightValues);
   };
 
-  $scope.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
-  };
+  var first = null;
+  var second = null;
 
-  $scope.getTotal = function () {
-    var totalValue = 0;
-
-    for (var routeName in $scope.newWeightValues) {
-      if (routeName) {
-        var value = $scope.newWeightValues[routeName];
-        totalValue += value;
+  $scope.$watch('weights', function (newValue, oldValue) {
+    if ($scope.routeCount === 2) {
+      if (newValue[first] === oldValue[first]) {
+        $scope.weights[first] = 100 - $scope.weights[second];
+      } else {
+        $scope.weights[second] = 100 - $scope.weights[first];
       }
     }
+  }, true);
 
-    return totalValue;
+  $scope.$on('/gateways/' + gateway.name, function (e, response) {
+    gateway = response.data;
+    $ctrl.$onInit();
+  });
+
+  this.$onInit = function () {
+    $scope.routeCount = _.size(gateway.routes);
+
+    $scope.weights = _.reduce(gateway.routes, function (weights, route, name) {
+      weights[name] = parseInt(route.weight, 10);
+      return weights;
+    }, {});
+
+    if ($scope.routeCount === 2) {
+      _.forEach(gateway.routes, function (v, name) {
+        if (first === null) {
+          first = name;
+        } else {
+          second = name;
+        }
+      });
+    }
   };
 }

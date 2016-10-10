@@ -84,8 +84,7 @@
             </tr>
             <tr ng-repeat="(name, route) in $ctrl.gateway.routes | orderByKeys ">
                 <td>
-                    <span class="label label-success"
-                          ng-class="{'highlight': $ctrl.added(route)}">{{name}}</span>
+                    <span class="label label-success" ng-class="{'highlight': $ctrl.added(route)}">{{name}}</span>
                 </td>
                 <td>
                     <div class="sparkchart-container">

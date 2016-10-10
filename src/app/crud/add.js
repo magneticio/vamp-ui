@@ -4,7 +4,7 @@ angular.module('app').component('add', {
   templateUrl: 'app/crud/edit.html'
 });
 
-function ArtifactAddController($scope, $attrs, $location, toastr, alert, vamp) {
+function ArtifactAddController($scope, $attrs, $location, toastr, alert, $vamp) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
@@ -47,7 +47,7 @@ function ArtifactAddController($scope, $attrs, $location, toastr, alert, vamp) {
 
   this.validate = _.debounce(function (data) {
     if (validation) {
-      vamp.put(path, data, {validate_only: true}, 'JSON');
+      $vamp.put(path, data, {validate_only: true}, 'JSON');
     }
   }, 1500);
 
@@ -65,8 +65,8 @@ function ArtifactAddController($scope, $attrs, $location, toastr, alert, vamp) {
 
   this.save = function () {
     validation = false;
-    vamp.await(function () {
-      vamp.put(path, $ctrl.source, {}, 'JSON');
+    $vamp.await(function () {
+      $vamp.put(path, $ctrl.source, {}, 'JSON');
     }).then(function () {
       goBack();
       toastr.success('New ' + $ctrl.singular + ' has been successfully created.');

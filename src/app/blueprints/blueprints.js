@@ -2,12 +2,12 @@ angular.module('app')
   .controller('BlueprintsController', BlueprintsController)
   .controller('DeployBlueprintController', DeployBlueprintController)
   .controller('UpdateDeploymentController', UpdateDeploymentController)
-  .factory('blueprint', ['$rootScope', 'vamp', function ($rootScope, vamp) {
-    return new BlueprintsService($rootScope, vamp);
+  .factory('blueprint', ['$rootScope', '$vamp', function ($rootScope, $vamp) {
+    return new BlueprintsService($rootScope, $vamp);
   }]);
 
 /** @ngInject */
-function BlueprintsController($scope, $location, $uibModal, toastr, vamp, blueprint) {
+function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, blueprint) {
   var $ctrl = this;
   this.blueprint = $scope.$parent.$parent.artifact;
 
@@ -39,8 +39,8 @@ function BlueprintsController($scope, $location, $uibModal, toastr, vamp, bluepr
       }
     }).result.then(function (data) {
       var deployment = data.deploymentName;
-      vamp.await(function () {
-        vamp.put('/deployments/' + deployment, angular.toJson($ctrl.blueprint));
+      $vamp.await(function () {
+        $vamp.put('/deployments/' + deployment, angular.toJson($ctrl.blueprint));
       }).then(function () {
         gotoDeployment(deployment);
         toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully deployed as \'' + deployment + '\'.');
@@ -67,8 +67,8 @@ function BlueprintsController($scope, $location, $uibModal, toastr, vamp, bluepr
 
     modal.result.then(function (data) {
       var name = data.deployment.name;
-      vamp.await(function () {
-        vamp.put('/deployments/' + name, angular.toJson($ctrl.blueprint));
+      $vamp.await(function () {
+        $vamp.put('/deployments/' + name, angular.toJson($ctrl.blueprint));
       }).then(function () {
         gotoDeployment(name);
         toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully merged to \'' + name + '\'.');
@@ -95,8 +95,8 @@ function BlueprintsController($scope, $location, $uibModal, toastr, vamp, bluepr
 
     modal.result.then(function (data) {
       var name = data.deployment.name;
-      vamp.await(function () {
-        vamp.remove('/deployments/' + name, angular.toJson($ctrl.blueprint));
+      $vamp.await(function () {
+        $vamp.remove('/deployments/' + name, angular.toJson($ctrl.blueprint));
       }).then(function () {
         gotoDeployment(name);
         toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully removed from \'' + name + '\'.');
@@ -180,11 +180,11 @@ function UpdateDeploymentController($scope, $uibModalInstance, blueprint, deploy
   };
 }
 
-function BlueprintsService($rootScope, vamp) {
+function BlueprintsService($rootScope, $vamp) {
   var deployments = [];
 
   var peek = _.debounce(function () {
-    vamp.peek('/deployments');
+    $vamp.peek('/deployments');
   }, 3000, {
     leading: true,
     trailing: false

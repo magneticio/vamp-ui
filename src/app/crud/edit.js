@@ -4,7 +4,7 @@ angular.module('app').component('edit', {
   templateUrl: 'app/crud/edit.html'
 });
 
-function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $location, toastr, alert, vamp) {
+function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $location, toastr, alert, $vamp) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
@@ -34,7 +34,7 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   var validation = true;
   var ignoreChange = false;
 
-  vamp.peek(path, '', {}, 'YAML');
+  $vamp.peek(path, '', {}, 'YAML');
 
   $scope.$on(path, function (e, response) {
     if ($ctrl.base === null && response.status === 'OK' && response.content === 'YAML') {
@@ -58,7 +58,7 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
       } else if (!ignoreChange && _.includes(response.data.tags, 'archive:update')) {
         alert.show('Warning', '\'' + $ctrl.name + '\' has been updated in background. Do you want to reload changed?', 'Reload', 'Keep', function () {
           $ctrl.base = $ctrl.source = null;
-          vamp.peek(path, '', {}, 'YAML');
+          $vamp.peek(path, '', {}, 'YAML');
         });
       }
     }
@@ -74,11 +74,11 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
     }
   });
 
-  this.validate = _.debounce(function (data) {
+  this.validate = _.throttle(function (data) {
     if (validation) {
-      vamp.put(path, data, {validate_only: true}, 'JSON');
+      $vamp.put(path, data, {validate_only: true}, 'JSON');
     }
-  }, 1500);
+  }, 1500, {trailing: true, leading: false});
 
   this.isModified = function () {
     return !($ctrl.base === null || $ctrl.base === $ctrl.source);
@@ -96,8 +96,8 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
     validation = false;
     ignoreChange = true;
 
-    vamp.await(function () {
-      vamp.put(path, $ctrl.source, {}, 'JSON');
+    $vamp.await(function () {
+      $vamp.put(path, $ctrl.source, {}, 'JSON');
     }).then(function () {
       goBack();
       toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');

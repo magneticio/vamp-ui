@@ -4,13 +4,13 @@ angular.module('app').component('info', {
   controller: InfoController
 });
 
-function InfoController($rootScope, $scope, vamp) {
-  if (vamp.connected()) {
-    vamp.peek('/info');
+function InfoController($rootScope, $scope, $vamp) {
+  if ($vamp.connected()) {
+    $vamp.peek('/info');
   } else {
-    $scope.$on('vamp:connection', function (event, connection) {
+    $scope.$on('$vamp:connection', function (event, connection) {
       if (connection === 'opened') {
-        vamp.peek('/info');
+        $vamp.peek('/info');
       }
     });
   }

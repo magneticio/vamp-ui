@@ -7,7 +7,7 @@ angular.module('app').component('artifacts', {
   }
 });
 
-function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, vamp) {
+function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, $vamp) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
@@ -16,12 +16,12 @@ function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, 
   var path = '/' + this.kind;
 
   this.peek = function () {
-    vamp.peek(path);
+    $vamp.peek(path);
   };
 
   this.peek();
 
-  $scope.$on('vamp:connection', function (e, connection) {
+  $scope.$on('$vamp:connection', function (e, connection) {
     if (connection === 'opened') {
       $ctrl.peek();
     }
@@ -99,8 +99,8 @@ function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, 
         $ctrl.selected.length = 0;
 
         _.forEach(names, function (name) {
-          vamp.await(function () {
-            vamp.remove(path + '/' + name);
+          $vamp.await(function () {
+            $vamp.remove(path + '/' + name);
           }).then(function () {
             toastr.success('\'' + name + '\' has been successfully deleted.');
           }).catch(function (response) {

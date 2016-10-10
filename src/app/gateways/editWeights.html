@@ -2,30 +2,26 @@
     <h3 class="modal-title">Edit weights</h3>
 </div>
 <div class="modal-body">
-    <div class="row">
+    <div class="row" ng-if="routeCount > 2">
         <div class="col-md-4">
             <h4 class="pull-right">Total value:</h4>
         </div>
         <div class="col-md-6 bar-fix">
-            <uib-progressbar max="100" value="getTotal()" type="{{getTotal() === 100 ? 'success' : 'danger'}}"><span
-                    style="color:white; white-space:nowrap;">{{getTotal()}} / 100%</span></uib-progressbar>
+            <uib-progressbar max="100" value="total()" type="{{ valid() ? 'success' : 'danger' }}">
+                <span style="color:white; white-space:nowrap;">{{ total() }} / 100%</span>
+            </uib-progressbar>
         </div>
     </div>
-
-    <div class="row row-centered" ng-repeat="(weightName, weightValue) in newWeightValues">
+    <div class="row row-centered" ng-repeat="(name, weight) in weights | orderByKeys">
         <div class="col-md-6">
-            <h5 class=" slider-fix">
-                {{weightName}}:&nbsp;
-            </h5>
+            <span class="label label-success slider-label">{{name}}</span>
         </div>
-        <div class="col-md-6">
-            <rzslider rz-slider-model="newWeightValues[weightName]" rz-slider-options="sliderOptions">
-            </rzslider>
+        <div class="col-md-6 rz-slider">
+            <rzslider rz-slider-model="weights[name]" rz-slider-options="sliderOptions"></rzslider>
         </div>
     </div>
-
 </div>
 <div class="modal-footer">
-    <button class="btn btn-danger" ng-disabled="getTotal() !== 100" type="button" ng-click="ok()">Save</button>
-    <button class="btn ghost" type="button" ng-click="cancel()">Cancel</button>
+    <button type="button" class="btn btn-danger" ng-disabled="!valid()" ng-click="$ctrl.save()">Save</button>
+    <button class="btn ghost" type="button" ng-click="$ctrl.dismiss()">Cancel</button>
 </div>

@@ -5,7 +5,7 @@ angular.module('app').component('menu', {
   controller: MenuController
 });
 
-function MenuController($rootScope, $scope, $interval, vamp) {
+function MenuController($rootScope, $scope, $interval, $vamp) {
   var $ctrl = this;
 
   // menu
@@ -33,7 +33,7 @@ function MenuController($rootScope, $scope, $interval, vamp) {
   this.connected = false;
 
   function info() {
-    vamp.peek('/info', '', {on: 'jvm'});
+    $vamp.peek('/info', '', {on: 'jvm'});
   }
 
   function start() {
@@ -50,11 +50,11 @@ function MenuController($rootScope, $scope, $interval, vamp) {
     polling = undefined;
   }
 
-  if (vamp.connected()) {
+  if ($vamp.connected()) {
     start();
   }
 
-  $scope.$on('vamp:connection', function (event, connection) {
+  $scope.$on('$vamp:connection', function (event, connection) {
     if (connection === 'opened') {
       start();
     } else {
