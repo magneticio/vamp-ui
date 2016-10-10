@@ -36,8 +36,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
 
     $stateProvider
       .state(artifact.kind, artifactsData)
-      .state(artifact.kind + '/add', artifactAddData)
-      .state(artifact.kind + '/view/:name*', artifactViewData)
-      .state(artifact.kind + '/edit/:name*', artifactEditData);
+      .state(artifact.kind + 'Add', artifactAddData)
+      .state(artifact.kind + 'View', artifactViewData)
+      .state(artifact.kind + 'Edit', artifactEditData);
   });
 }

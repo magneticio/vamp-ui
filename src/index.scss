@@ -308,19 +308,19 @@ p, div {
 }
 
 .panel-default > .panel-heading {
-  background-image: none !important;
-  background-color: white !important;
+  background: white none !important;
   padding: 0 10px 12px 10px;
 
   .column {
     height: 40px;
+    font-size: 14px;
     display: flex;
+    font-weight: $font-weight-bold;
     align-items: flex-end;
   }
 
   .head {
-    font-size: 28px;
-    color: $dark-blue;
+    font-size: 22px;
     font-weight: normal;
     line-height: 1;
   }
@@ -333,19 +333,19 @@ p, div {
 }
 
 .panel-body {
+  font-weight: $font-weight-bold;
   .head {
-    font-size: 28px;
+    font-size: 18px;
     line-height: 1;
     margin-bottom: 4px;
   }
 
   .sub-head {
-    font-size: 12px;
+    font-size: 14px;
     color: rgba($dark-blue, 0.7);
     line-height: 1;
     padding-top: 0;
   }
-
 }
 
 .chart-row {
@@ -401,10 +401,10 @@ p, div {
 
 .service-row {
   &:first-of-type {
-    padding: 10px 0;
+    padding: 0;
   }
 
-  padding: 40px 0;
+  padding: 10px 0;
   border-bottom: 1px solid $light-grey;
 
   &:last-of-type {
@@ -434,7 +434,6 @@ a.editable-click {
   border-bottom: none;
   font-style: normal;
   font-weight: bold;
-
 }
 
 .navbar-nav {
@@ -776,12 +775,18 @@ input[type=number] {
   }
 }
 
-// gateway
+//
 
-.gateway {
-
+.gateway  {
   p, span {
-    font-size: 14px !important;
+    font-size: 14px;
+    font-weight: $font-weight-regular;
+  }
+}
+
+.deployment {
+  p, span {
+    font-size: 14px;
     font-weight: $font-weight-regular;
   }
 }

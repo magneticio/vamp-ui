@@ -9,7 +9,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   this.gateway = null;
   this.title = $filter('decodeName')($stateParams.name);
 
-  var charts = null;
+  var charts = new TimeSeriesCharts();
 
   this.last = [];
 
@@ -74,14 +74,6 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     save(gateway);
   };
 
-  function save(gateway) {
-    $vamp.await(function () {
-      $vamp.put(path, JSON.stringify(gateway));
-    }).catch(function (response) {
-      toastr.error(response.data.message, 'Update of gateway \'' + $ctrl.gateway.name + '\' failed.');
-    });
-  }
-
   var addedRoutes = [];
 
   this.added = function (route) {
@@ -102,8 +94,6 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     }
     if ($ctrl.gateway) {
       addedRoutes = _.difference(_.map(response.data.routes, 'lookup_name'), _.map($ctrl.gateway.routes, 'lookup_name'));
-    } else {
-      charts = new TimeSeriesCharts();
     }
     $ctrl.gateway = response.data;
     $timeout(updateCharts, 0);
@@ -132,12 +122,22 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   });
 
   $scope.$on('/events', function (e, response) {
-    _.forEach(response.data, function (event) {
-      if ($ctrl.gateway && _.includes(event.tags, 'gateways:' + $ctrl.gateway.name)) {
-        chartUpdate(event);
-      }
-    });
+    $timeout(function () {
+      _.forEach(response.data, function (event) {
+        if ($ctrl.gateway && _.includes(event.tags, 'gateways:' + $ctrl.gateway.name)) {
+          chartUpdate(event);
+        }
+      });
+    }, 0);
   });
+
+  function save(gateway) {
+    $vamp.await(function () {
+      $vamp.put(path, JSON.stringify(gateway));
+    }).catch(function (response) {
+      toastr.error(response.data.message, 'Update of gateway \'' + $ctrl.gateway.name + '\' failed.');
+    });
+  }
 
   function peekEvents() {
     var nameTag = 'gateways:' + $ctrl.gateway.name;
@@ -155,12 +155,14 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     var chartConfig = {
       millisPerPixel: 100
     };
+
     var sparkLineConfig = {
       millisPerPixel: 300, labels: {disabled: true},
       timestampFormatter: function () {
         return '';
       }
     };
+
     var definitions = _.concat(
       [
         {canvasId: 'rate', chartOptions: chartConfig},
@@ -175,7 +177,15 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
         ];
       }))
     );
+
     charts.define(definitions);
+
+    var ts = new Date().getTime();
+    _.forEach(definitions, function (definition) {
+      charts.timeout(definition.canvasId, ts, 0, 10000).then(function () {
+        $ctrl.last[definition.canvasId] = 'none';
+      });
+    });
   }
 
   function chartUpdate(event) {

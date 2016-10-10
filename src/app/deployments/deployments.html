@@ -1,9 +1,9 @@
 <artifacts kind="deployments">
     <div class="artifact-properties" ng-controller="DeploymentsController as $ctrl">
-        <span class="label label-primary">cpu : {{ $ctrl.cpu }}</span>
+        <span class="label label-primary">cpu : {{ $ctrl.scale.cpu }}</span>
         <p></p>
-        <span class="label label-primary">memory : {{ $ctrl.memory }} MB</span>
+        <span class="label label-primary">memory : {{ $ctrl.scale.memory }} MB</span>
         <p></p>
-        <span class="label label-primary">instances : {{ $ctrl.instances }}</span>
+        <span class="label label-primary">instances : {{ $ctrl.scale.instances }}</span>
     </div>
 </artifacts>

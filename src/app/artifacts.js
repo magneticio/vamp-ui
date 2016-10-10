@@ -5,7 +5,8 @@ Artifacts.prototype.all = function () {
   return [
     {
       kind: "deployments",
-      deployable: true
+      deployable: true,
+      artifactViewTemplate: 'app/deployments/deployment.html'
     },
     {
       kind: "gateways",

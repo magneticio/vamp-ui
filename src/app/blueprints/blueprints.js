@@ -3,7 +3,7 @@ angular.module('app')
   .controller('DeployBlueprintController', DeployBlueprintController)
   .controller('UpdateDeploymentController', UpdateDeploymentController)
   .factory('blueprint', ['$rootScope', '$vamp', function ($rootScope, $vamp) {
-    return new BlueprintsService($rootScope, $vamp);
+    return new BlueprintService($rootScope, $vamp);
   }]);
 
 /** @ngInject */
@@ -180,7 +180,7 @@ function UpdateDeploymentController($scope, $uibModalInstance, blueprint, deploy
   };
 }
 
-function BlueprintsService($rootScope, $vamp) {
+function BlueprintService($rootScope, $vamp) {
   var deployments = [];
 
   var peek = _.debounce(function () {
