@@ -116,6 +116,6 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   function goBack() {
     validation = false;
     ignoreChange = true;
-    $location.path($location.search().back || $ctrl.kind);
+    $location.path($location.search().back || $ctrl.kind).search({});
   }
 }

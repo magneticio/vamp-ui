@@ -57,6 +57,12 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     });
   };
 
+  this.saveCondition = function (route, condition) {
+    var gateway = angular.copy($ctrl.gateway);
+    gateway.routes[route].condition = condition;
+    $vamp.put(path, JSON.stringify(gateway));
+  };
+
   var addedRoutes = [];
 
   this.added = function (route) {
