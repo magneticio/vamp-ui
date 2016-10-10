@@ -190,14 +190,17 @@ menu {
   margin: 6px;
 }
 
-.table > tbody > tr > td {
-  vertical-align: middle !important;
-  letter-spacing: 0.05em;
-  color: $dark-blue;
-  padding: 8px 0 2px 8px;
-  border-top: none !important;
-  font-size: 14px !important;
-  font-weight: 500;
+.table {
+  margin-bottom: 0;
+
+  tbody > tr > td {
+    vertical-align: middle !important;
+    letter-spacing: 0.05em;
+    color: $dark-blue;
+    padding: 8px 0 8px 0;
+    font-size: 14px !important;
+    font-weight: 500;
+  }
 }
 
 .row-centered {
@@ -595,18 +598,17 @@ input[type=number] {
 
 @keyframes highlightChange {
   0% {
-    background-color: #5cb85c;
+    background-color: #ec971f;
   }
   50% {
     background-color: $dark-blue;
   }
   100% {
-    background-color: #5cb85c;
+    background-color: #ec971f;
   }
 }
 
 .highlight {
-  background-color: #5cb85c;
   animation-name: highlightChange;
   animation-duration: 1s;
   animation-iteration-count: 5;

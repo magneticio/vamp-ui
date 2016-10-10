@@ -84,7 +84,8 @@
             </tr>
             <tr ng-repeat="(name, route) in $ctrl.gateway.routes | orderByKeys ">
                 <td>
-                    <span class="label label-success">{{name}}</span>
+                    <span class="label label-success"
+                          ng-class="{'highlight': $ctrl.added(route)}">{{name}}</span>
                 </td>
                 <td>
                     <div class="sparkchart-container">
@@ -117,7 +118,10 @@
                     <span highlighter="route.weight" class="label label-success">{{route.weight}}</span>
                 </td>
                 <td>
-                    <span highlighter="route.condition.condition" class="label label-success">{{route.condition.condition}}</span>
+                    <span highlighter="route.condition.condition" class="label"
+                          ng-class="{'label-success': route.condition.condition, 'label-default': !label-default}">
+                        {{route.condition.condition || 'none'}}
+                    </span>
 
                     <!--<editable-text active="true" text="{{route.condition.condition}}"-->
                     <!--edited="$ctrl.conditionsChanged(routename, newConditions)"></editable-text>-->

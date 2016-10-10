@@ -10,7 +10,7 @@ angular.module('app').directive('highlighter', function ($timeout) {
           element.addClass('highlight');
           $timeout(function () {
             element.removeClass('highlight');
-          }, 5000);
+          }, 7000);
         }
       });
     }

@@ -43,9 +43,18 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, v
     console.log('edit weights');
   };
 
+  var addedRoutes = [];
+
+  this.added = function (route) {
+    return _.includes(addedRoutes, route.lookup_name);
+  };
+
   vamp.peek(path);
 
   $scope.$on(path, function (e, response) {
+    if ($ctrl.gateway) {
+      addedRoutes = _.difference(_.map(response.data.routes, 'lookup_name'), _.map($ctrl.gateway.routes, 'lookup_name'));
+    }
     $ctrl.gateway = response.data;
     $timeout(updateCharts, 0);
     peekEvents();
