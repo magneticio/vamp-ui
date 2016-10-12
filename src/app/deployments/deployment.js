@@ -13,10 +13,6 @@ function DeploymentController($scope, $stateParams, $interval, $timeout, $locati
 
   this.last = [];
 
-  this.clusterCount = function () {
-    return $ctrl.deployment ? _.size($ctrl.deployment.clusters) : 0;
-  };
-
   this.edit = function () {
     $location.path('/deployments/edit/' + this.deployment.name).search({back: '/deployments/view/' + this.deployment.name});
   };

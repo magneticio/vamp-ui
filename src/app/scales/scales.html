@@ -1,9 +1,9 @@
 <artifacts kind="scales">
-    <div class="artifact-properties" ng-controller="ScalesController as $ctrl">
-        <span class="label label-primary">cpu : {{ $ctrl.cpu }}</span>
+    <div class="artifact-properties" ng-controller="ArtifactsController as $ctrl">
+        <span class="label label-primary">cpu : {{ $ctrl.artifact.cpu }}</span>
         <p></p>
-        <span class="label label-primary">memory : {{ $ctrl.memory }} MB</span>
+        <span class="label label-primary">memory : {{ $ctrl.artifact.memory | asNumber:0 }} MB</span>
         <p></p>
-        <span class="label label-primary">instances : {{ $ctrl.instances }}</span>
+        <span class="label label-primary">instances : {{ $ctrl.artifact.instances }}</span>
     </div>
 </artifacts>

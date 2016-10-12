@@ -14,10 +14,6 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   this.last = [];
   this.sliderOptions = slider.weightOptions;
 
-  this.routeCount = function () {
-    return $ctrl.gateway ? _.size($ctrl.gateway.routes) : 0;
-  };
-
   this.edit = function () {
     var encoded = $filter('encodeName')(this.gateway.name);
     $location.path('/gateways/edit/' + encoded).search({back: '/gateways/view/' + encoded});

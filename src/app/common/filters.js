@@ -19,6 +19,11 @@ angular.module('app')
       return _.isEmpty(obj);
     };
   })
+  .filter('countKeys', function () {
+    return function (object) {
+      return object ? _.size(object) : 0;
+    };
+  })
   .filter('orderByKeys', function () {
     return function (items) {
       var keys = _.map(items, function (v, n) {
@@ -29,5 +34,19 @@ angular.module('app')
         result[key] = items[key];
       });
       return result;
+    };
+  })
+  .filter('namify', function () {
+    return function (object) {
+      return _.map(object, function (value, key) {
+        value.name = key;
+        return value;
+      });
+    };
+  })
+  .filter('asNumber', function () {
+    // because $filter('number') is strict, e.g. '64MB' is not a number.
+    return function (input, fraction) {
+      return parseFloat(input || '').toFixed(fraction === null || fraction === undefined ? 2 : fraction);
     };
   });

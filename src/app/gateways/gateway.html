@@ -81,7 +81,7 @@
                 <th>requests / sec</th>
                 <th>response time</th>
                 <th>
-                    <editable on-click="$ctrl.editWeights()" active="$ctrl.routeCount() > 1"> weight</editable>
+                    <editable on-click="$ctrl.editWeights()" active="($ctrl.gateway.routes | countKeys) > 1"> weight</editable>
                 </th>
                 <th>condition</th>
                 <th>condition strength</th>

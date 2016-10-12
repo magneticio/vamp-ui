@@ -228,7 +228,7 @@ function BlueprintService($rootScope, $vamp) {
   };
 
   $rootScope.$on('/events/stream', function (e, response) {
-    if (_.includes(response.data.tags, 'synchronization')) {
+    if ((_.includes(response.data.tags, 'deployments') && _.includes(response.data.tags, 'archive')) || _.includes(response.data.tags, 'synchronization')) {
       peek();
     }
   });
