@@ -13,29 +13,25 @@
     </header>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-2">
-                <p>host</p>
-                <span class="label label-success">{{$ctrl.gateway.service.host}}</span>
+            <div class="col-md-3 gateway-row">
+                <p>host:port</p>
+                <span class="label label-success">{{$ctrl.gateway.service.host}}:{{$ctrl.gateway.service.port}}</span>
             </div>
-            <div class="col-md-2">
-                <p>port</p>
-                <span class="label label-success">{{$ctrl.gateway.service.port}}</span>
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-3 gateway-row">
                 <p>virtual hosts</p>
                 <p ng-repeat="host in $ctrl.gateway.virtual_hosts | orderBy:'length'">
                     <span class="label label-success">{{host}}</span>
                 </p>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3 gateway-row">
                 <p>deployed </p>
                 <span ng-if="$ctrl.gateway.deployed" class="label label-success"><i class="fa fa-check"></i>&nbsp;deployed</span>
                 <span ng-if="!$ctrl.gateway.deployed" class="label label-default">not deployed</span>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3 gateway-row">
                 <p>sticky</p>
                 <editable-drop-down active="true" values="$ctrl.stickyValues" selected="$ctrl.sticky(value)">
-                    <span ng-if="$ctrl.gateway" highlighter="$ctrl.gateway.sticky" class="label"
+                    <span ng-if="$ctrl.gateway" highlighter="$ctrl.gateway.sticky" class="label gateway-sticky"
                           ng-class="{'label-success': $ctrl.gateway.sticky, 'label-default': !$ctrl.gateway.sticky}">
                         {{ $ctrl.gateway.sticky || 'not sticky'}}
                     </span>
@@ -44,83 +40,99 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-md-4 chart-fix">
-                <div>
-                    <p>health
-                        <span ng-if="$ctrl.last['health'] != null && $ctrl.last['health'] != 'none'"
-                              class="label label-primary">{{ $ctrl.last['health'] }} %</span>
-                        <span ng-if="$ctrl.last['health'] == 'none'" class="label label-danger">none</span>
-                    </p>
-                    <canvas class="chart" id="health" width="320"></canvas>
-                </div>
+            <div class="col-md-4 gateway-row">
+                <p>health
+                    <span ng-if="$ctrl.last['health'] != null && $ctrl.last['health'] != 'none'"
+                          class="label label-primary">
+                        {{ $ctrl.last['health'] }} %
+                    </span>
+                    <span ng-if="$ctrl.last['health'] == 'none'" class="label label-danger">none</span>
+                </p>
+                <canvas class="chart" id="health" width="320"></canvas>
             </div>
-            <div class="col-md-4 chart-fix">
-                <div>
-                    <p>requests / second
-                        <span ng-if="$ctrl.last['rate'] != null && $ctrl.last['rate'] != 'none'"
-                              class="label label-primary">{{ $ctrl.last['rate'] }}</span>
-                        <span ng-if="$ctrl.last['rate'] == 'none'" class="label label-danger">none</span>
-                    </p>
-                    <canvas class="chart" id="rate" width="320"></canvas>
-                </div>
+            <div class="col-md-4 gateway-row">
+                <p>requests / second
+                    <span ng-if="$ctrl.last['rate'] != null && $ctrl.last['rate'] != 'none'"
+                          class="label label-primary">
+                        {{ $ctrl.last['rate'] }}
+                    </span>
+                    <span ng-if="$ctrl.last['rate'] == 'none'" class="label label-danger">none</span>
+                </p>
+                <canvas class="chart" id="rate" width="320"></canvas>
             </div>
-            <div class="col-md-4 chart-fix">
+            <div class="col-md-4 gateway-row">
                 <p>response time
                     <span ng-if="$ctrl.last['responseTime'] != null && $ctrl.last['responseTime'] != 'none'"
-                          class="label label-primary">{{ $ctrl.last['responseTime'] }} ms</span>
+                          class="label label-primary">
+                        {{ $ctrl.last['responseTime'] }} ms
+                    s</span>
                     <span ng-if="$ctrl.last['responseTime'] == 'none'" class="label label-danger">none</span>
                 </p>
                 <canvas class="chart" id="responseTime" width="320"></canvas>
             </div>
         </div>
-        <br>
-        <table class="table">
-            <tr>
-                <th>route</th>
-                <th>health</th>
-                <th>requests / sec</th>
-                <th>response time</th>
-                <th>
-                    <editable on-click="$ctrl.editWeights()" active="($ctrl.gateway.routes | countKeys) > 1"> weight</editable>
-                </th>
-                <th>condition</th>
-                <th>condition strength</th>
-            </tr>
-            <tr ng-repeat="(name, route) in $ctrl.gateway.routes | orderByKeys ">
-                <td>
+        <br> <br>
+        <div class="row">
+            <div class="col-md-4 gateway-row">
+                <div class="col-sm-8 gateway-row"><p>route</p></div>
+                <div class="col-sm-4 gateway-row">
+                    <editable on-click="$ctrl.editWeights()" active="($ctrl.gateway.routes | countKeys) > 1">
+                        weight
+                    </editable>
+                </div>
+            </div>
+            <div class="col-md-4 gateway-row">
+                <div class="col-sm-4 gateway-row"><p>health</p></div>
+                <div class="col-sm-4 gateway-row"><p>requests / sec</p></div>
+                <div class="col-sm-4 gateway-row"><p>response time</p></div>
+            </div>
+            <div class="col-md-4 gateway-row">
+                <div class="col-sm-8 gateway-row"><p>condition</p></div>
+                <div class="col-sm-4 gateway-row"><p>strength</p></div>
+            </div>
+        </div>
+
+        <div class="row gateway-route-row" ng-repeat="(name, route) in $ctrl.gateway.routes | orderByKeys">
+            <br>
+            <div class="col-md-4 gateway-route">
+                <div class="col-sm-8 gateway-row">
                     <span class="label label-success" ng-class="{'highlight': $ctrl.added(route)}">{{name}}</span>
-                </td>
-                <td>
-                    <div class="sparkchart-container">
-                        <canvas class="chart" id="health-{{route.lookup_name}}" width="75" height="40"></canvas>
+                </div>
+                <div class="col-sm-4 gateway-row">
+                    <span highlighter="route.weight" class="label label-success">{{route.weight}}</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="col-sm-4 gateway-row">
+                    <canvas class="chart" id="health-{{route.lookup_name}}" width="75" height="40"></canvas>
+                    <p>
                         <span ng-show="$ctrl.last['health-' + route.lookup_name] != null && $ctrl.last['health-' + route.lookup_name] != 'none'"
                               class="label label-primary">{{ $ctrl.last['health-' + route.lookup_name] }} %</span>
                         <span ng-show="$ctrl.last['health-' + route.lookup_name] == 'none'"
                               class="label label-danger">none</span>
-                    </div>
-                </td>
-                <td>
-                    <div class="sparkchart-container">
-                        <canvas class="chart" id="rate-{{route.lookup_name}}" width="75" height="40"></canvas>
+                    </p>
+                </div>
+                <div class="col-sm-4 gateway-row">
+                    <canvas class="chart" id="rate-{{route.lookup_name}}" width="75" height="40"></canvas>
+                    <p>
                         <span ng-show="$ctrl.last['rate-' + route.lookup_name] != null && $ctrl.last['rate-' + route.lookup_name] != 'none'"
                               class="label label-primary">{{ $ctrl.last['rate-' + route.lookup_name] }}</span>
                         <span ng-show="$ctrl.last['rate-' + route.lookup_name] == 'none'"
                               class="label label-danger">none</span>
-                    </div>
-                </td>
-                <td>
-                    <div class="sparkchart-container">
-                        <canvas class="chart" id="responseTime-{{route.lookup_name}}" width="75" height="40"></canvas>
+                    </p>
+                </div>
+                <div class="col-sm-4 gateway-row">
+                    <canvas class="chart" id="responseTime-{{route.lookup_name}}" width="75" height="40"></canvas>
+                    <p>
                         <span ng-show="$ctrl.last['responseTime-' + route.lookup_name] != null && $ctrl.last['responseTime-' + route.lookup_name] != 'none'"
                               class="label label-primary">{{ $ctrl.last['responseTime-' + route.lookup_name] }} ms</span>
                         <span ng-show="$ctrl.last['responseTime-' + route.lookup_name] == 'none'"
                               class="label label-danger">none</span>
-                    </div>
-                </td>
-                <td>
-                    <span highlighter="route.weight" class="label label-success">{{route.weight}}</span>
-                </td>
-                <td>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 gateway-route-condition">
+                <div class="col-sm-8 gateway-row">
                     <editable-text active="true" text="{{route.condition.condition}}"
                                    edited="$ctrl.saveCondition(name, value)">
                         <span highlighter="route.condition.condition" class="label"
@@ -128,8 +140,8 @@
                             {{route.condition.condition || 'none'}}
                         </span>
                     </editable-text>
-                </td>
-                <td>
+                </div>
+                <div class="col-sm-4 gateway-row">
                     <editable-number-slider active="route.condition.condition"
                                             options="$ctrl.sliderOptions"
                                             number="route.condition_strength"
@@ -138,8 +150,9 @@
                             {{route.condition_strength}}
                         </span>
                     </editable-number-slider>
-                </td>
-            </tr>
-        </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

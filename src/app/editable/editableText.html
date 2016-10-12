@@ -5,12 +5,14 @@
     <div ng-if="$ctrl.editMode">
         <form class="editable-text" novalidate name="form" ng-submit="$ctrl.edited({value: $ctrl.change}); $ctrl.setEditModeInactive()">
             <input ng-model="$ctrl.change" type="text">
-            <button type="submit">
-                <i class="fa fa-check"></i>
-            </button>
-            <button ng-click="$ctrl.setEditModeInactive()">
-                <i class="fa fa-times"></i>
-            </button>
+            <div class="editable-text-buttons">
+                <button type="submit">
+                    <i class="fa fa-check"></i>
+                </button>
+                <button ng-click="$ctrl.setEditModeInactive()">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
         </form>
     </div>
 </div>

@@ -621,26 +621,13 @@ input[type=number] {
   }
 }
 
-.sparkchart-container {
-  width: 150px;
-  height: 36px;
-  position: relative;
-  vertical-align: top;
-
-  span {
-    position: absolute;
-    margin: 10px 0 0 5px;
-  }
-}
-
 .editable {
-  display: flex;
+  display: inline-flex;
 
   .editable-icon {
     margin-left: 6px;
     cursor: pointer;
     i {
-      transform: translate(0, -1px);
       color: $color-text-dark;
     }
     &.disabled {
@@ -654,11 +641,19 @@ input[type=number] {
 
 .editable-text {
   color: $color-bg-dark;
+  input {
+    width: 70%;
+  }
+}
+
+.editable-text-buttons, .editable-number-slider-buttons {
+  display: inline-flex;
   button {
     background-color: $color-text-dark;
     border-radius: .25em;
     border: none;
     color: aliceblue;
+    margin: 0 2px;
   }
 }
 
@@ -855,6 +850,29 @@ input[type=number] {
     font-size: $font-medium;
     font-weight: $font-weight-regular;
   }
+}
+
+.gateway-sticky {
+  margin-left: 20px;
+}
+
+.gateway-row {
+  text-align: center;
+}
+
+.gateway-route-row {
+  border-top: 1px solid rgba($color-blue-dark, 0.3);
+  &:last-of-type {
+    border-bottom: 1px solid rgba($color-blue-dark, 0.3);
+  }
+  padding-bottom: 5px;
+  &:hover {
+    background-color: rgba($color-blue-dark, 0.1);
+  }
+}
+
+.gateway-route, .gateway-route-condition {
+  padding-top: 10px;
 }
 
 .deployment {

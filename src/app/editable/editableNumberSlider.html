@@ -2,9 +2,9 @@
     <editable ng-if="!$ctrl.editMode" active="$ctrl.active" on-click="$ctrl.setEditModeActive()">
         <span ng-transclude></span>
     </editable>
-    <div class="editable-text" ng-if="$ctrl.editMode">
+    <div class="editable-number-slider" ng-if="$ctrl.editMode">
         <rzslider class="slider" rz-slider-model="$ctrl.change" rz-slider-options="$ctrl.sliderOptions"></rzslider>
-        <div class="pull-right">
+        <div class="editable-number-slider-buttons pull-right">
             <button ng-click="$ctrl.edited({value: $ctrl.change}); $ctrl.setEditModeInactive()">
                 <i class="fa fa-check"></i>
             </button>
