@@ -10,12 +10,17 @@ span:focus {
 
 // colors
 
-$color-blue-dark: #37647D;
-$color-blue: #6991AA;
+
+$color-blue: #29719b;
+$color-blue-dark: rgba(#29719b, 0.2);
+
 $color-pink: #FF405E;
 $color-pink-dark: #C33750;
+
 $color-white: #F0F5FA;
-$color-green: #15D9B2;
+
+$color-green: #00ff00;
+$color-green-dark: rgba(#00ff00, 0.2);
 $color-yellow: #f1c40f;
 
 $color-bg: #141e2d;
@@ -153,6 +158,15 @@ menu {
   &.error {
     background-color: rgba($color-pink, 0.5);
   }
+}
+
+.label-success {
+  background-color: $color-green-dark;
+  color: $color-white;
+}
+
+.label-primary {
+  background-color: $color-blue;
 }
 
 .editor {
@@ -542,13 +556,12 @@ a.editable-click:hover {
   }
 
   &.green {
-    background-color: $color-green;
+    background-color: $color-green-dark;
   }
 
   &.yellow {
     background-color: $color-yellow;
   }
-
 }
 
 // slider style

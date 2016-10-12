@@ -43,12 +43,12 @@
             <div class="col-md-4 gateway-row">
                 <p>health
                     <span ng-if="$ctrl.last['health'] != null && $ctrl.last['health'] != 'none'"
-                          class="label label-primary">
+                          class="label label-success">
                         {{ $ctrl.last['health'] }} %
                     </span>
                     <span ng-if="$ctrl.last['health'] == 'none'" class="label label-danger">none</span>
                 </p>
-                <canvas class="chart" id="health" width="320"></canvas>
+                <canvas class="chart" id="health" width="330"></canvas>
             </div>
             <div class="col-md-4 gateway-row">
                 <p>requests / second
@@ -58,17 +58,17 @@
                     </span>
                     <span ng-if="$ctrl.last['rate'] == 'none'" class="label label-danger">none</span>
                 </p>
-                <canvas class="chart" id="rate" width="320"></canvas>
+                <canvas class="chart" id="rate" width="330"></canvas>
             </div>
             <div class="col-md-4 gateway-row">
                 <p>response time
                     <span ng-if="$ctrl.last['responseTime'] != null && $ctrl.last['responseTime'] != 'none'"
                           class="label label-primary">
                         {{ $ctrl.last['responseTime'] }} ms
-                    s</span>
+                    </span>
                     <span ng-if="$ctrl.last['responseTime'] == 'none'" class="label label-danger">none</span>
                 </p>
-                <canvas class="chart" id="responseTime" width="320"></canvas>
+                <canvas class="chart" id="responseTime" width="330"></canvas>
             </div>
         </div>
         <br> <br>
@@ -104,16 +104,16 @@
             </div>
             <div class="col-md-4">
                 <div class="col-sm-4 gateway-row">
-                    <canvas class="chart" id="health-{{route.lookup_name}}" width="75" height="40"></canvas>
+                    <canvas class="chart" id="health-{{route.lookup_name}}" width="100" height="40"></canvas>
                     <p>
                         <span ng-show="$ctrl.last['health-' + route.lookup_name] != null && $ctrl.last['health-' + route.lookup_name] != 'none'"
-                              class="label label-primary">{{ $ctrl.last['health-' + route.lookup_name] }} %</span>
+                              class="label label-success">{{ $ctrl.last['health-' + route.lookup_name] }} %</span>
                         <span ng-show="$ctrl.last['health-' + route.lookup_name] == 'none'"
                               class="label label-danger">none</span>
                     </p>
                 </div>
                 <div class="col-sm-4 gateway-row">
-                    <canvas class="chart" id="rate-{{route.lookup_name}}" width="75" height="40"></canvas>
+                    <canvas class="chart" id="rate-{{route.lookup_name}}" width="100" height="40"></canvas>
                     <p>
                         <span ng-show="$ctrl.last['rate-' + route.lookup_name] != null && $ctrl.last['rate-' + route.lookup_name] != 'none'"
                               class="label label-primary">{{ $ctrl.last['rate-' + route.lookup_name] }}</span>
@@ -122,7 +122,7 @@
                     </p>
                 </div>
                 <div class="col-sm-4 gateway-row">
-                    <canvas class="chart" id="responseTime-{{route.lookup_name}}" width="75" height="40"></canvas>
+                    <canvas class="chart" id="responseTime-{{route.lookup_name}}" width="100" height="40"></canvas>
                     <p>
                         <span ng-show="$ctrl.last['responseTime-' + route.lookup_name] != null && $ctrl.last['responseTime-' + route.lookup_name] != 'none'"
                               class="label label-primary">{{ $ctrl.last['responseTime-' + route.lookup_name] }} ms</span>

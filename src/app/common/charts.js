@@ -1,180 +1,169 @@
 /* global SmoothieChart, TimeSeries */
-function TimeSeriesCharts() {
-  this.charts = {};
-  this.timeoutTasks = {};
-}
+(function (exports) {
+  var charts = {};
+  var timeoutTasks = {};
+  var creationTimestamp = new Date().getTime();
 
-TimeSeriesCharts.chart = 'chart';
-TimeSeriesCharts.healthChart = 'health-chart';
-TimeSeriesCharts.sparkline = 'sparkline';
-TimeSeriesCharts.healthSparkline = 'shealth-parkline';
+  var resetValueTimeout = 7500;
 
-TimeSeriesCharts.chartOptions = {
-  maxValueScale: 1,
-  interpolation: 'step',
-  sharpLines: true,
-  borderVisible: false,
-  grid: {
-    fillStyle: 'transparent',
-    strokeStyle: '#37647D',
-    millisPerLine: 10000,
-    verticalSections: 5
-  },
-  labels: {
-    fillStyle: '#b9c8d2',
-    fontSize: 10,
-    precision: 0
-  },
-  timestampFormatter: SmoothieChart.timeFormatter,
-  minValue: 0,
-  millisPerPixel: 100
-};
-
-TimeSeriesCharts.healthChartOptions = {
-  maxValueScale: 1,
-  interpolation: 'step',
-  sharpLines: true,
-  borderVisible: false,
-  grid: {
-    fillStyle: 'transparent',
-    strokeStyle: '#37647D',
-    millisPerLine: 10000,
-    verticalSections: 5
-  },
-  labels: {
-    fillStyle: '#b9c8d2',
-    fontSize: 10,
-    precision: 0
-  },
-  timestampFormatter: SmoothieChart.timeFormatter,
-  minValue: 0,
-  millisPerPixel: 100
-};
-
-TimeSeriesCharts.sparklineOptions = {
-  maxValueScale: 1,
-  interpolation: 'step',
-  sharpLines: true,
-  borderVisible: false,
-  grid: {
-    fillStyle: 'transparent',
-    strokeStyle: '#b3b3b3',
-    millisPerLine: 10000,
-    verticalSections: 5
-  },
-  minValue: 0,
-  millisPerPixel: 300,
-  labels: {
-    disabled: true
-  },
-  timestampFormatter: function () {
-    return '';
+  function TimeSeriesCharts() {
   }
-};
 
-TimeSeriesCharts.healthSparklineOptions = TimeSeriesCharts.sparklineOptions;
+  TimeSeriesCharts.chart = 'chart';
+  TimeSeriesCharts.healthChart = 'health-chart';
+  TimeSeriesCharts.sparkline = 'sparkline';
+  TimeSeriesCharts.healthSparkline = 'shealth-parkline';
 
-TimeSeriesCharts.chartTimeSeriesOptions = {
-  lineWidth: 2,
-  strokeStyle: '#0080ff',
-  fillStyle: 'rgba(0,128,255,0.2)'
-};
+  var chartOptions = {
+    maxValueScale: 1,
+    interpolation: 'bezier',
+    sharpLines: true,
+    grid: {
+      fillStyle: 'transparent',
+      strokeStyle: '#37647D',
+      millisPerLine: 10000,
+      verticalSections: 5,
+      borderVisible: true
+    },
+    labels: {
+      fillStyle: '#b9c8d2',
+      fontSize: 10,
+      precision: 0
+    },
+    timestampFormatter: SmoothieChart.timeFormatter,
+    minValue: 0,
+    millisPerPixel: 100,
+    maxDataSetLength: 8
+  };
 
-TimeSeriesCharts.healthChartTimeSeriesOptions = {
-  lineWidth: 2,
-  strokeStyle: '#00ff00',
-  fillStyle: 'rgba(0,255,0,0.2)'
-};
+  var healthChartOptions = chartOptions;
 
-TimeSeriesCharts.sparklineTimeSeriesOptions = TimeSeriesCharts.chartTimeSeriesOptions;
+  var sparklineOptions = {
+    maxValueScale: 1,
+    interpolation: 'bezier',
+    sharpLines: true,
+    borderVisible: false,
+    grid: {
+      fillStyle: 'transparent',
+      strokeStyle: '#b3b3b3',
+      millisPerLine: 10000,
+      verticalSections: 5
+    },
+    minValue: 0,
+    millisPerPixel: 330,
+    labels: {
+      disabled: true
+    },
+    timestampFormatter: function () {
+      return '';
+    },
+    maxDataSetLength: 8
+  };
 
-TimeSeriesCharts.healthSparklineTimeSeriesOptions = TimeSeriesCharts.healthChartTimeSeriesOptions;
+  var healthSparklineOptions = sparklineOptions;
 
-TimeSeriesCharts.prototype.define = function (definitions) {
-  var $this = this;
+  var chartTimeSeriesOptions = {
+    lineWidth: 1,
+    strokeStyle: '#29719b',
+    fillStyle: 'rgba(41, 113, 155, 0.4)'
+  };
 
-  var remove = _.difference(_.map($this.charts, function (v, n) {
-    return n;
-  }), _.map(definitions, function (definition) {
-    return definition.canvasId;
-  }));
+  var healthChartTimeSeriesOptions = {
+    lineWidth: 1,
+    strokeStyle: '#00ff00',
+    fillStyle: 'rgba(0, 255, 0, 0.4)'
+  };
 
-  _.forEach(remove, function (canvasId) {
-    if ($this.charts[canvasId]) {
-      if ($this.timeoutTasks[canvasId]) {
-        clearTimeout($this.timeoutTasks[canvasId]);
+  var sparklineTimeSeriesOptions = chartTimeSeriesOptions;
+
+  var healthSparklineTimeSeriesOptions = healthChartTimeSeriesOptions;
+
+  TimeSeriesCharts.prototype.define = function (definitions) {
+    var remove = _.difference(_.map(charts, function (v, n) {
+      return n;
+    }), _.map(definitions, function (definition) {
+      return definition.canvasId;
+    }));
+
+    _.forEach(remove, function (canvasId) {
+      if (charts[canvasId]) {
+        if (timeoutTasks[canvasId]) {
+          clearTimeout(timeoutTasks[canvasId]);
+        }
+        if (charts[canvasId].chart) {
+          charts[canvasId].chart.stop();
+        }
+        delete charts[canvasId];
       }
-      if ($this.charts[canvasId].chart) {
-        $this.charts[canvasId].chart.stop();
+    });
+
+    var added = [];
+
+    _.forEach(definitions, function (definition) {
+      if (!charts[definition.canvasId]) {
+        var co = chartOptions;
+        var tso = chartTimeSeriesOptions;
+        if (TimeSeriesCharts.healthChart === definition.type) {
+          co = healthChartOptions;
+          tso = healthChartTimeSeriesOptions;
+        } else if (TimeSeriesCharts.sparkline === definition.type) {
+          co = sparklineOptions;
+          tso = sparklineTimeSeriesOptions;
+        } else if (TimeSeriesCharts.healthSparkline === definition.type) {
+          co = healthSparklineOptions;
+          tso = healthSparklineTimeSeriesOptions;
+        }
+
+        var entry = charts[definition.canvasId] = {};
+        entry.series = new TimeSeries();
+        entry.chart = new SmoothieChart(co);
+        entry.chart.addTimeSeries(entry.series, tso);
+        entry.chart.streamTo(document.getElementById(definition.canvasId));
+        added.push(definition.canvasId);
       }
-      delete $this.charts[canvasId];
+    });
+
+    return {removed: remove, added: added};
+  };
+
+  TimeSeriesCharts.prototype.append = function (id, timestamp, value) {
+    if (charts[id] && charts[id].series) {
+      charts[id].series.append(timestamp, value);
     }
-  });
+  };
 
-  var added = [];
-
-  _.forEach(definitions, function (definition) {
-    if (!$this.charts[definition.canvasId]) {
-      var chartOptions;
-      var timeSeriesOptions;
-      if (TimeSeriesCharts.healthChart === definition.type) {
-        chartOptions = TimeSeriesCharts.healthChartOptions;
-        timeSeriesOptions = TimeSeriesCharts.healthChartTimeSeriesOptions;
-      } else if (TimeSeriesCharts.sparkline === definition.type) {
-        chartOptions = TimeSeriesCharts.sparklineOptions;
-        timeSeriesOptions = TimeSeriesCharts.sparklineTimeSeriesOptions;
-      } else if (TimeSeriesCharts.healthSparkline === definition.type) {
-        chartOptions = TimeSeriesCharts.healthSparklineOptions;
-        timeSeriesOptions = TimeSeriesCharts.healthSparklineTimeSeriesOptions;
+  TimeSeriesCharts.prototype.timeout = function (id, timestamp) {
+    var $this = this;
+    var old = creationTimestamp - timestamp > resetValueTimeout;
+    if (!old && timeoutTasks[id] !== null) {
+      clearTimeout(timeoutTasks[id]);
+    }
+    return new Promise(function (resolve, reject) {
+      if (old) {
+        reject();
       } else {
-        chartOptions = TimeSeriesCharts.chartOptions;
-        timeSeriesOptions = TimeSeriesCharts.chartTimeSeriesOptions;
+        timeoutTasks[id] = setTimeout(function () {
+          $this.append(id, timestamp + 1, 0);
+          if (resolve) {
+            resolve();
+          }
+        }, resetValueTimeout);
       }
+    });
+  };
 
-      var entry = $this.charts[definition.canvasId] = {};
-      entry.series = new TimeSeries();
-      entry.chart = new SmoothieChart(chartOptions);
-      entry.chart.addTimeSeries(entry.series, timeSeriesOptions);
-      entry.chart.streamTo(document.getElementById(definition.canvasId), 0);
-      added.push(definition.canvasId);
-    }
-  });
+  TimeSeriesCharts.prototype.destroy = function () {
+    _.forEach(timeoutTasks, function (task) {
+      clearTimeout(task);
+    });
+    _.forEach(charts, function (entry) {
+      if (entry.chart) {
+        entry.chart.stop();
+      }
+    });
+    charts = {};
+    timeoutTasks = {};
+  };
 
-  return {removed: remove, added: added};
-};
-
-TimeSeriesCharts.prototype.append = function (id, timestamp, value) {
-  if (this.charts[id] && this.charts[id].series) {
-    this.charts[id].series.append(timestamp, value);
-  }
-};
-
-TimeSeriesCharts.prototype.timeout = function (id, timestamp, value, after) {
-  var $this = this;
-  if ($this.timeoutTasks[id] !== null) {
-    clearTimeout($this.timeoutTasks[id]);
-  }
-  return new Promise(function (resolve, reject) {
-    if (value !== null && after !== null) {
-      $this.timeoutTasks[id] = setTimeout(function () {
-        $this.append(id, timestamp + after, value);
-        resolve();
-      }, after);
-    } else {
-      reject();
-    }
-  });
-};
-
-TimeSeriesCharts.prototype.destroy = function () {
-  _.forEach(this.timeoutTasks, function (task) {
-    clearTimeout(task);
-  });
-  _.forEach(this.charts, function (entry) {
-    if (entry.chart) {
-      entry.chart.stop();
-    }
-  });
-  this.charts = {};
-  this.timeoutTasks = {};
-};
+  exports.TimeSeriesCharts = TimeSeriesCharts;
+})(typeof exports === 'undefined' ? this : exports);

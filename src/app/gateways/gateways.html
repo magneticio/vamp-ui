@@ -2,6 +2,7 @@
     <div class="artifact-properties" ng-controller="GatewaysController as $ctrl">
         <span ng-if="!$ctrl.gateway.deployed" class="label label-primary">not deployed</span>
         <span ng-if="$ctrl.gateway.deployed" class="label label-primary">port : {{ $ctrl.gateway.port }}</span>
+        <span ng-if="!$ctrl.gateway.inner" class="label label-primary">external</span>
         <span ng-if="$ctrl.gateway.inner" class="label label-primary">inner</span>
         <p></p>
         <div class="list" ng-if="!($ctrl.gateway.virtual_hosts | isEmpty)">

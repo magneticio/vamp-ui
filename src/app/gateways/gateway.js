@@ -153,9 +153,9 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   function peekEvents() {
     var nameTag = 'gateways:' + $ctrl.gateway.name;
     var requests = [
-      {tags: [nameTag, 'health']},
-      {tags: [nameTag, 'metrics:rate']},
-      {tags: [nameTag, 'metrics:responseTime']}
+      {tags: [nameTag, 'health'], timestamp: {gte: 'now-1m'}},
+      {tags: [nameTag, 'metrics:rate'], timestamp: {gte: 'now-1m'}},
+      {tags: [nameTag, 'metrics:responseTime'], timestamp: {gte: 'now-1m'}}
     ];
     _.forEach(requests, function (request) {
       $vamp.peek('/events', JSON.stringify(request));
@@ -180,11 +180,8 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
 
     charts.define(definitions);
 
-    var ts = new Date().getTime();
     _.forEach(definitions, function (definition) {
-      charts.timeout(definition.canvasId, ts, 0, 10000).then(function () {
-        $ctrl.last[definition.canvasId] = 'none';
-      });
+      appendToChart(definition.canvasId);
     });
   }
 
@@ -214,11 +211,14 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   }
 
   function appendToChart(id, value, timestamp) {
-    var ts = new Date(timestamp).getTime();
-    $ctrl.last[id] = value;
-    charts.append(id, ts, value);
-    charts.timeout(id, ts, 0, 10000).then(function () {
+    var ts = timestamp ? new Date(timestamp).getTime() : new Date().getTime();
+    if (value !== null && value !== undefined) {
+      $ctrl.last[id] = value;
+      charts.append(id, ts, value);
+    }
+    charts.timeout(id, ts).then(function () {
       $ctrl.last[id] = 'none';
+    }).catch(function () {
     });
   }
 }
