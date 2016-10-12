@@ -665,6 +665,10 @@ input[type=number] {
   }
 }
 
+.editable-drop-down ul li a {
+  color: $color-big-stone;
+}
+
 @keyframes highlightChange {
   0% {
     background-color: #ec971f;

@@ -34,8 +34,12 @@
             </div>
             <div class="col-md-2">
                 <p>sticky</p>
-                <span ng-if="$ctrl.gateway.sticky" class="label label-success"><i class="fa fa-check"></i>&nbsp;{{ $ctrl.gateway.sticky }}</span>
-                <span ng-if="!$ctrl.gateway.sticky" class="label label-default">not sticky</span>
+                <editable-drop-down active="true" values="$ctrl.stickyValues" selected="$ctrl.sticky(value)">
+                    <span highlighter="$ctrl.gateway.sticky" class="label"
+                          ng-class="{'label-success': $ctrl.gateway.sticky, 'label-default': !$ctrl.gateway.sticky}">
+                        {{ $ctrl.gateway.sticky || 'not sticky'}}
+                    </span>
+                </editable-drop-down>
             </div>
         </div>
         <br>

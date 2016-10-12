@@ -75,6 +75,20 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     save(gateway);
   };
 
+  this.stickyValues = ['not sticky', 'route', 'instance'];
+
+  this.sticky = function (value) {
+    var gateway = angular.copy($ctrl.gateway);
+    if (value === 'route' || value === 'instance') {
+      gateway.sticky = value;
+    } else {
+      gateway.sticky = null;
+    }
+    if (gateway.sticky !== $ctrl.gateway) {
+      save(gateway);
+    }
+  };
+
   var addedRoutes = [];
 
   this.added = function (route) {
