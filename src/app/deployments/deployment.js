@@ -107,18 +107,18 @@ function DeploymentController($scope, $stateParams, $interval, $timeout, $locati
   }
 
   function updateCharts() {
-    var definitions = [
-      {canvasId: 'health', chartOptions: {millisPerPixel: 100}},
-      {canvasId: 'memory', chartOptions: {millisPerPixel: 100}},
-      {canvasId: 'cpu', chartOptions: {millisPerPixel: 100, labels: {precision: 1}}}
-    ];
-    charts.define(definitions);
-    var ts = new Date().getTime();
-    _.forEach(definitions, function (definition) {
-      charts.timeout(definition.canvasId, ts, 0, 10000).then(function () {
-        $ctrl.last[definition.canvasId] = 'none';
-      });
-    });
+    // var definitions = [
+    //   {canvasId: 'health', chartOptions: {millisPerPixel: 100}},
+    //   {canvasId: 'memory', chartOptions: {millisPerPixel: 100}},
+    //   {canvasId: 'cpu', chartOptions: {millisPerPixel: 100, labels: {precision: 1}}}
+    // ];
+    // charts.define(definitions);
+    // var ts = new Date().getTime();
+    // _.forEach(definitions, function (definition) {
+    //   charts.timeout(definition.canvasId, ts, 0, 10000).then(function () {
+    //     $ctrl.last[definition.canvasId] = 'none';
+    //   });
+    // });
   }
 
   function chartUpdate(event) {

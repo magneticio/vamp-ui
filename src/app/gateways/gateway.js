@@ -163,28 +163,17 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   }
 
   function updateCharts() {
-    var chartConfig = {
-      millisPerPixel: 100
-    };
-
-    var sparkLineConfig = {
-      millisPerPixel: 300, labels: {disabled: true},
-      timestampFormatter: function () {
-        return '';
-      }
-    };
-
     var definitions = _.concat(
       [
-        {canvasId: 'rate', chartOptions: chartConfig},
-        {canvasId: 'health', chartOptions: chartConfig},
-        {canvasId: 'responseTime', chartOptions: chartConfig}
+        {canvasId: 'rate', type: TimeSeriesCharts.chart},
+        {canvasId: 'responseTime', type: TimeSeriesCharts.chart},
+        {canvasId: 'health', type: TimeSeriesCharts.healthChart}
       ],
       _.flatMap(_.map($ctrl.gateway.routes, function (route) {
         return [
-          {canvasId: 'rate-' + route.lookup_name, chartOptions: sparkLineConfig},
-          {canvasId: 'health-' + route.lookup_name, chartOptions: sparkLineConfig},
-          {canvasId: 'responseTime-' + route.lookup_name, chartOptions: sparkLineConfig}
+          {canvasId: 'rate-' + route.lookup_name, type: TimeSeriesCharts.sparkline},
+          {canvasId: 'responseTime-' + route.lookup_name, type: TimeSeriesCharts.sparkline},
+          {canvasId: 'health-' + route.lookup_name, type: TimeSeriesCharts.healthSparkline}
         ];
       }))
     );
