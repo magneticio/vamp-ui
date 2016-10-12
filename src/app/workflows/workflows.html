@@ -1,5 +1,8 @@
 <artifacts kind="workflows">
     <div class="artifact-properties" ng-controller="ArtifactsController as $ctrl">
+        <span ng-if="$ctrl.artifact.breed.name" class="label label-primary">breed: {{$ctrl.artifact.breed.name}}</span>
+        <span ng-if="$ctrl.artifact.breed.reference" class="label label-primary">breed: {{$ctrl.artifact.breed.reference}}</span>
+        <p></p>
         <span ng-if="$ctrl.artifact.schedule === 'daemon'" class="label label-primary">schedule : daemon</span>
         <div class="list" ng-if="!($ctrl.artifact.schedule.event | isEmpty)">
             <p>event schedule: </p>
