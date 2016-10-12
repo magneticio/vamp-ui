@@ -1,6 +1,6 @@
 <div ng-class="{'show': $ctrl.show}" class="event-panel-content">
     <div class="head" ng-click="$ctrl.toggle()">
-        <p class="category">Events</p>
+        <p class="category"><i class="fa fa-ellipsis-v"></i>&nbsp;&nbsp;events</p>
         <div>
             <button type="button" class="btn"
                     ng-model="$ctrl.filters.health" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
@@ -17,18 +17,14 @@
                 &nbsp;metrics
             </button>
         </div>
-        <a ng-show="$ctrl.show">
-            <i class="fa fa-times"></i>
-        </a>
     </div>
-
     <div class="container-fluid" ng-if="$ctrl.show">
         <table class="table">
             <tr>
-                <th>Time</th>
-                <th>Type</th>
-                <th>Tags</th>
-                <th>Value</th>
+                <th>time</th>
+                <th>type</th>
+                <th>tags</th>
+                <th>value</th>
             </tr>
             <tr ng-repeat="event in $ctrl.events | orderBy: 'timestamp':true">
                 <td>

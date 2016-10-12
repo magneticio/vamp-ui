@@ -30,8 +30,7 @@
     "ace-builds": {
       "main": [
         "src-min-noconflict/ace.js",
-        "src-min-noconflict/mode-yaml.js",
-        "src-min-noconflict/theme-chrome.js"
+        "src-min-noconflict/mode-yaml.js"
       ]
     }
   },

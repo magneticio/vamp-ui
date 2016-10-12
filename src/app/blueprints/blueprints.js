@@ -165,7 +165,7 @@ function UpdateDeploymentController($scope, $uibModalInstance, blueprint, deploy
   $scope.buttonText = buttonText;
   $scope.buttonClass = buttonClass;
   $scope.deployments = deployments;
-  $scope.chosenDeployment = undefined;
+  $scope.chosenDeployment = deployments[0];
 
   $scope.deploymentChosen = function (deployment) {
     $scope.chosenDeployment = deployment;
@@ -185,7 +185,7 @@ function BlueprintService($rootScope, $vamp) {
 
   var peek = _.debounce(function () {
     $vamp.peek('/deployments');
-  }, 3000, {
+  }, 1000, {
     leading: true,
     trailing: false
   });
@@ -199,7 +199,8 @@ function BlueprintService($rootScope, $vamp) {
 
   this.mergeWithDeployments = function (list) {
     list.length = 0;
-    _.forEach(deployments, function (deployment) {
+
+    _.forEach(_.sortBy(deployments, ['name']), function (deployment) {
       list.unshift(deployment);
     });
   };
@@ -221,7 +222,7 @@ function BlueprintService($rootScope, $vamp) {
       });
     });
 
-    _.forEach(filtered, function (deployment) {
+    _.forEach(_.sortBy(filtered, ['name']), function (deployment) {
       list.unshift(deployment);
     });
   };

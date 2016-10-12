@@ -47,7 +47,7 @@
                               class="label label-primary">{{ $ctrl.last['health'] }} %</span>
                         <span ng-if="$ctrl.last['health'] == 'none'" class="label label-danger">none</span>
                     </p>
-                    <canvas class="chart" id="health"></canvas>
+                    <canvas class="chart" id="health" width="320"></canvas>
                 </div>
             </div>
             <div class="col-md-4 chart-fix">
@@ -57,7 +57,7 @@
                               class="label label-primary">{{ $ctrl.last['rate'] }}</span>
                         <span ng-if="$ctrl.last['rate'] == 'none'" class="label label-danger">none</span>
                     </p>
-                    <canvas class="chart" id="rate"></canvas>
+                    <canvas class="chart" id="rate" width="320"></canvas>
                 </div>
             </div>
             <div class="col-md-4 chart-fix">
@@ -66,7 +66,7 @@
                           class="label label-primary">{{ $ctrl.last['responseTime'] }} ms</span>
                     <span ng-if="$ctrl.last['responseTime'] == 'none'" class="label label-danger">none</span>
                 </p>
-                <canvas class="chart" id="responseTime"></canvas>
+                <canvas class="chart" id="responseTime" width="320"></canvas>
             </div>
         </div>
         <br>
@@ -126,8 +126,8 @@
                     </editable-text>
                 </td>
                 <td>
-
-                    <editable-number-slider active="route.condition.condition" postfix="%" min="0" max="100"
+                    <editable-number-slider active="route.condition.condition"
+                                            options="$ctrl.sliderOptions"
                                             number="route.condition_strength"
                                             edited="$ctrl.saveConditionStrength(name, value)">
                         <span highlighter="route.condition_strength" class="label label-success">

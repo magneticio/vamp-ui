@@ -20,7 +20,7 @@
                               class="label label-primary">{{ $ctrl.last['health'] }} %</span>
                         <span ng-if="$ctrl.last['health'] == 'none'" class="label label-danger">none</span>
                     </p>
-                    <canvas class="chart" id="health"></canvas>
+                    <canvas class="chart" id="health" width="320"></canvas>
                 </div>
             </div>
             <div class="col-md-4 chart-fix">
@@ -30,7 +30,7 @@
                               class="label label-primary">{{ $ctrl.last['cpu'] }}</span>
                         <span ng-if="$ctrl.last['cpu'] == 'none'" class="label label-danger">none</span>
                     </p>
-                    <canvas class="chart" id="cpu"></canvas>
+                    <canvas class="chart" id="cpu" width="320"></canvas>
                 </div>
             </div>
             <div class="col-md-4 chart-fix">
@@ -39,7 +39,7 @@
                           class="label label-primary">{{ $ctrl.last['memory'] }} MB</span>
                     <span ng-if="$ctrl.last['memory'] == 'none'" class="label label-danger">none</span>
                 </p>
-                <canvas class="chart" id="memory"></canvas>
+                <canvas class="chart" id="memory" width="320"></canvas>
             </div>
         </div>
         <br>

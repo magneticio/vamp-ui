@@ -7,13 +7,7 @@ angular.module('app').component('editableNumberSlider', {
     };
     $ctrl.change = 0;
     $ctrl.editMode = false;
-    $ctrl.sliderOptions = {
-      floor: $ctrl.min,
-      ceil: $ctrl.max,
-      translate: function (value) {
-        return value + $ctrl.postfix;
-      }
-    };
+    $ctrl.sliderOptions = $ctrl.options;
     $ctrl.setEditModeActive = function () {
       $ctrl.change = $ctrl.getParsedNumber();
       $ctrl.editMode = true;
@@ -24,12 +18,10 @@ angular.module('app').component('editableNumberSlider', {
     };
   },
   bindings: {
-    min: '=',
-    max: '=',
+    options: '=',
     number: '=',
     active: '=',
-    edited: '&',
-    postfix: '@'
+    edited: '&'
   },
   transclude: true
 });

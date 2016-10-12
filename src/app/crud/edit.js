@@ -4,7 +4,7 @@ angular.module('app').component('edit', {
   templateUrl: 'app/crud/edit.html'
 });
 
-function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $location, toastr, alert, $vamp) {
+function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $location, toastr, alert, $vamp, artifact) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
@@ -13,24 +13,14 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
 
   this.headerClass = '';
   this.headerMessage = '';
+  this.editor = artifact.editor;
 
   var path = '/' + this.kind + '/' + this.name;
-
-  this.editor = {
-    useWrapMode: false,
-    showGutter: true,
-    theme: 'chrome',
-    mode: 'yaml',
-    firstLineNumber: 1,
-    onLoad: function (editor) {
-      editor.focus();
-      editor.$blockScrolling = 'Infinity';
-    }
-  };
 
   this.base = null;
   this.source = null;
 
+  this.valid = true;
   var validation = true;
   var ignoreChange = false;
 
@@ -38,13 +28,16 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
 
   $scope.$on(path, function (e, response) {
     if ($ctrl.base === null && response.status === 'OK' && response.content === 'YAML') {
+      $ctrl.valid = true;
       $ctrl.base = $ctrl.source = response.data;
     }
     if (response.content === 'JSON') {
       if (response.status === 'ERROR') {
+        $ctrl.valid = false;
         $ctrl.headerClass = 'error';
         $ctrl.headerMessage = response.data.message;
       } else {
+        $ctrl.valid = true;
         $ctrl.headerClass = '';
         $ctrl.headerMessage = '';
       }
@@ -74,11 +67,9 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
     }
   });
 
-  this.validate = _.throttle(function (data) {
-    if (validation) {
-      $vamp.put(path, data, {validate_only: true}, 'JSON');
-    }
-  }, 1500, {trailing: true, leading: false});
+  this.validate = function () {
+    artifact.validate(path, $ctrl.source, validation);
+  };
 
   this.isModified = function () {
     return !($ctrl.base === null || $ctrl.base === $ctrl.source);

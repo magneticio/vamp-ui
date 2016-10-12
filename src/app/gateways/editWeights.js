@@ -10,18 +10,11 @@ angular.module('app').component('editWeights', {
 });
 
 /** @ngInject */
-function EditWeights($scope) {
+function EditWeights($scope, slider) {
   var $ctrl = this;
   var gateway = this.resolve.gateway;
 
-  $scope.sliderOptions = {
-    floor: 0,
-    ceil: 100,
-    showSelectionBar: true,
-    translate: function (value) {
-      return value + '%';
-    }
-  };
+  $scope.sliderOptions = slider.weightOptions;
 
   $scope.total = function () {
     return _.reduce($scope.weights, function (sum, weight) {

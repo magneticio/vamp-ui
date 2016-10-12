@@ -2,7 +2,7 @@
 angular.module('app').controller('GatewayController', GatewayController);
 
 /** @ngInject */
-function GatewayController($scope, $filter, $stateParams, $timeout, $location, $vamp, alert, toastr, $uibModal) {
+function GatewayController($scope, $filter, $stateParams, $timeout, $location, $vamp, slider, alert, toastr, $uibModal) {
   var $ctrl = this;
   var path = '/gateways/' + $stateParams.name;
 
@@ -12,6 +12,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   var charts = new TimeSeriesCharts();
 
   this.last = [];
+  this.sliderOptions = slider.weightOptions;
 
   this.routeCount = function () {
     return $ctrl.gateway ? _.size($ctrl.gateway.routes) : 0;
@@ -59,7 +60,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
 
   this.saveCondition = function (route, condition) {
     var gateway = angular.copy($ctrl.gateway);
-    if (!condition || condition.trim.length === 0) {
+    if (!condition || condition.trim().length === 0) {
       gateway.routes[route].condition = null;
       gateway.routes[route].condition_strength = '0%';
     } else {

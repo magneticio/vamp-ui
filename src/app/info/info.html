@@ -1,29 +1,42 @@
 <div class="info-panel" ng-class="{'active': infoPanelActive}">
-  <h3>Info</h3>
-  <p>{{info.message}}</p>
+    <h3>Info</h3>
 
-  <label>Running since</label>
-  <p>{{info.running_since | date: 'HH:mm:ss dd-MM-yyyy'}}</p>
-
-  <label>Version:</label>
-  <p>{{info.version}}</p>
-
-  <label ng-if="info.ui_version !== info.version">UI version:</label>
-  <p ng-if="info.ui_version !== info.version">{{info.ui_version}}</p>
-
-  <label>Persistence:</label>
-  <p>{{info.persistence}}</p>
-
-  <label>Key value store:</label>
-  <p>{{info.key_value_store}}</p>
-
-  <label>Gateway driver:</label>
-  <p>{{info.gateway_driver}}</p>
-
-  <label>Container driver:</label>
-  <p>{{info.container_driver}}</p>
-
-  <label>Workflow driver:</label>
-  <p>{{info.workflow_driver}}</p>
+    <table class="table">
+        <tr>
+            <td colspan="2">{{info.message}}</td>
+        </tr>
+        <tr>
+            <td>Running since</td>
+            <td>{{info.running_since | date: 'dd-MM-yyyy HH:mm:ss'}}</td>
+        </tr>
+        <tr>
+            <td>Version</td>
+            <td>{{info.version}}</td>
+        </tr>
+        <tr ng-if="info.ui_version !== info.version">
+            <td>UI version</td>
+            <td>{{info.ui_version}}</td>
+        </tr>
+        <tr>
+            <td>Persistence</td>
+            <td>{{info.persistence}}</td>
+        </tr>
+        <tr>
+            <td>Key value store</td>
+            <td>{{info.key_value_store}}</td>
+        </tr>
+        <tr>
+            <td>Gateway driver</td>
+            <td>{{info.gateway_driver}}</td>
+        </tr>
+        <tr>
+            <td>Container driver</td>
+            <td>{{info.container_driver}}</td>
+        </tr>
+        <tr>
+            <td>Workflow driver</td>
+            <td>{{info.workflow_driver}}</td>
+        </tr>
+    </table>
 
 </div>

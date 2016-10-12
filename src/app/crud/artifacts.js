@@ -32,7 +32,9 @@ function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, 
   });
 
   $scope.$on('/events/stream', function (e, response) {
-    if (_.includes(response.data.tags, 'archive') && _.includes(response.data.tags, $ctrl.kind)) {
+    if ((_.includes(response.data.tags, 'archive') ||
+      _.includes(response.data.tags, 'deployed') ||
+      _.includes(response.data.tags, 'undeployed')) && _.includes(response.data.tags, $ctrl.kind)) {
       $ctrl.peek();
     }
   });

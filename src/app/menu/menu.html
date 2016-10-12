@@ -17,31 +17,31 @@
             <ul class="nav navbar-nav">
                 <li ng-class="{active : $ctrl.isActive(artifact), deployable : artifact.deployable}"
                     ng-repeat="artifact in $ctrl.artifacts">
-                    <a ui-sref="{{ artifact.kind }}" href="#">{{artifact.kind | capitalize}}</a>
+                    <a ui-sref="{{ artifact.kind }}" href="#">{{artifact.kind | uppercase}}</a>
                 </li>
             </ul>
             <!-- disconnected -->
             <ul class="nav navbar-nav navbar-right" ng-show="!$ctrl.connected">
                 <li class="disconnected">
-                    DISCONNECTED FROM $vamp
+                    DISCONNECTED FROM VAMP
                 </li>
             </ul>
             <!-- connected -->
             <ul class="nav navbar-nav navbar-right" ng-show="$ctrl.connected">
                 <li class="stats" ng-show="$ctrl.jvm">
-                    <div class="CPU">
-                        <span class="stat-label">system load:</span>
+                    <div class="stat-value">
+                        <span class="stat-label">load:</span>
                         {{ $ctrl.jvm.systemLoad | number: 2 }}%
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <div class="memory">
+                    <div class="stat-value">
                         <span class="stat-label">memory:</span>
                         <span class="stat-content">
-              {{ ($ctrl.jvm.heapCurrent / $ctrl.jvm.heapMax) * 100 | number: 1 }}%
-              <span class="detail">
-                &nbsp;({{ $ctrl.jvm.heapCurrent | number: 0}}MB/{{ $ctrl.jvm.heapMax | number: 0 }}MB)
-              </span>
-            </span>
+                          {{ ($ctrl.jvm.heapCurrent / $ctrl.jvm.heapMax) * 100 | number: 1 }}%
+                          <span class="detail">
+                            &nbsp;({{ $ctrl.jvm.heapCurrent | number: 0}}MB/{{ $ctrl.jvm.heapMax | number: 0 }}MB)
+                          </span>
+                        </span>
                     </div>
                 </li>
                 <li class="clickable" ng-click="$ctrl.toggleInfoPanel()">
