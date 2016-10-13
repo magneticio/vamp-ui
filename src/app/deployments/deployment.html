@@ -1,10 +1,10 @@
 <div class="deployment" ng-controller="DeploymentController as $ctrl" ng-show="$ctrl.deployment">
     <header title="{{$ctrl.title}}">
         <buttons>
-            <button class="btn btn-lg btn-circle" type="submit" title="Edit" ng-click="$ctrl.edit()">
+            <button class="btn btn-lg btn-circle" type="submit" title="EDIT" ng-click="$ctrl.edit()">
                 <i class="fa fa-pencil"></i>
             </button>
-            <button class="btn btn-lg btn-circle red" type="submit" title="Delete"
+            <button class="btn btn-lg btn-circle red" type="submit" title="DELETE"
                     ng-disabled="!$ctrl.deployment"
                     ng-click="$ctrl.delete()">
                 <i class="fa fa-trash-o"></i>

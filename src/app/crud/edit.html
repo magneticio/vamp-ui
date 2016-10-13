@@ -1,18 +1,20 @@
-<header title="{{ $ctrl.title }}" message="{{ $ctrl.headerMessage }}" clazz="{{ $ctrl.headerClass }}">
+<header title="{{ $ctrl.title }}" clazz="{{ $ctrl.errorClass }}">
+    <message>
+        <span ng-if="$ctrl.errorMessage.length < 40">{{ $ctrl.errorMessage }}</span>
+        <div class="message-truncated" ng-if="$ctrl.errorMessage.length >= 40" ng-click="$ctrl.fullErrorMessage()">
+            <span>{{ $ctrl.errorMessage | limitTo:40 }}...&nbsp;<i class="fa fa-expand"></i></span>
+        </div>
+    </message>
     <buttons>
-        <button class="btn btn-lg btn-circle" type="submit" title="Save" ng-disabled="!$ctrl.isModified() || !$ctrl.valid" ng-click="$ctrl.save()">
+        <button class="btn btn-lg btn-circle" type="submit" title="SAVE"
+                ng-disabled="!$ctrl.isModified() || !$ctrl.valid" ng-click="$ctrl.save()">
             <i class="fa fa-floppy-o"></i>
         </button>
-        <button class="btn btn-lg btn-circle red" type="submit" title="Cancel" ng-click="$ctrl.cancel()">
+        <button class="btn btn-lg btn-circle red" type="submit" title="CANCEL" ng-click="$ctrl.cancel()">
             <i class="fa fa-times"></i>
         </button>
     </buttons>
 </header>
-
-<div class="fluid-container">
-    <div class="editor">
-        <div ui-ace="$ctrl.editor"
-             ng-model="$ctrl.source"
-             ng-change="$ctrl.validate()"></div>
-    </div>
+<div class="editor">
+    <div ui-ace="$ctrl.editor" ng-model="$ctrl.source" ng-change="$ctrl.validate()"></div>
 </div>

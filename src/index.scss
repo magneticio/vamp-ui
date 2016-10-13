@@ -77,6 +77,8 @@ menu {
       align-items: center;
       height: 50px;
       padding-top: 8px;
+      font-size: $font-medium;
+      font-weight: $font-weight-regular;
 
       .stat-value {
         color: $color-text;
@@ -84,16 +86,11 @@ menu {
 
       .stat-label {
         color: $color-text-dark;
-        border-top: none !important;
-        font-size: 16px !important;
-        font-weight: 500;
       }
 
       .stat-content {
         .detail {
           color: $color-text-dark;
-          font-size: $font-medium;
-          font-weight: $font-weight-regular;
         }
       }
     }
@@ -129,37 +126,44 @@ menu {
 
 .vamp-page-header {
   margin: 0;
-  padding: 15px 0;
+  padding: 0;
+  align-items: center;
 
-  .titles {
-    float: left;
-    display: flex;
-    align-items: center;
+  .header-row {
+    margin: 0 0 -20px 0;
+    padding: 0 !important;
+  }
 
-    h1, h2, h3, h4, h5, h6 {
-      margin: 12px 0;
-      padding: 0;
-    }
+  .header-column {
+    margin: 0 -5px;
+    padding: 0;
+    height: 75px;
+    line-height: 75px;
 
-    .title {
+    &.title {
       font-size: $font-really-big;
       text-transform: uppercase;
       color: $color-text;
       font-weight: $font-weight-light;
-
-      &.message {
-        text-transform: none;
-        margin-left: 10px;
-        font-size: $font-big;
-      }
+      letter-spacing: 0.05em;
+      margin: 0;
+      padding: 0;
     }
-  }
-  .buttons {
-    float: right;
+
+    &.message {
+      margin: 0;
+      padding: 0;
+      font-size: $font-big;
+    }
+
+    &.buttons {
+      margin: 0;
+      padding: 0;
+    }
   }
 
   &.error {
-    background-color: rgba($color-pink, 0.5);
+    background-color: rgba($color-pink, 0.4);
   }
 }
 
@@ -178,6 +182,14 @@ menu {
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+edit, add {
+  .message-truncated span {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .ace_editor {
@@ -345,31 +357,6 @@ p, div {
   }
 }
 
-.panel-default > .panel-heading {
-  background: white none !important;
-  padding: 0 10px 12px 10px;
-
-  .column {
-    height: 40px;
-    font-size: $font-medium;
-    display: flex;
-    font-weight: $font-weight-regular;
-    align-items: flex-end;
-  }
-
-  .head {
-    font-size: 22px;
-    font-weight: normal;
-    line-height: 1;
-  }
-
-  .category {
-    font-size: 12px;
-    font-weight: lighter;
-    color: rgba($color-yellow, 0.7);
-  }
-}
-
 .panel-body {
   font-weight: $font-weight-bold;
   .head {
@@ -403,10 +390,11 @@ p, div {
 
   .head {
     height: 50px;
-    padding: 15px 15px;
+    padding: 15px;
+    margin: 0;
     width: 100%;
     display: flex;
-    font-size: 16px;
+    font-size: $font-medium;
     justify-content: space-between;
     align-items: center;
     background-color: $color-bg-dark;
@@ -444,6 +432,7 @@ p, div {
       font-weight: $font-weight-regular;
       th {
         border-top: none;
+        font-size: $font-small !important;
         border-bottom: 1px solid $color-bg-dark;
       }
       td {
@@ -766,7 +755,7 @@ input[type=number] {
 //
 
 .btn {
-  font-size: $font-medium !important;
+  font-size: $font-small !important;
   border: none !important;
   border-radius: 20px !important;
   line-height: 1 !important;
@@ -776,6 +765,7 @@ input[type=number] {
   color: aliceblue !important;
   font-weight: $font-weight-light !important;
   letter-spacing: 1px;
+  text-transform: uppercase;
 
   &:hover {
     background-color: $color-blue-dark !important;
@@ -800,7 +790,7 @@ input[type=number] {
     height: 5rem;
     font-size: $font-big !important;
     border-radius: 50% !important;
-    margin-left: 2rem;
+    margin: 1rem 0 1rem 2rem;
     padding: 0 !important;
     @include box-shadow($color-blue);
     &:hover {
@@ -929,6 +919,7 @@ input[type=number] {
 }
 
 .modal-header {
+  font-size: $font-big;
   background-color: $color-bg;
   border-bottom: 1px solid $color-text;
 }
@@ -936,4 +927,11 @@ input[type=number] {
 .modal-footer {
   background-color: $color-bg;
   border-top: none;
+}
+
+.deployment-selection {
+  button {
+    font-size: $font-medium !important;
+    text-transform: none;
+  }
 }

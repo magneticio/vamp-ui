@@ -46,9 +46,9 @@ function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, bluep
         toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully deployed as \'' + deployment + '\'.');
       }).catch(function (response) {
         if (response) {
-          toastr.error(response.data.message, 'Deployment failed.');
+          toastr.error(response.data.message, 'Deployment of \'' + $ctrl.blueprint.name + '\' failed.');
         } else {
-          toastr.error('Server timeout.', 'Deployment failed.');
+          toastr.error('Server timeout.', 'Deployment of \'' + $ctrl.blueprint.name + '\' failed.');
         }
       });
     });
@@ -74,9 +74,9 @@ function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, bluep
         toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully merged to \'' + name + '\'.');
       }).catch(function (response) {
         if (response) {
-          toastr.error(response.data.message, 'Merge failed.');
+          toastr.error(response.data.message, 'Merge of \'' + $ctrl.blueprint.name + '\' failed.');
         } else {
-          toastr.error('Server timeout.', 'Merge failed.');
+          toastr.error('Server timeout.', 'Merge of \'' + $ctrl.blueprint.name + '\' failed.');
         }
       });
     });
@@ -102,9 +102,9 @@ function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, bluep
         toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully removed from \'' + name + '\'.');
       }).catch(function (response) {
         if (response) {
-          toastr.error(response.data.message, 'Removal failed.');
+          toastr.error(response.data.message, 'Removal of \'' + $ctrl.blueprint.name + '\' failed.');
         } else {
-          toastr.error('Server timeout.', 'Removal failed.');
+          toastr.error('Server timeout.', 'Removal of \'' + $ctrl.blueprint.name + '\' failed.');
         }
       });
     });

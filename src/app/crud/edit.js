@@ -4,15 +4,15 @@ angular.module('app').component('edit', {
   templateUrl: 'app/crud/edit.html'
 });
 
-function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $location, toastr, alert, $vamp, artifact) {
+function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $location, $vamp, artifact, snippet, toastr, alert) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
   this.name = $stateParams.name;
   this.title = $filter('decodeName')(this.name);
 
-  this.headerClass = '';
-  this.headerMessage = '';
+  this.errorClass = '';
+  this.errorMessage = '';
   this.editor = artifact.editor;
 
   var path = '/' + this.kind + '/' + this.name;
@@ -34,12 +34,12 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
     if (response.content === 'JSON') {
       if (response.status === 'ERROR') {
         $ctrl.valid = false;
-        $ctrl.headerClass = 'error';
-        $ctrl.headerMessage = response.data.message;
+        $ctrl.errorClass = 'error';
+        $ctrl.errorMessage = response.data.message;
       } else {
         $ctrl.valid = true;
-        $ctrl.headerClass = '';
-        $ctrl.headerMessage = '';
+        $ctrl.errorClass = '';
+        $ctrl.errorMessage = '';
       }
     }
   });
@@ -75,6 +75,10 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
     return !($ctrl.base === null || $ctrl.base === $ctrl.source);
   };
 
+  this.fullErrorMessage = function () {
+    snippet.show('Error message', $ctrl.errorMessage);
+  };
+
   this.cancel = function () {
     if ($ctrl.isModified()) {
       alert.show('Warning', '\'' + $ctrl.name + '\' has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel', goBack);
@@ -97,9 +101,9 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
       ignoreChange = false;
 
       if (response) {
-        toastr.error(response.data.message, 'Save failed.');
+        toastr.error(response.data.message, 'Save of \'' + $ctrl.name + '\'failed.');
       } else {
-        toastr.error('Server timeout.', 'Save failed.');
+        toastr.error('Server timeout.', 'Save of \'' + $ctrl.name + '\'failed.');
       }
     });
   };

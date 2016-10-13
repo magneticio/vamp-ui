@@ -1,6 +1,6 @@
 <artifacts kind="gateways">
     <div class="artifact-properties" ng-controller="GatewaysController as $ctrl">
-        <span ng-if="!$ctrl.gateway.deployed" class="label label-primary">not deployed</span>
+        <span ng-if="!$ctrl.gateway.deployed" class="label label-primary">not deployed&nbsp;<i class="fa fa-cog fa-spin"></i></span>
         <span ng-if="$ctrl.gateway.deployed" class="label label-primary">port : {{ $ctrl.gateway.port }}</span>
         <span ng-if="!$ctrl.gateway.internal" class="label label-primary">external</span>
         <span ng-if="$ctrl.gateway.internal" class="label label-primary">internal</span>

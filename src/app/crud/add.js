@@ -4,18 +4,18 @@ angular.module('app').component('add', {
   templateUrl: 'app/crud/edit.html'
 });
 
-function ArtifactAddController($scope, $attrs, $location, $state, toastr, alert, $vamp, artifact) {
+function ArtifactAddController($scope, $attrs, $location, $state, $vamp, artifact, toastr, alert, code) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
   // naive singularization
   this.singular = this.kind.substring(0, this.kind.length - 1);
-  this.title = 'new ' + this.singular;
+  this.title = 'add ' + this.singular;
 
   var path = '/' + this.kind;
 
-  this.headerClass = '';
-  this.headerMessage = '';
+  this.errorClass = '';
+  this.errorMessage = '';
   this.editor = artifact.editor;
 
   this.source = null;
@@ -28,12 +28,12 @@ function ArtifactAddController($scope, $attrs, $location, $state, toastr, alert,
     if (response.content === 'JSON') {
       if (response.status === 'ERROR') {
         $ctrl.valid = false;
-        $ctrl.headerClass = 'error';
-        $ctrl.headerMessage = response.data.message;
+        $ctrl.errorClass = 'error';
+        $ctrl.errorMessage = response.data.message;
       } else {
         $ctrl.valid = true;
-        $ctrl.headerClass = '';
-        $ctrl.headerMessage = '';
+        $ctrl.errorClass = '';
+        $ctrl.errorMessage = '';
       }
     }
   });
@@ -54,6 +54,10 @@ function ArtifactAddController($scope, $attrs, $location, $state, toastr, alert,
 
   this.isModified = function () {
     return $ctrl.source;
+  };
+
+  this.fullErrorMessage = function () {
+    code.show('Error message', $ctrl.errorMessage);
   };
 
   this.cancel = function () {
