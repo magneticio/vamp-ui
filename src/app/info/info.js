@@ -31,7 +31,7 @@ function InfoController($rootScope, $scope, $vamp) {
     info.running_since = data.running_since;
     info.version = data.version;
     info.ui_version = Environment.prototype.version();
-    info.persistence = data.persistence.database.type;
+    info.persistence = data.persistence.database.type === 'key-value' ? data.key_value.type : data.persistence.database.type;
     info.key_value_store = data.key_value.type;
     info.gateway_driver = 'haproxy ' + data.gateway_driver.marshaller.haproxy;
     info.container_driver = data.container_driver.type;

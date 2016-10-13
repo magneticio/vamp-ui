@@ -1,42 +1,38 @@
 <div class="info-panel" ng-class="{'active': infoPanelActive}">
-    <h3>Info</h3>
-
+    <span>{{info.message}}</span>
+    <br><br>
     <table class="table">
         <tr>
-            <td colspan="2">{{info.message}}</td>
-        </tr>
-        <tr>
-            <td>Running since</td>
+            <td>RUNNING SINCE</td>
             <td>{{info.running_since | date: 'dd-MM-yyyy HH:mm:ss'}}</td>
         </tr>
         <tr>
-            <td>Version</td>
+            <td>VERSION</td>
             <td>{{info.version}}</td>
         </tr>
         <tr ng-if="info.ui_version !== info.version">
-            <td>UI version</td>
+            <td>UI VERSION</td>
             <td>{{info.ui_version}}</td>
         </tr>
         <tr>
-            <td>Persistence</td>
+            <td>PERSISTENCE</td>
             <td>{{info.persistence}}</td>
         </tr>
         <tr>
-            <td>Key value store</td>
+            <td>KEY VALUE STORE</td>
             <td>{{info.key_value_store}}</td>
         </tr>
         <tr>
-            <td>Gateway driver</td>
+            <td>GATEWAY DRIVER</td>
             <td>{{info.gateway_driver}}</td>
         </tr>
         <tr>
-            <td>Container driver</td>
+            <td>CONTAINER DRIVER</td>
             <td>{{info.container_driver}}</td>
         </tr>
         <tr>
-            <td>Workflow driver</td>
+            <td>WORKFLOW DRIVER</td>
             <td>{{info.workflow_driver}}</td>
         </tr>
     </table>
-
 </div>

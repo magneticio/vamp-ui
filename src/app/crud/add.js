@@ -4,13 +4,13 @@ angular.module('app').component('add', {
   templateUrl: 'app/crud/edit.html'
 });
 
-function ArtifactAddController($scope, $attrs, $location, $state, $vamp, artifact, toastr, alert, code) {
+function ArtifactAddController($scope, $attrs, $location, $state, $vamp, artifact, toastr, alert, snippet) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
   // naive singularization
   this.singular = this.kind.substring(0, this.kind.length - 1);
-  this.title = 'add ' + this.singular;
+  this.title = 'new ' + this.singular;
 
   var path = '/' + this.kind;
 
@@ -57,7 +57,7 @@ function ArtifactAddController($scope, $attrs, $location, $state, $vamp, artifac
   };
 
   this.fullErrorMessage = function () {
-    code.show('Error message', $ctrl.errorMessage);
+    snippet.show('Error message', $ctrl.errorMessage);
   };
 
   this.cancel = function () {

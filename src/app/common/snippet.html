@@ -1,7 +1,9 @@
 <div class="modal-header">
     <h4 class="modal-title" id="modal-title">{{ $ctrl.title | uppercase }}</h4>
 </div>
-<div class="modal-body" id="modal-body">{{ $ctrl.message }}</div>
+<div class="modal-body">
+    <pre>{{ $ctrl.message }}</pre>
+</div>
 <div class="modal-footer">
     <button class="btn" type="button" ng-click="$ctrl.close()">OK</button>
 </div>

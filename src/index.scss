@@ -310,20 +310,27 @@ edit, add {
   right: -25%;
   transition: right 0.3s ease-in-out;
 
-  .table {
-    tbody > tr > td {
+  .table tbody tr {
+    vertical-align: bottom;
+    :nth-child(1) {
+      color: $color-text-dark;
+      font-size: $font-small !important;
+      vertical-align: bottom !important;
+    }
+    td {
       border: none;
       color: $color-text;
     }
   }
 
+  span {
+    margin: 0 0 20px 0;
+    font-size: $font-big;
+  }
+
   &.active {
     right: 0;
     @include box-shadow($color-blue-dark);
-  }
-
-  h3 {
-    margin: 0 0 20px 0;
   }
 }
 
@@ -622,7 +629,7 @@ input[type=number] {
     &.disabled {
       cursor: default;
       i {
-        color: rgba($color-text-dark, 0.5);
+        color: rgba($color-text-dark, 0.4);
       }
     }
   }
@@ -649,7 +656,7 @@ input[type=number] {
 .editable-drop-down ul {
   background-color: $color-bg;
   margin-top: 10px;
-  @include box-shadow($color-text);
+  @include box-shadow($color-blue-dark);
   li a {
     color: $color-text;
     &:hover {
@@ -933,5 +940,16 @@ input[type=number] {
   button {
     font-size: $font-medium !important;
     text-transform: none;
+  }
+}
+
+snippet {
+  .modal-header {
+    border-bottom: none;
+  }
+
+  pre {
+    color: $color-text;
+    background: rgba($color-text, 0.1);
   }
 }
