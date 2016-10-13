@@ -102,7 +102,10 @@ function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, 
 
         _.forEach(names, function (name) {
           $vamp.await(function () {
-            $vamp.remove(path + '/' + name);
+            var artifact = _.find($ctrl.artifacts, function (artifact) {
+              return artifact.name === name;
+            });
+            $vamp.remove(path + '/' + name, angular.toJson(artifact));
           }).then(function () {
             toastr.success('\'' + name + '\' has been successfully deleted.');
           }).catch(function (response) {

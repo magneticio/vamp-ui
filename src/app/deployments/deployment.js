@@ -20,7 +20,7 @@ function DeploymentController($scope, $stateParams, $interval, $timeout, $locati
   this.delete = function () {
     alert.show('Warning', 'Are you sure you want to delete deployment \'' + $ctrl.deployment.name + '\'?', 'Delete', 'Cancel', function () {
       $vamp.await(function () {
-        $vamp.remove(path);
+        $vamp.remove(path, angular.toJson($ctrl.deployment));
       }).then(function () {
         $location.path('/deployments');
         toastr.success('Deployment \'' + $ctrl.deployment.name + '\' has been successfully deleted.');

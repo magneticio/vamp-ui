@@ -1,9 +1,11 @@
 <artifacts kind="gateways">
     <div class="artifact-properties" ng-controller="GatewaysController as $ctrl">
-        <span ng-if="!$ctrl.gateway.deployed" class="label label-primary">not deployed&nbsp;<i class="fa fa-cog fa-spin"></i></span>
-        <span ng-if="$ctrl.gateway.deployed" class="label label-primary">port : {{ $ctrl.gateway.port }}</span>
-        <span ng-if="!$ctrl.gateway.internal" class="label label-primary">external</span>
-        <span ng-if="$ctrl.gateway.internal" class="label label-primary">internal</span>
+        <span class="label" ng-class="{'label-info': !$ctrl.gateway.deployed, 'label-success': $ctrl.gateway.deployed}">
+            {{$ctrl.gateway.deployed ? 'port : ' + $ctrl.gateway.port : 'not deployed'}}&nbsp;
+            <i ng-if="$ctrl.gateway.deployed" class="fa fa-check"></i>
+            <i ng-if="!$ctrl.gateway.deployed" class="fa fa-cog fa-spin"></i>
+        </span>
+        <span class="label label-primary">{{ $ctrl.gateway.internal ? 'internal' : 'external'}}</span>
         <p></p>
         <div class="list" ng-if="!($ctrl.gateway.virtual_hosts | isEmpty)">
             <p>virtual hosts :</p>
@@ -15,7 +17,8 @@
         <div class="list">
             <p>routes :</p>
             <ul>
-                <li ng-repeat="route in $ctrl.gateway.routes | namify | limitTo: 3 | orderBy:'name'">{{ route.name }}</li>
+                <li ng-repeat="route in $ctrl.gateway.routes | namify | limitTo: 3 | orderBy:'name'">{{ route.name }}
+                </li>
                 <li><i ng-if="($ctrl.gateway.routes | countKeys) > 3" class="fa fa-ellipsis-h"></i></li>
             </ul>
         </div>
