@@ -8,7 +8,22 @@ angular.module('app')
 function DeploymentsController($scope, deployment) {
   var $parent = $scope.$parent.$parent.$ctrl;
   this.deployment = $scope.$parent.$parent.artifact;
+
   this.scale = deployment.scale(this.deployment);
+  this.status = function () {
+    var statuses = _.flatMap(this.deployment.clusters, function (cluster) {
+      return _.map(cluster.services, 'state.step.name');
+    });
+    for (var i = 0; i < statuses.length; i++) {
+      if (statuses[i].toLowerCase() === 'failure') {
+        return 'failed';
+      } else if (statuses[i].toLowerCase() === 'initiated' || statuses[i].toLowerCase() === 'update') {
+        return 'updating';
+      }
+    }
+    return 'running';
+  };
+
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'synchronization')) {
       $parent.peek();

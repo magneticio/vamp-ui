@@ -1,9 +1,20 @@
 <artifacts kind="deployments">
     <div class="artifact-properties" ng-controller="DeploymentsController as $ctrl">
-        <span class="label label-primary">cpu : {{ $ctrl.scale.cpu }}</span>
+        <span class="label"
+              ng-class="{'label-success': $ctrl.status() === 'running', 'label-info': $ctrl.status() === 'updating', 'label-red-alert': $ctrl.status() === 'failed'}">
+            status : {{ $ctrl.status() }}
+            <i class="fa"
+               ng-class="{'fa-check': $ctrl.status() === 'running', 'fa-cog': $ctrl.status() === 'updating', 'fa-spin': $ctrl.status() === 'updating', 'fa-exclamation': $ctrl.status() === 'failed'}">
+            </i>
+        </span>
         <p></p>
-        <span class="label label-primary">memory : {{ $ctrl.scale.memory }} MB</span>
-        <p></p>
-        <span class="label label-primary">instances : {{ $ctrl.scale.instances }}</span>
+        <div class="list">
+            <p>scale :</p>
+            <ul>
+                <li>cpu : {{ $ctrl.scale.cpu }}</li>
+                <li>memory : {{ $ctrl.scale.memory }} MB</li>
+                <li>instances : {{ $ctrl.scale.instances }}</li>
+            </ul>
+        </div>
     </div>
 </artifacts>

@@ -10,8 +10,9 @@ span:focus {
 
 // colors
 
-$color-blue: #29719b;
 $color-blue-dark: #295882;
+$color-blue: #29719b;
+$color-blue-light: #6991AA;
 
 $color-pink: #FF405E;
 $color-pink-dark: #C33750;
@@ -21,6 +22,7 @@ $color-white: #F0F5FA;
 $color-green: #00ff00;
 $color-green-dark: rgba(#00ff00, 0.2);
 $color-yellow: #f1c40f;
+$color-yellow-dark: #9b790d;
 
 $color-bg: #141e2d;
 $color-bg-dark: #0f1523;
@@ -682,6 +684,35 @@ input[type=number] {
   animation-name: highlightChange;
   animation-duration: 1s;
   animation-iteration-count: 5;
+  -webkit-animation-iteration-count: 5;
+}
+
+@keyframes redAlert {
+  0% {
+    background-color: red;
+    color: $color-white;
+    font-weight: $font-weight-regular;
+    @include box-shadow(red);
+  }
+  50% {
+    background-color: $color-yellow;
+    color: $color-white;
+    font-weight: $font-weight-regular;
+    @include box-shadow($color-yellow);
+  }
+  100% {
+    background-color: red;
+    color: $color-white;
+    font-weight: $font-weight-regular;
+    @include box-shadow(red);
+  }
+}
+
+.label-red-alert {
+  animation-name: redAlert;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
 }
 
 //
@@ -734,19 +765,29 @@ input[type=number] {
   span {
     font-size: $font-medium !important;
     font-weight: $font-weight-light;
-    background-color: rgba(lightblue, .1);
+    background-color: rgba($color-blue-light, .2);
     color: inherit;
     border-radius: .3em;
-    //margin-top: 30px !important;
+    margin-right: 5px;
+
+    &.label-success {
+      color: $color-white;
+      background-color: $color-green-dark;
+    }
+
+    &.label-info {
+      color: $color-white;
+      background-color: $color-yellow-dark;
+    }
   }
 
   .list {
     margin: .6rem 0 .6rem 0;
     font-weight: $font-weight-light;
-    background-color: rgba(lightblue, .1);
+    background-color: rgba($color-blue-light, .2);
     border-radius: .3em;
     color: inherit;
-    padding: .2em .6em 0;
+    padding: 5px 10px 1px 10px;
 
     p {
       margin: 0;
@@ -754,7 +795,7 @@ input[type=number] {
 
     ul {
       list-style-type: none;
-      padding: 0 10px;
+      padding: 0 0 0 10px;
     }
   }
 }
