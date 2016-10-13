@@ -31,7 +31,7 @@ $color-text-dark: #6991AA;
 $font-small: 12px;
 $font-medium: 14px;
 $font-big: 18px;
-$font-really-big: 32px;
+$font-really-big: 24px;
 
 $font-weight-light: 300;
 $font-weight-regular: 500;
@@ -145,7 +145,7 @@ menu {
       font-size: $font-really-big;
       text-transform: uppercase;
       color: $color-text;
-      font-weight: 300;
+      font-weight: $font-weight-light;
 
       &.message {
         text-transform: none;
@@ -207,7 +207,6 @@ menu {
   bottom: 20px;
 
   background-color: rgba(black, 0.1);
-
   overflow: hidden;
 }
 
@@ -385,10 +384,6 @@ p, div {
     line-height: 1;
     padding-top: 0;
   }
-}
-
-.chart-row {
-  padding-bottom: 40px;
 }
 
 .input-small {
@@ -716,7 +711,7 @@ input[type=number] {
   @include box-shadow($color-blue-dark);
 
   &:hover {
-    background-color: rgba(black, 0.5);
+    background-color: rgba(black, 0.4);
   }
 
   &.selected {

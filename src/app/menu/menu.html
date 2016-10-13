@@ -2,17 +2,17 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    data-target="#v" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="http://vamp.io">
                 <img class="nav-logo" src="img/logo.svg">
             </a>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse" id="v">
             <ul class="nav navbar-nav">
                 <li ng-class="{active : $ctrl.isActive(artifact), deployable : artifact.deployable}"
                     ng-repeat="artifact in $ctrl.artifacts">

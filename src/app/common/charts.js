@@ -1,10 +1,8 @@
 /* global SmoothieChart, TimeSeries */
 (function (exports) {
   var charts = {};
-  var timeoutTasks = {};
-  var creationTimestamp = new Date().getTime();
-
   var resetValueTimeout = 7500;
+  var resetValueAfterLast = 5000;
 
   function TimeSeriesCharts() {
   }
@@ -71,7 +69,7 @@
   var healthChartTimeSeriesOptions = {
     lineWidth: 3,
     strokeStyle: '#00ff00',
-    fillStyle: 'rgba(0, 255, 0, 0.4)'
+    fillStyle: 'rgba(0, 255, 0, 0.2)'
   };
 
   var sparklineTimeSeriesOptions = chartTimeSeriesOptions;
@@ -87,8 +85,8 @@
 
     _.forEach(remove, function (canvasId) {
       if (charts[canvasId]) {
-        if (timeoutTasks[canvasId]) {
-          clearTimeout(timeoutTasks[canvasId]);
+        if (charts[canvasId].timeout) {
+          clearTimeout(charts[canvasId].timeout);
         }
         if (charts[canvasId].chart) {
           charts[canvasId].chart.stop();
@@ -128,41 +126,43 @@
 
   TimeSeriesCharts.prototype.append = function (id, timestamp, value) {
     if (charts[id] && charts[id].series) {
+      if (charts[id].tail < timestamp - resetValueTimeout) {
+        charts[id].series.append(timestamp - resetValueTimeout, 0);
+      }
       charts[id].series.append(timestamp, value);
     }
   };
 
   TimeSeriesCharts.prototype.timeout = function (id, timestamp) {
     var $this = this;
-    var old = creationTimestamp - timestamp > resetValueTimeout;
-    if (!old && timeoutTasks[id] !== null) {
-      clearTimeout(timeoutTasks[id]);
+    if (!charts[id]) {
+      return;
     }
+    var tail = charts[id].tail ? charts[id].tail < timestamp : true;
     return new Promise(function (resolve, reject) {
-      if (old) {
-        reject();
-      } else {
-        timeoutTasks[id] = setTimeout(function () {
-          $this.append(id, timestamp + 1, 0);
-          if (resolve) {
-            resolve();
-          }
+      if (tail) {
+        clearTimeout(charts[id].timeout);
+        charts[id].tail = timestamp;
+        charts[id].timeout = setTimeout(function () {
+          $this.append(id, timestamp + resetValueAfterLast, 0);
+          resolve();
         }, resetValueTimeout);
+      } else {
+        reject();
       }
     });
   };
 
   TimeSeriesCharts.prototype.destroy = function () {
-    _.forEach(timeoutTasks, function (task) {
-      clearTimeout(task);
-    });
     _.forEach(charts, function (entry) {
+      if (entry.timeout) {
+        clearTimeout(entry.timeout);
+      }
       if (entry.chart) {
         entry.chart.stop();
       }
     });
     charts = {};
-    timeoutTasks = {};
   };
 
   exports.TimeSeriesCharts = TimeSeriesCharts;
