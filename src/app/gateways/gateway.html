@@ -5,17 +5,17 @@
                 <i class="fa fa-pencil"></i>
             </button>
             <button class="btn btn-lg btn-circle red" type="submit" title="Delete"
-                    ng-disabled="!$ctrl.gateway || $ctrl.gateway.inner"
+                    ng-disabled="!$ctrl.gateway || $ctrl.gateway.internal"
                     ng-click="$ctrl.delete()">
                 <i class="fa fa-trash-o"></i>
             </button>
         </buttons>
     </header>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row gateway-header">
             <div class="col-md-3 gateway-row">
-                <p>host:port</p>
-                <span class="label label-success">{{$ctrl.gateway.service.host}}:{{$ctrl.gateway.service.port}}</span>
+                <p>host ~ port/type</p>
+                <span class="label label-success">{{$ctrl.gateway.service.host}} ~ {{$ctrl.gateway.service.port}}</span>
             </div>
             <div class="col-md-3 gateway-row">
                 <p>virtual hosts</p>
@@ -39,7 +39,7 @@
             </div>
         </div>
         <br>
-        <div class="row">
+        <div class="row gateway-charts">
             <div class="col-md-4 gateway-row">
                 <p>health
                     <span ng-if="$ctrl.last['health'] != null && $ctrl.last['health'] != 'none'"
@@ -71,8 +71,8 @@
                 <canvas class="chart" id="responseTime" width="330"></canvas>
             </div>
         </div>
-        <br> <br>
-        <div class="row">
+        <br>
+        <div class="row gateway-route-row-header">
             <div class="col-md-4 gateway-row">
                 <div class="col-sm-8 gateway-row"><p>route</p></div>
                 <div class="col-sm-4 gateway-row">
@@ -141,7 +141,7 @@
                         </span>
                     </editable-text>
                 </div>
-                <div class="col-sm-4 gateway-row">
+                <div class="col-sm-4 gateway-row gateway-route-condition-strength">
                     <editable-number-slider active="route.condition.condition"
                                             options="$ctrl.sliderOptions"
                                             number="route.condition_strength"

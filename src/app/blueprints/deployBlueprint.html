@@ -4,9 +4,9 @@
 <form novalidate name="form" ng-submit="ok()">
     <div class="modal-body">
         <p>You are about to deploy the blueprint '{{ blueprint.name }}'. You should give a name to deployment.</p>
-
+        <br>
         <div class="form-group" ng-class="{'has-error': form.name.$invalid}">
-            <label for="deployment-name">Deployment name</label>
+            <label for="deployment-name">Deployment name:</label>
             <input name="name" type="text" class="form-control" id="deployment-name" placeholder="Name"
                    ng-model="deploymentName" ng-pattern="/^\S*$/" required>
             <span class="help-block" ng-show="form.name.$error.required">Deployment should have a name.</span>

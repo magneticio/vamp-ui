@@ -3,7 +3,6 @@
         <span ng-transclude></span>
     </editable>
     <div class="editable-number-slider" ng-if="$ctrl.editMode">
-        <rzslider class="slider" rz-slider-model="$ctrl.change" rz-slider-options="$ctrl.sliderOptions"></rzslider>
         <div class="editable-number-slider-buttons pull-right">
             <button ng-click="$ctrl.edited({value: $ctrl.change}); $ctrl.setEditModeInactive()">
                 <i class="fa fa-check"></i>
@@ -12,5 +11,6 @@
                 <i class="fa fa-times"></i>
             </button>
         </div>
+        <rzslider class="slider" rz-slider-model="$ctrl.change" rz-slider-options="$ctrl.sliderOptions"></rzslider>
     </div>
 </div>

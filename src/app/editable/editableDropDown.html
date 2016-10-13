@@ -2,8 +2,8 @@
     <editable active="$ctrl.active" on-click="$ctrl.toggle()">
         <span ng-transclude></span>
     </editable>
-    <span uib-dropdown is-open='$ctrl.editMode' ng-click="$ctrl.toggle();">
-      <ul class="dropdown-menu" uib-dropdown-menu>
+    <span class="editable-drop-down" uib-dropdown is-open='$ctrl.editMode' ng-click="$ctrl.toggle();">
+      <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
         <li ng-repeat="choice in $ctrl.values">
           <a href ng-click="$ctrl.selected({value: choice}); $ctrl.setEditModeInactive()">{{choice}}</a>
         </li>

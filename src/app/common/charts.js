@@ -22,7 +22,7 @@
       fillStyle: 'transparent',
       strokeStyle: '#37647D',
       millisPerLine: 10000,
-      verticalSections: 5,
+      verticalSections: 4,
       borderVisible: true
     },
     labels: {
@@ -47,7 +47,7 @@
       fillStyle: 'transparent',
       strokeStyle: '#b3b3b3',
       millisPerLine: 10000,
-      verticalSections: 5
+      verticalSections: 4
     },
     minValue: 0,
     millisPerPixel: 330,
@@ -63,13 +63,13 @@
   var healthSparklineOptions = sparklineOptions;
 
   var chartTimeSeriesOptions = {
-    lineWidth: 1,
+    lineWidth: 3,
     strokeStyle: '#29719b',
     fillStyle: 'rgba(41, 113, 155, 0.4)'
   };
 
   var healthChartTimeSeriesOptions = {
-    lineWidth: 1,
+    lineWidth: 3,
     strokeStyle: '#00ff00',
     fillStyle: 'rgba(0, 255, 0, 0.4)'
   };
