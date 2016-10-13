@@ -76,6 +76,26 @@
 
   var healthSparklineTimeSeriesOptions = healthChartTimeSeriesOptions;
 
+  function merge() {
+    var result = {};
+    for (var i = 0; i < arguments.length; i++) {
+      for (var key in arguments[i]) {
+        if (arguments[i].hasOwnProperty(key)) {
+          if (typeof (arguments[i][key]) === 'object') {
+            if (arguments[i][key] instanceof Array) {
+              result[key] = arguments[i][key];
+            } else {
+              result[key] = merge(result[key], arguments[i][key]);
+            }
+          } else {
+            result[key] = arguments[i][key];
+          }
+        }
+      }
+    }
+    return result;
+  }
+
   TimeSeriesCharts.prototype.define = function (definitions) {
     var remove = _.difference(_.map(charts, function (v, n) {
       return n;
@@ -101,6 +121,7 @@
       if (!charts[definition.canvasId]) {
         var co = chartOptions;
         var tso = chartTimeSeriesOptions;
+
         if (TimeSeriesCharts.healthChart === definition.type) {
           co = healthChartOptions;
           tso = healthChartTimeSeriesOptions;
@@ -112,11 +133,15 @@
           tso = healthSparklineTimeSeriesOptions;
         }
 
+        co = merge(co, definition.chartOptions);
+        tso = merge(tso, definition.timeSeriesOptions);
+
         var entry = charts[definition.canvasId] = {};
         entry.series = new TimeSeries();
         entry.chart = new SmoothieChart(co);
         entry.chart.addTimeSeries(entry.series, tso);
         entry.chart.streamTo(document.getElementById(definition.canvasId));
+
         added.push(definition.canvasId);
       }
     });
@@ -124,16 +149,27 @@
     return {removed: remove, added: added};
   };
 
-  TimeSeriesCharts.prototype.append = function (id, timestamp, value) {
-    if (charts[id] && charts[id].series) {
-      if (charts[id].tail < timestamp - resetValueTimeout) {
-        charts[id].series.append(timestamp - resetValueTimeout, 0);
+  TimeSeriesCharts.prototype.append = function (id, timestamp, value, lasts) {
+    timestamp = timestamp || Date.now();
+    if (value !== null && value !== undefined) {
+      lasts[id] = value;
+      if (charts[id] && charts[id].series) {
+        if (charts[id].tail < timestamp - resetValueTimeout) {
+          charts[id].series.append(timestamp - resetValueTimeout, 0);
+        }
+        charts[id].series.append(timestamp, value);
       }
-      charts[id].series.append(timestamp, value);
+    }
+    var promise = this.timeout(id, timestamp, lasts);
+    if (promise) {
+      promise.then(function () {
+        lasts[id] = 'none';
+      }).catch(function () {
+      });
     }
   };
 
-  TimeSeriesCharts.prototype.timeout = function (id, timestamp) {
+  TimeSeriesCharts.prototype.timeout = function (id, timestamp, lasts) {
     var $this = this;
     if (!charts[id]) {
       return;
@@ -144,7 +180,7 @@
         clearTimeout(charts[id].timeout);
         charts[id].tail = timestamp;
         charts[id].timeout = setTimeout(function () {
-          $this.append(id, timestamp + resetValueAfterLast, 0);
+          $this.append(id, timestamp + resetValueAfterLast, 0, lasts);
           resolve();
         }, resetValueTimeout);
       } else {

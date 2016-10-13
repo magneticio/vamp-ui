@@ -1,28 +1,20 @@
 angular.module('app')
   .controller('DeploymentsController', DeploymentsController)
-  .factory('deployment', ['$filter', function ($filter) {
-    return new DeploymentService($filter);
+  .factory('deployment', ['$rootScope', '$interval', '$filter', '$vamp', function ($rootScope, $interval, $filter, $vamp) {
+    return new DeploymentService($rootScope, $interval, $filter, $vamp);
+  }])
+  .run(["deployment", function (deployment) {
+    deployment.init();
   }]);
 
 /** @ngInject */
 function DeploymentsController($scope, deployment) {
+  var $ctrl = this;
   var $parent = $scope.$parent.$parent.$ctrl;
   this.deployment = $scope.$parent.$parent.artifact;
 
-  this.scale = deployment.scale(this.deployment);
-  this.status = function () {
-    var statuses = _.flatMap(this.deployment.clusters, function (cluster) {
-      return _.map(cluster.services, 'state.step.name');
-    });
-    for (var i = 0; i < statuses.length; i++) {
-      if (statuses[i].toLowerCase() === 'failure') {
-        return 'failed';
-      } else if (statuses[i].toLowerCase() === 'initiated' || statuses[i].toLowerCase() === 'update') {
-        return 'updating';
-      }
-    }
-    return 'running';
-  };
+  this.scale = deployment.scale($ctrl.deployment);
+  this.status = deployment.deploymentStatus($ctrl.deployment);
 
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'synchronization')) {
@@ -31,8 +23,20 @@ function DeploymentsController($scope, deployment) {
   });
 }
 
-function DeploymentService($filter) {
-  this.scale = function (deployment) {
+/** @ngInject */
+function DeploymentService($rootScope, $interval, $filter, $vamp) {
+  var $this = this;
+  var scales = {};
+  var scalePeriod = 5000;
+
+  this.init = function () {
+    $vamp.peek('/deployments');
+    $interval(function () {
+      $vamp.peek('/deployments');
+    }, scalePeriod);
+  };
+
+  this.scale = throttle(function (deployment) {
     var cpu = 0;
     var memory = 0;
     var instances = 0;
@@ -49,5 +53,60 @@ function DeploymentService($filter) {
       memory: Number($filter('number')(memory, 2)),
       instances: instances
     };
+  });
+
+  this.peekScales = function (deployment) {
+    return scales[deployment.name];
   };
+
+  this.deploymentStatus = throttle(function (deployment) {
+    var services = _.flatMap(deployment.clusters, function (cluster) {
+      return cluster.services;
+    });
+    for (var i = 0; i < services.length; i++) {
+      var status = $this.serviceStatus(services[i]);
+      if (status === 'failed' || status === 'updating') {
+        return status;
+      }
+    }
+    return 'running';
+  });
+
+  this.serviceStatus = throttle(function (service) {
+    var status = service.state.step.name.toLowerCase();
+    if (status === 'failure') {
+      return 'failed';
+    } else if (status === 'initiated' || status === 'update') {
+      return 'updating';
+    }
+    return 'running';
+  });
+
+  var onDeployments = throttle(function (deployments) {
+    var now = Date.now();
+    _.forEach(deployments, function (deployment) {
+      var scale = {
+        scale: $this.scale(deployment),
+        timestamp: now
+      };
+      if (!scales[deployment.name]) {
+        scales[deployment.name] = [];
+      }
+      scales[deployment.name].unshift(scale);
+      $rootScope.$broadcast('deployments/' + deployment.name + '/scale', scale);
+      while (scales[deployment.name][scales[deployment.name].length - 1].timestamp + 60000 < now) {
+        scales[deployment.name].pop();
+      }
+    });
+  }, scalePeriod / 2);
+
+  $rootScope.$on('/deployments', function (e, response) {
+    if (response.status === 'OK') {
+      onDeployments(response.data);
+    }
+  });
+
+  function throttle(f, period) {
+    return _.throttle(f, period || 1000, {leading: true, trailing: false});
+  }
 }

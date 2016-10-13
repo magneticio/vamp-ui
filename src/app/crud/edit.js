@@ -76,7 +76,7 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   };
 
   this.fullErrorMessage = function () {
-    snippet.show('Error message', $ctrl.errorMessage);
+    snippet.show('Error message', artifact.transformErrorMessage($ctrl.errorMessage));
   };
 
   this.cancel = function () {
@@ -99,7 +99,6 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
     }).catch(function (response) {
       validation = true;
       ignoreChange = false;
-
       if (response) {
         toastr.error(response.data.message, 'Save of \'' + $ctrl.name + '\'failed.');
       } else {

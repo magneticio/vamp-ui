@@ -211,14 +211,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   }
 
   function appendToChart(id, value, timestamp) {
-    var ts = timestamp ? new Date(timestamp).getTime() : new Date().getTime();
-    if (value !== null && value !== undefined) {
-      $ctrl.last[id] = value;
-      charts.append(id, ts, value);
-    }
-    charts.timeout(id, ts).then(function () {
-      $ctrl.last[id] = 'none';
-    }).catch(function () {
-    });
+    timestamp = timestamp ? new Date(timestamp).getTime() : Date.now();
+    charts.append(id, timestamp, value, $ctrl.last);
   }
 }

@@ -183,7 +183,7 @@ function UpdateDeploymentController($scope, $uibModalInstance, blueprint, deploy
 function BlueprintService($rootScope, $vamp) {
   var deployments = [];
 
-  var peek = _.debounce(function () {
+  var peek = _.throttle(function () {
     $vamp.peek('/deployments');
   }, 1000, {
     leading: true,
@@ -193,8 +193,10 @@ function BlueprintService($rootScope, $vamp) {
   peek();
 
   $rootScope.$on('/deployments', function (e, response) {
-    deployments = _.sortBy(response.data, ['name']);
-    $rootScope.$broadcast('deployments');
+    if (response.status === 'OK') {
+      deployments = _.sortBy(response.data, ['name']);
+      $rootScope.$broadcast('deployments');
+    }
   });
 
   this.mergeWithDeployments = function (list) {

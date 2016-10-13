@@ -2,7 +2,7 @@
 angular.module('app').controller('DeploymentController', DeploymentController);
 
 /** @ngInject */
-function DeploymentController($scope, $stateParams, $interval, $timeout, $location, $vamp, alert, toastr, deployment) {
+function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, deployment, alert, toastr) {
   var $ctrl = this;
   var path = '/deployments/' + $stateParams.name;
 
@@ -34,12 +34,6 @@ function DeploymentController($scope, $stateParams, $interval, $timeout, $locati
     });
   };
 
-  // var addedClusters = [];
-
-  // this.added = function (cluster) {
-  //   return _.includes(addedClusters, cluster.lookup_name);
-  // };
-
   $vamp.await(function () {
     $vamp.peek(path);
   }).catch(function () {
@@ -52,12 +46,21 @@ function DeploymentController($scope, $stateParams, $interval, $timeout, $locati
     if (response.status === 'ERROR') {
       return;
     }
-    // if ($ctrl.deployment) {
-    //   addedClusters = _.difference(_.map(response.data.clusters, 'lookup_name'), _.map($ctrl.deployment.clusters, 'lookup_name'));
-    // }
+    var created = !$ctrl.deployment;
     $ctrl.deployment = response.data;
     $timeout(updateCharts, 0);
-    $timeout(updateScale, 0);
+    if (created) {
+      $timeout(function () {
+        $scope.$on('deployments/' + response.data.name + '/scale', function (e, data) {
+          appendToChart('cpu', data.scale.cpu, data.timestamp);
+          appendToChart('memory', data.scale.memory, data.timestamp);
+        });
+        _.forEach(deployment.peekScales(response.data) || [], function (data) {
+          appendToChart('cpu', data.scale.cpu, data.timestamp);
+          appendToChart('memory', data.scale.memory, data.timestamp);
+        });
+      }, 0);
+    }
     peekEvents();
   });
 
@@ -68,9 +71,17 @@ function DeploymentController($scope, $stateParams, $interval, $timeout, $locati
   $scope.$on('/events/stream', function (e, response) {
     var event = response.data;
     if ($ctrl.deployment && _.includes(event.tags, 'deployments:' + $ctrl.deployment.name)) {
-      chartUpdate(event);
-    } else if (_.includes(response.data.tags, 'synchronization')) {
-      $vamp.peek(path);
+      if (_.includes(event.tags, 'synchronization')) {
+        $vamp.await(function () {
+          $vamp.peek(path);
+        }).catch(function () {
+          alert.show('Warning', '\'' + $ctrl.deployment.name + '\' has been deleted in background.', 'Leave', 'Stay', function () {
+            $location.path('/deployments');
+          });
+        });
+      } else {
+        chartUpdate(event);
+      }
     }
   });
 
@@ -84,41 +95,25 @@ function DeploymentController($scope, $stateParams, $interval, $timeout, $locati
     }, 0);
   });
 
-  // function save(deployment) {
-  //   $vamp.await(function () {
-  //     $vamp.put(path, JSON.stringify(deployment));
-  //   }).catch(function (response) {
-  //     toastr.error(response.data.message, 'Update of deployment \'' + $ctrl.deployment.name + '\' failed.');
-  //   });
-  // }
-
-  $interval(updateScale, 5000);
-
-  function updateScale() {
-    if ($ctrl.deployment) {
-      var scale = deployment.scale($ctrl.deployment);
-      appendToChart('cpu', scale.cpu);
-      appendToChart('memory', scale.memory);
-    }
-  }
-
   function peekEvents() {
-    $vamp.peek('/events', JSON.stringify({tags: ['deployments:' + $ctrl.deployment.name, 'deployment', 'health']}));
+    $vamp.peek('/events', JSON.stringify({
+      tags: ['deployments:' + $ctrl.deployment.name, 'deployment', 'health'],
+      timestamp: {gte: 'now-1m'}
+    }));
   }
 
   function updateCharts() {
-    // var definitions = [
-    //   {canvasId: 'health', chartOptions: {millisPerPixel: 100}},
-    //   {canvasId: 'memory', chartOptions: {millisPerPixel: 100}},
-    //   {canvasId: 'cpu', chartOptions: {millisPerPixel: 100, labels: {precision: 1}}}
-    // ];
-    // charts.define(definitions);
-    // var ts = new Date().getTime();
-    // _.forEach(definitions, function (definition) {
-    //   charts.timeout(definition.canvasId, ts, 0, 10000).then(function () {
-    //     $ctrl.last[definition.canvasId] = 'none';
-    //   });
-    // });
+    var definitions = [
+      {canvasId: 'health', type: TimeSeriesCharts.healthChart},
+      {canvasId: 'memory', type: TimeSeriesCharts.chart},
+      {canvasId: 'cpu', type: TimeSeriesCharts.chart, chartOptions: {labels: {precision: 1}}}
+    ];
+
+    charts.define(definitions);
+
+    _.forEach(definitions, function (definition) {
+      appendToChart(definition.canvasId);
+    });
   }
 
   function chartUpdate(event) {
@@ -128,11 +123,8 @@ function DeploymentController($scope, $stateParams, $interval, $timeout, $locati
   }
 
   function appendToChart(id, value, timestamp) {
-    var ts = timestamp ? new Date(timestamp).getTime() : new Date().getTime();
-    $ctrl.last[id] = value;
-    charts.append(id, ts, value);
-    charts.timeout(id, ts, 0, 10000).then(function () {
-      $ctrl.last[id] = 'none';
-    });
+    timestamp = timestamp || Date.now();
+    timestamp = Number.isInteger(timestamp) ? timestamp : new Date(timestamp).getTime();
+    charts.append(id, timestamp, value, $ctrl.last);
   }
 }

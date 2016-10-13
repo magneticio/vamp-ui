@@ -41,9 +41,19 @@ function ArtifactService($vamp) {
       editor.$blockScrolling = 'Infinity';
     }
   };
+
   this.validate = _.throttle(function (path, data, validation) {
     if (validation && data && path) {
       $vamp.put(path, data, {validate_only: true}, 'JSON');
     }
   }, 500, {trailing: true, leading: false});
+
+  this.transformErrorMessage = function (message) {
+    var index = message.indexOf('Unexpected in DSL: ');
+    if (index === 0) {
+      var json = JSON.parse(message.substring('Unexpected in DSL: '.length));
+      return 'Unexpected in DSL:\n' + JSON.stringify(json, null, 2);
+    }
+    return message;
+  };
 }

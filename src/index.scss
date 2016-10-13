@@ -655,7 +655,7 @@ input[type=number] {
   }
 }
 
-.editable-drop-down ul {
+.dropdown-menu-list ul {
   background-color: $color-bg;
   margin-top: 10px;
   @include box-shadow($color-blue-dark);
@@ -890,7 +890,7 @@ input[type=number] {
   }
 }
 
-.gateway {
+.gateway, .deployment {
   p, span {
     font-size: $font-medium;
     font-weight: $font-weight-regular;
@@ -910,12 +910,12 @@ input[type=number] {
   margin-left: 20px;
 }
 
-.gateway-row {
+.gateway-row, .deployment-row {
   text-align: center;
   padding: 0;
 }
 
-.gateway-charts {
+.gateway-charts, .deployment-charts {
   margin: 0;
   padding: 12px 0 15px 0;
   background-color: $color-bg-dark;
@@ -949,10 +949,7 @@ input[type=number] {
 }
 
 .deployment {
-  p, span {
-    font-size: $font-medium;
-    font-weight: $font-weight-regular;
-  }
+  padding-top: 10px;
 }
 
 //

@@ -54,7 +54,7 @@
             <div class="col-md-4 gateway-row">
                 <p>REQUESTS / SECOND&nbsp;
                     <span ng-if="$ctrl.last['rate'] != null" class="label"
-                          ng-class="{'label-success': $ctrl.last['rate'] != 'none', 'label-red-alert': $ctrl.last['rate'] == 'none'}">
+                          ng-class="{'label-primary': $ctrl.last['rate'] != 'none', 'label-red-alert': $ctrl.last['rate'] == 'none'}">
                         {{ $ctrl.last['rate'] == 'none' ? 'none' : $ctrl.last['rate'] }}
                     </span>
                 </p>
@@ -63,7 +63,7 @@
             <div class="col-md-4 gateway-row">
                 <p>RESPONSE TIME&nbsp;
                     <span ng-if="$ctrl.last['responseTime'] != null" class="label"
-                          ng-class="{'label-success': $ctrl.last['responseTime'] != 'none', 'label-red-alert': $ctrl.last['responseTime'] == 'none'}">
+                          ng-class="{'label-primary': $ctrl.last['responseTime'] != 'none', 'label-red-alert': $ctrl.last['responseTime'] == 'none'}">
                         {{ $ctrl.last['responseTime'] == 'none' ? 'none' : $ctrl.last['responseTime'] + ' ms' }}
                     </span>
                 </p>
@@ -115,7 +115,7 @@
                     <canvas class="chart" id="rate-{{route.lookup_name}}" width="100" height="40"></canvas>
                     <p>
                         <span ng-if="$ctrl.last['rate-' + route.lookup_name] != null" class="label"
-                              ng-class="{'label-success': $ctrl.last['rate-' + route.lookup_name] != 'none', 'label-red-alert': $ctrl.last['rate-' + route.lookup_name] == 'none'}">
+                              ng-class="{'label-primary': $ctrl.last['rate-' + route.lookup_name] != 'none', 'label-red-alert': $ctrl.last['rate-' + route.lookup_name] == 'none'}">
                         {{ $ctrl.last['rate-' + route.lookup_name] == 'none' ? 'none' : $ctrl.last['rate-' + route.lookup_name]}}
                         </span>
                     </p>
@@ -124,7 +124,7 @@
                     <canvas class="chart" id="responseTime-{{route.lookup_name}}" width="100" height="40"></canvas>
                     <p>
                         <span ng-if="$ctrl.last['responseTime-' + route.lookup_name] != null" class="label"
-                              ng-class="{'label-success': $ctrl.last['responseTime-' + route.lookup_name] != 'none', 'label-red-alert': $ctrl.last['responseTime-' + route.lookup_name] == 'none'}">
+                              ng-class="{'label-primary': $ctrl.last['responseTime-' + route.lookup_name] != 'none', 'label-red-alert': $ctrl.last['responseTime-' + route.lookup_name] == 'none'}">
                         {{ $ctrl.last['responseTime-' + route.lookup_name] == 'none' ? 'none' : $ctrl.last['responseTime-' + route.lookup_name] + ' ms'}}
                         </span>
                     </p>
