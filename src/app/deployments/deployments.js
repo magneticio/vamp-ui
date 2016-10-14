@@ -86,10 +86,6 @@ function DeploymentService($rootScope, $interval, $filter, $vamp) {
     return 'running';
   };
 
-  this.serviceLookup = function (service) {
-    return service.breed.name;
-  };
-
   var onDeployments = _.throttle(function (deployments) {
     var now = Date.now();
     _.forEach(deployments, function (deployment) {

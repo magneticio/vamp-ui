@@ -72,11 +72,11 @@
                         </span>
                     </div>
                     <div class="col-sm-6 deployment-row">
-                        <canvas class="chart" id="health-{{$ctrl.serviceLookup(service)}}" width="100"
+                        <canvas class="chart" id="health-{{service.breed.name}}" width="100"
                                 height="40"></canvas>
-                        <span ng-if="$ctrl.last['health-' + $ctrl.serviceLookup(service)] != null" class="label"
-                              ng-class="{'label-success': $ctrl.last['health-' + $ctrl.serviceLookup(service)] != 'none', 'label-red-alert': $ctrl.last['health-' + $ctrl.serviceLookup(service)] == 'none'}">
-                        {{ $ctrl.last['health-' + $ctrl.serviceLookup(service)] == 'none' ? 'none' : $ctrl.last['health-' + $ctrl.serviceLookup(service)] + ' %'}}
+                        <span ng-if="$ctrl.last['health-' + service.breed.name] != null" class="label"
+                              ng-class="{'label-success': $ctrl.last['health-' + service.breed.name] != 'none', 'label-red-alert': $ctrl.last['health-' + service.breed.name] == 'none'}">
+                        {{ $ctrl.last['health-' + service.breed.name] == 'none' ? 'none' : $ctrl.last['health-' + service.breed.name] + ' %'}}
                         </span>
 
                     </div>

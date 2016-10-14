@@ -112,7 +112,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   });
 
   $scope.$on('$destroy', function () {
-    charts.destroy();
+    charts.invalidate();
   });
 
   $scope.$on('/events/stream', function (e, response) {

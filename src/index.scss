@@ -364,37 +364,6 @@ p, div {
   }
 }
 
-.panel-default {
-  border: none !important;
-
-  .panel-label {
-    font-size: $font-medium;
-    color: rgba($color-yellow, 0.7);
-    line-height: 1;
-  }
-}
-
-.panel-body {
-  font-weight: $font-weight-bold;
-  .head {
-    font-size: $font-big;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .sub-head {
-    font-size: $font-medium;
-    color: rgba($color-yellow, 0.7);
-    line-height: 1;
-    padding-top: 0;
-  }
-}
-
-.input-small {
-  width: 70px;
-  font-size: 12px;
-}
-
 .event-panel-content {
   height: 50px;
   position: relative;
@@ -649,13 +618,18 @@ input[type=number] {
   color: $color-bg-dark;
   input {
     width: 70%;
+    color: $color-text;
+    background-color: $color-bg;
+    border: 1px solid $color-text-dark;
+    border-radius: .3em;
+    padding: 2px 4px;
   }
 }
 
 .editable-text-buttons, .editable-number-slider-buttons {
   display: inline-flex;
   button {
-    background-color: $color-text-dark;
+    background-color: $color-blue;
     border-radius: .25em;
     border: none;
     color: aliceblue;
@@ -884,6 +858,16 @@ input[type=number] {
   }
 }
 
+.form-control {
+  color: $color-text;
+  background-color: $color-bg;
+  border-color: $color-text-dark;
+}
+
+.has-error .help-block {
+  color: $color-pink;
+}
+
 //
 
 .blueprint-actions {
@@ -943,6 +927,14 @@ input[type=number] {
     &.label-info {
       color: $color-white;
       background-color: $color-yellow-dark;
+    }
+  }
+
+  p a {
+    color: $color-text-dark;
+    &:hover {
+      color: $color-text;
+      text-decoration: none;
     }
   }
 }

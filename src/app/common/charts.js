@@ -97,6 +97,8 @@
   }
 
   TimeSeriesCharts.prototype.define = function (definitions) {
+    this.invalidate();
+
     var remove = _.difference(_.map(charts, function (v, n) {
       return n;
     }), _.map(definitions, function (definition) {
@@ -114,8 +116,6 @@
         delete charts[canvasId];
       }
     });
-
-    var added = [];
 
     _.forEach(definitions, function (definition) {
       if (!charts[definition.canvasId]) {
@@ -141,12 +141,8 @@
         entry.chart = new SmoothieChart(co);
         entry.chart.addTimeSeries(entry.series, tso);
         entry.chart.streamTo(document.getElementById(definition.canvasId));
-
-        added.push(definition.canvasId);
       }
     });
-
-    return {removed: remove, added: added};
   };
 
   TimeSeriesCharts.prototype.append = function (id, timestamp, value, lasts) {
@@ -189,7 +185,7 @@
     });
   };
 
-  TimeSeriesCharts.prototype.destroy = function () {
+  TimeSeriesCharts.prototype.invalidate = function () {
     _.forEach(charts, function (entry) {
       if (entry.timeout) {
         clearTimeout(entry.timeout);

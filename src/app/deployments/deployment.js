@@ -36,8 +36,6 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
     });
   };
 
-  this.serviceLookup = deployment.serviceLookup;
-
   this.serviceStatus = deployment.serviceStatus;
 
   this.editScale = function (cluster, service) {
@@ -45,7 +43,20 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
   };
 
   this.showInstances = function (cluster, service) {
-    snippet.show('Instances', header(cluster, service) + angular.toJson(service.instances, 2), 'lg');
+    var instances = '';
+    _.forEach(service.instances, function (instance) {
+      instances += '- name: ' + instance.name + '\n';
+      instances += '  deployed: ' + instance.deployed + '\n';
+      instances += '  host: ' + instance.host + '\n';
+      if (instance.ports) {
+        instances += '  ports:\n';
+        _.forEach(instance.ports, function (number, port) {
+          instances += '  - ' + port + ' : ' + number + '\n';
+        });
+      }
+      instances += '\n';
+    });
+    snippet.show('Instances', header(cluster, service) + instances, 'lg');
   };
 
   this.showEnvironmentVariables = function (cluster, service) {
@@ -93,23 +104,25 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
     });
 
     $timeout(updateCharts, 0);
-    if (created) {
-      $timeout(function () {
+
+    $timeout(function () {
+      if (created) {
         $scope.$on('deployments/' + response.data.name + '/scale', function (e, data) {
           appendToChart('cpu', data.scale.cpu, data.timestamp);
           appendToChart('memory', data.scale.memory, data.timestamp);
         });
-        _.forEach(deployment.peekScales(response.data) || [], function (data) {
-          appendToChart('cpu', data.scale.cpu, data.timestamp);
-          appendToChart('memory', data.scale.memory, data.timestamp);
-        });
-      }, 0);
-    }
+      }
+      _.forEach(deployment.peekScales(response.data) || [], function (data) {
+        appendToChart('cpu', data.scale.cpu, data.timestamp);
+        appendToChart('memory', data.scale.memory, data.timestamp);
+      });
+    }, 0);
+
     peekEvents();
   });
 
   $scope.$on('$destroy', function () {
-    charts.destroy();
+    charts.invalidate();
   });
 
   $scope.$on('/events/stream', function (e, response) {
@@ -164,11 +177,9 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
         {canvasId: 'memory', type: TimeSeriesCharts.chart},
         {canvasId: 'cpu', type: TimeSeriesCharts.chart, chartOptions: {labels: {precision: 1}}}
       ],
-      _.flatMap(_.map(services, function (service) {
-        return [
-          {canvasId: 'health-' + deployment.serviceLookup(service), type: TimeSeriesCharts.healthSparkline}
-        ];
-      }))
+      _.map(services, function (service) {
+        return {canvasId: 'health-' + service.breed.name, type: TimeSeriesCharts.healthSparkline};
+      })
     );
 
     charts.define(definitions);
@@ -187,7 +198,7 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
           return _.includes(event.tags, 'services:' + s.breed.name);
         });
         if (service) {
-          appendToChart('health-' + deployment.serviceLookup(service), 100 * Number(event.value), event.timestamp);
+          appendToChart('health-' + service.breed.name, 100 * Number(event.value), event.timestamp);
         }
       }
     }
