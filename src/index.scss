@@ -665,8 +665,8 @@ input[type=number] {
 .highlight {
   animation-name: highlightChange;
   animation-duration: 1s;
-  animation-iteration-count: 5;
-  -webkit-animation-iteration-count: 5;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
 }
 
 @keyframes redAlert {

@@ -150,6 +150,9 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   function updateAddedRoutes(gateway) {
     if ($ctrl.gateway) {
       addedRoutes = _.difference(_.map(gateway.routes, 'lookup_name'), _.map($ctrl.gateway.routes, 'lookup_name'));
+      $timeout(function () {
+        addedRoutes = [];
+      }, 5000);
     }
   }
 

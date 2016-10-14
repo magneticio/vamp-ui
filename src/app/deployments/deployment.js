@@ -174,6 +174,9 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
 
     if ($ctrl.deployment) {
       addedServices = _.difference(flatten(deployment), flatten($ctrl.deployment));
+      $timeout(function () {
+        addedServices = [];
+      }, 5000);
     }
   }
 
