@@ -36,7 +36,7 @@ function DeploymentService($rootScope, $interval, $filter, $vamp) {
     }, scalePeriod);
   };
 
-  this.scale = throttle(function (deployment) {
+  this.scale = function (deployment) {
     var cpu = 0;
     var memory = 0;
     var instances = 0;
@@ -53,16 +53,14 @@ function DeploymentService($rootScope, $interval, $filter, $vamp) {
       memory: Number($filter('number')(memory, 2)),
       instances: instances
     };
-  });
+  };
 
   this.peekScales = function (deployment) {
     return scales[deployment.name];
   };
 
-  this.deploymentStatus = throttle(function (deployment) {
-    var services = _.flatMap(deployment.clusters, function (cluster) {
-      return cluster.services;
-    });
+  this.deploymentStatus = function (deployment) {
+    var services = this.services(deployment);
     for (var i = 0; i < services.length; i++) {
       var status = $this.serviceStatus(services[i]);
       if (status === 'failed' || status === 'updating') {
@@ -70,9 +68,15 @@ function DeploymentService($rootScope, $interval, $filter, $vamp) {
       }
     }
     return 'running';
-  });
+  };
 
-  this.serviceStatus = throttle(function (service) {
+  this.services = function (deployment) {
+    return _.flatMap(deployment.clusters, function (cluster) {
+      return cluster.services;
+    });
+  };
+
+  this.serviceStatus = function (service) {
     var status = service.state.step.name.toLowerCase();
     if (status === 'failure') {
       return 'failed';
@@ -80,9 +84,13 @@ function DeploymentService($rootScope, $interval, $filter, $vamp) {
       return 'updating';
     }
     return 'running';
-  });
+  };
 
-  var onDeployments = throttle(function (deployments) {
+  this.serviceLookup = function (service) {
+    return service.breed.name;
+  };
+
+  var onDeployments = _.throttle(function (deployments) {
     var now = Date.now();
     _.forEach(deployments, function (deployment) {
       var scale = {
@@ -98,15 +106,11 @@ function DeploymentService($rootScope, $interval, $filter, $vamp) {
         scales[deployment.name].pop();
       }
     });
-  }, scalePeriod / 2);
+  }, scalePeriod / 2, {leading: true, trailing: false});
 
   $rootScope.$on('/deployments', function (e, response) {
     if (response.status === 'OK') {
       onDeployments(response.data);
     }
   });
-
-  function throttle(f, period) {
-    return _.throttle(f, period || 1000, {leading: true, trailing: false});
-  }
 }

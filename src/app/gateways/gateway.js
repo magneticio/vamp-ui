@@ -152,11 +152,20 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
 
   function peekEvents() {
     var nameTag = 'gateways:' + $ctrl.gateway.name;
-    var requests = [
-      {tags: [nameTag, 'health'], timestamp: {gte: 'now-1m'}},
-      {tags: [nameTag, 'metrics:rate'], timestamp: {gte: 'now-1m'}},
-      {tags: [nameTag, 'metrics:responseTime'], timestamp: {gte: 'now-1m'}}
-    ];
+    var requests = _.concat(
+      [
+        {tags: [nameTag, 'gateway', 'health'], timestamp: {gte: 'now-1m'}},
+        {tags: [nameTag, 'gateway', 'metrics:rate'], timestamp: {gte: 'now-1m'}},
+        {tags: [nameTag, 'gateway', 'metrics:responseTime'], timestamp: {gte: 'now-1m'}}
+      ],
+      _.flatMap(_.map($ctrl.gateway.routes, function (v, n) {
+        return [
+          {tags: [nameTag, 'route', 'health', 'routes:' + n], timestamp: {gte: 'now-1m'}},
+          {tags: [nameTag, 'route', 'metrics:rate', 'routes:' + n], timestamp: {gte: 'now-1m'}},
+          {tags: [nameTag, 'route', 'metrics:responseTime', 'routes:' + n], timestamp: {gte: 'now-1m'}}
+        ];
+      }))
+    );
     _.forEach(requests, function (request) {
       $vamp.peek('/events', JSON.stringify(request));
     });

@@ -192,6 +192,14 @@ edit, add {
       cursor: pointer;
     }
   }
+  .message-expand-icon {
+    margin-left: 15px;
+    cursor: pointer;
+    color: $color-text-dark;
+    &:hover {
+      color: $color-text;
+    }
+  }
 }
 
 .ace_editor {
@@ -910,9 +918,33 @@ input[type=number] {
   margin-left: 20px;
 }
 
-.gateway-row, .deployment-row {
+.gateway-row {
   text-align: center;
   padding: 0;
+}
+
+.deployment-row {
+  text-align: left;
+  padding: 0;
+
+  span {
+    font-size: $font-medium !important;
+    font-weight: $font-weight-light;
+    background-color: rgba($color-blue-light, .2);
+    color: inherit;
+    border-radius: .3em;
+    margin-right: 5px;
+
+    &.label-success {
+      color: $color-white;
+      background-color: $color-green-dark;
+    }
+
+    &.label-info {
+      color: $color-white;
+      background-color: $color-yellow-dark;
+    }
+  }
 }
 
 .gateway-charts, .deployment-charts {
@@ -924,7 +956,7 @@ input[type=number] {
   @include box-shadow($color-blue-dark);
 }
 
-.gateway-route-row {
+.gateway-route-row, .deployment-cluster-service-row {
   margin: 0 0 15px 0;
   background-color: $color-bg-dark;
   border: 1px solid $color-blue-dark;
@@ -932,11 +964,11 @@ input[type=number] {
   @include box-shadow($color-blue-dark);
 }
 
-.gateway-route-row-header {
+.gateway-route-row-header, .deployment-cluster-row-header {
   margin: 0 10px 0 0;
 }
 
-.gateway-route {
+.gateway-route, .deployment-cluster-service {
   padding-top: 10px;
 }
 
@@ -950,6 +982,36 @@ input[type=number] {
 
 .deployment {
   padding-top: 10px;
+}
+
+.deployment-action-icons {
+  i {
+    margin-left: 5px;
+    cursor: pointer;
+    color: $color-text-dark;
+    &:hover {
+      color: $color-text;
+    }
+    &.disabled {
+      cursor: default;
+      color: rgba($color-text-dark, 0.4);
+    }
+  }
+}
+
+.deployment-cluster-list {
+  ul {
+    list-style-type: none;
+    padding: 0 0 0 10px;
+  }
+
+  &.grouped ul {
+    text-align: left;
+    font-weight: $font-weight-light;
+
+    list-style-type: none;
+    padding: 0 0 0 10px;
+  }
 }
 
 //

@@ -42,145 +42,88 @@
             </div>
         </div>
         <br>
+        <div class="row deployment-cluster" ng-repeat="cluster in $ctrl.deployment.clusters | namify | orderBy:'name'">
+            <div class="row deployment-cluster-row-header">
+                <div class="col-md-4 deployment-row">
+                    <div class="col-sm-6 deployment-row">
+                        <span class="label">CLUSTER : {{ cluster.name | uppercase }}</span>
+                    </div>
+                    <div class="col-sm-6 deployment-row">HEALTH</div>
+                </div>
+                <div class="col-md-4 deployment-row">
+                    <div class="col-sm-6 deployment-row"><p>SCALE</p></div>
+                    <div class="col-sm-6 deployment-row"><p>INSTANCES</p></div>
+                </div>
+                <div class="col-md-4 deployment-row">
+                    <div class="col-sm-6 deployment-row"><p>PORTS</p></div>
+                    <div class="col-sm-6 deployment-row"><p>ENV VARS</p></div>
+                </div>
+            </div>
+            <div class="row deployment-cluster-service-row" ng-repeat="service in cluster.services | orderBy:'name'">
+                <br>
+                <div class="col-md-4 deployment-cluster-service">
+                    <div class="col-sm-6 deployment-row">
+                        <span class="label"
+                              ng-class="{'label-success': $ctrl.serviceStatus(service) === 'running', 'label-info': $ctrl.serviceStatus(service) === 'updating', 'label-red-alert': $ctrl.serviceStatus(service) === 'failed'}">
+                            {{service.breed.name}}
+                            <i ng-if="$ctrl.serviceStatus(service) !== 'running'"
+                               class="fa"
+                               ng-class="{'fa-cog': $ctrl.serviceStatus(service) === 'updating', 'fa-spin': $ctrl.serviceStatus(service) === 'updating', 'fa-exclamation-triangle': $ctrl.serviceStatus(service) === 'failed'}"></i>
+                        </span>
+                    </div>
+                    <div class="col-sm-6 deployment-row">
+                        <canvas class="chart" id="health-{{$ctrl.serviceLookup(service)}}" width="100"
+                                height="40"></canvas>
+                        <span ng-if="$ctrl.last['health-' + $ctrl.serviceLookup(service)] != null" class="label"
+                              ng-class="{'label-success': $ctrl.last['health-' + $ctrl.serviceLookup(service)] != 'none', 'label-red-alert': $ctrl.last['health-' + $ctrl.serviceLookup(service)] == 'none'}">
+                        {{ $ctrl.last['health-' + $ctrl.serviceLookup(service)] == 'none' ? 'none' : $ctrl.last['health-' + $ctrl.serviceLookup(service)] + ' %'}}
+                        </span>
 
-
-
-
-        <!--<div class="row">-->
-            <!--<div class="col-md-12">-->
-                <!--<div class="panel panel-default" ng-repeat="(clusterName, cluster) in $ctrl.deployment.clusters | orderByKeys">-->
-                    <!--<div class="panel-heading">-->
-                        <!--<div class="row">-->
-                            <!--<div class="col-md-3 column">-->
-                                <!--<span class="label label-success head">{{clusterName}}</span>-->
-                            <!--</div>-->
-                            <!--<div class="col-md-2">-->
-                                <!--<span class="column">scale</span>-->
-                            <!--</div>-->
-                            <!--<div class="col-md-2">-->
-                                <!--<span class="column">ports</span>-->
-                            <!--</div>-->
-                            <!--<div class="col-md-3">-->
-                                <!--<span class="column">environment variables</span>-->
-                            <!--</div>-->
-                            <!--<div class="col-md-2">-->
-                                <!--<span class="column pull-right">deployment status</span>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="panel-body">-->
-                        <!--<div class="row service-row" ng-repeat="service in cluster.services | orderBy:service.breed.name">-->
-                            <!--<div class="col-md-3">-->
-                                <!--<p class="head">{{service.breed.name}}</p>-->
-                                <!--<p class="sub-head">{{ service.breed.deployable.definition }}</p>-->
-                            <!--</div>-->
-
-                            <!--&lt;!&ndash; ************************ &ndash;&gt;-->
-
-                            <!--<div class="col-md-2">-->
-
-                                <!--<p>-->
-                                    <!--<span class="panel-label">cpu: </span>-->
-
-                                    <!--<span ng-hide="$ctrl.editCpu[service.breed.name]">-->
-                  <!--<span highlighter="service.scale.cpu">{{service.scale.cpu}}</span>&nbsp;-->
-                  <!--<i ng-click="$ctrl.editNumberOfCpus(service.breed.name, service.scale.cpu)" class="fa fa-pencil"-->
-                     <!--aria-hidden="true"></i>-->
-                <!--</span>-->
-
-                                    <!--<span ng-show="$ctrl.editCpu[service.breed.name]">-->
-                  <!--<input class="input-small" maxlength="4" step="0.1" type="number" min="0"-->
-                         <!--ng-model="$ctrl.initialNumberOfCpus[service.breed.name]">-->
-                  <!--<button ng-click="$ctrl.saveNumberOfCpus(service.breed.name, service.scale, $ctrl.initialNumberOfCpus[service.breed.name])">-->
-                    <!--<i class="fa fa-check"></i>-->
-                  <!--</button>-->
-                  <!--<button ng-click="$ctrl.editCpu[service.breed.name] = false; $ctrl.editCancel()">-->
-                    <!--<i class="fa fa-times"></i>-->
-                  <!--</button>-->
-                <!--</span>-->
-                                <!--</p>-->
-                                <!--<p>-->
-                                    <!--<span class="panel-label">memory: </span>-->
-
-                                    <!--<span ng-hide="$ctrl.editMemory[service.breed.name]">-->
-                  <!--<span highlighter="service.scale.memory">{{service.scale.memory}}</span>&nbsp;-->
-                  <!--<i ng-click="$ctrl.editSizeOfMemory(service.breed.name, service.scale.memory)" class="fa fa-pencil"-->
-                     <!--aria-hidden="true"></i>-->
-                <!--</span>-->
-
-                                    <!--<span ng-show="$ctrl.editMemory[service.breed.name]">-->
-                  <!--<input maxlength="10" size="10" type="input" min="0"-->
-                         <!--ng-model="$ctrl.initialSizeOfMemory[service.breed.name]">-->
-
-                  <!--<button ng-disabled="$ctrl.memoryToNumber($ctrl.initialSizeOfMemory[service.breed.name]) < 1"-->
-                          <!--ng-click="$ctrl.saveSizeOfMemory(service.breed.name, service.scale, $ctrl.initialSizeOfMemory[service.breed.name])">-->
-                    <!--<i class="fa fa-check"></i>-->
-                  <!--</button>-->
-                  <!--<button ng-click="$ctrl.editMemory[service.breed.name] = false; $ctrl.editCancel()">-->
-                    <!--<i class="fa fa-times"></i>-->
-                  <!--</button>-->
-                <!--</span>-->
-                                <!--</p>-->
-
-                                <!--<p>-->
-                                    <!--<span class="panel-label">instances: </span>-->
-
-                                    <!--<span ng-hide="$ctrl.editInstances[service.breed.name]">-->
-                  <!--<span highlighter="service.scale.instances">{{service.scale.instances}}</span>&nbsp;-->
-                  <!--<i ng-click="$ctrl.editNumberOfInstances(service.breed.name, service.scale.instances)"-->
-                     <!--class="fa fa-pencil" aria-hidden="true"></i>-->
-                <!--</span>-->
-
-                                    <!--<span ng-show="$ctrl.editInstances[service.breed.name]">-->
-                  <!--<input class="input-small" size="2" maxlength="2" step="1" type="number" min="1"-->
-                         <!--ng-model="$ctrl.initialNumberOfInstances[service.breed.name]">-->
-                  <!--<button ng-disabled="!$ctrl.initialNumberOfInstances[service.breed.name]"-->
-                          <!--ng-click="$ctrl.saveNumberOfInstances(service.breed.name, service.scale, $ctrl.initialNumberOfInstances[service.breed.name])">-->
-                    <!--<i class="fa fa-check"></i>-->
-                  <!--</button>-->
-                  <!--<button ng-click="$ctrl.editInstances[service.breed.name] = false; $ctrl.editCancel()">-->
-                    <!--<i class="fa fa-times"></i>-->
-                  <!--</button>-->
-                <!--</span>-->
-                                <!--</p>-->
-
-
-                                <!--<div class="instance" ng-repeat="instance in service.instances">-->
-                                    <!--<span class="label label-success">{{instance.host}}</span>-->
-                                <!--</div>-->
-                            <!--</div>-->
-
-                            <!--&lt;!&ndash; ************************ &ndash;&gt;-->
-
-                            <!--<div class="col-md-2">-->
-                                <!--<p ng-repeat="(portName, port) in service.breed.ports | orderByKeys">-->
-                                    <!--<a ui-sref="gatewaysView({name: '{{$ctrl.deployment.name}}/{{clusterName}}/{{portName}}'})"-->
-                                       <!--href="">{{portName}}</a>-->
-                                <!--</p>-->
-                            <!--</div>-->
-                            <!--<div class="col-md-3">-->
-                                <!--<div ng-repeat="(envName, envValue) in service.environment_variables | orderByKeys">-->
-                                    <!--<p>{{envName}}={{envValue}}</p>-->
-                                    <!--<p></p>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="col-md-2">-->
-                                <!--<span class="label label-warning pull-right" ng-if="service.state.step.name === 'Initiated'">-->
-                                    <!--updating-->
-                                <!--</span>-->
-                                <!--<span class="label label-success pull-right" ng-if="service.state.step.name === 'Done'">-->
-                                    <!--deployed-->
-                                <!--</span>-->
-                                <!--<span class="label label-danger pull-right" ng-if="service.state.step.name === 'Failed'">-->
-                                    <!--failed-->
-                                <!--</span>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!---->
-        <!---->
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-sm-6 deployment-row deployment-cluster-list deployment-action-icons grouped">
+                        <ul>
+                            <editable on-click="$ctrl.editScale(cluster, service)" active="true">
+                                <li></li>
+                            </editable>
+                            <li>instances : {{service.scale.instances}}</li>
+                            <li>cpu : {{service.scale.cpu}}</li>
+                            <li>memory : {{service.scale.memory}}</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 deployment-row deployment-cluster-list deployment-action-icons">
+                        <ul>
+                            <i class="fa fa-arrows-alt" ng-click="$ctrl.showInstances(cluster, service)"></i>
+                            <li ng-repeat="instance in service.instances | limitTo: 5">
+                                <span class="label label-success">{{instance.host}}</span>
+                            </li>
+                            <li>
+                                <i ng-if="service.instances.length > 5" class="fa fa-ellipsis-h"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-sm-6 deployment-row">
+                        <p ng-repeat="(portName, port) in service.breed.ports | orderByKeys">
+                            <a ui-sref="gatewaysView({name: '{{$ctrl.deployment.name}}/{{cluster.name}}/{{portName}}'})"
+                               href="">{{portName}}</a>
+                        </p>
+                    </div>
+                    <div class="col-sm-6 deployment-row deployment-cluster-list deployment-action-icons">
+                        <ul>
+                            <i class="fa fa-arrows-alt" ng-click="$ctrl.showEnvironmentVariables(cluster, service)"></i>
+                            <li ng-repeat="env in service.environment_variables | limitTo: 5">
+                                {{env.name | limitTo: 15 }}{{env.name.length > 15 ? ' ...' : '' }}
+                            </li>
+                            <li>
+                                <i ng-if="service.environment_variables.length > 5" class="fa fa-ellipsis-h"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

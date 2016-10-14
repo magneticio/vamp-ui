@@ -1,7 +1,7 @@
 <artifacts kind="gateways">
     <div class="artifact-properties" ng-controller="GatewaysController as $ctrl">
         <span class="label" ng-class="{'label-info': !$ctrl.gateway.deployed, 'label-success': $ctrl.gateway.deployed}">
-            {{$ctrl.gateway.deployed ? 'port : ' + $ctrl.gateway.port : 'not deployed'}}&nbsp;
+            {{$ctrl.gateway.deployed ? 'port : ' + $ctrl.gateway.port : 'deploying'}}&nbsp;
             <i ng-if="$ctrl.gateway.deployed" class="fa fa-check"></i>
             <i ng-if="!$ctrl.gateway.deployed" class="fa fa-cog fa-spin"></i>
         </span>

@@ -60,7 +60,7 @@ function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, bluep
     var modal = updateDeployment(
       $ctrl.mergeWith,
       'Merge blueprint \'' + $ctrl.blueprint.name + '\' to deployment',
-      'Which deployment should [' + $ctrl.blueprint.name + '] be merged to?',
+      'Which deployment should \'' + $ctrl.blueprint.name + '\' be merged to?',
       'Merge',
       ''
     );
@@ -88,7 +88,7 @@ function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, bluep
     var modal = updateDeployment(
       $ctrl.removeFrom,
       'Remove blueprint \'' + $ctrl.blueprint.name + '\' from deployment',
-      'Which deployment should [' + $ctrl.blueprint.name + '] be removed from?',
+      'Which deployment should \'' + $ctrl.blueprint.name + '\' be removed from?',
       'Remove',
       'red'
     );
