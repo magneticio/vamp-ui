@@ -12,6 +12,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   var charts = new TimeSeriesCharts();
 
   this.last = [];
+  var addedRoutes = [];
   this.sliderOptions = slider.weightOptions;
 
   this.edit = function () {
@@ -85,9 +86,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     }
   };
 
-  var addedRoutes = [];
-
-  this.added = function (route) {
+  this.addedRoute = function (route) {
     return _.includes(addedRoutes, route.lookup_name);
   };
 
@@ -103,9 +102,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     if (response.status === 'ERROR') {
       return;
     }
-    if ($ctrl.gateway) {
-      addedRoutes = _.difference(_.map(response.data.routes, 'lookup_name'), _.map($ctrl.gateway.routes, 'lookup_name'));
-    }
+    updateAddedRoutes(response.data);
     $ctrl.gateway = response.data;
     $timeout(updateCharts, 0);
     peekEvents();
@@ -148,6 +145,12 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     }).catch(function (response) {
       toastr.error(response.data.message, 'Update of gateway \'' + $ctrl.gateway.name + '\' failed.');
     });
+  }
+
+  function updateAddedRoutes(gateway) {
+    if ($ctrl.gateway) {
+      addedRoutes = _.difference(_.map(gateway.routes, 'lookup_name'), _.map($ctrl.gateway.routes, 'lookup_name'));
+    }
   }
 
   function peekEvents() {

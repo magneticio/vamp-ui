@@ -64,7 +64,7 @@
                 <div class="col-md-4 deployment-cluster-service">
                     <div class="col-sm-6 deployment-row">
                         <span class="label"
-                              ng-class="{'label-success': $ctrl.serviceStatus(service) === 'running', 'label-info': $ctrl.serviceStatus(service) === 'updating', 'label-red-alert': $ctrl.serviceStatus(service) === 'failed'}">
+                              ng-class="{'label-success': $ctrl.serviceStatus(service) === 'running', 'label-info': $ctrl.serviceStatus(service) === 'updating', 'label-red-alert': $ctrl.serviceStatus(service) === 'failed', 'highlight': $ctrl.addedService(cluster, service)}">
                             {{service.breed.name}}
                             <i ng-if="$ctrl.serviceStatus(service) !== 'running'"
                                class="fa"

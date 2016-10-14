@@ -11,6 +11,7 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
 
   var original;
   var services;
+  var addedServices = [];
   var charts = new TimeSeriesCharts();
 
   this.last = [];
@@ -69,11 +70,9 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
     snippet.show('Environment Variables', header(cluster, service) + lines.join('\n'), 'lg');
   };
 
-  function header(cluster, service) {
-    var header = '# cluster: ' + cluster.name + '\n';
-    header += '# service: ' + service.breed.name + '\n\n';
-    return header;
-  }
+  this.addedService = function (cluster, service) {
+    return _.includes(addedServices, cluster.name + '/' + service.breed.name);
+  };
 
   $vamp.await(function () {
     $vamp.peek(path);
@@ -90,18 +89,10 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
     var created = !$ctrl.deployment;
 
     original = response.data;
+    updateAddedServices(original);
     $ctrl.deployment = angular.copy(original);
     services = deployment.services($ctrl.deployment);
-    _.forEach(services, function (service) {
-      var vars = [];
-      _.forEach(service.environment_variables, function (v, n) {
-        vars.push({
-          name: n,
-          value: v
-        });
-      });
-      service.environment_variables = _.sortBy(vars, ['name.length', 'name']);
-    });
+    updateServices();
 
     $timeout(updateCharts, 0);
 
@@ -152,6 +143,39 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
       });
     }, 0);
   });
+
+  function header(cluster, service) {
+    var header = '# cluster: ' + cluster.name + '\n';
+    header += '# service: ' + service.breed.name + '\n\n';
+    return header;
+  }
+
+  function updateServices() {
+    _.forEach(services, function (service) {
+      var vars = [];
+      _.forEach(service.environment_variables, function (v, n) {
+        vars.push({
+          name: n,
+          value: v
+        });
+      });
+      service.environment_variables = _.sortBy(vars, ['name.length', 'name']);
+    });
+  }
+
+  function updateAddedServices(deployment) {
+    function flatten(d) {
+      return _.flatMap(d.clusters, function (cluster, clusterName) {
+        return _.map(cluster.services, function (service) {
+          return clusterName + '/' + service.breed.name;
+        });
+      });
+    }
+
+    if ($ctrl.deployment) {
+      addedServices = _.difference(flatten(deployment), flatten($ctrl.deployment));
+    }
+  }
 
   function peekEvents() {
     var nameTag = 'deployments:' + $ctrl.deployment.name;
