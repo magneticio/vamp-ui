@@ -16,4 +16,7 @@
             </ul>
         </div>
     </div>
+    <div class="deployment-actions" ng-controller="DeploymentsController as $ctrl">
+        <button class="btn" ng-click="$ctrl.export($event)">Export as a Blueprint</button>
+    </div>
 </artifacts>

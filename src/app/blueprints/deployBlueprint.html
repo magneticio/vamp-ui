@@ -8,14 +8,14 @@
         <br>
         <div class="form-group" ng-class="{'has-error': form.name.$invalid}">
             <input name="name" type="text" class="form-control" id="deployment-name" placeholder="name"
-                   ng-model="deploymentName" ng-pattern="/^[^\s\/]*$/" required>
+                   ng-model="name" ng-pattern="/^[^\s\/]*$/" required>
             <span class="help-block" ng-show="form.name.$error.required">Deployment must have a name.</span>
             <span class="help-block" ng-show="form.name.$error.pattern">Deployment must not contain whitespace or slash characters.</span>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-success" ng-disabled="form.$invalid" type="submit">Deploy
-        </button>
+        <button class="btn btn-success" ng-disabled="form.$invalid" type="submit">Deploy</button>
         <button class="btn ghost" type="button" ng-click="cancel()">Cancel</button>
     </div>
 </form>
+

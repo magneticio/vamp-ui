@@ -877,7 +877,19 @@ input[type=number] {
   justify-content: center;
 
   button {
-    margin: 5px 30px 5px 30px;
+    margin: 5px 30px;
+    text-align: left;
+  }
+}
+
+.deployment-actions {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  button {
+    margin: 5px 30px;
     text-align: left;
   }
 }

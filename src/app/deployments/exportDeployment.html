@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h4 class="modal-title">EXPORT DEPLOYMENT</h4>
+</div>
+<form novalidate name="form" ng-submit="ok()">
+    <div class="modal-body">
+        <p>You are about to export the deployment '{{ deployment.name }}'.</p>
+        <p>Provide a blueprint name:</p>
+        <br>
+        <div class="form-group" ng-class="{'has-error': form.name.$invalid}">
+            <input name="name" type="text" class="form-control" id="blueprint-name" placeholder="name"
+                   ng-model="name" ng-pattern="/^[^\s\/]*$/" required>
+            <span class="help-block" ng-show="form.name.$error.required">Blueprint must have a name.</span>
+            <span class="help-block" ng-show="form.name.$error.pattern">Blueprint must not contain whitespace or slash characters.</span>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="overwrite">overwrite if exists
+            </label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-disabled="form.$invalid" type="submit">Export</button>
+        <button class="btn ghost" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

@@ -45,7 +45,7 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   });
 
   $scope.$on('/events/stream', function (e, response) {
-    if (_.includes(response.data.tags, $ctrl.kind + ':' + $ctrl.name)) {
+    if ($ctrl.base && _.includes(response.data.tags, $ctrl.kind + ':' + $ctrl.name)) {
       if (_.includes(response.data.tags, 'archive:delete')) {
         alert.show('Warning', '\'' + $ctrl.name + '\' has been deleted in background. If you save the content, \'' + $ctrl.name + '\' will be recreated.', 'OK');
       } else if (!ignoreChange && _.includes(response.data.tags, 'archive:update')) {

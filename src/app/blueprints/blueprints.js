@@ -38,7 +38,7 @@ function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, bluep
         }
       }
     }).result.then(function (data) {
-      var deployment = data.deploymentName;
+      var deployment = data.name;
       $vamp.await(function () {
         $vamp.put('/deployments/' + deployment, angular.toJson($ctrl.blueprint));
       }).then(function () {
@@ -146,10 +146,10 @@ function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, bluep
 /** @ngInject */
 function DeployBlueprintController($scope, $uibModalInstance, blueprint) {
   $scope.blueprint = blueprint;
-  $scope.deploymentName = angular.copy(blueprint.name);
+  $scope.name = angular.copy(blueprint.name);
 
   $scope.ok = function () {
-    $uibModalInstance.close({deploymentName: $scope.deploymentName, blueprint: blueprint});
+    $uibModalInstance.close({name: $scope.name});
   };
 
   $scope.cancel = function () {
