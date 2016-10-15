@@ -4,5 +4,5 @@ dist
 node_modules
 bower_components
 
+res
 src/app/environment.js
-old

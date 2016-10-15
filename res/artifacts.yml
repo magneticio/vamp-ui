@@ -1,0 +1,161 @@
+---
+name: micro
+kind: scale
+cpu: 0.2
+memory: 64MB
+instances: 1
+---
+name: runner
+kind: blueprint
+gateways:
+  9050: frontend/port
+clusters:
+  frontend:
+    services:
+      breed:
+        name: frontend
+        deployable: magneticio/sava:runner_1.0
+        ports:
+          port: 8081/http
+        environment_variables:
+          SAVA_RUNNER_ID: frontend
+          SAVA_RUNNER_HTTP_DEPENDENCY_URL1: http://$backend.host:$backend.ports.port
+        dependencies:
+          backend: backend
+      scale: micro
+  backend:
+    services:
+      breed:
+        name: backend
+        deployable: magneticio/sava:runner_1.0
+        ports:
+          port: 8085/http
+        environment_variables:
+          SAVA_RUNNER_ID: backend
+          SAVA_RUNNER_HTTP_PORT1: 8085
+      scale: micro
+---
+name: sava:1.0
+kind: blueprint
+gateways:
+  9050: sava/webport
+clusters:
+  sava:
+    services:
+      breed:
+        name: sava:1.0.0
+        deployable: magneticio/sava:1.0.0
+        ports:
+          webport: 8080/http
+        environment_variables:
+          THEME: LIGHT
+      scale: micro
+---
+name: sava:1.1
+kind: blueprint
+gateways:
+  9050: sava/webport
+clusters:
+  sava:
+    services:
+      breed:
+        name: sava:1.1.0
+        deployable: magneticio/sava:1.1.0
+        ports:
+          status: 8088/http
+          webport: 8080/http
+        environment_variables:
+          THEME: LIGHT
+          CACHE_ENABLED: true
+      scale: micro
+      environment_variables:
+        THEME: DARK
+---
+name: sava:1.1.1
+kind: blueprint
+gateways:
+  9050: sava/webport
+clusters:
+  sava:
+    services:
+      breed:
+        name: sava:1.1.1
+        deployable: magneticio/sava:1.1.0
+        ports:
+          webport: 8080/http
+      scale: micro
+---
+name: sava:1.2
+kind: blueprint
+gateways:
+  9060: sava/webport
+clusters:
+  sava:
+    services:
+      breed:
+        name: sava-frontend:1.2.0
+        deployable: magneticio/sava-frontend:1.2.0
+        ports:
+          webport: 8080/http
+        environment_variables:
+          BACKEND_1: http://$backend1.host:$backend1.ports.webport/api/message
+          BACKEND_2: http://$backend2.host:$backend2.ports.webport/api/message
+        dependencies:
+          backend1: sava-backend1:1.2.0
+          backend2: sava-backend2:1.2.0
+      scale:
+        cpu: 0.2
+        memory: 64MB
+        instances: 1
+  backend1:
+    services:
+      breed:
+        name: sava-backend1:1.2.0
+        deployable: magneticio/sava-backend1:1.2.0
+        ports:
+          webport: 8080/http
+      scale:
+        cpu: 0.2
+        memory: 64MB
+        instances: 1
+  backend2:
+    services:
+      breed:
+        name: sava-backend2:1.2.0
+        deployable: magneticio/sava-backend2:1.2.0
+        ports:
+          webport: 8080/http
+      scale:
+        cpu: 0.2
+        memory: 64MB
+        instances: 1
+---
+name: sava:1.3
+kind: blueprint
+clusters:
+  sava:
+    services:
+      breed:
+        name: sava-frontend:1.3.0
+        deployable: magneticio/sava-frontend:1.3.0
+        ports:
+          webport: 8080/http
+        environment_variables:
+          BACKEND: http://$backend.host:$backend.ports.webport/api/message
+        dependencies:
+          backend: sava-backend:1.3.0
+      scale:
+        cpu: 0.2
+        memory: 64MB
+        instances: 1
+  backend:
+    services:
+      breed:
+        name: sava-backend:1.3.0
+        deployable: magneticio/sava-backend:1.3.0
+        ports:
+          webport: 8080/http
+      scale:
+        cpu: 0.2
+        memory: 64MB
+        instances: 1
