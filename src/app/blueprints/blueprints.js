@@ -2,12 +2,12 @@ angular.module('app')
   .controller('BlueprintsController', BlueprintsController)
   .controller('DeployBlueprintController', DeployBlueprintController)
   .controller('UpdateDeploymentController', UpdateDeploymentController)
-  .factory('blueprint', ['$rootScope', '$vamp', function ($rootScope, $vamp) {
+  .factory('$vampBlueprint', ['$rootScope', '$vamp', function ($rootScope, $vamp) {
     return new BlueprintService($rootScope, $vamp);
   }]);
 
 /** @ngInject */
-function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, blueprint) {
+function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, $vampBlueprint) {
   var $ctrl = this;
   this.blueprint = $scope.$parent.$parent.artifact;
 
@@ -15,8 +15,8 @@ function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, bluep
   this.removeFrom = [];
 
   function peekDeployments() {
-    blueprint.mergeWithDeployments($ctrl.mergeWith, $ctrl.blueprint);
-    blueprint.removeFromDeployments($ctrl.removeFrom, $ctrl.blueprint);
+    $vampBlueprint.mergeWithDeployments($ctrl.mergeWith, $ctrl.blueprint);
+    $vampBlueprint.removeFromDeployments($ctrl.removeFrom, $ctrl.blueprint);
   }
 
   peekDeployments();

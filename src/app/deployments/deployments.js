@@ -1,20 +1,20 @@
 angular.module('app')
   .controller('DeploymentsController', DeploymentsController)
-  .factory('deployment', ['$rootScope', '$interval', '$filter', '$vamp', function ($rootScope, $interval, $filter, $vamp) {
+  .factory('$vampDeployment', ['$rootScope', '$interval', '$filter', '$vamp', function ($rootScope, $interval, $filter, $vamp) {
     return new DeploymentService($rootScope, $interval, $filter, $vamp);
   }])
-  .run(["deployment", function (deployment) {
-    deployment.init();
+  .run(['$vampDeployment', function ($vampDeployment) {
+    $vampDeployment.init();
   }]);
 
 /** @ngInject */
-function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, deployment) {
+function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, $vampDeployment) {
   var $ctrl = this;
   var $parent = $scope.$parent.$parent.$ctrl;
   this.deployment = $scope.$parent.$parent.artifact;
 
-  this.scale = deployment.scale($ctrl.deployment);
-  this.status = deployment.deploymentStatus($ctrl.deployment);
+  this.scale = $vampDeployment.scale($ctrl.deployment);
+  this.status = $vampDeployment.deploymentStatus($ctrl.deployment);
 
   this.export = function ($event) {
     $event.stopPropagation();

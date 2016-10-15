@@ -1,10 +1,13 @@
 /* global Environment */
 /* eslint camelcase: ["error", {properties: "never"}] */
 'use strict';
-
-angular.module('app').factory('$vamp', ['$log', '$rootScope', '$websocket', '$timeout', function ($log, $rootScope, $websocket, $timeout) {
-  return new $vamp($log, $rootScope, $websocket, $timeout);
-}]);
+angular.module('app')
+  .factory('$vamp', ['$log', '$rootScope', '$websocket', '$timeout', function ($log, $rootScope, $websocket, $timeout) {
+    return new $vamp($log, $rootScope, $websocket, $timeout);
+  }])
+  .run(['$vamp', function ($vamp) {
+    $vamp.init();
+  }]);
 
 function $vamp($log, $rootScope, $websocket, $timeout) {
   var stream;
@@ -123,7 +126,3 @@ function $vamp($log, $rootScope, $websocket, $timeout) {
     stream.send(message);
   }
 }
-
-angular.module('app').run(["$vamp", function ($vamp) {
-  $vamp.init();
-}]);

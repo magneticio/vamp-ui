@@ -2,7 +2,7 @@
 angular.module('app').controller('DeploymentController', DeploymentController);
 
 /** @ngInject */
-function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, deployment, snippet, alert, toastr) {
+function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, $vampDeployment, snippet, alert, toastr) {
   var $ctrl = this;
   var path = '/deployments/' + $stateParams.name;
 
@@ -37,7 +37,7 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
     });
   };
 
-  this.serviceStatus = deployment.serviceStatus;
+  this.serviceStatus = $vampDeployment.serviceStatus;
 
   this.editScale = function (cluster, service) {
     snippet.show('Edit Scale', header(cluster, service) + angular.toJson(service.scale, 2));
@@ -91,7 +91,7 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
     original = response.data;
     updateAddedServices(original);
     $ctrl.deployment = angular.copy(original);
-    services = deployment.services($ctrl.deployment);
+    services = $vampDeployment.services($ctrl.deployment);
     updateServices();
 
     $timeout(updateCharts, 0);
@@ -103,7 +103,7 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
           appendToChart('memory', data.scale.memory, data.timestamp);
         });
       }
-      _.forEach(deployment.peekScales(response.data) || [], function (data) {
+      _.forEach($vampDeployment.peekScales(response.data) || [], function (data) {
         appendToChart('cpu', data.scale.cpu, data.timestamp);
         appendToChart('memory', data.scale.memory, data.timestamp);
       });
