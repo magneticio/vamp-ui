@@ -606,6 +606,9 @@ a.editable-click:hover {
     cursor: pointer;
     i {
       color: $color-text-dark;
+      &:hover {
+        color: $color-text;
+      }
     }
     &.disabled {
       cursor: default;
@@ -896,7 +899,9 @@ a.editable-click:hover {
   }
 }
 
-.gateway, .deployment {
+// gateway view
+
+.gateway {
   p, span {
     font-size: $font-medium;
     font-weight: $font-weight-regular;
@@ -904,7 +909,7 @@ a.editable-click:hover {
 }
 
 .gateway-header {
-  margin: 0;
+  margin: 0 0 15px 0;
   padding: 10px;
   background-color: $color-bg-dark;
   border: 1px solid $color-blue-dark;
@@ -918,6 +923,82 @@ a.editable-click:hover {
 
 .gateway-row {
   text-align: center;
+  padding: 0;
+}
+
+.gateway-charts {
+  margin: 0 0 15px 0;
+  padding: 12px 0 15px 0;
+  background-color: $color-bg-dark;
+  border: 1px solid $color-blue-dark;
+  border-radius: 1rem;
+  @include box-shadow($color-blue-dark);
+}
+
+.gateway-route-row {
+  margin: 0 0 15px 0;
+  padding: 10px 0 5px 0;
+  background-color: $color-bg-dark;
+  border: 1px solid $color-blue-dark;
+  border-radius: 1rem;
+  @include box-shadow($color-blue-dark);
+}
+
+.gateway-route-row-header {
+  margin: 0 10px 0 0;
+}
+
+.gateway-route {
+  padding-top: 10px;
+}
+
+.gateway-route-condition {
+  padding: 10px 0 0 0;
+}
+
+.gateway-route-condition-strength {
+  padding: 0 10px 0 0;
+}
+
+// deployment
+
+.deployment {
+  @extend .gateway;
+  padding-top: 10px;
+}
+
+.deployment-charts {
+  @extend .gateway-charts;
+}
+
+.deployment-chart-column {
+  text-align: center;
+  padding: 0;
+}
+
+.deployment-cluster-row-header {
+  margin: 15px 0 10px 0;
+}
+
+.deployment-cluster-name {
+  padding: 0 0 0 15px;
+  span {
+    font-size: $font-big !important;
+    font-weight: $font-weight-light;
+    background-color: rgba($color-blue-light, .2);
+    color: inherit;
+    border-radius: .3em;
+    margin: 0;
+  }
+}
+
+.deployment-cluster-service-row {
+  @extend .gateway-route-row;
+  margin: 5px 15px 15px 15px;
+  padding: 10px 0 0 0;
+}
+
+.deployment-row-no-padding {
   padding: 0;
 }
 
@@ -953,46 +1034,42 @@ a.editable-click:hover {
   }
 }
 
-.gateway-charts, .deployment-charts {
-  margin: 0;
-  padding: 12px 0 15px 0;
-  background-color: $color-bg-dark;
-  border: 1px solid $color-blue-dark;
-  border-radius: 1rem;
-  @include box-shadow($color-blue-dark);
+.deployment-row-center {
+  @extend .deployment-row;
+  text-align: center;
 }
 
-.gateway-route-row, .deployment-cluster-service-row {
-  margin: 0 0 15px 0;
-  background-color: $color-bg-dark;
-  border: 1px solid $color-blue-dark;
-  border-radius: 1rem;
-  @include box-shadow($color-blue-dark);
+.deployment-cluster-service-name {
+  padding-top: 12px;
 }
 
-.gateway-route-row-header, .deployment-cluster-row-header {
-  margin: 0 10px 0 0;
+.deployment-column-sparkline {
+  padding: 3px 0 0 0;
 }
 
-.gateway-route, .deployment-cluster-service {
-  padding-top: 10px;
+.deployment-column-scale {
+  padding: 0;
 }
 
-.gateway-route-condition {
-  padding: 10px 0 0 0;
+.deployment-column-instances {
+  padding: 3px 0 0 0;
 }
 
-.gateway-route-condition-strength {
-  padding: 0 10px 0 0;
+.deployment-column-ports {
+  padding: 0 0 0 20px;
 }
 
-.deployment {
-  padding-top: 10px;
+.deployment-float-1 {
+  float: left;
+}
+
+.deployment-float-2 {
+  float: left;
+  padding-left: 10px;
 }
 
 .deployment-action-icons {
   i {
-    margin-left: 5px;
     cursor: pointer;
     color: $color-text-dark;
     &:hover {
@@ -1009,14 +1086,21 @@ a.editable-click:hover {
   ul {
     list-style-type: none;
     padding: 0 0 0 10px;
-  }
-
-  &.grouped ul {
     text-align: left;
     font-weight: $font-weight-light;
+    font-size: $font-medium;
 
-    list-style-type: none;
-    padding: 0 0 0 10px;
+    li:first-of-type {
+      margin: 0 0 0 0;
+    }
+
+    li .title {
+      background-color: transparent;
+      text-transform: uppercase;
+      font-size: $font-small !important;
+      color: $color-text-dark;
+      font-weight: $font-weight-regular;
+    }
   }
 }
 

@@ -40,7 +40,6 @@
                 </editable-drop-down>
             </div>
         </div>
-        <br>
         <div class="row gateway-charts">
             <div class="col-md-4 gateway-row">
                 <p>HEALTH&nbsp;
@@ -70,7 +69,6 @@
                 <canvas class="chart" id="responseTime" width="330"></canvas>
             </div>
         </div>
-        <br>
         <div class="row gateway-route-row-header">
             <div class="col-md-4 gateway-row">
                 <div class="col-sm-8 gateway-row"><p>ROUTE</p></div>
@@ -90,9 +88,7 @@
                 <div class="col-sm-4 gateway-row"><p>STRENGTH</p></div>
             </div>
         </div>
-
         <div class="row gateway-route-row" ng-repeat="(name, route) in $ctrl.gateway.routes | orderByKeys">
-            <br>
             <div class="col-md-4 gateway-route">
                 <div class="col-sm-8 gateway-row">
                     <span class="label label-success" ng-class="{'highlight': $ctrl.addedRoute(route)}">{{name}}</span>
@@ -101,7 +97,7 @@
                     <span highlighter="route.weight" class="label label-success">{{route.weight}}</span>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 gateway-row">
                 <div class="col-sm-4 gateway-row">
                     <canvas class="chart" id="health-{{route.lookup_name}}" width="100" height="40"></canvas>
                     <p>

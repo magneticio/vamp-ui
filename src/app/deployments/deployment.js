@@ -133,7 +133,7 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
         appendToChart('cpu', data.scale.cpu, data.timestamp);
         appendToChart('memory', data.scale.memory, data.timestamp);
       });
-    }, 1000);
+    }, 0);
 
     peekEvents();
   });
@@ -186,6 +186,7 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
         });
       });
       service.environment_variables = _.sortBy(vars, ['name.length', 'name']);
+      service.scale.memory = parseInt(service.scale.memory, 10) + ' MB';
     });
   }
 
