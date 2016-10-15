@@ -15,7 +15,7 @@
         <div class="row gateway-header">
             <div class="col-md-3 gateway-row">
                 <p>HOST - PORT/TYPE</p>
-                <span class="label label-success">{{$ctrl.gateway.service.host}} - {{$ctrl.gateway.service.port}}</span>
+                <span class="label label-success" ng-if="$ctrl.gateway.deployed">{{$ctrl.gateway.service.host}} - {{$ctrl.gateway.service.port}}</span>
             </div>
             <div class="col-md-3 gateway-row">
                 <p>VIRTUAL HOSTS</p>
@@ -27,7 +27,7 @@
                 <p>DEPLOYED</p>
                 <span ng-if="$ctrl.gateway.deployed" class="label label-success">deployed&nbsp;<i
                         class="fa fa-check"></i></span>
-                <span ng-if="!$ctrl.gateway.deployed" class="label label-default">not deployed&nbsp;<i
+                <span ng-if="!$ctrl.gateway.deployed" class="label label-info">not deployed&nbsp;<i
                         class="fa fa-cog fa-spin"></i></span>
             </div>
             <div class="col-md-3 gateway-row">
