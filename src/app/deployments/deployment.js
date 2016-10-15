@@ -2,7 +2,7 @@
 angular.module('app').controller('DeploymentController', DeploymentController);
 
 /** @ngInject */
-function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, $vampDeployment, snippet, alert, toastr) {
+function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, $vampDeployment, $uibModal, snippet, alert, toastr) {
   var $ctrl = this;
   var path = '/deployments/' + $stateParams.name;
 
@@ -40,7 +40,33 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
   this.serviceStatus = $vampDeployment.serviceStatus;
 
   this.editScale = function (cluster, service) {
-    snippet.show('Edit Scale', header(cluster, service) + angular.toJson(service.scale, 2));
+    $uibModal.open({
+      animation: true,
+      component: 'editScale',
+      resolve: {
+        deployment: function () {
+          return $ctrl.deployment;
+        },
+        cluster: function () {
+          return cluster;
+        },
+        service: function () {
+          return service;
+        }
+      }
+    }).result.then(function (scale) {
+      $vamp.await(function () {
+        $vamp.put(path + '/clusters/' + cluster.name + '/services/' + service.breed.name + '/scale', angular.toJson(scale));
+      }).then(function () {
+        toastr.success('Scale for service \'' + service.breed.name + '\' has been successfully updated.');
+        // workaround, no scale update event from server
+        $timeout(function () {
+          $vamp.peek(path);
+        }, 500);
+      }).catch(function (response) {
+        toastr.error(response.data.message, 'Update of scale for service \'' + service.breed.name + '\' failed.');
+      });
+    });
   };
 
   this.showInstances = function (cluster, service) {
@@ -107,7 +133,7 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
         appendToChart('cpu', data.scale.cpu, data.timestamp);
         appendToChart('memory', data.scale.memory, data.timestamp);
       });
-    }, 0);
+    }, 1000);
 
     peekEvents();
   });

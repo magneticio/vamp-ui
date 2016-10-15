@@ -48,6 +48,7 @@ $font-weight-bold: 700;
 body {
   background: linear-gradient(to right bottom, $color-bg, $color-bg-dark);
   color: $color-text;
+  overflow: hidden;
 }
 
 .page {
@@ -381,7 +382,7 @@ p, div {
 
   .head {
     height: 50px;
-    padding: 15px;
+    padding: 0 15px;
     margin: 0;
     width: 100%;
     display: flex;
@@ -578,10 +579,6 @@ a.editable-click:hover {
   .rz-selection {
     background-color: $color-pink !important;
   }
-}
-
-input[type=number] {
-  width: 34px;
 }
 
 .instance {
@@ -1038,11 +1035,31 @@ input[type=number] {
   font-size: $font-big;
   background-color: $color-bg;
   border-bottom: 1px solid $color-text;
+  text-transform: uppercase;
 }
 
 .modal-footer {
   background-color: $color-bg;
   border-top: none;
+}
+
+.edit-scale {
+  .note {
+    margin: 10px 40px 25px 0;
+    span {
+      letter-spacing: 1px;
+      font-size: $font-medium;
+      font-weight: $font-weight-light;
+      background-color: rgba($color-blue-light, .2);
+      color: inherit;
+      border-radius: .3em;
+    }
+  }
+  label {
+    color: $color-text-dark;
+    text-transform: uppercase;
+    font-size: $font-medium;
+  }
 }
 
 .deployment-selection {

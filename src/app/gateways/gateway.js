@@ -51,7 +51,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
       _.forEach(weights, function (weight, route) {
         gateway.routes[route].weight = weight;
       });
-      save(gateway);
+      save(gateway, 'Weight has been successfully updated.');
     });
   };
 
@@ -63,13 +63,13 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     } else {
       gateway.routes[route].condition = condition;
     }
-    save(gateway);
+    save(gateway, 'Condition has been successfully updated.');
   };
 
   this.saveConditionStrength = function (route, strength) {
     var gateway = angular.copy($ctrl.gateway);
     gateway.routes[route].condition_strength = strength + '%';
-    save(gateway);
+    save(gateway, 'Condition strength has been successfully updated.');
   };
 
   this.stickyValues = ['not sticky', 'route', 'instance'];
@@ -82,7 +82,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
       gateway.sticky = null;
     }
     if (gateway.sticky !== $ctrl.gateway) {
-      save(gateway);
+      save(gateway, 'Sticky value has been successfully updated.');
     }
   };
 
@@ -139,9 +139,11 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     }, 0);
   });
 
-  function save(gateway) {
+  function save(gateway, message) {
     $vamp.await(function () {
       $vamp.put(path, JSON.stringify(gateway));
+    }).then(function () {
+      toastr.success(message);
     }).catch(function (response) {
       toastr.error(response.data.message, 'Update of gateway \'' + $ctrl.gateway.name + '\' failed.');
     });
