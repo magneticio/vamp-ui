@@ -81,10 +81,17 @@ function $vamp($log, $rootScope, $websocket, $timeout) {
   };
 
   this.init = function () {
-    var websocket = function () {
-      var url = 'ws://' + Environment.prototype.origin() + '/websocket';
-      $log.debug('websocket: ' + url);
+    var url;
+    if (Environment.prototype.origin()) {
+      url = 'ws://' + Environment.prototype.origin() + '/websocket';
+    } else {
+      url = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+      url += window.location.host;
+      url += window.location.pathname.endsWith('/') ? window.location.pathname + 'websocket' : window.location.pathname + '/websocket';
+    }
 
+    var websocket = function () {
+      $log.debug('websocket: ' + url);
       stream = $websocket(url);
 
       stream.onOpen(function () {

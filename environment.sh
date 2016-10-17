@@ -13,13 +13,11 @@ echo "${green}Version         : ${yellow}${VERSION}${reset}"
 
 if [ -z "$ORIGIN" ]; then
   DEBUG='false'
-  ORIGIN="window.location.origin + window.location.pathname"
   MIXPANEL="3dc73f826819c8e11d0d9898ca4291c8"
 else
   DEBUG='true'
   MIXPANEL=""
 fi
-
 
 echo "${green}Debug mode      : ${yellow}${DEBUG}${reset}"
 echo "${green}Vamp API origin : ${yellow}${ORIGIN}${reset}"
