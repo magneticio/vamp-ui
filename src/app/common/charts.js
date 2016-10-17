@@ -1,8 +1,8 @@
 /* global SmoothieChart, TimeSeries */
 (function (exports) {
   var charts = {};
-  var resetValueTimeout = 7500;
-  var resetValueAfterLast = 5000;
+  var resetValueTimeout = 12500;
+  var resetValueAfterLast = 7500;
 
   function TimeSeriesCharts() {
   }
