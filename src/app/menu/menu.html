@@ -1,8 +1,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#v" aria-expanded="false">
+            <button type="button" class="navbar-toggle" ng-click="isNavCollapsed = !isNavCollapsed">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -12,7 +11,7 @@
                 <img class="nav-logo" src="img/logo.svg">
             </a>
         </div>
-        <div class="collapse navbar-collapse" id="v">
+        <div class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
             <ul class="nav navbar-nav">
                 <li ng-class="{active : $ctrl.isActive(artifact), deployable : artifact.deployable}"
                     ng-repeat="artifact in $ctrl.artifacts">
@@ -20,35 +19,36 @@
                 </li>
             </ul>
             <!-- disconnected -->
-            <ul class="nav navbar-nav navbar-right" ng-show="!$ctrl.connected">
-                <li class="disconnected">
-                    DISCONNECTED FROM VAMP
-                </li>
-            </ul>
+            <span class="nav navbar-nav navbar-right disconnected" ng-show="!$ctrl.connected">
+                 DISCONNECTED FROM VAMP
+            </span>
             <!-- connected -->
-            <ul class="nav navbar-nav navbar-right" ng-show="$ctrl.connected">
-                <li class="stats" ng-show="$ctrl.jvm">
-                    <div class="stat-value">
-                        <span class="stat-label">LOAD:</span>
-                        {{ $ctrl.jvm.systemLoad | number: 2 }}%
-                    </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <div class="stat-value">
-                        <span class="stat-label">MEMORY:</span>
-                        <span class="stat-content">
+            <div class="nav navbar-nav navbar-right" ng-show="$ctrl.connected">
+                <div  class="deployment-float-1 hidden-xs hidden-sm hidden-md">
+                    <ul class="nav navbar-nav navbar-right" ng-show="$ctrl.connected">
+                        <li class="stats" ng-show="$ctrl.jvm">
+                            <div class="stat-value">
+                                <span class="stat-label">LOAD:</span>
+                                {{ $ctrl.jvm.systemLoad | number: 2 }}%
+                            </div>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="stat-value">
+                                <span class="stat-label">MEMORY:</span>
+                                <span class="stat-content">
                           {{ ($ctrl.jvm.heapCurrent / $ctrl.jvm.heapMax) * 100 | number: 1 }}%
                           <span class="detail">
                             &nbsp;({{ $ctrl.jvm.heapCurrent | number: 0}}MB/{{ $ctrl.jvm.heapMax | number: 0 }}MB)
                           </span>
                         </span>
-                    </div>
-                </li>
-                <li class="clickable" ng-click="$ctrl.toggleInfoPanel()">
-                    <a class="info-button">
-                        <i class="fa fa-info" aria-hidden="true"></i>
-                    </a>
-                </li>
-            </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="deployment-float-2 hidden-xs hidden-sm">
+                    <i class="fa fa-info info-button clickable" aria-hidden="true"
+                       ng-click="$ctrl.toggleInfoPanel()"></i>
+                </div>
+            </div>
         </div>
     </div>
 </nav>

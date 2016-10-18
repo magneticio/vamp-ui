@@ -101,11 +101,36 @@ menu {
     .disconnected {
       display: flex;
       align-items: center;
-      height: 50px;
+      height: 55px;
       font-size: 16px !important;
       font-weight: 500;
       color: $color-pink;
     }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .navbar-collapse.collapse {
+    display: none !important;
+  }
+  .navbar-collapse.collapse.in {
+    display: block !important;
+  }
+  .navbar-header .collapse, .navbar-toggle {
+    display:block !important;
+  }
+  .navbar-header {
+    float:none;
+  }
+}
+
+.navbar-default .navbar-toggle {
+  background-color: $color-bg;
+  color: $color-text;
+  border: 1px solid $color-text;
+
+  &:hover, &:focus {
+    background-color: $color-bg;
   }
 }
 
@@ -352,6 +377,9 @@ edit, add {
 
 .clickable {
   cursor: pointer;
+  &:hover {
+    color: $color-text-dark;
+  }
 }
 
 // bootstrap overwrite
