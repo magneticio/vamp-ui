@@ -507,9 +507,14 @@ a.editable-click:hover {
   font-size: 22px;
 }
 
+.navbar-brand {
+  padding: 0;
+  margin: 5px 12px 0 0;
+}
+
 .nav-logo {
-  height: 24px;
-  width: 24px;
+  height: 40px;
+  width: 150px;
 }
 
 .deploy-status {
