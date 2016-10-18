@@ -90,10 +90,10 @@
         </div>
         <div class="row gateway-route-row" ng-repeat="(name, route) in $ctrl.gateway.routes | orderByKeys">
             <div class="col-md-4 gateway-route">
-                <div class="col-sm-8 gateway-row">
+                <div class="col-sm-8 gateway-row gateway-route-name">
                     <span class="label label-success" ng-class="{'highlight': $ctrl.addedRoute(route)}">{{name}}</span>
                 </div>
-                <div class="col-sm-4 gateway-row">
+                <div class="col-sm-4 gateway-row gateway-route-weight">
                     <span highlighter="route.weight" class="label label-success">{{route.weight}}</span>
                 </div>
             </div>

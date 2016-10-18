@@ -145,7 +145,7 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
   $scope.$on('/events/stream', function (e, response) {
     var event = response.data;
     if ($ctrl.deployment && _.includes(event.tags, 'deployments:' + $ctrl.deployment.name)) {
-      if (_.includes(event.tags, 'synchronization')) {
+      if (_.includes(event.tags, 'synchronization') || _.includes(event.tags, 'archive')) {
         $vamp.await(function () {
           $vamp.peek(path);
         }).catch(function () {

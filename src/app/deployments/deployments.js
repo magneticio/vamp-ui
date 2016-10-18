@@ -50,6 +50,7 @@ function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, $vam
           }
         });
       }
+
       $vamp.await(function () {
         $vamp.peek('/deployments/' + $ctrl.deployment.name, '', {as_blueprint: true});
       }).then(function (response) {
@@ -117,13 +118,24 @@ function DeploymentService($rootScope, $interval, $filter, $vamp) {
 
   this.deploymentStatus = function (deployment) {
     var services = this.services(deployment);
+
+    var deploying = false;
+    var undeploying = true;
+
     for (var i = 0; i < services.length; i++) {
       var status = $this.serviceStatus(services[i]);
-      if (status === 'failed' || status === 'updating') {
+      if (status === 'failed') {
         return status;
       }
+      deploying |= (status === 'updating' || status === 'deploying');
+      undeploying &= status === 'undeploying';
     }
-    return 'running';
+
+    if (undeploying) {
+      return 'undeploying';
+    }
+
+    return deploying ? 'deploying' : 'deployed';
   };
 
   this.services = function (deployment) {
@@ -133,13 +145,13 @@ function DeploymentService($rootScope, $interval, $filter, $vamp) {
   };
 
   this.serviceStatus = function (service) {
-    var status = service.state.step.name.toLowerCase();
-    if (status === 'failure') {
+    var phase = service.status.phase.name.toLowerCase();
+    if (phase === 'failed') {
       return 'failed';
-    } else if (status === 'initiated' || status === 'update') {
-      return 'updating';
+    } else if (phase === 'initiated' || phase === 'updating') {
+      return service.status.intention.toLowerCase() === 'deployment' ? 'updating' : 'undeploying';
     }
-    return 'running';
+    return 'deployed';
   };
 
   var onDeployments = _.throttle(function (deployments) {

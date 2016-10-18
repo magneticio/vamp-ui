@@ -63,11 +63,11 @@
                 <div class="col-md-4 deployment-cluster-service">
                     <div class="col-sm-6 deployment-row-center deployment-cluster-service-name">
                         <span class="label"
-                              ng-class="{'label-success': $ctrl.serviceStatus(service) === 'running', 'label-info': $ctrl.serviceStatus(service) === 'updating', 'label-red-alert': $ctrl.serviceStatus(service) === 'failed', 'highlight': $ctrl.addedService(cluster, service)}">
+                              ng-class="{'label-success': $ctrl.serviceStatus(service) === 'deployed', 'label-info': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'label-red-alert': $ctrl.serviceStatus(service) === 'failed', 'highlight': $ctrl.addedService(cluster, service)}">
                             {{service.breed.name}}
                             <i ng-if="$ctrl.serviceStatus(service) !== 'running'"
                                class="fa"
-                               ng-class="{'fa-cog': $ctrl.serviceStatus(service) === 'updating', 'fa-spin': $ctrl.serviceStatus(service) === 'updating', 'fa-exclamation-triangle': $ctrl.serviceStatus(service) === 'failed'}"></i>
+                               ng-class="{'fa-cog': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'fa-spin': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'fa-exclamation-triangle': $ctrl.serviceStatus(service) === 'failed'}"></i>
                         </span>
                     </div>
                     <div class="col-sm-6 deployment-row-center deployment-column-sparkline">
@@ -100,19 +100,21 @@
                         <div class="deployment-column-instances">
                             <div class="deployment-float-1">
                                 <ul>
-                                    <li ng-repeat="instance in service.instances | limitTo: 5">
-                                <span class="label label-success"
-                                      ng-class="{'highlight': service.scale.instances != service.instances.length}">
-                                    {{instance.host}}
-                                </span>
+                                    <li ng-repeat="instance in service.instances | limitTo: 3">
+                                        <p ng-class="{'highlight': service.scale.instances != service.instances.length}">
+                                            {{instance.host}}
+                                        </p>
                                     </li>
                                     <li>
-                                        <i ng-if="service.instances.length > 5" class="fa fa-ellipsis-h"></i>
+                                        <i ng-if="service.instances.length > 3" class="fa fa-ellipsis-h"
+                                           ng-click="$ctrl.showInstances(cluster, service)"></i>
                                     </li>
                                 </ul>
                             </div>
                             <div class="deployment-float-2">
-                                <i class="fa fa-arrows-alt" ng-click="$ctrl.showInstances(cluster, service)"></i>
+                                <i class="fa fa-arrows-alt"
+                                   ng-if="service.instances.length > 0"
+                                   ng-click="$ctrl.showInstances(cluster, service)"></i>
                             </div>
                         </div>
                     </div>
@@ -128,17 +130,19 @@
                         <div>
                             <div class="deployment-float-1">
                                 <ul>
-                                    <li ng-repeat="env in service.environment_variables | limitTo: 5">
-                                        {{env.name | limitTo: 15 }}{{env.name.length > 15 ? ' ...' : '' }}
+                                    <li ng-repeat="env in service.environment_variables | limitTo: 3">
+                                        <p>{{env.name | limitTo: 15 }}{{env.name.length > 15 ? ' ...' : '' }}</p>
                                     </li>
                                     <li>
-                                        <i ng-if="service.environment_variables.length > 5"
-                                           class="fa fa-ellipsis-h"></i>
+                                        <i ng-if="service.environment_variables.length > 3"
+                                           class="fa fa-ellipsis-h"
+                                           ng-click="$ctrl.showEnvironmentVariables(cluster, service)"></i>
                                     </li>
                                 </ul>
                             </div>
                             <div class="deployment-float-2">
                                 <i class="fa fa-arrows-alt"
+                                   ng-if="service.environment_variables.length > 0"
                                    ng-click="$ctrl.showEnvironmentVariables(cluster, service)"></i>
                             </div>
                         </div>

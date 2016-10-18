@@ -1,10 +1,10 @@
 <artifacts kind="deployments">
     <div class="artifact-properties" ng-controller="DeploymentsController as $ctrl">
         <span class="label"
-              ng-class="{'label-success': $ctrl.status === 'running', 'label-info': $ctrl.status === 'updating', 'label-red-alert': $ctrl.status === 'failed'}">
-            status : {{ $ctrl.status }}&nbsp;
+              ng-class="{'label-success': $ctrl.status === 'deployed', 'label-info': $ctrl.status === 'updating' || $ctrl.status === 'deploying' || $ctrl.status === 'undeploying', 'label-red-alert': $ctrl.status === 'failed'}">
+            {{ $ctrl.status }}&nbsp;
             <i class="fa"
-               ng-class="{'fa-check': $ctrl.status === 'running', 'fa-cog': $ctrl.status === 'updating', 'fa-spin': $ctrl.status === 'updating', 'fa-exclamation-triangle': $ctrl.status === 'failed'}"></i>
+               ng-class="{'fa-check': $ctrl.status === 'deployed', 'fa-cog': $ctrl.status === 'updating' || $ctrl.status === 'deploying' || $ctrl.status === 'undeploying', 'fa-spin': $ctrl.status === 'updating' || $ctrl.status === 'deploying' || $ctrl.status === 'undeploying', 'fa-exclamation-triangle': $ctrl.status === 'failed'}"></i>
         </span>
         <p></p>
         <div class="list">

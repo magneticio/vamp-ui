@@ -3,13 +3,13 @@
 'use strict';
 angular.module('app')
   .factory('$vamp', ['$log', '$rootScope', '$websocket', '$timeout', function ($log, $rootScope, $websocket, $timeout) {
-    return new $vamp($log, $rootScope, $websocket, $timeout);
+    return new Vamp($log, $rootScope, $websocket, $timeout);
   }])
   .run(['$vamp', function ($vamp) {
     $vamp.init();
   }]);
 
-function $vamp($log, $rootScope, $websocket, $timeout) {
+function Vamp($log, $rootScope, $websocket, $timeout) {
   var stream;
   var transaction = 1;
 

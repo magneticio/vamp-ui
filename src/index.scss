@@ -937,10 +937,11 @@ a.editable-click:hover {
 
 .gateway-route-row {
   margin: 0 0 15px 0;
-  padding: 10px 0 5px 0;
+  padding: 15px 0 5px 0;
   background-color: $color-bg-dark;
   border: 1px solid $color-blue-dark;
   border-radius: 1rem;
+  min-height: 100px;
   @include box-shadow($color-blue-dark);
 }
 
@@ -950,6 +951,18 @@ a.editable-click:hover {
 
 .gateway-route {
   padding-top: 10px;
+}
+
+.gateway-route-name {
+  padding-top: 15px;
+
+  span {
+    font-size: $font-big !important;
+  }
+}
+
+.gateway-route-weight {
+  padding-top: 12px;
 }
 
 .gateway-route-condition {
@@ -995,7 +1008,8 @@ a.editable-click:hover {
 .deployment-cluster-service-row {
   @extend .gateway-route-row;
   margin: 5px 15px 15px 15px;
-  padding: 10px 0 0 0;
+  padding: 12px 0 0 0;
+  min-height: 100px;
 }
 
 .deployment-row-no-padding {
@@ -1040,7 +1054,11 @@ a.editable-click:hover {
 }
 
 .deployment-cluster-service-name {
-  padding-top: 12px;
+  padding-top: 20px;
+
+  span {
+    font-size: $font-big !important;
+  }
 }
 
 .deployment-column-sparkline {
