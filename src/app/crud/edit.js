@@ -24,7 +24,11 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   var validation = true;
   var ignoreChange = false;
 
-  $vamp.peek(path, '', {}, 'YAML');
+  this.peek = function () {
+    $vamp.peek(path, '', {}, 'YAML');
+  };
+
+  this.peek();
 
   $scope.$on(path, function (e, response) {
     if ($ctrl.base === null && response.status === 'OK' && response.content === 'YAML') {
@@ -51,7 +55,7 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
       } else if (!ignoreChange && _.includes(response.data.tags, 'archive:update')) {
         alert.show('Warning', '\'' + $ctrl.name + '\' has been updated in background. Do you want to reload changed?', 'Reload', 'Keep', function () {
           $ctrl.base = $ctrl.source = null;
-          $vamp.peek(path, '', {}, 'YAML');
+          $ctrl.peek();
         });
       }
     }
@@ -64,6 +68,12 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
         $ctrl.base = $ctrl.source = null;
         $state.go(toState, toParams);
       });
+    }
+  });
+
+  $scope.$on('$vamp:connection', function (event, connection) {
+    if (connection === 'opened') {
+      $ctrl.peek();
     }
   });
 

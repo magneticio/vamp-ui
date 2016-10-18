@@ -139,6 +139,12 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     }, 0);
   });
 
+  $scope.$on('$vamp:connection', function (event, connection) {
+    if (connection === 'opened') {
+      $vamp.peek(path);
+    }
+  });
+
   function save(gateway, message) {
     $vamp.await(function () {
       $vamp.put(path, JSON.stringify(gateway));
