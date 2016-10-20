@@ -32,12 +32,17 @@
             </div>
             <div class="col-md-3 gateway-row">
                 <p>STICKY</p>
-                <editable-drop-down active="true" values="$ctrl.stickyValues" selected="$ctrl.sticky(value)">
-                    <span ng-if="$ctrl.gateway" highlighter="$ctrl.gateway.sticky" class="label gateway-sticky"
+                <editable-drop-down ng-if="$ctrl.gateway && $ctrl.gateway.port.endsWith('/http')" active="true"
+                                    values="$ctrl.stickyValues" selected="$ctrl.sticky(value)">
+                    <span highlighter="$ctrl.gateway.sticky" class="label gateway-sticky"
                           ng-class="{'label-success': $ctrl.gateway.sticky, 'label-default': !$ctrl.gateway.sticky}">
                         {{ $ctrl.gateway.sticky || 'not sticky'}}
                     </span>
                 </editable-drop-down>
+                <span ng-if="$ctrl.gateway && !$ctrl.gateway.port.endsWith('/http')"
+                      class="label label-default gateway-sticky">
+                    not HTTP
+                </span>
             </div>
         </div>
         <div class="row gateway-charts">
