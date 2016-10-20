@@ -11,7 +11,7 @@ const hub = new HubRegistry([conf.path.tasks('*.js')]);
 gulp.registry(hub);
 
 gulp.task('inject', gulp.series(gulp.parallel('styles', 'scripts'), 'inject'));
-gulp.task('build', gulp.series('partials', gulp.parallel('inject', 'other', 'failAfterError'), 'build', fixCssUrls));
+gulp.task('build', gulp.series('partials', gulp.parallel('inject', 'other', 'failAfterError'), 'build', fixDist));
 gulp.task('test', gulp.series('scripts', 'karma:single-run'));
 gulp.task('test:auto', gulp.series('watch', 'karma:auto-run'));
 gulp.task('serve', gulp.series('inject', 'watch', 'browsersync'));
@@ -39,12 +39,17 @@ function watch(done) {
   done();
 }
 
-function fixCssUrls(next) {
+function fixDist(next) {
   gulp
     .src(conf.paths.dist + '/img/blueprint.png')
     .pipe(gulp.dest(conf.paths.dist + '/styles/img'));
+
   gulp
     .src(conf.paths.dist + '/fonts/roboto-*')
     .pipe(gulp.dest(conf.paths.dist + '/styles/fonts'));
+
+  gulp.src(conf.paths.dist + '/../bower_components/components-font-awesome/fonts/*')
+    .pipe(gulp.dest(conf.paths.dist + '/fonts'));
+
   next();
 }
