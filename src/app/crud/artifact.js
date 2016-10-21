@@ -54,6 +54,6 @@ function ArtifactService($vamp) {
       var json = JSON.parse(message.substring('Unexpected in DSL: '.length));
       return 'Unexpected in DSL:\n' + JSON.stringify(json, null, 2);
     }
-    return message;
+    return message.split('. ').join('.\n');
   };
 }

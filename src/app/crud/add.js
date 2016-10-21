@@ -57,7 +57,7 @@ function ArtifactAddController($scope, $attrs, $location, $state, $vamp, artifac
   };
 
   this.fullErrorMessage = function () {
-    snippet.show('Error message', artifact.transformErrorMessage($ctrl.errorMessage));
+    snippet.show('Error message', artifact.transformErrorMessage($ctrl.errorMessage), 'lg');
   };
 
   this.cancel = function () {

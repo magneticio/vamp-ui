@@ -86,7 +86,7 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   };
 
   this.fullErrorMessage = function () {
-    snippet.show('Error message', artifact.transformErrorMessage($ctrl.errorMessage));
+    snippet.show('Error message', artifact.transformErrorMessage($ctrl.errorMessage), 'lg');
   };
 
   this.cancel = function () {
