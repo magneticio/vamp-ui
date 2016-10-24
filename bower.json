@@ -2,25 +2,25 @@
   "name": "fountain-inject",
   "version": "0.0.1",
   "dependencies": {
-    "angular": "^1.5.0",
-    "angular-ui-router": "^0.3.1",
-    "jquery": "<3.0.0",
-    "angular-bootstrap": "^2.1.4",
-    "angular-toastr": "^1.7.0",
-    "lodash": "^4.14.0",
-    "bootstrap": "^3.3.7",
-    "components-font-awesome": "^4.6.3",
-    "angular-mixpanel": "^1.1.2",
-    "angular-websocket": "^2.0.0",
-    "ace-builds": "^1.2.5",
+    "angular": "1.5.8",
+    "angular-ui-router": "0.3.1",
+    "jquery": "3.0.0",
+    "angular-bootstrap": "2.1.4",
+    "angular-toastr": "1.7.0",
+    "lodash": "4.14.0",
+    "bootstrap": "3.3.7",
+    "components-font-awesome": "4.6.3",
+    "angular-mixpanel": "1.1.2",
+    "angular-websocket": "2.0.0",
+    "ace-builds": "1.2.5",
     "angular-ui-ace": "bower",
-    "angular-animate": "^1.5.8",
-    "smoothie": "^1.27.0",
-    "angularjs-slider": "^5.5.1",
-    "animate.css": "^3.5.2"
+    "angular-animate": "1.5.8",
+    "smoothie": "1.27.0",
+    "angularjs-slider": "5.5.1",
+    "animate.css": "3.5.2"
   },
   "devDependencies": {
-    "angular-mocks": "^1.5.0"
+    "angular-mocks": "1.5.0"
   },
   "overrides": {
     "bootstrap-sass": {
@@ -37,6 +37,6 @@
   },
   "resolutions": {
     "angular": "1.5.8",
-    "angular-bootstrap": "^2.1.4"
+    "angular-bootstrap": "2.1.4"
   }
 }
