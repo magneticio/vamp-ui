@@ -1,33 +1,49 @@
+// David colors
+$gray-base: #0d1e26;
+$gray-darker: #142d3c;
+$gray-dark: rgb(35, 75, 95);
+$gray: #37647d;
+$gray-light: #6991aa;
+$gray-lighter: #c3d2dc;
+$brand-primary: rgb(55, 100, 125);
+$brand-success: #1AA379;
+$brand-info: #6991aa;
+$brand-warning: #FAAC19;
+$brand-danger: rgb(255, 64, 94);
+$link-hover-color: darken($brand-info, 15%);
+
 // colors
+$color-blue-dark: $gray-dark;
+$color-blue: $gray;
+$color-blue-light: $gray-light;
 
-$color-blue-dark: #295882;
-$color-blue: #29719b;
-$color-blue-light: #6991AA;
+$color-pink: $brand-danger;
+$color-pink-dark: darken($brand-danger, 10%);
 
-$color-pink: #FF405E;
-$color-pink-dark: #C33750;
+$color-white: $gray-lighter;
 
-$color-white: #F0F5FA;
+$color-green: $brand-success;
+$color-green-dark: rgba($brand-success, 0.2);
+$color-yellow: $brand-warning;
+$color-yellow-dark: darken($brand-warning, 10%);
 
-$color-green: #00ff00;
-$color-green-dark: rgba(#00ff00, 0.2);
-$color-yellow: #f1c40f;
-$color-yellow-dark: #9b790d;
+$color-bg: rgb(20, 45, 60);
+$color-bg-dark: rgb(20, 45, 60);
 
-$color-bg: #141e2d;
-$color-bg-dark: #0f1523;
+$color-text: $gray-lighter;
+$color-text-dark: $gray-light;
 
-$color-text: #b9c8d2;
-$color-text-dark: #6991AA;
-
-$font-small: 12px;
-$font-medium: 14px;
-$font-big: 18px;
-$font-really-big: 24px;
+$font-base: 14px;
+$font-small: ceil($font-base * 0.86);
+$font-medium: $font-base;
+$font-big: ceil($font-base * 1.25);
+$font-really-big: ceil($font-base * 1.7);
 
 $font-weight-light: 300;
-$font-weight-regular: 500;
-$font-weight-bold: 700;
+$font-weight-regular: 300;
+$font-weight-bold: 500;
+
+
 
 @mixin box-shadow($color) {
   -webkit-box-shadow: 0 0 4px 2px $color;
@@ -108,22 +124,23 @@ menu {
   margin: 0;
   z-index: 999;
   position: relative;
-  @include box-shadow($color-blue-dark);
+  height: 50px;
 
   nav {
-    background: $color-bg-dark !important;
+    background: rgb(13, 30, 38) !important;
     overflow-y: scroll;
+    height: 100%;
   }
 
   .navbar {
     margin-bottom: 0;
     border: none;
+    box-shadow: none;
 
     .stats {
       display: flex;
       align-items: center;
       height: 50px;
-      padding-top: 8px;
       font-size: $font-medium;
       font-weight: $font-weight-regular;
 
@@ -141,6 +158,7 @@ menu {
         }
       }
     }
+
 
     .disconnected {
       display: flex;
@@ -174,26 +192,27 @@ menu {
   border: 1px solid $color-text;
 
   &:hover, &:focus {
-    background-color: $color-bg;
+    background-color: $link-hover-color;
   }
 }
 
 .navbar-default .navbar-nav > li > a {
-  color: $color-text !important;
-  font-size: 16px;
+  color: $brand-info !important;
+  font-size: $font-base;
   font-weight: $font-weight-light;
-  letter-spacing: 1px;
-  padding-top: 18px;
+  letter-spacing: 0.1em;
 }
 
 .navbar-default .navbar-nav > .active > a {
-  background: $color-pink none !important;
-  color: ghostwhite !important;
+  background: $color-bg none !important;
+  color: $gray-lighter !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar-default .navbar-nav > .deployable > a {
-  text-decoration: overline;
-  text-decoration-style: double;
+  text-decoration: underline;
 }
 
 .vamp-page-header {
@@ -209,8 +228,8 @@ menu {
   .header-column {
     margin: 0 -5px;
     padding: 0;
-    height: 75px;
-    line-height: 75px;
+    height: 80px;
+    line-height: 80px;
 
     &.title {
       font-size: $font-really-big;
@@ -341,7 +360,7 @@ edit, add {
   tbody > tr > td {
     vertical-align: middle !important;
     letter-spacing: 0.05em;
-    color: white;
+    color: $gray-lighter;
     padding: 8px 0 8px 0;
     font-size: $font-medium !important;
     font-weight: $font-weight-regular;
@@ -384,11 +403,11 @@ edit, add {
 .info-panel {
   z-index: 999;
   position: fixed;
-  top: 57px;
+  top: 50px;
   width: 25%;
   max-width: 400px;
   bottom: 0;
-  background-color: $color-bg-dark;
+  background-color: $gray-dark;
   color: $color-text;
   padding: 22px;
   overflow-y: scroll;
@@ -415,7 +434,6 @@ edit, add {
 
   &.active {
     right: 0;
-    @include box-shadow($color-blue-dark);
   }
 }
 
@@ -465,7 +483,7 @@ p, div {
     cursor: pointer;
     font-weight: $font-weight-regular;
     overflow-y: scroll;
-    @include box-shadow($color-blue-dark);
+    background-color: $gray-dark;
 
     .category {
       cursor: pointer;
@@ -779,8 +797,6 @@ a.editable-click:hover {
   -webkit-animation-iteration-count: infinite;
 }
 
-//
-
 .artifacts {
   margin: 0;
   display: flex;
@@ -793,21 +809,25 @@ a.editable-click:hover {
 .artifact {
   height: 28rem;
   width: 28rem;
-  border: 2px solid $color-blue-dark;
-  border-radius: 1rem;
-  margin: 1rem;
-  padding: 1rem;
+  border-radius: 2px;
+  margin: 10px;
+  padding: 15px;
   cursor: pointer;
-  background: $color-bg-dark url('img/blueprint.png');
-  @include box-shadow($color-blue-dark);
+  background-color: rgba($gray-dark, 0.5);
+  border: 2px solid transparent;
+  position: relative;
+
+  box-shadow: 0 1px 3px rgba($gray-base,0.12), 0 1px 2px rgba($gray-base,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 
   &:hover {
-    background-color: rgba(black, 0.4);
+    //background-color: rgba($gray-dark, 0.75);
+    box-shadow: 0 10px 24px rgba($gray-base,0.5), 0 6px 6px rgba($gray-base, 0.5);
+    transform: scale(1.025);
   }
 
   &.selected {
-    border: 2px solid $color-pink;
-    @include box-shadow($color-pink);
+    border: 2px solid $gray-light;
   }
 
   input[type="checkbox"] {
@@ -816,6 +836,7 @@ a.editable-click:hover {
       cursor: pointer;
     }
   }
+
 }
 
 .artifact-title {
@@ -827,31 +848,48 @@ a.editable-click:hover {
 .artifact-properties {
 
   span {
-    font-size: $font-medium !important;
+    font-size: $font-small !important;
     font-weight: $font-weight-light;
     background-color: rgba($color-blue-light, .2);
-    color: inherit;
-    border-radius: .3em;
+    color: $gray-lighter;
+    border-radius: 2px;
     margin-right: 5px;
+    background-color: $gray-light;
 
     &.label-success {
-      color: $color-white;
-      background-color: $color-green-dark;
+      color: white;
+      background-color: $brand-success;
+    }
+
+    &.label-primary {
+      color: white;
+      background-color: $brand-primary;
+    }
+
+    &.label-warning {
+      color: white;
+      background-color: $brand-warning;
+    }
+
+    &.label-danger {
+      color: white;
+      background-color: $brand-danger;
     }
 
     &.label-info {
-      color: $color-white;
-      background-color: $color-yellow-dark;
+      color: white;
+      background-color: $brand-info;
     }
   }
 
   .list {
-    margin: .6rem 0 .6rem 0;
+    margin: 5px 0;
     font-weight: $font-weight-light;
-    background-color: rgba($color-blue-light, .2);
-    border-radius: .3em;
+    border-radius: 2px;
     color: inherit;
-    padding: 5px 10px 1px 10px;
+    padding: 5px;
+    border: 1px solid rgba($gray-lighter, 0.3);
+
 
     p {
       margin: 0;
@@ -869,14 +907,14 @@ a.editable-click:hover {
 .btn {
   font-size: $font-small !important;
   border: none !important;
-  border-radius: 20px !important;
+  border-radius: 5px !important;
   line-height: 1 !important;
-  background: $color-blue none !important;
+  background: $brand-primary none !important;
   text-shadow: none !important;
-  padding: 9px 20px 7px 20px !important;
-  color: aliceblue !important;
+  padding: 10px !important;
+  color: $gray-lighter !important;
   font-weight: $font-weight-light !important;
-  letter-spacing: 1px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 
   &:hover {
@@ -898,44 +936,26 @@ a.editable-click:hover {
   }
 
   &.btn-circle, &.btn-circle-3d {
-    width: 5rem;
-    height: 5rem;
+    width: 40px;
+    height: 40px;
     font-size: $font-big !important;
     border-radius: 50% !important;
-    margin: 1rem 0 1rem 2rem;
+    margin: 0 5px;
     padding: 0 !important;
-    @include box-shadow($color-blue);
-    &:hover {
-      @include box-shadow($color-blue-dark);
-    }
-
-    &.red {
-      @include box-shadow($color-pink);
-      &:hover {
-        @include box-shadow($color-pink-dark);
-      }
-    }
-
-    &.ghost {
-      @include box-shadow($color-white);
-      &:hover {
-        @include box-shadow($color-text);
-      }
-    }
   }
 
   &.red {
-    background-color: $color-pink !important;
+    background-color: $brand-danger !important;
     &:hover {
-      background-color: $color-pink-dark !important;
+      background-color: darken($brand-danger, 10%) !important;
     }
   }
 
   &.ghost {
-    background-color: $color-white !important;
+    background-color: white !important;
     color: $color-bg-dark !important;
     &:hover {
-      background-color: $color-text !important;
+      background-color: $gray-lighter !important;
     }
   }
 }
@@ -953,26 +973,34 @@ a.editable-click:hover {
 //
 
 .blueprint-actions {
-  margin-top: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
 
   button {
-    margin: 5px 30px;
-    text-align: left;
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 2px !important;
   }
 }
 
 .deployment-actions {
-  margin-top: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
 
   button {
-    margin: 5px 30px;
-    text-align: left;
+    margin: 0;
+    text-align: center;
+    border-radius: 2px !important;
   }
 }
 
@@ -986,12 +1014,9 @@ a.editable-click:hover {
 }
 
 .gateway-header {
-  margin: 0 0 15px 0;
   padding: 10px;
-  background-color: $color-bg-dark;
-  border: 1px solid $color-blue-dark;
-  border-radius: 1rem;
-  @include box-shadow($color-blue-dark);
+  background-color: rgba($gray-dark, 0.2);
+  margin-bottom: 20px;
 }
 
 .gateway-sticky {
@@ -1001,37 +1026,49 @@ a.editable-click:hover {
 .gateway-row {
   text-align: center;
   padding: 0;
+  margin: 20px 0;
 }
 
 .gateway-charts {
-  margin: 0 0 15px 0;
   padding: 12px 0 15px 0;
-  background-color: $color-bg-dark;
-  border: 1px solid $color-blue-dark;
-  border-radius: 1rem;
-  @include box-shadow($color-blue-dark);
+  background-color: rgba($gray-dark, 0.2);
+
+  &>.gateway-row {
+    p {
+      margin-bottom: 20px;
+    }
+  }
 }
 
 .gateway-route-row {
-  margin: 0 0 15px 0;
-  padding: 15px 0 5px 0;
-  background-color: $color-bg-dark;
-  border: 1px solid $color-blue-dark;
-  border-radius: 1rem;
-  min-height: 100px;
-  @include box-shadow($color-blue-dark);
+  padding: 10px 0;
+  background-color: rgba($gray-dark, 0.2);
+
+  &>.gateway-row {
+    margin: 0;
+
+    &>.gateway-row {
+      margin: 0;
+
+      p {
+        margin: 10px 0 0 0;
+      }
+    }
+  }
 }
 
-.gateway-route-row-header {
-  margin: 0 10px 0 0;
+.gateway-route-row-header>.gateway-row {
+  margin: 20px 0 0 0;
+  &>.gateway-row {
+    margin: 0;
+  }
 }
 
 .gateway-route {
-  padding-top: 10px;
 }
 
 .gateway-route-name {
-  padding-top: 15px;
+  //padding-top: 15px;
 
   span {
     font-size: $font-big !important;
@@ -1039,15 +1076,15 @@ a.editable-click:hover {
 }
 
 .gateway-route-weight {
-  padding-top: 12px;
+  //padding-top: 12px;
 }
 
 .gateway-route-condition {
-  padding: 10px 0 0 0;
+  //padding: 10px 0 0 0;
 }
 
 .gateway-route-condition-strength {
-  padding: 0 10px 0 0;
+  //padding: 0 10px 0 0;
 }
 
 // deployment
@@ -1063,11 +1100,15 @@ a.editable-click:hover {
 
 .deployment-chart-column {
   text-align: center;
-  padding: 0;
+  padding: 20px 0;
+  &>p {
+    margin-bottom: 20px;
+  }
 }
 
 .deployment-cluster-row-header {
-  margin: 15px 0 10px 0;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .deployment-cluster-name {
@@ -1075,17 +1116,15 @@ a.editable-click:hover {
   span {
     font-size: $font-big !important;
     font-weight: $font-weight-light;
-    background-color: rgba($color-blue-light, .2);
+    //background-color: rgba($color-blue-light, .2);
     color: inherit;
-    border-radius: .3em;
-    margin: 0;
+    margin: 10px;
   }
 }
 
 .deployment-cluster-service-row {
   @extend .gateway-route-row;
-  margin: 5px 15px 15px 15px;
-  padding: 12px 0 0 0;
+  padding: 10px 0 0 0;
   min-height: 100px;
 }
 
@@ -1128,6 +1167,10 @@ a.editable-click:hover {
 .deployment-row-center {
   @extend .deployment-row;
   text-align: center;
+
+  p {
+    margin-top: 10px;
+  }
 }
 
 .deployment-cluster-service-name {
@@ -1203,11 +1246,9 @@ a.editable-click:hover {
 
 .modal-content {
   background-color: $color-bg;
-  border: 2px solid $color-text;
-  border-radius: 1rem;
+  border-radius: 2px;
   margin: 1rem;
   padding: 1rem;
-  @include box-shadow($color-text);
 }
 
 .modal-header {
