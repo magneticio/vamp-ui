@@ -31,7 +31,8 @@
     timestampFormatter: SmoothieChart.timeFormatter,
     minValue: 0,
     millisPerPixel: 100,
-    maxDataSetLength: 8
+    maxDataSetLength: 8,
+    enableDpiScaling: false
   };
 
   var healthChartOptions = chartOptions;
@@ -55,7 +56,8 @@
     timestampFormatter: function () {
       return '';
     },
-    maxDataSetLength: 8
+    maxDataSetLength: 8,
+    enableDpiScaling: false
   };
 
   var healthSparklineOptions = sparklineOptions;
@@ -63,13 +65,15 @@
   var chartTimeSeriesOptions = {
     lineWidth: 3,
     strokeStyle: '#29719b',
-    fillStyle: 'rgba(41, 113, 155, 0.4)'
+    fillStyle: 'rgba(41, 113, 155, 0.4)',
+    enableDpiScaling: false
   };
 
   var healthChartTimeSeriesOptions = {
     lineWidth: 3,
     strokeStyle: '#00ff00',
-    fillStyle: 'rgba(0, 255, 0, 0.2)'
+    fillStyle: 'rgba(0, 255, 0, 0.2)',
+    enableDpiScaling: false
   };
 
   var sparklineTimeSeriesOptions = chartTimeSeriesOptions;
