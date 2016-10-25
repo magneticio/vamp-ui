@@ -106,8 +106,8 @@ function DeploymentService($rootScope, $interval, $filter, $vamp) {
       });
     });
     return {
-      cpu: Number($filter('number')(cpu, 2)),
-      memory: Number($filter('number')(memory, 2)),
+      cpu: Number($filter('asNumber')(cpu, 2)),
+      memory: Number($filter('asNumber')(memory, 2)),
       instances: instances
     };
   };
