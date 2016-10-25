@@ -45,7 +45,7 @@
             <div class="row deployment-cluster-row-header">
                 <div class="col-md-4 deployment-row-no-padding">
                     <div class="col-sm-6 deployment-cluster-name">
-                        <span class="label">CLUSTER : {{ cluster.name | uppercase }}</span>
+                        <span>CLUSTER : {{ cluster.name | uppercase }}</span>
                     </div>
                     <div class="col-sm-6 deployment-row-center">HEALTH</div>
                 </div>
@@ -58,12 +58,12 @@
                     <div class="col-sm-6">ENV VARS</div>
                 </div>
             </div>
-            <div class="row deployment-cluster-service-row"
+            <div class="deployment-cluster-service-row"
                  ng-repeat="service in cluster.services | orderBy:'breed.name'">
                 <div class="col-md-4 deployment-cluster-service">
-                    <div class="col-sm-6 deployment-row-center deployment-cluster-service-name">
+                    <div class="col-sm-6 deployment-row deployment-cluster-service-name">
                         <span class="label"
-                              ng-class="{'label-success': $ctrl.serviceStatus(service) === 'deployed', 'label-info': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'label-red-alert': $ctrl.serviceStatus(service) === 'failed', 'highlight': $ctrl.addedService(cluster, service)}">
+                              ng-class="{label-info': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'label-red-alert': $ctrl.serviceStatus(service) === 'failed', 'highlight': $ctrl.addedService(cluster, service)}">
                             {{service.breed.name}}
                             <i ng-if="$ctrl.serviceStatus(service) !== 'running'"
                                class="fa"

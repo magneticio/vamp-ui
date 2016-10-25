@@ -6,7 +6,7 @@ $gray: #37647d;
 $gray-light: #6991aa;
 $gray-lighter: #c3d2dc;
 $brand-primary: rgb(55, 100, 125);
-$brand-success: #1AA379;
+$brand-success: #3ABA5E;
 $brand-info: #6991aa;
 $brand-warning: #FAAC19;
 $brand-danger: rgb(255, 64, 94);
@@ -106,7 +106,7 @@ span:focus {
 }
 
 body {
-  background: linear-gradient(to right bottom, $color-bg, $color-bg-dark);
+  background: linear-gradient($gray-darker 10%, $gray-base);
   color: $color-text;
   overflow: hidden;
 }
@@ -125,6 +125,8 @@ menu {
   z-index: 999;
   position: relative;
   height: 50px;
+  box-shadow: 0 5px 5px -2px $gray-base;
+
 
   nav {
     background: rgb(13, 30, 38) !important;
@@ -259,17 +261,17 @@ menu {
 }
 
 .label-success {
-  background-color: $color-green-dark;
+  background-color: rgba($brand-success, 0.7);
   color: $color-white;
 }
 
 .label-primary {
-  background-color: $color-blue;
+  background-color: $brand-primary;
 }
 
 .label-info {
   color: $color-white;
-  background-color: $color-yellow-dark;
+  background-color: $brand-warning;
 }
 
 .editor {
@@ -460,11 +462,39 @@ p, div {
   }
 }
 
+
+
 .event-panel-content {
   height: 50px;
   position: relative;
   z-index: 888;
   transition: 0.3s height ease-in-out;
+
+  .label-success {
+    color: white;
+    background-color: $brand-success;
+  }
+
+  .label-primary {
+    color: white;
+    background-color: $brand-primary;
+  }
+
+  .label-warning {
+    color: white;
+    background-color: $brand-warning;
+  }
+
+  .label-danger {
+    color: white;
+    background-color: $brand-danger;
+  }
+
+  .label-info {
+    color: white;
+    background-color: $brand-info;
+  }
+
 
   &.show {
     height: 400px;
@@ -483,7 +513,7 @@ p, div {
     cursor: pointer;
     font-weight: $font-weight-regular;
     overflow-y: scroll;
-    background-color: $gray-dark;
+    background-color: rgba($gray-dark, 0.5);
 
     .category {
       cursor: pointer;
@@ -493,6 +523,16 @@ p, div {
       &:hover {
         color: $color-text-dark;
       }
+    }
+
+    .btn  {
+      border: 2px solid $gray !important;
+    }
+
+    .btn.red {
+      background-color: transparent !important;
+
+      color: $gray-light !important;
     }
 
     a {
@@ -600,6 +640,11 @@ a.editable-click:hover {
 .navbar-brand {
   padding: 0;
   margin: 5px 12px 0 0;
+
+  img {
+    margin-top: 5px;
+    height: 30px;
+  }
 }
 
 .nav-logo {
@@ -771,22 +816,22 @@ a.editable-click:hover {
 
 @keyframes redAlert {
   0% {
-    background-color: red;
+    background-color: $brand-danger;
     color: $color-white;
     font-weight: $font-weight-regular;
-    @include box-shadow(red);
+    @include box-shadow($brand-danger);
   }
   50% {
-    background-color: $color-yellow;
+    background-color: $brand-warning;
     color: $color-white;
     font-weight: $font-weight-regular;
-    @include box-shadow($color-yellow);
+    @include box-shadow($brand-warning);
   }
   100% {
-    background-color: red;
+    background-color: $brand-danger;
     color: $color-white;
     font-weight: $font-weight-regular;
-    @include box-shadow(red);
+    @include box-shadow($brand-danger);
   }
 }
 
@@ -809,22 +854,32 @@ a.editable-click:hover {
 .artifact {
   height: 28rem;
   width: 28rem;
-  border-radius: 2px;
+  border-radius: 5px;
   margin: 10px;
   padding: 15px;
   cursor: pointer;
   background-color: rgba($gray-dark, 0.5);
-  border: 2px solid transparent;
   position: relative;
 
   box-shadow: 0 1px 3px rgba($gray-base,0.12), 0 1px 2px rgba($gray-base,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  
+  background-image: url("img/background-pattern-alpha.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+
 
   &:hover {
     //background-color: rgba($gray-dark, 0.75);
     box-shadow: 0 10px 24px rgba($gray-base,0.5), 0 6px 6px rgba($gray-base, 0.5);
     transform: scale(1.025);
+
+    .artifact-title {
+      text-decoration: underline;
+    }
+
   }
+
 
   &.selected {
     border: 2px solid $gray-light;
@@ -846,6 +901,7 @@ a.editable-click:hover {
 }
 
 .artifact-properties {
+
 
   span {
     font-size: $font-small !important;
@@ -887,9 +943,12 @@ a.editable-click:hover {
     font-weight: $font-weight-light;
     border-radius: 2px;
     color: inherit;
-    padding: 5px;
-    border: 1px solid rgba($gray-lighter, 0.3);
+    padding: 8px;
+    //border: 1px solid rgba($gray-lighter, 0.3)
+    background-color: rgba($gray-base, 0.75);
 
+
+    color: $gray-light !important;
 
     p {
       margin: 0;
@@ -916,6 +975,8 @@ a.editable-click:hover {
   font-weight: $font-weight-light !important;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+
+
 
   &:hover {
     background-color: $color-blue-dark !important;
@@ -952,7 +1013,7 @@ a.editable-click:hover {
   }
 
   &.ghost {
-    background-color: white !important;
+    background-color: $gray-lighter !important;
     color: $color-bg-dark !important;
     &:hover {
       background-color: $gray-lighter !important;
@@ -984,7 +1045,7 @@ a.editable-click:hover {
   button {
     margin-top: 5px;
     text-align: center;
-    border-radius: 2px !important;
+    border-radius: 20px !important;
   }
 }
 
@@ -1000,7 +1061,7 @@ a.editable-click:hover {
   button {
     margin: 0;
     text-align: center;
-    border-radius: 2px !important;
+    border-radius: 20px !important;
   }
 }
 
@@ -1009,7 +1070,7 @@ a.editable-click:hover {
 .gateway {
   p, span {
     font-size: $font-medium;
-    font-weight: $font-weight-regular;
+    font-weight: $font-weight-bold;
   }
 }
 
@@ -1031,7 +1092,7 @@ a.editable-click:hover {
 
 .gateway-charts {
   padding: 12px 0 15px 0;
-  background-color: rgba($gray-dark, 0.2);
+  //background-color: rgba($gray-dark, 0.2);
 
   &>.gateway-row {
     p {
@@ -1043,6 +1104,12 @@ a.editable-click:hover {
 .gateway-route-row {
   padding: 10px 0;
   background-color: rgba($gray-dark, 0.2);
+  border-radius: 5px;
+  padding: 10px 0 0 0;
+  min-height: 130px;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 2px;
 
   &>.gateway-row {
     margin: 0;
@@ -1058,29 +1125,30 @@ a.editable-click:hover {
 }
 
 .gateway-route-row-header>.gateway-row {
-  margin: 20px 0 0 0;
+  @extend .deployment-cluster-row-header;
   &>.gateway-row {
     margin: 0;
   }
 }
 
-.gateway-route {
-}
 
 .gateway-route-name {
-  //padding-top: 15px;
+  @extend .deployment-cluster-name;
+  padding-top: 26px;
 
   span {
     font-size: $font-big !important;
   }
+
+
 }
 
 .gateway-route-weight {
-  //padding-top: 12px;
+  padding-top: 26px;
 }
 
 .gateway-route-condition {
-  //padding: 10px 0 0 0;
+  padding-top: 26px;
 }
 
 .gateway-route-condition-strength {
@@ -1106,26 +1174,46 @@ a.editable-click:hover {
   }
 }
 
+.deployment-cluster {
+  margin-top: 20px;
+}
+
 .deployment-cluster-row-header {
   margin-top: 20px;
   margin-bottom: 10px;
+  margin-left: -3px;
+  text-align: left;
+
+  color: $gray;
+
 }
 
 .deployment-cluster-name {
-  padding: 0 0 0 15px;
   span {
     font-size: $font-big !important;
     font-weight: $font-weight-light;
     //background-color: rgba($color-blue-light, .2);
-    color: inherit;
+    color: $gray-lighter;
     margin: 10px;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
+
+  overflow: hidden;
 }
 
 .deployment-cluster-service-row {
   @extend .gateway-route-row;
-  padding: 10px 0 0 0;
-  min-height: 100px;
+  border-radius: 5px;
+
+
+  margin-top: 2px;
+  margin-left: 20px;
+  margin-right: 20px;
+
 }
 
 .deployment-row-no-padding {
@@ -1146,12 +1234,12 @@ a.editable-click:hover {
 
     &.label-success {
       color: $color-white;
-      background-color: $color-green-dark;
+      background-color: rgba($brand-success, 0.7);
     }
 
     &.label-info {
       color: $color-white;
-      background-color: $color-yellow-dark;
+      background-color: $brand-warning;
     }
   }
 
@@ -1173,8 +1261,17 @@ a.editable-click:hover {
   }
 }
 
+.deployment-cluster-service-row {
+}
+
+.deployment-cluster-service {
+  height: 100%;
+}
+
 .deployment-cluster-service-name {
-  padding-top: 20px;
+  padding-top: 46px;
+
+  height: 100%;
 
   span {
     font-size: $font-big !important;
