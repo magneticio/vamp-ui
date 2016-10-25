@@ -147,7 +147,7 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
             $vamp.peek(path);
           }).catch(function () {
             $ctrl.deployment.clusters = {};
-            alert.show('Warning', '\'' + $ctrl.deployment.name + '\' has been deleted in background.', 'Leave', 'Stay', function () {
+            alert.show('Warning', '\'' + $ctrl.deployment.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
               $location.path('/deployments');
             });
           });

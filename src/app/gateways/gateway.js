@@ -116,7 +116,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     var event = response.data;
     if ($ctrl.gateway && _.includes(event.tags, 'gateways:' + $ctrl.gateway.name)) {
       if (_.includes(event.tags, 'archive:delete')) {
-        alert.show('Warning', '\'' + $ctrl.gateway.name + '\' has been deleted in background.', 'Leave', 'Stay', function () {
+        alert.show('Warning', '\'' + $ctrl.gateway.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
           $location.path('/gateways');
         });
       } else if (_.includes(event.tags, 'archive:update')) {
