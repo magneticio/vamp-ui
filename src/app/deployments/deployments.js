@@ -53,9 +53,10 @@ function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, $vam
 
       $vamp.await(function () {
         $vamp.peek('/deployments/' + $ctrl.deployment.name, '', {as_blueprint: true});
-      }).then(function (response) {
+      }).then(function (blueprint) {
+        blueprint.data.name = data.name;
         if (data.overwrite) {
-          save(response.data);
+          save(blueprint.data);
         } else {
           $vamp.await(function () {
             $vamp.peek('/blueprints/' + data.name);
@@ -63,7 +64,7 @@ function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, $vam
             toastr.error('Blueprint \'' + data.name + '\' already exists.');
           }).catch(function (response) {
             if (response) {
-              save();
+              save(blueprint.data);
             } else {
               toastr.error('Server timeout.', 'Export of \'' + $ctrl.deployment.name + '\' failed.');
             }
