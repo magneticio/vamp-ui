@@ -48,13 +48,6 @@ function EditWeights($scope, slider) {
     }
   }, true);
 
-  $scope.$on('/gateways/' + gateway.name, function (e, response) {
-    if (response.status === 'OK') {
-      gateway = response.data;
-      $ctrl.$onInit();
-    }
-  });
-
   this.$onInit = function () {
     $scope.routeCount = _.size(gateway.routes);
 
