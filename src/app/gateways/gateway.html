@@ -35,7 +35,7 @@
                 <editable-drop-down ng-if="$ctrl.gateway && $ctrl.gateway.port.endsWith('/http')" active="true"
                                     values="$ctrl.stickyValues" selected="$ctrl.sticky(value)">
                     <span highlighter="$ctrl.gateway.sticky" class="label gateway-sticky"
-                          ng-class="{'label-success': $ctrl.gateway.sticky, 'label-default': !$ctrl.gateway.sticky}">
+                          ng-class="{'label-success': $ctrl.gateway.sticky, 'label-primary': !$ctrl.gateway.sticky}">
                         {{ $ctrl.gateway.sticky || 'not sticky'}}
                     </span>
                 </editable-drop-down>
@@ -96,7 +96,7 @@
         <div class="row gateway-route-row" ng-repeat="(name, route) in $ctrl.gateway.routes | orderByKeys">
             <div class="col-md-4 gateway-route">
                 <div class="col-sm-8 gateway-row gateway-route-name">
-                    <span class="label label-success" ng-class="{'highlight': $ctrl.addedRoute(route)}">{{name}}</span>
+                    <span class="label" ng-class="{'highlight': $ctrl.addedRoute(route)}">{{name}}</span>
                 </div>
                 <div class="col-sm-4 gateway-row gateway-route-weight">
                     <span highlighter="route.weight" class="label label-success">{{route.weight}}</span>
@@ -136,7 +136,7 @@
                     <editable-text active="true" text="{{route.condition.condition}}"
                                    edited="$ctrl.saveCondition(name, value)">
                         <span highlighter="route.condition.condition" class="label"
-                              ng-class="{'label-success': route.condition.condition, 'label-default': !label-default}">
+                              ng-class="{'label-success': route.condition.condition, 'label-primary': !label-default}">
                             {{route.condition.condition || 'none'}}
                         </span>
                     </editable-text>

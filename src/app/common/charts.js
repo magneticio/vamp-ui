@@ -71,8 +71,8 @@
 
   var healthChartTimeSeriesOptions = {
     lineWidth: 3,
-    strokeStyle: '#00ff00',
-    fillStyle: 'rgba(0, 255, 0, 0.2)',
+    strokeStyle: '#3ABA5E',
+    fillStyle: 'rgba(58, 186, 94, 0.3)',
     enableDpiScaling: false
   };
 
