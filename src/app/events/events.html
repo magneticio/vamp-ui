@@ -5,15 +5,15 @@
             <button type="button" class="btn"
                     ng-model="$ctrl.filters.health" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
                     ng-class="{red: $ctrl.filters['health']}" ng-click="filter($event, 'health')" ng-show="$ctrl.show">
-                <i class="fa fa-check" ng-if="!$ctrl.filters['health']"></i>
-                <i class="fa fa-times" ng-if="$ctrl.filters['health']"></i>
+                <i class="fa fa-fw fa-check" ng-if="!$ctrl.filters['health']"></i>
+                <i class="fa fa-fw fa-times" ng-if="$ctrl.filters['health']"></i>
                 &nbsp;health
             </button>
             <button type="button" class="btn"
                     ng-model="$ctrl.filters.metrics" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
                     ng-class="{red: $ctrl.filters['metrics']}" ng-click="filter($event, 'metrics')" ng-show="$ctrl.show">
-                <i class="fa fa-check" ng-if="!$ctrl.filters['metrics']"></i>
-                <i class="fa fa-times" ng-if="$ctrl.filters['metrics']"></i>
+                <i class="fa fa-fw fa-check" ng-if="!$ctrl.filters['metrics']"></i>
+                <i class="fa fa-fw fa-times" ng-if="$ctrl.filters['metrics']"></i>
                 &nbsp;metrics
             </button>
         </div>
@@ -28,7 +28,7 @@
             </tr>
             <tr ng-repeat="event in $ctrl.events | orderBy: 'timestamp':true">
                 <td>
-                    <span class="label">
+                    <span class="label timestamp">
                         {{ event.timestamp | date:'HH:mm:ss.sss'}}
                     </span>
                 <td>

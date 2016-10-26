@@ -41,114 +41,239 @@
                 <canvas class="chart" id="memory" width="330"></canvas>
             </div>
         </div>
-        <div class="row deployment-cluster" ng-repeat="cluster in $ctrl.deployment.clusters | namify | orderBy:'name'">
-            <div class="row deployment-cluster-row-header">
-                <div class="col-md-4 deployment-row-no-padding">
-                    <div class="col-sm-6 deployment-cluster-name">
-                        <span>CLUSTER : {{ cluster.name | uppercase }}</span>
+
+        <div class="vamp-table cluster-table">
+            <div class="vamp-table__group" ng-repeat="cluster in $ctrl.deployment.clusters | namify | orderBy: 'name'">
+                <div class="vamp-table__group__name">
+                    <span class="v-value">{{ cluster.name | uppercase }}</span>
+                    <span class="v-label">&nbsp;CLUSTER</span>
+                </div>
+
+                <div class="vamp-table__headers">
+                    <div class="vamp-table__header name-col">
+                        <span class="v-label">Name</span>
                     </div>
-                    <div class="col-sm-6 deployment-row-center">HEALTH</div>
+                    <div class="vamp-table__header health-col">
+                        <span class="v-label">HEALTH</span>
+                    </div>
+                    <div class="vamp-table__header scale-col">
+                        <span class="v-label">SCALE</span>
+                    </div>
+                    <div class="vamp-table__header instances-col">
+                        <span class="v-label">INSTANCES</span>
+                    </div>
+                    <div class="vamp-table__header ports-col">
+                        <span class="v-label">PORTS</span>
+                    </div>
+                    <div class="vamp-table__header env-col">
+                        <span class="v-label">ENV VARS</span>
+                    </div>
                 </div>
-                <div class="col-md-4 deployment-row">
-                    <div class="col-sm-6">SCALE</div>
-                    <div class="col-sm-6">INSTANCES</div>
-                </div>
-                <div class="col-md-4 deployment-row">
-                    <div class="col-sm-6">PORTS</div>
-                    <div class="col-sm-6">ENV VARS</div>
-                </div>
-            </div>
-            <div class="deployment-cluster-service-row"
-                 ng-repeat="service in cluster.services | orderBy:'breed.name'">
-                <div class="col-md-4 deployment-cluster-service">
-                    <div class="col-sm-6 deployment-row deployment-cluster-service-name">
-                        <span class="label"
-                              ng-class="{label-info': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'label-red-alert': $ctrl.serviceStatus(service) === 'failed', 'highlight': $ctrl.addedService(cluster, service)}">
+
+                <!--NAME-COL-->
+                <div class="vamp-table__row" ng-repeat="service in cluster.services | orderBy:'breed.name'">
+                    <div class="vamp-table__col name-col">
+                        <span class="v-value v-value--emphasis v-value--state"
+                              ng-class="{'v-value--state--warning': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'v-value--state--error-alert': $ctrl.serviceStatus(service) === 'failed', 'v-value--state--highlight': $ctrl.addedService(cluster, service)}">
                             {{service.breed.name}}
-                            <i ng-if="$ctrl.serviceStatus(service) !== 'running'"
-                               class="fa"
-                               ng-class="{'fa-cog': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'fa-spin': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'fa-exclamation-triangle': $ctrl.serviceStatus(service) === 'failed'}"></i>
+
+                            <i class="fa" ng-class="{'fa-cog': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'fa-spin': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'fa-exclamation-triangle': $ctrl.serviceStatus(service) === 'failed'}"></i>
                         </span>
                     </div>
-                    <div class="col-sm-6 deployment-row-center deployment-column-sparkline">
-                        <canvas class="chart" id="health-{{service.breed.name}}" width="100"
-                                height="40"></canvas>
-                        <p>
-                            <span ng-if="$ctrl.last['health-' + service.breed.name] != null" class="label"
-                                  ng-class="{'label-success': $ctrl.last['health-' + service.breed.name] != 'none', 'label-red-alert': $ctrl.last['health-' + service.breed.name] == 'none'}">
+
+                    <!--HEALTH-COL-->
+                    <div class="vamp-table__col vamp-table__col--chart health-col">
+                        <span class="v-value">
                             {{ $ctrl.last['health-' + service.breed.name] == 'none' ? 'none' : $ctrl.last['health-' + service.breed.name] + ' %'}}
-                            </span>
-                        </p>
+                        </span>
+                        <canvas class="chart" id="health-{{service.breed.name}}" width="100"
+                                height="40">
+
+                        </canvas>
+
                     </div>
-                </div>
-                <div class="col-md-4 deployment-row">
-                    <div class="col-sm-6 deployment-row deployment-cluster-list deployment-action-icons">
-                        <div class="deployment-column-scale">
-                            <div class="deployment-float-1">
-                                <ul>
-                                    <li><span class="title">cpu: </span> {{service.scale.cpu}}</li>
-                                    <li><span class="title">memory: </span> {{service.scale.memory}}</li>
-                                    <li><span class="title">instances: </span> {{service.scale.instances}}</li>
-                                </ul>
+
+                    <!--SCALE-COL-->
+                    <div class="vamp-table__col scale-col">
+                        <div class="vamp-table__col__list">
+                            <div class="vamp-table__col__list__action" ng-click="$ctrl.editScale(cluster, service)">
+                                <i class="fa fa-pencil"></i>
                             </div>
-                            <div class="deployment-float-2">
-                                <i class="fa fa-pencil" ng-click="$ctrl.editScale(cluster, service)"></i>
+
+
+                            <div class="vamp-table__col__list__item">
+                                <span class="v-label">CPU:&nbsp;</span>
+                                <span class="v-value">{{service.scale.cpu}}</span>
+
+                            </div>
+
+                            <div class="vamp-table__col__list__item">
+                                <span class="v-label">Memory:&nbsp;</span>
+                                <span class="v-value">{{service.scale.memory}}</span>
+                            </div>
+
+                            <div class="vamp-table__col__list__item">
+                                <span class="v-label">Instances:&nbsp;</span>
+                                <span class="v-value">{{service.scale.instances}}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 deployment-row deployment-cluster-list deployment-action-icons">
-                        <div class="deployment-column-instances">
-                            <div class="deployment-float-1">
-                                <ul>
-                                    <li ng-repeat="instance in service.instances | limitTo: 3">
-                                        <p ng-class="{'highlight': service.scale.instances != service.instances.length}">
-                                            {{instance.host}}
-                                        </p>
-                                    </li>
-                                    <li>
-                                        <i ng-if="service.instances.length > 3" class="fa fa-ellipsis-h"
-                                           ng-click="$ctrl.showInstances(cluster, service)"></i>
-                                    </li>
-                                </ul>
+
+                    <!--INSTANCES-COL-->
+                    <div class="vamp-table__col instances-col">
+                        <div class="vamp-table__col__list">
+                            <div class="vamp-table__col__list__action" ng-show="service.instances.length > 0" ng-click="$ctrl.showInstances(cluster, service)">
+                                <i class="fa fa-arrows-alt"></i>
                             </div>
-                            <div class="deployment-float-2">
-                                <i class="fa fa-arrows-alt"
-                                   ng-if="service.instances.length > 0"
-                                   ng-click="$ctrl.showInstances(cluster, service)"></i>
+
+                            <div class="vamp-table__col__list__item" ng-repeat="instance in service.instances | limitTo: 3">
+                                <span class="v-value v-value--state" ng-class="{'v-value--state--highlight': service.scale.instances != service.instances.length}">{{instance.host}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--PORTS-COL-->
+                    <div class="vamp-table__col ports-col">
+                        <div class="vamp-table__col__list">
+                            <div class="vamp-table__col__list__item" ng-repeat="(portName, port) in service.breed.ports | orderByKeys">
+                                <span class="v-value">
+                                    <a ui-sref="gatewaysView({name: '{{$ctrl.deployment.name}}/{{cluster.name}}/{{portName}}'})"
+                                       href="">{{portName}}</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--ENV-COL-->
+                    <div class="vamp-table__col env-col">
+                        <div class="vamp-table__col__list">
+                            <div class="vamp-table__col__list__action" ng-show="service.environment_variables.length > 0" ng-click="$ctrl.showEnvironmentVariables(cluster, service)">
+                                <i class="fa fa-arrows-alt"></i>
+                            </div>
+
+                            <div class="vamp-table__col__list__item" ng-repeat="env in service.environment_variables | limitTo: 3">
+                                <span class="v-value">
+                                    {{env.name | limitTo: 15 }}{{env.name.length > 15 ? ' ...' : '' }}
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 deployment-row">
-                    <div class="col-sm-6 deployment-column-ports">
-                        <p ng-repeat="(portName, port) in service.breed.ports | orderByKeys">
-                            <a ui-sref="gatewaysView({name: '{{$ctrl.deployment.name}}/{{cluster.name}}/{{portName}}'})"
-                               href="">{{portName}}</a>
-                        </p>
-                    </div>
-                    <div class="col-sm-6 deployment-cluster-list deployment-action-icons">
-                        <div>
-                            <div class="deployment-float-1">
-                                <ul>
-                                    <li ng-repeat="env in service.environment_variables | limitTo: 3">
-                                        <p>{{env.name | limitTo: 15 }}{{env.name.length > 15 ? ' ...' : '' }}</p>
-                                    </li>
-                                    <li>
-                                        <i ng-if="service.environment_variables.length > 3"
-                                           class="fa fa-ellipsis-h"
-                                           ng-click="$ctrl.showEnvironmentVariables(cluster, service)"></i>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="deployment-float-2">
-                                <i class="fa fa-arrows-alt"
-                                   ng-if="service.environment_variables.length > 0"
-                                   ng-click="$ctrl.showEnvironmentVariables(cluster, service)"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+
             </div>
         </div>
+
+        
+        <!--OLD-->
+        <!--<div class="row deployment-cluster" ng-repeat="cluster in $ctrl.deployment.clusters | namify | orderBy:'name'">-->
+            <!--<div class="row deployment-cluster-row-header">-->
+                <!--<div class="col-md-4 deployment-row-no-padding">-->
+                    <!--<div class="col-sm-6 deployment-cluster-name">-->
+                        <!--<span>CLUSTER : {{ cluster.name | uppercase }}</span>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-6 deployment-row-center">HEALTH</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-4 deployment-row">-->
+                    <!--<div class="col-sm-6">SCALE</div>-->
+                    <!--<div class="col-sm-6">INSTANCES</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-4 deployment-row">-->
+                    <!--<div class="col-sm-6">PORTS</div>-->
+                    <!--<div class="col-sm-6">ENV VARS</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="deployment-cluster-service-row"-->
+                 <!--ng-repeat="service in cluster.services | orderBy:'breed.name'">-->
+                <!--<div class="col-md-4 deployment-cluster-service">-->
+                    <!--<div class="col-sm-6 deployment-row deployment-cluster-service-name">-->
+                        <!--<span class="label"-->
+                              <!--ng-class="{label-info': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'label-red-alert': $ctrl.serviceStatus(service) === 'failed', 'highlight': $ctrl.addedService(cluster, service)}">-->
+                            <!--{{service.breed.name}}-->
+                            <!--<i ng-if="$ctrl.serviceStatus(service) !== 'running'"-->
+                               <!--class="fa"-->
+                               <!--ng-class="{'fa-cog': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'fa-spin': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'fa-exclamation-triangle': $ctrl.serviceStatus(service) === 'failed'}"></i>-->
+                        <!--</span>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-6 deployment-row-center deployment-column-sparkline">-->
+                        <!--<canvas class="chart" id="health-{{service.breed.name}}" width="100"-->
+                                <!--height="40"></canvas>-->
+                        <!--<p>-->
+                            <!--<span ng-if="$ctrl.last['health-' + service.breed.name] != null" class="label"-->
+                                  <!--ng-class="{'label-success': $ctrl.last['health-' + service.breed.name] != 'none', 'label-red-alert': $ctrl.last['health-' + service.breed.name] == 'none'}">-->
+                            <!--{{ $ctrl.last['health-' + service.breed.name] == 'none' ? 'none' : $ctrl.last['health-' + service.breed.name] + ' %'}}-->
+                            <!--</span>-->
+                        <!--</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-4 deployment-row">-->
+                    <!--<div class="col-sm-6 deployment-row deployment-cluster-list deployment-action-icons">-->
+                        <!--<div class="deployment-column-scale">-->
+                            <!--<div class="deployment-float-1">-->
+                                <!--<ul>-->
+                                    <!--<li><span class="title">cpu: </span> {{service.scale.cpu}}</li>-->
+                                    <!--<li><span class="title">memory: </span> {{service.scale.memory}}</li>-->
+                                    <!--<li><span class="title">instances: </span> {{service.scale.instances}}</li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                            <!--<div class="deployment-float-2">-->
+                                <!--<i class="fa fa-pencil" ng-click="$ctrl.editScale(cluster, service)"></i>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-6 deployment-row deployment-cluster-list deployment-action-icons">-->
+                        <!--<div class="deployment-column-instances">-->
+                            <!--<div class="deployment-float-1">-->
+                                <!--<ul>-->
+                                    <!--<li ng-repeat="instance in service.instances | limitTo: 3">-->
+                                        <!--<p ng-class="{'highlight': service.scale.instances != service.instances.length}">-->
+                                            <!--{{instance.host}}-->
+                                        <!--</p>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<i ng-if="service.instances.length > 3" class="fa fa-ellipsis-h"-->
+                                           <!--ng-click="$ctrl.showInstances(cluster, service)"></i>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                            <!--<div class="deployment-float-2">-->
+                                <!--<i class="fa fa-arrows-alt"-->
+                                   <!--ng-if="service.instances.length > 0"-->
+                                   <!--ng-click="$ctrl.showInstances(cluster, service)"></i>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-4 deployment-row">-->
+                    <!--<div class="col-sm-6 deployment-column-ports">-->
+                        <!--<p ng-repeat="(portName, port) in service.breed.ports | orderByKeys">-->
+                            <!--<a ui-sref="gatewaysView({name: '{{$ctrl.deployment.name}}/{{cluster.name}}/{{portName}}'})"-->
+                               <!--href="">{{portName}}</a>-->
+                        <!--</p>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-6 deployment-cluster-list deployment-action-icons">-->
+                        <!--<div>-->
+                            <!--<div class="deployment-float-1">-->
+                                <!--<ul>-->
+                                    <!--<li ng-repeat="env in service.environment_variables | limitTo: 3">-->
+                                        <!--<p>{{env.name | limitTo: 15 }}{{env.name.length > 15 ? ' ...' : '' }}</p>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<i ng-if="service.environment_variables.length > 3"-->
+                                           <!--class="fa fa-ellipsis-h"-->
+                                           <!--ng-click="$ctrl.showEnvironmentVariables(cluster, service)"></i>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                            <!--<div class="deployment-float-2">-->
+                                <!--<i class="fa fa-arrows-alt"-->
+                                   <!--ng-if="service.environment_variables.length > 0"-->
+                                   <!--ng-click="$ctrl.showEnvironmentVariables(cluster, service)"></i>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </div>

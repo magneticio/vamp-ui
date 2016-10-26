@@ -19,8 +19,8 @@
     </div>
 </div>
 <div class="modal-footer">
+    <button class="btn cancel" type="button" ng-click="cancel()">Cancel</button>
     <button class="btn {{ buttonClass }}" type="button" ng-disabled="!chosenDeployment" ng-click="ok()">
         {{ buttonText }}
     </button>
-    <button class="btn ghost" type="button" ng-click="cancel()">Cancel</button>
 </div>

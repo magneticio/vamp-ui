@@ -8,14 +8,14 @@
         <span class="label label-primary">{{ $ctrl.gateway.internal ? 'internal' : 'external'}}</span>
         <p></p>
         <div class="list" ng-if="!($ctrl.gateway.virtual_hosts | isEmpty)">
-            <p>virtual hosts :</p>
+            <p class="v-label">virtual hosts :</p>
             <ul>
                 <li ng-repeat="host in $ctrl.gateway.virtual_hosts | limitTo: 2 | orderBy:'length'">{{ host }}</li>
                 <li><i ng-if="$ctrl.gateway.virtual_hosts.length > 2" class="fa fa-ellipsis-h"></i></li>
             </ul>
         </div>
         <div class="list">
-            <p>routes :</p>
+            <p class="v-label">routes :</p>
             <ul>
                 <li ng-repeat="route in $ctrl.gateway.routes | namify | limitTo: 3 | orderBy:'name'">{{ route.name }}
                 </li>

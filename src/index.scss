@@ -470,6 +470,10 @@ p, div {
   z-index: 888;
   transition: 0.3s height ease-in-out;
 
+  .timestamp {
+    color: $gray-lighter;
+  }
+
   .label-success {
     color: white;
     background-color: $brand-success;
@@ -527,6 +531,7 @@ p, div {
 
     .btn  {
       border: 2px solid $gray !important;
+      width: 120px;
     }
 
     .btn.red {
@@ -841,6 +846,10 @@ a.editable-click:hover {
   -webkit-animation-iteration-count: infinite;
 }
 
+.red-alert {
+  @extend .label-red-alert;
+}
+
 .artifacts {
   margin: 0;
   display: flex;
@@ -859,19 +868,21 @@ a.editable-click:hover {
   cursor: pointer;
   background-color: rgba($gray-dark, 0.5);
   position: relative;
+  border: 2px solid transparent;
 
-  box-shadow: 0 1px 3px rgba($gray-base,0.12), 0 1px 2px rgba($gray-base,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
   
   background-image: url("/img/background-pattern-alpha.png");
   background-repeat: no-repeat;
   background-size: contain;
 
+  //box-shadow: 0 1px 3px rgba($gray-base,1), 0 1px 2px rgba($gray-base,1)
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 
   &:hover {
     //background-color: rgba($gray-dark, 0.75);
-    box-shadow: 0 10px 24px rgba($gray-base,0.5), 0 6px 6px rgba($gray-base, 0.5);
-    transform: scale(1.025);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 
     .artifact-title {
       text-decoration: underline;
@@ -881,7 +892,7 @@ a.editable-click:hover {
 
 
   &.selected {
-    border: 2px solid $gray-light;
+    border-color: $gray-light;
   }
 
   input[type="checkbox"] {
@@ -942,12 +953,12 @@ a.editable-click:hover {
     font-weight: $font-weight-light;
     border-radius: 2px;
     color: inherit;
-    padding: 8px;
+    padding: 15px;
     //border: 1px solid rgba($gray-lighter, 0.3)
     background-color: rgba($gray-base, 0.75);
 
 
-    color: $gray-light !important;
+    color: $gray-lighter !important;
 
     p {
       margin: 0;
@@ -955,7 +966,12 @@ a.editable-click:hover {
 
     ul {
       list-style-type: none;
-      padding: 0 0 0 10px;
+      padding: 0;
+    }
+
+    .v-label {
+      color: $gray-light !important;
+      margin-bottom: 2px;
     }
   }
 }
@@ -974,6 +990,7 @@ a.editable-click:hover {
   font-weight: $font-weight-light !important;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  font-weight: 500 !important;
 
 
 
@@ -1017,6 +1034,22 @@ a.editable-click:hover {
     &:hover {
       background-color: $gray-lighter !important;
     }
+  }
+
+  &.cancel {
+    font-weight: 500 !important;
+  }
+
+  &.action {
+    background-color: $brand-success !important;
+    font-weight: 500 !important;
+    color: $gray-lighter !important;
+    text-shadow: 0 1px rgba(black, 0.5) !important;
+  }
+
+  &.success {
+    background-color: $brand-success;
+    font-weight: 500;
   }
 }
 
@@ -1068,8 +1101,9 @@ a.editable-click:hover {
 
 .gateway {
   p, span {
-    font-size: $font-medium;
-    font-weight: $font-weight-bold;
+    opacity: 1;
+    //font-size: $font-medium;
+    //font-weight: $font-weight-bold;
   }
 }
 
@@ -1394,5 +1428,189 @@ snippet {
   pre {
     color: $color-text;
     background: rgba($color-text, 0.1);
+  }
+}
+
+
+//Vamp Abstraction
+.v-label {
+  color: $gray;
+  font-size: $font-medium;
+  text-transform: uppercase;
+}
+
+.v-value {
+  color: $gray-lighter;
+  font-size: 22px;
+  font-weight: 300 !important;
+
+  &--state {
+    &--highlight {
+      @extend .highlight;
+    }
+
+    &--warning {
+      @extend .label-info;
+    }
+
+    &--error-alert {
+      @extend .label-red-alert;
+    }
+  }
+}
+
+.v-action {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+//Table
+.vamp-table {
+  &__group {
+    &:not(:first-of-type) {
+      margin-top: 20px;
+    }
+
+    &__name {
+      margin-bottom: -22px;
+    }
+
+  }
+
+  &__headers {
+    width: 100%;
+    display: flex;
+  }
+
+  &__row {
+    width: 100%;
+    display: flex;
+
+    background-color: rgba($gray-dark, 0.2);
+    border-radius: 5px;
+    min-height: 130px;
+    margin-top: 2px;
+
+    align-items: center;
+
+    .v-label {
+      font-weight: $font-weight-light;
+    }
+
+    .v-value {
+      font-size: $font-base;
+
+      &--emphasis {
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: $font-big;
+        background-color: rgba($color-blue-light, .2);
+      }
+
+
+
+      a {
+        color: #1D96B2;
+        padding-left: 6px;
+        font-size: $font-base + 1px;
+
+        &:before {
+          content: "\f105";
+          font-family: FontAwesome;
+          left:-5px;
+          position:absolute;
+          top: 2px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  &__col {
+    position: relative;
+    &:first-of-type {
+      padding-left: 20px;
+    }
+
+    &--chart {
+      position: relative;
+      margin-top: 5px;
+      .v-value {
+        display: block;
+        position: absolute;
+        margin-left: 5px;
+        margin-top: 2px;
+        font-weight: 500 !important;
+        text-shadow: 1px 1px rgba(black, 0.3);
+      }
+    }
+
+    &__list {
+      display: inline-block;
+      position: relative;
+
+      &__action {
+        position: absolute;
+        left: 100%;
+        top: 0;
+        bottom: 0;
+        margin-left: 20px;
+        padding-left: 10px;
+        display: flex;
+        align-items: center;
+        border-left: 1px solid $gray;
+        color: $gray;
+        cursor: pointer;
+
+        &:hover {
+          color: $gray-light;
+        }
+
+      }
+    }
+
+    &__action {
+      cursor: pointer;
+      position: absolute;
+      background-color: red;
+      top: 0;
+      bottom: 0;
+      left: 110px;
+    }
+
+
+  }
+}
+
+//For clusters
+.cluster-table {
+  .vamp-table__headers {
+    .name-col {
+      opacity: 0;
+    }
+  }
+
+  .name-col {
+    width: 20%;
+  }
+
+  .health-col {
+    width: 15%;
+  }
+
+  .scale-col {
+    width: 20%;
+  }
+
+  .instances-col {
+    width: 20%;
+  }
+
+  .ports-col {
+    width: 10%;
+  }
+
+  .env-col {
+    width: 25%;
   }
 }
