@@ -73,7 +73,7 @@
                 <div class="vamp-table__row" ng-repeat="service in cluster.services | orderBy:'breed.name'">
                     <div class="vamp-table__col name-col">
                         <span class="v-value v-value--emphasis v-value--state"
-                              ng-class="{'v-value--state--warning': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'v-value--state--error-alert': $ctrl.serviceStatus(service) === 'failed', 'v-value--state--highlight': $ctrl.addedService(cluster, service)}">
+                              ng-class="{'v-value--state--update': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'v-value--state--error-alert': $ctrl.serviceStatus(service) === 'failed', 'v-value--state--highlight': $ctrl.addedService(cluster, service)}">
                             {{service.breed.name}}
 
                             <i class="fa"

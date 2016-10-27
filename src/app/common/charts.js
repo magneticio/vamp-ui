@@ -2,7 +2,7 @@
 (function (exports) {
   var charts = {};
   var resetValueTimeout = 12500;
-  var resetValueAfterLast = 7500;
+  var resetValueAfterLast = 12500;
 
   function TimeSeriesCharts() {
   }
@@ -65,15 +65,13 @@
   var chartTimeSeriesOptions = {
     lineWidth: 3,
     strokeStyle: '#29719b',
-    fillStyle: 'rgba(41, 113, 155, 0.4)',
-    enableDpiScaling: false
+    fillStyle: 'rgba(41, 113, 155, 0.4)'
   };
 
   var healthChartTimeSeriesOptions = {
     lineWidth: 3,
     strokeStyle: '#3ABA5E',
-    fillStyle: 'rgba(58, 186, 94, 0.3)',
-    enableDpiScaling: false
+    fillStyle: 'rgba(58, 186, 94, 0.3)'
   };
 
   var sparklineTimeSeriesOptions = chartTimeSeriesOptions;

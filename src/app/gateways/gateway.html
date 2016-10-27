@@ -74,27 +74,29 @@
                 <canvas class="chart" id="responseTime" width="330"></canvas>
             </div>
         </div>
-        <div class="row gateway-route-row-header">
-            <div class="col-md-4 gateway-row">
-                <div class="col-sm-8 gateway-row"><p>ROUTE</p></div>
-                <div class="col-sm-4 gateway-row">
+
+        <div class="row gateway-route-header">
+            <div class="col-md-4 gateway-route-header-column">
+                <div class="col-sm-8 gateway-route-header-column">ROUTE</div>
+                <div class="col-sm-4 gateway-route-header-column">
                     <editable on-click="$ctrl.editWeights()" active="($ctrl.gateway.routes | countKeys) > 1">
                         WEIGHT
                     </editable>
                 </div>
             </div>
-            <div class="col-md-4 gateway-row">
-                <div class="col-sm-4 gateway-row"><p>HEALTH</p></div>
-                <div class="col-sm-4 gateway-row"><p>REQUESTS / SECOND</p></div>
-                <div class="col-sm-4 gateway-row"><p>RESPONSE TIME</p></div>
+            <div class="col-md-4 gateway-route-header-column">
+                <div class="col-sm-4 gateway-route-header-column">HEALTH</div>
+                <div class="col-sm-4 gateway-route-header-column">REQUESTS / SECOND</div>
+                <div class="col-sm-4 gateway-route-header-column">RESPONSE TIME</div>
             </div>
-            <div class="col-md-4 gateway-row">
-                <div class="col-sm-8 gateway-row"><p>CONDITION</p></div>
-                <div class="col-sm-4 gateway-row"><p>STRENGTH</p></div>
+            <div class="col-md-4 gateway-route-header-column">
+                <div class="col-sm-8 gateway-route-header-column">CONDITION</div>
+                <div class="col-sm-4 gateway-route-header-column">STRENGTH</div>
             </div>
         </div>
+
         <div class="row gateway-route-row" ng-repeat="(name, route) in $ctrl.gateway.routes | orderByKeys">
-            <div class="col-md-4 gateway-route">
+            <div class="col-md-4 gateway-row">
                 <div class="col-sm-8 gateway-row gateway-route-name">
                     <span class="label" ng-class="{'highlight': $ctrl.addedRoute(route)}">{{name}}</span>
                 </div>
@@ -102,7 +104,7 @@
                     <span highlighter="route.weight" class="label label-success">{{route.weight}}</span>
                 </div>
             </div>
-            <div class="col-md-4 gateway-row">
+            <div class="col-md-4 gateway-row gateway-route-sparklines">
                 <div class="col-sm-4 gateway-row">
                     <canvas class="chart" id="health-{{route.lookup_name}}" width="100" height="40"></canvas>
                     <p>
