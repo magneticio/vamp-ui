@@ -5,7 +5,7 @@
     "angular": "1.5.8",
     "angular-ui-router": "0.3.1",
     "jquery": "3.0.0",
-    "angular-bootstrap": "2.1.4",
+    "angular-bootstrap": "2.2.0",
     "angular-toastr": "1.7.0",
     "lodash": "4.14.0",
     "bootstrap": "3.3.7",
@@ -37,6 +37,6 @@
   },
   "resolutions": {
     "angular": "1.5.8",
-    "angular-bootstrap": "2.1.4"
+    "angular-bootstrap": "2.2.0"
   }
 }

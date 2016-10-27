@@ -5,18 +5,23 @@ angular.module('app').component('info', {
 });
 
 function InfoController($rootScope, $scope, $vamp) {
+  $scope.info = {};
+
   if ($vamp.connected()) {
     $vamp.peek('/info');
-  } else {
-    $scope.$on('$vamp:connection', function (event, connection) {
-      if (connection === 'opened') {
-        $vamp.peek('/info');
-      }
-    });
   }
+
+  $scope.$on('$vamp:connection', function (event, connection) {
+    if (connection === 'opened') {
+      $vamp.peek('/info');
+    }
+  });
 
   $rootScope.$watch('infoPanelActive', function (newValue) {
     $scope.infoPanelActive = newValue;
+    if (!$scope.info.message) {
+      $vamp.peek('/info');
+    }
   });
 
   $scope.$on('/info', function (event, data) {
@@ -26,23 +31,20 @@ function InfoController($rootScope, $scope, $vamp) {
       return;
     }
 
-    var info = {};
-    info.message = data.message;
-    info.running_since = data.running_since;
-    info.version = data.version;
-    info.ui_version = Environment.prototype.version();
-    info.persistence = data.persistence.database.type === 'key-value' ? data.key_value.type : data.persistence.database.type;
-    info.key_value_store = data.key_value.type;
-    info.gateway_driver = 'haproxy ' + data.gateway_driver.marshaller.haproxy;
-    info.container_driver = data.container_driver.type;
-    info.workflow_driver = '';
+    $scope.info.message = data.message;
+    $scope.info.running_since = data.running_since;
+    $scope.info.version = data.version;
+    $scope.info.ui_version = Environment.prototype.version();
+    $scope.info.persistence = data.persistence.database.type === 'key-value' ? data.key_value.type : data.persistence.database.type;
+    $scope.info.key_value_store = data.key_value.type;
+    $scope.info.gateway_driver = 'haproxy ' + data.gateway_driver.marshaller.haproxy;
+    $scope.info.container_driver = data.container_driver.type;
+    $scope.info.workflow_driver = '';
 
     for (var name in data.workflow_driver) {
       if (name && data.workflow_driver.hasOwnProperty(name)) {
-        info.workflow_driver += info.workflow_driver === '' ? name : ', ' + name;
+        $scope.info.workflow_driver += $scope.info.workflow_driver === '' ? name : ', ' + name;
       }
     }
-
-    $scope.info = info;
   });
 }
