@@ -62,7 +62,7 @@ function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, $vamp
       'Merge blueprint to deployment',
       'Which deployment should \'' + $ctrl.blueprint.name + '\' be merged to?',
       'Merge',
-      'action'
+      ''
     );
 
     modal.result.then(function (data) {

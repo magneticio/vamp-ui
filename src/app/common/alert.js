@@ -45,10 +45,10 @@ angular.module('app').component('alert', {
             return button2;
           },
           button1Class: function () {
-            return button1Class ? button1Class : 'red';
+            return button1Class ? button1Class : '';
           },
           button2Class: function () {
-            return button2Class ? button2Class : '';
+            return button2Class ? button2Class : 'red';
           }
         }
       }).result.then(function () {

@@ -41,7 +41,7 @@ function watch(done) {
 
 function fixDist(next) {
   gulp
-    .src(conf.paths.dist + '/img/blueprint.png')
+    .src(conf.paths.dist + '/img/background-*.png')
     .pipe(gulp.dest(conf.paths.dist + '/styles/img'));
 
   gulp

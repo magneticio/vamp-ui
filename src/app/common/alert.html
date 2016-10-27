@@ -5,11 +5,10 @@
     {{ $ctrl.message }}
 </div>
 <div class="modal-footer">
-    <button class="btn {{ $ctrl.button2Class }}" type="button" ng-show="$ctrl.button2" ng-click="$ctrl.cancel()">
-        {{ $ctrl.button2 }}
-    </button>
     <button class="btn {{ $ctrl.button1Class }}" type="button" ng-show="$ctrl.button1" ng-click="$ctrl.ok()">
         {{ $ctrl.button1 }}
     </button>
-
+    <button class="btn {{ $ctrl.button2Class }}" type="button" ng-show="$ctrl.button2" ng-click="$ctrl.cancel()">
+        {{ $ctrl.button2 }}
+    </button>
 </div>
