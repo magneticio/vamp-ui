@@ -120,20 +120,15 @@ menu {
   margin: 0;
   z-index: 999;
   position: relative;
-  height: 50px;
-  box-shadow: 0 5px 5px -2px $gray-base;
-  overflow: hidden;
 
   nav {
     background: rgb(13, 30, 38) !important;
     overflow-y: scroll;
-    height: 100%;
   }
 
   .navbar {
     margin-bottom: 0;
     border: none;
-    box-shadow: none;
 
     .stats {
       display: flex;
@@ -181,6 +176,12 @@ menu {
   .navbar-header {
     float: none;
   }
+}
+
+.navbar-default {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
 }
 
 .navbar-default .navbar-toggle {
