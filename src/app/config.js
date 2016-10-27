@@ -1,5 +1,5 @@
 /* global Environment */
-angular.module('app').config(function ($logProvider, toastrConfig, $mixpanelProvider) {
+angular.module('app').config(function ($logProvider, toastrConfig) {
   $logProvider.debugEnabled(Environment.prototype.debug());
 
   // Configuration of the angular-toastr plugin. See: https://github.com/Foxandxss/angular-toastr
@@ -13,6 +13,4 @@ angular.module('app').config(function ($logProvider, toastrConfig, $mixpanelProv
     positionClass: 'toast-top-right',
     preventOpenDuplicates: true
   });
-
-  $mixpanelProvider.apiKey(Environment.prototype.mixpanel());
 });
