@@ -7,7 +7,7 @@ $gray-lighter: #c3d2dc;
 $brand-primary: rgb(55, 100, 125);
 $brand-success: #3ABA5E;
 $brand-info: #6991aa;
-$brand-warning: #FAAC19;
+$brand-warning: #ffb21b;
 $brand-danger: rgb(255, 64, 94);
 $link-hover-color: darken($brand-info, 15%);
 
@@ -270,7 +270,7 @@ menu {
 
 .label-info {
   color: $color-white;
-  background-color: $brand-warning;
+  background-color: $brand-warning !important;
 }
 
 .editor {
@@ -999,7 +999,7 @@ a.editable-click:hover {
     border-radius: 50% !important;
     margin: 0 5px;
     padding: 0 !important;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   }
 
   &.red {
@@ -1432,6 +1432,7 @@ snippet {
 
     &--update {
       @extend .label-info;
+      background-color: $brand-warning !important;
     }
 
     &--error-alert {

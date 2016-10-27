@@ -2,7 +2,7 @@
 (function (exports) {
   var charts = {};
   var resetValueTimeout = 12500;
-  var resetValueAfterLast = 12500;
+  var resetValueAfterLast = 7500;
 
   function TimeSeriesCharts() {
   }
