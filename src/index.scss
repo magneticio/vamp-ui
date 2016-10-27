@@ -1,4 +1,3 @@
-// David colors
 $gray-base: #0d1e26;
 $gray-darker: #142d3c;
 $gray-dark: rgb(35, 75, 95);
@@ -12,7 +11,6 @@ $brand-warning: #FAAC19;
 $brand-danger: rgb(255, 64, 94);
 $link-hover-color: darken($brand-info, 15%);
 
-// colors
 $color-blue-dark: $gray-dark;
 $color-blue: $gray;
 $color-blue-light: $gray-light;
@@ -42,8 +40,6 @@ $font-really-big: ceil($font-base * 1.7);
 $font-weight-light: 300;
 $font-weight-regular: 300;
 $font-weight-bold: 500;
-
-
 
 @mixin box-shadow($color) {
   -webkit-box-shadow: 0 0 4px 2px $color;
@@ -161,7 +157,6 @@ menu {
       }
     }
 
-
     .disconnected {
       display: flex;
       align-items: center;
@@ -181,10 +176,10 @@ menu {
     display: block !important;
   }
   .navbar-header .collapse, .navbar-toggle {
-    display:block !important;
+    display: block !important;
   }
   .navbar-header {
-    float:none;
+    float: none;
   }
 }
 
@@ -462,8 +457,6 @@ p, div {
   }
 }
 
-
-
 .event-panel-content {
   height: 50px;
   position: relative;
@@ -499,7 +492,6 @@ p, div {
     background-color: $brand-info;
   }
 
-
   &.show {
     height: 400px;
   }
@@ -529,7 +521,7 @@ p, div {
       }
     }
 
-    .btn  {
+    .btn {
       border: 2px solid $gray !important;
       width: 120px;
     }
@@ -870,26 +862,23 @@ a.editable-click:hover {
   position: relative;
   border: 2px solid transparent;
 
-
-  
   background-image: url("/img/background-pattern-alpha.png");
   background-repeat: no-repeat;
   background-size: contain;
 
   //box-shadow: 0 1px 3px rgba($gray-base,1), 0 1px 2px rgba($gray-base,1)
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 
   &:hover {
     //background-color: rgba($gray-dark, 0.75);
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 
     .artifact-title {
       text-decoration: underline;
     }
 
   }
-
 
   &.selected {
     border-color: $gray-light;
@@ -911,7 +900,6 @@ a.editable-click:hover {
 }
 
 .artifact-properties {
-
 
   span {
     font-size: $font-small !important;
@@ -957,7 +945,6 @@ a.editable-click:hover {
     //border: 1px solid rgba($gray-lighter, 0.3)
     background-color: rgba($gray-base, 0.75);
 
-
     color: $gray-lighter !important;
 
     p {
@@ -991,8 +978,6 @@ a.editable-click:hover {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-weight: 500 !important;
-
-
 
   &:hover {
     background-color: $color-blue-dark !important;
@@ -1102,8 +1087,6 @@ a.editable-click:hover {
 .gateway {
   p, span {
     opacity: 1;
-    //font-size: $font-medium;
-    //font-weight: $font-weight-bold;
   }
 }
 
@@ -1125,9 +1108,8 @@ a.editable-click:hover {
 
 .gateway-charts {
   padding: 12px 0 15px 0;
-  //background-color: rgba($gray-dark, 0.2);
 
-  &>.gateway-row {
+  & > .gateway-row {
     p {
       margin-bottom: 20px;
     }
@@ -1135,7 +1117,6 @@ a.editable-click:hover {
 }
 
 .gateway-route-row {
-  padding: 10px 0;
   background-color: rgba($gray-dark, 0.2);
   border-radius: 5px;
   padding: 10px 0 0 0;
@@ -1144,10 +1125,10 @@ a.editable-click:hover {
   margin-right: 15px;
   margin-top: 2px;
 
-  &>.gateway-row {
+  & > .gateway-row {
     margin: 0;
 
-    &>.gateway-row {
+    & > .gateway-row {
       margin: 0;
 
       p {
@@ -1157,13 +1138,12 @@ a.editable-click:hover {
   }
 }
 
-.gateway-route-row-header>.gateway-row {
+.gateway-route-row-header > .gateway-row {
   @extend .deployment-cluster-row-header;
-  &>.gateway-row {
+  & > .gateway-row {
     margin: 0;
   }
 }
-
 
 .gateway-route-name {
   @extend .deployment-cluster-name;
@@ -1172,8 +1152,6 @@ a.editable-click:hover {
   span {
     font-size: $font-big !important;
   }
-
-
 }
 
 .gateway-route-weight {
@@ -1185,7 +1163,6 @@ a.editable-click:hover {
 }
 
 .gateway-route-condition-strength {
-  //padding: 0 10px 0 0;
 }
 
 // deployment
@@ -1202,7 +1179,7 @@ a.editable-click:hover {
 .deployment-chart-column {
   text-align: center;
   padding: 20px 0;
-  &>p {
+  & > p {
     margin-bottom: 20px;
   }
 }
@@ -1226,10 +1203,8 @@ a.editable-click:hover {
   span {
     font-size: $font-big !important;
     font-weight: $font-weight-light;
-    //background-color: rgba($color-blue-light, .2);
     color: $gray-lighter;
     margin: 10px;
-    overflow: hidden;
 
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1243,11 +1218,9 @@ a.editable-click:hover {
   @extend .gateway-route-row;
   border-radius: 5px;
 
-
   margin-top: 2px;
   margin-left: 20px;
   margin-right: 20px;
-
 }
 
 .deployment-row-no-padding {
@@ -1431,8 +1404,6 @@ snippet {
   }
 }
 
-
-//Vamp Abstraction
 .v-label {
   color: $gray;
   font-size: $font-medium;
@@ -1464,7 +1435,6 @@ snippet {
   cursor: pointer;
 }
 
-//Table
 .vamp-table {
   &__group {
     &:not(:first-of-type) {
@@ -1474,7 +1444,6 @@ snippet {
     &__name {
       margin-bottom: -22px;
     }
-
   }
 
   &__headers {
@@ -1507,8 +1476,6 @@ snippet {
         background-color: rgba($color-blue-light, .2);
       }
 
-
-
       a {
         color: #1D96B2;
         padding-left: 6px;
@@ -1517,9 +1484,9 @@ snippet {
         &:before {
           content: "\f105";
           font-family: FontAwesome;
-          left:-5px;
-          position:absolute;
-          top: 2px;
+          left: -5px;
+          position: absolute;
+          top: 1px;
           font-size: 14px;
         }
       }
@@ -1577,7 +1544,6 @@ snippet {
       bottom: 0;
       left: 110px;
     }
-
 
   }
 }
