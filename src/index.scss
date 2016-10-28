@@ -510,7 +510,6 @@ p, div {
     font-size: $font-medium;
     justify-content: space-between;
     align-items: center;
-    background-color: $color-bg-dark;
     cursor: pointer;
     font-weight: $font-weight-regular;
     overflow-y: scroll;
@@ -552,7 +551,7 @@ p, div {
     color: $color-text !important;
 
     table tbody tr {
-      color: $color-text;
+      color: $color-text-dark;
       font-weight: $font-weight-regular;
       th {
         border-top: none;
