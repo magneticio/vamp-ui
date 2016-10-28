@@ -6,8 +6,8 @@ angular.module('app')
       $mixpanelProvider.apiKey(Environment.prototype.mixpanel());
     }
   })
-  .factory('$analytics', ['$rootScope', function ($rootScope) {
-    return new Analytics($rootScope);
+  .factory('$analytics', ['$injector', '$rootScope', '$log', function ($injector, $rootScope, $log) {
+    return new Analytics($injector, $rootScope, $log);
   }])
   .run(['$analytics', function ($analytics) {
     if (Environment.prototype.mixpanel()) {
@@ -15,9 +15,13 @@ angular.module('app')
     }
   }]);
 
-function Analytics($rootScope) { // $mixpanel
+function Analytics($injector, $rootScope, $log) {
+  var $this = this;
+  var $mixpanel;
+  var info = {};
+
   this.run = function () {
-    var info = {};
+    $mixpanel = $injector.get('$mixpanel');
 
     $rootScope.$on('/info', function (event, data) {
       data = data.data;
@@ -28,9 +32,40 @@ function Analytics($rootScope) { // $mixpanel
       info.version = data.version;
       info.ui_version = Environment.prototype.version();
       info.container_driver = data.container_driver.type;
+      info.key_value_store = data.key_value.type;
+      info.persistence = data.persistence.database.type === 'key-value' ? data.key_value.type : data.persistence.database.type;
+
+      if ($mixpanel) {
+        $mixpanel.identify(info.uuid);
+        $mixpanel.people.set({
+          $distinct_id: info.uuid
+        });
+      }
     });
 
-    $rootScope.$on('/events/stream', function () {
+    $rootScope.$on('/events/stream', function (e, response) {
+      if (_.includes(response.data.tags, 'archive')) {
+        var type;
+        var archive;
+        _.forEach(response.data.tags, function (tag) {
+          if (!type && tag.indexOf(':') === -1 && tag.indexOf('-') === -1 && tag !== 'archive') {
+            type = tag;
+          }
+          if (!archive && tag.indexOf('archive:') === 0) {
+            archive = tag.substring('archive:'.length);
+          }
+        });
+        if (archive && type) {
+          $this.track(type + ':' + archive);
+        }
+      }
     });
+  };
+
+  this.track = function (event) {
+    if ($mixpanel) {
+      $mixpanel.track(event, info);
+      $log.debug('mixpanel: ' + JSON.stringify({event: event, info: info}));
+    }
   };
 }
