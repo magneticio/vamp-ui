@@ -21,6 +21,7 @@ function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, $vam
 
     $uibModal.open({
       animation: true,
+      backdrop: 'static',
       controller: function ($scope, $uibModalInstance, deployment) {
         $scope.deployment = deployment;
         $scope.name = angular.copy(deployment.name);

@@ -40,6 +40,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   this.editWeights = function () {
     $uibModal.open({
       animation: true,
+      backdrop: 'static',
       component: 'editWeights',
       resolve: {
         gateway: function () {

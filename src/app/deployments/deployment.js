@@ -42,6 +42,7 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
   this.editScale = function (cluster, service) {
     $uibModal.open({
       animation: true,
+      backdrop: 'static',
       component: 'editScale',
       resolve: {
         deployment: function () {

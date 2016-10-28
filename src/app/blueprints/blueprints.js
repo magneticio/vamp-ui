@@ -30,6 +30,7 @@ function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, $vamp
 
     $uibModal.open({
       animation: true,
+      backdrop: 'static',
       controller: 'DeployBlueprintController',
       templateUrl: 'app/blueprints/deployBlueprint.html',
       resolve: {
@@ -117,6 +118,7 @@ function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, $vamp
   function updateDeployment(deployments, title, text, buttonText, buttonClass) {
     return $uibModal.open({
       animation: true,
+      backdrop: 'static',
       controller: 'UpdateDeploymentController',
       templateUrl: 'app/blueprints/updateDeployment.html',
       resolve: {

@@ -30,6 +30,7 @@ angular.module('app').component('alert', {
     show: function (title, message, button1, button2, button1Click, button2Click, button1Class, button2Class) {
       $uibModal.open({
         animation: true,
+        backdrop: 'static',
         component: 'alert',
         resolve: {
           title: function () {

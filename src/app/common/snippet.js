@@ -17,6 +17,7 @@ angular.module('app').component('snippet', {
       $uibModal.open({
         size: size,
         animation: true,
+        backdrop: 'static',
         component: 'snippet',
         resolve: {
           title: function () {
