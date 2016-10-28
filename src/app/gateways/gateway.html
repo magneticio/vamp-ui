@@ -32,14 +32,14 @@
             </div>
             <div class="col-md-3 gateway-row">
                 <p>STICKY</p>
-                <editable-drop-down ng-if="$ctrl.gateway && $ctrl.gateway.service.port.endsWith('/http')" active="true"
+                <editable-drop-down ng-if="$ctrl.gateway && $ctrl.gateway.deployed && $ctrl.gateway.service.port.endsWith('/http')" active="true"
                                     values="$ctrl.stickyValues" selected="$ctrl.sticky(value)">
                     <span highlighter="$ctrl.gateway.sticky" class="label gateway-sticky"
                           ng-class="{'label-success': $ctrl.gateway.sticky, 'label-primary': !$ctrl.gateway.sticky}">
                         {{ $ctrl.gateway.sticky || 'not sticky'}}
                     </span>
                 </editable-drop-down>
-                <span ng-if="$ctrl.gateway && !$ctrl.gateway.service.port.endsWith('/http')"
+                <span ng-if="$ctrl.gateway && $ctrl.gateway.deployed && !$ctrl.gateway.service.port.endsWith('/http')"
                       class="label label-default gateway-sticky">
                     not HTTP
                 </span>

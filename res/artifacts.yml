@@ -159,3 +159,31 @@ clusters:
         cpu: 0.2
         memory: 64MB
         instances: 1
+---
+name: sava-tcp
+kind: blueprint
+
+gateways:
+  9070/tcp: runner/port
+
+clusters:
+  runner:
+    services:
+      breed:
+        name: tcp:1.0.0
+        deployable: magneticio/sava:runner_1.0
+        ports:
+          port: 8091/tcp
+        environment_variables:
+          SAVA_RUNNER_ID: 1.0.0
+
+      scale:
+        cpu: 0.2
+        memory: 64MB
+        instances: 1
+
+    gateways:
+      port:
+        routes:
+          tcp:1.0.0:
+            balance: source

@@ -120,7 +120,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
         alert.show('Warning', '\'' + $ctrl.gateway.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
           $location.path('/gateways');
         });
-      } else if (_.includes(event.tags, 'archive:update')) {
+      } else if (_.includes(event.tags, 'archive:update') || _.includes(event.tags, 'deployed')) {
         $vamp.peek(path);
       } else {
         chartUpdate(event);
