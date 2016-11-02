@@ -1,22 +1,31 @@
 <artifacts kind="workflows">
-    <div class="artifact-properties" ng-controller="ArtifactsController as $ctrl">
-        <span ng-if="$ctrl.artifact.breed.name" class="label label-primary">breed: {{$ctrl.artifact.breed.name}}</span>
-        <span ng-if="$ctrl.artifact.breed.reference" class="label label-primary">breed: {{$ctrl.artifact.breed.reference}}</span>
+    <div class="artifact-properties" ng-controller="WorkflowsController as $ctrl">
+        <span class="label"
+              ng-class="{'label-success': $ctrl.workflow.status === 'running', 'label-info': $ctrl.updating()}">
+            {{ $ctrl.workflow.status }}&nbsp;
+            <i class="fa"
+               ng-class="{'fa-check': $ctrl.workflow.status === 'running', 'fa-cog': $ctrl.updating(), 'fa-spin': $ctrl.updating(), 'fa-pause': $ctrl.workflow.status === 'suspended'}"></i>
+        </span>
         <p></p>
-        <span ng-if="$ctrl.artifact.schedule === 'daemon'" class="label label-primary">schedule : daemon</span>
-        <div class="list" ng-if="!($ctrl.artifact.schedule.event | isEmpty)">
-            <p>event schedule: </p>
-            <ul>
-                <li ng-repeat="tag in $ctrl.artifact.schedule.event.tags">{{ tag }}</li>
-            </ul>
+        <span ng-if="$ctrl.workflow.breed.name" class="label label-primary">breed: {{$ctrl.workflow.breed.name}}</span>
+        <span ng-if="$ctrl.workflow.breed.reference" class="label label-primary">breed: {{$ctrl.workflow.breed.reference}}</span>
+        <p></p>
+
+        <span ng-if="$ctrl.workflow.schedule === 'daemon'" class="label label-primary">schedule : daemon</span>
+        <span ng-if="!($ctrl.workflow.schedule.event | isEmpty)" class="label label-primary">schedule : event</span>
+        <span ng-if="!($ctrl.workflow.schedule.time | isEmpty)" class="label label-primary">schedule : time</span>
+
+        <div class="artifact-card-actions">
+            <button class="btn" ng-if="$ctrl.workflow.status === 'suspended'" ng-click="$ctrl.start($event)">
+                <i class="fa fa-play"></i>&nbsp;&nbsp;start
+            </button>
+            <button class="btn" ng-if="$ctrl.workflow.status === 'running'" ng-click="$ctrl.suspend($event)">
+                <i class="fa fa-pause"></i>&nbsp;&nbsp;suspend
+            </button>
+            <button class="btn" ng-if="$ctrl.workflow.status === 'running'" ng-click="$ctrl.restart($event)">
+                <i class="fa fa-refresh"></i>&nbsp;&nbsp;restart
+            </button>
         </div>
-        <div class="list" ng-if="!($ctrl.artifact.schedule.time | isEmpty)">
-            <p>time schedule: </p>
-            <ul>
-                <li ng-if="$ctrl.artifact.schedule.time.period">period : {{ $ctrl.artifact.schedule.time.period }}</li>
-                <li ng-if="$ctrl.artifact.schedule.time.start">start  : {{ $ctrl.artifact.schedule.time.start }}</li>
-                <li ng-if="$ctrl.artifact.schedule.time.repeat">repeat : {{ $ctrl.artifact.schedule.time.repeat }}</li>
-            </ul>
-        </div>
+
     </div>
 </artifacts>
