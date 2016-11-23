@@ -2,10 +2,17 @@
 
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-reset=`tput sgr0`
-red=`tput setaf 1`
-green=`tput setaf 2`
-yellow=`tput setaf 3`
+if hash tput &> /dev/null ; then
+  reset="$(tput sgr0)"
+  red="$(tput setaf 1)"
+  green="$(tput setaf 2)"
+  yellow="$(tput setaf 3)"
+else
+  reset=""
+  red=""
+  green=""
+  yellow=""
+fi
 
 ORIGIN=$1
 VERSION=`git describe --tags`
