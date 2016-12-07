@@ -27,7 +27,7 @@ function InfoController($rootScope, $scope, $vamp) {
   $scope.$on('/info', function (event, data) {
     /* eslint camelcase: ["error", {properties: "never"}] */
     data = data.data;
-    if (!data.persistence || !data.key_value || !data.gateway_driver || !data.container_driver || !data.workflow_driver) {
+    if (!data.persistence || !data.pulse || !data.key_value || !data.gateway_driver || !data.container_driver || !data.workflow_driver) {
       return;
     }
 
@@ -36,6 +36,7 @@ function InfoController($rootScope, $scope, $vamp) {
     $scope.info.version = data.version;
     $scope.info.ui_version = Environment.prototype.version();
     $scope.info.persistence = data.persistence.database.type === 'key-value' ? data.key_value.type : data.persistence.database.type;
+    $scope.info.pulse = data.pulse.type;
     $scope.info.key_value_store = data.key_value.type;
     $scope.info.gateway_driver = 'haproxy ' + data.gateway_driver.marshaller.haproxy;
     $scope.info.container_driver = data.container_driver.type;
