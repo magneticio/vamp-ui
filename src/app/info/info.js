@@ -1,4 +1,4 @@
-/* global Environment */
+/* global Environment,Help */
 angular.module('app').component('info', {
   templateUrl: 'app/info/info.html',
   controller: InfoController
@@ -7,17 +7,29 @@ angular.module('app').component('info', {
 function InfoController($rootScope, $scope, $vamp) {
   var $ctrl = this;
   $scope.info = {};
+  $scope.helpLinks = [];
 
   var showI = false;
   var showH = false;
 
-  this.showInfo = function () {
+  $ctrl.showInfo = function () {
     return showI;
   };
 
-  this.showHelp = function () {
+  $ctrl.showHelp = function () {
     return showH;
   };
+
+  $rootScope.$on('$stateChangeStart',
+    function (event, toState) {
+      var path = toState.url.substring(1);
+      var last = path.indexOf('/');
+      if (last !== -1) {
+        path = path.substring(0, last);
+      }
+      $scope.helpLinks = Help.prototype.entries()[path] ? Help.prototype.entries()[path] : Help.prototype.entries().default;
+    }
+  );
 
   if ($vamp.connected()) {
     $vamp.peek('/info');

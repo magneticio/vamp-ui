@@ -42,7 +42,10 @@
         </table>
     </div>
     <div ng-show="$ctrl.showHelp()">
-        <span>HELP</span>
-        <br><br>
+        <table class="table">
+            <tr ng-repeat="link in helpLinks">
+                <td><a href="{{ link.url }}" target="_blank">{{ link.title | uppercase }}</a></td>
+            </tr>
+        </table>
     </div>
 </div>
