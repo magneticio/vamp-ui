@@ -24,7 +24,7 @@
             </span>
             <!-- connected -->
             <div class="nav navbar-nav navbar-right" ng-show="$ctrl.connected">
-                <div  class="deployment-float-1 hidden-xs hidden-sm hidden-md">
+                <div class="deployment-float-1 hidden-xs hidden-sm hidden-md">
                     <ul class="nav navbar-nav navbar-right" ng-show="$ctrl.connected">
                         <li class="stats" ng-show="$ctrl.jvm">
                             <div class="stat-value">
@@ -33,20 +33,24 @@
                             </div>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="stat-value">
-                                <span class="stat-label">MEMORY:</span>
+                                <span class="stat-label">MEM:</span>
                                 <span class="stat-content">
                           {{ ($ctrl.jvm.heapCurrent / $ctrl.jvm.heapMax) * 100 | number: 1 }}%
                           <span class="detail">
-                            &nbsp;({{ $ctrl.jvm.heapCurrent | number: 0}}MB/{{ $ctrl.jvm.heapMax | number: 0 }}MB)
+                            &nbsp;({{ $ctrl.jvm.heapCurrent | number: 0}}/{{ $ctrl.jvm.heapMax | number: 0 }}MB)
                           </span>
                         </span>
                             </div>
                         </li>
                     </ul>
                 </div>
-                <div class="deployment-float-2 hidden-xs hidden-sm">
-                    <i class="fa fa-info info-button clickable" aria-hidden="true"
+                <div class="deployment-float-1 hidden-xs hidden-sm">
+                    <i class="fa fa-info-circle info-button clickable" aria-hidden="true"
                        ng-click="$ctrl.toggleInfoPanel()"></i>
+                </div>
+                <div class="deployment-float-1 hidden-xs hidden-sm">
+                    <i class="fa fa-question-circle help-button clickable" aria-hidden="true"
+                       ng-click="$ctrl.toggleHelpPanel()"></i>
                 </div>
             </div>
         </div>

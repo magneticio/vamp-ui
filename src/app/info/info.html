@@ -1,42 +1,48 @@
-<div class="info-panel hidden-xs hidden-sm" ng-class="{'active': infoPanelActive}">
-    <span>{{info.message}}</span>
-    <br><br>
-    <table class="table">
-        <tr>
-            <td>RUNNING SINCE</td>
-            <td>{{info.running_since | date: 'dd-MM-yyyy HH:mm:ss'}}</td>
-        </tr>
-        <tr>
-            <td>VERSION</td>
-            <td>{{info.version}}</td>
-        </tr>
-        <tr ng-if="info.ui_version !== info.version">
-            <td>UI VERSION</td>
-            <td>{{info.ui_version}}</td>
-        </tr>
-        <tr>
-            <td>PERSISTENCE</td>
-            <td>{{info.persistence}}</td>
-        </tr>
-        <tr>
-            <td>PULSE</td>
-            <td>{{info.pulse}}</td>
-        </tr>
-        <tr>
-            <td>KEY VALUE STORE</td>
-            <td>{{info.key_value_store}}</td>
-        </tr>
-        <tr>
-            <td>GATEWAY DRIVER</td>
-            <td>{{info.gateway_driver}}</td>
-        </tr>
-        <tr>
-            <td>CONTAINER DRIVER</td>
-            <td>{{info.container_driver}}</td>
-        </tr>
-        <tr>
-            <td>WORKFLOW DRIVER</td>
-            <td>{{info.workflow_driver}}</td>
-        </tr>
-    </table>
+<div class="info-panel hidden-xs hidden-sm" ng-class="{'active': infoPanelActive || helpPanelActive}">
+    <div ng-show="$ctrl.showInfo()">
+        <span>{{info.message}}</span>
+        <br><br>
+        <table class="table">
+            <tr>
+                <td>RUNNING SINCE</td>
+                <td>{{info.running_since | date: 'dd-MM-yyyy HH:mm:ss'}}</td>
+            </tr>
+            <tr>
+                <td>VERSION</td>
+                <td>{{info.version}}</td>
+            </tr>
+            <tr ng-if="info.ui_version !== info.version">
+                <td>UI VERSION</td>
+                <td>{{info.ui_version}}</td>
+            </tr>
+            <tr>
+                <td>PERSISTENCE</td>
+                <td>{{info.persistence}}</td>
+            </tr>
+            <tr>
+                <td>PULSE</td>
+                <td>{{info.pulse}}</td>
+            </tr>
+            <tr>
+                <td>KEY VALUE STORE</td>
+                <td>{{info.key_value_store}}</td>
+            </tr>
+            <tr>
+                <td>GATEWAY DRIVER</td>
+                <td>{{info.gateway_driver}}</td>
+            </tr>
+            <tr>
+                <td>CONTAINER DRIVER</td>
+                <td>{{info.container_driver}}</td>
+            </tr>
+            <tr>
+                <td>WORKFLOW DRIVER</td>
+                <td>{{info.workflow_driver}}</td>
+            </tr>
+        </table>
+    </div>
+    <div ng-show="$ctrl.showHelp()">
+        <span>HELP</span>
+        <br><br>
+    </div>
 </div>

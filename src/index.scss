@@ -625,17 +625,19 @@ a.editable-click:hover {
 }
 
 .info-button {
+  margin-left: 15px;
   margin-right: -15px;
   width: 57px;
   display: flex !important;
   align-items: center;
   justify-content: center;
-  margin-left: 15px;
-  padding-top: 16px;
+  padding-top: 12px;
+  font-size: 24px;
 }
 
-.fa-info {
-  font-size: 22px;
+.help-button {
+  @extend .info-button;
+  margin-left: 0;
 }
 
 .navbar-brand {

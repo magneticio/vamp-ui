@@ -5,7 +5,19 @@ angular.module('app').component('info', {
 });
 
 function InfoController($rootScope, $scope, $vamp) {
+  var $ctrl = this;
   $scope.info = {};
+
+  var showI = false;
+  var showH = false;
+
+  this.showInfo = function () {
+    return showI;
+  };
+
+  this.showHelp = function () {
+    return showH;
+  };
 
   if ($vamp.connected()) {
     $vamp.peek('/info');
@@ -19,8 +31,20 @@ function InfoController($rootScope, $scope, $vamp) {
 
   $rootScope.$watch('infoPanelActive', function (newValue) {
     $scope.infoPanelActive = newValue;
+    if ($scope.infoPanelActive) {
+      showI = true;
+      showH = false;
+    }
     if (!$scope.info.message) {
       $vamp.peek('/info');
+    }
+  });
+
+  $rootScope.$watch('helpPanelActive', function (newValue) {
+    $scope.helpPanelActive = newValue;
+    if ($scope.helpPanelActive) {
+      showH = true;
+      showI = false;
     }
   });
 
