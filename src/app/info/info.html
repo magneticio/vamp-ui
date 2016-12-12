@@ -1,8 +1,8 @@
 <div class="info-panel hidden-xs hidden-sm" ng-class="{'active': infoPanelActive || helpPanelActive}">
-    <div ng-show="$ctrl.showInfo()">
+    <div class="" ng-show="$ctrl.showInfo()">
         <i class="fa fa-arrow-right clickable pull-right" aria-hidden="true" ng-click="$ctrl.closePanel()"></i>
-        <br><br>
-        <span>{{info.message}}</span>
+        <br>
+        <span class="info-message">{{info.message}}</span>
         <br><br>
         <table class="table">
             <tr>
@@ -46,11 +46,13 @@
     <div ng-show="$ctrl.showHelp()">
         <i class="fa fa-arrow-right clickable pull-right" aria-hidden="true" ng-click="$ctrl.closePanel()"></i>
         <br><br>
-        <span>{{helpDescription}}</span>
+        <span class="help-description">{{helpDescription}}</span>
         <br><br>
         <table class="table">
             <tr ng-repeat="link in helpLinks">
-                <td><a href="{{ link.url }}" target="_blank">{{ link.title | uppercase }}</a></td>
+                <td><a class="help-link" href="{{ link.url }}" target="_blank">
+                    {{ link.title | uppercase }}
+                </a>&nbsp;<i class="fa fa-external-link" aria-hidden="true"></i></td>
             </tr>
         </table>
     </div>

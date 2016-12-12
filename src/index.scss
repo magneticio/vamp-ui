@@ -429,12 +429,22 @@ edit, add {
     td {
       border: none;
       color: $color-text;
+
+      .help-link {
+        font-weight: $font-weight-bold;
+      }
     }
   }
 
-  span {
+  .info-message {
     margin: 0 0 20px 0;
     font-size: $font-big;
+  }
+
+  .help-description {
+    @extend .info-message;
+    font-size: $font-big;
+    font-weight: $font-weight-regular;
   }
 
   &.active {
