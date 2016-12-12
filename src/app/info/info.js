@@ -7,6 +7,7 @@ angular.module('app').component('info', {
 function InfoController($rootScope, $scope, $vamp) {
   var $ctrl = this;
   $scope.info = {};
+  $scope.helpDescription = '';
   $scope.helpLinks = [];
 
   var showI = false;
@@ -20,6 +21,11 @@ function InfoController($rootScope, $scope, $vamp) {
     return showH;
   };
 
+  this.closePanel = function () {
+    $rootScope.infoPanelActive = false;
+    $rootScope.helpPanelActive = false;
+  };
+
   $rootScope.$on('$stateChangeStart',
     function (event, toState) {
       var path = toState.url.substring(1);
@@ -27,7 +33,14 @@ function InfoController($rootScope, $scope, $vamp) {
       if (last !== -1) {
         path = path.substring(0, last);
       }
-      $scope.helpLinks = Help.prototype.entries()[path] ? Help.prototype.entries()[path] : Help.prototype.entries().default;
+
+      if (Help.prototype.entries()[path]) {
+        $scope.helpDescription = Help.prototype.entries()[path].description;
+        $scope.helpLinks = Help.prototype.entries()[path].links;
+      } else {
+        $scope.helpDescription = Help.prototype.entries().default.description;
+        $scope.helpLinks = Help.prototype.entries().default.links;
+      }
     }
   );
 
