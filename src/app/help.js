@@ -58,7 +58,7 @@ Help.prototype.entries = function () {
       ]
     },
     gateways: {
-      description: "Gateways are the stable routing endpoints defined by a port (incoming) and routes (outgoing). You can monitor incoming traffic here and manage traffic distribution using weights and conditions.",
+      description: "Gateways are stable routing endpoints defined by a port (incoming) and routes (outgoing). You can monitor incoming traffic here and manage traffic distribution.",
       links: [
         {
           title: 'Using gateways',
@@ -79,7 +79,7 @@ Help.prototype.entries = function () {
       ]
     },
     workflows: {
-      description: "Workflows are apps (services) deployed on cluster, used for dynamically changing the runtime configuration (e.g. SLA, scaling, condition weight update). Use this page to deploy and update workflows.",
+      description: "Workflows are apps (services) deployed on cluster to measure activity and dynamically change the runtime configuration. You can use this page to create your own workflows. Note that the Health and Metrics workflows are required by the Vamp UI.",
       links: [
         {
           title: 'Using workflows',
@@ -92,7 +92,7 @@ Help.prototype.entries = function () {
       ]
     },
     blueprints: {
-      description: "Blueprints are static artifacts that describe how breeds work in runtime and what properties they should have. Create and store blueprints here ready for deployment.",
+      description: "Blueprints are static artifacts. They describe how breeds work in runtime and what properties they should have. You can create, edit and deploy blueprints from here.",
       links: [
         {
           title: 'Using blueprints',
@@ -100,7 +100,7 @@ Help.prototype.entries = function () {
         },
         {
           title: 'Merging a blueprint with a running deployment',
-          url: 'http://vamp.io/documentation/using-vamp/blueprints/'
+          url: 'http://vamp.io/documentation/using-vamp/deployments/#deployment-scenarios'
         },
         {
           title: 'Tutorial: Deploy your first Blueprint',
@@ -113,7 +113,7 @@ Help.prototype.entries = function () {
       ]
     },
     breeds: {
-      description: "Breeds describe single services and their dependencies. Breeds stored here can be referenced by blueprints and/or workflows as part of a deployment.",
+      description: "Breeds are static artifacts that describe single services and their dependencies. Breeds stored here can be referenced in blueprints as part of a deployment or used as a workflow.",
       links: [
         {
           title: 'Using breeds',
@@ -130,7 +130,7 @@ Help.prototype.entries = function () {
       ]
     },
     scales: {
-      description: "Scales define the size of a deployed service. Scales stored here can be referenced by blueprints and/or workflows to apply to a deployment.",
+      description: "Scales are static artifacts that define the size of a deployed service. Scales stored here can be referenced in blueprints as part of a deployment or applied to a workflow.",
       links: [
         {
           title: 'Using scales',
