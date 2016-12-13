@@ -79,7 +79,7 @@ Help.prototype.entries = function () {
       ]
     },
     workflows: {
-      description: "Workflows are apps (services) deployed on cluster, used for dynamically changing the runtime configuration (e.g. SLA, scaling, condition weight update). use this page to deploy and update workflows.",
+      description: "Workflows are apps (services) deployed on cluster, used for dynamically changing the runtime configuration (e.g. SLA, scaling, condition weight update). Use this page to deploy and update workflows.",
       links: [
         {
           title: 'Using workflows',
