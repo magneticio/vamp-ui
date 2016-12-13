@@ -45,11 +45,13 @@
     </div>
     <div ng-show="$ctrl.showHelp()">
         <i class="fa fa-arrow-right clickable pull-right" aria-hidden="true" ng-click="$ctrl.closePanel()"></i>
+        <br>
+        <span class="info-message">{{ help.title | uppercase }}</span>
         <br><br>
-        <span class="help-description">{{helpDescription}}</span>
+        <span class="help-description">{{ help.description }}</span>
         <br><br>
         <table class="table">
-            <tr ng-repeat="link in helpLinks">
+            <tr ng-repeat="link in help.links">
                 <td><a class="help-link" href="{{ link.url }}" target="_blank">
                     {{ link.title | uppercase }}
                 </a>&nbsp;<i class="fa fa-external-link" aria-hidden="true"></i></td>

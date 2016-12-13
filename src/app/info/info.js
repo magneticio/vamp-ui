@@ -7,8 +7,11 @@ angular.module('app').component('info', {
 function InfoController($rootScope, $scope, $vamp) {
   var $ctrl = this;
   $scope.info = {};
-  $scope.helpDescription = '';
-  $scope.helpLinks = [];
+  $scope.help = {
+    title: '',
+    description: '',
+    links: []
+  };
 
   var showI = false;
   var showH = false;
@@ -35,11 +38,13 @@ function InfoController($rootScope, $scope, $vamp) {
       }
 
       if (Help.prototype.entries()[path]) {
-        $scope.helpDescription = Help.prototype.entries()[path].description;
-        $scope.helpLinks = Help.prototype.entries()[path].links;
+        $scope.help.title = path;
+        $scope.help.description = Help.prototype.entries()[path].description;
+        $scope.help.links = Help.prototype.entries()[path].links;
       } else {
-        $scope.helpDescription = Help.prototype.entries().default.description;
-        $scope.helpLinks = Help.prototype.entries().default.links;
+        $scope.help.title = 'help';
+        $scope.help.description = Help.prototype.entries().default.description;
+        $scope.help.links = Help.prototype.entries().default.links;
       }
     }
   );
