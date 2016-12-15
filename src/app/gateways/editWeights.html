@@ -13,10 +13,8 @@
         </div>
     </div>
     <div class="row row-centered" ng-repeat="(name, weight) in weights | orderByKeys">
-        <div class="col-md-6">
+        <div class="col-md-12 rz-slider">
             <span class="label label-success slider-label">{{name}}</span>
-        </div>
-        <div class="col-md-6 rz-slider">
             <rzslider rz-slider-model="weights[name]" rz-slider-options="sliderOptions"></rzslider>
         </div>
     </div>
