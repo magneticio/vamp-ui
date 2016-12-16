@@ -48,7 +48,7 @@ Help.prototype.entries = function () {
           url: 'http://vamp.io/documentation/using-vamp/deployments/'
         },
         {
-          title: 'Tutorial: Deploy your first Blueprint',
+          title: 'Tutorial: Deploy your first blueprint',
           url: 'http://vamp.io/documentation/tutorials/deploy-your-first-blueprint/'
         },
         {
@@ -103,7 +103,7 @@ Help.prototype.entries = function () {
           url: 'http://vamp.io/documentation/using-vamp/deployments/#deployment-scenarios'
         },
         {
-          title: 'Tutorial: Deploy your first Blueprint',
+          title: 'Tutorial: Deploy your first blueprint',
           url: 'http://vamp.io/documentation/tutorials/deploy-your-first-blueprint/'
         },
         {
@@ -120,7 +120,7 @@ Help.prototype.entries = function () {
           url: 'http://vamp.io/documentation/using-vamp/breeds/'
         },
         {
-          title: 'Tutorial: Deploy your first Blueprint',
+          title: 'Tutorial: Deploy your first blueprint',
           url: 'http://vamp.io/documentation/tutorials/deploy-your-first-blueprint/'
         },
         {
@@ -137,7 +137,7 @@ Help.prototype.entries = function () {
           url: 'http://vamp.io/documentation/using-vamp/blueprints/#scale'
         },
         {
-          title: 'Tutorial: Deploy your first Blueprint',
+          title: 'Tutorial: Deploy your first blueprint',
           url: 'http://vamp.io/documentation/tutorials/deploy-your-first-blueprint/'
         },
         {
