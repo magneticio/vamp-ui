@@ -103,7 +103,7 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
         $log.info('websocket closed, will try to reconnect in 5 seconds...');
         notify('$vamp:connection', 'closed');
         stream = null;
-        $timeout(websocket, 5000);
+        $timeout(websocket, 10000);
       });
 
       stream.onMessage(function (message) {
