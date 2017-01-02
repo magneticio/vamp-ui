@@ -6,7 +6,7 @@ SHELL             := bash
 .SUFFIXES:
 
 # Constants, these can be overwritten in your Makefile.local
-CONTAINER := magneticio/buildserver:0.3
+CONTAINER := magneticio/buildserver:0.4
 
 # if Makefile.local exists, include it.
 ifneq ("$(wildcard Makefile.local)", "")
