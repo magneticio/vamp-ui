@@ -28,7 +28,7 @@ default:
 		--env BUILD_UID=$(shell id -u) \
 		--env BUILD_GID=$(shell id -g) \
 		$(CONTAINER) \
-			make build
+			make build dist
 
 
 .PHONY: build
@@ -40,9 +40,18 @@ build:
 	gulp build
 
 
+.PHONY: dist
+dist:
+	mv $(CURDIR)/dist $(CURDIR)/ui
+	tar -cvjSf ui.tar.bz2 ui/
+
+
 .PHONY: clean
 clean:
 	rm -rf $(CURDIR)/src/app/environment.js
+	rm -rf $(CURDIR)/dist
+	rm -rf $(CURDIR)/ui
+	rm -rf $(CURDIR)/ui.tar.bz2
 
 
 .PHONY: clean-cache
