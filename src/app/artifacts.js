@@ -25,6 +25,9 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "scales"
+    },
+    {
+      kind: "conditions"
     }
   ];
 };
