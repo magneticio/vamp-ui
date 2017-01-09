@@ -33,7 +33,13 @@ default:
 
 .PHONY: build
 build:
-	npm install gulp gulp-cli
+	npm install gulp gulp-cli bower
+
+	node --version
+	npm --version
+	bower --version
+	gulp --version
+
 	npm install
 	bower install
 	./environment.sh
