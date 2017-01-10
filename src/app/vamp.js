@@ -10,19 +10,19 @@ angular.module('app')
   }]);
 
 function Vamp($log, $rootScope, $websocket, $timeout) {
-  let stream;
-  let transaction = 1;
+  var stream;
+  var transaction = 1;
 
-  let notify = function (name, value) {
+  var notify = function (name, value) {
     $log.debug('websocket notify: ' + name + ' :: ' + JSON.stringify(value));
     $rootScope.$broadcast(name, value);
   };
 
-  let awaiting = [];
+  var awaiting = [];
 
-  let process = function (message) {
+  var process = function (message) {
     $log.debug('websocket message: ' + message);
-    let response = JSON.parse(message);
+    var response = JSON.parse(message);
 
     if (response.content === 'JSON' && response.data) {
       try {
@@ -61,10 +61,10 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
   };
 
   this.await = function (request) {
-    let current = transaction;
+    var current = transaction;
     awaiting[current] = {};
 
-    let promise = new Promise(function (resolve, reject) {
+    var promise = new Promise(function (resolve, reject) {
       awaiting[current].reject = reject;
       awaiting[current].resolve = resolve;
       $timeout(function () {
@@ -81,7 +81,7 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
   };
 
   this.init = function () {
-    let url;
+    var url;
     if (Environment.prototype.origin()) {
       url = 'ws://' + Environment.prototype.origin() + '/websocket';
     } else {
@@ -90,7 +90,7 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
       url += window.location.pathname.endsWith('/') ? window.location.pathname + 'websocket' : window.location.pathname + '/websocket';
     }
 
-    let websocket = function () {
+    var websocket = function () {
       $log.debug('websocket: ' + url);
       stream = $websocket(url);
 
@@ -118,7 +118,7 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
     if (!stream) {
       return null;
     }
-    let message = {
+    var message = {
       api: 'v1',
       path: path,
       action: action,

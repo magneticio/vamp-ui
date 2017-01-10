@@ -4,7 +4,7 @@ angular.module('app').component('configuration', {
 });
 
 function ConfigurationController($timeout, artifact, $vamp, alert, toastr) {
-  let $ctrl = this;
+  var $ctrl = this;
   $ctrl.editor = artifact.editor;
 
   $ctrl.type = '';
@@ -62,7 +62,7 @@ function ConfigurationController($timeout, artifact, $vamp, alert, toastr) {
       $vamp.peek('configuration', '', {type: type, flatten: $ctrl.flatten}, 'YAML');
     }).then(function (response) {
       $timeout(function () {
-        let data = response.data || '';
+        var data = response.data || '';
         $ctrl.type = type;
         $ctrl.source = data;
         if (type === 'dynamic') {
