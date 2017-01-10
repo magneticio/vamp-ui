@@ -11,7 +11,7 @@
                         </button>
                         <button class="btn btn-lg ghost" type="submit"
                                 ng-click="$ctrl.setType('dynamic', true)"
-                                ng-show="$ctrl.type == 'dynamic' && $ctrl.dirty()">
+                                ng-disabled="$ctrl.type != 'dynamic' || !$ctrl.dirty()">
                             <i class="fa fa-fw fa-refresh"></i>&nbsp;reload
                         </button>
                     </buttons>

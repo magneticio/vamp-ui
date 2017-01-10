@@ -83,8 +83,8 @@ function ConfigurationController($timeout, artifact, $vamp, alert, toastr) {
       $vamp.put('configuration', $ctrl.source, {}, 'YAML');
     }).then(function () {
       $timeout(function () {
-        toastr.success('Configuration has been successfully updated.');
-        $ctrl.reload('dynamic');
+        toastr.success('Configuration has been successfully updated. Connection with Vamp should be established again in few moments.');
+        $ctrl.dynamic.base = $ctrl.dynamic.current;
       }, 0);
     }).catch(function (response) {
       $timeout(function () {
