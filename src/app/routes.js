@@ -40,4 +40,6 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       .state(artifact.kind + 'View', artifactViewData)
       .state(artifact.kind + 'Edit', artifactEditData);
   });
+
+  $stateProvider.state('configuration', {url: '/configuration', template: '<configuration></configuration>'});
 }

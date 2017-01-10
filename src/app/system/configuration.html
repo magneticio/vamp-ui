@@ -1,0 +1,68 @@
+<div>
+    <div class="vamp-page-header">
+        <div class="container-fluid">
+            <div class="row header-row">
+                <div class="col-xs-2 header-column title">
+                    <buttons>
+                        <button class="btn btn-lg ghost" type="submit" ng-click="$ctrl.toggleFlatten()">
+                            <i class="fa fa-fw fa-check" ng-if="$ctrl.flatten"></i>
+                            <i class="fa fa-fw fa-times" ng-if="!$ctrl.flatten"></i>
+                            flatten
+                        </button>
+                        <button class="btn btn-lg ghost" type="submit"
+                                ng-click="$ctrl.setType('dynamic', true)"
+                                ng-show="$ctrl.type == 'dynamic' && $ctrl.dirty()">
+                            <i class="fa fa-fw fa-refresh"></i>&nbsp;reload
+                        </button>
+                    </buttons>
+                </div>
+                <div class="col-xs-4 header-column title">
+                    {{ $ctrl.title() }}
+                </div>
+                <div class="col-xs-6 header-column buttons">
+                    <div class="pull-right">
+                        <buttons>
+                            <button class="btn btn-lg" type="submit" title="APPLIED"
+                                    ng-click="$ctrl.setType('applied')"
+                                    ng-disabled="$ctrl.type === 'applied'">applied
+                            </button>
+                            <button class="btn btn-lg" type="submit" title="DYNAMIC (KEY-VALUE STORE)"
+                                    ng-click="$ctrl.setType('dynamic')"
+                                    ng-disabled="$ctrl.type === 'dynamic'">
+                                <i class="fa fa-pencil"></i>&nbsp;dynamic
+                            </button>
+                            <button class="btn btn-lg" type="submit" title="SYSTEM PROPERTIES"
+                                    ng-click="$ctrl.setType('system')"
+                                    ng-disabled="$ctrl.type === 'system'">system properties
+                            </button>
+                            <button class="btn btn-lg" type="submit" title="ENVIRONMENT VARIABLES"
+                                    ng-click="$ctrl.setType('environment')"
+                                    ng-disabled="$ctrl.type === 'environment'">environment variables
+                            </button>
+                            <button class="btn btn-lg" type="submit" title="APPLICATION CONFIGURATION FILE"
+                                    ng-click="$ctrl.setType('application')"
+                                    ng-disabled="$ctrl.type === 'application'">application
+                            </button>
+                            <button class="btn btn-lg" type="submit" title="REFERENCE"
+                                    ng-click="$ctrl.setType('reference')"
+                                    ng-disabled="$ctrl.type === 'reference'">reference
+                            </button>
+
+                            <button class="btn btn-lg red" type="submit" title="SAVE & UPDATE"
+                                    ng-click="$ctrl.update()"
+                                    ng-disabled="$ctrl.type != 'dynamic' || !$ctrl.dirty()">
+                                <i class="fa fa-floppy-o"></i>&nbsp;update
+                            </button>
+                        </buttons>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="editor">
+        <div ui-ace="$ctrl.editor"
+             ng-readonly="$ctrl.type != 'dynamic'"
+             ng-model="$ctrl.source"
+             ng-change="$ctrl.edited()"></div>
+    </div>
+</div>
