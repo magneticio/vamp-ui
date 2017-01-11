@@ -53,7 +53,7 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
       if (_.includes(response.data.tags, 'archive:delete')) {
         alert.show('Warning', '\'' + $ctrl.name + '\' has been deleted in background. If you save the content, \'' + $ctrl.name + '\' will be recreated.', 'OK');
       } else if (!ignoreChange && _.includes(response.data.tags, 'archive:update')) {
-        alert.show('Warning', '\'' + $ctrl.name + '\' has been updated in background. Do you want to reload changed?', 'Reload', 'Keep', function () {
+        alert.show('Warning', '\'' + $ctrl.name + '\' has been updated in background. Do you want to reload changes?', 'Reload', 'Keep', function () {
           $ctrl.base = $ctrl.source = null;
           $ctrl.peek();
         });

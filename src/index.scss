@@ -126,10 +126,13 @@ menu {
     overflow-y: scroll;
   }
 
+  ul {
+    padding-right: 20px;
+  }
+
   .navbar {
     margin-bottom: 0;
     border: none;
-
     .stats {
       display: flex;
       align-items: center;
@@ -641,20 +644,37 @@ a.editable-click:hover {
   font-weight: 500;
 }
 
-.info-button {
-  margin-left: 15px;
-  margin-right: -15px;
-  width: 57px;
+.menu-button {
   display: flex !important;
   align-items: center;
   justify-content: center;
   padding-top: 12px;
   font-size: 24px;
+  color: $color-text;
+  &:hover {
+    color: $color-text-dark;
+  }
 }
 
-.help-button {
-  @extend .info-button;
+.config-button a {
+  @extend .menu-button;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.info-button i {
+  @extend .menu-button;
+  margin-left: 15px;
+  margin-right: -15px;
+  width: 57px;
+}
+
+.help-button i {
+  @extend .menu-button;
   margin-left: 0;
+  margin-right: -15px;
+  width: 57px;
 }
 
 .navbar-brand {

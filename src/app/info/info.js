@@ -92,13 +92,23 @@ function InfoController($rootScope, $scope, $vamp) {
     $scope.info.persistence = data.persistence.database.type === 'key-value' ? data.key_value.type : data.persistence.database.type;
     $scope.info.pulse = data.pulse.type;
     $scope.info.key_value_store = data.key_value.type;
-    $scope.info.gateway_driver = 'haproxy ' + data.gateway_driver.marshaller.haproxy;
     $scope.info.container_driver = data.container_driver.type;
-    $scope.info.workflow_driver = '';
 
-    for (var name in data.workflow_driver) {
-      if (name && data.workflow_driver.hasOwnProperty(name)) {
-        $scope.info.workflow_driver += $scope.info.workflow_driver === '' ? name : ', ' + name;
+    $scope.info.gateway_driver = '';
+    var types = new Set();
+    for (var gateway in data.gateway_driver.marshallers) {
+      if (gateway && data.gateway_driver.marshallers.hasOwnProperty(gateway)) {
+        types.add(data.gateway_driver.marshallers[gateway].type);
+      }
+    }
+    types.forEach(function (value) {
+      $scope.info.gateway_driver += $scope.info.gateway_driver === '' ? value : ', ' + value;
+    });
+
+    $scope.info.workflow_driver = '';
+    for (var workflow in data.workflow_driver) {
+      if (workflow && data.workflow_driver.hasOwnProperty(workflow)) {
+        $scope.info.workflow_driver += $scope.info.workflow_driver === '' ? workflow : ', ' + workflow;
       }
     }
   });

@@ -42,7 +42,7 @@ function ConfigurationController($timeout, artifact, $vamp, alert, toastr) {
   $ctrl.setType = function (type, force) {
     if (type === 'dynamic' && $ctrl.dirty()) {
       if (force) {
-        alert.show('Warning', 'If you reload dynamic configuration your curent changes will be lost.', 'Reload', 'Keep', function () {
+        alert.show('Warning', 'If you reload dynamic configuration your current changes will be lost.', 'Reload', 'Keep', function () {
           $ctrl.reload(type);
         });
       } else {
@@ -89,9 +89,9 @@ function ConfigurationController($timeout, artifact, $vamp, alert, toastr) {
     }).catch(function (response) {
       $timeout(function () {
         if (response) {
-          toastr.error(response.data.message, 'Updating new configuration failed.');
+          toastr.error(response.data.message, 'Updating configuration failed.');
         } else {
-          toastr.error('Server timeout.', 'Updating new configuration failed.');
+          toastr.error('Server timeout.', 'Updating configuration failed.');
         }
       }, 0);
     });
