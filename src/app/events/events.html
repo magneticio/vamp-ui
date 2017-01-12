@@ -16,6 +16,13 @@
                 <i class="fa fa-fw fa-times" ng-if="$ctrl.filters['metrics']"></i>
                 &nbsp;metrics
             </button>
+            <button type="button" class="btn"
+                    ng-model="$ctrl.filters.allocation" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
+                    ng-class="{red: $ctrl.filters['allocation']}" ng-click="filter($event, 'allocation')" ng-show="$ctrl.show">
+                <i class="fa fa-fw fa-check" ng-if="!$ctrl.filters['allocation']"></i>
+                <i class="fa fa-fw fa-times" ng-if="$ctrl.filters['allocation']"></i>
+                &nbsp;allocation
+            </button>
         </div>
     </div>
     <div class="container-fluid" ng-if="$ctrl.show">

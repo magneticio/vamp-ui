@@ -1,10 +1,7 @@
 angular.module('app')
   .controller('DeploymentsController', DeploymentsController)
-  .factory('$vampDeployment', ['$rootScope', '$interval', '$filter', '$vamp', function ($rootScope, $interval, $filter, $vamp) {
-    return new DeploymentService($rootScope, $interval, $filter, $vamp);
-  }])
-  .run(['$vampDeployment', function ($vampDeployment) {
-    $vampDeployment.init();
+  .factory('$vampDeployment', ['$filter', function ($filter) {
+    return new DeploymentService($filter);
   }]);
 
 /** @ngInject */
@@ -83,17 +80,9 @@ function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, $vam
 }
 
 /** @ngInject */
-function DeploymentService($rootScope, $interval, $filter, $vamp) {
+function DeploymentService($filter) {
   var $this = this;
   var scales = {};
-  var scalePeriod = 5000;
-
-  this.init = function () {
-    $vamp.peek('/deployments');
-    $interval(function () {
-      $vamp.peek('/deployments');
-    }, scalePeriod);
-  };
 
   this.scale = function (deployment) {
     var cpu = 0;
@@ -155,28 +144,4 @@ function DeploymentService($rootScope, $interval, $filter, $vamp) {
     }
     return 'deployed';
   };
-
-  var onDeployments = _.throttle(function (deployments) {
-    var now = Date.now();
-    _.forEach(deployments, function (deployment) {
-      var scale = {
-        scale: $this.scale(deployment),
-        timestamp: now
-      };
-      if (!scales[deployment.name]) {
-        scales[deployment.name] = [];
-      }
-      scales[deployment.name].unshift(scale);
-      $rootScope.$broadcast('deployments/' + deployment.name + '/scale', scale);
-      while (scales[deployment.name][scales[deployment.name].length - 1].timestamp + 60000 < now) {
-        scales[deployment.name].pop();
-      }
-    });
-  }, scalePeriod / 2, {leading: true, trailing: false});
-
-  $rootScope.$on('/deployments', function (e, response) {
-    if (response.status === 'OK') {
-      onDeployments(response.data);
-    }
-  });
 }
