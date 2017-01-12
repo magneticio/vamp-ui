@@ -1,10 +1,10 @@
 /* global Environment,Help */
-angular.module('app').component('info', {
-  templateUrl: 'app/info/info.html',
-  controller: InfoController
+angular.module('app').component('side', {
+  templateUrl: 'app/menu/side.html',
+  controller: SideController
 });
 
-function InfoController($rootScope, $scope, $vamp) {
+function SideController($rootScope, $scope, $vamp) {
   var $ctrl = this;
   $scope.info = {};
   $scope.help = {

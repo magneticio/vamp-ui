@@ -42,5 +42,6 @@ function routesConfig($stateProvider, $urlRouterProvider) {
   });
 
   $stateProvider.state('vga', {url: '/vga', template: '<vga></vga>'});
+  $stateProvider.state('info', {url: '/info', template: '<info></info>'});
   $stateProvider.state('configuration', {url: '/configuration', template: '<configuration></configuration>'});
 }
