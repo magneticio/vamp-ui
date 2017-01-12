@@ -5,7 +5,7 @@ angular.module('app').component('vga', {
 
 function VgaController($state, $scope, $timeout, $vamp, artifact, toastr, alert) {
   var $ctrl = this;
-  $ctrl.editor = artifact.editor;
+  $ctrl.editor = JSON.parse(JSON.stringify(artifact.editor));
   $ctrl.editor.mode = 'twig';
 
   $ctrl.source = '';
