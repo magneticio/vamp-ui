@@ -1,9 +1,9 @@
 angular.module('app').component('info', {
   templateUrl: 'app/system/info.html',
-  controller: VgaController
+  controller: InfoController
 });
 
-function VgaController($scope, $timeout, $vamp, artifact) {
+function InfoController($scope, $timeout, $vamp, artifact) {
   var $ctrl = this;
   $ctrl.editor = artifact.editor;
   $ctrl.source = '';

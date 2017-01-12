@@ -80,6 +80,9 @@ function SideController($rootScope, $scope, $vamp) {
 
   $scope.$on('/info', function (event, data) {
     /* eslint camelcase: ["error", {properties: "never"}] */
+    if (data.content !== 'JSON') {
+      return;
+    }
     data = data.data;
     if (!data.persistence || !data.pulse || !data.key_value || !data.gateway_driver || !data.container_driver || !data.workflow_driver) {
       return;

@@ -3,10 +3,19 @@ angular.module('app').component('vga', {
   controller: VgaController
 });
 
-function VgaController($state, $scope, $timeout, $vamp, artifact, toastr, alert) {
+function VgaController($state, $scope, $timeout, $vamp, toastr, alert) {
   var $ctrl = this;
-  $ctrl.editor = JSON.parse(JSON.stringify(artifact.editor));
-  $ctrl.editor.mode = 'twig';
+  $ctrl.editor = {
+    useWrapMode: false,
+    showGutter: true,
+    theme: 'vamp',
+    mode: 'twig',
+    firstLineNumber: 1,
+    onLoad: function (editor) {
+      editor.focus();
+      editor.$blockScrolling = 'Infinity';
+    }
+  };
 
   $ctrl.source = '';
   $ctrl.marshallers = [];
