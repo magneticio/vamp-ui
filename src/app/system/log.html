@@ -1,0 +1,59 @@
+<div>
+    <div class="vamp-page-header">
+        <div class="container-fluid">
+            <div class="row header-row">
+                <div class="col-xs-4 header-column title">
+                    LOG
+                </div>
+                <div class="col-xs-8 header-column buttons">
+                    <div class="pull-right">
+                        <buttons>
+                            <button class="btn btn-lg" type="submit" title="ERROR"
+                                    ng-click="$ctrl.level('ERROR')"
+                                    ng-disabled="$ctrl.level() === 'ERROR'">ERROR
+                            </button>
+                            <button class="btn btn-lg" type="submit" title="INFO"
+                                    ng-click="$ctrl.level('INFO')"
+                                    ng-disabled="$ctrl.level() === 'INFO'">INFO
+                            </button>
+                            <button class="btn btn-lg" type="submit" title="TRACE"
+                                    ng-click="$ctrl.level('TRACE')"
+                                    ng-disabled="$ctrl.level() === 'TRACE'">TRACE
+                            </button>
+                            <button class="btn btn-lg" type="submit" title="OFF"
+                                    ng-click="$ctrl.level('OFF')"
+                                    ng-disabled="$ctrl.level() === 'OFF'">OFF
+                            </button>
+                        </buttons>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <table class="table">
+            <tr>
+                <th>TIME</th>
+                <th>LEVEL</th>
+                <th>LOGGER</th>
+                <th>MESSAGE</th>
+            </tr>
+            <tr ng-repeat="log in $ctrl.logs">
+                <td>
+                    <span class="label timestamp">
+                        {{ log.timestamp | date:'HH:mm:ss.sss'}}
+                    </span>
+                </td>
+                <td>
+                    <span class="label" ng-class="{'label-danger': log.level == 'ERROR', 'label-success': log.level == 'INFO', 'label-primary': log.level == 'TRACE'}">{{ log.level }}</span>
+                </td>
+                <td>
+                    <span class="label">{{ log.logger }}</span>
+                </td>
+                <td>
+                    {{ log.message}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
