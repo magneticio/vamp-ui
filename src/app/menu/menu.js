@@ -85,11 +85,13 @@ function MenuController($rootScope, $scope, $interval, $vamp) {
   });
 
   $scope.$on('/info', function (event, data) {
-    var info = data.data;
-    $ctrl.jvm = {
-      systemLoad: info.jvm['operating_system']['system_load_average'],
-      heapCurrent: info.jvm.memory.heap.used / (1024 * 1024),
-      heapMax: info.jvm.memory.heap.max / (1024 * 1024)
-    };
+    if (data.content === 'JSON') {
+      var info = data.data;
+      $ctrl.jvm = {
+        systemLoad: info.jvm['operating_system']['system_load_average'],
+        heapCurrent: info.jvm.memory.heap.used / (1024 * 1024),
+        heapMax: info.jvm.memory.heap.max / (1024 * 1024)
+      };
+    }
   });
 }

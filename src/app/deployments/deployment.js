@@ -109,8 +109,6 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
     if (response.status === 'ERROR') {
       return;
     }
-    var created = !$ctrl.deployment;
-
     original = response.data;
     updateAddedServices(original);
     $ctrl.deployment = angular.copy(original);
@@ -120,12 +118,6 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
     $timeout(updateCharts, 0);
 
     $timeout(function () {
-      if (created) {
-        $scope.$on('deployments/' + response.data.name + '/scale', function (e, data) {
-          appendToChart('cpu', data.scale.cpu, data.timestamp);
-          appendToChart('memory', data.scale.memory, data.timestamp);
-        });
-      }
       _.forEach($vampDeployment.peekScales(response.data) || [], function (data) {
         appendToChart('cpu', data.scale.cpu, data.timestamp);
         appendToChart('memory', data.scale.memory, data.timestamp);
@@ -217,7 +209,8 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
     var nameTag = 'deployments:' + $ctrl.deployment.name;
     var requests = _.concat(
       [
-        {tags: [nameTag, 'deployment', 'health'], timestamp: {gte: 'now-1m'}}
+        {tags: [nameTag, 'deployment', 'health'], timestamp: {gte: 'now-1m'}},
+        {tags: [nameTag, 'allocation'], timestamp: {gte: 'now-1m'}}
       ],
       _.flatMap(_.map(services, function (service) {
         return [
@@ -261,6 +254,9 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
           appendToChart('health-' + service.breed.name, 100 * Number(event.value), event.timestamp);
         }
       }
+    } else if (_.includes(event.tags, 'allocation')) {
+      appendToChart('cpu', event.value.cpu, event.timestamp);
+      appendToChart('memory', event.value.memory, event.timestamp);
     }
   }
 

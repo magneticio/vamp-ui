@@ -43,4 +43,9 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       .state(artifact.kind + 'View', artifactViewData)
       .state(artifact.kind + 'Edit', artifactEditData);
   });
+
+  $stateProvider.state('vga', {url: '/vga', template: '<vga></vga>'});
+  $stateProvider.state('log', {url: '/log', template: '<log></log>'});
+  $stateProvider.state('info', {url: '/info', template: '<info></info>'});
+  $stateProvider.state('configuration', {url: '/configuration', template: '<configuration></configuration>'});
 }
