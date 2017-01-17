@@ -1,0 +1,12 @@
+<span class="label vamp-tag"
+  ng-class="{'label-success': $tag.hasProgress && $tag.success,
+             'label-info': $tag.hasProgress && $tag.inProgress,
+             'label-red-alert' : $tag.hasProgress && $tag.error,
+             'label-primary' : !$tag.hasProgress}">
+   {{ $tag.value }}&nbsp;
+   <i ng-if="$tag.hasProgress" class="fa"
+      ng-class="{'fa-cog fa-spin' : $tag.inProgress,
+                 'fa-check' : $tag.success,
+                 'fa-pause' : $tag.paused,
+                 'fa-exclamation-triangle' : $tag.error}"></i>
+</span>

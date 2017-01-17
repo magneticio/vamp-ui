@@ -1,31 +1,37 @@
-angular.module('app').component('artifact', {
-  require: {
-    artifacts: '^artifacts'
-  },
-  templateUrl: 'app/crud/artifact.html',
-  bindings: {
-    artifact: '<'
-  },
-  transclude: {
-    body: '?div'
-  },
-  controller: function () {
-    var $ctrl = this;
+/* function baseArtifactController($scope, $vamp) {
+    var vm = this;
 
-    this.hover = false;
+    vm.peek = function () {
+      if (this.kind) {
+        var path = '/' + this.kind;
+        $vamp.peek(path);
+      }
+    }
+}
 
-    this.hoverIn = function () {
-      $ctrl.hover = true;
-    };
+baseArtifactController.$inject = ['$scope', '$vamp'];
+angular.module('app').controller('baseArtifactController', BaseGenericCtrl);*/
 
-    this.hoverOut = function () {
-      $ctrl.hover = false;
-    };
-  }
-}).controller('ArtifactsController', function ($scope) {
-  this.kind = $scope.$parent.$parent.$ctrl.kind;
-  this.artifact = $scope.$parent.$parent.artifact;
-}).factory('artifact', ['$vamp', function ($vamp) {
+function ArtifactController($scope) {
+  // angular.extend(this, $controller('baseArtifactController', {$scope: $scope}));
+  var $ctrl = this;
+
+  $ctrl.artifact = $scope.artifact;
+  $ctrl.kind = $ctrl.artifact.kind;
+
+  // $ctrl.peek();
+}
+
+ArtifactController.$inject = ['$scope'];
+angular.module('app').controller('ArtifactController', ArtifactController);
+
+angular.module('app')/* .controller('ArtifactController', function ($scope) {
+  var $ctrl = this;
+
+  $ctrl.artifact = $scope.artifact
+  $ctrl.kind = $ctrl.artifact.kind;
+
+})*/.factory('artifact', ['$vamp', function ($vamp) {
   return new ArtifactService($vamp);
 }]);
 

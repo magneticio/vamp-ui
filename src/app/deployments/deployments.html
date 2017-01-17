@@ -1,22 +1,3 @@
-<artifacts kind="deployments">
-    <div class="artifact-properties" ng-controller="DeploymentsController as $ctrl">
-        <span class="label"
-              ng-class="{'label-success': $ctrl.status === 'deployed', 'label-info': $ctrl.status === 'updating' || $ctrl.status === 'deploying' || $ctrl.status === 'undeploying', 'label-red-alert': $ctrl.status === 'failed'}">
-            {{ $ctrl.status }}&nbsp;
-            <i class="fa"
-               ng-class="{'fa-check': $ctrl.status === 'deployed', 'fa-cog': $ctrl.status === 'updating' || $ctrl.status === 'deploying' || $ctrl.status === 'undeploying', 'fa-spin': $ctrl.status === 'updating' || $ctrl.status === 'deploying' || $ctrl.status === 'undeploying', 'fa-exclamation-triangle': $ctrl.status === 'failed'}"></i>
-        </span>
-        <p></p>
-        <div class="list">
-            <p class="v-label">scale :</p>
-            <ul>
-                <li>cpu : {{ $ctrl.scale.cpu }}</li>
-                <li>memory : {{ $ctrl.scale.memory }} MB</li>
-                <li>instances : {{ $ctrl.scale.instances }}</li>
-            </ul>
-        </div>
-    </div>
-    <div class="deployment-actions" ng-controller="DeploymentsController as $ctrl">
-        <button class="btn" ng-click="$ctrl.export($event)">Export as a Blueprint</button>
-    </div>
+<artifacts kind="deployments" with-controller="DeploymentsController">
+
 </artifacts>

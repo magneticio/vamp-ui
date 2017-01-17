@@ -1,15 +1,23 @@
 angular
   .module('app')
-  .controller('GatewaysController', function ($scope) {
+  .controller('GatewaysController', function ($scope, $vamp, namifyFilter, $controller) {
     var $ctrl = this;
-    var $parent = $scope.$parent.$parent.$ctrl;
-    this.gateway = $scope.$parent.$parent.artifact;
-    $scope.$on('/events/stream', function (e, response) {
+
+    $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope});
+
+    // Namifying the Routes
+    $ctrl.onDataResponse = function () {
+      angular.forEach($ctrl.artifacts, function (a) {
+        a.routes = namifyFilter(a.routes);
+      });
+    };
+
+    $ctrl.onStreamEvent = function (response) {
       if (_.includes(response.data.tags, 'synchronization') ||
         (_.includes(response.data.tags, 'gateways:' + $ctrl.gateway.name) && (_.includes(response.data.tags, 'deployed') || _.includes(response.data.tags, 'undeployed')))) {
-        $parent.peek();
+        $ctrl.peek();
       }
-    });
+    };
   })
   .factory('slider', [function () {
     return new SliderService();

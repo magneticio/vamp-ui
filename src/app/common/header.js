@@ -5,6 +5,7 @@ angular.module('app').component('header', {
     clazz: '@'
   },
   transclude: {
+    toggle: '?viewToggle',
     message: '?message',
     buttons: '?buttons'
   }

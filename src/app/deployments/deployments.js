@@ -8,15 +8,18 @@ angular.module('app')
   }]);
 
 /** @ngInject */
-function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, $vampDeployment) {
+function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, $vampDeployment, $controller) {
   var $ctrl = this;
-  var $parent = $scope.$parent.$parent.$ctrl;
-  this.deployment = $scope.$parent.$parent.artifact;
+  $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope});
 
-  this.scale = $vampDeployment.scale($ctrl.deployment);
-  this.status = $vampDeployment.deploymentStatus($ctrl.deployment);
+  $ctrl.getScale = function (deployment) {
+    return $vampDeployment.scale(deployment);
+  };
+  $ctrl.getStatus = function (deployment) {
+    return $vampDeployment.deploymentStatus(deployment);
+  };
 
-  this.export = function ($event) {
+  $ctrl.exportDeployment = function (deploymentToExport, $event) {
     $event.stopPropagation();
 
     $uibModal.open({
@@ -33,7 +36,7 @@ function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, $vam
       templateUrl: 'app/deployments/exportDeployment.html',
       resolve: {
         deployment: function () {
-          return $ctrl.deployment;
+          return deploymentToExport;
         }
       }
     }).result.then(function (data) {
@@ -45,15 +48,15 @@ function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, $vam
           toastr.success('\'' + blueprint.name + '\' has been successfully exported as \'' + data.name + '\'.');
         }).catch(function (response) {
           if (response) {
-            toastr.error(response.data.message, 'Export of \'' + $ctrl.deployment.name + '\' failed.');
+            toastr.error(response.data.message, 'Export of \'' + deploymentToExport.name + '\' failed.');
           } else {
-            toastr.error('Server timeout.', 'Export of \'' + $ctrl.deployment.name + '\' failed.');
+            toastr.error('Server timeout.', 'Export of \'' + deploymentToExport.name + '\' failed.');
           }
         });
       }
 
       $vamp.await(function () {
-        $vamp.peek('/deployments/' + $ctrl.deployment.name, '', {as_blueprint: true});
+        $vamp.peek('/deployments/' + deploymentToExport.name, '', {as_blueprint: true});
       }).then(function (blueprint) {
         blueprint.data.name = data.name;
         if (data.overwrite) {
@@ -67,7 +70,7 @@ function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, $vam
             if (response) {
               save(blueprint.data);
             } else {
-              toastr.error('Server timeout.', 'Export of \'' + $ctrl.deployment.name + '\' failed.');
+              toastr.error('Server timeout.', 'Export of \'' + deploymentToExport.name + '\' failed.');
             }
           });
         }
@@ -75,11 +78,18 @@ function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, $vam
     });
   };
 
-  $scope.$on('/events/stream', function (e, response) {
+  $ctrl.onDataResponse = function () {
+    angular.forEach($ctrl.artifacts, function (ar) {
+      ar.scale = $ctrl.getScale(ar);
+      ar.status = $ctrl.getStatus(ar);
+    });
+  };
+
+  $ctrl.onStreamEvent = function (response) {
     if (_.includes(response.data.tags, 'synchronization')) {
-      $parent.peek();
+      $ctrl.peek();
     }
-  });
+  };
 }
 
 /** @ngInject */

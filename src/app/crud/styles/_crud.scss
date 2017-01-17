@@ -1,0 +1,148 @@
+.btn {
+  font-size: $font-small ;
+  border: none ;
+  line-height: 1 ;
+  background: $brand-primary;
+  text-shadow: none ;
+  padding: 10px ;
+  color: $gray-lighter ;
+  font-weight: $font-weight-bold ;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.vamp-btn-group {
+  .btn {
+    background: $gray-base;
+    color: $gray-lighter ;
+
+    &.btn-toggle-grid {
+      height:40px;
+      width: 40px;
+      background-image: url('resources/app/crud/images/panel-view.svg');
+    }
+    &.btn-toggle-list {
+      height:40px;
+      width: 40px;
+      background-image: url('resources/app/crud/images/list-view.svg');
+    }
+
+    &.vamp-btn-selected {
+      background: $brand-primary;
+    }
+  }
+}
+
+.vamp-lv {
+  border-collapse: separate;
+  border-spacing: 0px 10px;
+
+  thead {
+    font-weight: $font-weight-light;
+    color: $brand-info;
+
+    td {
+      text-transform: uppercase;
+    }
+  }
+
+  tbody {
+
+    tr {
+      &.vamp-lv-data-row {
+        /*background: rgba($gray-base, 0.75) no-repeat url('img/background-pattern-alpha.png');*/
+        background: rgba($gray-base, 0.75);
+        cursor: pointer;
+
+        &:hover {
+          td[field-name='Name'] {
+            text-decoration: underline;
+          }
+        }
+
+        td {
+          height: 60px;
+
+          &[field-name='Name'] {
+            font-size: $font-big;
+            font-weight: $font-weight-light;
+          }
+
+          .vamp-lv-checkbox {
+            margin-left: 26px;
+          }
+        }
+
+        td:first-child {
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+        }
+
+        td:last-child {
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+      }
+    }
+  }
+}
+
+.vamp-tag {
+    font-size: $font-small !important;
+    font-weight: $font-weight-light;
+    color: $gray-lighter;
+    border-radius: 2px;
+    margin-right: 5px;
+    background-color: $gray-light;
+
+    &.label-success {
+      color: white;
+      background-color: $brand-success;
+    }
+
+    &.label-primary {
+      color: white;
+      background-color: $brand-primary;
+    }
+
+    &.label-warning {
+      color: white;
+      background-color: $brand-warning;
+    }
+
+    &.label-danger {
+      color: white;
+      background-color: $brand-danger;
+    }
+
+    &.label-info {
+      color: white;
+      background-color: $brand-info;
+    }
+}
+
+.artifact-properties {
+
+  .list {
+    margin: 5px 0;
+    font-weight: $font-weight-light;
+    border-radius: 2px;
+    padding: 15px;
+    background-color: rgba($gray-base, 0.75);
+    color: $gray-lighter !important;
+
+    p {
+      margin: 0;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .v-label {
+      color: $gray-light !important;
+      margin-bottom: 2px;
+    }
+  }
+}

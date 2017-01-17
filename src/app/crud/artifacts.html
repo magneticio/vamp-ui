@@ -1,24 +1,60 @@
 <header>
+    <view-toggle>
+        <div class="btn-group vamp-btn-group">
+            <button class="btn btn-toggle-grid"
+              ng-class="{'vamp-btn-selected' : $artifacts.viewStates.main == 'grid'}"
+              type="button" ng-click="$artifacts.toggleView('grid')">
+            </button>
+            <button class="btn btn-toggle-list"
+              ng-class="{'vamp-btn-selected' : $artifacts.viewStates.main == 'table'}"
+              type="button" ng-click="$artifacts.toggleView('table')">
+            </button>
+        </div>
+    </view-toggle>
     <buttons>
-        <button class="btn btn-lg btn-circle ghost" type="submit" title="SELECT"
-                ng-click="$ctrl.toggleSelection()">
-            <i class="fa fa-square-o" ng-show="!$ctrl.isSelectedAll()"></i>
-            <i class="fa fa-check-square-o" ng-show="$ctrl.isSelectedAll()"></i>
+        <button class="vamp-btn btn-lg btn-circle ghost" type="submit" title="SELECT"
+                ng-click="$artifacts.toggleSelection()">
+            <i class="fa fa-square-o" ng-show="!$artifacts.isSelectedAll()"></i>
+            <i class="fa fa-check-square-o" ng-show="$artifacts.isSelectedAll()"></i>
         </button>
-        <button class="btn btn-lg btn-circle" type="submit" title="ADD" ng-click="$ctrl.add()">
+        <button class="vamp-btn btn-lg btn-circle" type="submit" title="ADD" ng-click="$artifacts.add()">
             <i class="fa fa-plus"></i>
         </button>
-        <button class="btn btn-lg btn-circle red" type="submit" title="DELETE"
-                ng-disabled="!$ctrl.isSelectedAny()"
-                ng-click="$ctrl.deleteSelected()">
+        <button class="vamp-btn btn-lg btn-circle red" type="submit" title="DELETE"
+                ng-disabled="!$artifacts.isSelectedAny()"
+                ng-click="$artifacts.deleteSelected()">
             <i class="fa fa-trash-o"></i>
         </button>
     </buttons>
 </header>
+
 <div class="container-fluid">
-    <div class="artifacts">
-        <artifact ng-repeat="artifact in $ctrl.artifacts" artifact="artifact">
-            <div ng-transclude="body"></div>
-        </artifact>
+    <div ng-if="$artifacts.viewStates.main == 'grid'" class="artifacts">
+      <!--<artifact ng-repeat="artifact in $artifacts.artifacts" artifact="artifact">
+          <div ng-transclude="gridItem"></div>
+      </artifact>-->
+      <div ng-repeat="artifact in $artifacts.artifacts track by $index">
+        <div class="artifact" ng-class="{selected: $artifacts.isSelected(artifact)}"
+             ng-click="$artifacts.view(artifact)">
+            <h3 class="artifact-title">
+                {{ artifact.name }}
+                <input type="checkbox" class="pull-right"
+                       ng-checked="$artifacts.isSelected(artifact)"
+                       ng-click="$artifacts.updateSelection($event, artifact)">
+            </h3>
+
+            <div ng-include="$artifacts.artifactData.artifactGridView"></div>
+
+        </div>
+      </div>
     </div>
+    <div ng-if="$artifacts.viewStates.main == 'table'">
+      <artifact-list-view ng-if="$artifacts.viewStates.main == 'table'"
+        artifacts-ctrl="$artifacts"
+        items="$artifacts.artifacts"
+        artifact-data="$artifacts.artifactData">
+      </artifact-list-view>
+    </div>
+
+
 </div>
