@@ -47,9 +47,11 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   $scope.$on('/events/stream', function (e, response) {
     if ($scope.onStreamEvent) {
       $scope.onStreamEvent(response);
-    } else if ((_.includes(response.data.tags, 'archive') ||
-      _.includes(response.data.tags, 'deployed') ||
-      _.includes(response.data.tags, 'undeployed')) && _.includes(response.data.tags, $ctrl.kind)) {
+    }
+
+    if ((_.includes(response.data.tags, 'archive') ||
+          _.includes(response.data.tags, 'deployed') ||
+          _.includes(response.data.tags, 'undeployed')) && _.includes(response.data.tags, $ctrl.kind)) {
       $ctrl.peek();
     }
   });
