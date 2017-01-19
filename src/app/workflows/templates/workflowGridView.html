@@ -27,13 +27,13 @@
     <span ng-if="!($ctrl.workflow.schedule.time | isEmpty)" class="label label-primary">schedule : time</span>-->
 
     <div class="artifact-card-actions">
-        <button class="vamp-btn" ng-if="artifact.status === 'suspended'" ng-click="$ctrl.start($event)">
+        <button class="btn" ng-if="artifact.status === 'suspended'" ng-click="$ctrl.start($event)">
             <i class="fa fa-play"></i>&nbsp;&nbsp;start
         </button>
-        <button class="vamp-btn" ng-if="artifact.status === 'running'" ng-click="$ctrl.suspend($event)">
+        <button class="btn" ng-if="artifact.status === 'running'" ng-click="$ctrl.suspend($event)">
             <i class="fa fa-pause"></i>&nbsp;&nbsp;suspend
         </button>
-        <button class="vamp-btn" ng-if="artifact.status === 'running'" ng-click="$ctrl.restart($event)">
+        <button class="btn" ng-if="artifact.status === 'running'" ng-click="$ctrl.restart($event)">
             <i class="fa fa-refresh"></i>&nbsp;&nbsp;restart
         </button>
     </div>

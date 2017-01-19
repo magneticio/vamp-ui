@@ -1,11 +1,11 @@
 angular.module('app').component('tag', {
   bindings: {
-    value: '<',
+    value: '=',
     hasProgress: '<',
-    success: '<',
-    inProgress: '<',
-    paused: '<',
-    error: '<'
+    success: '=',
+    inProgress: '=',
+    paused: '=',
+    error: '='
   },
   controllerAs: '$tag',
   templateUrl: 'app/crud/templates/tag.html',
@@ -17,7 +17,7 @@ angular.module('app').component('tag', {
       return undefined;
     }
 
-    var value = context.$eval(expression);// $interpolate(expression)(context);
+    var value = context.$eval(expression);
     return value;
   };
 });

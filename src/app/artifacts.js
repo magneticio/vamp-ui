@@ -7,6 +7,7 @@ Artifacts.prototype.all = function () {
       kind: "deployments",
       deployable: true,
       artifactViewTemplate: 'app/deployments/deployment.html',
+      artifactController: "DeploymentCtrl",
       artifactGridView: 'app/deployments/templates/deploymentGridView.html',
       artifactInfo: [
         {
@@ -45,6 +46,14 @@ Artifacts.prototype.all = function () {
               value: "instances"
             }
           ]
+        }
+      ],
+      actions: [
+        {
+          name: "export",
+          title: "Export as a blueprint",
+          action: "exportDeployment",
+          icon: "fa-file-code-o"
         }
       ]
     },
@@ -87,7 +96,6 @@ Artifacts.prototype.all = function () {
           arrayPath: "routes",
           valuePath: "name",
           type: "array"
-
         }
       ]
     },
@@ -140,6 +148,26 @@ Artifacts.prototype.all = function () {
             }
           ]
         }
+      ],
+      actions: [
+        {
+          name: "suspend",
+          title: "Suspend",
+          action: "suspend",
+          icon: "fa-pause"
+        },
+        {
+          name: "restart",
+          title: "Restart",
+          action: "restart",
+          icon: "fa-refresh"
+        },
+        {
+          name: "suspend",
+          title: "Start",
+          action: "start",
+          icon: "fa-play"
+        }
       ]
     },
     {
@@ -151,6 +179,27 @@ Artifacts.prototype.all = function () {
           title: "Name",
           valuePath: "name",
           type: "string"
+        }
+      ],
+      actions: [
+        {
+          name: "deployAs",
+          title: "Deploy as",
+          action: "deploy",
+          icon: "fa-file-code-o"
+        },
+        {
+          name: "mergeTo",
+          title: "Merge to",
+          action: "merge",
+          icon: "fa-compress"
+        },
+        {
+          name: "removeFrom",
+          title: "Remove from",
+          action: "remove",
+          icon: "fa-chain-broken",
+          cssClass: "vamp-lv-action-red"
         }
       ]
     },
@@ -193,7 +242,8 @@ Artifacts.prototype.all = function () {
         {
           title: "Memory",
           valuePath: "memory",
-          type: "string"
+          type: "string",
+          expression: "(artifact.memory | asNumber:0) + ' MB'"
         },
         {
           title: "Instances",

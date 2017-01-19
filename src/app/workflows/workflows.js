@@ -8,7 +8,7 @@ function WorkflowsController($scope, $vamp, toastr, $controller) {
   $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope});
 
   $ctrl.onStreamEvent = function (response) {
-    if (_.includes(response.data.tags, 'workflows:' + $ctrl.workflow.name)) {
+    if (_.includes(response.data.tags, 'workflows')) {
       $ctrl.peek();
     }
   };

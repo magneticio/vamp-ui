@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive artifacts-table">
   <table class="table table-condensed vamp-lv">
     <thead class="vamp-lv-header-group">
       <tr class="vamp-lv-row">
@@ -12,19 +12,19 @@
       </tr>
     </thead>
     <tbody class="artifacts-list">
-      <tr class="vamp-lv-row vamp-lv-data-row" ng-repeat="artifact in $lv.items track by $index"
+      <tr class="vamp-lv-row vamp-lv-data-row" ng-repeat="artifact in ($lv.items | limitTo: $lv.artifactsCtrl.itemsPerPage: (($lv.artifactsCtrl.currentPage - 1) * $lv.artifactsCtrl.itemsPerPage)) track by $index"
       dynamic-controller-as="{{$lv.artifactData.artifactController}}" ng-click="$lv.onItemClick(artifact, $event)">
         <td class="vamp-lv-col">
           <input type="checkbox" class="checkbox vamp-lv-checkbox"
-             ng-checked="$artifacts.isSelected(artifact)"
-             ng-click="$artifacts.updateSelection($event, artifact)">
+             ng-checked="$lv.artifactsCtrl.isSelected(artifact)"
+             ng-click="$lv.artifactsCtrl.updateSelection($event, artifact)">
         </td>
         <td class="vamp-lv-col" ng-repeat="field in $lv.artifactData.artifactInfo" field-name="{{field.title}}">
           <div ng-switch="field.type">
             <div class="vamp-lv-col-tags" ng-switch-when="tags">
               <tag ng-repeat="tag in field.tags" ng-show="tag.visible === undefined ? true : (tag.visible | interpolate:this)" value="tag.value | interpolate:this"
-                has-progress="tag.hasProgress"
-                success="tag.success | interpolate:this"
+                has-progress="(tag.hasProgress)"
+                success="(tag.success | interpolate:this)"
                 error="tag.error | interpolate:this"
                 in-progress="tag.inProgress | interpolate:this"
                 paused="tag.paused | interpolate:this">
@@ -41,9 +41,13 @@
               </div>
             </div>
             <div class="vamp-lv-col-string" ng-switch-default>
-              {{ $lv.getKeyValue(artifact, field.valuePath) || "" }}
+              {{ field.expression ? (field.expression | interpolate:this) : ($lv.getKeyValue(artifact, field.valuePath) || "" ) }}
             </div>
           </div>
+        </td>
+        <td class="vamp-lv-col vamp-lv-row-actions {{ action.cssClass }}" title="{{action.title}}"
+          ng-repeat="action in $lv.artifactData.actions" ng-click="$ctrl[action.action]($event)">
+          <i class="fa {{action.icon}}"></i>
         </td>
       </tr>
     </tbody>

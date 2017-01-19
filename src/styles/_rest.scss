@@ -452,12 +452,12 @@ p, div {
       }
     }
 
-    .vamp-btn {
+    .btn {
       border: 2px solid $gray !important;
       width: 120px;
     }
 
-    .vamp-btn.red {
+    .btn.red {
       background-color: transparent !important;
 
       color: $gray-light !important;
@@ -859,7 +859,7 @@ a.editable-click:hover {
 
 //
 
-.vamp-btn {
+.btn:not(.bootstrap-btn) {
   font-size: $font-small !important;
   border: none !important;
   border-radius: 20px !important;

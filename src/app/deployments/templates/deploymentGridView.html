@@ -1,34 +1,36 @@
-<div class="artifact-properties">
-    <!--<span class="label"
-          ng-class="{'label-success': $ctrl.status === 'deployed',
-          'label-info': $ctrl.status === 'updating' || $ctrl.status === 'deploying' || $ctrl.status === 'undeploying',
-          'label-red-alert': $ctrl.status === 'failed'}">
-        {{ $ctrl.status }}&nbsp;
-        <i class="fa"
-           ng-class="{'fa-check': $ctrl.status === 'deployed',
+<div ng-controller="DeploymentCtrl as $ctrl">
+  <div class="artifact-properties">
+      <!--<span class="label"
+            ng-class="{'label-success': $ctrl.status === 'deployed',
+            'label-info': $ctrl.status === 'updating' || $ctrl.status === 'deploying' || $ctrl.status === 'undeploying',
+            'label-red-alert': $ctrl.status === 'failed'}">
+          {{ $ctrl.status }}&nbsp;
+          <i class="fa"
+             ng-class="{'fa-check': $ctrl.status === 'deployed',
 
-           'fa-cog': $ctrl.status === 'updating' || $ctrl.status === 'deploying' || $ctrl.status === 'undeploying',
+             'fa-cog': $ctrl.status === 'updating' || $ctrl.status === 'deploying' || $ctrl.status === 'undeploying',
 
-            'fa-spin': $ctrl.status === 'updating' || $ctrl.status === 'deploying' || $ctrl.status === 'undeploying',
+              'fa-spin': $ctrl.status === 'updating' || $ctrl.status === 'deploying' || $ctrl.status === 'undeploying',
 
-            'fa-exclamation-triangle': $ctrl.status === 'failed'}"></i>
-    </span>-->
-    <tag value="artifact.status" has-progress="true"
-      success="artifact.status=== 'deployed'"
-      in-progress="artifact.status === 'updating' ||
-        artifact.status=== 'deploying' || artifact.status=== 'undeploying'"
-      error="artifact.status === 'failed'"
-    ></tag>
-    <p></p>
-    <div class="list">
-        <p class="v-label">scale :</p>
-        <ul>
-            <li>cpu : {{ artifact.scale.cpu }}</li>
-            <li>memory : {{ artifact.scale.memory }} MB</li>
-            <li>instances : {{ artifact.scale.instances }}</li>
-        </ul>
-    </div>
-</div>
-<div class="deployment-actions">
-    <button class="vamp-btn" ng-click="$artifacts.exportDeployment(artifact, $event)">Export as a Blueprint</button>
+              'fa-exclamation-triangle': $ctrl.status === 'failed'}"></i>
+      </span>-->
+      <tag value="artifact.status" has-progress="true"
+        success="artifact.status=== 'deployed'"
+        in-progress="artifact.status === 'updating' ||
+          artifact.status=== 'deploying' || artifact.status=== 'undeploying'"
+        error="artifact.status === 'failed'"
+      ></tag>
+      <p></p>
+      <div class="list">
+          <p class="v-label">scale :</p>
+          <ul>
+              <li>cpu : {{ artifact.scale.cpu }}</li>
+              <li>memory : {{ artifact.scale.memory }} MB</li>
+              <li>instances : {{ artifact.scale.instances }}</li>
+          </ul>
+      </div>
+  </div>
+  <div class="deployment-actions">
+    <button class="btn" ng-click="$ctrl.exportDeployment($event)">Export as a Blueprint</button>
+  </div>
 </div>

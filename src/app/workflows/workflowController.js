@@ -6,6 +6,7 @@ function WorkflowController($scope, $vamp, toastr) {
   var $ctrl = this;
 
   var path = '/workflows/' + $scope.artifact.name;
+  $ctrl.workflow = $scope.artifact;
 
   $ctrl.updating = function () {
     return $scope.artifact.status === 'starting' ||

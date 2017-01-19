@@ -9,8 +9,14 @@ function routesConfig($stateProvider, $urlRouterProvider) {
 
   _.forEach(artifacts, function (artifact) {
     var artifactsData = {
-      url: '/' + artifact.kind,
-      data: artifact
+      url: '/' + artifact.kind + '?page',
+      data: artifact,
+      params: {
+        page: {
+          value: '1',
+          squash: true
+        }
+      }
     };
 
     if (artifact.artifactsTemplate) {

@@ -15,11 +15,12 @@ angular.module('app').directive('artifacts', function () {
   };
 });
 
-BaseArtifactsController.$inject = ['$ctrl', '$scope', '$vamp', 'uiStatesFactory', '$state',
+BaseArtifactsController.$inject = ['$ctrl', '$scope', '$vamp', 'uiStatesFactory', '$state', '$stateParams',
   '$filter', '$location', 'toastr', 'alert'];
 
 function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
-  $state, $filter, $location, toastr, alert) {
+  $state, $stateParams, $filter, $location, toastr, alert) {
+  $ctrl.initialized = false;
   $ctrl.kind = $scope.kind;
   if (!$ctrl.path) {
     $ctrl.path = '/' + $ctrl.kind;
@@ -42,11 +43,14 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
     if ($ctrl.onDataResponse) {
       $ctrl.onDataResponse(response.data);
     }
+
+    $ctrl.calcPagination();
+    $ctrl.initialized = true;
   });
 
   $scope.$on('/events/stream', function (e, response) {
-    if ($scope.onStreamEvent) {
-      $scope.onStreamEvent(response);
+    if ($ctrl.onStreamEvent) {
+      $ctrl.onStreamEvent(response);
     }
 
     if ((_.includes(response.data.tags, 'archive') ||
@@ -62,6 +66,35 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   };
 
   $ctrl.artifactData = $state.$current.data;
+
+  $ctrl.itemsPerPage = 8;
+  $ctrl.pages = 1;
+  $ctrl.currentPage = parseInt($stateParams.page, 10);
+
+  $ctrl.calcPagination = function () {
+    var pageSum = Math.ceil($ctrl.artifacts.length / $ctrl.itemsPerPage);
+    $ctrl.pages = pageSum === 0 ? 1 : pageSum;
+  };
+
+  $ctrl.nextPage = function () {
+    if ($ctrl.currentPage < $ctrl.pages) {
+      $state.go('.', {page: $ctrl.currentPage + 1});
+    }
+  };
+
+  $ctrl.previousPage = function () {
+    if ($ctrl.currentPage > 1) {
+      $state.go('.', {page: $ctrl.currentPage - 1});
+    }
+  };
+
+  $ctrl.goToPage = function (n) {
+    $state.go('.', {page: n});
+  };
+
+  $ctrl.range = function (n) {
+    return new Array(n);
+  };
 
   // selections
 

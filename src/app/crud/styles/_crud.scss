@@ -1,36 +1,106 @@
-.btn {
-  font-size: $font-small ;
-  border: none ;
-  line-height: 1 ;
-  background: $brand-primary;
-  text-shadow: none ;
-  padding: 10px ;
-  color: $gray-lighter ;
-  font-weight: $font-weight-bold ;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
+
 
 .vamp-btn-group {
-  .btn {
+  margin: 20px 0 20px 10px;
+
+  .btn.vamp-btn {
+    font-size: $font-small ;
+    border: none ;
+    line-height: 1 ;
+    text-shadow: none ;
+    padding: 10px ;
+    color: $gray-lighter ;
+    font-weight: $font-weight-bold ;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
     background: $gray-base;
     color: $gray-lighter ;
 
-    &.btn-toggle-grid {
-      height:40px;
-      width: 40px;
-      background-image: url('resources/app/crud/images/panel-view.svg');
-    }
-    &.btn-toggle-list {
-      height:40px;
-      width: 40px;
-      background-image: url('resources/app/crud/images/list-view.svg');
-    }
+    height:40px;
+    width: 40px;
 
     &.vamp-btn-selected {
       background: $brand-primary;
     }
+
+    &:hover:not(.vamp-btn-selected) {
+      background-color: $color-blue-dark;
+    }
+
+    &.btn-toggle-grid {
+      background-image: url('resources/app/crud/images/panel-view.svg');
+    }
+    &.btn-toggle-list {
+      background-image: url('resources/app/crud/images/list-view.svg');
+    }
   }
+}
+
+.artifact-pagination {
+  margin-left: 15px
+}
+
+.vamp-pagination {
+
+  li {
+    text-align: center;
+    user-select:none;
+
+    & > a {
+      user-select:none;
+      cursor: pointer;
+      font-size: $font-big ;
+      border: none ;
+      line-height: 1 ;
+      background:  $gray-base;
+      text-shadow: none ;
+      padding: 10px ;
+      color: $gray-lighter ;
+      font-weight: $font-weight-regular;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      height: 40px;
+      width:40px;
+
+      &:hover {
+        background-color: $color-blue-dark;
+        color: $gray-lighter ;
+      }
+
+      &.vamp-page-selected {
+        text-decoration: underline;
+        font-weight: $font-weight-bold;
+
+        &:hover {
+          background-color: $gray-base;
+          color: $gray-lighter ;
+        }
+      }
+
+      &.vamp-page-disabled {
+        cursor: default;
+        opacity: 0.5;
+
+        &:hover {
+          background-color: $gray-base;
+          color: $gray-lighter ;
+        }
+      }
+    }
+  }
+}
+
+.jumbotron.vamp-no-artifacts {
+  background: none;
+
+  p {
+    color : $brand-primary;
+  }
+}
+
+.artifacts-table {
+  margin: 0 10px 0 10px;
 }
 
 .vamp-lv {
@@ -48,11 +118,20 @@
 
   tbody {
 
+    tr.demi-row td div{
+        width: 100%;
+        height: 28px;
+        margin: 0 0 -28px 0;
+        background: transparent repeat-y top left;
+        color: #FFF;
+        background-size: 100%;
+        padding:0;
+    }
+
     tr {
       &.vamp-lv-data-row {
         /*background: rgba($gray-base, 0.75) no-repeat url('img/background-pattern-alpha.png');*/
         background: rgba($gray-base, 0.75);
-        cursor: pointer;
 
         &:hover {
           td[field-name='Name'] {
@@ -62,10 +141,32 @@
 
         td {
           height: 60px;
+          cursor: pointer;
 
           &[field-name='Name'] {
             font-size: $font-big;
             font-weight: $font-weight-light;
+          }
+
+          &.vamp-lv-row-actions {
+            width: 40px;
+            cursor: pointer;
+
+            &:hover {
+              background-color: $color-blue-dark;
+
+            }
+
+            i {
+              margin-left: 15px;
+            }
+
+            &.vamp-lv-action-red {
+
+
+              &:hover {
+              }
+            }
           }
 
           .vamp-lv-checkbox {
