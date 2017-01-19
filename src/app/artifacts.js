@@ -39,7 +39,8 @@ Artifacts.prototype.all = function () {
             },
             {
               title: "Memory",
-              value: "memory"
+              value: "memory",
+              expression: "(artifact.scale.memory | asNumber:0) + ' MB'"
             },
             {
               title: "Instances",

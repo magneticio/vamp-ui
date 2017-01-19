@@ -37,7 +37,8 @@
             </div>
             <div class="vamp-lv-col-object" ng-switch-when="object">
               <div class="prop" ng-repeat="prop in field.properties">
-                <span>{{ prop.title }}</span> : {{ $lv.getKeyValue(artifact, field.valuePath + '.' + prop.value) }}
+                <span>{{ prop.title }}</span> :
+                {{ prop.expression ? (prop.expression | interpolate:this) : ($lv.getKeyValue(artifact, field.valuePath + '.' + prop.value)) }}
               </div>
             </div>
             <div class="vamp-lv-col-string" ng-switch-default>
