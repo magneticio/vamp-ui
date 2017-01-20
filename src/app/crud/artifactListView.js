@@ -27,16 +27,3 @@ angular.module('app')
     controller: 'listViewController',
     controllerAs: '$lv'
   });
-  /* .directive('trImage', function() {
-    return {
-      restrict: 'A',
-      scope: {
-        trImage: '@',
-        colspan: '<'
-      },
-      link: function(scope, element, attrs) {
-        var demiTr = '<tr class="demi-row" ><td colspan="' + scope.colspan + '"><div style="background-image:url(\'' + scope.trImage + '\')"  >&nbsp;</div></td></tr>';
-        $(element).before(demiTr);
-      }
-    }
-  });*/

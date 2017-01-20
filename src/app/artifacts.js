@@ -53,8 +53,7 @@ Artifacts.prototype.all = function () {
         {
           name: "export",
           title: "Export as a blueprint",
-          action: "exportDeployment",
-          icon: "fa-file-code-o"
+          action: "exportDeployment"
         }
       ]
     },
@@ -154,20 +153,17 @@ Artifacts.prototype.all = function () {
         {
           name: "suspend",
           title: "Suspend",
-          action: "suspend",
-          icon: "fa-pause"
+          action: "suspend"
         },
         {
           name: "restart",
           title: "Restart",
-          action: "restart",
-          icon: "fa-refresh"
+          action: "restart"
         },
         {
           name: "suspend",
           title: "Start",
-          action: "start",
-          icon: "fa-play"
+          action: "start"
         }
       ]
     },
@@ -186,21 +182,19 @@ Artifacts.prototype.all = function () {
         {
           name: "deployAs",
           title: "Deploy as",
-          action: "deploy",
-          icon: "fa-file-code-o"
+          action: "deploy"
         },
         {
           name: "mergeTo",
           title: "Merge to",
-          action: "merge",
-          icon: "fa-compress"
+          action: "merge"
         },
         {
           name: "removeFrom",
           title: "Remove from",
           action: "remove",
-          icon: "fa-chain-broken",
-          cssClass: "vamp-lv-action-red"
+          class: "vamp-red",
+          active: "$ctrl.removeFrom | isEmpty"
         }
       ]
     },

@@ -1,38 +1,29 @@
-
-
 .vamp-btn-group {
   margin: 20px 0 20px 10px;
 
   .btn.vamp-btn {
-    font-size: $font-small ;
+    font-size: $font-big ;
     border: none ;
     line-height: 1 ;
     text-shadow: none ;
-    padding: 10px ;
-    color: $gray-lighter ;
+    padding: 5px ;
+    color: $medium-blue ;
     font-weight: $font-weight-bold ;
     letter-spacing: 2px;
     text-transform: uppercase;
 
     background: $gray-base;
-    color: $gray-lighter ;
 
     height:40px;
     width: 40px;
 
     &.vamp-btn-selected {
-      background: $brand-primary;
+      background-color: $brand-primary;
+      color: $off-white;
     }
 
     &:hover:not(.vamp-btn-selected) {
-      background-color: $color-blue-dark;
-    }
-
-    &.btn-toggle-grid {
-      background-image: url('resources/app/crud/images/panel-view.svg');
-    }
-    &.btn-toggle-list {
-      background-image: url('resources/app/crud/images/list-view.svg');
+      background-color: $dark-blue;
     }
   }
 }
@@ -53,10 +44,10 @@
       font-size: $font-big ;
       border: none ;
       line-height: 1 ;
-      background:  $gray-base;
+      background-color:  $gray-base;
       text-shadow: none ;
       padding: 10px ;
-      color: $gray-lighter ;
+      color: $medium-blue;
       font-weight: $font-weight-regular;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -64,13 +55,18 @@
       width:40px;
 
       &:hover {
-        background-color: $color-blue-dark;
-        color: $gray-lighter ;
+        background-color: $dark-blue;
+        color: $medium-blue;
+      }
+
+      &:active {
+        color: $medium-blue;
       }
 
       &.vamp-page-selected {
         text-decoration: underline;
         font-weight: $font-weight-bold;
+        color: $off-white;
 
         &:hover {
           background-color: $gray-base;
@@ -80,7 +76,7 @@
 
       &.vamp-page-disabled {
         cursor: default;
-        opacity: 0.5;
+        opacity: 0.3;
 
         &:hover {
           background-color: $gray-base;
@@ -88,14 +84,6 @@
         }
       }
     }
-  }
-}
-
-.jumbotron.vamp-no-artifacts {
-  background: none;
-
-  p {
-    color : $brand-primary;
   }
 }
 
@@ -117,6 +105,22 @@
   }
 
   tbody {
+
+    .table .text {
+      position: relative;
+    }
+    .table .text span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      position: absolute;
+      left: 0;
+      right: 0;
+    }
+    .text:before {
+      content: '';
+      display: inline-block;
+    }
 
     tr.demi-row td div{
         width: 100%;
@@ -142,6 +146,7 @@
         td {
           height: 60px;
           cursor: pointer;
+          padding: 5px;
 
           &[field-name='Name'] {
             font-size: $font-big;
@@ -149,28 +154,44 @@
           }
 
           &.vamp-lv-row-actions {
-            width: 40px;
-            cursor: pointer;
-
-            &:hover {
-              background-color: $color-blue-dark;
-
-            }
-
-            i {
-              margin-left: 15px;
-            }
-
-            &.vamp-lv-action-red {
-
+            button {
+              text-transform: capitalize;
+              background-color: $blue;
+              padding:5px 20px;
+              height: $button-size-small;
+              color: $white;
+              font-size: $font-size-small;
 
               &:hover {
+                background-color: darken($blue, 8%);
+                color: darken($white, 8%);
+              }
+
+              &:active {
+                background-color: darken($blue, 16%);
+                color: darken($white, 16%);
+              }
+
+              &.vamp-red {
+                background-color: $vamp-red;
+                color: $white;
+
+                &:hover{
+                  background-color: darken($vamp-red, 8%);
+                  color: darken($white, 8%);
+                }
+
+                &:active {
+                  background-color: darken($vamp-red, 16%);
+                  color: darken($white, 16%);
+                }
               }
             }
-          }
 
-          .vamp-lv-checkbox {
-            margin-left: 26px;
+            button.vamp-lv-row-action {
+              float: left;
+              margin-right: 15px;
+            }
           }
         }
 
@@ -183,6 +204,14 @@
           border-top-right-radius: 5px;
           border-bottom-right-radius: 5px;
         }
+      }
+    }
+  }
+
+  tr {
+    td {
+      .vamp-lv-checkbox {
+        margin-left: 26px;
       }
     }
   }

@@ -2,11 +2,11 @@
     <view-toggle>
       <div ng-if="$artifacts.initialized && $artifacts.artifacts.length !== 0">
         <div class="btn-group vamp-btn-group pull-left">
-            <button title="Grid view" class="btn bootstrap-btn vamp-btn btn-toggle-grid"
+            <button title="Grid view" class="btn bootstrap-btn vamp-btn icon-grid"
               ng-class="{'vamp-btn-selected' : $artifacts.viewStates.main == 'grid'}"
               type="button" ng-click="$artifacts.toggleView('grid')">
             </button>
-            <button title="List view" class="btn bootstrap-btn vamp-btn btn-toggle-list"
+            <button title="List view" class="btn bootstrap-btn vamp-btn icon-list"
               ng-class="{'vamp-btn-selected' : $artifacts.viewStates.main == 'table'}"
               type="button" ng-click="$artifacts.toggleView('table')">
             </button>
@@ -17,18 +17,18 @@
               <a ng-click="$artifacts.previousPage()"
                 ng-disabled="$artifacts.currentPage === 1"
                 ng-class="{'vamp-page-disabled' : $artifacts.currentPage === 1 }">
-                <span>&laquo;</span>
+                <i class="fa fa-angle-left"></i>
               </a>
             </li>
-            <li ng-repeat="page in ($artifacts.range($artifacts.pages)) track by $index">
-              <a ng-click="$artifacts.goToPage($index + 1)"
-                ng-class="{'vamp-page-selected' : $artifacts.currentPage == ($index + 1) }">{{$index + 1}}</a>
+            <li ng-repeat="page in ($artifacts.getPages($artifacts.pages) | limitTo:5:($artifacts.getCurrentPageStartingIndex()))">
+              <a ng-click="$artifacts.goToPage(page + 1)"
+                ng-class="{'vamp-page-selected' : $artifacts.currentPage == (page + 1) }">{{page + 1}}</a>
             </li>
             <li>
               <a ng-click="$artifacts.nextPage()"
                 ng-disabled="$artifacts.currentPage === $artifacts.pages"
                 ng-class="{'vamp-page-disabled' : $artifacts.currentPage === $artifacts.pages }">
-                <span>&raquo;</span>
+                <i class="fa fa-angle-right"></i>
               </a>
             </li>
           </ul>

@@ -38,7 +38,7 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   });
 
   $scope.$on($ctrl.path, function (e, response) {
-    angular.copy(response.data, $ctrl.artifacts);
+    angular.copy(_.orderBy(response.data, 'name'), $ctrl.artifacts);
 
     if ($ctrl.onDataResponse) {
       $ctrl.onDataResponse(response.data);
@@ -92,8 +92,20 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
     $state.go('.', {page: n});
   };
 
-  $ctrl.range = function (n) {
-    return new Array(n);
+  $ctrl.getPages = function (n) {
+    return Array.apply(null, {length: n}).map(Number.call, Number);
+  };
+
+  $ctrl.getCurrentPageStartingIndex = function () {
+    var index = $ctrl.currentPage - 2;
+
+    if ($ctrl.currentPage < 2) {
+      index = 0;
+    } else if ($ctrl.currentPage >= $ctrl.pages - 2) {
+      index = $ctrl.pages - 5;
+    }
+
+    return index;
   };
 
   // selections

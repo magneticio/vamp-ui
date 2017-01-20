@@ -3,11 +3,17 @@
     <thead class="vamp-lv-header-group">
       <tr class="vamp-lv-row">
         <td class="vamp-lv-col">
-          Select
+          <input type="checkbox" title="Select all" ng-checked="$lv.artifactsCtrl.isSelectedAll()"
+            class="checkbox vamp-checkbox vamp-lv-checkbox"
+             ng-click="$lv.artifactsCtrl.toggleSelection()">
         </td>
         <td class="vamp-lv-col"
            ng-repeat="field in $lv.artifactData.artifactInfo">
           {{ field.title }}
+        </td>
+        <td ng-if="$lv.artifactData.actions && $lv.artifactData.actions.length > 0"
+          class="vamp-lv-col">
+          Actions
         </td>
       </tr>
     </thead>
@@ -30,25 +36,30 @@
                 paused="tag.paused | interpolate:this">
               </tag>
             </div>
-            <div class="vamp-lv-col-array" ng-switch-when="array">
-              <div ng-repeat="item in $lv.getKeyValue(artifact, field.arrayPath)">
+            <div class="vamp-lv-value vamp-lv-col-array" ng-switch-when="array">
+              <div class="vamp-lv-value" ng-repeat="item in $lv.getKeyValue(artifact, field.arrayPath)">
                 {{ field.expression ? (field.expression | interpolate:this) : (item[field.valuePath] || item) }}
               </div>
             </div>
             <div class="vamp-lv-col-object" ng-switch-when="object">
-              <div class="prop" ng-repeat="prop in field.properties">
+              <div class="prop vamp-lv-value" ng-repeat="prop in field.properties">
                 <span>{{ prop.title }}</span> :
                 {{ prop.expression ? (prop.expression | interpolate:this) : ($lv.getKeyValue(artifact, field.valuePath + '.' + prop.value)) }}
               </div>
             </div>
-            <div class="vamp-lv-col-string" ng-switch-default>
+            <div title="{{ field.expression ? (field.expression | interpolate:this) : ($lv.getKeyValue(artifact, field.valuePath) || '' ) }}"
+              class="vamp-lv-value vamp-lv-col-string" ng-switch-default>
               {{ field.expression ? (field.expression | interpolate:this) : ($lv.getKeyValue(artifact, field.valuePath) || "" ) }}
             </div>
           </div>
         </td>
-        <td class="vamp-lv-col vamp-lv-row-actions {{ action.cssClass }}" title="{{action.title}}"
-          ng-repeat="action in $lv.artifactData.actions" ng-click="$ctrl[action.action]($event)">
-          <i class="fa {{action.icon}}"></i>
+        <td ng-if="$lv.artifactData.actions && $lv.artifactData.actions.length > 0"
+          class="vamp-lv-col vamp-lv-row-actions">
+          <button ng-disabled="(action.active | interpolate:this)" class="btn bootstrap-btn vamp-lv-row-action {{ action.class }}"
+            ng-repeat="action in $lv.artifactData.actions"
+            ng-click="$ctrl[action.action]($event)">
+            {{ action.title }}
+          </button>
         </td>
       </tr>
     </tbody>

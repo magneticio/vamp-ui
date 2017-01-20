@@ -51,5 +51,8 @@ function fixDist(next) {
   gulp.src(conf.paths.dist + '/../bower_components/components-font-awesome/fonts/*')
     .pipe(gulp.dest(conf.paths.dist + '/fonts'));
 
+  gulp.src(conf.paths.dist + '/../bower_components/simple-line-icons/fonts/*')
+    .pipe(gulp.dest(conf.paths.dist + '/fonts'));
+
   next();
 }

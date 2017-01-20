@@ -14,7 +14,7 @@ angular
 
     $ctrl.onStreamEvent = function (response) {
       if (_.includes(response.data.tags, 'synchronization') ||
-        (_.includes(response.data.tags, 'gateways:' + $ctrl.gateway.name) && (_.includes(response.data.tags, 'deployed') || _.includes(response.data.tags, 'undeployed')))) {
+        (_.includes(response.data.tags, 'gateways:') && (_.includes(response.data.tags, 'deployed') || _.includes(response.data.tags, 'undeployed')))) {
         $ctrl.peek();
       }
     };
