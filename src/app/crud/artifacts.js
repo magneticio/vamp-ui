@@ -1,25 +1,35 @@
-angular.module('app').component('artifacts', {
-  restrict: 'E',
-  controller: ArtifactsController,
-  templateUrl: 'app/crud/artifacts.html',
-  transclude: {
-    body: '?div'
-  }
+angular.module('app').directive('artifacts', function () {
+  return {
+    scope: {
+      kind: '@'
+    },
+    restrict: 'E',
+    controller: "@",
+    name: "withController",
+    controllerAs: '$artifacts',
+    templateUrl: 'app/crud/artifacts.html'/* ,
+    transclude: {
+      gridItem: 'div'
+    },
+    replace: true*/
+  };
 });
 
-function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, $vamp) {
-  var $ctrl = this;
+BaseArtifactsController.$inject = ['$ctrl', '$scope', '$vamp', 'uiStatesFactory', '$state', '$stateParams',
+  '$filter', '$location', 'toastr', 'alert'];
 
-  this.kind = $attrs.kind;
-  this.artifacts = [];
+function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
+  $state, $stateParams, $filter, $location, toastr, alert) {
+  $ctrl.initialized = false;
+  $ctrl.kind = $scope.kind;
+  if (!$ctrl.path) {
+    $ctrl.path = '/' + $ctrl.kind;
+  }
 
-  var path = '/' + this.kind;
-
-  this.peek = function () {
-    $vamp.peek(path);
+  $ctrl.artifacts = [];
+  $ctrl.peek = function () {
+    $vamp.peek($ctrl.path);
   };
-
-  this.peek();
 
   $scope.$on('$vamp:connection', function (e, connection) {
     if (connection === 'opened') {
@@ -27,23 +37,82 @@ function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, 
     }
   });
 
-  $scope.$on(path, function (e, response) {
-    $ctrl.artifacts = _.sortBy(response.data, ['name']);
+  $scope.$on($ctrl.path, function (e, response) {
+    angular.copy(_.orderBy(response.data, 'name'), $ctrl.artifacts);
+
+    if ($ctrl.onDataResponse) {
+      $ctrl.onDataResponse(response.data);
+    }
+
+    $ctrl.calcPagination();
+    $ctrl.initialized = true;
   });
 
   $scope.$on('/events/stream', function (e, response) {
+    if ($ctrl.onStreamEvent) {
+      $ctrl.onStreamEvent(response);
+    }
+
     if ((_.includes(response.data.tags, 'archive') ||
-      _.includes(response.data.tags, 'deployed') ||
-      _.includes(response.data.tags, 'undeployed')) && _.includes(response.data.tags, $ctrl.kind)) {
+          _.includes(response.data.tags, 'deployed') ||
+          _.includes(response.data.tags, 'undeployed')) && _.includes(response.data.tags, $ctrl.kind)) {
       $ctrl.peek();
     }
   });
 
+  $ctrl.viewStates = uiStatesFactory.viewStates;
+  $ctrl.toggleView = function (type) {
+    uiStatesFactory.setMainViewState(type);
+  };
+
+  $ctrl.artifactData = $state.$current.data;
+
+  $ctrl.itemsPerPage = 8;
+  $ctrl.pages = 1;
+  $ctrl.currentPage = parseInt($stateParams.page, 10);
+
+  $ctrl.calcPagination = function () {
+    var pageSum = Math.ceil($ctrl.artifacts.length / $ctrl.itemsPerPage);
+    $ctrl.pages = pageSum === 0 ? 1 : pageSum;
+  };
+
+  $ctrl.nextPage = function () {
+    if ($ctrl.currentPage < $ctrl.pages) {
+      $state.go('.', {page: $ctrl.currentPage + 1});
+    }
+  };
+
+  $ctrl.previousPage = function () {
+    if ($ctrl.currentPage > 1) {
+      $state.go('.', {page: $ctrl.currentPage - 1});
+    }
+  };
+
+  $ctrl.goToPage = function (n) {
+    $state.go('.', {page: n});
+  };
+
+  $ctrl.getPages = function (n) {
+    return Array.apply(null, {length: n}).map(Number.call, Number);
+  };
+
+  $ctrl.getCurrentPageStartingIndex = function () {
+    var index = $ctrl.currentPage - 2;
+
+    if ($ctrl.currentPage < 2) {
+      index = 0;
+    } else if ($ctrl.currentPage >= $ctrl.pages - 2) {
+      index = $ctrl.pages - 5;
+    }
+
+    return index;
+  };
+
   // selections
 
-  this.selected = [];
+  $ctrl.selected = [];
 
-  this.toggleSelection = function () {
+  $ctrl.toggleSelection = function () {
     var all = $ctrl.isSelectedAll();
     $ctrl.selected.length = 0;
     if (!all) {
@@ -53,21 +122,21 @@ function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, 
     }
   };
 
-  this.isSelectedAll = function () {
+  $ctrl.isSelectedAll = function () {
     return $ctrl.artifacts.length > 0 && $ctrl.artifacts.length === $ctrl.selected.length;
   };
 
-  this.isSelectedAny = function () {
+  $ctrl.isSelectedAny = function () {
     return $ctrl.selected.length > 0;
   };
 
-  this.isSelected = function (artifact) {
+  $ctrl.isSelected = function (artifact) {
     return _.find($ctrl.selected, function (a) {
       return a.name === artifact.name;
     });
   };
 
-  this.updateSelection = function ($event, artifact) {
+  $ctrl.updateSelection = function ($event, artifact) {
     $event.stopPropagation();
     _.remove($ctrl.selected, function (a) {
       return a.name === artifact.name;
@@ -79,15 +148,15 @@ function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, 
 
   // operations
 
-  this.add = function () {
+  $ctrl.add = function () {
     $location.path($ctrl.kind + '/add');
   };
 
-  this.view = function (artifact) {
+  $ctrl.view = function (artifact) {
     $location.path($ctrl.kind + '/view/' + $filter('encodeName')(artifact.name));
   };
 
-  this.deleteSelected = function () {
+  $ctrl.deleteSelected = function () {
     var names = _.map(_.sortBy($ctrl.selected, ['name']), function (a) {
       return a.name;
     });
@@ -105,7 +174,7 @@ function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, 
             var artifact = _.find($ctrl.artifacts, function (artifact) {
               return artifact.name === name;
             });
-            $vamp.remove(path + '/' + name, angular.toJson(artifact));
+            $vamp.remove($ctrl.path + '/' + name, angular.toJson(artifact));
           }).then(function () {
             toastr.success('\'' + name + '\' has been successfully deleted.');
           }).catch(function (response) {
@@ -119,4 +188,16 @@ function ArtifactsController($scope, $filter, $location, $attrs, toastr, alert, 
       });
     }
   };
+
+  $ctrl.peek();
 }
+
+ArtifactsController.$inject = ['$scope', '$controller'];
+function ArtifactsController(
+  $scope, $controller) {
+  var $ctrl = this;
+  $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope});
+}
+
+angular.module('app').controller('BaseArtifactsController', BaseArtifactsController);
+angular.module('app').controller('ArtifactsController', ArtifactsController);

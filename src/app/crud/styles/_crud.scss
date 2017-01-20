@@ -1,0 +1,278 @@
+.vamp-btn-group {
+  margin: 20px 0 20px 10px;
+
+  .btn.vamp-btn {
+    font-size: $font-big ;
+    border: none ;
+    line-height: 1 ;
+    text-shadow: none ;
+    padding: 5px ;
+    color: $medium-blue ;
+    font-weight: $font-weight-bold ;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    background: $gray-base;
+
+    height:40px;
+    width: 40px;
+
+    &.vamp-btn-selected {
+      background-color: $brand-primary;
+      color: $off-white;
+    }
+
+    &:hover:not(.vamp-btn-selected) {
+      background-color: $dark-blue;
+    }
+  }
+}
+
+.artifact-pagination {
+  margin-left: 15px
+}
+
+.vamp-pagination {
+
+  li {
+    text-align: center;
+    user-select:none;
+
+    & > a {
+      user-select:none;
+      cursor: pointer;
+      font-size: $font-big ;
+      border: none ;
+      line-height: 1 ;
+      background-color:  $gray-base;
+      text-shadow: none ;
+      padding: 10px ;
+      color: $medium-blue;
+      font-weight: $font-weight-regular;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      height: 40px;
+      width:40px;
+
+      &:hover {
+        background-color: $dark-blue;
+        color: $medium-blue;
+      }
+
+      &:active {
+        color: $medium-blue;
+      }
+
+      &.vamp-page-selected {
+        text-decoration: underline;
+        font-weight: $font-weight-bold;
+        color: $off-white;
+
+        &:hover {
+          background-color: $gray-base;
+          color: $gray-lighter ;
+        }
+      }
+
+      &.vamp-page-disabled {
+        cursor: default;
+        opacity: 0.3;
+
+        &:hover {
+          background-color: $gray-base;
+          color: $gray-lighter ;
+        }
+      }
+    }
+  }
+}
+
+.artifacts-table {
+  margin: 0 10px 0 10px;
+}
+
+.vamp-lv {
+  border-collapse: separate;
+  border-spacing: 0px 10px;
+
+  thead {
+    font-weight: $font-weight-light;
+    color: $brand-info;
+
+    td {
+      text-transform: uppercase;
+    }
+  }
+
+  tbody {
+
+    .table .text {
+      position: relative;
+    }
+    .table .text span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      position: absolute;
+      left: 0;
+      right: 0;
+    }
+    .text:before {
+      content: '';
+      display: inline-block;
+    }
+
+    tr.demi-row td div{
+        width: 100%;
+        height: 28px;
+        margin: 0 0 -28px 0;
+        background: transparent repeat-y top left;
+        color: #FFF;
+        background-size: 100%;
+        padding:0;
+    }
+
+    tr {
+      &.vamp-lv-data-row {
+        /*background: rgba($gray-base, 0.75) no-repeat url('img/background-pattern-alpha.png');*/
+        background: rgba($gray-base, 0.75);
+
+        &:hover {
+          td[field-name='Name'] {
+            text-decoration: underline;
+          }
+        }
+
+        td {
+          height: 60px;
+          cursor: pointer;
+          padding: 5px;
+
+          &[field-name='Name'] {
+            font-size: $font-big;
+            font-weight: $font-weight-light;
+          }
+
+          &.vamp-lv-row-actions {
+            button {
+              text-transform: capitalize;
+              background-color: $blue;
+              padding:5px 20px;
+              height: $button-size-small;
+              color: $white;
+              font-size: $font-size-small;
+
+              &:hover {
+                background-color: darken($blue, 8%);
+                color: darken($white, 8%);
+              }
+
+              &:active {
+                background-color: darken($blue, 16%);
+                color: darken($white, 16%);
+              }
+
+              &.vamp-red {
+                background-color: $vamp-red;
+                color: $white;
+
+                &:hover{
+                  background-color: darken($vamp-red, 8%);
+                  color: darken($white, 8%);
+                }
+
+                &:active {
+                  background-color: darken($vamp-red, 16%);
+                  color: darken($white, 16%);
+                }
+              }
+            }
+
+            button.vamp-lv-row-action {
+              float: left;
+              margin-right: 15px;
+            }
+          }
+        }
+
+        td:first-child {
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+        }
+
+        td:last-child {
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+      }
+    }
+  }
+
+  tr {
+    td {
+      .vamp-lv-checkbox {
+        margin-left: 26px;
+      }
+    }
+  }
+}
+
+.vamp-tag {
+    font-size: $font-small !important;
+    font-weight: $font-weight-light;
+    color: $gray-lighter;
+    border-radius: 2px;
+    margin-right: 5px;
+    background-color: $gray-light;
+
+    &.label-success {
+      color: white;
+      background-color: $brand-success;
+    }
+
+    &.label-primary {
+      color: white;
+      background-color: $brand-primary;
+    }
+
+    &.label-warning {
+      color: white;
+      background-color: $brand-warning;
+    }
+
+    &.label-danger {
+      color: white;
+      background-color: $brand-danger;
+    }
+
+    &.label-info {
+      color: white;
+      background-color: $brand-info;
+    }
+}
+
+.artifact-properties {
+
+  .list {
+    margin: 5px 0;
+    font-weight: $font-weight-light;
+    border-radius: 2px;
+    padding: 15px;
+    background-color: rgba($gray-base, 0.75);
+    color: $gray-lighter !important;
+
+    p {
+      margin: 0;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .v-label {
+      color: $gray-light !important;
+      margin-bottom: 2px;
+    }
+  }
+}

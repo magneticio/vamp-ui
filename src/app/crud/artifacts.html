@@ -1,24 +1,79 @@
 <header>
+    <view-toggle>
+      <div ng-if="$artifacts.initialized && $artifacts.artifacts.length !== 0">
+        <div class="btn-group vamp-btn-group pull-left">
+            <button title="Grid view" class="btn bootstrap-btn vamp-btn icon-grid"
+              ng-class="{'vamp-btn-selected' : $artifacts.viewStates.main == 'grid'}"
+              type="button" ng-click="$artifacts.toggleView('grid')">
+            </button>
+            <button title="List view" class="btn bootstrap-btn vamp-btn icon-list"
+              ng-class="{'vamp-btn-selected' : $artifacts.viewStates.main == 'table'}"
+              type="button" ng-click="$artifacts.toggleView('table')">
+            </button>
+        </div>
+        <nav ng-show="$artifacts.pages > 1" class="artifact-pagination pull-left">
+          <ul class="pagination vamp-pagination">
+            <li>
+              <a ng-click="$artifacts.previousPage()"
+                ng-disabled="$artifacts.currentPage === 1"
+                ng-class="{'vamp-page-disabled' : $artifacts.currentPage === 1 }">
+                <i class="fa fa-angle-left"></i>
+              </a>
+            </li>
+            <li ng-repeat="page in ($artifacts.getPages($artifacts.pages) | limitTo:5:($artifacts.getCurrentPageStartingIndex()))">
+              <a ng-click="$artifacts.goToPage(page + 1)"
+                ng-class="{'vamp-page-selected' : $artifacts.currentPage == (page + 1) }">{{page + 1}}</a>
+            </li>
+            <li>
+              <a ng-click="$artifacts.nextPage()"
+                ng-disabled="$artifacts.currentPage === $artifacts.pages"
+                ng-class="{'vamp-page-disabled' : $artifacts.currentPage === $artifacts.pages }">
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </view-toggle>
     <buttons>
         <button class="btn btn-lg btn-circle ghost" type="submit" title="SELECT"
-                ng-click="$ctrl.toggleSelection()">
-            <i class="fa fa-square-o" ng-show="!$ctrl.isSelectedAll()"></i>
-            <i class="fa fa-check-square-o" ng-show="$ctrl.isSelectedAll()"></i>
+                ng-click="$artifacts.toggleSelection()">
+            <i class="fa fa-square-o" ng-show="!$artifacts.isSelectedAll()"></i>
+            <i class="fa fa-check-square-o" ng-show="$artifacts.isSelectedAll()"></i>
         </button>
-        <button class="btn btn-lg btn-circle" type="submit" title="ADD" ng-click="$ctrl.add()">
+        <button class="btn btn-lg btn-circle" type="submit" title="ADD" ng-click="$artifacts.add()">
             <i class="fa fa-plus"></i>
         </button>
         <button class="btn btn-lg btn-circle red" type="submit" title="DELETE"
-                ng-disabled="!$ctrl.isSelectedAny()"
-                ng-click="$ctrl.deleteSelected()">
+                ng-disabled="!$artifacts.isSelectedAny()"
+                ng-click="$artifacts.deleteSelected()">
             <i class="fa fa-trash-o"></i>
         </button>
     </buttons>
 </header>
+
 <div class="container-fluid">
-    <div class="artifacts">
-        <artifact ng-repeat="artifact in $ctrl.artifacts" artifact="artifact">
-            <div ng-transclude="body"></div>
-        </artifact>
+  <div ng-if="$artifacts.initialized && $artifacts.artifacts.length > 0">
+    <div ng-if="$artifacts.viewStates.main == 'grid'" class="artifacts">
+      <div ng-repeat="artifact in ($artifacts.artifacts | limitTo: $artifacts.itemsPerPage: (($artifacts.currentPage - 1) * $artifacts.itemsPerPage)) track by $index">
+        <div class="artifact" ng-class="{selected: $artifacts.isSelected(artifact)}"
+             ng-click="$artifacts.view(artifact)">
+          <h3 class="artifact-title">
+            {{ artifact.name }}
+            <input type="checkbox" class="pull-right"
+               ng-checked="$artifacts.isSelected(artifact)"
+               ng-click="$artifacts.updateSelection($event, artifact)">
+          </h3>
+          <div ng-include="$artifacts.artifactData.artifactGridView"></div>
+        </div>
+      </div>
     </div>
+    <div ng-if="$artifacts.viewStates.main == 'table'">
+      <artifact-list-view ng-if="$artifacts.viewStates.main == 'table'"
+        artifacts-ctrl="$artifacts"
+        items="$artifacts.artifacts"
+        artifact-data="$artifacts.artifactData">
+      </artifact-list-view>
+    </div>
+  </div>
 </div>

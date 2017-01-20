@@ -1,0 +1,5 @@
+<div class="artifact-card-actions" ng-controller="BlueprintController as $ctrl">
+    <button class="btn" ng-click="$ctrl.deploy($event)">Deploy as</button>
+    <button class="btn" ng-click="$ctrl.merge($event)" ng-disabled="$ctrl.mergeWith | isEmpty">Merge to</button>
+    <button class="btn red" ng-click="$ctrl.remove($event)" ng-disabled="$ctrl.removeFrom | isEmpty">Remove from</button>
+</div>

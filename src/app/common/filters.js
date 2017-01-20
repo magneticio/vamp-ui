@@ -34,7 +34,14 @@ angular.module('app')
   .filter('namify', function () {
     return function (object) {
       return _.map(object, function (value, key) {
-        value.name = key;
+        if (typeof value !== 'object') {
+          value = {
+            value: value,
+            name: key
+          };
+        } else if (!value.name) {
+          value.name = key;
+        }
         return value;
       });
     };

@@ -8,7 +8,16 @@ function routesConfig($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/' + artifacts[0].kind);
 
   _.forEach(artifacts, function (artifact) {
-    var artifactsData = {url: '/' + artifact.kind};
+    var artifactsData = {
+      url: '/' + artifact.kind + '?page',
+      data: artifact,
+      params: {
+        page: {
+          value: '1',
+          squash: true
+        }
+      }
+    };
 
     if (artifact.artifactsTemplate) {
       artifactsData.templateUrl = artifact.artifactsTemplate;

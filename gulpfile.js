@@ -10,11 +10,11 @@ const hub = new HubRegistry([conf.path.tasks('*.js')]);
 // Tell gulp to use the tasks just loaded
 gulp.registry(hub);
 
-gulp.task('inject', gulp.series(gulp.parallel('styles', 'scripts'), 'inject'));
-gulp.task('build', gulp.series('partials', gulp.parallel('inject', 'other', 'failAfterError'), 'build', fixDist));
+gulp.task('prepare', gulp.series('partials', gulp.parallel('styles', 'scripts'), 'inject'));
+gulp.task('build', gulp.series( gulp.parallel('prepare', 'other', 'failAfterError'), 'build', fixDist));
 gulp.task('test', gulp.series('scripts', 'karma:single-run'));
 gulp.task('test:auto', gulp.series('watch', 'karma:auto-run'));
-gulp.task('serve', gulp.series('inject', 'watch', 'browsersync'));
+gulp.task('serve', gulp.series('prepare', 'watch', 'browsersync'));
 gulp.task('serve:dist', gulp.series('default', 'browsersync:dist'));
 gulp.task('default', gulp.series('clean', 'build'));
 gulp.task('watch', watch);
@@ -28,27 +28,30 @@ function watch(done) {
   gulp.watch([
     conf.path.src('index.html'),
     'bower.json'
-  ], gulp.parallel('inject'));
+  ], gulp.parallel('prepare'));
 
   gulp.watch(conf.path.src('app/**/*.html'), gulp.series('partials', reloadBrowserSync));
   gulp.watch([
     conf.path.src('**/*.scss'),
     conf.path.src('**/*.css')
   ], gulp.series('styles'));
-  gulp.watch(conf.path.src('**/*.js'), gulp.series('inject'));
+  gulp.watch(conf.path.src('**/*.js'), gulp.series('prepare'));
   done();
 }
 
 function fixDist(next) {
-  gulp
+  /*gulp
     .src(conf.paths.dist + '/img/background-*.png')
     .pipe(gulp.dest(conf.paths.dist + '/styles/img'));
 
   gulp
     .src(conf.paths.dist + '/fonts/roboto-*')
-    .pipe(gulp.dest(conf.paths.dist + '/styles/fonts'));
+    .pipe(gulp.dest(conf.paths.dist + '/styles/fonts'));*/
 
   gulp.src(conf.paths.dist + '/../bower_components/components-font-awesome/fonts/*')
+    .pipe(gulp.dest(conf.paths.dist + '/fonts'));
+
+  gulp.src(conf.paths.dist + '/../bower_components/simple-line-icons/fonts/*')
     .pipe(gulp.dest(conf.paths.dist + '/fonts'));
 
   next();

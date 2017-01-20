@@ -5,78 +5,30 @@ angular.module('app')
   }]);
 
 /** @ngInject */
-function DeploymentsController($scope, $uibModal, $location, toastr, $vamp, $vampDeployment) {
+function DeploymentsController($scope, $vampDeployment, $controller) {
   var $ctrl = this;
-  var $parent = $scope.$parent.$parent.$ctrl;
-  this.deployment = $scope.$parent.$parent.artifact;
+  $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope});
 
-  this.scale = $vampDeployment.scale($ctrl.deployment);
-  this.status = $vampDeployment.deploymentStatus($ctrl.deployment);
+  $ctrl.getScale = function (deployment) {
+    return $vampDeployment.scale(deployment);
+  };
 
-  this.export = function ($event) {
-    $event.stopPropagation();
+  $ctrl.getStatus = function (deployment) {
+    return $vampDeployment.deploymentStatus(deployment);
+  };
 
-    $uibModal.open({
-      animation: true,
-      backdrop: 'static',
-      controller: function ($scope, $uibModalInstance, deployment) {
-        $scope.deployment = deployment;
-        $scope.name = angular.copy(deployment.name);
-        $scope.ok = function () {
-          $uibModalInstance.close({name: $scope.name, overwrite: $scope.overwrite});
-        };
-        $scope.cancel = $uibModalInstance.dismiss;
-      },
-      templateUrl: 'app/deployments/exportDeployment.html',
-      resolve: {
-        deployment: function () {
-          return $ctrl.deployment;
-        }
-      }
-    }).result.then(function (data) {
-      function save(blueprint) {
-        return $vamp.await(function () {
-          $vamp.put('/blueprints/' + data.name, JSON.stringify(blueprint));
-        }).then(function () {
-          $location.path('blueprints/view/' + data.name);
-          toastr.success('\'' + blueprint.name + '\' has been successfully exported as \'' + data.name + '\'.');
-        }).catch(function (response) {
-          if (response) {
-            toastr.error(response.data.message, 'Export of \'' + $ctrl.deployment.name + '\' failed.');
-          } else {
-            toastr.error('Server timeout.', 'Export of \'' + $ctrl.deployment.name + '\' failed.');
-          }
-        });
-      }
-
-      $vamp.await(function () {
-        $vamp.peek('/deployments/' + $ctrl.deployment.name, '', {as_blueprint: true});
-      }).then(function (blueprint) {
-        blueprint.data.name = data.name;
-        if (data.overwrite) {
-          save(blueprint.data);
-        } else {
-          $vamp.await(function () {
-            $vamp.peek('/blueprints/' + data.name);
-          }).then(function () {
-            toastr.error('Blueprint \'' + data.name + '\' already exists.');
-          }).catch(function (response) {
-            if (response) {
-              save(blueprint.data);
-            } else {
-              toastr.error('Server timeout.', 'Export of \'' + $ctrl.deployment.name + '\' failed.');
-            }
-          });
-        }
-      });
+  $ctrl.onDataResponse = function () {
+    angular.forEach($ctrl.artifacts, function (ar) {
+      ar.scale = $ctrl.getScale(ar);
+      ar.status = $ctrl.getStatus(ar);
     });
   };
 
-  $scope.$on('/events/stream', function (e, response) {
+  $ctrl.onStreamEvent = function (response) {
     if (_.includes(response.data.tags, 'synchronization')) {
-      $parent.peek();
+      $ctrl.peek();
     }
-  });
+  };
 }
 
 /** @ngInject */

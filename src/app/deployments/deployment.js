@@ -168,12 +168,6 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
     }, 0);
   });
 
-  $scope.$on('$vamp:connection', function (event, connection) {
-    if (connection === 'opened') {
-      $vamp.peek(path);
-    }
-  });
-
   function header(cluster, service) {
     var header = '# cluster: ' + cluster.name + '\n';
     header += '# service: ' + service.breed.name + '\n\n';
