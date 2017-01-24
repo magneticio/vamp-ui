@@ -6,7 +6,8 @@ SHELL             := bash
 .SUFFIXES:
 
 # Constants, these can be overwritten in your Makefile.local
-CONTAINER := magneticio/buildserver
+BUILD_SERVER := magneticio/buildserver
+BUILD_PACKER := magneticio/packer
 
 # if Makefile.local exists, include it.
 ifneq ("$(wildcard Makefile.local)", "")
@@ -27,7 +28,7 @@ default:
 		--workdir=/srv/src \
 		--env BUILD_UID=$(shell id -u) \
 		--env BUILD_GID=$(shell id -g) \
-		$(CONTAINER) \
+		$(BUILD_SERVER) \
 			make build dist
 
 
@@ -51,6 +52,18 @@ dist:
 	mv $(CURDIR)/dist $(CURDIR)/ui
 	tar -cvjSf ui.tar.bz2 ui/
 
+.PHONY: pack
+pack:
+	export version="$$(git describe --tags)" && \
+	docker volume create packer && \
+	docker run \
+    	--name packer \
+    	--interactive \
+    	--volume $(CURDIR)/dist:/usr/local/src \
+    	--volume packer:/usr/local/stash \
+    	$(BUILD_PACKER) \
+      	vamp-ui $${version} && \
+	docker rm packer
 
 .PHONY: clean
 clean:
