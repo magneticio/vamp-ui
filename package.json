@@ -10,10 +10,11 @@
   },
   "devDependencies": {
     "angular-mocks": "1.5.0-beta.2",
-    "autoprefixer": "6.2.3",
+    "autoprefixer": "^6.2.3",
     "bower": "1.7.9",
     "browser-sync": "2.9.11",
     "browser-sync-spa": "1.0.3",
+    "browserslist" :  "^1.4.0",
     "del": "2.0.2",
     "es6-shim": "0.35.0",
     "eslint": "3.2.2",
