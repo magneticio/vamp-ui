@@ -1,5 +1,5 @@
-<header>
-    <view-toggle>
+<header title="{{$artifacts.kind}}">
+    <controls>
       <div ng-if="$artifacts.initialized && $artifacts.artifacts.length !== 0">
         <div class="btn-group vamp-btn-group pull-left">
             <button title="Grid view" class="btn bootstrap-btn vamp-btn icon-grid"
@@ -11,30 +11,8 @@
               type="button" ng-click="$artifacts.toggleView('table')">
             </button>
         </div>
-        <nav ng-show="$artifacts.pages > 1" class="artifact-pagination pull-left">
-          <ul class="pagination vamp-pagination">
-            <li>
-              <a ng-click="$artifacts.previousPage()"
-                ng-disabled="$artifacts.currentPage === 1"
-                ng-class="{'vamp-page-disabled' : $artifacts.currentPage === 1 }">
-                <i class="fa fa-angle-left"></i>
-              </a>
-            </li>
-            <li ng-repeat="page in ($artifacts.getPages($artifacts.pages) | limitTo:5:($artifacts.getCurrentPageStartingIndex()))">
-              <a ng-click="$artifacts.goToPage(page + 1)"
-                ng-class="{'vamp-page-selected' : $artifacts.currentPage == (page + 1) }">{{page + 1}}</a>
-            </li>
-            <li>
-              <a ng-click="$artifacts.nextPage()"
-                ng-disabled="$artifacts.currentPage === $artifacts.pages"
-                ng-class="{'vamp-page-disabled' : $artifacts.currentPage === $artifacts.pages }">
-                <i class="fa fa-angle-right"></i>
-              </a>
-            </li>
-          </ul>
-        </nav>
       </div>
-    </view-toggle>
+    </controls>
     <buttons>
         <button class="btn btn-lg btn-circle ghost" type="submit" title="SELECT"
                 ng-click="$artifacts.toggleSelection()">
@@ -52,7 +30,7 @@
     </buttons>
 </header>
 
-<div class="container-fluid">
+<div class="container-fluid artifacts-panel">
   <div ng-if="$artifacts.initialized && $artifacts.artifacts.length > 0">
     <div ng-if="$artifacts.viewStates.main == 'grid'" class="artifacts">
       <div ng-repeat="artifact in ($artifacts.artifacts | limitTo: $artifacts.itemsPerPage: (($artifacts.currentPage - 1) * $artifacts.itemsPerPage)) track by $index">
@@ -76,4 +54,26 @@
       </artifact-list-view>
     </div>
   </div>
+  <nav ng-show="$artifacts.pages > 1" class="artifact-pagination text-center">
+    <ul class="pagination vamp-pagination">
+      <li>
+        <a ng-click="$artifacts.previousPage()"
+          ng-disabled="$artifacts.currentPage === 1"
+          ng-class="{'vamp-page-disabled' : $artifacts.currentPage === 1 }">
+          <i class="fa fa-angle-left"></i>
+        </a>
+      </li>
+      <li ng-repeat="page in ($artifacts.getPages($artifacts.pages) | limitTo:5:($artifacts.getCurrentPageStartingIndex()))">
+        <a ng-click="$artifacts.goToPage(page + 1)"
+          ng-class="{'vamp-page-selected' : $artifacts.currentPage == (page + 1) }">{{page + 1}}</a>
+      </li>
+      <li>
+        <a ng-click="$artifacts.nextPage()"
+          ng-disabled="$artifacts.currentPage === $artifacts.pages"
+          ng-class="{'vamp-page-disabled' : $artifacts.currentPage === $artifacts.pages }">
+          <i class="fa fa-angle-right"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </div>

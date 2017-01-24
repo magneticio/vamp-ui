@@ -1,0 +1,136 @@
+
+/* Sidebar Styles */
+
+menu {
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  .sidebar-nav {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+
+    & > li.sidebar-brand {
+     height: 80px;
+     line-height: 80px;
+
+     a {
+       color: $white;
+			 background-color: $vamp-red;
+	     font-size: $font-size-large;
+			 padding-top:7px;
+
+       &:hover {
+       }
+
+			 img {
+				 vertical-align: text-bottom;
+			 }
+
+			 .vamp-logo {
+				height :40px;
+				margin-right: 18px;
+			 }
+			 .vamp-title {
+			 	height :29px;
+			 }
+     }
+    }
+   }
+
+   .sidebar-bottom-docked {
+     position: absolute;
+     bottom:1px;
+
+     ul {
+			 li {
+				 border-bottom: none;
+			 }
+     }
+   }
+
+   ul {
+     list-style: none;
+     font-size: $font-size-normal;
+		 margin-bottom: 0px;
+		 padding:0;
+		 width:250px;
+		 margin:0;
+
+		 &.sub-menu {
+			 li > a,
+			 li > .btn-link {
+				 background-color: $night;
+			 }
+		 }
+
+    li {
+			user-select:none;
+      line-height: 60px;
+      border-bottom: 2px solid $night;
+
+			&[data-toggle=collapse]:not(.collapsed)
+			{
+				.btn-link,
+				a {
+					text-decoration: none;
+					background-color: $night;
+
+					&:hover {
+						background-color: $night;
+					}
+				}
+			}
+
+			&.active {
+				.btn-link,
+				a {
+					text-decoration: none;
+					background-color: $night;
+					font-weight: $font-weight-bold;
+					color: $off-white;
+
+					&:hover {
+						background-color: $night;
+						font-weight: $font-weight-bold;
+						color: $off-white;
+					}
+				}
+			}
+
+			.btn-link,
+      a {
+				cursor: pointer;
+				background-color: $pitch;
+        font-weight: $font-weight-light;
+        padding-left: 20px;
+        display: block;
+        text-decoration: none;
+        text-transform: capitalize;
+        color: $blue;
+
+        &:hover {
+					background-color: $night;
+          color: $medium-blue;
+          text-decoration: none;
+        }
+
+        &:focus {
+					text-decoration: none;
+					background-color: $night;
+					font-weight: $font-weight-bold;
+					color: $off-white;
+        }
+      }
+    }
+   }
+
+  .sidebar-nav,
+  .sidebar-bottom-docked {
+
+  }
+}

@@ -9,7 +9,7 @@ span:focus {
 }
 
 body {
-  background: $gray-darker;
+  //background: $gray-darker;
   color: $color-text;
   overflow: hidden;
 }
@@ -22,13 +22,55 @@ body {
   position: relative;
 }
 
+body {
+   overflow-x: hidden;
+	 background-color: $panel;
+}
+
+/* Toggle Styles */
+
+#wrapper {
+   padding-left: 250px;
+   -webkit-transition: all 0.5s ease;
+   -moz-transition: all 0.5s ease;
+   -o-transition: all 0.5s ease;
+   transition: all 0.5s ease;
+}
+
+#sidebar-wrapper {
+   z-index: 1000;
+   position: fixed;
+   left: 250px;
+   width: 250px;
+   height: 100%;
+   margin-left: -250px;
+   overflow-y: auto;
+   background-color: $pitch;
+   -webkit-transition: all 0.5s ease;
+   -moz-transition: all 0.5s ease;
+   -o-transition: all 0.5s ease;
+   transition: all 0.5s ease;
+}
+
+#page-content-wrapper {
+   height: calc(100% - 50px);
+   width: calc(100% - 250px);
+   position: absolute;
+   overflow-y: auto;
+   transition: 0.3s height ease-in-out;
+
+   &.footer-expanded {
+     height: calc(100% - 400px);
+   }
+}
+
 menu {
   padding: 0;
   margin: 0;
   z-index: 999;
   position: relative;
 
-  nav {
+/*  nav {
     background: rgb(13, 30, 38) !important;
     overflow-y: scroll;
   }
@@ -70,10 +112,10 @@ menu {
       font-weight: 500;
       color: $color-pink;
     }
-  }
+  }*/
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
+/*@media (min-width: 768px) and (max-width: 991px) {
   .navbar-collapse.collapse {
     display: none !important;
   }
@@ -121,7 +163,36 @@ menu {
 
 .navbar-default .navbar-nav > .deployable > a {
   text-decoration: underline;
+}*/
+
+
+@media(min-width:768px) {
+   #wrapper {
+
+   }
+
+   #wrapper.toggled {
+       padding-left: 0;
+   }
+
+   #sidebar-wrapper {
+
+   }
+
+   #wrapper.toggled #sidebar-wrapper {
+       width: 0;
+   }
+
+   #page-content-wrapper {
+
+   }
+
+   #wrapper.toggled #page-content-wrapper {
+       position: relative;
+       margin-right: 0;
+   }
 }
+
 
 .vamp-page-header {
   margin: 0;
@@ -130,7 +201,8 @@ menu {
 
   .header-row {
     margin: 0 0 -20px 0;
-    padding: 0 !important;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .header-column {
@@ -140,8 +212,8 @@ menu {
     line-height: 80px;
 
     &.title {
-      font-size: $font-really-big;
-      text-transform: uppercase;
+      font-size: $font-size-extra-large;
+      text-transform: capitalize;;
       color: $color-text;
       font-weight: $font-weight-light;
       letter-spacing: 0.05em;
@@ -316,11 +388,11 @@ edit, add {
 .info-panel {
   z-index: 999;
   position: fixed;
-  top: 50px;
+  top: 0px;
   width: 25%;
   max-width: 400px;
-  bottom: 0;
-  background-color: $gray-dark;
+  bottom: 0px;
+  background-color: $pitch;
   color: $color-text;
   padding: 22px;
   overflow-y: scroll;
@@ -389,10 +461,19 @@ p, div {
   }
 }
 
+
+.events-panel {
+  position: fixed;
+  width: calc(100% - 250px);
+  bottom: 0px;
+}
+
 .event-panel-content {
   height: 50px;
   position: relative;
   z-index: 888;
+  background-color: $night-sky;
+  box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.15);
   transition: 0.3s height ease-in-out;
 
   .timestamp {
@@ -440,7 +521,7 @@ p, div {
     cursor: pointer;
     font-weight: $font-weight-regular;
     overflow-y: scroll;
-    background-color: rgba($gray-dark, 0.5);
+    background-color: $night-sky;
 
     .category {
       cursor: pointer;
@@ -472,7 +553,7 @@ p, div {
   }
 
   .container-fluid {
-    background-color: linear-gradient(to right bottom, $color-bg, $color-bg-dark);;
+    background-color: $panel;
     height: 360px;
     overflow-y: scroll;
     color: $color-text !important;
@@ -481,6 +562,7 @@ p, div {
       color: $color-text-dark;
       font-weight: $font-weight-regular;
       th {
+        font-weight: $font-weight-light;
         border-top: none;
         font-size: $font-small !important;
         border-bottom: 1px solid $color-bg-dark;
@@ -572,16 +654,14 @@ a.editable-click:hover {
 
 .info-button i {
   @extend .menu-button;
-  margin-left: 15px;
-  margin-right: -15px;
-  width: 57px;
+  margin-top: 15px;
+  margin-left: 10px
 }
 
 .help-button i {
   @extend .menu-button;
-  margin-left: 0;
-  margin-right: -15px;
-  width: 57px;
+  margin-top: 15px;
+  margin-left: 10px
 }
 
 .navbar-brand {
@@ -822,7 +902,7 @@ a.editable-click:hover {
   cursor: pointer;
   position: relative;
   border: 2px solid transparent;
-  background: rgba($gray-dark, 0.5) no-repeat url('/styles/resources/app/crud/images/background-pattern-alpha.png');
+  background: $night-sky no-repeat url('/styles/resources/app/crud/images/background-pattern-alpha.png');
   background-size: contain;
 
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);

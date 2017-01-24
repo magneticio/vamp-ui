@@ -37,8 +37,9 @@
               </tag>
             </div>
             <div class="vamp-lv-value vamp-lv-col-array" ng-switch-when="array">
-              <div class="vamp-lv-value" ng-repeat="item in $lv.getKeyValue(artifact, field.arrayPath)">
-                {{ field.expression ? (field.expression | interpolate:this) : (item[field.valuePath] || item) }}
+              <div class="vamp-lv-value" ng-repeat="item in (items = $lv.getKeyValue(artifact, field.arrayPath)) | limitTo:3">
+                <span ng-if="$index < 2 || items.length <= 3">{{ $lv.getArrayTypeValue(item, field, this) }}</span>
+                <a ng-if="$last && items.length > 3"> {{ items.length - 2 }} more...</a>
               </div>
             </div>
             <div class="vamp-lv-col-object" ng-switch-when="object">
@@ -55,8 +56,8 @@
         </td>
         <td ng-if="$lv.artifactData.actions && $lv.artifactData.actions.length > 0"
           class="vamp-lv-col vamp-lv-row-actions">
-          <button ng-disabled="(action.active | interpolate:this)" class="btn bootstrap-btn vamp-lv-row-action {{ action.class }}"
-            ng-repeat="action in $lv.artifactData.actions"
+          <button ng-repeat="action in $lv.artifactData.actions"
+            ng-show="action.active ? (action.active | interpolate:this) : true" class="btn bootstrap-btn vamp-lv-row-action {{ action.class }}"
             ng-click="$ctrl[action.action]($event)">
             {{ action.title }}
           </button>

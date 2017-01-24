@@ -153,7 +153,8 @@ Artifacts.prototype.all = function () {
         {
           name: "suspend",
           title: "Suspend",
-          action: "suspend"
+          action: "suspend",
+          active: "artifact.status === 'running'"
         },
         {
           name: "restart",
@@ -161,9 +162,10 @@ Artifacts.prototype.all = function () {
           action: "restart"
         },
         {
-          name: "suspend",
+          name: "start",
           title: "Start",
-          action: "start"
+          action: "start",
+          active: "artifact.status === 'suspended'"
         }
       ]
     },
@@ -194,7 +196,7 @@ Artifacts.prototype.all = function () {
           title: "Remove from",
           action: "remove",
           class: "vamp-red",
-          active: "$ctrl.removeFrom | isEmpty"
+          active: "!($ctrl.removeFrom | isEmpty)"
         }
       ]
     },

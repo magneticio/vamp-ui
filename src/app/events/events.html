@@ -2,7 +2,7 @@
     <div class="head" ng-click="$ctrl.toggle()">
         <p class="category"><i class="fa fa-ellipsis-v"></i>&nbsp;&nbsp;EVENTS</p>
         <div>
-            <button type="button" class="btn"
+            <button type="button" class="btn pull-right"
                     ng-model="$ctrl.filters.health" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
                     ng-class="{red: $ctrl.filters['health']}" ng-click="filter($event, 'health')" ng-show="$ctrl.show">
                 <i class="fa fa-fw fa-check" ng-if="!$ctrl.filters['health']"></i>
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="container-fluid" ng-if="$ctrl.show">
-        <table class="table">
+        <table class="table table-condensed">
             <tr>
                 <th>TIME</th>
                 <th>TYPE</th>

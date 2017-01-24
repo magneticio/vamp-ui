@@ -1,9 +1,19 @@
 angular.module('app')
-  .controller('listViewController', function ($scope, $element, util) {
+  .controller('listViewController', function ($scope, $element, util, interpolateFilter) {
     var $lv = this;
 
     $lv.getKeyValue = function (item, key) {
       var value = util.getValueByString(item, key);
+      return value;
+    };
+
+    $lv.getArrayTypeValue = function (item, field, context) {
+      var value = (item[field.valuePath] || item);
+
+      if (field.expression) {
+        value = interpolateFilter(field.expression, context);
+      }
+
       return value;
     };
 

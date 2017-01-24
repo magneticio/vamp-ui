@@ -1,7 +1,7 @@
 /* global Artifacts */
 /* eslint dot-notation: ["error", { "allowPattern": "^[a-z]+(_[a-z]+)+$" }] */
 angular.module('app').component('menu', {
-  templateUrl: 'app/menu/menu.html',
+  templateUrl: 'app/menu/templates/menu-v2.html',
   controller: MenuController
 });
 
@@ -21,32 +21,6 @@ function MenuController($rootScope, $scope, $interval, $vamp) {
   });
 
   // info panel
-
-  this.toggleInfoPanel = function () {
-    if ($rootScope.helpPanelActive) {
-      $rootScope.infoPanelActive = true;
-      $rootScope.helpPanelActive = false;
-    } else {
-      $rootScope.infoPanelActive = !$rootScope.infoPanelActive;
-      if ($rootScope.infoPanelActive) {
-        $rootScope.helpPanelActive = false;
-      }
-    }
-  };
-
-  // help panel
-
-  this.toggleHelpPanel = function () {
-    if ($rootScope.infoPanelActive) {
-      $rootScope.helpPanelActive = true;
-      $rootScope.infoPanelActive = false;
-    } else {
-      $rootScope.helpPanelActive = !$rootScope.helpPanelActive;
-      if ($rootScope.helpPanelActive) {
-        $rootScope.infoPanelActive = false;
-      }
-    }
-  };
 
   // jvm metrics
 

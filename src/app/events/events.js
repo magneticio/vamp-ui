@@ -3,7 +3,7 @@ angular.module('app').component('events', {
   controller: EventController
 });
 
-function EventController($scope, $vamp) {
+function EventController($scope, $vamp, uiStatesFactory) {
   var $ctrl = this;
 
   var maxLength = 50;
@@ -16,6 +16,7 @@ function EventController($scope, $vamp) {
   this.toggle = function ($event) {
     if (!$event || !$event.ignore) {
       $ctrl.show = !$ctrl.show;
+      uiStatesFactory.setFooterViewState($ctrl.show ? 'expanded' : 'collapsed');
     }
   };
 

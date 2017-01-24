@@ -67,7 +67,7 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
 
   $ctrl.artifactData = $state.$current.data;
 
-  $ctrl.itemsPerPage = 8;
+  $ctrl.itemsPerPage = 20;
   $ctrl.pages = 1;
   $ctrl.currentPage = parseInt($stateParams.page, 10);
 
@@ -99,7 +99,7 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   $ctrl.getCurrentPageStartingIndex = function () {
     var index = $ctrl.currentPage - 2;
 
-    if ($ctrl.currentPage < 2) {
+    if ($ctrl.pages <= 5 || $ctrl.currentPage < 2) {
       index = 0;
     } else if ($ctrl.currentPage >= $ctrl.pages - 2) {
       index = $ctrl.pages - 5;

@@ -22,12 +22,33 @@
 </head>
 <body ng-app="app">
 <div class="page">
-    <menu></menu>
-    <div class="app-center">
-        <ui-view></ui-view>
-        <side></side>
+
+
+    <div id="wrapper" ng-controller="layoutController as $layout">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+          <menu>
+          </menu>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" ng-class="{'footer-expanded': $layout.uiStates.footer == 'expanded'}">
+
+            <ui-view></ui-view>
+            <side></side>
+
+
+        </div>
+        <!-- /#page-content-wrapper -->
+        <events class="events-panel"></events>
+
+
     </div>
-    <events class="events-panel"></events>
+    <!--<menu></menu>-->
+
+
 </div>
 </body>
 <!-- build:js({.tmp,src}) scripts/vendor.js -->

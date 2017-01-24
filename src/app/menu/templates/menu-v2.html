@@ -1,0 +1,52 @@
+
+<ul class="sidebar-nav">
+    <li class="sidebar-brand">
+      <a href="#">
+        <img class="vamp-logo" src="styles/resources/img/_logo.svg">
+        <img class="vamp-title" src="styles/resources/img/logo-title.svg">
+      </a>
+    </li>
+    <li ng-class="{active : $ctrl.isActive(artifact)}"
+        ng-repeat="artifact in $ctrl.artifacts">
+        <a ui-sref="{{ artifact.kind }}" href="#">
+          <i></i>
+          <span>{{artifact.kind}}</span>
+        </a>
+    </li>
+</ul>
+<div class="sidebar-bottom-docked">
+  <ul class="settings-menu">
+    <ul class="sub-menu collapse" id="settings">
+      <li>
+        <a ui-sref="configuration" href="#">
+          <i></i>
+          <span>Backend configuration</span>
+        </a>
+      </li>
+      <li>
+        <a ui-sref="vga" href="#">
+          <i></i>
+          <span>VGA configuration</span>
+        </a>
+      </li>
+      <li>
+        <a ui-sref="info" href="#">
+          <i></i>
+          <span>Extended info</span>
+        </a>
+      </li>
+      <li>
+        <a ui-sref="log" href="#">
+          <i></i>
+          <span>Logs</span>
+        </a>
+      </li>
+    </ul>
+    <li data-toggle="collapse" data-target="#settings" class="collapsed">
+      <a class="btn-link">
+        <i></i>
+        <span>Settings</span>
+      </a>
+    </li>
+  </ul>
+</div>

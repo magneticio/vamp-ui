@@ -1,10 +1,10 @@
 <header title="{{ $ctrl.title }}" clazz="{{ $ctrl.errorClass }}">
-    <message>
+    <controls>
         <span ng-if="$ctrl.errorMessage.length < 40">{{ $ctrl.errorMessage }}</span>
         <div class="message-truncated" ng-if="$ctrl.errorMessage.length >= 40" ng-click="$ctrl.fullErrorMessage()">
             <span>{{ $ctrl.errorMessage | limitTo:40 }}...<i class="fa fa-arrows-alt message-expand-icon"></i></span>
         </div>
-    </message>
+    </controls>
     <buttons>
         <button class="btn btn-lg btn-circle" type="submit" title="SAVE"
                 ng-disabled="!$ctrl.isModified() || !$ctrl.valid" ng-click="$ctrl.save()">
