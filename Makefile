@@ -30,7 +30,7 @@ default:
 		--env BUILD_GID=$(shell id -g) \
 		$(BUILD_SERVER) \
 			make build dist
-
+	make pack
 
 .PHONY: build
 build:
@@ -46,24 +46,19 @@ build:
 	./environment.sh
 	gulp build
 
-
-.PHONY: dist
-dist:
-	mv $(CURDIR)/dist $(CURDIR)/ui
-	tar -cvjSf ui.tar.bz2 ui/
-
 .PHONY: pack
 pack:
+	make build
 	export version="$$(git describe --tags)" && \
 	docker volume create packer && \
 	docker run \
+	    --rm \
     	--name packer \
     	--interactive \
     	--volume $(CURDIR)/dist:/usr/local/src \
     	--volume packer:/usr/local/stash \
     	$(BUILD_PACKER) \
-      	vamp-ui $${version} && \
-	docker rm packer
+      	vamp-ui $${version}
 
 .PHONY: clean
 clean:
