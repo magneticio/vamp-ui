@@ -5,8 +5,8 @@ angular.module('app').component('header', {
     clazz: '@'
   },
   transclude: {
+    main: '?main',
     controls: '?controls',
-    message: '?message',
     buttons: '?buttons'
   },
   controller: function ($scope, $rootScope) {

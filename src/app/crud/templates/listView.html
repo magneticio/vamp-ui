@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody class="artifacts-list">
-      <tr class="vamp-lv-row vamp-lv-data-row" ng-repeat="artifact in ($lv.items | limitTo: $lv.artifactsCtrl.itemsPerPage: (($lv.artifactsCtrl.currentPage - 1) * $lv.artifactsCtrl.itemsPerPage)) track by $index"
+      <tr class="vamp-lv-row vamp-lv-data-row" ng-repeat="artifact in ($lv.items | filter:{name:$lv.artifactsCtrl.searchTerm} | limitTo: $lv.artifactsCtrl.itemsPerPage: (($lv.artifactsCtrl.currentPage - 1) * $lv.artifactsCtrl.itemsPerPage)) track by $index"
       dynamic-controller-as="{{$lv.artifactData.artifactController}}" ng-click="$lv.onItemClick(artifact, $event)">
         <td class="vamp-lv-col">
           <input type="checkbox" class="checkbox vamp-lv-checkbox"

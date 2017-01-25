@@ -1015,9 +1015,45 @@ a.editable-click:hover {
 }
 
 .form-control {
-  color: $color-text;
-  background-color: $color-bg;
-  border-color: $color-text-dark;
+  color: $medium-blue;
+  background-color: $pitch;
+  border: none;
+  border-radius: 20px;
+
+  &:hover,
+  &:focus {
+    border:none;
+    box-shadow: none;
+  }
+}
+
+.input-group-addon {
+  color: $dark-blue ;
+  background-color: $pitch;
+  border: none;
+  border-radius: 20px;
+}
+
+.input-group {
+  .form-control:not(:first-child) {
+    padding-left: 0px;
+  }
+}
+
+input[type="text"]::-webkit-input-placeholder {
+  color: $dark-blue !important;
+}
+
+input[type="text"]:-moz-placeholder { /* Firefox 18- */
+color: $night-sky !important;
+}
+
+input[type="text"]::-moz-placeholder {  /* Firefox 19+ */
+color: $night-sky !important;
+}
+
+input[type="text"]:-ms-input-placeholder {
+color: $night-sky !important;
 }
 
 .has-error .help-block {

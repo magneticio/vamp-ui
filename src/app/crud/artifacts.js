@@ -20,6 +20,7 @@ BaseArtifactsController.$inject = ['$ctrl', '$scope', '$vamp', 'uiStatesFactory'
 
 function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   $state, $stateParams, $filter, $location, toastr, alert) {
+  $ctrl.searchTerm = "";
   $ctrl.initialized = false;
   $ctrl.kind = $scope.kind;
   if (!$ctrl.path) {
