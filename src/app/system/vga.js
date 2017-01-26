@@ -1,21 +1,11 @@
 angular.module('app').component('vga', {
-  templateUrl: 'app/system/vga.html',
+  templateUrl: 'app/system/templates/vgaConfiguration.html',
   controller: VgaController
 });
 
-function VgaController($state, $scope, $timeout, $vamp, toastr, alert) {
+function VgaController($state, $scope, $timeout, $vamp, toastr, alert, artifact) {
   var $ctrl = this;
-  $ctrl.editor = {
-    useWrapMode: false,
-    showGutter: true,
-    theme: 'vamp',
-    mode: 'twig',
-    firstLineNumber: 1,
-    onLoad: function (editor) {
-      editor.focus();
-      editor.$blockScrolling = 'Infinity';
-    }
-  };
+  $ctrl.editor = artifact.editor;
 
   $ctrl.source = '';
   $ctrl.marshallers = [];
@@ -27,6 +17,7 @@ function VgaController($state, $scope, $timeout, $vamp, toastr, alert) {
   var mode = 'configuration';
   var marshaller = '';
   var ignoreChange = false;
+  $ctrl.selectedIndex = 0;
 
   $ctrl.title = function () {
     return marshaller ? mode + ' : ' + marshaller : '';
@@ -44,6 +35,7 @@ function VgaController($state, $scope, $timeout, $vamp, toastr, alert) {
     if (m && marshaller !== m) {
       marshaller = m;
       $ctrl.load();
+      $ctrl.selectedIndex = _.indexOf($ctrl.marshallers, marshaller);
     }
     return marshaller;
   };
@@ -58,6 +50,10 @@ function VgaController($state, $scope, $timeout, $vamp, toastr, alert) {
     }
   };
 
+  $ctrl.discardChanges = function () {
+    $ctrl.source = $ctrl.template.current = $ctrl.template.base;
+  };
+
   $ctrl.update = function () {
     ignoreChange = true;
     $vamp.await(function () {
@@ -66,6 +62,7 @@ function VgaController($state, $scope, $timeout, $vamp, toastr, alert) {
       $timeout(function () {
         toastr.success('Template has been successfully updated.');
         $ctrl.template.base = $ctrl.template.current;
+        $ctrl.mode('configuration');
         ignoreChange = false;
       }, 0);
     }).catch(function (response) {

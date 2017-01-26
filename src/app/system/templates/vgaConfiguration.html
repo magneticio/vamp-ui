@@ -1,0 +1,62 @@
+<header title="VGA configuration">
+</header>
+
+<div class="container-fluid">
+  <div>
+    <ul class="nav nav-tabs">
+      <li ng-repeat="marshaller in $ctrl.marshallers"
+        ng-class="{'active' : $index == $ctrl.selectedIndex}">
+        <a data-toggle="tab" ng-click="$ctrl.marshaller(marshaller)">{{marshaller}}</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active">
+        <div class="container-fluid">
+          <div class="row tab-pane-header">
+            <div class="col-md-6">
+              <div class="btn-group">
+                <button class="btn bootstrap-btn btn-small btn-transparent"
+                  ng-class="{'active' : $ctrl.mode() == 'configuration' }"
+                  ng-click="$ctrl.mode('configuration')">
+                    <i class="icon-layers"></i>
+                    <span class="btn-text">generated</span>
+                </button>
+                <button class="btn bootstrap-btn btn-small btn-transparent"
+                  ng-class="{'active' : $ctrl.mode() == 'template' }"
+                  ng-click="$ctrl.mode('template')">
+                    <i class="icon-layers"></i>
+                    <span class="btn-text">template</span>
+                </button>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="pull-right">
+                <button class="btn bootstrap-btn btn-small btn-ghost btn-primary"
+                  ng-click="$ctrl.discardChanges()"
+                  ng-show="$ctrl.mode() == 'template'"
+                  ng-disabled="!$ctrl.dirty()">
+                    <span class="btn-text">discard</span>
+                </button>
+                <button class="btn bootstrap-btn btn-small btn-ghost btn-success"
+                  ng-click="$ctrl.update()"
+                  ng-show="$ctrl.mode() == 'template'"
+                  ng-disabled="!$ctrl.dirty()">
+                    <span class="btn-text">save</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row tab-editor">
+            <div class="col-md-12">
+              <div id="editor" ui-ace="$ctrl.editor"
+                   ng-readonly="$ctrl.mode() != 'template'"
+                   ng-model="$ctrl.source"
+                   ng-change="$ctrl.edited()"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
