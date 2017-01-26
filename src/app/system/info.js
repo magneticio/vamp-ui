@@ -1,5 +1,5 @@
 angular.module('app').component('info', {
-  templateUrl: 'app/system/info.html',
+  templateUrl: 'app/system/templates/infoConfiguration.html',
   controller: InfoController
 });
 
