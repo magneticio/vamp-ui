@@ -1,0 +1,76 @@
+<header title="backend configuration">
+</header>
+
+<div class="container-fluid">
+  <div>
+    <ul class="nav nav-tabs">
+      <li
+        ng-class="{'tab-highlight' : $ctrl.type === 'dynamic',
+          'active' : ($ctrl.type === 'dynamic' || $ctrl.type === 'applied')}">
+        <a
+          ng-click="$ctrl.setType('applied')">
+          {{ $ctrl.type === 'dynamic' ? 'dynamic' : 'applied' }}
+        </a>
+      </li>
+      <li ng-class="{'active' : $ctrl.type === 'system'}">
+        <a ng-click="$ctrl.setType('system')">system properties</a>
+      </li>
+      <li ng-class="{'active' : $ctrl.type === 'environment'}">
+        <a ng-click="$ctrl.setType('environment')">environment variables</a>
+      </li>
+      <li ng-class="{'active' : $ctrl.type === 'application'}">
+        <a ng-click="$ctrl.setType('application')">application</a>
+      </li>
+      <li ng-class="{'active' : $ctrl.type === 'reference'}">
+        <a ng-click="$ctrl.setType('reference')">reference</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active">
+        <div class="container-fluid">
+          <div class="row tab-pane-header"
+            ng-class="{'tab-highlight' : $ctrl.type === 'dynamic'}">
+            <div class="col-md-6">
+              <button class="btn bootstrap-btn btn-small btn-transparent"
+                ng-class="{'active' : $ctrl.flatten }"
+                ng-if="$ctrl.type !== 'dynamic'"
+                ng-click="$ctrl.toggleFlatten()">
+                  <i class="icon-layers"></i>
+                  <span class="btn-text">flatten</span>
+              </button>
+            </div>
+            <div class="col-md-6">
+              <div class="pull-right">
+                <button class="btn bootstrap-btn btn-small btn-ghost btn-info"
+                  ng-if="$ctrl.type === 'applied'"
+                  ng-click="$ctrl.startEdit()">
+                    <i class="icon-pencil"></i>
+                    <span class="btn-text">edit</span>
+                </button>
+                <button class="btn bootstrap-btn btn-small btn-ghost btn-primary"
+                  ng-if="$ctrl.type === 'dynamic'"
+                  ng-click="$ctrl.setType('applied', true)">
+                    <span class="btn-text">exit</span>
+                </button>
+                <button class="btn bootstrap-btn btn-small btn-ghost btn-white"
+                  ng-if="$ctrl.type === 'dynamic'"
+                  ng-click="$ctrl.dirty() && $ctrl.update()"
+                  ng-disabled="!($ctrl.dirty())">
+                    <span class="btn-text">save</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row tab-editor">
+            <div class="col-md-12">
+                <div id="editor" ui-ace="$ctrl.editor"
+                     ng-readonly="$ctrl.type != 'dynamic'"
+                     ng-model="$ctrl.source"
+                     ng-change="$ctrl.edited()"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

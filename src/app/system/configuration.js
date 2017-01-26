@@ -1,9 +1,9 @@
 angular.module('app').component('configuration', {
-  templateUrl: 'app/system/configuration.html',
+  templateUrl: 'app/system/templates/backendConfiguration.html',
   controller: ConfigurationController
 });
 
-function ConfigurationController($timeout, artifact, $vamp, alert, toastr) {
+function ConfigurationController($scope, $timeout, $element, artifact, $vamp, alert, toastr) {
   var $ctrl = this;
   $ctrl.editor = artifact.editor;
 
@@ -16,17 +16,12 @@ function ConfigurationController($timeout, artifact, $vamp, alert, toastr) {
     current: null
   };
 
-  $ctrl.title = function () {
-    if ($ctrl.type === 'dynamic') {
-      return 'dynamic (key-value store)';
-    } else if ($ctrl.type === 'system') {
-      return 'system properties';
-    } else if ($ctrl.type === 'environment') {
-      return 'environment variables';
-    } else if ($ctrl.type === 'application') {
-      return 'application configuration file';
-    }
-    return $ctrl.type;
+  $ctrl.startEdit = function () {
+    $ctrl.setType('dynamic');
+
+    $timeout(function () {
+      $($element).find('#editor textarea').focus();
+    });
   };
 
   $ctrl.dirty = function () {
@@ -39,16 +34,12 @@ function ConfigurationController($timeout, artifact, $vamp, alert, toastr) {
     }
   };
 
-  $ctrl.setType = function (type, force) {
-    if (type === 'dynamic' && $ctrl.dirty()) {
-      if (force) {
-        alert.show('Warning', 'If you reload dynamic configuration your current changes will be lost.', 'Reload', 'Keep', function () {
-          $ctrl.reload(type);
-        });
-      } else {
-        $ctrl.type = 'dynamic';
-        $ctrl.source = $ctrl.dynamic.current;
-      }
+  $ctrl.setType = function (type) {
+    if (type !== 'dynamic' && $ctrl.dirty()) {
+      alert.show('Warning', 'If you exit, unsaved changes to your configuration will be lost.', 'Proceed', 'Cancel', function () {
+        $ctrl.dynamic.current = $ctrl.dynamic.base;
+        $ctrl.reload(type);
+      });
     } else {
       $ctrl.reload(type);
     }
@@ -85,6 +76,7 @@ function ConfigurationController($timeout, artifact, $vamp, alert, toastr) {
       $timeout(function () {
         toastr.success('Configuration has been successfully updated. Connection with Vamp should be established again in few moments.');
         $ctrl.dynamic.base = $ctrl.dynamic.current;
+        $ctrl.reload('applied');
       }, 0);
     }).catch(function (response) {
       $timeout(function () {
