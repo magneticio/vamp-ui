@@ -4,7 +4,7 @@ angular.module('app').component('side', {
   controller: SideController
 });
 
-function SideController($rootScope, $scope, $vamp) {
+function SideController($scope, $rootScope, $vamp, uiStatesFactory) {
   var $ctrl = this;
   $scope.info = {};
   $scope.help = {
@@ -13,20 +13,11 @@ function SideController($rootScope, $scope, $vamp) {
     links: []
   };
 
-  var showI = false;
-  var showH = false;
+  $ctrl.uiStates = uiStatesFactory.viewStates;
 
-  $ctrl.showInfo = function () {
-    return showI;
-  };
-
-  $ctrl.showHelp = function () {
-    return showH;
-  };
-
-  this.closePanel = function () {
-    $rootScope.infoPanelActive = false;
-    $rootScope.helpPanelActive = false;
+  $ctrl.closePanel = function () {
+    uiStatesFactory.setInfoPanelViewState(false);
+    uiStatesFactory.setHelpPanelViewState(false);
   };
 
   $rootScope.$on('$stateChangeStart',
@@ -56,25 +47,6 @@ function SideController($rootScope, $scope, $vamp) {
   $scope.$on('$vamp:connection', function (event, connection) {
     if (connection === 'opened') {
       $vamp.peek('/info');
-    }
-  });
-
-  $rootScope.$watch('infoPanelActive', function (newValue) {
-    $scope.infoPanelActive = newValue;
-    if ($scope.infoPanelActive) {
-      showI = true;
-      showH = false;
-    }
-    if (!$scope.info.message) {
-      $vamp.peek('/info');
-    }
-  });
-
-  $rootScope.$watch('helpPanelActive', function (newValue) {
-    $scope.helpPanelActive = newValue;
-    if ($scope.helpPanelActive) {
-      showH = true;
-      showI = false;
     }
   });
 

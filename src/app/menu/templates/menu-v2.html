@@ -16,33 +16,43 @@
 </ul>
 <div class="sidebar-bottom-docked">
   <ul class="settings-menu">
-    <ul class="sub-menu collapse" id="settings">
-      <li>
+    <ul id="settings" class="sub-menu collapse"
+      ng-class="{'in' :
+        $ctrl.isActive('configuration') ||
+        $ctrl.isActive('vga') ||
+        $ctrl.isActive('info') ||
+        $ctrl.isActive('log')}" >
+      <li ng-class="{active : $ctrl.isActive('configuration')}">
         <a ui-sref="configuration" href="#">
           <i></i>
           <span>Backend configuration</span>
         </a>
       </li>
-      <li>
+      <li ng-class="{active : $ctrl.isActive('vga')}">
         <a ui-sref="vga" href="#">
           <i></i>
           <span>VGA configuration</span>
         </a>
       </li>
-      <li>
+      <li ng-class="{active : $ctrl.isActive('info')}">
         <a ui-sref="info" href="#">
           <i></i>
           <span>Extended info</span>
         </a>
       </li>
-      <li>
+      <li ng-class="{active : $ctrl.isActive('log')}">
         <a ui-sref="log" href="#">
           <i></i>
           <span>Logs</span>
         </a>
       </li>
     </ul>
-    <li data-toggle="collapse" data-target="#settings" class="collapsed">
+    <li data-toggle="collapse" data-target="#settings" class="collapsed"
+      ng-class="{'collapsed' :
+        !($ctrl.isActive('configuration') ||
+        $ctrl.isActive('vga') ||
+        $ctrl.isActive('info') ||
+        $ctrl.isActive('log'))}" >
       <a class="btn-link">
         <i></i>
         <span>Settings</span>

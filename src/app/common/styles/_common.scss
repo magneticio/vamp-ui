@@ -1,0 +1,50 @@
+
+/* Button styles */
+@import "_buttons";
+
+/* Inputs */
+
+.form-control {
+  color: $medium-blue;
+  background-color: $pitch;
+  border: none;
+  border-radius: 20px;
+
+  &:hover,
+  &:focus {
+    border:none;
+    box-shadow: none;
+  }
+}
+
+.input-group-addon {
+  color: $dark-blue ;
+  background-color: $pitch;
+  border: none;
+  border-radius: 20px;
+}
+
+.input-group {
+  .form-control:not(:first-child) {
+    padding-left: 0px;
+  }
+}
+
+input[type="text"]::-webkit-input-placeholder {
+  color: $dark-blue !important;
+}
+
+input[type="text"]:-moz-placeholder { /* Firefox 18- */
+  color: $dark-blue !important;
+}
+
+input[type="text"]::-moz-placeholder {  /* Firefox 19+ */
+  color: $dark-blue !important;
+}
+
+input[type="text"]:-ms-input-placeholder {
+  color: $dark-blue !important;
+}
+
+/* Tabs */
+@import "_tabs";

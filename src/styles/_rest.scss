@@ -259,8 +259,8 @@ menu {
 .editor {
   position: absolute;
   top: 80px;
-  left: 0;
-  right: 0;
+  left: 15px;
+  right: 15px;
   bottom: 0;
 }
 
@@ -280,12 +280,14 @@ edit, add {
   }
 }
 
-.ace_editor {
-  position: absolute !important;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+.editor {
+  .ace_editor {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 }
 
 .alert {
@@ -889,9 +891,6 @@ a.editable-click:hover {
   color: $color-text;
 }
 
-.artifact-row {
-
-}
 
 .artifact {
   height: 28rem;
@@ -934,8 +933,6 @@ a.editable-click:hover {
   font-weight: $font-weight-light;
   margin: 0 0 1.5rem 0;
 }
-
-
 
 //
 
@@ -1014,47 +1011,6 @@ a.editable-click:hover {
   }
 }
 
-.form-control {
-  color: $medium-blue;
-  background-color: $pitch;
-  border: none;
-  border-radius: 20px;
-
-  &:hover,
-  &:focus {
-    border:none;
-    box-shadow: none;
-  }
-}
-
-.input-group-addon {
-  color: $dark-blue ;
-  background-color: $pitch;
-  border: none;
-  border-radius: 20px;
-}
-
-.input-group {
-  .form-control:not(:first-child) {
-    padding-left: 0px;
-  }
-}
-
-input[type="text"]::-webkit-input-placeholder {
-  color: $dark-blue !important;
-}
-
-input[type="text"]:-moz-placeholder { /* Firefox 18- */
-color: $night-sky !important;
-}
-
-input[type="text"]::-moz-placeholder {  /* Firefox 19+ */
-color: $night-sky !important;
-}
-
-input[type="text"]:-ms-input-placeholder {
-color: $night-sky !important;
-}
 
 .has-error .help-block {
   color: $color-pink;

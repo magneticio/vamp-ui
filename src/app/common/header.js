@@ -9,17 +9,19 @@ angular.module('app').component('header', {
     controls: '?controls',
     buttons: '?buttons'
   },
-  controller: function ($scope, $rootScope) {
+  controller: function ($scope, $rootScope, uiStatesFactory) {
     var $ctrl = this;
 
+    $ctrl.uiStates = uiStatesFactory.viewStates;
+
     $ctrl.toggleInfoPanel = function () {
-      if ($rootScope.helpPanelActive) {
-        $rootScope.infoPanelActive = true;
-        $rootScope.helpPanelActive = false;
+      if ($ctrl.uiStates.helpPanel) {
+        uiStatesFactory.setHelpPanelViewState(false);
+        uiStatesFactory.setInfoPanelViewState(true);
       } else {
-        $rootScope.infoPanelActive = !$rootScope.infoPanelActive;
-        if ($rootScope.infoPanelActive) {
-          $rootScope.helpPanelActive = false;
+        uiStatesFactory.setInfoPanelViewState(!$ctrl.uiStates.infoPanel);
+        if ($ctrl.uiStates.infoPanel) {
+          uiStatesFactory.setHelpPanelViewState(false);
         }
       }
     };
@@ -27,13 +29,13 @@ angular.module('app').component('header', {
     // help panel
 
     $ctrl.toggleHelpPanel = function () {
-      if ($rootScope.infoPanelActive) {
-        $rootScope.helpPanelActive = true;
-        $rootScope.infoPanelActive = false;
+      if ($ctrl.uiStates.infoPanel) {
+        uiStatesFactory.setInfoPanelViewState(false);
+        uiStatesFactory.setHelpPanelViewState(true);
       } else {
-        $rootScope.helpPanelActive = !$rootScope.helpPanelActive;
-        if ($rootScope.helpPanelActive) {
-          $rootScope.infoPanelActive = false;
+        uiStatesFactory.setHelpPanelViewState(!$ctrl.uiStates.helpPanel);
+        if ($ctrl.uiStates.helpPanel) {
+          uiStatesFactory.setInfoPanelViewState(false);
         }
       }
     };

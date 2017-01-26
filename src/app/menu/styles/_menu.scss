@@ -1,7 +1,12 @@
 
 /* Sidebar Styles */
 
+
 menu {
+  :focus {
+    outline: none !important;
+  }
+  
   height: 100%;
   width: 100%;
   position: relative;
@@ -86,7 +91,12 @@ menu {
 				}
 			}
 
+      &:focus {
+        outline: none !important;
+      }
+
 			&.active {
+
 				.btn-link,
 				a {
 					text-decoration: none;

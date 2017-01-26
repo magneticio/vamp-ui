@@ -1,0 +1,75 @@
+ul.nav-tabs {
+  position: relative;
+  border-bottom: 1px solid $night-sky;
+
+  li {
+    user-select : none;
+    & > a {
+      cursor: pointer;
+      border: 1px solid $night-sky;
+      color: $blue;
+      background-color: $night-sky;
+      text-transform: capitalize;
+      padding: 20px;
+      font-weight: $font-weight-light;
+      font-size: $font-size-normal;
+
+      &:hover {
+        border: 1px solid $night-sky;
+        background-color: $night-sky;
+        color: $medium-blue;
+      }
+    }
+
+    &.tab-highlight {
+      & > a {
+        border-color: $informative !important;
+        background-color: $informative !important;
+      }
+    }
+
+    &.active {
+      z-index: 1;
+
+      &:not(:first-child) {
+        & > a {
+          margin-left: 15px;
+        }
+      }
+
+      & > a {
+        font-weight: $font-weight-bold;
+        border: 1px solid $night-sky;
+        color: $off-white;
+        background-color: $night-sky;
+        text-transform: capitalize;
+        margin-right: 15px;
+
+        &:hover,
+        &:focus {
+          color: $off-white;
+          background-color: $night-sky;
+          border: 1px solid $night-sky;
+        }
+      }
+    }
+  }
+}
+
+.tab-content {
+  position: relative;
+  background-color: $night-sky;
+  box-shadow: 0px -3px 5px $shadow;
+
+  .tab-pane {
+    padding-bottom:15px;
+
+    .tab-pane-header {
+      padding: 10px 0px;
+
+      &.tab-highlight {
+        background-color: $informative;
+      }
+    }
+  }
+}

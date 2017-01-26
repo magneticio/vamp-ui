@@ -27,6 +27,7 @@ $white: #FFFFFF;
 $off-white: #F0F5FA;
 $misty: #C3D2CD;
 $medium-blue: #6991AA;
+$shadow: rgba(0,0,0,0.15);
 
 $font-size-extra-large: 36px;
 $button-size-large: 60px;
@@ -75,6 +76,39 @@ $font-weight-bold: 500;
   -webkit-box-shadow: 0 0 4px 2px $color;
   -moz-box-shadow: 0 0 4px 2px $color;
   box-shadow: 0 0 4px 2px $color;
+}
+
+@mixin colorize-ghost-btn($color) {
+    color: $color;
+    border: 1px solid $color;
+
+    &:not([disabled=disabled]) {
+      &:hover {
+        color: darken($color, 8%);
+        border-color: darken($color, 8%);
+      }
+
+      &:active {
+        color: darken($color, 16%);
+        border-color: darken($color, 16%);
+      }
+    }
+}
+
+@mixin colorize-btn($color) {
+    background-color: $color;
+
+    &:not([disabled=disabled]) {
+      &:hover {
+        background-color: darken($color, 8%);
+        color: darken($white, 8%);
+      }
+
+      &:active {
+        background-color: darken($color, 16%);
+        color: darken($white, 16%);
+      }
+    }
 }
 
 // font

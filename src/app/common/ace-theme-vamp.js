@@ -12,7 +12,7 @@ width: 0;\
 background: #141e2d;\
 }\
 .ace-vamp {\
-background-color: transparent;\
+background-color: #0D1E26;\
 color: #C5C8C6;\
 }\
 .ace-vamp .ace_cursor {\
@@ -32,10 +32,10 @@ margin: -1px 0 0 -1px;\
 border: 1px solid #4B4E55;\
 }\
 .ace-vamp .ace_marker-layer .ace_active-line {\
-background: rgba(13, 30, 38, 0.5);\
+background: #091921;\
 }\
 .ace-vamp .ace_gutter-active-line {\
-background-color: transparent;\
+background-color: #091921;\
 }\
 .ace-vamp .ace_marker-layer .ace_selected-word {\
 border: 1px solid #373B41;\

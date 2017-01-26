@@ -12,8 +12,9 @@ function MenuController($rootScope, $scope, $interval, $vamp) {
 
   this.artifacts = Artifacts.prototype.all();
 
-  this.isActive = function (artifact) {
-    return $ctrl.active ? $ctrl.active.startsWith(artifact.kind) : false;
+  this.isActive = function (item) {
+    var route = item.kind || item;
+    return $ctrl.active ? $ctrl.active.startsWith(route) : false;
   };
 
   $scope.$on('$stateChangeSuccess', function (event, state) {

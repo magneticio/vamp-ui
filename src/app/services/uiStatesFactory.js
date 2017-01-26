@@ -2,6 +2,8 @@ function uiStatesFactory() {
   var viewStates = {
     main: 'grid',
     sideBar: 'expanded',
+    infoPanel: false,
+    helpPanel: false,
     footer: 'collapsed'
   };
 
@@ -13,6 +15,14 @@ function uiStatesFactory() {
     viewStates.sideBar = type;
   }
 
+  function setInfoPanelViewState(type) {
+    viewStates.infoPanel = type;
+  }
+
+  function setHelpPanelViewState(type) {
+    viewStates.helpPanel = type;
+  }
+
   function setFooterViewState(type) {
     viewStates.footer = type;
   }
@@ -21,6 +31,8 @@ function uiStatesFactory() {
     viewStates: viewStates,
     setMainViewState: setMainViewState,
     setSideBarViewState: setSideBarViewState,
+    setInfoPanelViewState: setInfoPanelViewState,
+    setHelpPanelViewState: setHelpPanelViewState,
     setFooterViewState: setFooterViewState
   };
 }

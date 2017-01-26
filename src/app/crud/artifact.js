@@ -1,37 +1,14 @@
-/* function baseArtifactController($scope, $vamp) {
-    var vm = this;
-
-    vm.peek = function () {
-      if (this.kind) {
-        var path = '/' + this.kind;
-        $vamp.peek(path);
-      }
-    }
-}
-
-baseArtifactController.$inject = ['$scope', '$vamp'];
-angular.module('app').controller('baseArtifactController', BaseGenericCtrl);*/
-
 function ArtifactController($scope) {
-  // angular.extend(this, $controller('baseArtifactController', {$scope: $scope}));
   var $ctrl = this;
 
   $ctrl.artifact = $scope.artifact;
   $ctrl.kind = $ctrl.artifact.kind;
-
-  // $ctrl.peek();
 }
 
 ArtifactController.$inject = ['$scope'];
 angular.module('app').controller('ArtifactController', ArtifactController);
 
-angular.module('app')/* .controller('ArtifactController', function ($scope) {
-  var $ctrl = this;
-
-  $ctrl.artifact = $scope.artifact
-  $ctrl.kind = $ctrl.artifact.kind;
-
-})*/.factory('artifact', ['$vamp', function ($vamp) {
+angular.module('app').factory('artifact', ['$vamp', function ($vamp) {
   return new ArtifactService($vamp);
 }]);
 
@@ -42,9 +19,38 @@ function ArtifactService($vamp) {
     theme: 'vamp',
     mode: 'yaml',
     firstLineNumber: 1,
+    maxLines: Infinity,
+    useSoftTabs: true,
+    advanced: {
+      tabSize: 2
+    },
     onLoad: function (editor) {
       editor.focus();
       editor.$blockScrolling = 'Infinity';
+
+      var heightUpdateFunction = function () {
+          // http://stackoverflow.com/questions/11584061/
+        var minHeight = 40 * editor.renderer.lineHeight;
+        var newHeight =
+                    editor.getSession().getScreenLength() *
+                    editor.renderer.lineHeight +
+                    editor.renderer.scrollBar.getWidth();
+
+        newHeight = newHeight < minHeight ? minHeight : newHeight;
+        $('#editor').height(newHeight.toString() + "px");
+        $('#editor-section').height(newHeight.toString() + "px");
+
+          // This call is required for the editor to fix all of
+          // its inner structure for adapting to a change in size
+        editor.resize();
+      };
+
+      // Set initial size to match initial content
+      heightUpdateFunction();
+
+      // Whenever a change happens inside the ACE editor, update
+      // the size again
+      editor.getSession().on('change', heightUpdateFunction);
     }
   };
 

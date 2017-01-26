@@ -72,7 +72,8 @@
       "angular": true,
       "CappedArray": true,
       "_": true,
-      "areAllClustersThere": true
+      "areAllClustersThere": true,
+      "$": true
     },
     "root": true,
     "env": {

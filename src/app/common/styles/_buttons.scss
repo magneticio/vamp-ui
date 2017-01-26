@@ -1,0 +1,89 @@
+.btn.bootstrap-btn {
+  font-size: $font-size-normal;
+  font-weight: $font-weight-bold;
+  color: $white;
+  height: $button-size-normal;
+  font-size: $font-size-normal;
+
+  &:not(.btn-icon) {
+    min-width: 110px;
+  }
+
+  :not(.btn-group) > & + & {
+    margin-left: 10px;
+  }
+
+  &.btn-small {
+    height: $button-size-small;
+    font-size: $font-size-small;
+  }
+
+  &.btn-transparent {
+    color: $blue;
+    background-color: transparent;
+
+    &:hover {
+      color: $medium-blue;
+      background-color: transparent;
+      border: 1px solid $pitch;
+    }
+
+    &:active {
+      //box-shadow: none;
+    }
+
+    &.active {
+      color: $off-white;
+      box-shadow: none;
+      background-color: $pitch;
+
+      &:hover {
+        color: $off-white;
+        background-color: $pitch;
+      }
+
+      &:active {
+        //box-shadow: none;
+      }
+    }
+  }
+
+  &.btn-ghost {
+    background: none !important;
+    text-shadow: none;
+    box-shadow: none;
+
+    &.btn-success {
+      @include colorize-ghost-btn($great-times);
+    }
+
+    &.btn-primary {
+      @include colorize-ghost-btn($blue);
+    }
+
+    &.btn-info {
+      @include colorize-ghost-btn($informative);
+    }
+
+    &.btn-white {
+      @include colorize-ghost-btn($white);
+    }
+  }
+
+  &.btn-success {
+    @include colorize-btn($great-times);
+  }
+
+  &[disabled=disabled] {
+    cursor: default !important;
+  }
+
+  .btn-text {
+    text-transform: capitalize;
+
+    &:not(:first-child) {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+}
