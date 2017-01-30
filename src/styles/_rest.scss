@@ -57,6 +57,7 @@ body {
    width: calc(100% - 250px);
    position: absolute;
    overflow-y: auto;
+   overflow-x: hidden;
    transition: 0.3s height ease-in-out;
 
    &.footer-expanded {
@@ -344,13 +345,17 @@ edit, add {
   margin-bottom: 0;
 
   tbody > tr > td {
-    vertical-align: middle !important;
     letter-spacing: 0.05em;
     color: $gray-lighter;
-    padding: 8px 0 8px 0;
     font-size: $font-medium;
     font-weight: $font-weight-regular;
     border: none;
+    max-width: 700px;
+
+    & div {
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
   }
 
   tbody > tr > th {
@@ -934,7 +939,6 @@ a.editable-click:hover {
   margin: 0 0 1.5rem 0;
 }
 
-//
 
 .btn:not(.bootstrap-btn) {
   font-size: $font-small !important;

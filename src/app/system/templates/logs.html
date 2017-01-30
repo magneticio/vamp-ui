@@ -1,0 +1,62 @@
+<header title="Logs">
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <label class="checkbox-inline">
+              <input type="checkbox" ng-model="$ctrl.INFO.active" ng-change="$ctrl.filterChange($ctrl.INFO)"> Info
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" ng-model="$ctrl.ERROR.active" ng-change="$ctrl.filterChange($ctrl.ERROR)"> Error
+            </label>
+            <label class="checkbox-inline">
+              <input type="checkbox" ng-model="$ctrl.TRACE.active" ng-change="$ctrl.filterChange($ctrl.TRACE)"> Trace
+            </label>
+          </div>
+          <div class="pull-right">
+            <toggle ng-model="$ctrl.isLogOn" style="vamp-toggle"
+              ng-change="$ctrl.toggleOnOff()" onstyle="btn-success"
+              offstyle="btn-primary" size="btn-xs" ng-model="toggleValue"
+              ng-change="changed()"></toggle>
+          </div>
+        </div>
+        <div class="panel-body">
+          <table class="table table-condensed vamp-lv">
+            <thead>
+              <tr>
+                  <th>time</th>
+                  <th>level</th>
+                  <th>logger</th>
+                  <th>message</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr lass="vamp-lv-data-row"
+                ng-repeat="log in filteredLogs = ($ctrl.logs | filter:$ctrl.containLevelsFilter) | limitTo:50:(filteredLogs.lenth - 50)">
+                  <td>
+                      <span class="timestamp">
+                          {{ log.timestamp | date:'HH:mm:ss.sss'}}
+                      </span>
+                  </td>
+                  <td>
+                      <span class="label" ng-class="{'label-danger': log.level == 'ERROR', 'label-success': log.level == 'INFO', 'label-primary': log.level == 'TRACE'}">{{ log.level }}</span>
+                  </td>
+                  <td>
+                      <span class="label">{{ log.logger }}</span>
+                  </td>
+                  <td>
+                      {{ log.message}}
+                  </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

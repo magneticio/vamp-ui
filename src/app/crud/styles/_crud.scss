@@ -98,17 +98,28 @@
   margin: 0 10px 0 10px;
 }
 
-.vamp-lv {
+table.vamp-lv {
   border-collapse: separate;
   border-spacing: 0px 10px;
 
-  thead {
+  & > thead {
     font-weight: $font-weight-light;
     color: $brand-info;
 
-    td {
-      text-transform: uppercase;
+    & > tr {
+      & > td,
+      & > th {
+        text-transform: uppercase;
+        font-weight: $font-weight-light;
+      }
+
+      & > th {
+        background-color: $night-sky;
+        box-shadow: 0px 3px 5px $shadow;
+        border-bottom:none;
+      }
     }
+
   }
 
   tbody {
@@ -151,6 +162,8 @@
         }
 
         td {
+          vertical-align: middle !important;
+          white-space: nowrap;
           height: 60px;
           cursor: pointer;
           padding: 5px;
