@@ -68,7 +68,7 @@ function LogController($scope, $vamp) {
     }
   });
 
-  $scope.$on('/logs', function (e, response) {
+  $scope.$on('/log', function (e, response) {
     if (response.content === 'JSON') {
       $ctrl.logs.push({
         timestamp: response.data.timestamp,
@@ -80,7 +80,7 @@ function LogController($scope, $vamp) {
   });
 
   $ctrl.peek = function (level) {
-    $vamp.peek('/logs', '', {logger: 'io.vamp', level: level});
+    $vamp.peek('/log', '', {logger: 'io.vamp', level: level});
   };
 
   $ctrl.peek('TRACE');
