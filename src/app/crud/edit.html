@@ -6,12 +6,12 @@
         </div>
     </controls>
     <buttons>
-        <button class="btn btn-lg btn-circle" type="submit" title="SAVE"
+        <button class="btn btn-ghost btn-success" type="submit" title="SAVE"
                 ng-disabled="!$ctrl.isModified() || !$ctrl.valid" ng-click="$ctrl.save()">
-            <i class="fa fa-floppy-o"></i>
+            Save
         </button>
-        <button class="btn btn-lg btn-circle red" type="submit" title="CANCEL" ng-click="$ctrl.cancel()">
-            <i class="fa fa-times"></i>
+        <button class="btn btn-ghost btn-primary" type="submit" title="CANCEL" ng-click="$ctrl.cancel()">
+            Cancel
         </button>
     </buttons>
 </header>

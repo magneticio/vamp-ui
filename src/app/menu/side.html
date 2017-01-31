@@ -1,3 +1,5 @@
+<div class="overlay" ng-class="{'active': $ctrl.uiStates.infoPanel || $ctrl.uiStates.helpPanel}" ng-click="$ctrl.closePanel()">
+</div>
 <div class="info-panel hidden-xs hidden-sm" ng-class="{'active': $ctrl.uiStates.infoPanel || $ctrl.uiStates.helpPanel}">
     <div class="" ng-show="$ctrl.uiStates.infoPanel">
         <i class="fa fa-arrow-right clickable pull-right" aria-hidden="true" ng-click="$ctrl.closePanel()"></i>

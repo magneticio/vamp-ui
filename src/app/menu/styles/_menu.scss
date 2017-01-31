@@ -6,7 +6,7 @@ menu {
   :focus {
     outline: none !important;
   }
-  
+
   height: 100%;
   width: 100%;
   position: relative;
@@ -27,7 +27,7 @@ menu {
        color: $white;
 			 background-color: $vamp-red;
 	     font-size: $font-size-large;
-			 padding-top:7px;
+			 padding-top:9px;
 
        &:hover {
        }
@@ -61,6 +61,7 @@ menu {
    ul {
      list-style: none;
      font-size: $font-size-normal;
+     font-weight: $font-weight-light;
 		 margin-bottom: 0px;
 		 padding:0;
 		 width:250px;
@@ -100,14 +101,13 @@ menu {
 				.btn-link,
 				a {
 					text-decoration: none;
-					background-color: $night;
 					font-weight: $font-weight-bold;
-					color: $off-white;
+					color: $misty;
 
 					&:hover {
-						background-color: $night;
-						font-weight: $font-weight-bold;
-						color: $off-white;
+            text-decoration: none;
+            font-weight: $font-weight-bold;
+  					color: $misty;
 					}
 				}
 			}
@@ -121,19 +121,18 @@ menu {
         display: block;
         text-decoration: none;
         text-transform: capitalize;
-        color: $blue;
+        color: $medium-blue;
 
         &:hover {
-					background-color: $night;
           color: $medium-blue;
+          font-weight: $font-weight-bold;
           text-decoration: none;
         }
 
         &:focus {
-					text-decoration: none;
-					background-color: $night;
+          text-decoration: none;
 					font-weight: $font-weight-bold;
-					color: $off-white;
+					color: $misty;
         }
       }
     }

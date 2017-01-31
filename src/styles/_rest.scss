@@ -38,7 +38,7 @@ body {
 }
 
 #sidebar-wrapper {
-   z-index: 1000;
+   z-index: 999;
    position: fixed;
    left: 250px;
    width: 250px;
@@ -202,8 +202,6 @@ menu {
 
   .header-row {
     margin: 0 0 -20px 0;
-    padding-left: 15px;
-    padding-right: 15px;
   }
 
   .header-column {
@@ -392,8 +390,23 @@ edit, add {
   display: inline-block;
 }
 
+.overlay {
+  z-index:1000;
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  display: none;
+  background-color: #000;
+  opacity: 0.2;
+
+  &.active {
+    display: block;
+  }
+}
 .info-panel {
-  z-index: 999;
+  z-index: 1001;
   position: fixed;
   top: 0px;
   width: 25%;
@@ -646,9 +659,9 @@ a.editable-click:hover {
   justify-content: center;
   padding-top: 12px;
   font-size: 24px;
-  color: $color-text;
+  //color: $color-text;
   &:hover {
-    color: $color-text-dark;
+    //color: $color-text-dark;
   }
 }
 
@@ -662,13 +675,19 @@ a.editable-click:hover {
 .info-button i {
   @extend .menu-button;
   margin-top: 15px;
-  margin-left: 10px
+  margin-left: 10px;
+  @include colorize-ghost-btn($medium-blue);
+  border: none;
+  cursor: pointer;
 }
 
 .help-button i {
   @extend .menu-button;
   margin-top: 15px;
-  margin-left: 10px
+  margin-left: 15px;
+  @include colorize-ghost-btn($medium-blue);
+  border: none;
+  cursor: pointer;
 }
 
 .navbar-brand {
@@ -939,7 +958,7 @@ a.editable-click:hover {
   margin: 0 0 1.5rem 0;
 }
 
-
+/*
 .btn:not(.bootstrap-btn) {
   font-size: $font-small !important;
   border: none !important;
@@ -1014,7 +1033,7 @@ a.editable-click:hover {
     font-weight: 500;
   }
 }
-
+*/
 
 .has-error .help-block {
   color: $color-pink;
@@ -1031,10 +1050,11 @@ a.editable-click:hover {
   left: 16px;
   right: 16px;
 
-  button {
+  & > button.btn {
     margin-top: 5px;
     text-align: center;
-    border-radius: 20px !important;
+    margin-left: 0px !important;
+    background-color: $night-sky !important;
   }
 }
 
@@ -1047,10 +1067,11 @@ a.editable-click:hover {
   left: 16px;
   right: 16px;
 
-  button {
+  & > button.btn {
     margin: 0;
     text-align: center;
-    border-radius: 20px !important;
+    margin-left: 0px !important;
+    background-color: $night-sky !important;
   }
 }
 

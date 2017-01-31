@@ -152,11 +152,11 @@
       return {
         restrict: 'E',
         transclude: true,
-        template: '<div class="toggle btn bootstrap-btn default-bootstrap" ng-class="wrapperClass" ng-style="wrapperStyle" ng-click="onSwitch()">' +
+        template: '<div class="toggle btn default-bootstrap" ng-class="wrapperClass" ng-style="wrapperStyle" ng-click="onSwitch()">' +
           '<div class="toggle-group">' +
-          '<label class="btn bootstrap-btn default-bootstrap" ng-class="onClass"></label>' +
-          '<label class="btn active bootstrap-btn default-bootstrap" ng-class="offClass"></label>' +
-          '<span class="btn btn-default bootstrap-btn default-bootstrap" ng-class="handleClass"></span>' +
+          '<label class="btn default-bootstrap" ng-class="onClass"></label>' +
+          '<label class="btn active default-bootstrap" ng-class="offClass"></label>' +
+          '<span class="btn btn-default default-bootstrap" ng-class="handleClass"></span>' +
           '</div>' +
           '</div>',
         scope: {

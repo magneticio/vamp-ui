@@ -1,10 +1,10 @@
-.btn.bootstrap-btn:not(.default-bootstrap) {
-  font-size: $font-size-normal;
+.btn {
   font-weight: $font-weight-bold;
   color: $white;
   height: $button-size-normal;
   font-size: $font-size-normal;
-
+  box-shadow: none;
+  text-shadow: none;
 
   :not(.btn-group) > & + & {
     margin-left: 10px;
@@ -65,14 +65,44 @@
     &.btn-white {
       @include colorize-ghost-btn($white);
     }
+
+    &.btn-warning {
+      @include colorize-ghost-btn($warm-warning);
+    }
+
+    &.btn-danger {
+      @include colorize-ghost-btn($vamp-red);
+    }
   }
 
   &.btn-success {
     @include colorize-btn($great-times);
   }
 
+  &.btn-primary {
+    @include colorize-btn($blue);
+  }
+
+  &.btn-info {
+    @include colorize-btn($informative);
+  }
+
+  &.btn-white {
+    @include colorize-btn($white);
+  }
+
+  &.btn-warning {
+    @include colorize-btn($warm-warning);
+    color: #000;
+  }
+
+  &.btn-danger {
+    @include colorize-btn($vamp-red);
+  }
+
   &[disabled=disabled] {
     cursor: default !important;
+    opacity: 0.35;
   }
 
   .btn-text {
@@ -83,4 +113,7 @@
       padding-right: 5px;
     }
   }
+}
+:not(.btn-group) > button.btn {
+  min-width: 100px;
 }
