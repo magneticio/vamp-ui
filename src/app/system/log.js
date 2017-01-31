@@ -1,13 +1,13 @@
 angular.module('app').component('log', {
-  templateUrl: 'app/system/templates/logs.html',
+  templateUrl: 'app/system/templates/log.html',
   controller: LogController
 });
 
-function LogController($scope, $vamp) {
+function LogController($scope, $vamp, $element) {
   var $ctrl = this;
 
   $ctrl.logs = [];
-  $ctrl.isLogOn = true;
+  $ctrl.isLogOn = false;
 
   $ctrl.INFO = {
     name: 'INFO',
@@ -16,7 +16,7 @@ function LogController($scope, $vamp) {
   };
   $ctrl.ERROR = {
     name: 'ERROR',
-    active: false,
+    active: true,
     priority: 2
   };
   $ctrl.TRACE = {
@@ -37,12 +37,8 @@ function LogController($scope, $vamp) {
     return $ctrl.selectedLevels[_.findIndex($ctrl.selectedLevels, {'priority': max})];
   }*/
 
-  $ctrl.toggleOnOff = function () {
-    if ($ctrl.isLogOn) {
-      $ctrl.peek('TRACE');
-    } else {
-      $ctrl.peek('OFF');
-    }
+  $ctrl.toggleFollowOnOff = function () {
+    $ctrl.scrollToBottom();
   };
 
   $ctrl.filterChange = function (level) {
@@ -56,6 +52,13 @@ function LogController($scope, $vamp) {
     // if ($ctrl.isLogOn && currentMaxLevel()) {
       // $ctrl.peek(currentMaxLevel().name);
     // }
+  };
+
+  $ctrl.scrollToBottom = function () {
+    if ($ctrl.isLogOn) {
+      var scrolledContainer = $($element).find('.panel-body');
+      scrolledContainer.scrollTop(scrolledContainer.prop('scrollHeight'));
+    }
   };
 
   $ctrl.containLevelsFilter = function (log) {

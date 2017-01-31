@@ -1,10 +1,10 @@
-<header title="Logs">
+<header title="Log">
 </header>
 
-<div class="container-fluid">
+<div class="container-fluid stretch-height">
   <div class="row">
     <div class="col-md-12">
-      <div class="panel panel-default">
+      <div class="panel panel-default log-panel">
         <div class="panel-heading">
           <div class="panel-title">
             <label class="checkbox-inline">
@@ -18,8 +18,9 @@
             </label>
           </div>
           <div class="pull-right">
+            Follow log:&nbsp;
             <toggle ng-model="$ctrl.isLogOn" style="vamp-toggle"
-              ng-change="$ctrl.toggleOnOff()" onstyle="btn-success"
+              ng-change="$ctrl.toggleFollowOnOff()" onstyle="btn-success"
               offstyle="btn-primary" size="btn-xs" ng-model="toggleValue"
               ng-change="changed()"></toggle>
           </div>
@@ -36,7 +37,8 @@
             </thead>
             <tbody>
               <tr lass="vamp-lv-data-row"
-                ng-repeat="log in filteredLogs = ($ctrl.logs | filter:$ctrl.containLevelsFilter) | limitTo:50:(filteredLogs.lenth - 50)">
+                ng-repeat="log in filteredLogs = ($ctrl.logs | orderBy:timestamp | filter:$ctrl.containLevelsFilter)"
+                on-render-end="$ctrl.scrollToBottom()">
                   <td>
                       <span class="timestamp">
                           {{ log.timestamp | date:'HH:mm:ss.sss'}}

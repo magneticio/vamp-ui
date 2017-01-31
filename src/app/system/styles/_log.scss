@@ -1,0 +1,24 @@
+.container-fluid.stretch-height {
+  height: calc(100% - 80px);
+  padding-bottom: 15px;
+
+  .row {
+    height: 100%;
+
+    & > div:only-child {
+      height: 100%;
+    }
+  }
+}
+
+.panel.log-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .panel-body {
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+}
