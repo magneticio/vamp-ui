@@ -2,9 +2,13 @@
   padding-bottom: 15px;
 }
 
+main {
+  display: flex;
+  align-items: center;
+}
 .artifacts-search-box {
   display: inline-block;
-  width: 240px;
+  max-width: 240px;
   vertical-align: middle;
   margin-left: 20px;
 }
@@ -175,7 +179,6 @@ table.vamp-lv {
 
           &.vamp-lv-row-actions {
             button {
-              text-transform: capitalize;
               background-color: $blue;
               padding:5px 20px;
               height: $button-size-small;

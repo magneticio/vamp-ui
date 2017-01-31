@@ -29,7 +29,7 @@ $misty: #C3D2CD;
 $medium-blue: #6991AA;
 $shadow: rgba(0,0,0,0.15);
 
-$font-size-extra-large: 36px;
+$font-size-extra-large: 34px;
 $button-size-large: 60px;
 $font-size-large: 19px;
 $button-size-normal: 40px;
@@ -96,7 +96,9 @@ $font-weight-bold: 500;
 }
 
 @mixin colorize-btn($color) {
-    background-color: $color;
+   background:none;
+   background-color: $color;
+   border:none;
 
     &:not([disabled=disabled]) {
       &:hover {
