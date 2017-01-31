@@ -26,7 +26,7 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
         $vamp.remove(path, JSON.stringify(original));
       }).then(function () {
         $location.path('/deployments');
-        toastr.success('Deployment \'' + $ctrl.deployment.name + '\' has been successfully deleted.');
+        toastr.success('Deployment \'' + $ctrl.title + '\' has been successfully deleted.');
       }).catch(function (response) {
         if (response) {
           toastr.error(response.data.message, 'Deletion of deployment \'' + $ctrl.deployment.name + '\' failed.');

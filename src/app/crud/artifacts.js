@@ -28,6 +28,7 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   }
 
   $ctrl.artifacts = [];
+  var _artifacts = [];
   $ctrl.peek = function () {
     $vamp.peek($ctrl.path);
   };
@@ -39,7 +40,8 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   });
 
   $scope.$on($ctrl.path, function (e, response) {
-    angular.copy(_.orderBy(response.data, 'name'), $ctrl.artifacts);
+    angular.copy(_.orderBy(response.data, 'name'), _artifacts);
+    angular.copy(_.orderBy(_artifacts, 'name'), $ctrl.artifacts);
 
     if ($ctrl.onDataResponse) {
       $ctrl.onDataResponse(response.data);
@@ -172,7 +174,7 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
 
         _.forEach(names, function (name) {
           $vamp.await(function () {
-            var artifact = _.find($ctrl.artifacts, function (artifact) {
+            var artifact = _.find(_artifacts, function (artifact) {
               return artifact.name === name;
             });
             $vamp.remove($ctrl.path + '/' + name, angular.toJson(artifact));
