@@ -4,13 +4,13 @@
       <div class="artifacts-search-box">
         <div class="input-group">
           <span class="input-group-addon"><i class="icon-magnifier"></i></span>
-          <input type="text" auto-focus class="form-control" ng-model="$artifacts.searchTerm" placeholder="Search" />
+          <input type="text" ng-change="$artifacts.onSearchTermChange()" auto-focus class="form-control" ng-model="$artifacts.searchTerm" placeholder="Search" />
         </div>
       </div>
     </main>
     <controls>
       <div ng-if="$artifacts.initialized && $artifacts.artifacts.length !== 0">
-        <div class="btn-group vamp-btn-group pull-left">
+        <div class="btn-group vamp-btn-group">
             <button title="Grid view" class="btn bootstrap-btn btn-icon vamp-btn icon-grid"
               ng-class="{'vamp-btn-selected' : $artifacts.viewStates.main == 'grid'}"
               type="button" ng-click="$artifacts.toggleView('grid')">
@@ -43,7 +43,7 @@
 <div class="container-fluid artifacts-panel">
   <div ng-if="$artifacts.initialized && $artifacts.artifacts.length > 0">
     <div ng-if="$artifacts.viewStates.main == 'grid'" class="artifacts">
-      <div ng-repeat="artifact in ($artifacts.artifacts | filter:{name:$artifacts.searchTerm} | limitTo: $artifacts.itemsPerPage: (($artifacts.currentPage - 1) * $artifacts.itemsPerPage)) track by $index">
+      <div ng-repeat="artifact in $artifacts.filteredArtifacts | limitTo: $artifacts.itemsPerPage: (($artifacts.currentPage - 1) * $artifacts.itemsPerPage) track by $index">
         <div class="artifact" ng-class="{selected: $artifacts.isSelected(artifact)}"
              ng-click="$artifacts.view(artifact)">
           <h3 class="artifact-title">
@@ -59,7 +59,7 @@
     <div ng-if="$artifacts.viewStates.main == 'table'">
       <artifact-list-view ng-if="$artifacts.viewStates.main == 'table'"
         artifacts-ctrl="$artifacts"
-        items="$artifacts.artifacts"
+        items="$artifacts.filteredArtifacts"
         artifact-data="$artifacts.artifactData">
       </artifact-list-view>
     </div>

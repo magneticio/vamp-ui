@@ -16,11 +16,11 @@ angular.module('app').directive('artifacts', function () {
 });
 
 BaseArtifactsController.$inject = ['$ctrl', '$scope', '$vamp', 'uiStatesFactory', '$state', '$stateParams',
-  '$filter', '$location', 'toastr', 'alert'];
+  '$filter', 'filterFilter', '$location', 'toastr', 'alert'];
 
 function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
-  $state, $stateParams, $filter, $location, toastr, alert) {
-  $ctrl.searchTerm = "";
+  $state, $stateParams, $filter, filterFilter, $location, toastr, alert) {
+  $ctrl.searchTerm = $stateParams.searchTerm;
   $ctrl.initialized = false;
   $ctrl.kind = $scope.kind;
   if (!$ctrl.path) {
@@ -28,9 +28,16 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   }
 
   $ctrl.artifacts = [];
+  $ctrl.filteredArtifacts = filterFilter($ctrl.artifacts, {name: $ctrl.searchTerm});
   var _artifacts = [];
   $ctrl.peek = function () {
     $vamp.peek($ctrl.path);
+  };
+
+  $ctrl.onSearchTermChange = function () {
+    $stateParams.searchTerm = $ctrl.searchTerm;
+    $ctrl.filteredArtifacts = filterFilter($ctrl.artifacts, {name: $ctrl.searchTerm});
+    $ctrl.calcPagination();
   };
 
   $scope.$on('$vamp:connection', function (e, connection) {
@@ -42,6 +49,7 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   $scope.$on($ctrl.path, function (e, response) {
     angular.copy(_.orderBy(response.data, 'name'), _artifacts);
     angular.copy(_.orderBy(_artifacts, 'name'), $ctrl.artifacts);
+    $ctrl.filteredArtifacts = filterFilter($ctrl.artifacts, {name: $ctrl.searchTerm});
 
     if ($ctrl.onDataResponse) {
       $ctrl.onDataResponse(response.data);
@@ -75,7 +83,7 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   $ctrl.currentPage = parseInt($stateParams.page, 10);
 
   $ctrl.calcPagination = function () {
-    var pageSum = Math.ceil($ctrl.artifacts.length / $ctrl.itemsPerPage);
+    var pageSum = Math.ceil($ctrl.filteredArtifacts.length / $ctrl.itemsPerPage);
     $ctrl.pages = pageSum === 0 ? 1 : pageSum;
   };
 
@@ -119,7 +127,7 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
     var all = $ctrl.isSelectedAll();
     $ctrl.selected.length = 0;
     if (!all) {
-      _.forEach($ctrl.artifacts, function (a) {
+      _.forEach($ctrl.filteredArtifacts, function (a) {
         $ctrl.selected.push(a);
       });
     }

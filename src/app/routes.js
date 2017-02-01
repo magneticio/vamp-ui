@@ -9,11 +9,15 @@ function routesConfig($stateProvider, $urlRouterProvider) {
 
   _.forEach(artifacts, function (artifact) {
     var artifactsData = {
-      url: '/' + artifact.kind + '?page',
+      url: '/' + artifact.kind + '?page&searchTerm',
       data: artifact,
       params: {
         page: {
           value: '1',
+          squash: true
+        },
+        searchTerm: {
+          value: '',
           squash: true
         }
       }
