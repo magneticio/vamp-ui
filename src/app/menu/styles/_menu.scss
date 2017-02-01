@@ -15,13 +15,13 @@ menu {
     position: absolute;
     height: 100%;
     top: 0;
-    width: 250px;
+    width: 25rem;
     margin: 0;
     padding: 0;
 
     & > li.sidebar-brand {
-     height: 80px;
-     line-height: 80px;
+     height: 8rem;
+     line-height: 8rem;
 
      a {
        color: $white;
@@ -37,11 +37,11 @@ menu {
 			 }
 
 			 .vamp-logo {
-				height :40px;
-				margin-right: 18px;
+				height : 4rem;
+				margin-right: 1.8rem;
 			 }
 			 .vamp-title {
-			 	height :29px;
+			 	height : 2.9rem;
 			 }
      }
     }
@@ -64,7 +64,7 @@ menu {
      font-weight: $font-weight-light;
 		 margin-bottom: 0px;
 		 padding:0;
-		 width:250px;
+		 width:25rem;
 		 margin:0;
 
 		 &.sub-menu {
@@ -76,7 +76,7 @@ menu {
 
     li {
 			user-select:none;
-      line-height: 60px;
+      line-height: 6rem;
       border-bottom: 2px solid $night;
 
 			&[data-toggle=collapse]:not(.collapsed)
@@ -117,7 +117,7 @@ menu {
 				cursor: pointer;
 				background-color: $pitch;
         font-weight: $font-weight-light;
-        padding-left: 20px;
+        padding-left: 2rem;
         display: block;
         text-decoration: none;
         text-transform: capitalize;

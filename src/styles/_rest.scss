@@ -8,10 +8,24 @@ span:focus {
   outline: none !important;
 }
 
+html {
+  font-size: 10px;
+
+}
+
+@media only screen and (min-width:1200px) and (min-device-pixel-ratio: 2),
+    only screen and (min-width:1200px) and (min-resolution: 192dpi) {
+  html {
+    font-size: 8px;
+  }
+}
+
 body {
-  //background: $gray-darker;
+  font-size: $font-size-normal;
+  font-family: 'Roboto', sans-serif;
   color: $color-text;
   overflow: hidden;
+  background-color: $panel;
 }
 
 .page {
@@ -22,15 +36,10 @@ body {
   position: relative;
 }
 
-body {
-   overflow-x: hidden;
-	 background-color: $panel;
-}
-
 /* Toggle Styles */
 
 #wrapper {
-   padding-left: 250px;
+   padding-left: 25rem;
    -webkit-transition: all 0.5s ease;
    -moz-transition: all 0.5s ease;
    -o-transition: all 0.5s ease;
@@ -40,10 +49,10 @@ body {
 #sidebar-wrapper {
    z-index: 999;
    position: fixed;
-   left: 250px;
-   width: 250px;
+   left: 25rem;
+   width: 25rem;
    height: 100%;
-   margin-left: -250px;
+   margin-left: -25rem;
    overflow-y: auto;
    background-color: $pitch;
    -webkit-transition: all 0.5s ease;
@@ -53,15 +62,15 @@ body {
 }
 
 #page-content-wrapper {
-   height: calc(100% - 50px);
-   width: calc(100% - 250px);
+   height: calc(100% - 5rem);
+   width: calc(100% - 25rem);
    position: absolute;
    overflow-y: auto;
    overflow-x: hidden;
    transition: 0.3s height ease-in-out;
 
    &.footer-expanded {
-     height: calc(100% - 400px);
+     height: calc(100% - 40rem);
    }
 }
 
@@ -87,7 +96,7 @@ menu {
       display: flex;
       align-items: center;
       height: 50px;
-      font-size: $font-medium;
+      font-size: $font-size-normal;
       font-weight: $font-weight-regular;
 
       .stat-value {
@@ -149,7 +158,7 @@ menu {
 
 .navbar-default .navbar-nav > li > a {
   color: $brand-info !important;
-  font-size: $font-base;
+  font-size: $font-size-normal;
   font-weight: $font-weight-light;
   letter-spacing: 0.1em;
 }
@@ -207,11 +216,11 @@ menu {
   .header-column {
     margin: 0 -5px;
     padding: 0;
-    height: 80px;
-    line-height: 80px;
+    height: 8rem;
+    line-height: 8rem;
 
     &.title {
-      font-size: $font-size-extra-large;
+      font-size: $font-size-xxl;
       text-transform: capitalize;;
       color: $color-text;
       font-weight: $font-weight-light;
@@ -223,7 +232,7 @@ menu {
     &.message {
       margin: 0;
       padding: 0;
-      font-size: $font-big;
+      font-size: $font-size-large;
     }
 
     &.buttons {
@@ -257,7 +266,7 @@ menu {
 
 .editor {
   position: absolute;
-  top: 80px;
+  top: 8rem;
   left: 15px;
   right: 15px;
   bottom: 0;
@@ -328,7 +337,7 @@ edit, add {
   .status-text {
     height: 100%;
     line-height: 1;
-    font-size: $font-really-big;
+    font-size: $font-size-xl;
   }
 }
 
@@ -345,7 +354,7 @@ edit, add {
   tbody > tr > td {
     letter-spacing: 0.05em;
     color: $gray-lighter;
-    font-size: $font-medium;
+    font-size: $font-size-normal;
     font-weight: $font-weight-regular;
     border: none;
     max-width: 700px;
@@ -368,7 +377,7 @@ edit, add {
 
 .slider-label {
   letter-spacing: 0.05em;
-  font-size: $font-medium;
+  font-size: $font-size-normal;
 }
 
 .rz-slider {
@@ -423,7 +432,7 @@ edit, add {
     vertical-align: bottom;
     :nth-child(1) {
       color: $color-text-dark;
-      font-size: $font-small !important;
+      font-size: $font-size-small !important;
       vertical-align: bottom !important;
       a {
         color: $color-text;
@@ -444,12 +453,12 @@ edit, add {
 
   .info-message {
     margin: 0 0 20px 0;
-    font-size: $font-big;
+    font-size: $font-size-large;
   }
 
   .help-description {
     @extend .info-message;
-    font-size: $font-big;
+    font-size: $font-size-large;
     font-weight: $font-weight-regular;
   }
 
@@ -484,12 +493,12 @@ p, div {
 
 .events-panel {
   position: fixed;
-  width: calc(100% - 250px);
+  width: calc(100% - 25rem);
   bottom: 0px;
 }
 
 .event-panel-content {
-  height: 50px;
+  height: 5rem;
   position: relative;
   z-index: 888;
   background-color: $night-sky;
@@ -526,16 +535,16 @@ p, div {
   }
 
   &.show {
-    height: 400px;
+    height: 40rem;
   }
 
   .head {
-    height: 50px;
+    height: 5rem;
     padding: 0 15px;
     margin: 0;
     width: 100%;
     display: flex;
-    font-size: $font-medium;
+    font-size: $font-size-normal;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
@@ -551,17 +560,6 @@ p, div {
       &:hover {
         color: $color-text-dark;
       }
-    }
-
-    .btn {
-      border: 2px solid $gray !important;
-      width: 120px;
-    }
-
-    .btn.red {
-      background-color: transparent !important;
-
-      color: $gray-light !important;
     }
 
     a {
@@ -584,16 +582,16 @@ p, div {
       th {
         font-weight: $font-weight-light;
         border-top: none;
-        font-size: $font-small !important;
+        font-size: $font-size-small !important;
         border-bottom: 1px solid $color-bg-dark;
       }
       td {
         border-top: 1px $color-bg-dark solid;
-        font-size: $font-medium !important;
+        font-size: $font-size-normal !important;
         color: $color-text;
         font-weight: $font-weight-light;
         span {
-          font-size: $font-medium !important;
+          font-size: $font-size-normal !important;
           font-weight: $font-weight-light;
         }
       }
@@ -649,7 +647,7 @@ a.editable-click:hover {
   vertical-align: middle !important;
   color: rgba($color-yellow, 0.5);
   border-top: none !important;
-  font-size: $font-medium !important;
+  font-size: $font-size-normal !important;
   font-weight: 500;
 }
 
@@ -657,8 +655,8 @@ a.editable-click:hover {
   display: flex !important;
   align-items: center;
   justify-content: center;
-  padding-top: 12px;
-  font-size: 24px;
+  padding-top: 1.2rem;
+  font-size: $font-size-large;
   //color: $color-text;
   &:hover {
     //color: $color-text-dark;
@@ -674,7 +672,7 @@ a.editable-click:hover {
 
 .info-button i {
   @extend .menu-button;
-  margin-top: 15px;
+  margin-top: 1.5rem;
   margin-left: 10px;
   @include colorize-ghost-btn($medium-blue);
   border: none;
@@ -683,7 +681,7 @@ a.editable-click:hover {
 
 .help-button i {
   @extend .menu-button;
-  margin-top: 15px;
+  margin-top: 1.5rem;
   margin-left: 15px;
   @include colorize-ghost-btn($medium-blue);
   border: none;
@@ -740,7 +738,7 @@ a.editable-click:hover {
 
   .rz-bubble {
     color: $color-text;
-    font-size: $font-medium;
+    font-size: $font-size-normal;
   }
 
   .rz-limit {
@@ -953,14 +951,14 @@ a.editable-click:hover {
 }
 
 .artifact-title {
-  font-size: $font-big;
+  font-size: $font-size-large;
   font-weight: $font-weight-light;
   margin: 0 0 1.5rem 0;
 }
 
 /*
 .btn:not(.bootstrap-btn) {
-  font-size: $font-small !important;
+  font-size: $font-size-small !important;
   border: none !important;
   border-radius: 20px !important;
   line-height: 1 !important;
@@ -995,7 +993,7 @@ a.editable-click:hover {
     width: 50px;
     height: 50px;
     min-width: 50px;
-    font-size: $font-big !important;
+    font-size: $font-size-large !important;
     border-radius: 50% !important;
     margin: 0 5px;
     padding: 0 !important;
@@ -1156,7 +1154,7 @@ a.editable-click:hover {
   padding-top: 46px;
 
   span {
-    font-size: $font-big !important;
+    font-size: $font-size-large !important;
   }
 }
 
@@ -1208,7 +1206,7 @@ a.editable-click:hover {
 
 .deployment-cluster-name {
   span {
-    font-size: $font-big !important;
+    font-size: $font-size-large !important;
     font-weight: $font-weight-light;
     color: $gray-lighter;
     margin: 10px;
@@ -1239,7 +1237,7 @@ a.editable-click:hover {
   padding: 0;
 
   span {
-    font-size: $font-medium !important;
+    font-size: $font-size-normal !important;
     font-weight: $font-weight-light;
     background-color: rgba($color-blue-light, .2);
     color: inherit;
@@ -1288,7 +1286,7 @@ a.editable-click:hover {
   height: 100%;
 
   span {
-    font-size: $font-big !important;
+    font-size: $font-size-large !important;
   }
 }
 
@@ -1337,7 +1335,7 @@ a.editable-click:hover {
     padding: 0 0 0 10px;
     text-align: left;
     font-weight: $font-weight-light;
-    font-size: $font-medium;
+    font-size: $font-size-normal;
 
     li:first-of-type {
       margin: 0 0 0 0;
@@ -1346,7 +1344,7 @@ a.editable-click:hover {
     li .title {
       background-color: transparent;
       text-transform: uppercase;
-      font-size: $font-small !important;
+      font-size: $font-size-small !important;
       color: $color-text-dark;
       font-weight: $font-weight-regular;
     }
@@ -1363,7 +1361,7 @@ a.editable-click:hover {
 }
 
 .modal-header {
-  font-size: $font-big;
+  font-size: $font-size-large;
   background-color: $color-bg;
   border-bottom: 1px solid $color-text;
   text-transform: uppercase;
@@ -1379,7 +1377,7 @@ a.editable-click:hover {
     margin: 10px 40px 25px 0;
     span {
       letter-spacing: 1px;
-      font-size: $font-medium;
+      font-size: $font-size-normal;
       font-weight: $font-weight-light;
       background-color: rgba($color-blue-light, .2);
       color: inherit;
@@ -1389,13 +1387,13 @@ a.editable-click:hover {
   label {
     color: $color-text-dark;
     text-transform: uppercase;
-    font-size: $font-medium;
+    font-size: $font-size-normal;
   }
 }
 
 .deployment-selection {
   button {
-    font-size: $font-medium !important;
+    font-size: $font-size-normal !important;
     text-transform: none;
   }
 }
@@ -1413,7 +1411,7 @@ snippet {
 
 .v-label {
   color: $gray;
-  font-size: $font-medium;
+  font-size: $font-size-normal;
   text-transform: uppercase;
 }
 
@@ -1475,19 +1473,19 @@ snippet {
     }
 
     .v-value {
-      font-size: $font-base;
+      font-size: $font-size-normal;
 
       &--emphasis {
         padding: 5px 10px;
         border-radius: 5px;
-        font-size: $font-big;
+        font-size: $font-size-large;
         background-color: rgba($color-blue-light, .2);
       }
 
       a {
         color: #1D96B2;
         padding-left: 6px;
-        font-size: $font-base + 1px;
+        font-size: $font-size-normal;
 
         &:before {
           content: "\f105";
@@ -1495,7 +1493,7 @@ snippet {
           left: -5px;
           position: absolute;
           top: 1px;
-          font-size: 14px;
+          //font-size: $font-size-normal;
         }
       }
     }

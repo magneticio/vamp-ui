@@ -29,7 +29,7 @@ $misty: #C3D2CD;
 $medium-blue: #6991AA;
 $shadow: rgba(0,0,0,0.15);
 
-$font-size-extra-large: 34px;
+/*$font-size-extra-large: 34px;
 $button-size-large: 60px;
 $font-size-large: 19px;
 $button-size-normal: 40px;
@@ -37,7 +37,26 @@ $font-size-normal: 14px;
 $button-size-small: 30px;
 $font-size-small: 12px;
 $button-size-tiny: 20px;
-$font-size-tiny: 10px;
+$font-size-tiny: 10px;*/
+
+$font-size-xxl: 3.4rem;
+$font-size-xl: 2.5rem;
+$button-size-large: 6rem;
+$font-size-large: 1.9rem;
+$button-size-normal: 4rem;
+$font-size-normal: 1.4rem;
+$button-size-small: 3rem;
+$font-size-small: 1.2rem;
+$button-size-tiny: 2rem;
+$font-size-tiny: 1rem;
+
+// Medium screen / desktop
+$screen-md:                  992px;
+
+// Large screen / wide desktop
+$screen-lg:                  1200px;
+
+
 
 $gray-base-hover: #132d3d;
 $gray-base-pressed: #0d99c7;
@@ -61,12 +80,6 @@ $color-bg-dark: rgb(20, 45, 60);
 
 $color-text: $gray-lighter;
 $color-text-dark: $gray-light;
-
-$font-base: 14px;
-$font-small: ceil($font-base * 0.86);
-$font-medium: $font-base;
-$font-big: ceil($font-base * 1.25);
-$font-really-big: ceil($font-base * 1.7);
 
 $font-weight-light: 300;
 $font-weight-regular: 300;

@@ -7,12 +7,13 @@
   text-shadow: none;
 
   :not(.btn-group) > & + & {
-    margin-left: 10px;
+    margin-left: 1rem;
   }
 
   &.btn-small {
     height: $button-size-small;
     font-size: $font-size-small;
+    padding:0;
   }
 
   &.btn-transparent {

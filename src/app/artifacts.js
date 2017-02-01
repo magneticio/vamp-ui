@@ -195,7 +195,7 @@ Artifacts.prototype.all = function () {
           name: "removeFrom",
           title: "Remove from",
           action: "remove",
-          class: "vamp-red",
+          class: "btn-danger",
           active: "!($ctrl.removeFrom | isEmpty)"
         }
       ]

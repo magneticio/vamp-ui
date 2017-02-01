@@ -2,26 +2,26 @@
     <div class="head" ng-click="$ctrl.toggle()">
         <p class="category"><i class="fa fa-ellipsis-v"></i>&nbsp;&nbsp;Events</p>
         <div>
-            <button type="button" class="btn pull-right"
+            <button type="button" class="btn btn-ghost btn-primary"
                     ng-model="$ctrl.filters.health" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
                     ng-class="{red: $ctrl.filters['health']}" ng-click="filter($event, 'health')" ng-show="$ctrl.show">
                 <i class="fa fa-fw fa-check" ng-if="!$ctrl.filters['health']"></i>
                 <i class="fa fa-fw fa-times" ng-if="$ctrl.filters['health']"></i>
-                &nbsp;health
+                <span class="btn-text">Health</span>
             </button>
-            <button type="button" class="btn"
+            <button type="button" class="btn btn-ghost btn-primary"
                     ng-model="$ctrl.filters.metrics" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
                     ng-class="{red: $ctrl.filters['metrics']}" ng-click="filter($event, 'metrics')" ng-show="$ctrl.show">
                 <i class="fa fa-fw fa-check" ng-if="!$ctrl.filters['metrics']"></i>
                 <i class="fa fa-fw fa-times" ng-if="$ctrl.filters['metrics']"></i>
-                &nbsp;metrics
+                <span class="btn-text">Metrics</span>
             </button>
-            <button type="button" class="btn"
+            <button type="button" class="btn btn-ghost btn-primary"
                     ng-model="$ctrl.filters.allocation" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
                     ng-class="{red: $ctrl.filters['allocation']}" ng-click="filter($event, 'allocation')" ng-show="$ctrl.show">
                 <i class="fa fa-fw fa-check" ng-if="!$ctrl.filters['allocation']"></i>
                 <i class="fa fa-fw fa-times" ng-if="$ctrl.filters['allocation']"></i>
-                &nbsp;allocation
+                <span class="btn-text">Allocation</span>
             </button>
         </div>
     </div>

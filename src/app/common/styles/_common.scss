@@ -5,6 +5,7 @@
 /* Inputs */
 
 .form-control {
+  font-size: $font-size-normal;
   color: $medium-blue;
   background-color: $pitch;
   border: none;
@@ -18,6 +19,7 @@
 }
 
 .input-group-addon {
+  font-size: $font-size-normal;
   color: $dark-blue ;
   background-color: $pitch;
   border: none;
@@ -25,6 +27,7 @@
 }
 
 .input-group {
+  font-size: $font-size-normal;
   .form-control:not(:first-child) {
     padding-left: 0px;
   }

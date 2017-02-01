@@ -57,7 +57,8 @@
         <td ng-if="$lv.artifactData.actions && $lv.artifactData.actions.length > 0"
           class="vamp-lv-col vamp-lv-row-actions">
           <button ng-repeat="action in $lv.artifactData.actions"
-            ng-show="action.active ? (action.active | interpolate:this) : true" class="btn bootstrap-btn vamp-lv-row-action {{ action.class }}"
+            ng-show="action.active ? (action.active | interpolate:this) : true"
+            class="btn btn-ghost btn-primary {{ action.class }}"
             ng-click="$ctrl[action.action]($event)">
             {{ action.title }}
           </button>

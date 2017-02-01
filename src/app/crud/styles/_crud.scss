@@ -8,16 +8,17 @@ main {
 }
 .artifacts-search-box {
   display: inline-block;
-  max-width: 240px;
+  max-width: 24rem;
   vertical-align: middle;
   margin-left: 20px;
 }
 
 .vamp-btn-group {
-  margin: 20px 0 20px 0px;
+  display: flex;
+  align-items: center;
 
   .btn.vamp-btn {
-    font-size: $font-big ;
+    font-size: $font-size-large ;
     border: none ;
     line-height: 1 ;
     text-shadow: none ;
@@ -52,7 +53,7 @@ main {
     & > a {
       user-select:none;
       cursor: pointer;
-      font-size: $font-big ;
+      font-size: $font-size-large ;
       border: none ;
       line-height: 1 ;
       background-color:  $gray-base;
@@ -63,7 +64,7 @@ main {
       letter-spacing: 2px;
       text-transform: uppercase;
       height: 40px;
-      width:40px;
+      width: 40px;
 
       &:hover {
         background-color: $dark-blue;
@@ -109,6 +110,7 @@ table.vamp-lv {
   & > thead {
     font-weight: $font-weight-light;
     color: $brand-info;
+    font-size: $font-size-normal;
 
     & > tr {
       & > td,
@@ -158,6 +160,7 @@ table.vamp-lv {
       &.vamp-lv-data-row {
         /*background: rgba($gray-base, 0.75) no-repeat url('img/background-pattern-alpha.png');*/
         background: $night-sky;
+        font-size: $font-size-normal;
 
         &:hover {
           td[field-name='Name'] {
@@ -168,17 +171,16 @@ table.vamp-lv {
         td {
           vertical-align: middle !important;
           white-space: nowrap;
-          height: 60px;
+          height: 6rem;
           cursor: pointer;
           padding: 5px;
 
           &[field-name='Name'] {
-            font-size: $font-big;
-            font-weight: $font-weight-bold;
+            font-size: $font-size-large;
           }
 
-          &.vamp-lv-row-actions {
-            button {
+          &.vamp-lv-row-actions   {
+            /*button {
               background-color: $blue;
               padding:5px 20px;
               height: $button-size-small;
@@ -209,7 +211,7 @@ table.vamp-lv {
                   color: darken($white, 16%);
                 }
               }
-            }
+            }*/
 
             button.vamp-lv-row-action {
               float: left;
@@ -240,7 +242,7 @@ table.vamp-lv {
 }
 
 .vamp-tag {
-    font-size: $font-small !important;
+    font-size: $font-size-small !important;
     font-weight: $font-weight-light;
     color: $gray-lighter;
     border-radius: 2px;
@@ -276,10 +278,10 @@ table.vamp-lv {
 .artifact-properties {
 
   .list {
-    margin: 5px 0;
+    margin: 0.5rem 0;
     font-weight: $font-weight-light;
     border-radius: 2px;
-    padding: 15px;
+    padding: 1.5rem;
     background-color: rgba($gray-base, 0.75);
     color: $gray-lighter !important;
 
