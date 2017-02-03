@@ -22,7 +22,17 @@ function SideController($scope, $rootScope, $vamp, uiStatesFactory) {
 
   $rootScope.$on('$stateChangeStart',
     function (event, toState) {
-      var path = toState.name;
+      var path = toState.url.substring(1);
+      var last = path.indexOf('/');
+      if (last !== -1) {
+        path = path.substring(0, last);
+      }
+
+      // handling qs params
+      var qs = path.indexOf('?');
+      if (qs !== -1) {
+        path = path.substring(0, qs);
+      }
 
       if (Help.prototype.entries()[path]) {
         $scope.help.title = path;

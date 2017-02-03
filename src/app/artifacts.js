@@ -196,6 +196,7 @@ Artifacts.prototype.all = function () {
           name: "mergeTo",
           title: "Merge to",
           action: "merge",
+          active: "!($ctrl.mergeWith | isEmpty)",
           class: "btn-primary"
         },
         {
