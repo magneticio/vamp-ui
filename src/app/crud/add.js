@@ -10,7 +10,7 @@ function ArtifactAddController($scope, $attrs, $location, $state, $vamp, artifac
   this.kind = $attrs.kind;
   // naive singularization
   this.singular = this.kind.substring(0, this.kind.length - 1);
-  this.title = 'new ' + this.singular;
+  this.title = 'New ' + this.singular;
 
   var path = '/' + this.kind;
 

@@ -203,6 +203,9 @@ menu {
    }
 }
 
+.capitalize {
+  text-transform: capitalize;;
+}
 
 .vamp-page-header {
   margin: 0;
@@ -221,12 +224,14 @@ menu {
 
     &.title {
       font-size: $font-size-xxl;
-      text-transform: capitalize;;
+
       color: $color-text;
       font-weight: $font-weight-light;
       letter-spacing: 0.05em;
       margin: 0;
       padding: 0;
+
+
     }
 
     &.message {
