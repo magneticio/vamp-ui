@@ -125,6 +125,28 @@ menu {
   }*/
 }
 
+.stats {
+  float:right;
+  font-size: $font-size-normal;
+  font-weight: $font-weight-regular;
+  line-height: 5rem;
+
+  .stat-value {
+    display: inline-block;
+    color: $color-text;
+  }
+
+  .stat-label {
+    color: $color-text-dark;
+  }
+
+  .stat-content {
+    .detail {
+      color: $color-text-dark;
+    }
+  }
+}
+
 /*@media (min-width: 768px) and (max-width: 991px) {
   .navbar-collapse.collapse {
     display: none !important;
@@ -548,10 +570,7 @@ p, div {
     padding: 0 15px;
     margin: 0;
     width: 100%;
-    display: flex;
     font-size: $font-size-normal;
-    justify-content: space-between;
-    align-items: center;
     cursor: pointer;
     font-weight: $font-weight-regular;
     overflow-y: scroll;
@@ -560,10 +579,25 @@ p, div {
     .category {
       cursor: pointer;
       margin: 0;
-      line-height: 1;
+      line-height: 5rem;
       color: $color-text;
+      display: inline-block;
       &:hover {
         color: $color-text-dark;
+      }
+    }
+
+    .event-head-filters {
+      display: inline-block;
+      margin-left: 4rem;
+      font-weight: $font-weight-light;
+
+      & > label {
+        margin-right: 1.5rem;
+
+        & > input[type="checkbox"] {
+          margin-right: 0.5rem;
+        }
       }
     }
 

@@ -26,8 +26,9 @@ menu {
      a {
        color: $white;
 			 background-color: $vamp-red;
-	     font-size: $font-size-large;
-			 padding-top: 0.9rem;
+       display: flex;
+        align-items: center;
+        height: 100%;
 
        &:hover {
        }
@@ -42,6 +43,7 @@ menu {
 			 }
 			 .vamp-title {
 			 	height : 2.9rem;
+        margin-top: 1.1rem
 			 }
      }
     }
@@ -51,11 +53,6 @@ menu {
      position: absolute;
      bottom:1px;
 
-     ul {
-			 li {
-				 border-bottom: none;
-			 }
-     }
    }
 
    ul {
@@ -70,6 +67,7 @@ menu {
 		 &.sub-menu {
 			 li > a,
 			 li > .btn-link {
+         padding-left: 4rem;
 				 background-color: $night;
 			 }
 		 }

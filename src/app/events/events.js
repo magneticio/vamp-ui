@@ -3,7 +3,7 @@ angular.module('app').component('events', {
   controller: EventController
 });
 
-function EventController($scope, $vamp, uiStatesFactory) {
+function EventController($scope, $vamp, $interval, uiStatesFactory) {
   var $ctrl = this;
 
   var maxLength = 50;
@@ -11,7 +11,11 @@ function EventController($scope, $vamp, uiStatesFactory) {
   this.events = [];
   this.show = false;
 
-  this.filters = {};
+  this.filters = {
+    health: true,
+    metrics: true,
+    allocation: true
+  };
 
   this.toggle = function ($event) {
     if (!$event || !$event.ignore) {
@@ -25,9 +29,10 @@ function EventController($scope, $vamp, uiStatesFactory) {
       return;
     }
     $event.stopPropagation();
-    $ctrl.filters[type] = !$ctrl.filters[type];
 
     if ($ctrl.filters[type]) {
+      $($event.target).find('input[type=checkbox]').prop('checked', true);
+    } else {
       var filtered = _.filter($ctrl.events, function (event) {
         return event.type !== type;
       });
@@ -35,6 +40,8 @@ function EventController($scope, $vamp, uiStatesFactory) {
       _.forEach(filtered, function (event) {
         $ctrl.events.unshift(event);
       });
+
+      $($event.target).find('input[type=checkbox]').prop('checked', false);
     }
   };
 
@@ -55,7 +62,7 @@ function EventController($scope, $vamp, uiStatesFactory) {
   });
 
   function onEvent(event) {
-    if ($ctrl.filters[event.type]) {
+    if (!$ctrl.filters[event.type]) {
       return;
     }
 
@@ -90,5 +97,55 @@ function EventController($scope, $vamp, uiStatesFactory) {
 
   $scope.$on('/events/stream', function (e, response) {
     onEvent(response.data);
+  });
+
+  // jvm metrics
+
+  var polling;
+
+  $ctrl.connected = false;
+
+  function info() {
+    $vamp.peek('/info', '', {on: 'jvm'});
+  }
+
+  function startPolling() {
+    info();
+    if (!polling) {
+      polling = $interval(info, 15000);
+    }
+    $ctrl.connected = true;
+    // $rootScope.$emit('error.disconnected', true);
+  }
+
+  function stopPolling() {
+    $ctrl.connected = false;
+    $interval.cancel(polling);
+    polling = undefined;
+
+    // $rootScope.$emit('error.disconnected', true);
+  }
+
+  if ($vamp.connected()) {
+    startPolling();
+  }
+
+  $scope.$on('$vamp:connection', function (event, connection) {
+    if (connection === 'opened') {
+      startPolling();
+    } else {
+      stopPolling();
+    }
+  });
+
+  $scope.$on('/info', function (event, data) {
+    if (data.content === 'JSON') {
+      var info = data.data;
+      $ctrl.jvm = {
+        systemLoad: info.jvm.operating_system.system_load_average,
+        heapCurrent: info.jvm.memory.heap.used / (1024 * 1024),
+        heapMax: info.jvm.memory.heap.max / (1024 * 1024)
+      };
+    }
   });
 }

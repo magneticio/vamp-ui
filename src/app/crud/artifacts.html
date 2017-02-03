@@ -40,7 +40,7 @@
     </buttons>
 </header>
 
-<div class="container-fluid artifacts-panel">
+<div class="artifacts-panel">
   <div ng-if="$artifacts.initialized && $artifacts.artifacts.length > 0">
     <div ng-if="$artifacts.viewStates.main == 'grid'" class="artifacts">
       <div ng-repeat="artifact in $artifacts.filteredArtifacts | limitTo: $artifacts.itemsPerPage: (($artifacts.currentPage - 1) * $artifacts.itemsPerPage) track by $index">
