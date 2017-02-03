@@ -46,7 +46,6 @@ function ConfigurationController($scope, $timeout, $element, artifact, $vamp, al
   };
 
   $ctrl.reload = function (type) {
-    $ctrl.type = '';
     $ctrl.source = '';
 
     $vamp.await(function () {
