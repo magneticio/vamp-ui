@@ -149,11 +149,16 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
 
   $ctrl.updateSelection = function ($event, artifact) {
     $event.stopPropagation();
-    _.remove($ctrl.selected, function (a) {
-      return a.name === artifact.name;
-    });
-    if ($event.target.checked) {
+
+    if ($ctrl.isSelected(artifact)) {
+      _.remove($ctrl.selected, function (a) {
+        return a.name === artifact.name;
+      });
+
+      $($event.target).find('input[type=checkbox]').prop('checked', false);
+    } else {
       $ctrl.selected.push(artifact);
+      $($event.target).find('input[type=checkbox]').prop('checked', true);
     }
   };
 

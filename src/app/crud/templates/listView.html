@@ -2,10 +2,9 @@
   <table class="table table-condensed vamp-lv">
     <thead class="vamp-lv-header-group">
       <tr class="vamp-lv-row">
-        <td class="vamp-lv-col">
+        <td class="vamp-lv-col clickable" ng-click="$lv.artifactsCtrl.toggleSelection()">
           <input type="checkbox" title="Select all" ng-checked="$lv.artifactsCtrl.isSelectedAll()"
-            class="checkbox vamp-checkbox vamp-lv-checkbox"
-             ng-click="$lv.artifactsCtrl.toggleSelection()">
+            class="checkbox vamp-checkbox vamp-lv-checkbox">
         </td>
         <td class="vamp-lv-col"
            ng-repeat="field in $lv.artifactData.artifactInfo">
@@ -18,12 +17,13 @@
       </tr>
     </thead>
     <tbody class="artifacts-list">
-      <tr class="vamp-lv-row vamp-lv-data-row" ng-repeat="artifact in ($lv.items | filter:{name:$lv.artifactsCtrl.searchTerm} | limitTo: $lv.artifactsCtrl.itemsPerPage: (($lv.artifactsCtrl.currentPage - 1) * $lv.artifactsCtrl.itemsPerPage)) track by $index"
-      dynamic-controller-as="{{$lv.artifactData.artifactController}}" ng-click="$lv.onItemClick(artifact, $event)">
-        <td class="vamp-lv-col">
+      <tr class="vamp-lv-row vamp-lv-data-row"
+        ng-repeat="artifact in ($lv.items | filter:{name:$lv.artifactsCtrl.searchTerm} | limitTo: $lv.artifactsCtrl.itemsPerPage: (($lv.artifactsCtrl.currentPage - 1) * $lv.artifactsCtrl.itemsPerPage)) track by $index"
+        dynamic-controller-as="{{$lv.artifactData.artifactController}}"
+        ng-click="$lv.onItemClick(artifact, $event)">
+        <td class="vamp-lv-col clickable" ng-click="$lv.artifactsCtrl.updateSelection($event, artifact)">
           <input type="checkbox" class="checkbox vamp-lv-checkbox"
-             ng-checked="$lv.artifactsCtrl.isSelected(artifact)"
-             ng-click="$lv.artifactsCtrl.updateSelection($event, artifact)">
+             ng-checked="$lv.artifactsCtrl.isSelected(artifact)">
         </td>
         <td class="vamp-lv-col" ng-repeat="field in $lv.artifactData.artifactInfo" field-name="{{field.title}}">
           <div ng-switch="field.type">
@@ -57,8 +57,8 @@
         <td ng-if="$lv.artifactData.actions && $lv.artifactData.actions.length > 0"
           class="vamp-lv-col vamp-lv-row-actions">
           <button ng-repeat="action in $lv.artifactData.actions"
-            ng-show="action.active ? (action.active | interpolate:this) : true"
-            class="btn btn-ghost btn-primary {{ action.class }}"
+            ng-if="action.active ? (action.active | interpolate:this) : true"
+            class="btn btn-ghost {{ action.class }}"
             ng-click="$ctrl[action.action]($event)">
             {{ action.title }}
           </button>

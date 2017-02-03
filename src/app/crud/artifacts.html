@@ -33,7 +33,7 @@
             Add new
         </button>
         <button class="btn btn-ghost btn-danger" type="submit"
-                ng-disabled="!$artifacts.isSelectedAny()"
+                ng-if="$artifacts.isSelectedAny()"
                 ng-click="$artifacts.deleteSelected()">
             Delete selected
         </button>

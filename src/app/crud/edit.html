@@ -1,16 +1,13 @@
 <header title="{{ $ctrl.title }}" clazz="{{ $ctrl.errorClass }}">
     <controls>
-        <span ng-if="$ctrl.errorMessage.length < 40">{{ $ctrl.errorMessage }}</span>
-        <div class="message-truncated" ng-if="$ctrl.errorMessage.length >= 40" ng-click="$ctrl.fullErrorMessage()">
-            <span>{{ $ctrl.errorMessage | limitTo:40 }}...<i class="fa fa-arrows-alt message-expand-icon"></i></span>
-        </div>
+        <span>{{ $ctrl.errorMessage }}</span>
     </controls>
     <buttons>
-        <button class="btn btn-ghost btn-success" type="submit" title="SAVE"
-                ng-disabled="!$ctrl.isModified() || !$ctrl.valid" ng-click="$ctrl.save()">
+        <button class="btn btn-ghost btn-success" type="submit"
+                ng-if="!(!$ctrl.isModified() || !$ctrl.valid)" ng-click="$ctrl.save()">
             Save
         </button>
-        <button class="btn btn-ghost btn-primary" type="submit" title="CANCEL" ng-click="$ctrl.cancel()">
+        <button class="btn btn-ghost btn-primary" type="submit" ng-click="$ctrl.cancel()">
             Cancel
         </button>
     </buttons>

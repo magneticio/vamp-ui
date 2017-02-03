@@ -33,6 +33,10 @@
   }
 }
 
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
 input[type="text"]::-webkit-input-placeholder {
   color: $dark-blue !important;
 }

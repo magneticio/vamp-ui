@@ -28,13 +28,13 @@
 
     <div class="artifact-card-actions">
         <button class="btn btn-ghost btn-success" ng-if="artifact.status === 'suspended'" ng-click="$ctrl.start($event)">
-            <i class="fa fa-play"></i>&nbsp;&nbsp;start
+            <i class="fa fa-play"></i>&nbsp;&nbsp;Start
         </button>
         <button class="btn btn-ghost btn-primary" ng-if="artifact.status === 'running'" ng-click="$ctrl.suspend($event)">
-            <i class="fa fa-pause"></i>&nbsp;&nbsp;suspend
+            <i class="fa fa-pause"></i>&nbsp;&nbsp;Suspend
         </button>
         <button class="btn btn-ghost btn-primary" ng-if="artifact.status === 'running'" ng-click="$ctrl.restart($event)">
-            <i class="fa fa-refresh"></i>&nbsp;&nbsp;restart
+            <i class="fa fa-refresh"></i>&nbsp;&nbsp;Restart
         </button>
     </div>
 
