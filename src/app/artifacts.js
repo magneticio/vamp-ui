@@ -16,7 +16,7 @@ Artifacts.prototype.all = function () {
           type: "string"
         },
         {
-          title: "Tags",
+          title: "",
           type: "tags",
           tags: [
             {
@@ -53,7 +53,8 @@ Artifacts.prototype.all = function () {
         {
           name: "export",
           title: "Export as a blueprint",
-          action: "exportDeployment"
+          action: "exportDeployment",
+          class: "btn-primary"
         }
       ]
     },
@@ -69,7 +70,7 @@ Artifacts.prototype.all = function () {
           type: "string"
         },
         {
-          title: "Tags",
+          title: "",
           type: "tags",
           tags: [
             {
@@ -111,7 +112,7 @@ Artifacts.prototype.all = function () {
           type: "string"
         },
         {
-          title: "Tags",
+          title: "",
           type: "tags",
           tags: [
             {
@@ -154,18 +155,22 @@ Artifacts.prototype.all = function () {
           name: "suspend",
           title: "Suspend",
           action: "suspend",
-          active: "artifact.status === 'running'"
+          active: "artifact.status === 'running'",
+          class: "btn-primary"
         },
         {
           name: "restart",
           title: "Restart",
-          action: "restart"
+          action: "restart",
+          active: "artifact.status !== 'suspended'",
+          class: "btn-primary"
         },
         {
           name: "start",
           title: "Start",
           action: "start",
-          active: "artifact.status === 'suspended'"
+          active: "artifact.status === 'suspended'",
+          class: "btn-success"
         }
       ]
     },
@@ -184,12 +189,14 @@ Artifacts.prototype.all = function () {
         {
           name: "deployAs",
           title: "Deploy as",
-          action: "deploy"
+          action: "deploy",
+          class: "btn-primary"
         },
         {
           name: "mergeTo",
           title: "Merge to",
-          action: "merge"
+          action: "merge",
+          class: "btn-primary"
         },
         {
           name: "removeFrom",
