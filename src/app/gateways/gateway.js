@@ -61,9 +61,17 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     if (!condition || condition.trim().length === 0) {
       gateway.routes[route].condition = null;
       gateway.routes[route].condition_strength = '0%';
+    } else if (condition && (condition.startsWith('reference:') || condition.startsWith('ref:'))) {
+      var colonIndex = condition.indexOf(':');
+      condition = condition.substring(colonIndex + 1);
+
+      gateway.routes[route].condition = {
+        reference: condition
+      };
     } else {
       gateway.routes[route].condition = condition;
     }
+
     save(gateway, 'Condition has been successfully updated.');
   };
 
