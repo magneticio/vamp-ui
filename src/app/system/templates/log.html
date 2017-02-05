@@ -8,10 +8,10 @@
         <div class="panel-heading">
           <div class="panel-title">
             <label class="checkbox-inline">
-              <input type="checkbox" ng-model="$ctrl.INFO.active" ng-change="$ctrl.filterChange($ctrl.INFO)"> Info
+              <input type="checkbox" ng-model="$ctrl.ERROR.active" ng-change="$ctrl.filterChange($ctrl.ERROR)"> Error
             </label>
             <label class="checkbox-inline">
-              <input type="checkbox" ng-model="$ctrl.ERROR.active" ng-change="$ctrl.filterChange($ctrl.ERROR)"> Error
+              <input type="checkbox" ng-model="$ctrl.INFO.active" ng-change="$ctrl.filterChange($ctrl.INFO)"> Info
             </label>
             <label class="checkbox-inline">
               <input type="checkbox" ng-model="$ctrl.TRACE.active" ng-change="$ctrl.filterChange($ctrl.TRACE)"> Trace
@@ -19,7 +19,7 @@
           </div>
           <div class="pull-right">
             Follow log:&nbsp;
-            <toggle ng-model="$ctrl.isLogOn" style="vamp-toggle"
+            <toggle ng-model="$ctrl.isFollowLog" style="vamp-toggle"
               ng-change="$ctrl.toggleFollowOnOff()" onstyle="btn-success"
               offstyle="btn-primary" size="btn-xs" ng-model="toggleValue"
               ng-change="changed()"></toggle>

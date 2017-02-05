@@ -7,7 +7,7 @@ function LogController($scope, $vamp, $element) {
   var $ctrl = this;
 
   $ctrl.logs = [];
-  $ctrl.isLogOn = false;
+  $ctrl.isFollowLog = true;
 
   $ctrl.INFO = {
     name: 'INFO',
@@ -49,13 +49,13 @@ function LogController($scope, $vamp, $element) {
       $ctrl.selectedLevels.splice(i, 1);
     }
 
-    // if ($ctrl.isLogOn && currentMaxLevel()) {
+    // if ($ctrl.isFollowLog && currentMaxLevel()) {
       // $ctrl.peek(currentMaxLevel().name);
     // }
   };
 
   $ctrl.scrollToBottom = function () {
-    if ($ctrl.isLogOn) {
+    if ($ctrl.isFollowLog) {
       var scrolledContainer = $($element).find('.panel-body');
       scrolledContainer.scrollTop(scrolledContainer.prop('scrollHeight'));
     }
