@@ -40,11 +40,11 @@
             </div>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <div class="stat-value">
-              <span class="stat-label">MEM:</span>
+              <span class="stat-label">MEMORY:</span>
                 <span class="stat-content">
                   {{ ($ctrl.jvm.heapCurrent / $ctrl.jvm.heapMax) * 100 | number: 1 }}%
                   <span class="detail">
-                    &nbsp;({{ $ctrl.jvm.heapCurrent | number: 0}}/{{ $ctrl.jvm.heapMax | number: 0 }}MB)
+                    &nbsp;( {{ $ctrl.jvm.heapCurrent | number: 0}} MB / {{ $ctrl.jvm.heapMax | number: 0 }} MB )
                 </span>
               </span>
             </div>
