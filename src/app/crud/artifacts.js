@@ -201,7 +201,7 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
             }
           });
         });
-      });
+      }, null, 'btn-danger');
     }
   };
 
