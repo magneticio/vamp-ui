@@ -1,57 +1,41 @@
 angular.module('app').component('log', {
   templateUrl: 'app/system/templates/log.html',
   controller: LogController
-});
+}).factory('$vampLog', ['$log', '$rootScope', '$vamp', function ($log, $rootScope, $vamp) {
+  return new VampLogService($log, $rootScope, $vamp);
+}]).run(['$vampLog', function ($vampLog) {
+  $vampLog.init();
+}]);
 
-function LogController($scope, $vamp, $element) {
+function LogController($scope, $element, $vampLog) {
   var $ctrl = this;
 
   $ctrl.logs = [];
+  $ctrl.filteredLogs = [];
   $ctrl.isFollowLog = true;
+  $ctrl.filter = {error: false, info: false, trace: false};
 
-  $ctrl.INFO = {
-    name: 'INFO',
-    active: true,
-    priority: 1
-  };
-  $ctrl.ERROR = {
-    name: 'ERROR',
-    active: true,
-    priority: 2
-  };
-  $ctrl.TRACE = {
-    name: 'TRACE',
-    active: false,
-    priority: 3
-  };
-  $ctrl.selectedLevels = [
-    $ctrl.INFO
-  ];
-
-  /* function currentMaxLevel() {
-    function getMaxOfArray(numArray) {
-      return Math.max.apply(null, numArray);
-    }
-
-    var max = getMaxOfArray(_.map($ctrl.selectedLevels, 'priority'));
-    return $ctrl.selectedLevels[_.findIndex($ctrl.selectedLevels, {'priority': max})];
-  }*/
+  if ($vampLog.level() === 'TRACE') {
+    $ctrl.filter = {error: true, info: true, trace: true};
+  } else if ($vampLog.level() === 'INFO') {
+    $ctrl.filter = {error: true, info: true, trace: false};
+  } else if ($vampLog.level() === 'ERROR') {
+    $ctrl.filter = {error: true, info: false, trace: false};
+  }
 
   $ctrl.toggleFollowOnOff = function () {
     $ctrl.scrollToBottom();
   };
 
-  $ctrl.filterChange = function (level) {
-    if (level.active) {
-      $ctrl.selectedLevels.push(level);
-    } else {
-      var i = _.indexOf($ctrl.selectedLevels, level);
-      $ctrl.selectedLevels.splice(i, 1);
+  $ctrl.filterUpdate = function () {
+    if ($ctrl.filter.trace) {
+      $vampLog.level('TRACE');
+    } else if ($ctrl.filter.info) {
+      $vampLog.level('INFO');
+    } else if ($ctrl.filter.error) {
+      $vampLog.level('ERROR');
     }
-
-    // if ($ctrl.isFollowLog && currentMaxLevel()) {
-      // $ctrl.peek(currentMaxLevel().name);
-    // }
+    $ctrl.filterAll();
   };
 
   $ctrl.scrollToBottom = function () {
@@ -61,30 +45,88 @@ function LogController($scope, $vamp, $element) {
     }
   };
 
-  $ctrl.containLevelsFilter = function (log) {
-    return (_.findIndex($ctrl.selectedLevels, {name: log.level}) !== -1);
-  };
-
-  $scope.$on('$vamp:connection', function (event, connection) {
-    if (connection === 'opened') {
-      $ctrl.peek('TRACE');
-    }
-  });
-
   $scope.$on('/log', function (e, response) {
     if (response.content === 'JSON') {
-      $ctrl.logs.push({
-        timestamp: response.data.timestamp,
-        level: response.data.level,
-        logger: response.data.logger,
-        message: response.data.message
-      });
+      $ctrl.push(response.data);
     }
   });
 
-  $ctrl.peek = function (level) {
-    $vamp.peek('/log', '', {logger: 'io.vamp', level: level});
+  $ctrl.push = function (data) {
+    var log = {
+      timestamp: data.timestamp,
+      level: data.level,
+      logger: data.logger,
+      message: data.message
+    };
+    $ctrl.logs.push(log);
+    $ctrl.pushFiltered(log);
   };
 
-  $ctrl.peek('TRACE');
+  $ctrl.pushFiltered = function (log) {
+    if (!$ctrl.filter[log.level.toLowerCase()]) {
+      return;
+    }
+    $ctrl.filteredLogs.push(log);
+  };
+
+  $ctrl.filterAll = function () {
+    $ctrl.filteredLogs.length = 0;
+    for (var i = 0; i < $ctrl.logs.length; i++) {
+      $ctrl.pushFiltered($ctrl.logs[i]);
+    }
+  };
+
+  for (var i = 0; i < $vampLog.logs.length; i++) {
+    $ctrl.push($vampLog.logs[i]);
+  }
 }
+
+/** @ngInject */
+function VampLogService($log, $rootScope, $vamp) {
+  var $service = this;
+  var $level = 'INFO';
+
+  $service.logs = [];
+
+  this.level = function (level) {
+    if (level && level !== $level) {
+      $level = level;
+      $service.peek();
+    }
+    return $level;
+  };
+
+  this.init = function () {
+    $service.peek();
+  };
+
+  $rootScope.$on('/log', function (e, response) {
+    if (response.content === 'JSON') {
+      $service.push(response.data);
+    }
+  });
+
+  $rootScope.$on('$vamp:connection', function (event, connection) {
+    if (connection === 'opened') {
+      $service.peek();
+    }
+  });
+
+  this.push = function (log) {
+    $service.logs.push({
+      timestamp: log.timestamp,
+      level: log.level,
+      logger: log.logger,
+      message: log.message
+    });
+    while ($service.logs.length > 100) {
+      $service.logs.shift();
+    }
+  };
+
+  this.peek = function () {
+    $log.debug('log level: ' + $level);
+    $vamp.peek('/log', '', {logger: 'io.vamp', level: $level});
+  };
+}
+

@@ -8,13 +8,13 @@
         <div class="panel-heading">
           <div class="panel-title">
             <label class="checkbox-inline">
-              <input type="checkbox" ng-model="$ctrl.ERROR.active" ng-change="$ctrl.filterChange($ctrl.ERROR)"> Error
+              <input type="checkbox" ng-model="$ctrl.filter.error" ng-change="$ctrl.filterUpdate()"> Error
             </label>
             <label class="checkbox-inline">
-              <input type="checkbox" ng-model="$ctrl.INFO.active" ng-change="$ctrl.filterChange($ctrl.INFO)"> Info
+              <input type="checkbox" ng-model="$ctrl.filter.info" ng-change="$ctrl.filterUpdate()"> Info
             </label>
             <label class="checkbox-inline">
-              <input type="checkbox" ng-model="$ctrl.TRACE.active" ng-change="$ctrl.filterChange($ctrl.TRACE)"> Trace
+              <input type="checkbox" ng-model="$ctrl.filter.trace" ng-change="$ctrl.filterUpdate()"> Trace
             </label>
           </div>
           <div class="pull-right">
@@ -37,7 +37,7 @@
             </thead>
             <tbody>
               <tr lass="vamp-lv-data-row"
-                ng-repeat="log in filteredLogs = ($ctrl.logs | orderBy:timestamp | filter:$ctrl.containLevelsFilter)"
+                ng-repeat="log in ($ctrl.filteredLogs | orderBy:timestamp)"
                 on-render-end="$ctrl.scrollToBottom()">
                   <td>
                       <span class="timestamp">
@@ -45,7 +45,7 @@
                       </span>
                   </td>
                   <td>
-                      <span class="label" ng-class="{'label-danger': log.level == 'ERROR', 'label-success': log.level == 'INFO', 'label-primary': log.level == 'TRACE'}">{{ log.level }}</span>
+                      <span class="label" ng-class="{'label-danger': log.level == 'ERROR', 'label-success': log.level == 'INFO', 'label-primary': log.level == 'DEBUG' || log.level == 'TRACE'}">{{ log.level }}</span>
                   </td>
                   <td>
                       <span class="label">{{ log.logger }}</span>
