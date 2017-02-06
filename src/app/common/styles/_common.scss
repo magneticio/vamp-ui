@@ -112,3 +112,10 @@ input[type="text"]:-ms-input-placeholder {
 
   @import "_errors";
 }
+
+// PRELOADING IMAGES
+:root:before {
+  content: url('/styles/resources/app/common/images/disconnected-triangle.svg');
+  visibility: hidden;
+  position: absolute;
+}
