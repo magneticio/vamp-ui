@@ -5,33 +5,12 @@
             <label ng-click="filter($event, 'health')">
               <input type="checkbox" ng-model="$ctrl.filters.health" > Health
             </label>
-            <!--<button type="button" class="btn btn-ghost btn-primary"
-                    ng-model="$ctrl.filters.health" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
-                    ng-class="{red: $ctrl.filters['health']}" ng-click="filter($event, 'health')" >
-                <i class="fa fa-fw fa-check" ng-if="!$ctrl.filters['health']"></i>
-                <i class="fa fa-fw fa-times" ng-if="$ctrl.filters['health']"></i>
-                <span class="btn-text">Health</span>
-            </button>-->
             <label ng-click="filter($event, 'health')">
               <input type="checkbox" ng-model="$ctrl.filters.metrics" > Metrics
             </label>
             <label ng-click="filter($event, 'health')">
               <input type="checkbox" ng-model="$ctrl.filters.allocation" > Allocation
             </label>
-            <!--<button type="button" class="btn btn-ghost btn-primary"
-                    ng-model="$ctrl.filters.metrics" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
-                    ng-class="{red: $ctrl.filters['metrics']}" ng-click="filter($event, 'metrics')" >
-                <i class="fa fa-fw fa-check" ng-if="!$ctrl.filters['metrics']"></i>
-                <i class="fa fa-fw fa-times" ng-if="$ctrl.filters['metrics']"></i>
-                <span class="btn-text">Metrics</span>
-            </button>
-            <button type="button" class="btn btn-ghost btn-primary"
-                    ng-model="$ctrl.filters.allocation" btn-checkbox btn-checkbox-true="true" btn-checkbox-false="false"
-                    ng-class="{red: $ctrl.filters['allocation']}" ng-click="filter($event, 'allocation')" >
-                <i class="fa fa-fw fa-check" ng-if="!$ctrl.filters['allocation']"></i>
-                <i class="fa fa-fw fa-times" ng-if="$ctrl.filters['allocation']"></i>
-                <span class="btn-text">Allocation</span>
-            </button>-->
         </div>
         <div class="stats" ng-show="$ctrl.connected && $ctrl.jvm">
             <div class="stat-value">

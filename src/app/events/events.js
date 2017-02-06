@@ -3,7 +3,7 @@ angular.module('app').component('events', {
   controller: EventController
 });
 
-function EventController($scope, $vamp, $interval, uiStatesFactory) {
+function EventController($scope, $vamp, $interval, uiStatesFactory, overlayService) {
   var $ctrl = this;
 
   var maxLength = 50;
@@ -115,7 +115,8 @@ function EventController($scope, $vamp, $interval, uiStatesFactory) {
       polling = $interval(info, 15000);
     }
     $ctrl.connected = true;
-    // $rootScope.$emit('error.disconnected', true);
+
+    overlayService.hide();
   }
 
   function stopPolling() {
@@ -123,7 +124,7 @@ function EventController($scope, $vamp, $interval, uiStatesFactory) {
     $interval.cancel(polling);
     polling = undefined;
 
-    // $rootScope.$emit('error.disconnected', true);
+    overlayService.display('error.disconnected');
   }
 
   if ($vamp.connected()) {

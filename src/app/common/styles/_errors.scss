@@ -1,0 +1,12 @@
+.error {
+  font-weight: $font-weight-light;
+
+  .message {
+    font-size: $font-size-xxl;
+  }
+
+  .error-icon {
+    width: 12.5rem;
+    margin: 0 auto 2.5rem auto;
+  }
+}

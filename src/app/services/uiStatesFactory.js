@@ -4,7 +4,8 @@ function uiStatesFactory() {
     sideBar: 'expanded',
     infoPanel: false,
     helpPanel: false,
-    footer: 'collapsed'
+    footer: 'collapsed',
+    overlay: false
   };
 
   function setMainViewState(type) {
@@ -27,13 +28,18 @@ function uiStatesFactory() {
     viewStates.footer = type;
   }
 
+  function setOverlayState(state) {
+    viewStates.overlay = state;
+  }
+
   return {
     viewStates: viewStates,
     setMainViewState: setMainViewState,
     setSideBarViewState: setSideBarViewState,
     setInfoPanelViewState: setInfoPanelViewState,
     setHelpPanelViewState: setHelpPanelViewState,
-    setFooterViewState: setFooterViewState
+    setFooterViewState: setFooterViewState,
+    setOverlayState: setOverlayState
   };
 }
 

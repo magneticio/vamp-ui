@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="234px" height="190px" viewBox="0 0 234 190" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>Error notification</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icons/Error/Big" transform="translate(-8.000000, -11.000000)" fill="#FF3D5A">
+            <g id="Error-notification">
+                <path d="M111.748534,21.2023462 C119.067116,9.49261374 130.934443,9.49510822 138.251466,21.2023462 L236.748534,178.797654 C244.067116,190.507386 238.813168,200 224.99984,200 L25.0001596,200 C11.1929527,200 5.93444264,190.504892 13.2514664,178.797654 L111.748534,21.2023462 Z" id="Triangle" stroke="#FF3D5A" stroke-width="2" fill-opacity="0.5"></path>
+                <text id="!" font-family="Roboto-Regular, Roboto" font-size="90" font-weight="normal">
+                    <tspan x="113" y="154">!</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

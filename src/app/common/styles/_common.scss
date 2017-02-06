@@ -83,3 +83,32 @@ input[type="text"]:-ms-input-placeholder {
    border-bottom: 1px solid $panel;
  }
 }
+
+.overlay-root {
+  user-select:none;
+  z-index:1100;
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  display: block;
+  background-color: rgba(0,0,0,0.8);
+
+  &.active {
+    display: block;
+  }
+
+  .error-container {
+    width: 45rem;
+    height: 30rem;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  @import "_errors";
+}
