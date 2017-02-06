@@ -301,9 +301,13 @@ menu {
 }
 
 edit, add {
-  .message-truncated span {
-    &:hover {
-      cursor: pointer;
+  .message-truncated {
+    white-space: nowrap;
+    
+    span {
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
   .message-expand-icon {

@@ -1,6 +1,9 @@
 <header title="Editing {{ $ctrl.title }}" clazz="{{ $ctrl.errorClass }}">
     <controls>
-        <span>{{ $ctrl.errorMessage }}</span>
+      <span ng-if="$ctrl.errorMessage.length < 40">{{ $ctrl.errorMessage }}</span>
+      <div class="message-truncated" ng-if="$ctrl.errorMessage.length >= 40" ng-click="$ctrl.fullErrorMessage()">
+          <span>{{ $ctrl.errorMessage | limitTo:40 }}...<i class="fa fa-arrows-alt message-expand-icon"></i></span>
+      </div>
     </controls>
     <buttons>
         <button class="btn btn-ghost btn-success" type="submit"
