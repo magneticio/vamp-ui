@@ -145,6 +145,75 @@ Help.prototype.entries = function () {
           url: 'http://vamp.io/documentation/tutorials/deploy-wordpress-and-mysql/'
         }
       ]
+    },
+    conditions: {
+      description: "Conditions are static artifacts that define filters for incoming traffic. They can be stored here, then referenced and applied to gateways to target specific traffic for routing between services.",
+      links: [
+        {
+          title: 'Using conditions',
+          url: 'http://vamp.io/documentation/using-vamp/conditions/'
+        },
+        {
+          title: 'Using gateways',
+          url: 'http://vamp.io/documentation/using-vamp/gateways/'
+        },    
+        {
+          title: 'Tutorial: Run a canary release',
+          url: 'http://vamp.io/documentation/tutorials/run-a-canary-release/'
+        }
+      ]
+    },
+    configuration: {
+      description: "The current, applied Vamp configuration can be reviewed and updated here. Updates are stored in the key value store.",
+      links: [
+        {
+          title: 'How to configure Vamp',
+          url: 'http://vamp.io/documentation/installation/configure-vamp/'
+        },
+        {
+          title: 'Vamp configuration reference',
+          url: 'http://vamp.io/documentation/installation/configuration-reference/'
+        },
+        {
+          title: 'Vamp troubleshooting',
+          url: 'http://vamp.io/documentation/troubleshoot/'
+        }
+      ]
+    },
+    vga: {
+      description: "Vamp Gateway Agent (VGA) configuration is generated based on defined templates. View the generated VGA configuration for each configured gateway marshaller here and edit the associated templates.",
+      links: [
+        {
+          title: 'How to configure Vamp',
+          url: 'http://vamp.io/documentation/installation/configure-vamp/'
+        },
+        {
+          title: 'Vamp configuration reference',
+          url: 'http://vamp.io/documentation/installation/configuration-reference/'
+        },
+        {
+          title: 'Vamp troubleshooting',
+          url: 'http://vamp.io/documentation/troubleshoot/'
+        }
+      ]
+    },
+    info: {
+      description: "Extended info on the running Vamp installation.",
+      links: [
+        {
+          title: 'Vamp troubleshooting',
+          url: 'http://vamp.io/documentation/troubleshoot/'
+        }
+      ]
+    },
+    log: {
+      description: "Track the Vamp log. Trace level logging is useful for troubleshooting purposes.",
+      links: [
+        {
+          title: 'Vamp troubleshooting',
+          url: 'http://vamp.io/documentation/troubleshoot/'
+        }
+      ]
     }
   };
 };
