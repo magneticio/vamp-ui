@@ -1,4 +1,4 @@
-<header title="{{ $ctrl.title }}" clazz="{{ $ctrl.errorClass }}">
+<header title="Editing {{ $ctrl.title }}" clazz="{{ $ctrl.errorClass }}">
     <controls>
         <span>{{ $ctrl.errorMessage }}</span>
     </controls>
@@ -12,6 +12,10 @@
         </button>
     </buttons>
 </header>
-<div class="editor">
-    <div ui-ace="$ctrl.editor" ng-model="$ctrl.source" ng-change="$ctrl.validate()"></div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div id="editor"  ui-ace="$ctrl.editor" ng-model="$ctrl.source" ng-change="$ctrl.validate()"></div>
+    </div>
+  </div>
 </div>

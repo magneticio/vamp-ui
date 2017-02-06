@@ -13,46 +13,41 @@ menu {
 
   .sidebar-nav {
     position: absolute;
-    height: 100%;
-    top: 0;
+    height: calc(100% - 8rem);
+    top: 8rem;
     width: 25rem;
     margin: 0;
     padding: 0;
-
-    & > li.sidebar-brand {
-     height: 8rem;
-     line-height: 8rem;
-
-     a {
-       color: $white;
-			 background-color: $vamp-red;
-       display: flex;
-        align-items: center;
-        height: 100%;
-
-       &:hover {
-       }
-
-			 img {
-				 vertical-align: text-bottom;
-			 }
-
-			 .vamp-logo {
-				height : 4rem;
-				margin-right: 1.8rem;
-			 }
-			 .vamp-title {
-			 	height : 2.9rem;
-        margin-top: 1.1rem
-			 }
-     }
-    }
+    overflow-y: auto;
    }
 
-   .sidebar-bottom-docked {
-     position: absolute;
-     bottom:1px;
+   li.sidebar-brand {
+    height: 8rem;
+    line-height: 8rem;
 
+    a {
+      color: $white;
+      background-color: $vamp-red;
+      display: flex;
+      align-items: center;
+      height: 100%;
+
+      &:hover {
+      }
+
+      img {
+        vertical-align: text-bottom;
+      }
+
+      .vamp-logo {
+       height : 4rem;
+       margin-right: 1.8rem;
+      }
+      .vamp-title {
+       height : 2.9rem;
+       margin-top: 1.1rem
+      }
+    }
    }
 
    ul {
@@ -118,8 +113,15 @@ menu {
         padding-left: 2rem;
         display: block;
         text-decoration: none;
-        text-transform: capitalize;
         color: $medium-blue;
+
+        & > span {
+          display: block;
+
+          &::first-letter {
+            text-transform: capitalize;
+          }
+        }
 
         &:hover {
           color: $medium-blue;

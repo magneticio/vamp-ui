@@ -14,7 +14,7 @@ angular.module('app').factory('artifact', ['$vamp', function ($vamp) {
 
 function ArtifactService($vamp) {
   this.editor = {
-    useWrapMode: false,
+    useWrapMode: true,
     showGutter: true,
     theme: 'vamp',
     mode: 'yaml',

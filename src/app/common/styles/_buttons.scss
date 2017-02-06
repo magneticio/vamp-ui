@@ -13,7 +13,8 @@
   &.btn-small {
     height: $button-size-small;
     font-size: $font-size-small;
-    padding:0;
+    padding-top:0.2rem;
+    padding-bottom: 0.2rem;
   }
 
   &.btn-transparent {
