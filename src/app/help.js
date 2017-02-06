@@ -156,7 +156,7 @@ Help.prototype.entries = function () {
         {
           title: 'Using gateways',
           url: 'http://vamp.io/documentation/using-vamp/gateways/'
-        },    
+        },
         {
           title: 'Tutorial: Run a canary release',
           url: 'http://vamp.io/documentation/tutorials/run-a-canary-release/'
