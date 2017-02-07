@@ -13,14 +13,16 @@ function LogController($scope, $element, $vampLog) {
   $ctrl.logs = [];
   $ctrl.filteredLogs = [];
   $ctrl.isFollowLog = true;
-  $ctrl.filter = {error: false, info: false, trace: false};
+  $ctrl.filter = {error: false, info: false, debug: false, trace: false};
 
   if ($vampLog.level() === 'TRACE') {
-    $ctrl.filter = {error: true, info: true, trace: true};
+    $ctrl.filter = {error: true, info: true, debug: true, trace: true};
+  } else if ($vampLog.level() === 'DEBUG') {
+    $ctrl.filter = {error: true, info: true, debug: true, trace: false};
   } else if ($vampLog.level() === 'INFO') {
-    $ctrl.filter = {error: true, info: true, trace: false};
+    $ctrl.filter = {error: true, info: true, debug: false, trace: false};
   } else if ($vampLog.level() === 'ERROR') {
-    $ctrl.filter = {error: true, info: false, trace: false};
+    $ctrl.filter = {error: true, info: false, debug: false, trace: false};
   }
 
   $ctrl.toggleFollowOnOff = function () {
@@ -30,6 +32,8 @@ function LogController($scope, $element, $vampLog) {
   $ctrl.filterUpdate = function () {
     if ($ctrl.filter.trace) {
       $vampLog.level('TRACE');
+    } else if ($ctrl.filter.debug) {
+      $vampLog.level('DEBUG');
     } else if ($ctrl.filter.info) {
       $vampLog.level('INFO');
     } else if ($ctrl.filter.error) {
