@@ -62,7 +62,7 @@ function EventController($scope, $vamp, $interval, uiStatesFactory, overlayServi
   });
 
   function onEvent(event) {
-    if (!$ctrl.filters[event.type]) {
+    if ($ctrl.filters[event.type] === false) {
       return;
     }
 
