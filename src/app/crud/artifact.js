@@ -22,7 +22,8 @@ function ArtifactService($vamp) {
     useSoftTabs: true,
     advanced: {
       tabSize: 2,
-      maxLines: Infinity
+      maxLines: Infinity,
+      minLines: 50
     },
     onLoad: function () {
     }
