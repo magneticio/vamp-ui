@@ -3,11 +3,12 @@ angular.module('app').component('vga', {
   controller: VgaController
 });
 
-function VgaController($state, $scope, $timeout, $vamp, toastr, alert, artifact) {
+function VgaController($state, $scope, $timeout, $element, $vamp, $q, toastr, alert, artifact) {
   var $ctrl = this;
   $ctrl.editor = artifact.editor;
 
   $ctrl.source = '';
+  $ctrl.inEdit = false;
   $ctrl.marshallers = [];
   $ctrl.template = {
     base: null,
@@ -25,17 +26,28 @@ function VgaController($state, $scope, $timeout, $vamp, toastr, alert, artifact)
 
   $ctrl.mode = function (m) {
     if (m && mode !== m) {
-      mode = m;
-      $ctrl.load();
+      tryDiscard().then(function () {
+        mode = m;
+        $ctrl.load();
+      });
     }
     return mode;
   };
 
+  $ctrl.startEdit = function () {
+    $ctrl.inEdit = true;
+    $timeout(function () {
+      $($element).find('#editor textarea').focus();
+    });
+  };
+
   $ctrl.marshaller = function (m) {
     if (m && marshaller !== m) {
-      marshaller = m;
-      $ctrl.load();
-      $ctrl.selectedIndex = _.indexOf($ctrl.marshallers, marshaller);
+      tryDiscard().then(function () {
+        marshaller = m;
+        $ctrl.load();
+        $ctrl.selectedIndex = _.indexOf($ctrl.marshallers, marshaller);
+      });
     }
     return marshaller;
   };
@@ -51,8 +63,28 @@ function VgaController($state, $scope, $timeout, $vamp, toastr, alert, artifact)
   };
 
   $ctrl.discardChanges = function () {
-    $ctrl.source = $ctrl.template.current = $ctrl.template.base;
+    tryDiscard().then(function () {
+      $ctrl.source = $ctrl.template.current = $ctrl.template.base;
+      $ctrl.inEdit = false;
+    });
   };
+
+  function tryDiscard() {
+    var def = $q.defer();
+    if ($ctrl.dirty()) {
+      alert.show('Warning', 'Template has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel',
+      function () {
+        def.resolve();
+      },
+      function () {
+        def.reject();
+      });
+    } else {
+      def.resolve();
+    }
+
+    return def.promise;
+  }
 
   $ctrl.update = function () {
     ignoreChange = true;
@@ -78,6 +110,7 @@ function VgaController($state, $scope, $timeout, $vamp, toastr, alert, artifact)
   };
 
   $ctrl.load = function () {
+    $ctrl.inEdit = false;
     $vamp.await(function () {
       $vamp.peek('vga/' + $ctrl.marshaller() + '/' + $ctrl.mode(), '', {}, 'YAML');
     }).then(function (response) {

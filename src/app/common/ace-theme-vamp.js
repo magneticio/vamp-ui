@@ -7,6 +7,9 @@ ace.define("ace/theme/vamp", ["require", "exports", "module", "ace/lib/dom"], fu
 background: transparent;\
 color: #afbec8;\
 }\
+.ace-vamp[readonly='readonly'] .ace_gutter{\
+visibility:hidden;\
+}\
 .ace-vamp .ace_print-margin {\
 width: 0;\
 background: #141e2d;\
@@ -14,6 +17,10 @@ background: #141e2d;\
 .ace-vamp {\
 background-color: #0D1E26;\
 color: #C5C8C6;\
+}\
+.ace-vamp[readonly='readonly'] {\
+background-color: #0D222C\
+color: #E1E1E1;\
 }\
 .ace-vamp .ace_cursor {\
 color: #C5C8C6;\
@@ -37,6 +44,12 @@ background: #091921;\
 .ace-vamp .ace_gutter-active-line {\
 background-color: #091921;\
 }\
+.ace-vamp[readonly='readonly'] .ace_marker-layer .ace_active-line {\
+background: transparent;\
+}\
+.ace-vamp[readonly='readonly'] .ace_gutter-active-line {\
+background-color: transparent;\
+}\
 .ace-vamp .ace_marker-layer .ace_selected-word {\
 border: 1px solid #373B41;\
 }\
@@ -50,6 +63,13 @@ color: #4B4E55;\
 .ace-vamp .ace_support.ace_type {\
 color: #B294BB;\
 }\
+.ace-vamp[readonly='readonly'] .ace_keyword,\
+.ace-vamp[readonly='readonly'] .ace_meta,\
+.ace-vamp[readonly='readonly'] .ace_storage,\
+.ace-vamp[readonly='readonly'] .ace_storage.ace_type,\
+.ace-vamp[readonly='readonly'] .ace_support.ace_type {\
+color: #A8A8A8;\
+}\
 .ace-vamp .ace_keyword.ace_operator {\
 color: #8ABEB7;\
 }\
@@ -60,6 +80,14 @@ color: #8ABEB7;\
 .ace-vamp .ace_support.ace_constant,\
 .ace-vamp .ace_variable.ace_parameter {\
 color: #DE935F;\
+}\
+.ace-vamp[readonly='readonly'] .ace_constant.ace_character,\
+.ace-vamp[readonly='readonly'] .ace_constant.ace_language,\
+.ace-vamp[readonly='readonly'] .ace_constant.ace_numeric,\
+.ace-vamp[readonly='readonly'] .ace_keyword.ace_other.ace_unit,\
+.ace-vamp[readonly='readonly'] .ace_support.ace_constant,\
+.ace-vamp[readonly='readonly'] .ace_variable.ace_parameter {\
+color: #989898;\
 }\
 .ace-vamp .ace_constant.ace_other {\
 color: #CED1CF;\
@@ -90,12 +118,24 @@ color: #F0C674;\
 .ace-vamp .ace_string {\
 color: #B5BD68;\
 }\
+.ace-vamp[readonly='readonly'] .ace_heading,\
+.ace-vamp[readonly='readonly'] .ace_markup.ace_heading,\
+.ace-vamp[readonly='readonly'] .ace_string {\
+color: #B8B8B8;\
+}\
 .ace-vamp .ace_entity.ace_name.ace_tag,\
 .ace-vamp .ace_entity.ace_other.ace_attribute-name,\
 .ace-vamp .ace_meta.ace_tag,\
 .ace-vamp .ace_string.ace_regexp,\
 .ace-vamp .ace_variable {\
 color: #CC6666;\
+}\
+.ace-vamp[readonly='readonly'] .ace_entity.ace_name.ace_tag,\
+.ace-vamp[readonly='readonly'] .ace_entity.ace_other.ace_attribute-name,\
+.ace-vamp[readonly='readonly'] .ace_meta.ace_tag,\
+.ace-vamp[readonly='readonly'] .ace_string.ace_regexp,\
+.ace-vamp[readonly='readonly'] .ace_variable {\
+color: #7A7A7A;\
 }\
 .ace-vamp .ace_comment {\
 color: #969896;\

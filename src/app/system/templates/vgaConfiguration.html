@@ -6,7 +6,9 @@
     <ul class="nav nav-tabs">
       <li ng-repeat="marshaller in $ctrl.marshallers"
         ng-class="{'active' : $index == $ctrl.selectedIndex}">
-        <a data-toggle="tab" ng-click="$ctrl.marshaller(marshaller)">{{marshaller}}</a>
+        <a data-toggle="tab" ng-click="$ctrl.marshaller(marshaller)">
+          {{marshaller.split('/')[0] + ': ' + marshaller.split('/')[1]}}
+        </a>
       </li>
     </ul>
     <div class="tab-content">
@@ -32,15 +34,18 @@
             <div class="col-md-6">
               <div class="pull-right">
                 <button class="btn bootstrap-btn btn-small btn-ghost btn-primary"
+                  ng-if="$ctrl.mode() == 'template' && !$ctrl.inEdit"
+                  ng-click="$ctrl.startEdit()">
+                    <span class="btn-text">edit</span>
+                </button>
+                <button class="btn bootstrap-btn btn-small btn-ghost btn-primary"
                   ng-click="$ctrl.discardChanges()"
-                  ng-show="$ctrl.mode() == 'template'"
-                  ng-disabled="!$ctrl.dirty()">
-                    <span class="btn-text">discard</span>
+                  ng-if="$ctrl.mode() == 'template' && $ctrl.inEdit">
+                    <span class="btn-text">cancel</span>
                 </button>
                 <button class="btn bootstrap-btn btn-small btn-ghost btn-success"
                   ng-click="$ctrl.update()"
-                  ng-show="$ctrl.mode() == 'template'"
-                  ng-disabled="!$ctrl.dirty()">
+                  ng-if="$ctrl.mode() == 'template' && $ctrl.inEdit && $ctrl.dirty()">
                     <span class="btn-text">save</span>
                 </button>
               </div>
@@ -49,7 +54,7 @@
           <div class="row tab-editor">
             <div class="col-md-12">
               <div id="editor" ui-ace="$ctrl.editor"
-                   ng-readonly="$ctrl.mode() != 'template'"
+                   ng-readonly="$ctrl.mode() != 'template' || ($ctrl.mode() == 'template' && !$ctrl.inEdit)"
                    ng-model="$ctrl.source"
                    ng-change="$ctrl.edited()"></div>
             </div>

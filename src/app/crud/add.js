@@ -4,36 +4,59 @@ angular.module('app').component('add', {
   templateUrl: 'app/crud/edit.html'
 });
 
-function ArtifactAddController($scope, $attrs, $location, $state, $vamp, artifact, toastr, alert, snippet) {
+function ArtifactAddController($scope, $attrs, $location, $state, $timeout, $element, $vamp, artifact, toastr, alert) {
   var $ctrl = this;
 
-  this.kind = $attrs.kind;
+  $ctrl.kind = $attrs.kind;
   // naive singularization
-  this.singular = this.kind.substring(0, this.kind.length - 1);
-  this.title = 'new ' + this.singular;
+  $ctrl.singular = $ctrl.kind.substring(0, this.kind.length - 1);
+  $ctrl.title = 'New ' + $ctrl.singular;
 
-  var path = '/' + this.kind;
+  var path = '/' + $ctrl.kind;
 
-  this.errorClass = '';
-  this.errorMessage = '';
-  this.editor = artifact.editor;
+  $ctrl.errorClass = '';
+  $ctrl.errorMessage = '';
+  $ctrl.restOfMessage = '';
+  $ctrl.expandError = false;
+  $ctrl.editor = artifact.editor;
 
-  this.source = null;
+  $ctrl.source = null;
 
-  this.valid = true;
+  $ctrl.valid = true;
+  $ctrl.inEdit = true;
   var validation = true;
   var ignoreChange = false;
+
+  function init() {
+    $timeout(function () {
+      $($element).find('#editor textarea').focus();
+    });
+  }
+
+  function transformErrorMessage(message) {
+    $ctrl.errorMessage = message;
+
+    var newLineIndex = message.indexOf('\n');
+    if (newLineIndex !== -1) {
+      $ctrl.errorMessage = message.substring(0, newLineIndex);
+      $ctrl.restOfMessage = message.substring(newLineIndex + 1);
+      $ctrl.expandError = false;
+    }
+  }
 
   $scope.$on(path, function (e, response) {
     if (response.content === 'JSON') {
       if (response.status === 'ERROR') {
         $ctrl.valid = false;
         $ctrl.errorClass = 'error';
-        $ctrl.errorMessage = response.data.message;
+        transformErrorMessage(response.data.message);
+        $ctrl.expandError = false;
       } else {
         $ctrl.valid = true;
         $ctrl.errorClass = '';
         $ctrl.errorMessage = '';
+        $ctrl.restOfMessage = '';
+        $ctrl.expandError = false;
       }
     }
   });
@@ -53,11 +76,7 @@ function ArtifactAddController($scope, $attrs, $location, $state, $vamp, artifac
   };
 
   this.isModified = function () {
-    return $ctrl.source;
-  };
-
-  this.fullErrorMessage = function () {
-    snippet.show('Error message', artifact.transformErrorMessage($ctrl.errorMessage), 'lg');
+    return $ctrl.source !== null && $ctrl.source !== '';
   };
 
   this.cancel = function () {
@@ -93,4 +112,6 @@ function ArtifactAddController($scope, $attrs, $location, $state, $vamp, artifac
     ignoreChange = true;
     $location.path($ctrl.kind);
   }
+
+  init();
 }

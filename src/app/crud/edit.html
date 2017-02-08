@@ -1,24 +1,62 @@
-<header title="Editing {{ $ctrl.title }}" clazz="{{ $ctrl.errorClass }}">
-    <controls>
-      <span ng-if="$ctrl.errorMessage.length < 40">{{ $ctrl.errorMessage }}</span>
-      <div class="message-truncated" ng-if="$ctrl.errorMessage.length >= 40" ng-click="$ctrl.fullErrorMessage()">
-          <span>{{ $ctrl.errorMessage | limitTo:40 }}...<i class="fa fa-arrows-alt message-expand-icon"></i></span>
-      </div>
-    </controls>
-    <buttons>
-        <button class="btn btn-ghost btn-success" type="submit"
-                ng-if="!(!$ctrl.isModified() || !$ctrl.valid)" ng-click="$ctrl.save()">
-            Save
-        </button>
-        <button class="btn btn-ghost btn-primary" type="submit" ng-click="$ctrl.cancel()">
-            Cancel
-        </button>
-    </buttons>
+<header title="{{$ctrl.inEdit ? 'Editing' : 'Viewing'}}: {{ $ctrl.title }}">
+  <controls>
+    <!--<span ng-if="$ctrl.errorMessage.length < 40">{{ $ctrl.errorMessage }}</span>
+    <div class="message-truncated" ng-if="$ctrl.errorMessage.length >= 40" ng-click="$ctrl.fullErrorMessage()">
+        <span>{{ $ctrl.errorMessage | limitTo:40 }}...<i class="fa fa-arrows-alt message-expand-icon"></i></span>
+    </div>-->
+  </controls>
+  <buttons>
+
+  </buttons>
 </header>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-      <div id="editor"  ui-ace="$ctrl.editor" ng-model="$ctrl.source" ng-change="$ctrl.validate()"></div>
+      <div class="panel panel-default editor-panel">
+        <div class="panel-heading">
+          <div class="panel-title" ng-if="$ctrl.isModified() && !$ctrl.valid" >
+            <img class="error-icon" src="styles/resources/app/common/images/error_triangle.svg">
+            <div class="error-message-container">
+              <div class="error-message first-line"><!--
+              --><span>{{$ctrl.errorMessage}}</span><!--
+              --><span ng-class="{'invisible' : $ctrl.expandError}">...</span><!--
+              --><i ng-if="$ctrl.restOfMessage && !$ctrl.expandError" class="icon-size-fullscreen" title="Show full error message" ng-click="$ctrl.expandError = true"></i><!--
+              --><i ng-if="$ctrl.restOfMessage && $ctrl.expandError" class="icon-size-actual" title="Hide full error message" ng-click="$ctrl.expandError = false"></i><!--
+           --></div>
+              <div class="error-message" ng-if="$ctrl.restOfMessage" ng-show="$ctrl.expandError"><!--
+              -->{{$ctrl.restOfMessage}}<!--
+          --></div>
+            </div>
+          </div>
+          <div class="pull-right">
+            <button
+              ng-if="!$ctrl.inEdit"
+              class="btn btn-ghost btn-small btn-primary" type="submit"
+              ng-click="$ctrl.startEdit()">
+                Edit
+            </button>
+            <button
+              class="btn btn-ghost btn-small btn-success" type="submit"
+              ng-if="$ctrl.inEdit && !(!$ctrl.isModified() || !$ctrl.valid)" ng-click="$ctrl.save()">
+                Save
+            </button>
+            <button
+              ng-if="$ctrl.inEdit"
+              class="btn btn-ghost btn-small btn-primary" type="submit"
+              ng-click="$ctrl.cancel()">
+                Cancel
+            </button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div id="editor"
+            ng-class="{'editor-error' : ($ctrl.isModified() && !$ctrl.valid)}"
+            ui-ace="$ctrl.editor"
+            ng-model="$ctrl.source" ng-change="$ctrl.validate($event)"
+            ng-readonly="!$ctrl.inEdit"
+            ></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

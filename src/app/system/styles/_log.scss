@@ -1,5 +1,5 @@
 .container-fluid.stretch-height {
-  height: calc(100% - 80px);
+  height: calc(100% - 8rem);
   padding-bottom: 15px;
 
   .row {
@@ -15,10 +15,11 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  margin-bottom: 0;
 
   .panel-body {
     flex: 1;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 }

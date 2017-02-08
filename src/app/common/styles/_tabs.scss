@@ -9,10 +9,13 @@ ul.nav-tabs {
       border: 1px solid $night-sky;
       color: $blue;
       background-color: $night-sky;
-      text-transform: capitalize;
       padding: 20px;
       font-weight: $font-weight-light;
       font-size: $font-size-normal;
+
+      & > i {
+        margin-right: 0.5rem;
+      }
 
       &:hover {
         border: 1px solid $night-sky;
@@ -42,7 +45,6 @@ ul.nav-tabs {
         border: 1px solid $night-sky;
         color: $off-white;
         background-color: $night-sky;
-        text-transform: capitalize;
         margin-right: 15px;
 
         &:hover,

@@ -4,7 +4,7 @@ angular.module('app').component('edit', {
   templateUrl: 'app/crud/edit.html'
 });
 
-function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $location, $vamp, artifact, snippet, toastr, alert) {
+function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $timeout, $element, $location, $vamp, artifact, snippet, toastr, alert) {
   var $ctrl = this;
 
   this.kind = $attrs.kind;
@@ -13,7 +13,9 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
 
   this.errorClass = '';
   this.errorMessage = '';
+  $ctrl.restOfMessage = '';
   this.editor = artifact.editor;
+  $ctrl.expandError = false;
 
   var path = '/' + this.kind + '/' + this.name;
 
@@ -21,8 +23,32 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   this.source = null;
 
   this.valid = true;
+  $ctrl.inEdit = false;
   var validation = true;
   var ignoreChange = false;
+
+  function transformErrorMessage(message) {
+    $ctrl.errorMessage = message;
+
+    var newLineIndex = message.indexOf('\n');
+    if (newLineIndex !== -1) {
+      $ctrl.errorMessage = message.substring(0, newLineIndex);
+      $ctrl.restOfMessage = message.substring(newLineIndex + 1);
+      $ctrl.expandError = false;
+    }
+  }
+
+  $ctrl.startEdit = function () {
+    $ctrl.inEdit = true;
+    $timeout(function () {
+      $($element).find('#editor textarea').focus();
+    });
+  };
+
+  $ctrl.stopEdit = function () {
+    $ctrl.source = $ctrl.base;
+    $ctrl.inEdit = false;
+  };
 
   this.peek = function () {
     $vamp.peek(path, '', {}, 'YAML');
@@ -39,11 +65,14 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
       if (response.status === 'ERROR') {
         $ctrl.valid = false;
         $ctrl.errorClass = 'error';
-        $ctrl.errorMessage = response.data.message;
+        transformErrorMessage(response.data.message);
+        $ctrl.expandError = false;
       } else {
         $ctrl.valid = true;
         $ctrl.errorClass = '';
         $ctrl.errorMessage = '';
+        $ctrl.restOfMessage = '';
+        $ctrl.expandError = false;
       }
     }
   });
@@ -91,9 +120,9 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
 
   this.cancel = function () {
     if ($ctrl.isModified()) {
-      alert.show('Warning', '\'' + $ctrl.name + '\' has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel', goBack);
+      alert.show('Warning', '\'' + $ctrl.name + '\' has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel', $ctrl.stopEdit);
     } else {
-      goBack();
+      $ctrl.stopEdit();
     }
   };
 

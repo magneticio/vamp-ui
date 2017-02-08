@@ -3,13 +3,14 @@ angular.module('app').component('configuration', {
   controller: ConfigurationController
 });
 
-function ConfigurationController($scope, $timeout, $element, artifact, $vamp, alert, toastr) {
+function ConfigurationController($scope, $timeout, $element, $state, artifact, $vamp, alert, toastr) {
   var $ctrl = this;
   $ctrl.editor = artifact.editor;
 
   $ctrl.type = '';
   $ctrl.source = '';
   $ctrl.flatten = false;
+  $ctrl.inEdit = false;
 
   $ctrl.dynamic = {
     base: null,
@@ -17,8 +18,7 @@ function ConfigurationController($scope, $timeout, $element, artifact, $vamp, al
   };
 
   $ctrl.startEdit = function () {
-    $ctrl.setType('dynamic');
-
+    $ctrl.inEdit = true;
     $timeout(function () {
       $($element).find('#editor textarea').focus();
     });
@@ -35,8 +35,8 @@ function ConfigurationController($scope, $timeout, $element, artifact, $vamp, al
   };
 
   $ctrl.setType = function (type) {
-    if (type !== 'dynamic' && $ctrl.dirty()) {
-      alert.show('Warning', 'If you exit, unsaved changes to your configuration will be lost.', 'Proceed', 'Cancel', function () {
+    if ($ctrl.dirty()) {
+      alert.show('Warning', 'Unsaved changes to your configuration will be lost.', 'Proceed', 'Cancel', function () {
         $ctrl.dynamic.current = $ctrl.dynamic.base;
         $ctrl.reload(type);
       });
@@ -47,6 +47,7 @@ function ConfigurationController($scope, $timeout, $element, artifact, $vamp, al
 
   $ctrl.reload = function (type) {
     $ctrl.source = '';
+    $ctrl.inEdit = false;
 
     $vamp.await(function () {
       $vamp.peek('configuration', '', {type: type, flatten: $ctrl.flatten}, 'YAML');
@@ -92,6 +93,16 @@ function ConfigurationController($scope, $timeout, $element, artifact, $vamp, al
     $ctrl.flatten = !$ctrl.flatten;
     $ctrl.setType($ctrl.type);
   };
+
+  $scope.$on('$stateChangeStart', function (event, toState, toParams) {
+    if ($ctrl.dirty()) {
+      event.preventDefault();
+      alert.show('Warning', 'Unsaved changes to your configuration will be lost.', 'Proceed', 'Cancel', function () {
+        $ctrl.dynamic.current = $ctrl.dynamic.base;
+        $state.go(toState, toParams);
+      });
+    }
+  });
 
   $ctrl.setType('applied');
 }

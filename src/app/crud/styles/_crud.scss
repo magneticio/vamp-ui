@@ -303,3 +303,52 @@ table.vamp-lv {
     }
   }
 }
+
+.panel.editor-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .panel-heading {
+    color: $off-white;
+    font-weight: $font-weight-light;
+    line-height: 3rem;
+
+    .panel-title {
+      display: inline-flex;
+
+      .error-icon {
+        height: 1.4rem;
+        margin: .6rem;
+        margin-right: 1.6rem;
+      }
+
+      .error-message-container {
+        display: inline-block;
+
+        .error-message {
+          white-space: pre;
+
+          &.first-line {
+            display: inline-flex;
+            align-items: center;
+
+            i {
+              cursor: pointer;
+              margin-left: .5rem;
+            }
+          }
+        }
+
+
+      }
+    }
+  }
+
+  .panel-body {
+    padding:0;
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
