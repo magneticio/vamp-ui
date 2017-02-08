@@ -14,23 +14,13 @@
           <span>{{artifact.kind}}</span>
         </a>
     </li>
-    <li data-toggle="collapse" data-target="#settings" class="collapsed"
-      ng-class="{'collapsed' :
-        !($ctrl.isActive('configuration') ||
-        $ctrl.isActive('vga') ||
-        $ctrl.isActive('info') ||
-        $ctrl.isActive('log'))}" >
+    <li data-toggle="collapse" data-target="#settings" class="collapsed">
       <a class="btn-link">
         <i></i>
         <span>Admin</span>
       </a>
     </li>
-    <ul id="settings" class="sub-menu collapse"
-      ng-class="{'in' :
-        $ctrl.isActive('configuration') ||
-        $ctrl.isActive('vga') ||
-        $ctrl.isActive('info') ||
-        $ctrl.isActive('log')}" >
+    <ul id="settings" class="sub-menu collapse">
       <li ng-class="{active : $ctrl.isActive('configuration')}">
         <a ui-sref="configuration" href="#">
           <i></i>
