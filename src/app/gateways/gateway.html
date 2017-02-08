@@ -1,8 +1,8 @@
 <div ng-controller="GatewayController as $ctrl" ng-show="$ctrl.gateway">
     <header title="{{$ctrl.title}}">
         <buttons>
-            <button class="btn btn-ghost btn-primary" type="submit" ng-click="$ctrl.edit()">
-                Edit gateway
+            <button class="btn btn-ghost btn-primary" title="VIEW" type="submit" ng-click="$ctrl.edit()">
+                View source
             </button>
             <button class="btn btn-ghost btn-danger" type="submit" title="DELETE"
                     ng-disabled="!$ctrl.gateway || $ctrl.gateway.internal"
