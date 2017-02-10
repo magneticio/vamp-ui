@@ -1119,12 +1119,12 @@ a.editable-click:hover {
   flex-direction: column;
   justify-content: center;
   position: absolute;
-  bottom: 16px;
-  left: 16px;
-  right: 16px;
+  bottom: 1.6rem;
+  left: 1.6rem;
+  right: 1.6rem;
 
   & > button.btn {
-    margin-top: 5px;
+    margin-top: .5rem;
     text-align: center;
     margin-left: 0px !important;
     background-color: $night-sky !important;
@@ -1136,9 +1136,9 @@ a.editable-click:hover {
   flex-direction: column;
   justify-content: center;
   position: absolute;
-  bottom: 16px;
-  left: 16px;
-  right: 16px;
+  bottom: 1.6rem;
+  left: 1.6rem;
+  right: 1.6rem;
 
   & > button.btn {
     margin: 0;
@@ -1159,7 +1159,7 @@ a.editable-click:hover {
 .gateway-header {
   padding: 10px;
   background-color: rgba($gray-dark, 0.2);
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 
   & > .gateway-row {
     text-align: center;
@@ -1167,22 +1167,22 @@ a.editable-click:hover {
 }
 
 .gateway-sticky {
-  margin-left: 20px;
+  margin-left: 2rem;
 }
 
 .gateway-row {
   text-align: left;
   padding: 0;
-  margin: 20px 0;
+  margin: 2rem 0;
 }
 
 .gateway-charts {
-  padding: 12px 0 15px 0;
+  padding: 1.2rem 0 1.5rem 0;
 
   & > .gateway-row {
     text-align: center;
     p {
-      margin-bottom: 20px;
+      margin-bottom: 2rem;
     }
   }
 }
@@ -1190,9 +1190,9 @@ a.editable-click:hover {
 .gateway-route-row {
   background-color: rgba($gray-dark, 0.2);
   border-radius: 5px;
-  padding: 10px 0 0 0;
-  min-height: 130px;
-  margin: 2px 15px 0 15px;
+  padding: 1rem 0 0 0;
+  min-height: 13rem;
+  margin: .2rem 1.5rem 0 1.5rem;
 
   & > .gateway-row {
     margin: 0;
@@ -1201,7 +1201,7 @@ a.editable-click:hover {
       margin: 0;
 
       p {
-        margin: 10px 0 0 0;
+        margin: 1rem 0 0 0;
       }
     }
   }
@@ -1209,7 +1209,7 @@ a.editable-click:hover {
 
 .gateway-route-header {
   @extend .gateway-row;
-  margin: 0 15px;
+  margin: 0 1.5rem;
   text-align: left;
 }
 
@@ -1221,12 +1221,12 @@ a.editable-click:hover {
 }
 
 .gateway-route-sparklines {
-  padding-top: 20px;
+  padding-top: 2rem;
 }
 
 .gateway-route-name {
   @extend .deployment-cluster-name;
-  padding-top: 46px;
+  padding-top: 4.6rem;
 
   span {
     font-size: $font-size-large !important;
@@ -1234,11 +1234,11 @@ a.editable-click:hover {
 }
 
 .gateway-route-weight {
-  padding-top: 46px;
+  padding-top: 4.6rem;
 }
 
 .gateway-route-condition {
-  padding: 26px 0 0 0;
+  padding: 2.6rem 0 0 0;
   margin: 0;
 }
 
@@ -1249,7 +1249,7 @@ a.editable-click:hover {
 
 .deployment {
   @extend .gateway;
-  padding-top: 10px;
+  padding-top: 1rem;
 }
 
 .deployment-charts {
@@ -1258,21 +1258,21 @@ a.editable-click:hover {
 
 .deployment-chart-column {
   text-align: center;
-  padding: 20px 0;
+  padding: 2rem 0;
   & > p {
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
   }
 }
 
 .deployment-cluster {
-  margin-top: 20px;
+  margin-top: 2rem;
   overflow: hidden;
 }
 
 .deployment-cluster-row-header {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  margin-left: -3px;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  margin-left: -.3rem;
   text-align: left;
 
   color: $gray;
@@ -1284,7 +1284,7 @@ a.editable-click:hover {
     font-size: $font-size-large !important;
     font-weight: $font-weight-light;
     color: $gray-lighter;
-    margin: 10px;
+    margin: 1rem;
 
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1298,9 +1298,9 @@ a.editable-click:hover {
   @extend .gateway-route-row;
   border-radius: 5px;
 
-  margin-top: 2px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-top: .2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 
 .deployment-row-no-padding {
@@ -1317,7 +1317,7 @@ a.editable-click:hover {
     background-color: rgba($color-blue-light, .2);
     color: inherit;
     border-radius: .3em;
-    margin-right: 5px;
+    margin-right: .5rem;
 
     &.label-success {
       color: $color-white;
@@ -1344,7 +1344,7 @@ a.editable-click:hover {
   text-align: center;
 
   p {
-    margin-top: 10px;
+    margin-top: 1rem;
   }
 }
 
@@ -1356,7 +1356,7 @@ a.editable-click:hover {
 }
 
 .deployment-cluster-service-name {
-  padding-top: 46px;
+  padding-top: 4.6rem;
 
   height: 100%;
 
@@ -1378,7 +1378,7 @@ a.editable-click:hover {
 }
 
 .deployment-column-ports {
-  padding: 0 0 0 20px;
+  padding: 0 0 0 2rem;
 }
 
 .deployment-float-1 {
@@ -1407,7 +1407,7 @@ a.editable-click:hover {
 .deployment-cluster-list {
   ul {
     list-style-type: none;
-    padding: 0 0 0 10px;
+    padding: 0 0 0 1rem;
     text-align: left;
     font-weight: $font-weight-light;
     font-size: $font-size-normal;
@@ -1449,7 +1449,7 @@ a.editable-click:hover {
 
 .edit-scale {
   .note {
-    margin: 10px 40px 25px 0;
+    margin: 1rem 4rem 2.5rem 0;
     span {
       letter-spacing: 1px;
       font-size: $font-size-normal;
@@ -1519,11 +1519,11 @@ snippet {
 .vamp-table {
   &__group {
     &:not(:first-of-type) {
-      margin-top: 20px;
+      margin-top: 2rem;
     }
 
     &__name {
-      margin-bottom: -22px;
+      margin-bottom: -2.2rem;
     }
   }
 
@@ -1538,8 +1538,8 @@ snippet {
 
     background-color: rgba($gray-dark, 0.2);
     border-radius: 5px;
-    min-height: 130px;
-    margin-top: 2px;
+    min-height: 13rem;
+    margin-top: .2rem;
 
     align-items: center;
 
@@ -1551,7 +1551,7 @@ snippet {
       font-size: $font-size-normal;
 
       &--emphasis {
-        padding: 5px 10px;
+        padding: .5rem 1rem;
         border-radius: 5px;
         font-size: $font-size-large;
         background-color: rgba($color-blue-light, .2);
@@ -1559,15 +1559,15 @@ snippet {
 
       a {
         color: #1D96B2;
-        padding-left: 6px;
+        padding-left: .6rem;
         font-size: $font-size-normal;
 
         &:before {
           content: "\f105";
           font-family: FontAwesome;
-          left: -5px;
+          left: -.5rem;
           position: absolute;
-          top: 1px;
+          top: 0.1rem;
           //font-size: $font-size-normal;
         }
       }
@@ -1577,17 +1577,17 @@ snippet {
   &__col {
     position: relative;
     &:first-of-type {
-      padding-left: 20px;
+      padding-left: 2rem;
     }
 
     &--chart {
       position: relative;
-      margin-top: 5px;
+      margin-top: .5rem;
       .v-value {
         display: block;
         position: absolute;
-        margin-left: 5px;
-        margin-top: 2px;
+        margin-left: .5rem;
+        margin-top: .2rem;
         font-weight: 500 !important;
         text-shadow: 1px 1px rgba(black, 0.3);
       }
@@ -1602,8 +1602,8 @@ snippet {
         left: 100%;
         top: 0;
         bottom: 0;
-        margin-left: 20px;
-        padding-left: 10px;
+        margin-left: 2rem;
+        padding-left: 1rem;
         display: flex;
         align-items: center;
         border-left: 1px solid $gray;
@@ -1623,7 +1623,7 @@ snippet {
       background-color: red;
       top: 0;
       bottom: 0;
-      left: 110px;
+      left: 11rem;
     }
 
   }

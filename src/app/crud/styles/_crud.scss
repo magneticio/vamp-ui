@@ -1,5 +1,5 @@
 .artifacts-panel {
-  padding-bottom: 15px;
+  padding-bottom: 1.5rem;
   margin-left: 5px;
   margin-right: 5px;
 }
@@ -12,7 +12,7 @@ main {
   display: inline-block;
   max-width: 24rem;
   vertical-align: middle;
-  margin-left: 20px;
+  margin-left: 2rem;
 }
 
 .vamp-btn-group {
@@ -32,8 +32,8 @@ main {
 
     background-color: transparent;
 
-    height:40px;
-    width: 40px;
+    height:4rem;
+    width: 4rem;
 
     &.vamp-btn-selected {
       background-color: $gray-base;
@@ -65,8 +65,8 @@ main {
       font-weight: $font-weight-regular;
       letter-spacing: 2px;
       text-transform: uppercase;
-      height: 40px;
-      width: 40px;
+      height: 4rem;
+      width: 4rem;
 
       &:hover {
         background-color: $dark-blue;
@@ -108,7 +108,7 @@ main {
 
 table.vamp-lv {
   border-collapse: separate;
-  border-spacing: 0px 10px;
+  border-spacing: 0 1rem;
 
   & > thead {
     font-weight: $font-weight-light;
@@ -151,8 +151,8 @@ table.vamp-lv {
 
     tr.demi-row td div{
         width: 100%;
-        height: 28px;
-        margin: 0 0 -28px 0;
+        height: 2.8rem;
+        margin: 0 0 -2.8rem 0;
         background: transparent repeat-y top left;
         color: #FFF;
         background-size: 100%;
@@ -176,45 +176,13 @@ table.vamp-lv {
           white-space: nowrap;
           height: 6rem;
           cursor: pointer;
-          padding: 5px;
+          padding: .5rem;
 
           &[field-name='Name'] {
             font-size: $font-size-large;
           }
 
           &.vamp-lv-row-actions   {
-            /*button {
-              background-color: $blue;
-              padding:5px 20px;
-              height: $button-size-small;
-              color: $white;
-              font-size: $font-size-small;
-
-              &:hover {
-                background-color: darken($blue, 8%);
-                color: darken($white, 8%);
-              }
-
-              &:active {
-                background-color: darken($blue, 16%);
-                color: darken($white, 16%);
-              }
-
-              &.vamp-red {
-                background-color: $vamp-red;
-                color: $white;
-
-                &:hover{
-                  background-color: darken($vamp-red, 8%);
-                  color: darken($white, 8%);
-                }
-
-                &:active {
-                  background-color: darken($vamp-red, 16%);
-                  color: darken($white, 16%);
-                }
-              }
-            }*/
 
             button.vamp-lv-row-action {
               float: left;

@@ -9,7 +9,7 @@ ul.nav-tabs {
       border: 1px solid $night-sky;
       color: $blue;
       background-color: $night-sky;
-      padding: 20px;
+      padding: 2rem;
       font-weight: $font-weight-light;
       font-size: $font-size-normal;
 
@@ -36,7 +36,7 @@ ul.nav-tabs {
 
       &:not(:first-child) {
         & > a {
-          margin-left: 15px;
+          margin-left: 1.5rem;
         }
       }
 
@@ -45,7 +45,7 @@ ul.nav-tabs {
         border: 1px solid $night-sky;
         color: $off-white;
         background-color: $night-sky;
-        margin-right: 15px;
+        margin-right: 1.5rem;
 
         &:hover,
         &:focus {
@@ -64,10 +64,10 @@ ul.nav-tabs {
   box-shadow: 0px -3px 5px $shadow;
 
   .tab-pane {
-    padding-bottom:15px;
+    padding-bottom:1.5rem;
 
     .tab-pane-header {
-      padding: 10px 0px;
+      padding: 1rem 0;
 
       &.tab-highlight {
         background-color: $informative;
