@@ -97,7 +97,8 @@ $font-weight-bold: 500;
     border: 1px solid $color;
 
     &:not([disabled=disabled]) {
-      &:hover {
+      &:hover,
+      &:focus {
         color: darken($color, 8%);
         border-color: darken($color, 8%);
       }
@@ -115,7 +116,8 @@ $font-weight-bold: 500;
    border:none;
 
     &:not([disabled=disabled]) {
-      &:hover {
+      &:hover ,
+      &:focus {
         background-color: darken($color, 8%);
         color: darken($white, 8%);
       }

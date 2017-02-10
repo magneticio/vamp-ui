@@ -7,9 +7,6 @@ ace.define("ace/theme/vamp", ["require", "exports", "module", "ace/lib/dom"], fu
 background: transparent;\
 color: #afbec8;\
 }\
-.ace-vamp[readonly='readonly'] .ace_gutter{\
-visibility:hidden;\
-}\
 .ace-vamp .ace_print-margin {\
 width: 0;\
 background: #141e2d;\

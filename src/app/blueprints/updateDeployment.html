@@ -6,16 +6,16 @@
         <p>{{ text }}</p>
     </div>
     <div>
-        <div class="btn-group dropdown-menu-list" uib-dropdown is-open="status.isopen">
-            <button id="single-button" type="button" class="btn btn-primary deployment-selection" uib-dropdown-toggle ng-disabled="disabled">
-                {{ chosenDeployment ? chosenDeployment.name : 'Select deployment' }} <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                <li role="menuitem" ng-repeat="deployment in deployments" ng-click="deploymentChosen(deployment)">
-                    <a href="">{{ deployment.name }}</a>
-                </li>
-            </ul>
-        </div>
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          {{ chosenDeployment ? chosenDeployment.name : 'Select deployment' }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+            <li role="menuitem" ng-repeat="deployment in deployments" ng-click="deploymentChosen(deployment)">
+                <a href="">{{ deployment.name }}</a>
+            </li>
+        </ul>
+      </div>
     </div>
 </div>
 <div class="modal-footer">

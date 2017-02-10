@@ -1,4 +1,5 @@
-.btn {
+.btn,
+.open .btn {
   font-weight: $font-weight-bold;
   color: $white;
   height: $button-size-normal;
@@ -9,7 +10,6 @@
   :not(.btn-group) > & + & {
     margin-left: 1rem;
   }
-
   &.btn-small {
     height: $button-size-small;
     font-size: $font-size-small;
