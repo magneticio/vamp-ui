@@ -13,7 +13,7 @@
       <li ng-class="{'active' : $ctrl.type === 'dynamic'}">
         <a class="capitalize" ng-click="$ctrl.setType('dynamic')">
           <i class="icon-pencil"></i>
-          zookeeper
+          {{ $ctrl.info.key_value_store || 'key-value store'}}
         </a>
       </li>
       <li ng-class="{'active' : $ctrl.type === 'system'}">

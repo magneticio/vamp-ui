@@ -10,8 +10,11 @@ angular.module('app')
   }]);
 
 function Vamp($log, $rootScope, $websocket, $timeout) {
+  var $this = this;
   var stream;
   var transaction = 1;
+
+  $this.info = {};
 
   var notify = function (name, value) {
     $log.debug('websocket notify: ' + name + ' :: ' + JSON.stringify(value));
@@ -132,4 +135,42 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
     $log.debug('websocket send: ' + JSON.stringify(message));
     stream.send(message);
   }
+
+  $rootScope.$on('/info', function (event, data) {
+    /* eslint camelcase: ["error", {properties: "never"}] */
+    if (data.content !== 'JSON') {
+      return;
+    }
+    data = data.data;
+    if (!data.persistence || !data.pulse || !data.key_value || !data.gateway_driver || !data.container_driver || !data.workflow_driver) {
+      return;
+    }
+
+    $this.info.message = data.message;
+    $this.info.running_since = data.running_since;
+    $this.info.version = data.version;
+    $this.info.ui_version = Environment.prototype.version();
+    $this.info.persistence = data.persistence.database.type === 'key-value' ? data.key_value.type : data.persistence.database.type;
+    $this.info.pulse = data.pulse.type;
+    $this.info.key_value_store = data.key_value.type;
+    $this.info.container_driver = data.container_driver.type;
+
+    $this.info.gateway_driver = '';
+    var types = new Set();
+    for (var gateway in data.gateway_driver.marshallers) {
+      if (gateway && data.gateway_driver.marshallers.hasOwnProperty(gateway)) {
+        types.add(data.gateway_driver.marshallers[gateway].type);
+      }
+    }
+    types.forEach(function (value) {
+      $this.info.gateway_driver += $this.info.gateway_driver === '' ? value : ', ' + value;
+    });
+
+    $this.info.workflow_driver = '';
+    for (var workflow in data.workflow_driver) {
+      if (workflow && data.workflow_driver.hasOwnProperty(workflow)) {
+        $this.info.workflow_driver += $this.info.workflow_driver === '' ? workflow : ', ' + workflow;
+      }
+    }
+  });
 }
