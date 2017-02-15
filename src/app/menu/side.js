@@ -4,7 +4,7 @@ angular.module('app').component('side', {
   controller: SideController
 });
 
-function SideController($scope, $rootScope, $vamp, uiStatesFactory) {
+function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory) {
   var $ctrl = this;
   $scope.info = $vamp.info;
   $scope.help = {
@@ -13,11 +13,17 @@ function SideController($scope, $rootScope, $vamp, uiStatesFactory) {
     links: []
   };
 
+  $ctrl.pin = false;
   $ctrl.uiStates = uiStatesFactory.viewStates;
+
+  $ctrl.trust = function (src) {
+    return $sce.trustAsResourceUrl(src);
+  };
 
   $ctrl.closePanel = function () {
     uiStatesFactory.setInfoPanelViewState(false);
     uiStatesFactory.setHelpPanelViewState(false);
+    uiStatesFactory.setProxyPanelViewState('');
   };
 
   $rootScope.$on('$stateChangeStart',

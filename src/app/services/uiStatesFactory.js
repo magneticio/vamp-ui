@@ -4,6 +4,7 @@ function uiStatesFactory() {
     sideBar: 'expanded',
     infoPanel: false,
     helpPanel: false,
+    proxyPanel: '',
     footer: 'collapsed',
     overlay: false
   };
@@ -24,6 +25,10 @@ function uiStatesFactory() {
     viewStates.helpPanel = type;
   }
 
+  function setProxyPanelViewState(type) {
+    viewStates.proxyPanel = type;
+  }
+
   function setFooterViewState(type) {
     viewStates.footer = type;
   }
@@ -38,6 +43,7 @@ function uiStatesFactory() {
     setSideBarViewState: setSideBarViewState,
     setInfoPanelViewState: setInfoPanelViewState,
     setHelpPanelViewState: setHelpPanelViewState,
+    setProxyPanelViewState: setProxyPanelViewState,
     setFooterViewState: setFooterViewState,
     setOverlayState: setOverlayState
   };

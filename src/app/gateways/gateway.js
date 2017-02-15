@@ -1,8 +1,8 @@
-/* global TimeSeriesCharts */
+/* global Environment,TimeSeriesCharts */
 angular.module('app').controller('GatewayController', GatewayController);
 
 /** @ngInject */
-function GatewayController($scope, $filter, $stateParams, $timeout, $location, $vamp, slider, alert, toastr, $uibModal) {
+function GatewayController($scope, $filter, $stateParams, $timeout, $location, $vamp, uiStatesFactory, slider, alert, toastr, $uibModal) {
   var $ctrl = this;
   var path = '/gateways/' + $stateParams.name;
 
@@ -238,4 +238,14 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     timestamp = timestamp ? new Date(timestamp).getTime() : Date.now();
     charts.append(id, timestamp, value, $ctrl.last);
   }
+
+  $ctrl.proxy = function () {
+    var path = '/proxy/' + $ctrl.gateway.proxy + '/';
+    if (Environment.prototype.origin()) {
+      path = 'http://' + Environment.prototype.origin() + path;
+    }
+    uiStatesFactory.setProxyPanelViewState(path);
+    uiStatesFactory.setInfoPanelViewState(false);
+    uiStatesFactory.setHelpPanelViewState(false);
+  };
 }
