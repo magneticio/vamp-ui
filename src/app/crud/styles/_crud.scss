@@ -320,3 +320,35 @@ table.vamp-lv {
     overflow-y: auto;
   }
 }
+
+.artifact-revisions {
+  width: 250px;
+  min-width: 250px;
+  vertical-align: top;
+
+  .title {
+    margin: 0;
+    padding: 20px;
+    width: 100%;
+    color: $color-text;
+    font-size: $font-size-large;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  .revision {
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    color: $color-text;
+    font-size: $font-size-normal;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $blue;
+    }
+  }
+}
+

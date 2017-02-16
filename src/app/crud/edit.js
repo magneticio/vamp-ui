@@ -22,6 +22,8 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   this.base = null;
   this.source = null;
 
+  $ctrl.revisions = [];
+
   this.valid = true;
   $ctrl.inEdit = false;
   var validation = true;
@@ -52,6 +54,11 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
 
   this.peek = function () {
     $vamp.peek(path, '', {}, 'YAML');
+    $vamp.peek('/events', JSON.stringify({
+      tags: [
+        'archive', $ctrl.kind + ':' + $ctrl.name
+      ]
+    }), {type: 'archive'});
   };
 
   this.peek();
@@ -75,6 +82,14 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
         $ctrl.expandError = false;
       }
     }
+  });
+
+  $scope.$on('/events', function (e, response) {
+    _.forEach(response.data, function (event) {
+      if (event.type === 'archive' && _.includes(event.tags, $ctrl.kind + ':' + $ctrl.name) && (_.includes(event.tags, 'archive:update') || _.includes(event.tags, 'archive:create'))) {
+        $ctrl.addRevision(event);
+      }
+    });
   });
 
   $scope.$on('/events/stream', function (e, response) {
@@ -144,6 +159,32 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
         toastr.error('Server timeout.', 'Save of \'' + $ctrl.name + '\'failed.');
       }
     });
+  };
+
+  this.addRevision = function (event) {
+    if (_.find($ctrl.revisions, {id: event.id})) {
+      return;
+    }
+    $ctrl.revisions.push({
+      id: event.id,
+      source: event.value,
+      timestamp: event.timestamp
+    });
+  };
+
+  this.showRevision = function (revision) {
+    var source = revision.source || '';
+    if (source) {
+      source = revision.source.replace(/\\n/g, '\n');
+      source = source.replace(/\\"/g, '"');
+      if (source.charAt(0) === '"') {
+        source = source.substring(1);
+      }
+      if (source.charAt(source.length - 1) === '"') {
+        source = source.substring(0, source.length - 1);
+      }
+    }
+    snippet.show('Revision: ' + $filter('date')(revision.timestamp, 'dd MMM yyyy HH:mm:ss.sss'), source, 'lg');
   };
 
   function goBack() {

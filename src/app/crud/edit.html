@@ -49,12 +49,30 @@
           </div>
         </div>
         <div class="panel-body">
-          <div id="editor"
-            ng-class="{'editor-error' : ($ctrl.isModified() && !$ctrl.valid)}"
-            ui-ace="$ctrl.editor"
-            ng-model="$ctrl.source" ng-change="$ctrl.validate($event)"
-            ng-readonly="!$ctrl.inEdit"
-            ></div>
+          <table>
+            <tr>
+              <td width="100%">
+                <div id="editor"
+                     ng-class="{'editor-error' : ($ctrl.isModified() && !$ctrl.valid)}"
+                     ui-ace="$ctrl.editor"
+                     ng-model="$ctrl.source" ng-change="$ctrl.validate($event)"
+                     ng-readonly="!$ctrl.inEdit"></div>
+              </td>
+              <td ng-if="!$ctrl.base">&nbsp;</td>
+              <td class="artifact-revisions" ng-if="$ctrl.base">
+                <div class="title">REVISIONS</div>
+                <table>
+                  <tr ng-repeat="revision in $ctrl.revisions | orderBy: 'timestamp':true">
+                    <td width="100%">
+                      <div class="revision" ng-click="$ctrl.showRevision(revision)">
+                        {{ revision.timestamp | date:'dd MMM yyyy HH:mm:ss.sss' }}
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
