@@ -165,26 +165,33 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
     if (_.find($ctrl.revisions, {id: event.id})) {
       return;
     }
+
+    var source = event.value || '';
+    if (source) {
+      source = JSON.parse(source);
+      try {
+        source = JSON.stringify(JSON.parse(source), null, '  ');
+      } catch (e) {
+        source = event.value.replace(/\\n/g, '\n');
+        source = source.replace(/\\"/g, '"');
+        if (source.charAt(0) === '"') {
+          source = source.substring(1);
+        }
+        if (source.charAt(source.length - 1) === '"') {
+          source = source.substring(0, source.length - 1);
+        }
+      }
+    }
+
     $ctrl.revisions.push({
       id: event.id,
-      source: event.value,
+      source: source,
       timestamp: event.timestamp
     });
   };
 
   this.showRevision = function (revision) {
-    var source = revision.source || '';
-    if (source) {
-      source = revision.source.replace(/\\n/g, '\n');
-      source = source.replace(/\\"/g, '"');
-      if (source.charAt(0) === '"') {
-        source = source.substring(1);
-      }
-      if (source.charAt(source.length - 1) === '"') {
-        source = source.substring(0, source.length - 1);
-      }
-    }
-    snippet.show('Revision: ' + $filter('date')(revision.timestamp, 'dd MMM yyyy HH:mm:ss.sss'), source, 'lg');
+    snippet.show('Revision: ' + $filter('date')(revision.timestamp, 'dd MMM yyyy HH:mm:ss.sss'), revision.source, 'lg');
   };
 
   function goBack() {
