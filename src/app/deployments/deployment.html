@@ -122,9 +122,24 @@
                             </div>
 
                             <div class="vamp-table__col__list__item"
-                                 ng-repeat="instance in service.instances | limitTo: 3">
-                                <span class="v-value v-value--state"
-                                      ng-class="{'v-value--state--highlight': service.scale.instances != service.instances.length}">{{instance.host}}</span>
+                                 ng-repeat="instance in service.instances">
+                                <span ng-class="{'v-value--state--highlight': service.scale.instances != service.instances.length}">
+                                    {{instance.name | limitTo: 25 }}
+                                </span>
+                                <div ng-repeat="(portName, port) in instance.ports | orderByKeys">
+                                    <span class="v-value v-value--state"
+                                          ng-if="!$ctrl.proxy(cluster, service, instance, portName)">
+                                        {{portName}}
+                                    </span>
+                                    <span class="label label-success"
+                                          ng-if="$ctrl.proxy(cluster, service, instance, portName)">
+                                        <a class="proxy-anchor"
+                                           ng-click="$ctrl.proxy(cluster, service, instance, portName, $event)">
+                                            {{portName}}
+                                        </a>
+                                    </span>
+
+                                </div>
                             </div>
                         </div>
                     </div>

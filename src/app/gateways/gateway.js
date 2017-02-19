@@ -239,13 +239,19 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     charts.append(id, timestamp, value, $ctrl.last);
   }
 
-  $ctrl.proxy = function () {
-    var path = '/proxy/' + $ctrl.gateway.proxy + '/';
+  $ctrl.proxy = function ($event) {
+    if (!$ctrl.gateway || !$ctrl.gateway.deployed || !$ctrl.gateway.service || !$ctrl.gateway.service.port.endsWith('/http')) {
+      return null;
+    }
+    var path = '/proxy/gateways/' + encodeURIComponent($ctrl.gateway.name) + '/';
     if (Environment.prototype.origin()) {
       path = 'http://' + Environment.prototype.origin() + path;
     }
-    uiStatesFactory.setProxyPanelViewState(path);
-    uiStatesFactory.setInfoPanelViewState(false);
-    uiStatesFactory.setHelpPanelViewState(false);
+    if ($event) {
+      uiStatesFactory.setProxyPanelViewState(path);
+      uiStatesFactory.setInfoPanelViewState(false);
+      uiStatesFactory.setHelpPanelViewState(false);
+    }
+    return path;
   };
 }

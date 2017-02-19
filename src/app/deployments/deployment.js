@@ -1,8 +1,8 @@
-/* global TimeSeriesCharts */
+/* global Environment,TimeSeriesCharts */
 angular.module('app').controller('DeploymentController', DeploymentController);
 
 /** @ngInject */
-function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, $vampDeployment, $uibModal, snippet, alert, toastr) {
+function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $location, $vamp, $vampDeployment, $uibModal, snippet, alert, toastr) {
   var $ctrl = this;
   var path = '/deployments/' + $stateParams.name;
 
@@ -265,4 +265,17 @@ function DeploymentController($scope, $stateParams, $timeout, $location, $vamp, 
     timestamp = Number.isInteger(timestamp) ? timestamp : new Date(timestamp).getTime();
     charts.append(id, timestamp, value, $ctrl.last);
   }
+
+  $ctrl.proxy = function (cluster, service, instance, port, $event) {
+    var path = '/proxy/deployments/' + $ctrl.deployment.name + '/clusters/' + cluster.name + '/services/' + service.breed.name + '/instances/' + instance.name + '/ports/' + port + '/';
+    if (Environment.prototype.origin()) {
+      path = 'http://' + Environment.prototype.origin() + path;
+    }
+    if ($event) {
+      uiStatesFactory.setProxyPanelViewState(path);
+      uiStatesFactory.setInfoPanelViewState(false);
+      uiStatesFactory.setHelpPanelViewState(false);
+    }
+    return path;
+  };
 }

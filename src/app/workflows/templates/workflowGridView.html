@@ -1,10 +1,4 @@
 <div class="artifact-properties" ng-controller="WorkflowController as $ctrl">
-    <!--<span class="label"
-          ng-class="{'label-success': $ctrl.workflow.status === 'running', 'label-info': $ctrl.updating()}">
-        {{ $ctrl.workflow.status }}&nbsp;
-        <i class="fa"
-           ng-class="{'fa-check': $ctrl.workflow.status === 'running', 'fa-cog': $ctrl.updating(), 'fa-spin': $ctrl.updating(), 'fa-pause': $ctrl.workflow.status === 'suspended'}"></i>
-    </span>-->
     <tag
       value="artifact.status"
       has-progress="true"
@@ -13,8 +7,6 @@
       paused="artifact.status === 'suspended'">
     </tag>
     <p></p>
-    <!--<span ng-if="$ctrl.workflow.breed.name" class="label label-primary">breed: {{$ctrl.workflow.breed.name}}</span>
-    <span ng-if="$ctrl.workflow.breed.reference" class="label label-primary">breed: {{$ctrl.workflow.breed.reference}}</span>-->
     <tag ng-if="artifact.breed.name" value="'breed: ' + artifact.breed.name"></tag>
     <tag ng-if="artifact.breed.reference" value="'breed: ' + artifact.breed.reference"></tag>
     <p></p>
@@ -22,9 +14,6 @@
     <tag ng-if="artifact.schedule === 'daemon'" value="'schedule : daemon'"></tag>
     <tag ng-if="!(artifact.schedule.event | isEmpty)" value="'schedule : event'"></tag>
     <tag ng-if="!(artifact.schedule.time | isEmpty)" value="'schedule : time'"></tag>
-    <!--<span ng-if="$ctrl.workflow.schedule === 'daemon'" class="label label-primary">schedule : daemon</span>
-    <span ng-if="!($ctrl.workflow.schedule.event | isEmpty)" class="label label-primary">schedule : event</span>
-    <span ng-if="!($ctrl.workflow.schedule.time | isEmpty)" class="label label-primary">schedule : time</span>-->
 
     <div class="artifact-card-actions">
         <button class="btn btn-ghost btn-success" ng-if="artifact.status === 'suspended'" ng-click="$ctrl.start($event)">
@@ -36,6 +25,25 @@
         <button class="btn btn-ghost btn-primary" ng-if="artifact.status === 'running'" ng-click="$ctrl.restart($event)">
             <i class="fa fa-refresh"></i>&nbsp;&nbsp;Restart
         </button>
+    </div>
+
+    <div ng-repeat="instance in artifact.instances">
+        <span>
+            {{instance.name | limitTo: 25 }}
+        </span>
+        <div ng-repeat="(portName, port) in instance.ports | orderByKeys">
+            <span class="v-value v-value--state"
+                  ng-if="!proxy(artifact, instance, portName)">
+                {{portName}}
+            </span>
+            <span class="label label-success"
+                  ng-if="proxy(artifact, instance, portName)">
+                <a class="proxy-anchor"
+                   ng-click="proxy(artifact, instance, portName, $event)">
+                    {{portName}}
+                </a>
+            </span>
+        </div>
     </div>
 
 </div>

@@ -6,15 +6,17 @@
 <div class="info-panel hidden-xs hidden-sm" ng-class="{'active': $ctrl.uiStates.infoPanel || $ctrl.uiStates.helpPanel || $ctrl.uiStates.proxyPanel}">
 
     <div class="container-fluid">
-        <div class="col-sm-2">
-            <input type="checkbox" ng-model="$ctrl.pin">&nbsp;pin
+        <div class="col-sm-4">
+            <a class="side-button" ng-class="{'toggled': $ctrl.pin}" href="" ng-click="$ctrl.pin = !$ctrl.pin">
+                <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+            </a>
         </div>
-        <div class="col-sm-8">
-            <a class="proxy-anchor" ng-if="$ctrl.uiStates.proxyPanel" ng-href="{{ $ctrl.uiStates.proxyPanel }}" target="_blank">
-                {{ $ctrl.uiStates.proxyPanel.substr($ctrl.uiStates.proxyPanel.indexOf('/proxy/') + '/proxy/'.length) }}&nbsp;
-                <i class="fa fa-external-link" aria-hidden="true"></i></a>
+        <div class="col-sm-4 side-button-center">
+            <a class="side-button" ng-if="$ctrl.uiStates.proxyPanel" ng-href="{{ $ctrl.uiStates.proxyPanel }}" target="_blank">
+                <i class="fa fa-external-link" aria-hidden="true"></i>
+            </a>
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-4">
             <i class="fa fa-arrow-right clickable pull-right" aria-hidden="true" ng-click="$ctrl.closePanel()"></i>
         </div>
     </div>

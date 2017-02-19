@@ -1662,12 +1662,30 @@ snippet {
   }
 }
 
-.proxy-anchor {
+.side-button-center {
+  text-align: center;
+}
+
+.side-button {
+  padding: 5px;
   color: $color-white;
+  text-align: center;
   text-decoration: underline;
   &:hover {
     cursor: pointer;
+    color: $color-bg;
   }
+  &:focus {
+    color: $color-white;
+  }
+
+  &.toggled {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+.proxy-anchor {
+  @extend .side-button;
 }
 
 .proxy-container {
@@ -1680,4 +1698,6 @@ snippet {
   position: relative;
   height: 100%;
   width: 100%;
+  color: black;
+  background-color: white;
 }
