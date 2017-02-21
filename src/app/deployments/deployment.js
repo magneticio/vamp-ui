@@ -80,7 +80,7 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
       }
       instances += '\n';
     });
-    snippet.show('Instances', header(cluster, service) + instances, 'lg');
+    snippet.show('Instances', header(cluster, service) + instances, 'lg', {deployment: this.deployment, cluster: cluster, instances: service.instances});
   };
 
   this.showEnvironmentVariables = function (cluster, service) {

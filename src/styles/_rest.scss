@@ -4,7 +4,8 @@ input:focus,
 select:focus,
 textarea:focus,
 button:focus,
-span:focus {
+span:focus,
+a {
   outline: none !important;
 }
 
@@ -286,7 +287,12 @@ menu {
       margin: 0;
       padding: 0;
 
-
+      div {
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+        text-overflow: ellipsis;
+      }
     }
 
     &.message {

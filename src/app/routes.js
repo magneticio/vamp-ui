@@ -20,31 +20,51 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           value: '',
           squash: true
         }
+      },
+      views: {
+        main: {
+          templateUrl: ''
+        }
       }
     };
 
     if (artifact.artifactsTemplate) {
-      artifactsData.templateUrl = artifact.artifactsTemplate;
+      artifactsData.views.main.templateUrl = artifact.artifactsTemplate;
     } else {
-      artifactsData.templateUrl = 'app/' + artifact.kind + '/' + artifact.kind + '.html';
+      artifactsData.views.main.templateUrl = 'app/' + artifact.kind + '/' + artifact.kind + '.html';
     }
 
-    var artifactViewData = {url: '/' + artifact.kind + '/view/:name'};
+    var artifactViewData = {
+      url: '/' + artifact.kind + '/view/:name',
+      views: {
+        main: {
+          templateUrl: ''
+        }
+      }
+    };
 
     if (artifact.artifactViewTemplate) {
-      artifactViewData.templateUrl = artifact.artifactViewTemplate;
+      artifactViewData.views.main.templateUrl = artifact.artifactViewTemplate;
     } else {
-      artifactViewData.template = '<edit kind="' + artifact.kind + '"></edit>';
+      artifactViewData.views.main.template = '<edit kind="' + artifact.kind + '"></edit>';
     }
 
     var artifactAddData = {
       url: '/' + artifact.kind + '/add',
-      template: '<add kind="' + artifact.kind + '"></add>'
+      views: {
+        main: {
+          template: '<add kind="' + artifact.kind + '"></add>'
+        }
+      }
     };
 
     var artifactEditData = {
       url: '/' + artifact.kind + '/edit/:name',
-      template: '<edit kind="' + artifact.kind + '"></edit>'
+      views: {
+        main: {
+          template: '<edit kind="' + artifact.kind + '"></edit>'
+        }
+      }
     };
 
     $stateProvider
@@ -54,8 +74,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       .state(artifact.kind + 'Edit', artifactEditData);
   });
 
-  $stateProvider.state('vga', {url: '/vga', template: '<vga></vga>'});
-  $stateProvider.state('log', {url: '/log', template: '<log></log>'});
-  $stateProvider.state('info', {url: '/info', template: '<info></info>'});
-  $stateProvider.state('configuration', {url: '/configuration', template: '<configuration></configuration>'});
+  $stateProvider.state('vga', {url: '/vga', views: {main: {template: '<vga></vga>'}}});
+  $stateProvider.state('log', {url: '/log', views: {main: {template: '<log></log>'}}});
+  $stateProvider.state('info', {url: '/info', views: {main: {template: '<info></info>'}}});
+  $stateProvider.state('configuration', {url: '/configuration', views: {main: {template: '<configuration></configuration>'}}});
 }

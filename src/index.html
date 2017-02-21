@@ -23,7 +23,6 @@
 <body ng-app="app">
 <div class="page">
 
-
     <div id="wrapper" ng-controller="layoutController as $layout">
 
         <!-- Sidebar -->
@@ -36,7 +35,7 @@
         <!-- Page Content -->
         <div id="page-content-wrapper" ng-class="{'footer-expanded': $layout.uiStates.footer == 'expanded'}">
 
-            <ui-view></ui-view>
+            <ui-view name="main"></ui-view>
             <side></side>
 
 
@@ -58,6 +57,9 @@
 <!-- build:js({.tmp,src}) scripts/app.js -->
 <!-- inject:js -->
 <!-- js files will be automatically insert here -->
+<!-- endinject -->
+<!-- plugins:js -->
+<!-- plugin js files will be automatically insert here -->
 <!-- endinject -->
 <!-- inject:partials -->
 <!-- angular templates will be automatically converted in js and inserted here -->

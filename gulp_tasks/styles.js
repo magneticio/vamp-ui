@@ -6,17 +6,22 @@ const sass = require('gulp-sass');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const svgSprite = require('gulp-svg-sprite');
+const concat = require('gulp-concat');
 
 const conf = require('../conf/gulp.conf');
 
 gulp.task('css', styles);
 
 function styles() {
-  return gulp.src(conf.path.src('/styles/index.scss'))
+  return gulp.src([
+      conf.path.src('/styles/index.scss'),
+      conf.path.src('externalPlugins/**/*.scss')
+    ])
     .pipe(sourcemaps.init())
     .pipe(sass({outputStyle: 'expanded'})).on('error', conf.errorHandler('Sass'))
     .pipe(postcss([autoprefixer()])).on('error', conf.errorHandler('Autoprefixer'))
     .pipe(sourcemaps.write())
+    .pipe(concat('index.css'))
     .pipe(gulp.dest(conf.path.tmp('styles')))
     .pipe(browserSync.stream());
 }

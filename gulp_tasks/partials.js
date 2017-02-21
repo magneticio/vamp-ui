@@ -7,11 +7,10 @@ const conf = require('../conf/gulp.conf');
 gulp.task('partials', partials);
 
 function partials() {
-  return gulp.src(conf.path.src('app/**/*.html'))
+  return gulp.src(conf.path.src('/**/*.html'))
     .pipe(htmlmin())
     .pipe(angularTemplatecache('templateCacheHtml.js', {
-      module: conf.ngModule,
-      root: 'app'
+      module: conf.ngModule
     }))
     .pipe(gulp.dest(conf.path.tmp()));
 }

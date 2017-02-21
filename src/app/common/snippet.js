@@ -9,11 +9,12 @@ angular.module('app').component('snippet', {
     this.$onInit = function () {
       $ctrl.title = $ctrl.resolve.title;
       $ctrl.message = $ctrl.resolve.message;
+      $ctrl.data = $ctrl.resolve.data;
     };
   }
 }).factory('snippet', ['$uibModal', function ($uibModal) {
   return {
-    show: function (title, message, size) {
+    show: function (title, message, size, data) {
       $uibModal.open({
         size: size,
         animation: true,
@@ -25,6 +26,9 @@ angular.module('app').component('snippet', {
           },
           message: function () {
             return message;
+          },
+          data: function () {
+            return data;
           }
         }
       }).result.then();

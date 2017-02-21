@@ -30,7 +30,7 @@ function watch(done) {
     'bower.json'
   ], gulp.parallel('prepare'));
 
-  gulp.watch(conf.path.src('app/**/*.html'), gulp.series('partials', reloadBrowserSync));
+  gulp.watch(conf.path.src('**/*.html'), gulp.series('partials', reloadBrowserSync));
   gulp.watch([
     conf.path.src('**/*.scss'),
     conf.path.src('**/*.css')

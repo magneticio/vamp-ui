@@ -1,3 +1,4 @@
+
 angular.module('app', [
   'ui.router',
   'ui.bootstrap',
@@ -8,3 +9,18 @@ angular.module('app', [
   'ngAnimate',
   'rzModule'
 ]);
+
+function ExternalPluginsLoader() {
+  this.plugins = [];
+
+  function init() {
+  }
+
+  this.registerPlugin = function (config) {
+    this.plugins.push(config);
+  };
+
+  init();
+}
+
+window.vampPluginsLoader = new ExternalPluginsLoader();
