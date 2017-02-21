@@ -7,20 +7,36 @@
       <div class="panel panel-default log-panel">
         <div class="panel-heading">
           <div class="panel-title">
-            <label class="checkbox-inline">
-              <input type="checkbox" ng-model="$ctrl.filter.error" ng-change="$ctrl.filterUpdate()"> Error
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" ng-model="$ctrl.filter.info" ng-change="$ctrl.filterUpdate()"> Info
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" ng-model="$ctrl.filter.debug" ng-change="$ctrl.filterUpdate()"> Debug
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" ng-model="$ctrl.filter.trace" ng-change="$ctrl.filterUpdate()"> Trace
-            </label>
+            <div class="form-inline">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="$ctrl.filter.error" ng-change="$ctrl.filterUpdate()"> Error
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="$ctrl.filter.info" ng-change="$ctrl.filterUpdate()"> Info
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="$ctrl.filter.debug" ng-change="$ctrl.filterUpdate()"> Debug
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="$ctrl.filter.trace" ng-change="$ctrl.filterUpdate()"> Trace
+                </label>
+              </div>
+              <button class="btn btn-small btn-ghost btn-primary"
+                ng-click="$ctrl.clearLog()">
+                Clear log
+              </button>
+            </div>
+
           </div>
           <div class="pull-right">
+
             Follow log:&nbsp;
             <toggle ng-model="$ctrl.isFollowLog" style="vamp-toggle"
               ng-change="$ctrl.toggleFollowOnOff()" onstyle="btn-success"

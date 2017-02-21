@@ -83,6 +83,12 @@ function LogController($scope, $element, $vampLog) {
   for (var i = 0; i < $vampLog.logs.length; i++) {
     $ctrl.push($vampLog.logs[i]);
   }
+
+  $ctrl.clearLog = function () {
+    $ctrl.logs = [];
+    $ctrl.filteredLogs = [];
+    $vampLog.clear();
+  };
 }
 
 /** @ngInject */
@@ -102,6 +108,10 @@ function VampLogService($log, $rootScope, $vamp) {
 
   this.init = function () {
     $service.peek();
+  };
+
+  this.clear = function () {
+    $service.logs = [];
   };
 
   $rootScope.$on('/log', function (e, response) {
@@ -133,4 +143,3 @@ function VampLogService($log, $rootScope, $vamp) {
     $vamp.peek('/log', '', {logger: 'io.vamp', level: $level});
   };
 }
-
