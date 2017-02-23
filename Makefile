@@ -7,12 +7,13 @@ SHELL             := bash
 
 # Constants, these can be overwritten in your Makefile.local
 BUILD_SERVER := magneticio/buildserver
-BUILD_PACKER := magneticio/packer
 
 # if Makefile.local exists, include it.
 ifneq ("$(wildcard Makefile.local)", "")
 	include Makefile.local
 endif
+
+VERSION := $(shell git describe --tags)
 
 # Targets
 .PHONY: all
@@ -21,16 +22,19 @@ all: default
 # Using our buildserver which contains all the necessary dependencies
 .PHONY: default
 default:
+	docker pull $(BUILD_SERVER)
 	docker run \
+		--name buildserver \
 		--interactive \
+		--tty \
 		--rm \
 		--volume $(CURDIR):/srv/src \
 		--workdir=/srv/src \
 		--env BUILD_UID=$(shell id -u) \
 		--env BUILD_GID=$(shell id -g) \
 		$(BUILD_SERVER) \
-			make build dist
-	make pack
+			make build
+
 
 .PHONY: build
 build:
@@ -46,19 +50,20 @@ build:
 	./environment.sh
 	gulp build
 
+
 .PHONY: pack
 pack:
 	make build
-	export version="$$(git describe --tags)" && \
-	docker volume create packer && \
+	docker volume create packer
 	docker run \
-	    --rm \
-    	--name packer \
-    	--interactive \
-    	--volume $(CURDIR)/dist:/usr/local/src \
-    	--volume packer:/usr/local/stash \
-    	$(BUILD_PACKER) \
-      	vamp-ui $${version}
+		--name buildserver \
+		--interactive \
+		--tty \
+		--rm \
+    		--volume $(CURDIR)/dist:/usr/local/src \
+    		--volume packer:/usr/local/stash \
+    		$(BUILD_SERVER) \
+      			push vamp-ui $(VERSION)
 
 .PHONY: clean
 clean:
