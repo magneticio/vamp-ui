@@ -1,11 +1,12 @@
 function uiStatesFactory() {
   var viewStates = {
     main: 'grid',
-    sideBar: 'expanded',
+    left: true,
+    right: false,
     infoPanel: false,
     helpPanel: false,
     proxyPanel: '',
-    footer: 'collapsed',
+    footer: false,
     overlay: false
   };
 
@@ -13,8 +14,12 @@ function uiStatesFactory() {
     viewStates.main = type;
   }
 
-  function setSideBarViewState(type) {
-    viewStates.sideBar = type;
+  function setLeftPanelViewState(type) {
+    viewStates.left = type;
+  }
+
+  function setRightPanelViewState(type) {
+    viewStates.right = type;
   }
 
   function setInfoPanelViewState(type) {
@@ -40,7 +45,8 @@ function uiStatesFactory() {
   return {
     viewStates: viewStates,
     setMainViewState: setMainViewState,
-    setSideBarViewState: setSideBarViewState,
+    setLeftPanelViewState: setLeftPanelViewState,
+    setRightPanelViewState: setRightPanelViewState,
     setInfoPanelViewState: setInfoPanelViewState,
     setHelpPanelViewState: setHelpPanelViewState,
     setProxyPanelViewState: setProxyPanelViewState,

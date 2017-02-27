@@ -1,80 +1,47 @@
 <header title="{{$ctrl.inEdit ? 'Editing' : 'Viewing'}}: {{ $ctrl.title }}">
-  <controls>
-    <!--<span ng-if="$ctrl.errorMessage.length < 40">{{ $ctrl.errorMessage }}</span>
-    <div class="message-truncated" ng-if="$ctrl.errorMessage.length >= 40" ng-click="$ctrl.fullErrorMessage()">
-        <span>{{ $ctrl.errorMessage | limitTo:40 }}...<i class="fa fa-arrows-alt message-expand-icon"></i></span>
-    </div>-->
-  </controls>
-  <buttons>
-
-  </buttons>
 </header>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="panel panel-default editor-panel">
-        <div class="panel-heading">
-          <div class="panel-title" ng-if="$ctrl.isModified() && !$ctrl.valid" >
-            <img class="error-icon" src="styles/resources/app/common/images/error_triangle.svg">
-            <div class="error-message-container">
-              <div class="error-message first-line"><!--
-              --><span>{{$ctrl.errorMessage}}</span><!--
-              --><span ng-class="{'invisible' : $ctrl.expandError}">...</span><!--
-              --><i ng-if="$ctrl.restOfMessage && !$ctrl.expandError" class="icon-size-fullscreen" title="Show full error message" ng-click="$ctrl.expandError = true"></i><!--
-              --><i ng-if="$ctrl.restOfMessage && $ctrl.expandError" class="icon-size-actual" title="Hide full error message" ng-click="$ctrl.expandError = false"></i><!--
-           --></div>
-              <div class="error-message" ng-if="$ctrl.restOfMessage" ng-show="$ctrl.expandError"><!--
-              -->{{$ctrl.restOfMessage}}<!--
-          --></div>
-            </div>
-          </div>
-          <div class="pull-right">
-            <button
-              ng-if="!$ctrl.inEdit"
-              class="btn btn-ghost btn-small btn-primary" type="submit"
-              ng-click="$ctrl.startEdit()">
-                Edit
-            </button>
-            <button
-              class="btn btn-ghost btn-small btn-success" type="submit"
-              ng-if="$ctrl.inEdit && !(!$ctrl.isModified() || !$ctrl.valid)" ng-click="$ctrl.save()">
-                Save
-            </button>
-            <button
-              ng-if="$ctrl.inEdit"
-              class="btn btn-ghost btn-small btn-primary" type="submit"
-              ng-click="$ctrl.cancel()">
-                Cancel
-            </button>
-          </div>
-        </div>
-        <div class="panel-body">
-          <table>
-            <tr>
-              <td width="100%">
-                <div id="editor"
-                     ng-class="{'editor-error' : ($ctrl.isModified() && !$ctrl.valid)}"
-                     ui-ace="$ctrl.editor"
-                     ng-model="$ctrl.source" ng-change="$ctrl.validate($event)"
-                     ng-readonly="!$ctrl.inEdit"></div>
-              </td>
-              <td ng-if="!$ctrl.base">&nbsp;</td>
-              <td class="artifact-revisions" ng-if="$ctrl.base">
-                <div class="title">REVISIONS</div>
-                <table>
-                  <tr ng-repeat="revision in $ctrl.revisions | orderBy: 'timestamp':true">
-                    <td width="100%">
-                      <div class="revision" ng-click="$ctrl.showRevision(revision)">
-                        {{ revision.timestamp | date:'dd MMM yyyy HH:mm:ss.sss' }}
-                      </div>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </div>
+<div class="main-content container-fluid no-padding">
+  <div class="editors">
+    <div class="editor main-editor" ng-class="{'active' : $ctrl.activeRevisiton.id}">
+      <div id="editor"
+       ng-class="{'editor-error' : ($ctrl.isModified() && !$ctrl.valid)}"
+       ui-ace="$ctrl.editor"
+       ng-model="$ctrl.source" ng-change="$ctrl.validate($event)"
+       ng-readonly="!$ctrl.inEdit">
+
       </div>
+      <div class="editor-actions">
+        <button
+          ng-if="!$ctrl.inEdit"
+          class="btn btn-ghost btn-small btn-primary" type="submit"
+          ng-click="$ctrl.startEdit()">
+            Edit
+        </button>
+        <button
+          class="btn btn-ghost btn-small btn-success" type="submit"
+          ng-if="$ctrl.inEdit && !(!$ctrl.isModified() || !$ctrl.valid)" ng-click="$ctrl.save()">
+            Save
+        </button>
+        <button
+          ng-if="$ctrl.inEdit"
+          class="btn btn-ghost btn-small btn-primary" type="submit"
+          ng-click="$ctrl.cancel()">
+            Cancel
+        </button>
+      </div>
+    </div>
+    <div class="editor seocondary-editor" ng-class="{'active' : $ctrl.activeRevisiton.id}" ng-show="$ctrl.activeRevisiton.id">
+      <div id="revisitonEdifor"
+        ui-ace="$ctrl.editor"
+        ng-model="$ctrl.activeRevisiton.source"
+        ng-readonly="true">
+      </div>
+      <div class="editor-actions" ng-if="$ctrl.activeRevisiton.id">
+        <button
+          class="btn btn-ghost btn-small btn-primary" type="submit"
+          ng-click="$ctrl.closeRevision()">
+            Close
+        </button>
     </div>
   </div>
 </div>

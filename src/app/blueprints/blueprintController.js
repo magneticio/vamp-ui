@@ -108,7 +108,7 @@ function BlueprintController($scope, $location, $uibModal, toastr, $vamp, $vampB
   };
 
   function gotoDeployment(name) {
-    $location.path('deployments/view/' + name);
+    $location.path('deployments/' + name);
   }
 
   function updateDeployment(deployments, title, text, buttonText, buttonClass) {

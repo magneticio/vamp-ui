@@ -1,3 +1,5 @@
+/* Header */
+@import "_header";
 
 /* Button styles */
 @import "_buttons";
@@ -5,14 +7,24 @@
 /* Drop down */
 @import "_dropdown";
 
+/* Breadcrumbs */
+@import "_breadcrumbs";
+
+.container-fluid {
+  &.no-padding {
+    padding:0;
+  }
+}
+
 /* Inputs */
 
 .form-control {
   font-size: $font-size-normal;
   color: $medium-blue;
-  background-color: $pitch;
+  background-color: $background-light;
   border: none;
-  border-radius: 2rem;
+  min-height: $button-size-normal;
+  //border-radius: 2rem;
 
   &:hover,
   &:focus {
@@ -26,7 +38,7 @@
   color: $dark-blue ;
   background-color: $pitch;
   border: none;
-  border-radius: 2rem;
+  //border-radius: 2rem;
 }
 
 .input-group {

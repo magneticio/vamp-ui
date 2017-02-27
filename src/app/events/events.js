@@ -20,7 +20,7 @@ function EventController($scope, $vamp, $interval, uiStatesFactory, overlayServi
   this.toggle = function ($event) {
     if (!$event || !$event.ignore) {
       $ctrl.show = !$ctrl.show;
-      uiStatesFactory.setFooterViewState($ctrl.show ? 'expanded' : 'collapsed');
+      uiStatesFactory.setFooterViewState($ctrl.show);
     }
   };
 
