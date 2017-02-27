@@ -31,7 +31,7 @@ function DeploymentCtrl($scope, $uibModal, $vamp, $location, toastr) {
         return $vamp.await(function () {
           $vamp.put('/blueprints/' + data.name, JSON.stringify(blueprint));
         }).then(function () {
-          $location.path('blueprints/' + data.name);
+          $location.path('blueprints/view/' + data.name);
           toastr.success('\'' + blueprint.name + '\' has been successfully exported as \'' + data.name + '\'.');
         }).catch(function (response) {
           if (response) {

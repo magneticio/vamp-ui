@@ -8,30 +8,11 @@ main {
   display: flex;
   align-items: center;
 }
-
 .artifacts-search-box {
   display: inline-block;
   max-width: 24rem;
   vertical-align: middle;
   margin-left: 2rem;
-}
-
-.main-content {
-  height: calc(100% - 7.5rem);
-  overflow-x: hidden;
-  overflow-y: auto;
-  font-size: $font-size-normal;
-  font-weight: $font-weight-light;
-  color: $misty;
-
-  .content-header {
-    margin: 5rem 5rem 5rem 5rem;
-
-    .header-title {
-      font-size: $font-size-xl;
-      color: $white;
-    }
-  }
 }
 
 .vamp-btn-group {
@@ -44,8 +25,8 @@ main {
     line-height: 1 ;
     text-shadow: none ;
     padding: 5px ;
-    color: $misty;
-    font-weight: $font-weight-light ;
+    color: $medium-blue ;
+    font-weight: $font-weight-bold ;
     letter-spacing: 2px;
     text-transform: uppercase;
 
@@ -55,11 +36,12 @@ main {
     width: 4rem;
 
     &.vamp-btn-selected {
-      background-color: $background-light;
+      background-color: $gray-base;
+      color: $medium-blue;
     }
 
     &:hover:not(.vamp-btn-selected) {
-      color: $white;
+      background-color: $dark-blue;
     }
   }
 }
@@ -290,45 +272,6 @@ table.vamp-lv {
   }
 }
 
-
-
-.editors {
-  display: flex;
-  width: 100%;
-  height: 100%;
-
-  .editor {
-    position: relative;
-    -webkit-transition: flex 0.5s ease;
-    -moz-transition: flex 0.5s ease;
-    -o-transition: flex 0.5s ease;
-    transition: flex 0.5s ease;
-
-    &:not(:last-child) {
-      border-right: 1px solid $background-lighter;
-    }
-
-    &.main-editor {
-      flex: 1;
-    }
-
-    &.seocondary-editor {
-      flex: 0;
-
-      &.active {
-        flex: 1;
-      }
-    }
-
-    .editor-actions {
-      position: absolute;
-      top: 1.5rem;
-      right: 3rem;
-      z-index: 1;
-    }
-  }
-}
-
 .panel.editor-panel {
   display: flex;
   flex-direction: column;
@@ -379,52 +322,33 @@ table.vamp-lv {
 }
 
 .artifact-revisions {
-  width: 100%;
+  width: 250px;
+  min-width: 250px;
   vertical-align: top;
-  font-weight: $font-weight-light;
 
   .title {
     margin: 0;
     padding: 20px;
     width: 100%;
-    color: $white;
+    color: $color-text;
     font-size: $font-size-large;
+  }
+
+  table {
+    width: 100%;
   }
 
   .revision {
     width: 100%;
     margin: 0;
-    color: $misty;
+    padding: 20px;
+    color: $color-text;
     font-size: $font-size-normal;
 
-    position: relative;
-    height: 7rem;
-    padding: 1rem;
-
-    &.active-revision {
-      background-color: $background-dark;
-
-      &::before {
-        content: '';
-        width:2rem;
-        height: 2rem;
-        background-color: $background-dark;
-        transform: rotate(45deg);
-        border-bottom: 1px solid $background-lighter;
-        border-left: 1px solid $background-lighter;
-        position: absolute;
-        display: block;
-        left:0;
-        margin-left: calc(-1rem - 1px); // half + border
-        top: 50%;
-        margin-top: -1rem;
-      }
-    }
-
-    &:hover,
-    &:hover.active-revision::before {
+    &:hover {
       cursor: pointer;
       background-color: $blue;
     }
   }
 }
+

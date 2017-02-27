@@ -26,7 +26,7 @@ body {
   font-family: 'Roboto', sans-serif;
   color: $color-text;
   overflow: hidden;
-  background-color: $background-dark;
+  background-color: $panel;
 }
 
 .page {
@@ -37,169 +37,94 @@ body {
   position: relative;
 }
 
-/* Layout Styles */
+/* Toggle Styles */
 
 #wrapper {
-   padding-left: 7rem;
-   padding-right: 0rem;
+   padding-left: 25rem;
    -webkit-transition: all 0.5s ease;
    -moz-transition: all 0.5s ease;
    -o-transition: all 0.5s ease;
    transition: all 0.5s ease;
 }
 
-#wrapper.expand-left {
-   padding-left: 25rem;
-}
-
-#wrapper.expand-right {
-   padding-right: 30rem;
-}
-
-#left-panel-wrapper {
+#sidebar-wrapper {
    z-index: 999;
    position: fixed;
    left: 25rem;
-   width: 7rem;
-   min-width: 7rem;
+   width: 25rem;
    height: 100%;
    margin-left: -25rem;
    overflow-x: hidden;
    overflow-y: hidden;
-
+   background-color: $pitch;
    -webkit-transition: all 0.5s ease;
    -moz-transition: all 0.5s ease;
    -o-transition: all 0.5s ease;
    transition: all 0.5s ease;
-}
-
-#wrapper.expand-left #left-panel-wrapper {
-    width:25rem;
-}
-
-#right-panel-wrapper {
-  z-index: 999;
-  position: fixed;
-  right: 30rem;
-  width: 0;
-  height: 100%;
-  margin-right: -30rem;
-  background-color: $background-light;
-  border-left: 1px solid $background-lighter;
-
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-#wrapper.expand-right #right-panel-wrapper {
-    width:30rem;
 }
 
 #page-content-wrapper {
    height: calc(100% - 5rem);
-   width: calc(100% - 7rem);
+   width: calc(100% - 25rem);
    position: absolute;
    overflow-y: auto;
    overflow-x: hidden;
-   -webkit-transition: all 0.5s ease;
-   -moz-transition: all 0.5s ease;
-   -o-transition: all 0.5s ease;
-   transition: all 0.5s ease;
+   transition: 0.3s height ease-in-out;
+
+   &.footer-expanded {
+     height: calc(100% - 40rem);
+   }
 }
-
-#wrapper.expand-left #page-content-wrapper {
-  position: absolute;
-  width: calc(100% - 25rem);
-}
-
-#wrapper.expand-right  #page-content-wrapper {
-  position: absolute;
-  width: calc(100% - 7rem - 30rem);
-}
-
-#wrapper.expand-right.expand-left #page-content-wrapper {
-  width: calc(100% - 30rem - 25rem);
-}
-
-#wrapper.footer-expanded #page-content-wrapper {
-  position: absolute;
-  height: calc(100% - 40rem);
-}
-
-.events-panel {
-  position: fixed;
-  width: calc(100% - 7rem);
-  bottom: 0px;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-#wrapper.expand-right.expand-left .events-panel {
-  width: calc(100% - 30rem - 25rem);
-}
-
-#wrapper.expand-left .events-panel {
-  width: calc(100% - 25rem);
-}
-
-#wrapper.expand-right  .events-panel {
-  width: calc(100% - 7rem - 30rem);
-}
-
-/*@media(min-width:768px) {
-    #wrapper {
-        padding-left: 25rem;
-        padding-right: 30rem;
-    }
-
-    #wrapper.expand-left {
-        padding-left: 0;
-    }
-
-    #wrapper.expand-right {
-        padding-right: 0;
-    }
-
-    #left-panel-wrapper {
-        width: 25rem;
-    }
-
-    #right-panel-wrapper {
-      width: 30rem;
-    }
-
-    #wrapper.expand-left #left-panel-wrapper {
-        width: 0;
-    }
-
-    #wrapper.expand-right #right-panel-wrapper {
-        width: 0;
-    }
-
-    #page-content-wrapper {
-        position: relative;
-    }
-
-    #wrapper.expand-left #page-content-wrapper {
-        position: relative;
-        margin-right: 0;
-    }
-
-    #wrapper.expand-right #page-content-wrapper {
-        position: relative;
-        margin-left: 0;
-    }
-}*/
 
 menu {
   padding: 0;
   margin: 0;
   z-index: 999;
   position: relative;
+
+/*  nav {
+    background: rgb(13, 30, 38) !important;
+    overflow-y: scroll;
+  }
+
+  ul {
+    padding-right: 20px;
+  }
+
+  .navbar {
+    margin-bottom: 0;
+    border: none;
+    .stats {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      font-size: $font-size-normal;
+      font-weight: $font-weight-regular;
+
+      .stat-value {
+        color: $color-text;
+      }
+
+      .stat-label {
+        color: $color-text-dark;
+      }
+
+      .stat-content {
+        .detail {
+          color: $color-text-dark;
+        }
+      }
+    }
+
+    .disconnected {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      font-size: 16px !important;
+      font-weight: 500;
+      color: $color-pink;
+    }
+  }*/
 }
 
 /// Mixin to customize scrollbars
@@ -307,10 +232,84 @@ menu {
 }*/
 
 
+@media(min-width:768px) {
+   #wrapper {
 
+   }
+
+   #wrapper.toggled {
+       padding-left: 0;
+   }
+
+   #sidebar-wrapper {
+
+   }
+
+   #wrapper.toggled #sidebar-wrapper {
+       width: 0;
+   }
+
+   #page-content-wrapper {
+
+   }
+
+   #wrapper.toggled #page-content-wrapper {
+       position: relative;
+       margin-right: 0;
+   }
+}
 
 .capitalize {
   text-transform: capitalize;;
+}
+
+.vamp-page-header {
+  margin: 0;
+  padding: 0;
+  align-items: center;
+
+  .header-row {
+    margin: 0 0 -20px 0;
+  }
+
+  .header-column {
+    margin: 0 -5px;
+    padding: 0;
+    height: 8rem;
+    line-height: 8rem;
+
+    &.title {
+      font-size: $font-size-xxl;
+
+      color: $off-white;
+      font-weight: $font-weight-light;
+      letter-spacing: 0.05em;
+      margin: 0;
+      padding: 0;
+
+      div {
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+        text-overflow: ellipsis;
+      }
+    }
+
+    &.message {
+      margin: 0;
+      padding: 0;
+      font-size: $font-size-large;
+    }
+
+    &.buttons {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  &.error {
+    background-color: rgba($color-pink, 0.4);
+  }
 }
 
 .label {
@@ -331,6 +330,14 @@ menu {
   background-color: $brand-warning !important;
 }
 
+.editor {
+  position: absolute;
+  top: 8rem;
+  left: 15px;
+  right: 15px;
+  bottom: 0;
+}
+
 edit, add {
   .message-truncated {
     white-space: nowrap;
@@ -348,6 +355,16 @@ edit, add {
     &:hover {
       color: $color-text;
     }
+  }
+}
+
+.editor {
+  .ace_editor {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 }
 
@@ -543,12 +560,18 @@ p, div {
   }
 }
 
+
+.events-panel {
+  position: fixed;
+  width: calc(100% - 25rem);
+  bottom: 0px;
+}
+
 .event-panel-content {
   height: 5rem;
   position: relative;
   z-index: 888;
-  background-color: $background-dark;
-  border-top: 1px solid $background-lighter;
+  background-color: $night-sky;
   box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.15);
   transition: 0.3s height ease-in-out;
 
@@ -593,7 +616,7 @@ p, div {
     font-size: $font-size-normal;
     cursor: pointer;
     font-weight: $font-weight-regular;
-    background-color: $background-light;
+    background-color: $night-sky;
 
     .category {
       cursor: pointer;
@@ -629,7 +652,7 @@ p, div {
   }
 
   .container-fluid {
-    background-color: $background-dark;
+    background-color: $panel;
     height: 35rem;
     overflow-y: scroll;
     color: $color-text !important;
@@ -710,10 +733,10 @@ a.editable-click:hover {
 }
 
 .menu-button {
-  //display: flex !important;
-  //align-items: center;
-  //justify-content: center;
-  //padding-top: 1.2rem;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1.2rem;
   font-size: $font-size-large;
   //color: $color-text;
   &:hover {
@@ -721,18 +744,27 @@ a.editable-click:hover {
   }
 }
 
+.config-button a {
+  @extend .menu-button;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-decoration: none;
+}
+
 .info-button i {
   @extend .menu-button;
-  margin-left: 1.5rem;
-  @include colorize-ghost-btn($misty);
+  margin-top: 1.5rem;
+  margin-left: 10px;
+  @include colorize-ghost-btn($medium-blue);
   border: none;
   cursor: pointer;
 }
 
 .help-button i {
   @extend .menu-button;
-  margin-left: 1.5rem;
-  @include colorize-ghost-btn($misty);
+  margin-top: 1.5rem;
+  margin-left: 15px;
+  @include colorize-ghost-btn($medium-blue);
   border: none;
   cursor: pointer;
 }

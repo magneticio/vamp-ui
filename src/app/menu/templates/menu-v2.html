@@ -1,63 +1,51 @@
-
-<ul class="sidebar-nav" ng-class="{'closed' : $ctrl.leftPanelState}">
-  <li class="sidebar-brand">
-    <a href="#">
-      <img class="vamp-logo" src="styles/resources/img/_logo.svg">
-      <img class="vamp-title" src="styles/resources/img/logo-title.svg">
-    </a>
-  </li>
-  <li class="link-group">
-    <p class="group-title">Menu</p>
-    <ul>
-      <li class="link-item" ng-class="{active : $ctrl.isActive(artifact)}"
-          ng-repeat="artifact in $ctrl.artifacts">
-          <a ui-sref="{{ artifact.kind }}" href="#">
-            <i class="icon-ghost"></i>
-            <span>{{artifact.kind}}</span>
-          </a>
-      </li>
-    </ul>
-  </li>
-  <li class="link-group">
-    <p class="group-title">Settings</p>
-    <ul>
-      <li class="link-item" ng-class="{active : $ctrl.subMenu == 'admin'}" ng-click="$ctrl.openSubMenu('admin')">
-        <a class="btn-link">
+<ul>
+    <li class="sidebar-brand">
+      <a href="#">
+        <img class="vamp-logo" src="styles/resources/img/_logo.svg">
+        <img class="vamp-title" src="styles/resources/img/logo-title.svg">
+      </a>
+    </li>
+  </ul>
+<ul class="sidebar-nav">
+    <li ng-class="{active : $ctrl.isActive(artifact)}"
+        ng-repeat="artifact in $ctrl.artifacts">
+        <a ui-sref="{{ artifact.kind }}" href="#">
           <i></i>
-          <span>Admin</span>
+          <span>{{artifact.kind}}</span>
+        </a>
+    </li>
+    <li data-toggle="collapse" data-target="#settings" class="collapsed">
+      <a class="btn-link">
+        <i></i>
+        <span>Admin</span>
+      </a>
+    </li>
+    <ul id="settings" class="sub-menu collapse">
+      <li ng-class="{active : $ctrl.isActive('configuration')}">
+        <a ui-sref="configuration" href="#">
+          <i></i>
+          <span>Backend configuration</span>
+        </a>
+      </li>
+      <li ng-class="{active : $ctrl.isActive('vga')}">
+        <a ui-sref="vga" href="#">
+          <i></i>
+          <span>VGA configuration</span>
+        </a>
+      </li>
+      <li ng-class="{active : $ctrl.isActive('info')}">
+        <a ui-sref="info" href="#">
+          <i></i>
+          <span>Extended info</span>
+        </a>
+      </li>
+      <li ng-class="{active : $ctrl.isActive('log')}">
+        <a ui-sref="log" href="#">
+          <i></i>
+          <span>Log</span>
         </a>
       </li>
     </ul>
-  </li>
-</ul>
-<ul id="admin" class="sub-menu" ng-class="{'open' : $ctrl.subMenu == 'admin'}">
-  <li class="header-content">
-    Admin
-  </li>
-  <li class="link-item" ng-class="{active : $ctrl.isActive('configuration')}">
-    <a ui-sref="configuration" href="#">
-      <i></i>
-      <span>Backend configuration</span>
-    </a>
-  </li>
-  <li class="link-item" ng-class="{active : $ctrl.isActive('vga')}">
-    <a ui-sref="vga" href="#">
-      <i></i>
-      <span>VGA configuration</span>
-    </a>
-  </li>
-  <li class="link-item" ng-class="{active : $ctrl.isActive('info')}">
-    <a ui-sref="info" href="#">
-      <i></i>
-      <span>Extended info</span>
-    </a>
-  </li>
-  <li class="link-item" ng-class="{active : $ctrl.isActive('log')}">
-    <a ui-sref="log" href="#">
-      <i></i>
-      <span>Log</span>
-    </a>
-  </li>
 </ul>
 <div class="sidebar-bottom-docked">
 </div>

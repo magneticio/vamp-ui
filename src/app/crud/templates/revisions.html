@@ -1,8 +1,0 @@
-<div class="artifact-revisions">
-  <div class="header-content">Revisions</div>
-  <ul class="list-unstyled">
-    <li ng-repeat="revision in $ctrl.revisions | orderBy: 'timestamp':true" class="revision" ng-class="{'active-revision' : $ctrl.activeRevision.id == revision.id}" ng-click="$ctrl.toggleRevisiton(revision)">
-        <span class="pull-left">{{ revision.timestamp | date:'MMM dd' }}</span><span class="pull-right">{{ revision.timestamp | date:'HH:mm' }}</span>
-    </li>
-  </ul>
-</div>

@@ -87,8 +87,7 @@
     "rules": {
       "guard-for-in": "off",
       "camelcase": "off",
-      "no-loop-func": "off",
-      "linebreak-style": "off"
+      "no-loop-func": "off"
     }
   },
   "dependencies": {

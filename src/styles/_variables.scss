@@ -17,12 +17,6 @@ $misty: #C3D2CD;
 $medium-blue: #6991AA;
 $shadow: rgba(0,0,0,0.15);
 
-$background-dark: #0C1E26;
-$background-light: #16252E;
-$background-lighter: #1E323E;
-
-
-
 $gray-base: #0d1e26;
 $gray-darker: #142d3c;
 $gray-dark: rgb(35, 75, 95);
@@ -35,6 +29,16 @@ $brand-info: #6991aa;
 $brand-warning: #8e6013;
 $brand-danger: rgb(255, 64, 94);
 $link-hover-color: darken($brand-info, 15%) ;
+
+/*$font-size-extra-large: 34px;
+$button-size-large: 60px;
+$font-size-large: 19px;
+$button-size-normal: 40px;
+$font-size-normal: 14px;
+$button-size-small: 30px;
+$font-size-small: 12px;
+$button-size-tiny: 20px;
+$font-size-tiny: 10px;*/
 
 $font-size-xxl: 3.4rem;
 $font-size-xl: 2.5rem;

@@ -4,13 +4,10 @@ angular.module('app').component('edit', {
   templateUrl: 'app/crud/edit.html'
 });
 
-function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $timeout,
-  $element, $location, $vamp, uiStatesFactory,
-  revisionsService, artifact, snippet, toastr, alert) {
-
+function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $timeout, $element, $location, $vamp, artifact, snippet, toastr, alert) {
   var $ctrl = this;
 
-  this.kind = $stateParams.kind;
+  this.kind = $attrs.kind;
   this.name = $stateParams.name;
   this.title = $filter('decodeName')(this.name);
 
@@ -25,19 +22,12 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   this.base = null;
   this.source = null;
 
-  $ctrl.revisions = revisionsService.revisions;
-  $ctrl.activeRevisiton = revisionsService.activeRevision;
+  $ctrl.revisions = [];
 
   this.valid = true;
   $ctrl.inEdit = false;
   var validation = true;
   var ignoreChange = false;
-
-  uiStatesFactory.setRightPanelViewState(true);
-
-  $scope.$on('$destroy', function() {
-    uiStatesFactory.setRightPanelViewState(false);
-  });
 
   function transformErrorMessage(message) {
     $ctrl.errorMessage = message;
@@ -92,6 +82,14 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
         $ctrl.expandError = false;
       }
     }
+  });
+
+  $scope.$on('/events', function (e, response) {
+    _.forEach(response.data, function (event) {
+      if (event.type === 'archive' && _.includes(event.tags, $ctrl.kind + ':' + $ctrl.name) && (_.includes(event.tags, 'archive:update') || _.includes(event.tags, 'archive:create'))) {
+        $ctrl.addRevision(event);
+      }
+    });
   });
 
   $scope.$on('/events/stream', function (e, response) {
@@ -163,8 +161,37 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
     });
   };
 
-  this.closeRevision = function () {
-    revisionsService.clearSelected();
+  this.addRevision = function (event) {
+    if (_.find($ctrl.revisions, {id: event.id})) {
+      return;
+    }
+
+    var source = event.value || '';
+    if (source) {
+      source = JSON.parse(source);
+      try {
+        source = JSON.stringify(JSON.parse(source), null, '  ');
+      } catch (e) {
+        source = event.value.replace(/\\n/g, '\n');
+        source = source.replace(/\\"/g, '"');
+        if (source.charAt(0) === '"') {
+          source = source.substring(1);
+        }
+        if (source.charAt(source.length - 1) === '"') {
+          source = source.substring(0, source.length - 1);
+        }
+      }
+    }
+
+    $ctrl.revisions.push({
+      id: event.id,
+      source: source,
+      timestamp: event.timestamp
+    });
+  };
+
+  this.showRevision = function (revision) {
+    snippet.show('Revision: ' + $filter('date')(revision.timestamp, 'dd MMM yyyy HH:mm:ss.sss'), revision.source, 'lg');
   };
 
   function goBack() {

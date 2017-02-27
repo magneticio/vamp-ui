@@ -34,49 +34,20 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       artifactsData.views.main.templateUrl = 'app/' + artifact.kind + '/' + artifact.kind + '.html';
     }
 
-    $stateProvider.state(artifact.kind, artifactsData);
-
     var artifactViewData = {
-      url: '/' + artifact.kind + '/:name',
+      url: '/' + artifact.kind + '/view/:name',
       views: {
         main: {
           templateUrl: ''
-        },
-        "right-panel" : {
-          templateUrl: 'app/crud/templates/revisions.html',
-          controller: 'revisionsController',
-          controllerAs : '$ctrl'
         }
-      },
-      params: {
-        kind: artifact.kind
-      },
-      data: {
-        path: 'artifact'
       }
     };
 
     if (artifact.artifactViewTemplate) {
       artifactViewData.views.main.templateUrl = artifact.artifactViewTemplate;
-
-      var artifactEditData = {
-        url: '/' + artifact.kind + '/:name/edit',
-        views: {
-          main: {
-            template: '<edit kind="' + artifact.kind + '"></edit>'
-          }
-        },
-        params: {
-          kind: artifact.kind
-        }
-      };
-
-      $stateProvider.state(artifact.kind + 'Edit', artifactEditData);
     } else {
       artifactViewData.views.main.template = '<edit kind="' + artifact.kind + '"></edit>';
     }
-
-    $stateProvider.state(artifact.kind + 'View', artifactViewData);
 
     var artifactAddData = {
       url: '/' + artifact.kind + '/add',
@@ -87,7 +58,20 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       }
     };
 
-    $stateProvider.state(artifact.kind + 'Add', artifactAddData);
+    var artifactEditData = {
+      url: '/' + artifact.kind + '/edit/:name',
+      views: {
+        main: {
+          template: '<edit kind="' + artifact.kind + '"></edit>'
+        }
+      }
+    };
+
+    $stateProvider
+      .state(artifact.kind, artifactsData)
+      .state(artifact.kind + 'Add', artifactAddData)
+      .state(artifact.kind + 'View', artifactViewData)
+      .state(artifact.kind + 'Edit', artifactEditData);
   });
 
   $stateProvider.state('vga', {url: '/vga', views: {main: {template: '<vga></vga>'}}});

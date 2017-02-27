@@ -3,5 +3,4 @@ angular.module('app')
     var $layout = this;
 
     $layout.uiStates = uiStatesFactory.viewStates;
-    $layout.statesControl = uiStatesFactory;
   });

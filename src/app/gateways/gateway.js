@@ -17,7 +17,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
 
   this.edit = function () {
     var encoded = $filter('encodeName')(this.gateway.name);
-    $location.path('/gateways/' + encoded + '/edit').search({back: '/gateways/' + encoded});
+    $location.path('/gateways/edit/' + encoded).search({back: '/gateways/view/' + encoded});
   };
 
   this.delete = function () {

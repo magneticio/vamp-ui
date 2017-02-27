@@ -57,7 +57,7 @@
     }
 
     &.btn-primary {
-      @include colorize-ghost-btn($misty);
+      @include colorize-ghost-btn($medium-blue);
     }
 
     &.btn-info {
@@ -116,6 +116,6 @@
     }
   }
 }
-:not(.btn-group) > button.btn  {
-  min-width: $button-size-normal;
+:not(.btn-group) > button.btn {
+  min-width: 10rem;
 }

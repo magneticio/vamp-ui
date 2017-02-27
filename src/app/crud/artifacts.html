@@ -1,52 +1,46 @@
-<header>
+<header title="{{$artifacts.kind}}">
+    <main>
+      <span class="capitalize">{{$artifacts.kind}}</span>
+      <div class="artifacts-search-box">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="icon-magnifier"></i></span>
+          <input type="text" ng-change="$artifacts.onSearchTermChange()" auto-focus class="form-control" ng-model="$artifacts.searchTerm" placeholder="Search" />
+        </div>
+      </div>
+    </main>
+    <controls>
+      <div ng-if="$artifacts.initialized && $artifacts.artifacts.length !== 0">
+        <div class="btn-group vamp-btn-group">
+            <button title="Grid view" class="btn bootstrap-btn btn-icon vamp-btn icon-grid"
+              ng-class="{'vamp-btn-selected' : $artifacts.viewStates.main == 'grid'}"
+              type="button" ng-click="$artifacts.toggleView('grid')">
+            </button>
+            <button title="List view" class="btn bootstrap-btn btn-icon vamp-btn icon-list"
+              ng-class="{'vamp-btn-selected' : $artifacts.viewStates.main == 'table'}"
+              type="button" ng-click="$artifacts.toggleView('table')">
+            </button>
+        </div>
+      </div>
+    </controls>
+    <buttons>
+        <!--<button class="btn btn-ghost btn-primary " type="submit"
+                ng-click="$artifacts.toggleSelection()">
+            <i class="fa fa-square-o" ng-show="!$artifacts.isSelectedAll()"></i>
+            <i class="fa fa-check-square-o" ng-show="$artifacts.isSelectedAll()"></i>
+            <span class="btn-text">Select all</span>
+        </button>-->
+        <button class="btn btn-ghost btn-primary" type="submit" ng-click="$artifacts.add()">
+            Add new
+        </button>
+        <button class="btn btn-ghost btn-danger" type="submit"
+                ng-if="$artifacts.isSelectedAny()"
+                ng-click="$artifacts.deleteSelected()">
+            Delete selected
+        </button>
+    </buttons>
 </header>
 
-<div class="container-fluid no-padding main-content">
-  <div class="row content-header">
-    <div class="col-md-5 ">
-      <div class="pull-left">
-        <span class="capitalize header-title">{{$artifacts.kind}}&nbsp;&nbsp;|</span>
-        <span>&nbsp;&nbsp;{{$artifacts.artifacts.length}} total</span>
-      </div>
-    </div>
-    <div class="col-md-2 text-center">
-        <div style="display:inline-block">
-          <div ng-if="$artifacts.initialized && $artifacts.artifacts.length !== 0">
-            <div class="btn-group vamp-btn-group">
-                <button title="Grid view" class="btn bootstrap-btn btn-icon vamp-btn icon-grid"
-                  ng-class="{'vamp-btn-selected' : $artifacts.viewStates.main == 'grid'}"
-                  type="button" ng-click="$artifacts.toggleView('grid')">
-                </button>
-                <button title="List view" class="btn bootstrap-btn btn-icon vamp-btn icon-list"
-                  ng-class="{'vamp-btn-selected' : $artifacts.viewStates.main == 'table'}"
-                  type="button" ng-click="$artifacts.toggleView('table')">
-                </button>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div class="col-md-5 buttons">
-      <div class="pull-right">
-        <div class="artifacts-search-box">
-          <div class="input-group">
-            <span class="input-group-addon"><i class="icon-magnifier"></i></span>
-            <input type="text" ng-change="$artifacts.onSearchTermChange()" auto-focus class="form-control" ng-model="$artifacts.searchTerm" placeholder="Search" />
-          </div>
-        </div>
-          <button class="btn btn-success" type="submit" ng-click="$artifacts.add()">
-              <i class="fa fa-plus"></i>
-          </button>
-          <button class="btn btn-ghost btn-danger" type="submit"
-                  ng-if="$artifacts.isSelectedAny()"
-                  ng-click="$artifacts.deleteSelected()">
-              Delete selected
-          </button>
-      </div>
-    </div>
-  </div>
-
-
-<div class="row artifacts-panel">
+<div class="artifacts-panel">
   <div ng-if="$artifacts.initialized && $artifacts.artifacts.length > 0">
     <div ng-if="$artifacts.viewStates.main == 'grid'" class="artifacts">
       <div ng-repeat="artifact in $artifacts.filteredArtifacts | limitTo: $artifacts.itemsPerPage: (($artifacts.currentPage - 1) * $artifacts.itemsPerPage) track by $index">
@@ -92,6 +86,4 @@
       </li>
     </ul>
   </nav>
-</div>
-
 </div>
