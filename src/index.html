@@ -23,22 +23,22 @@
 <body ng-app="app">
 <div class="page">
 
-    <div id="wrapper" ng-controller="layoutController as $layout">
+    <div id="wrapper" ng-class="{'expand-left' : $layout.uiStates.left, 'expand-right' : $layout.uiStates.right, 'footer-expanded' : $layout.uiStates.footer}" ng-controller="layoutController as $layout">
 
         <!-- Sidebar -->
-        <div id="sidebar-wrapper">
+        <div id="left-panel-wrapper">
           <menu>
           </menu>
         </div>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
-        <div id="page-content-wrapper" ng-class="{'footer-expanded': $layout.uiStates.footer == 'expanded'}">
-
+        <div id="page-content-wrapper">
             <ui-view name="main"></ui-view>
             <side></side>
-
-
+        </div>
+        <div id="right-panel-wrapper">
+          <ui-view name="right-panel"></ui-view>
         </div>
         <!-- /#page-content-wrapper -->
         <events class="events-panel"></events>

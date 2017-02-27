@@ -169,7 +169,7 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   };
 
   $ctrl.view = function (artifact) {
-    $location.path($ctrl.kind + '/view/' + $filter('encodeName')(artifact.name));
+    $location.path($ctrl.kind + '/' + $filter('encodeName')(artifact.name));
   };
 
   $ctrl.deleteSelected = function () {

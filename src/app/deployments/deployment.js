@@ -17,7 +17,7 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
   this.last = [];
 
   this.edit = function () {
-    $location.path('/deployments/edit/' + this.deployment.name).search({back: '/deployments/view/' + this.deployment.name});
+    $location.path('/deployments/' + this.deployment.name + '/edit').search({back: '/deployments/' + this.deployment.name});
   };
 
   this.delete = function () {

@@ -1,0 +1,28 @@
+<div class="vamp-page-header {{ $ctrl.clazz }}">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 header-content">
+        <breadcrumbs></breadcrumbs>
+        <div class="info-button pull-right">
+            <i class="icon-info" aria-hidden="true"
+               ng-click="$ctrl.toggleInfoPanel()"></i>
+        </div>
+        <div class="help-button pull-right">
+            <i class="icon-question" aria-hidden="true"
+               ng-click="$ctrl.toggleHelpPanel()"></i>
+        </div>
+      </div>
+    </div>
+  <!--  <div class="row">
+      <div class="col-md-5 header-content">
+          <div class="pull-left" ng-transclude="main">{{ $ctrl.title }}</div>
+      </div>
+      <div class="col-md-2 header-content text-center">
+          <div style="display:inline-block" ng-transclude="controls"></div>
+      </div>
+      <div class="col-md-5 header-content buttons">
+        <div class="pull-right" ng-transclude="buttons"></div>
+      </div>
+    </div>-->
+  </div>
+</div>
