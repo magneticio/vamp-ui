@@ -5,9 +5,9 @@ angular.module('app')
   }]);
 
 /** @ngInject */
-function DeploymentsController($scope, $vampDeployment, $controller) {
+function DeploymentsController($scope, artifactsMetadata, $vampDeployment, $controller) {
   var $ctrl = this;
-  $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope});
+  $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope, artifactsMetadata: artifactsMetadata});
 
   $ctrl.getScale = function (deployment) {
     return $vampDeployment.scale(deployment);

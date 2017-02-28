@@ -1,32 +1,16 @@
-angular.module('app').directive('artifacts', function () {
-  return {
-    scope: {
-      kind: '@'
-    },
-    restrict: 'E',
-    controller: "@",
-    name: "withController",
-    controllerAs: '$artifacts',
-    templateUrl: 'app/crud/artifacts.html'/* ,
-    transclude: {
-      gridItem: 'div'
-    },
-    replace: true*/
-  };
-});
+BaseArtifactsController.$inject = ['$ctrl', '$scope', 'artifactsMetadata', '$vamp', 'uiStatesFactory', '$state', '$stateParams',
+  '$filter', 'filterFilter', 'toastr', 'alert'];
 
-BaseArtifactsController.$inject = ['$ctrl', '$scope', '$vamp', 'uiStatesFactory', '$state', '$stateParams',
-  '$filter', 'filterFilter', '$location', 'toastr', 'alert'];
-
-function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
-  $state, $stateParams, $filter, filterFilter, $location, toastr, alert) {
+function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $vamp, uiStatesFactory,
+  $state, $stateParams, $filter, filterFilter, toastr, alert) {
   $ctrl.searchTerm = $stateParams.searchTerm;
   $ctrl.initialized = false;
-  $ctrl.kind = $scope.kind;
+  $ctrl.kind = $stateParams.kind;
   if (!$ctrl.path) {
     $ctrl.path = '/' + $ctrl.kind;
   }
 
+  $ctrl.artifactsMetadata = artifactsMetadata;
   $ctrl.artifacts = [];
   $ctrl.filteredArtifacts = filterFilter($ctrl.artifacts, {name: $ctrl.searchTerm});
   var _artifacts = [];
@@ -75,8 +59,6 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   $ctrl.toggleView = function (type) {
     uiStatesFactory.setMainViewState(type);
   };
-
-  $ctrl.artifactData = $state.$current.data;
 
   $ctrl.itemsPerPage = 20;
   $ctrl.pages = 1;
@@ -165,11 +147,11 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   // operations
 
   $ctrl.add = function () {
-    $location.path($ctrl.kind + '/add');
+    $state.go('.add');
   };
 
   $ctrl.view = function (artifact) {
-    $location.path($ctrl.kind + '/view/' + $filter('encodeName')(artifact.name));
+    $state.go('.view', {name: artifact.name});
   };
 
   $ctrl.deleteSelected = function () {
@@ -208,12 +190,14 @@ function BaseArtifactsController($ctrl, $scope, $vamp, uiStatesFactory,
   $ctrl.peek();
 }
 
-ArtifactsController.$inject = ['$scope', '$controller'];
+angular.module('app').controller('BaseArtifactsController', BaseArtifactsController);
+
+ArtifactsController.$inject = ['$scope', 'artifactsMetadata', '$controller'];
+
 function ArtifactsController(
-  $scope, $controller) {
+  $scope, artifactsMetadata, $controller) {
   var $ctrl = this;
-  $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope});
+  $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope, artifactsMetadata: artifactsMetadata});
 }
 
-angular.module('app').controller('BaseArtifactsController', BaseArtifactsController);
 angular.module('app').controller('ArtifactsController', ArtifactsController);

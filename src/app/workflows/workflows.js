@@ -3,10 +3,10 @@ angular.module('app')
   .controller('WorkflowsController', WorkflowsController);
 
 /** @ngInject */
-function WorkflowsController(uiStatesFactory, $scope, $controller) {
+function WorkflowsController($scope, artifactsMetadata, $controller, uiStatesFactory) {
   var $ctrl = this;
 
-  $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope});
+  $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope, artifactsMetadata: artifactsMetadata});
 
   $ctrl.onStreamEvent = function (response) {
     if (_.includes(response.data.tags, 'workflows')) {

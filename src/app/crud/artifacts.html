@@ -9,7 +9,7 @@
       </div>
     </main>
     <controls>
-      <div ng-if="$artifacts.initialized && $artifacts.artifacts.length !== 0">
+      <div ng-if="$artifacts.artifacts.length !== 0">
         <div class="btn-group vamp-btn-group">
             <button title="Grid view" class="btn bootstrap-btn btn-icon vamp-btn icon-grid"
               ng-class="{'vamp-btn-selected' : $artifacts.viewStates.main == 'grid'}"
@@ -41,7 +41,7 @@
 </header>
 
 <div class="artifacts-panel">
-  <div ng-if="$artifacts.initialized && $artifacts.artifacts.length > 0">
+  <div ng-if="$artifacts.artifacts.length > 0">
     <div ng-if="$artifacts.viewStates.main == 'grid'" class="artifacts">
       <div ng-repeat="artifact in $artifacts.filteredArtifacts | limitTo: $artifacts.itemsPerPage: (($artifacts.currentPage - 1) * $artifacts.itemsPerPage) track by $index">
         <div class="artifact" ng-class="{selected: $artifacts.isSelected(artifact)}"
@@ -52,7 +52,7 @@
                ng-checked="$artifacts.isSelected(artifact)"
                ng-click="$artifacts.updateSelection($event, artifact)">
           </h3>
-          <div ng-include="$artifacts.artifactData.artifactGridView"></div>
+          <div ng-include="$artifacts.artifactsMetadata.artifactGridView"></div>
         </div>
       </div>
     </div>
@@ -60,7 +60,7 @@
       <artifact-list-view ng-if="$artifacts.viewStates.main == 'table'"
         artifacts-ctrl="$artifacts"
         items="$artifacts.filteredArtifacts"
-        artifact-data="$artifacts.artifactData">
+        artifacts-metadata="$artifacts.artifactsMetadata">
       </artifact-list-view>
     </div>
   </div>

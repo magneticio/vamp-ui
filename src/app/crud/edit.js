@@ -1,13 +1,9 @@
-angular.module('app').component('edit', {
-  restrict: 'E',
-  controller: ArtifactEditController,
-  templateUrl: 'app/crud/edit.html'
-});
+angular.module('app').controller('edit',
 
-function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $timeout, $element, $location, $vamp, artifact, snippet, toastr, alert) {
+function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout, $element, $vamp, artifact, snippet, toastr, alert) {
   var $ctrl = this;
 
-  this.kind = $attrs.kind;
+  this.kind = $stateParams.kind;
   this.name = $stateParams.name;
   this.title = $filter('decodeName')(this.name);
 
@@ -197,6 +193,6 @@ function ArtifactEditController($scope, $filter, $attrs, $state, $stateParams, $
   function goBack() {
     validation = false;
     ignoreChange = true;
-    $location.path($location.search().back || $ctrl.kind).search({});
+    $state.go('^');
   }
-}
+});

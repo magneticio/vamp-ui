@@ -2,7 +2,7 @@ angular.module('app')
   .controller('DeploymentCtrl', DeploymentCtrl);
 
 /** @ngInject */
-function DeploymentCtrl($scope, $uibModal, $vamp, $location, toastr) {
+function DeploymentCtrl($scope, $uibModal, $vamp, $state, toastr) {
   var $ctrl = this;
   $ctrl.deployment = $scope.artifact;
 
@@ -31,7 +31,7 @@ function DeploymentCtrl($scope, $uibModal, $vamp, $location, toastr) {
         return $vamp.await(function () {
           $vamp.put('/blueprints/' + data.name, JSON.stringify(blueprint));
         }).then(function () {
-          $location.path('blueprints/view/' + data.name);
+          $state.go('artifacts.view.source', {kind: 'blueprints', name: data.name});
           toastr.success('\'' + blueprint.name + '\' has been successfully exported as \'' + data.name + '\'.');
         }).catch(function (response) {
           if (response) {

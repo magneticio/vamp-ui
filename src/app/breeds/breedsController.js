@@ -1,8 +1,8 @@
-BreedsController.$inject = ['$scope', 'namifyFilter', '$controller'];
+BreedsController.$inject = ['$scope', 'artifactsMetadata', 'namifyFilter', '$controller'];
 function BreedsController(
-  $scope, namifyFilter, $controller) {
+  $scope, artifactsMetadata, namifyFilter, $controller) {
   var $ctrl = this;
-  $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope});
+  $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope, artifactsMetadata: artifactsMetadata});
 
   $ctrl.onDataResponse = function () {
     angular.forEach($ctrl.artifacts, function (ar) {

@@ -2,7 +2,7 @@
 angular.module('app').controller('GatewayController', GatewayController);
 
 /** @ngInject */
-function GatewayController($scope, $filter, $stateParams, $timeout, $location, $vamp, uiStatesFactory, slider, alert, toastr, $uibModal) {
+function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vamp, uiStatesFactory, slider, alert, toastr, $uibModal) {
   var $ctrl = this;
   var path = '/gateways/' + $stateParams.name;
 
@@ -16,8 +16,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   this.sliderOptions = slider.weightOptions;
 
   this.edit = function () {
-    var encoded = $filter('encodeName')(this.gateway.name);
-    $location.path('/gateways/edit/' + encoded).search({back: '/gateways/view/' + encoded});
+    $state.go('.source');
   };
 
   this.delete = function () {
@@ -25,7 +24,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
       $vamp.await(function () {
         $vamp.remove(path);
       }).then(function () {
-        $location.path('/gateways');
+        $state.go('^');
         toastr.success('Gateway \'' + $ctrl.gateway.name + '\' has been successfully deleted.');
       }).catch(function (response) {
         if (response) {
@@ -102,7 +101,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
   $vamp.await(function () {
     $vamp.peek(path);
   }).catch(function () {
-    $location.path('/gateways');
+    $state.go('^');
     alert.show('Error', 'Gateway \'' + $stateParams.name + '\' cannot be found.', 'OK', null, function () {
     });
   });
@@ -125,7 +124,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $location, $
     var event = response.data;
     if ($ctrl.gateway && _.includes(event.tags, 'gateways:' + $ctrl.gateway.name)) {
       if (_.includes(event.tags, 'archive:delete')) {
-        $location.path('/gateways');
+        $state.go('^');
       } else if (_.includes(event.tags, 'archive:update') || _.includes(event.tags, 'deployed')) {
         $vamp.peek(path);
       } else {

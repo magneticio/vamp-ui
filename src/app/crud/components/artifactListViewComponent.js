@@ -30,7 +30,7 @@ angular.module('app')
   .component('artifactListView', {
     bindings: {
       items: '<',
-      artifactData: '<',
+      artifactsMetadata: '<',
       artifactsCtrl: '<'
     },
     templateUrl: 'app/crud/templates/listView.html',

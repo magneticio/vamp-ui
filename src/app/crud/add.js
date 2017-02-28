@@ -1,13 +1,9 @@
-angular.module('app').component('add', {
-  restrict: 'E',
-  controller: ArtifactAddController,
-  templateUrl: 'app/crud/edit.html'
-});
+angular.module('app').controller('addController',
 
-function ArtifactAddController($scope, $attrs, $location, $state, $timeout, $element, $vamp, artifact, toastr, alert) {
+function ($scope, $state, $stateParams, $timeout, $element, $vamp, artifact, toastr, alert) {
   var $ctrl = this;
 
-  $ctrl.kind = $attrs.kind;
+  $ctrl.kind = $stateParams.kind;
   // naive singularization
   $ctrl.singular = $ctrl.kind.substring(0, this.kind.length - 1);
   $ctrl.title = 'New ' + $ctrl.singular;
@@ -110,8 +106,8 @@ function ArtifactAddController($scope, $attrs, $location, $state, $timeout, $ele
   function goBack() {
     validation = false;
     ignoreChange = true;
-    $location.path($ctrl.kind);
+    $state.go('artifacts', {kind: $ctrl.kind});
   }
 
   init();
-}
+});

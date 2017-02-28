@@ -2,7 +2,7 @@
 angular.module('app').controller('DeploymentController', DeploymentController);
 
 /** @ngInject */
-function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $location, $vamp, $vampDeployment, $uibModal, snippet, alert, toastr) {
+function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $state, $vamp, $vampDeployment, $uibModal, snippet, alert, toastr) {
   var $ctrl = this;
   var path = '/deployments/' + $stateParams.name;
 
@@ -17,7 +17,7 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
   this.last = [];
 
   this.edit = function () {
-    $location.path('/deployments/edit/' + this.deployment.name).search({back: '/deployments/view/' + this.deployment.name});
+    $state.go('.source');
   };
 
   this.delete = function () {
@@ -25,7 +25,7 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
       $vamp.await(function () {
         $vamp.remove(path, JSON.stringify(original));
       }).then(function () {
-        $location.path('/deployments');
+        $state.go('^');
         toastr.success('Deployment \'' + $ctrl.title + '\' has been successfully deleted.');
       }).catch(function (response) {
         if (response) {
@@ -100,7 +100,7 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
   $vamp.await(function () {
     $vamp.peek(path);
   }).catch(function () {
-    $location.path('/deployments');
+    $state.go('^');
     alert.show('Error', 'Deployment \'' + $stateParams.name + '\' cannot be found.', 'OK', null, function () {
     });
   });
@@ -141,7 +141,7 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
           }).catch(function () {
             $ctrl.deployment.clusters = {};
             alert.show('Warning', '\'' + $ctrl.deployment.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
-              $location.path('/deployments');
+              $state.go('^');
             });
           });
         } else {

@@ -5,6 +5,7 @@ Artifacts.prototype.all = function () {
   return [
     {
       kind: "deployments",
+      mainController: 'DeploymentsController',
       deployable: true,
       artifactViewTemplate: 'app/deployments/deployment.html',
       artifactController: "DeploymentCtrl",
@@ -60,6 +61,7 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "gateways",
+      mainController: 'GatewaysController',
       deployable: true,
       artifactViewTemplate: 'app/gateways/gateway.html',
       artifactGridView: 'app/gateways/templates/gridView.html',
@@ -102,6 +104,7 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "workflows",
+      mainController: 'WorkflowsController',
       deployable: true,
       artifactController: "WorkflowController",
       artifactGridView: 'app/workflows/templates/workflowGridView.html',
@@ -176,6 +179,7 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "blueprints",
+      mainController: "BlueprintsController",
       artifactGridView: 'app/blueprints/templates/blueprintGridView.html',
       artifactController: "BlueprintController",
       artifactInfo: [
@@ -210,6 +214,7 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "breeds",
+      mainController: 'BreedsController',
       artifactGridView: 'app/breeds/templates/breedGridView.html',
       artifactInfo: [
         {
@@ -232,6 +237,7 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "scales",
+      mainController: 'ArtifactsController',
       artifactGridView: 'app/scales/templates/scaleGridView.html',
       artifactInfo: [
         {
@@ -259,6 +265,7 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "conditions",
+      mainController: 'ArtifactsController',
       artifactGridView: 'app/conditions/templates/gridView.html',
       artifactInfo: [
         {

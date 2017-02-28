@@ -2,7 +2,7 @@ angular.module('app')
   .controller('BlueprintController', BlueprintController);
 
 /** @ngInject */
-function BlueprintController($scope, $location, $uibModal, toastr, $vamp, $vampBlueprint) {
+function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlueprint) {
   var $ctrl = this;
 
   $ctrl.blueprint = $scope.artifact;
@@ -108,7 +108,7 @@ function BlueprintController($scope, $location, $uibModal, toastr, $vamp, $vampB
   };
 
   function gotoDeployment(name) {
-    $location.path('deployments/view/' + name);
+    $state.go('artifacts.view', {kind: 'deployments', name: name});
   }
 
   function updateDeployment(deployments, title, text, buttonText, buttonClass) {

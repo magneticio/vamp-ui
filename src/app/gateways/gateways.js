@@ -1,9 +1,9 @@
 angular
   .module('app')
-  .controller('GatewaysController', function ($scope, $vamp, namifyFilter, $controller) {
+  .controller('GatewaysController', function ($scope, artifactsMetadata, $vamp, namifyFilter, $controller) {
     var $ctrl = this;
 
-    $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope});
+    $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope, artifactsMetadata: artifactsMetadata});
 
     // Namifying the Routes
     $ctrl.onDataResponse = function () {

@@ -5,12 +5,11 @@ angular.module('app').config(routesConfig);
 function routesConfig($stateProvider, $urlRouterProvider) {
   var artifacts = Artifacts.prototype.all();
 
-  $urlRouterProvider.otherwise('/' + artifacts[0].kind);
+  $urlRouterProvider.otherwise('/deployments');
 
-  _.forEach(artifacts, function (artifact) {
-    var artifactsData = {
-      url: '/' + artifact.kind + '?page&searchTerm',
-      data: artifact,
+  $stateProvider
+    .state('artifacts', {
+      url: '/:kind?page&searchTerm',
       params: {
         page: {
           value: '1',
@@ -21,58 +20,52 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           squash: true
         }
       },
+      resolve: {
+        artifactsMetadata: function ($stateParams) {
+          return _.find(artifacts, {kind: $stateParams.kind});
+        }
+      },
       views: {
-        main: {
-          templateUrl: ''
+        "main@": {
+          controllerProvider: function (artifactsMetadata) {
+            return artifactsMetadata.mainController;
+          },
+          templateUrl: 'app/crud/artifacts.html',
+          controllerAs: '$artifacts'
         }
       }
-    };
-
-    if (artifact.artifactsTemplate) {
-      artifactsData.views.main.templateUrl = artifact.artifactsTemplate;
-    } else {
-      artifactsData.views.main.templateUrl = 'app/' + artifact.kind + '/' + artifact.kind + '.html';
-    }
-
-    var artifactViewData = {
-      url: '/' + artifact.kind + '/view/:name',
+    })
+    .state('artifacts.add', {
+      url: '/add',
       views: {
-        main: {
-          templateUrl: ''
+        "main@": {
+          controller: 'addController as $ctrl',
+          templateUrl: 'app/crud/templates/addArtifact.html'
         }
       }
-    };
-
-    if (artifact.artifactViewTemplate) {
-      artifactViewData.views.main.templateUrl = artifact.artifactViewTemplate;
-    } else {
-      artifactViewData.views.main.template = '<edit kind="' + artifact.kind + '"></edit>';
-    }
-
-    var artifactAddData = {
-      url: '/' + artifact.kind + '/add',
+    })
+    .state('artifacts.view', {
+      url: '/:name/view',
       views: {
-        main: {
-          template: '<add kind="' + artifact.kind + '"></add>'
+        "main@": {
+          templateUrl: function (params) {
+            return _.find(artifacts, {kind: params.kind}).artifactViewTemplate;
+          }
+        }
+      },
+      data: {
+        allowedKinds: ['deployments', 'gateways']
+      }
+    })
+    .state('artifacts.view.source', {
+      url: '/source',
+      views: {
+        "main@": {
+          controller: 'edit as $ctrl',
+          templateUrl: 'app/crud/edit.html'
         }
       }
-    };
-
-    var artifactEditData = {
-      url: '/' + artifact.kind + '/edit/:name',
-      views: {
-        main: {
-          template: '<edit kind="' + artifact.kind + '"></edit>'
-        }
-      }
-    };
-
-    $stateProvider
-      .state(artifact.kind, artifactsData)
-      .state(artifact.kind + 'Add', artifactAddData)
-      .state(artifact.kind + 'View', artifactViewData)
-      .state(artifact.kind + 'Edit', artifactEditData);
-  });
+    });
 
   $stateProvider.state('vga', {url: '/vga', views: {main: {template: '<vga></vga>'}}});
   $stateProvider.state('log', {url: '/log', views: {main: {template: '<log></log>'}}});

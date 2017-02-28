@@ -9,7 +9,7 @@
 <ul class="sidebar-nav">
     <li ng-class="{active : $ctrl.isActive(artifact)}"
         ng-repeat="artifact in $ctrl.artifacts">
-        <a ui-sref="{{ artifact.kind }}" href="#">
+        <a ui-sref="artifacts({kind : artifact.kind })" href="#">
           <i></i>
           <span>{{artifact.kind}}</span>
         </a>

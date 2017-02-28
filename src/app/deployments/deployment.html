@@ -149,7 +149,7 @@
                             <div class="vamp-table__col__list__item"
                                  ng-repeat="(portName, port) in service.breed.ports | orderByKeys">
                                 <span class="v-value">
-                                    <a ui-sref="gatewaysView({name: '{{$ctrl.deployment.name}}/{{cluster.name}}/{{portName}}'})"
+                                    <a ui-sref="artifacts.view({kind: 'gateways', name: '{{$ctrl.deployment.name}}/{{cluster.name}}/{{portName}}'})"
                                        href="">{{portName}}</a>
                                 </span>
                             </div>

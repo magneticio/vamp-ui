@@ -7,9 +7,9 @@ angular.module('app')
   }]);
 
 /** @ngInject */
-function BlueprintsController($scope, $location, $uibModal, toastr, $vamp, $vampBlueprint, $controller) {
+function BlueprintsController($scope, artifactsMetadata, $vampBlueprint, $controller) {
   var $ctrl = this;
-  $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope});
+  $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope, artifactsMetadata: artifactsMetadata});
 }
 
 /** @ngInject */
