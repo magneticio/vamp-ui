@@ -5,21 +5,8 @@ angular.module('app').component('menu', {
   controller: MenuController
 });
 
-function MenuController($rootScope, $scope) {
+function MenuController() {
   var $ctrl = this;
 
-  // menu
-
-  this.artifacts = Artifacts.prototype.all();
-
-  this.isActive = function (item) {
-    var route = item.kind || item;
-    return $ctrl.active ? $ctrl.active.startsWith(route) : false;
-  };
-
-  $scope.$on('$stateChangeSuccess', function (event, state) {
-    $ctrl.active = state.name;
-  });
-
-  // info panel
+  $ctrl.artifacts = Artifacts.prototype.all();
 }

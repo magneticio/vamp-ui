@@ -1,6 +1,6 @@
 angular.module('app').controller('edit',
 
-function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout, $element, $vamp, artifact, snippet, toastr, alert) {
+function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcrumb, $timeout, $element, $vamp, artifact, snippet, toastr, alert) {
   var $ctrl = this;
 
   this.kind = $stateParams.kind;

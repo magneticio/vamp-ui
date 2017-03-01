@@ -1,5 +1,6 @@
 /* global Artifacts */
-angular.module('app').config(routesConfig);
+angular.module('app')
+   .config(routesConfig);
 
 /** @ngInject */
 function routesConfig($stateProvider, $urlRouterProvider) {
@@ -31,8 +32,11 @@ function routesConfig($stateProvider, $urlRouterProvider) {
             return artifactsMetadata.mainController;
           },
           templateUrl: 'app/crud/artifacts.html',
-          controllerAs: '$artifacts'
+          controllerAs: '$ctrl'
         }
+      },
+      ncyBreadcrumb: {
+        label: '{{ $ctrl.kind }}'
       }
     })
     .state('artifacts.add', {
@@ -42,19 +46,34 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           controller: 'addController as $ctrl',
           templateUrl: 'app/crud/templates/addArtifact.html'
         }
+      },
+      ncyBreadcrumb: {
+        label: 'New {{ $ctrl.singular }}'
       }
     })
     .state('artifacts.view', {
       url: '/:name/view',
       views: {
         "main@": {
+          controllerProvider: function (artifactsMetadata) {
+            return artifactsMetadata.artifactViewController;
+          },
+          controllerAs: '$ctrl',
           templateUrl: function (params) {
             return _.find(artifacts, {kind: params.kind}).artifactViewTemplate;
           }
         }
       },
+      resolve: {
+        artifactsMetadata: function ($stateParams) {
+          return _.find(artifacts, {kind: $stateParams.kind});
+        }
+      },
       data: {
         allowedKinds: ['deployments', 'gateways']
+      },
+      ncyBreadcrumb: {
+        label: '{{ $ctrl.title }}'
       }
     })
     .state('artifacts.view.source', {
@@ -64,6 +83,9 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           controller: 'edit as $ctrl',
           templateUrl: 'app/crud/edit.html'
         }
+      },
+      ncyBreadcrumb: {
+        label: 'View source'
       }
     });
 

@@ -7,9 +7,9 @@
     </li>
   </ul>
 <ul class="sidebar-nav">
-    <li ng-class="{active : $ctrl.isActive(artifact)}"
+    <li
         ng-repeat="artifact in $ctrl.artifacts">
-        <a ui-sref="artifacts({kind : artifact.kind })" href="#">
+        <a ui-sref="artifacts({kind : artifact.kind })" ui-sref-active="active" href="#">
           <i></i>
           <span>{{artifact.kind}}</span>
         </a>

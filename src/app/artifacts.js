@@ -7,8 +7,9 @@ Artifacts.prototype.all = function () {
       kind: "deployments",
       mainController: 'DeploymentsController',
       deployable: true,
+      artifactViewController: 'DeploymentController',
       artifactViewTemplate: 'app/deployments/deployment.html',
-      artifactController: "DeploymentCtrl",
+      gridViewController: "DeploymentCtrl",
       artifactGridView: 'app/deployments/templates/deploymentGridView.html',
       artifactInfo: [
         {
@@ -63,6 +64,7 @@ Artifacts.prototype.all = function () {
       kind: "gateways",
       mainController: 'GatewaysController',
       deployable: true,
+      artifactViewController: 'GatewayController',
       artifactViewTemplate: 'app/gateways/gateway.html',
       artifactGridView: 'app/gateways/templates/gridView.html',
       artifactInfo: [
@@ -106,7 +108,7 @@ Artifacts.prototype.all = function () {
       kind: "workflows",
       mainController: 'WorkflowsController',
       deployable: true,
-      artifactController: "WorkflowController",
+      gridViewController: "WorkflowController",
       artifactGridView: 'app/workflows/templates/workflowGridView.html',
       artifactInfo: [
         {
@@ -181,7 +183,7 @@ Artifacts.prototype.all = function () {
       kind: "blueprints",
       mainController: "BlueprintsController",
       artifactGridView: 'app/blueprints/templates/blueprintGridView.html',
-      artifactController: "BlueprintController",
+      gridViewController: "BlueprintController",
       artifactInfo: [
         {
           title: "Name",

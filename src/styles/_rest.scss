@@ -263,6 +263,12 @@ menu {
   text-transform: capitalize;;
 }
 
+.capitalize-sentence {
+  &::first-letter {
+    text-transform: capitalize;
+  }
+}
+
 .vamp-page-header {
   margin: 0;
   padding: 0;

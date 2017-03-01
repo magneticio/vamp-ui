@@ -2,11 +2,12 @@
 angular.module('app').controller('GatewayController', GatewayController);
 
 /** @ngInject */
-function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vamp, uiStatesFactory, slider, alert, toastr, $uibModal) {
+function GatewayController($scope, $filter, $stateParams, $timeout, $state, $breadcrumb, $vamp, uiStatesFactory, slider, alert, toastr, $uibModal) {
   var $ctrl = this;
   var path = '/gateways/' + $stateParams.name;
 
   this.gateway = null;
+  this.kind = $stateParams.kind;
   this.title = $filter('decodeName')($stateParams.name);
 
   var charts = new TimeSeriesCharts();

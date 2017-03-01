@@ -7,7 +7,8 @@ angular.module('app', [
   'ui.ace',
   'toastr',
   'ngAnimate',
-  'rzModule'
+  'rzModule',
+  'ncy-angular-breadcrumb'
 ]);
 
 function ExternalPluginsLoader() {
