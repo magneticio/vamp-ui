@@ -30,11 +30,8 @@ function WorkflowController($scope, $vamp, toastr) {
   $ctrl.update = function ($event, status) {
     $event.stopPropagation();
     var operation = status.charAt(0).toUpperCase() + status.substr(1).toLowerCase();
-
     $vamp.await(function () {
-      var workflow = angular.copy($ctrl.workflow);
-      workflow.status = status;
-      $vamp.put(path, JSON.stringify(workflow), {}, 'JSON');
+      $vamp.put(path + '/status', status, {}, 'JSON');
     }).then(function () {
       toastr.success(operation + ' initiated.');
     }).catch(function (response) {
