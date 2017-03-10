@@ -1,7 +1,25 @@
+
+.main-content {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-size: $font-size-normal;
+  font-weight: $font-weight-light;
+  color: $misty;
+
+  .content-header {
+    margin: 2rem .5rem;
+
+    .header-title {
+      font-size: $font-size-xl;
+      color: $white;
+    }
+  }
+}
+
 .artifacts-panel {
   padding-bottom: 1.5rem;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin: 0 .5rem;
 }
 
 main {
@@ -12,7 +30,6 @@ main {
   display: inline-block;
   max-width: 24rem;
   vertical-align: middle;
-  margin-left: 2rem;
 }
 
 .vamp-btn-group {
@@ -149,19 +166,8 @@ table.vamp-lv {
       display: inline-block;
     }
 
-    tr.demi-row td div{
-        width: 100%;
-        height: 2.8rem;
-        margin: 0 0 -2.8rem 0;
-        background: transparent repeat-y top left;
-        color: #FFF;
-        background-size: 100%;
-        padding:0;
-    }
-
     tr {
       &.vamp-lv-data-row {
-        /*background: rgba($gray-base, 0.75) no-repeat url('img/background-pattern-alpha.png');*/
         background: $night-sky;
         font-size: $font-size-normal;
 
@@ -169,6 +175,7 @@ table.vamp-lv {
           td[field-name='Name'] {
             text-decoration: underline;
           }
+          //background-color: $dark-blue;
         }
 
         td {
@@ -182,11 +189,13 @@ table.vamp-lv {
             font-size: $font-size-large;
           }
 
-          &.vamp-lv-row-actions   {
+          &.row-select {
+            width: 4rem;
+          }
 
-            button.vamp-lv-row-action {
-              float: left;
-            }
+          &.actions {
+            width: 2rem;
+            background-color: $pitch;
           }
         }
 
@@ -206,7 +215,8 @@ table.vamp-lv {
   tr {
     td {
       .vamp-lv-checkbox {
-        margin-left: 26px;
+        margin-left: auto;
+        margin-right: auto;
       }
     }
   }
@@ -215,7 +225,7 @@ table.vamp-lv {
 .vamp-tag {
     font-size: $font-size-small !important;
     font-weight: $font-weight-light;
-    color: $gray-lighter;
+    color: $white;
     border-radius: 2px;
     margin-right: 5px;
     background-color: $gray-light;
@@ -232,7 +242,7 @@ table.vamp-lv {
 
     &.label-warning {
       color: white;
-      background-color: $brand-warning;
+      background-color: $warm-warning;
     }
 
     &.label-danger {
@@ -246,14 +256,188 @@ table.vamp-lv {
     }
 }
 
+.artifacts {
+  /*margin: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  color: $color-text;*/
+}
+
+.artifacts-list {
+  display:table-row-group;
+  margin: 0;
+  color: $color-text;
+}
+
+.artifact {
+  position:relative;
+  //overflow:hidden;
+  padding-bottom:100%;
+  margin: 15px 0;
+  //height: 31rem;
+  //width: 31rem;
+  //border-radius: 5px;
+  //margin: 10px;
+  //padding: 15px;
+  //cursor: pointer;
+  position: relative;
+  //border: 2px solid transparent;
+  //background: $night-sky no-repeat url('/styles/resources/app/crud/images/background-pattern-alpha.png');
+  background-size: contain;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  //transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+
+  .artifact-content {
+    position:absolute;
+    width: 100%;
+    height: 100%;
+
+    &:hover {
+      //box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+
+      .artifact-title {
+        text-decoration: underline;
+      }
+    }
+
+    &.selected {
+      border-color: $gray-light;
+    }
+
+    input[type="checkbox"] {
+      -moz-transform: scale(1.25, 1.25);
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .artifact-header {
+      position: relative;
+      border-top-left-radius: .5rem;
+      border-top-right-radius: .5rem;
+      background-color: $pitch;
+      height: 6rem;
+      line-height: 6rem;
+      padding-left: 2rem;
+      color: $white;
+      font-size: $font-size-large;
+
+      .artifact-title {
+        position: absolute;
+      }
+
+      .header-context {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-top-left-radius: .5rem;
+        border-top-right-radius: .5rem;
+        opacity: 0;
+        transition: opacity 300ms ease-in;
+
+        &.deploying {
+          transition: opacity 300ms ease-in;
+          opacity: 1;
+          background-color: $blue;
+          background-size: 30px 30px;
+          background-image: linear-gradient(
+            135deg,
+            rgba(white, 0.1)  25%,
+            transparent       25%,
+            transparent       50%,
+            rgba(white, 0.1)  50%,
+            rgba(white, 0.1)  75%,
+            transparent       75%,
+            transparent
+          );
+          animation: barberpole 1s linear infinite;
+        }
+      }
+
+
+
+      .artifact-actions-button {
+        border-top-right-radius: .5rem;
+        padding: 0 2rem;
+        background: none;
+        cursor: pointer;
+        display: inline-block;
+      }
+    }
+
+    .artifact-body {
+      width: 100%;
+      height: calc(100% - 6rem);
+      border-bottom-left-radius: .5rem;
+      border-bottom-right-radius: .5rem;
+      background-color: $night-sky;
+      padding: .5rem;
+    }
+  }
+
+
+}
+
+@keyframes barberpole {
+  from { background-position: 0 0; }
+  to   { background-position: -60px -30px; }
+}
+
+.has-error .help-block {
+  color: $color-pink;
+}
+
+.artifact-card-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  bottom: 1.6rem;
+  left: 1.6rem;
+  right: 1.6rem;
+
+  & > button.btn {
+    margin-top: .5rem;
+    text-align: center;
+    margin-left: 0px !important;
+    background-color: $night-sky !important;
+  }
+}
+
+/*.deployment-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  bottom: 1.6rem;
+  left: 1.6rem;
+  right: 1.6rem;
+
+  & > button.btn {
+    margin: 0;
+    text-align: center;
+    margin-left: 0px !important;
+    background-color: $night-sky !important;
+  }
+}*/
+
 .artifact-properties {
+
+  .artifact-labels {
+    width: 100%;
+    padding: 1.5rem;
+  }
 
   .list {
     margin: 0.5rem 0;
     font-weight: $font-weight-light;
     border-radius: 2px;
     padding: 1.5rem;
-    background-color: rgba($gray-base, 0.75);
     color: $gray-lighter !important;
 
     p {
@@ -307,8 +491,6 @@ table.vamp-lv {
             }
           }
         }
-
-
       }
     }
   }
@@ -352,3 +534,9 @@ table.vamp-lv {
   }
 }
 
+.popover-data {
+  font-size: $font-size-normal;
+  min-width: 16rem;
+  padding: 1rem;
+  text-align: left;
+}
