@@ -30,9 +30,36 @@
               ng-if="$ctrl.inEdit && !(!$ctrl.isModified() || !$ctrl.valid)" ng-click="$ctrl.save()">
                 Save
             </button>
+            <div ng-if="$ctrl.isBlueprint() && $ctrl.inCompose" class="input-group pull-right col-xs-3">
+              <input
+                type="text"
+                auto-focus=""
+                class="ng-pristine ng-valid ng-empty ng-touched form-control"
+                ng-model="$ctrl.composeName"
+                placeholder="Blueprint name">
+              <span class="input-group-btn">
+                <button
+                  class="btn btn-ghost btn-small btn-primary" type="submit"
+                  ng-click="$ctrl.stopCompose()">
+                    Blueprint
+                </button>
+                <button
+                  class="btn btn-ghost btn-small btn-primary" type="submit"
+                  ng-click="$ctrl.cancel()">
+                    Cancel
+                </button>
+              </span>
+            </div>
             <button
-              ng-if="$ctrl.inEdit"
+              ng-if="$ctrl.isBlueprint() && !$ctrl.inCompose"
               class="btn btn-ghost btn-small btn-primary" type="submit"
+              ng-click="$ctrl.startCompose()">
+                Docker-Compose
+            </button>
+
+            <button
+              ng-if="$ctrl.inEdit && !$ctrl.inCompose"
+              class="btn btn-ghost btn-small btn-primary pull-right" type="submit"
               ng-click="$ctrl.cancel()">
                 Cancel
             </button>

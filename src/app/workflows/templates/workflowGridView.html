@@ -28,19 +28,12 @@
     </div>
 
     <div ng-repeat="instance in artifact.instances">
-        <span>
-            {{instance.name | limitTo: 25 }}
-        </span>
         <div ng-repeat="(portName, port) in instance.ports | orderByKeys">
-            <span class="v-value v-value--state"
-                  ng-if="!proxy(artifact, instance, portName)">
-                {{portName}}
-            </span>
             <span class="label label-success"
                   ng-if="proxy(artifact, instance, portName)">
                 <a class="proxy-anchor"
                    ng-click="proxy(artifact, instance, portName, $event)">
-                    {{portName}}
+                    {{instance.name | limitTo: 20 }} : {{portName}}
                 </a>
             </span>
         </div>
