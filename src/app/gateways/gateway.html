@@ -1,6 +1,7 @@
 <div ng-show="$ctrl.gateway">
-    <header title="{{$ctrl.title}}">
-        <buttons>
+    <div class="container-fluid gateway">
+        <div class="row">
+          <div class="col-md-12">
             <button class="btn btn-ghost btn-primary" title="VIEW" type="submit" ng-click="$ctrl.edit()">
                 View source
             </button>
@@ -9,9 +10,8 @@
                     ng-click="$ctrl.delete()">
                 Delete
             </button>
-        </buttons>
-    </header>
-    <div class="container-fluid gateway">
+          </div>
+        </div>
         <div class="row gateway-header">
             <div class="col-md-3 gateway-row">
                 <p>HOST - PORT/TYPE</p>

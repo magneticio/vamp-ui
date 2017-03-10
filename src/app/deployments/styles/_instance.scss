@@ -1,0 +1,26 @@
+pre.container-log {
+  white-space: pre-line;
+}
+
+.instances {
+  .tab-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .tab-pane.active {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .panel-body {
+    display: flex;
+
+    iframe,
+    pre {
+      flex:1
+    }
+  }
+}

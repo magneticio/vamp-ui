@@ -1,15 +1,31 @@
 /* global Artifacts */
+/* global Environment */
+
 angular.module('app')
+  .config(function ($breadcrumbProvider) {
+    $breadcrumbProvider.setOptions({
+      templateUrl: 'app/common/templates/breadcrumb.html',
+      includeAbstract: true
+    });
+  })
    .config(routesConfig);
 
 /** @ngInject */
 function routesConfig($stateProvider, $urlRouterProvider) {
   var artifacts = Artifacts.prototype.all();
 
-  $urlRouterProvider.otherwise('/deployments');
+  $urlRouterProvider.otherwise('/vamp/deployments');
 
   $stateProvider
+    .state('vamp', {
+      abstract: true,
+      url: '/vamp',
+      ncyBreadcrumb: {
+        skip: true
+      }
+    })
     .state('artifacts', {
+      parent: 'vamp',
       url: '/:kind?page&searchTerm',
       params: {
         page: {
@@ -33,10 +49,17 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           },
           templateUrl: 'app/crud/artifacts.html',
           controllerAs: '$ctrl'
+        },
+        "right-panel@": {
+          controller: function ($scope) {
+            $scope.ncyBreadcrumbIgnore = true;
+          },
+          template: ''
         }
       },
       ncyBreadcrumb: {
-        label: '{{ $ctrl.kind }}'
+        label: '{{ $ctrl.kind }}',
+        hideIfCurrent: true
       }
     })
     .state('artifacts.add', {
@@ -45,14 +68,20 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         "main@": {
           controller: 'addController as $ctrl',
           templateUrl: 'app/crud/templates/addArtifact.html'
+        },
+        "right-panel@": {
+          controller: function ($scope) {
+            $scope.ncyBreadcrumbIgnore = true;
+          },
+          template: ''
         }
       },
       ncyBreadcrumb: {
         label: 'New {{ $ctrl.singular }}'
       }
     })
-    .state('artifacts.view', {
-      url: '/:name/view',
+    .state('artifacts.one', {
+      url: '/:name',
       views: {
         "main@": {
           controllerProvider: function (artifactsMetadata) {
@@ -62,21 +91,35 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           templateUrl: function (params) {
             return _.find(artifacts, {kind: params.kind}).artifactViewTemplate;
           }
+        },
+        "right-panel@": {
+          controller: function ($scope) {
+            $scope.ncyBreadcrumbIgnore = true;
+          },
+          template: ''
         }
       },
       resolve: {
-        artifactsMetadata: function ($stateParams) {
-          return _.find(artifacts, {kind: $stateParams.kind});
+        artifactData: function ($http, $stateParams) {
+          return $http({
+            method: 'GET',
+            url: 'http://' + Environment.prototype.origin() + '/api/v1/' + $stateParams.kind + '/' + $stateParams.name
+          }).then(function (response) {
+            var artifact = response.data;
+
+            return artifact;// _.find(clusterServices, ['breed.name', $stateParams.service]);
+          });
         }
       },
       data: {
         allowedKinds: ['deployments', 'gateways']
       },
       ncyBreadcrumb: {
-        label: '{{ $ctrl.title }}'
+        label: '{{ $ctrl.name }}'
       }
     })
-    .state('artifacts.view.source', {
+    .state('artifacts.one.source', {
+      abstract: true,
       url: '/source',
       views: {
         "main@": {
@@ -85,12 +128,181 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       ncyBreadcrumb: {
+        skip: true
+      }
+    })
+    .state('artifacts.one.source.view', {
+      url: '/view',
+      views: {
+        "editor": {
+          templateUrl: 'app/crud/templates/editor.html'
+        },
+        "right-panel@": {
+          controller: function ($scope) {
+            $scope.ncyBreadcrumbIgnore = true;
+          },
+          template: ''
+        }/*
+        "right-panel@": {
+          controller: 'revisionsController as $ctrl',
+          templateUrl: 'app/crud/templates/revisions.html'
+        }*/
+      },
+
+      ncyBreadcrumb: {
         label: 'View source'
+      }
+    })
+    .state('artifacts.one.source.edit', {
+      url: '/edit',
+      views: {
+        "editor": {
+          // controller: 'edit as $ctrl',
+          templateUrl: 'app/crud/templates/editor.html'
+        },
+        "right-panel@": {
+          controller: function ($scope) {
+            $scope.ncyBreadcrumbIgnore = true;
+          },
+          template: ''
+        }
+      },
+      ncyBreadcrumb: {
+        label: 'Edit source'
+      }
+    })
+    .state('artifacts.one.cluster', {
+      abstract: true,
+      url: '^/{kind:deployments}/:name/:cluster',
+      resolve: {
+        clusterData: function (artifactData, $stateParams) {
+          return artifactData.clusters[$stateParams.cluster];
+        }
+      },
+      ncyBreadcrumb: {
+        label: '{{ $ctrl.cluster }}'
+      }
+    })
+    .state('artifacts.one.cluster.service', {
+      url: '/:service',
+      views: {
+        "main@": {
+          controller: 'serviceController as $ctrl',
+          templateUrl: 'app/deployments/templates/service.html'
+        },
+        "right-panel@": {
+          controller: function ($scope) {
+            $scope.ncyBreadcrumbIgnore = true;
+          },
+          template: ''
+        }
+      },
+      resolve: {
+        serviceData: function (clusterData, $stateParams) {
+          return _.find(clusterData.services, ['breed.name', $stateParams.service]);
+        }
+      },
+      ncyBreadcrumb: {
+        label: '{{ $ctrl.serviceName }}'
+      }
+    })
+    .state('artifacts.one.cluster.service.instance', {
+      url: '/:instance',
+      views: {
+        "main@": {
+          controller: 'instanceController as $ctrl',
+          templateUrl: 'app/deployments/templates/instance.html'
+        },
+        "right-panel@": {
+          controller: function ($scope) {
+            $scope.ncyBreadcrumbIgnore = true;
+          },
+          template: ''
+        }
+      },
+      ncyBreadcrumb: {
+        label: '{{ $ctrl.instanceName }}'
+      }
+    })
+    .state('admin', {
+      url: '/settings',
+      abstract: true
+    })
+    .state('admin.vga', {
+      url: '/vga',
+      views: {
+        "main@": {
+          controller: 'vgaController as $ctrl',
+          templateUrl: 'app/system/templates/vgaConfiguration.html'
+        },
+        "right-panel@": {
+          controller: function ($scope) {
+            $scope.ncyBreadcrumbIgnore = true;
+          },
+          template: ''
+        }
+      },
+      ncyBreadcrumb: {
+        label: 'VGA configuration'
+      }
+    })
+    .state('admin.log', {
+      url: '/log',
+      views: {
+        "main@": {
+          controller: 'logController as $ctrl',
+          templateUrl: 'app/system/templates/log.html'
+        },
+        "right-panel@": {
+          controller: function ($scope) {
+            $scope.ncyBreadcrumbIgnore = true;
+          },
+          template: ''
+        }
+      },
+      ncyBreadcrumb: {
+        label: 'Log'
+      }
+    })
+    .state('admin.info', {
+      url: '/info',
+      views: {
+        "main@": {
+          controller: 'infoController as $ctrl',
+          templateUrl: 'app/system/templates/infoConfiguration.html'
+        },
+        "right-panel@": {
+          controller: function ($scope) {
+            $scope.ncyBreadcrumbIgnore = true;
+          },
+          template: ''
+        }
+      },
+      ncyBreadcrumb: {
+        label: 'Extended info'
+      }
+    })
+    .state('admin.configuration', {
+      url: '/configuration',
+      views: {
+        "main@": {
+          controller: 'configurationController as $ctrl',
+          templateUrl: 'app/system/templates/backendConfiguration.html'
+        },
+        "right-panel@": {
+          controller: function ($scope) {
+            $scope.ncyBreadcrumbIgnore = true;
+          },
+          template: ''
+        }
+      },
+      ncyBreadcrumb: {
+        label: 'Backend configuration'
       }
     });
 
-  $stateProvider.state('vga', {url: '/vga', views: {main: {template: '<vga></vga>'}}});
-  $stateProvider.state('log', {url: '/log', views: {main: {template: '<log></log>'}}});
-  $stateProvider.state('info', {url: '/info', views: {main: {template: '<info></info>'}}});
-  $stateProvider.state('configuration', {url: '/configuration', views: {main: {template: '<configuration></configuration>'}}});
+  // $stateProvider.state('vga', {url: '/vga', views: {main: {template: '<vga></vga>'}}});
+  // $stateProvider.state('log', {url: '/log', views: {main: {template: '<log></log>'}}});
+  // $stateProvider.state('info', {url: '/info', views: {main: {template: '<info></info>'}}});
+  // $stateProvider.state('configuration', {url: '/configuration', views: {main: {template: '<configuration></configuration>'}}});
 }

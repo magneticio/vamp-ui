@@ -10,6 +10,13 @@
   :not(.btn-group) > & + & {
     margin-left: 1rem;
   }
+
+  &.pull-right {
+    :not(.btn-group) > & + & {
+      margin-right: 1rem;
+    }
+  }
+
   &.btn-small {
     height: $button-size-small;
     font-size: $font-size-small;
@@ -117,5 +124,5 @@
   }
 }
 :not(.btn-group) > button.btn {
-  min-width: 10rem;
+  min-width: $button-size-normal
 }

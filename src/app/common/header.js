@@ -1,14 +1,5 @@
 angular.module('app').component('header', {
   templateUrl: 'app/common/header.html',
-  bindings: {
-    title: '@',
-    clazz: '@'
-  },
-  transclude: {
-    main: '?main',
-    controls: '?controls',
-    buttons: '?buttons'
-  },
   controller: function ($scope, $rootScope, uiStatesFactory) {
     var $ctrl = this;
 

@@ -1,6 +1,6 @@
 angular.module('app').controller('edit',
 
-function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcrumb, $timeout, $element, $vamp, artifact, snippet, toastr, alert) {
+function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcrumb, $timeout, uiStatesFactory, $element, $vamp, artifact, snippet, toastr, alert) {
   var $ctrl = this;
 
   this.kind = $stateParams.kind;
@@ -18,12 +18,25 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
   this.base = null;
   this.source = null;
 
-  $ctrl.revisions = [];
+  // $ctrl.revisions = revisionsService.revisions;
+  // $ctrl.activeRevisiton = revisionsService.activeRevision;
 
   this.valid = true;
   $ctrl.inEdit = false;
   var validation = true;
   var ignoreChange = false;
+
+  function init() {
+    if ($state.current.name === 'artifacts.one.source.view') {
+      $ctrl.stopEdit();
+    } else {
+      $ctrl.startEdit();
+    }
+  }
+
+  $scope.$on('$destroy', function () {
+    uiStatesFactory.setRightPanelViewState(false);
+  });
 
   function transformErrorMessage(message) {
     $ctrl.errorMessage = message;
@@ -38,14 +51,22 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
 
   $ctrl.startEdit = function () {
     $ctrl.inEdit = true;
-    $timeout(function () {
-      $($element).find('#editor textarea').focus();
+
+    $state.go('^.edit').then(function () {
+      uiStatesFactory.setRightPanelViewState(false);
+      $timeout(function () {
+        $($element).find('#editor textarea').focus();
+      });
     });
   };
 
   $ctrl.stopEdit = function () {
     $ctrl.source = $ctrl.base;
     $ctrl.inEdit = false;
+
+    $state.go('^.view').then(function () {
+      uiStatesFactory.setRightPanelViewState(true);
+    });
   };
 
   this.peek = function () {
@@ -78,14 +99,6 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
         $ctrl.expandError = false;
       }
     }
-  });
-
-  $scope.$on('/events', function (e, response) {
-    _.forEach(response.data, function (event) {
-      if (event.type === 'archive' && _.includes(event.tags, $ctrl.kind + ':' + $ctrl.name) && (_.includes(event.tags, 'archive:update') || _.includes(event.tags, 'archive:create'))) {
-        $ctrl.addRevision(event);
-      }
-    });
   });
 
   $scope.$on('/events/stream', function (e, response) {
@@ -157,42 +170,11 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
     });
   };
 
-  this.addRevision = function (event) {
-    if (_.find($ctrl.revisions, {id: event.id})) {
-      return;
-    }
-
-    var source = event.value || '';
-    if (source) {
-      source = JSON.parse(source);
-      try {
-        source = JSON.stringify(JSON.parse(source), null, '  ');
-      } catch (e) {
-        source = event.value.replace(/\\n/g, '\n');
-        source = source.replace(/\\"/g, '"');
-        if (source.charAt(0) === '"') {
-          source = source.substring(1);
-        }
-        if (source.charAt(source.length - 1) === '"') {
-          source = source.substring(0, source.length - 1);
-        }
-      }
-    }
-
-    $ctrl.revisions.push({
-      id: event.id,
-      source: source,
-      timestamp: event.timestamp
-    });
-  };
-
-  this.showRevision = function (revision) {
-    snippet.show('Revision: ' + $filter('date')(revision.timestamp, 'dd MMM yyyy HH:mm:ss.sss'), revision.source, 'lg');
-  };
-
   function goBack() {
     validation = false;
     ignoreChange = true;
     $state.go('^');
   }
+
+  init();
 });

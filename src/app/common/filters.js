@@ -46,9 +46,19 @@ angular.module('app')
       });
     };
   })
+  .filter('trustUrl', ['$sce', function ($sce) {
+    return function (url) {
+      return $sce.trustAsResourceUrl(url);
+    };
+  }])
   .filter('asNumber', function () {
     // because $filter('number') is strict, e.g. '64MB' is not a number.
     return function (input, fraction) {
       return parseFloat(input || '').toFixed(fraction === null || fraction === undefined ? 2 : fraction);
+    };
+  })
+  .filter('capitalize', function () {
+    return function (input) {
+      return (input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
     };
   });

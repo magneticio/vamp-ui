@@ -1,7 +1,4 @@
-angular.module('app').component('configuration', {
-  templateUrl: 'app/system/templates/backendConfiguration.html',
-  controller: ConfigurationController
-});
+angular.module('app').controller('configurationController', ConfigurationController);
 
 function ConfigurationController($scope, $timeout, $element, $state, artifact, $vamp, alert, toastr) {
   var $ctrl = this;

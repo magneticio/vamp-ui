@@ -4,7 +4,7 @@ angular.module('app').component('side', {
   controller: SideController
 });
 
-function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory) {
+function SideController($sce, $scope, $rootScope, $location, $vamp, uiStatesFactory) {
   var $ctrl = this;
   $scope.info = $vamp.info;
   $scope.help = {
@@ -26,9 +26,9 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory) {
     uiStatesFactory.setProxyPanelViewState('');
   };
 
-  $rootScope.$on('$stateChangeStart',
-    function (event, toState) {
-      var path = toState.url.substring(1);
+  $rootScope.$on('$stateChangeSuccess',
+    function () {
+      var path = $location.url().substring(1);
       var last = path.indexOf('/');
       if (last !== -1) {
         path = path.substring(0, last);

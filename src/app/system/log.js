@@ -1,7 +1,5 @@
-angular.module('app').component('log', {
-  templateUrl: 'app/system/templates/log.html',
-  controller: LogController
-}).factory('$vampLog', ['$log', '$rootScope', '$vamp', function ($log, $rootScope, $vamp) {
+angular.module('app').controller('logController', LogController)
+.factory('$vampLog', ['$log', '$rootScope', '$vamp', function ($log, $rootScope, $vamp) {
   return new VampLogService($log, $rootScope, $vamp);
 }]).run(['$vampLog', function ($vampLog) {
   $vampLog.init();

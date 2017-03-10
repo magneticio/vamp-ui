@@ -1,7 +1,4 @@
-angular.module('app').component('vga', {
-  templateUrl: 'app/system/templates/vgaConfiguration.html',
-  controller: VgaController
-});
+angular.module('app').controller('vgaController', VgaController);
 
 function VgaController($state, $scope, $timeout, $element, $vamp, $q, toastr, alert, artifact) {
   var $ctrl = this;

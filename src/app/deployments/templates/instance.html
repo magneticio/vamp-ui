@@ -1,0 +1,126 @@
+<div class="container-fluid main-view stretch-height instances">
+  <div class="row section">
+    <div class="col-md-12">
+      {{ $ctrl.instanceName }}
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <uib-tabset active="0">
+        <uib-tab index="0" heading="Output log">
+          <div class="panel panel-default log-panel">
+            <div class="panel-heading">
+              <div class="panel-title">
+                <div class="form-inline">
+                </div>
+
+              </div>
+              <div class="pull-right">
+
+                Follow log:&nbsp;
+                <toggle ng-model="$ctrl.isFollowLog" style="vamp-toggle"
+                  ng-change="$ctrl.toggleFollowOnOff()" onstyle="btn-success"
+                  offstyle="btn-primary" size="btn-xs" ng-model="toggleValue"
+                  ng-change="changed()"></toggle>
+              </div>
+            </div>
+            <div class="panel-body">
+              <pre class="container-log">
+                {{$ctrl.stdout}}
+              </pre>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="Error log">
+          <div class="panel panel-default log-panel">
+            <div class="panel-heading">
+              <div class="panel-title">
+                <div class="form-inline">
+                </div>
+
+              </div>
+              <div class="pull-right">
+
+                Follow log:&nbsp;
+                <toggle ng-model="$ctrl.isFollowLog" style="vamp-toggle"
+                  ng-change="$ctrl.toggleFollowOnOff()" onstyle="btn-success"
+                  offstyle="btn-primary" size="btn-xs" ng-model="toggleValue"
+                  ng-change="changed()"></toggle>
+              </div>
+            </div>
+            <div class="panel-body">
+              <pre class="container-log">
+                {{$ctrl.stderr}}
+              </pre>
+            </div>
+        </uib-tab>
+        <uib-tab ng-repeat="(portName, port) in $ctrl.instance.ports | orderByKeys" index="$index + 2" heading="{{portName}}">
+          <div class="panel panel-default log-panel">
+            <div class="panel-heading">
+            </div>
+            <div class="panel-body">
+              <iframe ng-src="{{$ctrl.host + ':' + port | trustUrl}}"></iframe>
+            </div>
+        </uib-tab>
+      </uib-tabset>
+
+      <!--<div class="panel panel-default log-panel">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <div class="form-inline">
+            </div>
+
+          </div>
+          <div class="pull-right">
+
+            Follow log:&nbsp;
+            <toggle ng-model="$ctrl.isFollowLog" style="vamp-toggle"
+              ng-change="$ctrl.toggleFollowOnOff()" onstyle="btn-success"
+              offstyle="btn-primary" size="btn-xs" ng-model="toggleValue"
+              ng-change="changed()"></toggle>
+          </div>
+        </div>
+        <div class="panel-body">
+          <pre class="container-log">
+            {{$ctrl.logData}}
+          </pre>
+        </div>-->
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!--
+  <div>
+    <ul class="nav nav-tabs">
+      <li ng-class="{'active' : $ctrl.type === 'system'}">
+        <a class="capitalize" ng-click="$ctrl.setType('system')">webport</a>
+      </li>
+      <li ng-class="{'active' : $ctrl.type === 'environment'}">
+        <a class="capitalize" ng-click="$ctrl.setType('environment')">stdout</a>
+      </li>
+      <li ng-class="{'active' : $ctrl.type === 'application'}">
+        <a class="capitalize" ng-click="$ctrl.setType('application')">stderr</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active">
+        <div class="container-fluid">
+          <div class="row tab-pane-header"
+            ng-class="{}">
+          </div>
+          <div class="row ">
+            <div class="col-md-12">
+              <pre class="container-log">
+                {{$ctrl.logData}}
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>-->
+</div>

@@ -1,0 +1,5 @@
+<div class="popover-data">
+  <div ng-repeat="item in (items = $ctrl.getKeyValue(artifact, field.arrayPath))">
+    <span>{{ $ctrl.getArrayTypeValue(item, field, this) }}</span>
+  </div>
+</div>

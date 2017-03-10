@@ -1,0 +1,64 @@
+.popover {
+  background-color: $pitch;
+  color: $misty;
+  font-size: $font-size-small;
+  font-weight: $font-weight-light;
+  border: none;
+
+  &.bottom {
+    & > .arrow {
+      top: -10px;
+
+      &::after {
+        border-bottom-color: $pitch;
+      }
+    }
+  }
+
+  &.left {
+    & > .arrow {
+      right: -10px;
+
+      &::after {
+        border-left-color: $pitch;
+      }
+    }
+  }
+
+  .popover-content {
+    padding: 0rem;
+  }
+}
+
+.tooltip {
+
+  &.in {
+    opacity: 1;
+  }
+
+  &.bottom {
+    & > .tooltip-arrow {
+        border-bottom-color: $pitch;
+    }
+  }
+
+  &.left {
+    & > .tooltip-arrow {
+        border-left-color: $pitch;
+    }
+  }
+
+  &.top {
+    & > .tooltip-arrow {
+        border-top-color: $pitch;
+    }
+  }
+
+  .tooltip-inner {
+    background-color: $pitch;
+    color: $misty;
+    font-size: $font-size-small;
+    font-weight: $font-weight-light;
+    max-width: none;
+  }
+}

@@ -5,8 +5,9 @@ angular.module('app').component('menu', {
   controller: MenuController
 });
 
-function MenuController() {
+function MenuController(uiStatesFactory) {
   var $ctrl = this;
 
+  $ctrl.leftPanelState = uiStatesFactory.viewStates.left;
   $ctrl.artifacts = Artifacts.prototype.all();
 }

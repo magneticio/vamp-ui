@@ -13,8 +13,8 @@ menu {
 
   .sidebar-nav {
     position: absolute;
-    height: calc(100% - 8rem);
-    top: 8rem;
+    height: calc(100% - $header-height;);
+    top: $header-height;;
     width: 25rem;
     margin: 0;
     padding: 0;
@@ -23,12 +23,13 @@ menu {
    }
 
    li.sidebar-brand {
-    height: 8rem;
-    line-height: 8rem;
+    height: $header-height;
+    line-height: $header-height;
+    border-bottom: 1px solid $dark-blue;
 
     a {
       color: $white;
-      background-color: $vamp-red;
+      //background-color: $vamp-red;
       display: flex;
       align-items: center;
       height: 100%;
@@ -61,46 +62,68 @@ menu {
 		 margin:0;
 
 		 &.sub-menu {
-			 li > a,
-			 li > .btn-link {
-         padding-left: 4rem;
-				 background-color: $night;
-			 }
+       & > li {
+         .btn-link,
+          a {
+            padding-left: 4.5rem;
+            background-color: $night;
+          }
+       }
 		 }
 
     li {
 			user-select:none;
       line-height: 6rem;
-      border-bottom: 2px solid $night;
-
-			&[data-toggle=collapse]:not(.collapsed)
-			{
-				.btn-link,
-				a {
-					text-decoration: none;
-					background-color: $night;
-
-					&:hover {
-						background-color: $night;
-					}
-				}
-			}
+      cursor: pointer;
+      background-color: $pitch;
+      border-left: 0 solid $vamp-red;
+      transition: border-left-width 200ms ease;
 
       &:focus {
         outline: none !important;
       }
 
+      &.active,
+      &[data-toggle=collapse]:not(.collapsed)
+			{
+        border-left-width: .5rem;
+        background-color: $night;
+        text-decoration: none;
 
+				& > .btn-link,
+				& > a {
+					text-decoration: none;
+					background-color: $night;
+          padding-left: 2rem;
+          font-weight: $font-weight-bold;
+          color: $misty;
+
+					&:hover {
+						background-color: $night;
+            text-decoration: none;
+            font-weight: $font-weight-bold;
+            color: $misty;
+					}
+				}
+
+        ul.sub-menu {
+          & > li {
+            .btn-link,
+             a {
+               padding-left: 4rem;
+             }
+          }
+        }
+			}
 
 			.btn-link,
       a {
-				cursor: pointer;
-				background-color: $pitch;
         font-weight: $font-weight-light;
-        padding-left: 2rem;
+        color: $medium-blue;
+        padding-left: 2.5rem;
         display: block;
         text-decoration: none;
-        color: $medium-blue;
+        transition: padding-left 200ms ease;
 
         & > span {
           display: block;
@@ -114,24 +137,13 @@ menu {
           color: $medium-blue;
           font-weight: $font-weight-bold;
           text-decoration: none;
+          background-color: $night;
         }
 
         &:focus {
           text-decoration: none;
 					font-weight: $font-weight-bold;
 					color: $misty;
-        }
-
-        &.active {
-          text-decoration: none;
-          font-weight: $font-weight-bold;
-          color: $misty;
-
-          &:hover {
-            text-decoration: none;
-            font-weight: $font-weight-bold;
-            color: $misty;
-          }
         }
       }
     }

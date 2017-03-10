@@ -2,30 +2,26 @@
   <table class="table table-condensed vamp-lv">
     <thead class="vamp-lv-header-group">
       <tr class="vamp-lv-row">
-        <td class="vamp-lv-col clickable" ng-click="$lv.artifactsCtrl.toggleSelection()">
-          <input type="checkbox" title="Select all" ng-checked="$lv.artifactsCtrl.isSelectedAll()"
+        <td class="vamp-lv-col clickable" ng-click="$ctrl.artifactsCtrl.toggleSelection()">
+          <input type="checkbox" title="Select all" ng-checked="$ctrl.artifactsCtrl.isSelectedAll()"
             class="checkbox vamp-checkbox vamp-lv-checkbox">
         </td>
         <td class="vamp-lv-col"
-           ng-repeat="field in $lv.artifactsMetadata.artifactInfo">
+           ng-repeat="field in $ctrl.artifactsMetadata.artifactInfo">
           {{ field.title }}
-        </td>
-        <td ng-if="$lv.artifactsMetadata.actions && $lv.artifactsMetadata.actions.length > 0"
-          class="vamp-lv-col">
-          Actions
         </td>
       </tr>
     </thead>
     <tbody class="artifacts-list">
       <tr class="vamp-lv-row vamp-lv-data-row"
-        ng-repeat="artifact in ($lv.items | filter:{name:$lv.artifactsCtrl.searchTerm} | limitTo: $lv.artifactsCtrl.itemsPerPage: (($lv.artifactsCtrl.currentPage - 1) * $lv.artifactsCtrl.itemsPerPage)) track by $index"
-        dynamic-controller-as="{{$lv.artifactsMetadata.gridViewController}}"
-        ng-click="$lv.onItemClick(artifact, $event)">
-        <td class="vamp-lv-col clickable" ng-click="$lv.artifactsCtrl.updateSelection($event, artifact)">
+        ng-repeat="artifact in ($ctrl.items | filter:{name:$ctrl.artifactsCtrl.searchTerm} | limitTo: $ctrl.artifactsCtrl.itemsPerPage: (($ctrl.artifactsCtrl.currentPage - 1) * $ctrl.artifactsCtrl.itemsPerPage)) track by $index"
+        dynamic-controller-as="{{$ctrl.artifactsMetadata.gridViewController}}"
+        dynamic-controller-alias="$artifactCtrl">
+        <td class="vamp-lv-col row-select clickable" ng-click="$ctrl.artifactsCtrl.updateSelection($event, artifact)">
           <input type="checkbox" class="checkbox vamp-lv-checkbox"
-             ng-checked="$lv.artifactsCtrl.isSelected(artifact)">
+             ng-checked="$ctrl.artifactsCtrl.isSelected(artifact)">
         </td>
-        <td class="vamp-lv-col" ng-repeat="field in $lv.artifactsMetadata.artifactInfo" field-name="{{field.title}}">
+        <td class="vamp" ng-click="$ctrl.onItemClick(artifact, $event)" ng-repeat="field in $ctrl.artifactsMetadata.artifactInfo" field-name="{{field.title}}">
           <div ng-switch="field.type">
             <div class="vamp-lv-col-tags" ng-switch-when="tags">
               <tag ng-repeat="tag in field.tags" ng-show="tag.visible === undefined ? true : (tag.visible | interpolate:this)" value="tag.value | interpolate:this"
@@ -36,32 +32,34 @@
                 paused="tag.paused | interpolate:this">
               </tag>
             </div>
-            <div class="vamp-lv-value vamp-lv-col-array" ng-switch-when="array">
-              <div class="vamp-lv-value" ng-repeat="item in (items = $lv.getKeyValue(artifact, field.arrayPath)) | limitTo:3">
-                <span ng-if="$index < 2 || items.length <= 3">{{ $lv.getArrayTypeValue(item, field, this) }}</span>
-                <a ng-if="$last && items.length > 3"> {{ items.length - 2 }} more...</a>
+            <div class="vamp-lv-col-array" ng-switch-when="array">
+              <div class="" ng-repeat="item in (items = $ctrl.getKeyValue(artifact, field.arrayPath)) | limitTo:3">
+                <span ng-if="$index < 2 || items.length < 3">{{ $ctrl.getArrayTypeValue(item, field, this) }}</span>
+                <a ng-if="$last && items.length >= 3"
+                  uib-tooltip-template="'app/crud/templates/listViewArrayPopup.html'"
+                  tooltip-append-to-body="true"
+                  tooltip-placement="top-left">...</a>
               </div>
             </div>
             <div class="vamp-lv-col-object" ng-switch-when="object">
-              <div class="prop vamp-lv-value" ng-repeat="prop in field.properties">
+              <div class="prop" ng-repeat="prop in field.properties">
                 <span>{{ prop.title }}</span> :
-                {{ prop.expression ? (prop.expression | interpolate:this) : ($lv.getKeyValue(artifact, field.valuePath + '.' + prop.value)) }}
+                {{ prop.expression ? (prop.expression | interpolate:this) : ($ctrl.getKeyValue(artifact, field.valuePath + '.' + prop.value)) }}
               </div>
             </div>
-            <div title="{{ field.expression ? (field.expression | interpolate:this) : ($lv.getKeyValue(artifact, field.valuePath) || '' ) }}"
-              class="vamp-lv-value vamp-lv-col-string" ng-switch-default>
-              {{ field.expression ? (field.expression | interpolate:this) : ($lv.getKeyValue(artifact, field.valuePath) || "" ) }}
+            <div title="{{ field.expression ? (field.expression | interpolate:this) : ($ctrl.getKeyValue(artifact, field.valuePath) || '' ) }}"
+              class="vamp-lv-col-string" ng-switch-default>
+              {{ field.expression ? (field.expression | interpolate:this) : ($ctrl.getKeyValue(artifact, field.valuePath) || "" ) }}
             </div>
           </div>
         </td>
-        <td ng-if="$lv.artifactsMetadata.actions && $lv.artifactsMetadata.actions.length > 0"
-          class="vamp-lv-col vamp-lv-row-actions">
-          <button ng-repeat="action in $lv.artifactsMetadata.actions"
-            ng-if="action.active ? (action.active | interpolate:this) : true"
-            class="btn btn-ghost {{ action.class }}"
-            ng-click="$ctrl[action.action]($event)">
-            {{ action.title }}
-          </button>
+        <td ng-if="$ctrl.artifactsMetadata.actions && $ctrl.artifactsMetadata.actions.length > 0" class="actions"
+          uib-popover-template="'app/crud/templates/actionsMenu.html'"
+          popover-append-to-body="true"
+          popover-trigger="'outsideClick'"
+          popover-placement="left">
+
+          <i class="icon-options-vertical"></i>
         </td>
       </tr>
     </tbody>

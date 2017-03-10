@@ -1,0 +1,33 @@
+table.table.v2 {
+  font-weight: $font-weight-light;
+  font-size: $font-size-normal;
+
+  thead {
+
+    tr {
+      border: 1px solid $night-sky;
+
+      th {
+        border: none;
+        height: 5rem;
+        line-height: 5rem;
+        padding: 0 0 0 2.5rem;
+        background-color: $panel;
+        font-weight: $font-weight-light;
+        font-size: $font-size-tiny;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        background-color: $night-sky;
+        height: 6rem;
+        line-height: 6rem;
+        padding: 0 0 0 2.5rem;
+        border-bottom: 1px solid $panel;
+      }
+    }
+  }
+}

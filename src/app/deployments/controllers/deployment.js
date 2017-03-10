@@ -8,7 +8,7 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $breadcrumb
 
   this.deployment = null;
   this.kind = $stateParams.kind;
-  this.title = $stateParams.name;
+  this.title = this.name = $stateParams.name;
 
   var original;
   var services;
@@ -18,7 +18,7 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $breadcrumb
   this.last = [];
 
   this.edit = function () {
-    $state.go('.source');
+    $state.go('.source.view');
   };
 
   this.delete = function () {

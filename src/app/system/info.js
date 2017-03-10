@@ -1,7 +1,4 @@
-angular.module('app').component('info', {
-  templateUrl: 'app/system/templates/infoConfiguration.html',
-  controller: InfoController
-});
+angular.module('app').controller('infoController', InfoController);
 
 function InfoController($scope, $timeout, $vamp, artifact) {
   var $ctrl = this;

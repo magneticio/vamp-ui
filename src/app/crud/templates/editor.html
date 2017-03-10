@@ -1,0 +1,8 @@
+<div class="panel-body">
+        <div id="editor"
+             ng-class="{'editor-error' : ($ctrl.isModified() && !$ctrl.valid)}"
+             ui-ace="$ctrl.editor"
+             ng-model="$ctrl.source" ng-change="$ctrl.validate($event)"
+             ng-readonly="!$ctrl.inEdit"></div>
+
+</div>

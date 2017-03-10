@@ -108,7 +108,7 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
   };
 
   function gotoDeployment(name) {
-    $state.go('artifacts.view', {kind: 'deployments', name: name});
+    $state.go('artifacts.one', {kind: 'deployments', name: name});
   }
 
   function updateDeployment(deployments, title, text, buttonText, buttonClass) {

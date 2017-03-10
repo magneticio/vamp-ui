@@ -1,0 +1,26 @@
+ol.breadcrumb {
+  max-width: 100%;
+  background: none;
+  padding:0;
+  margin: 0;
+  display: inline-block;
+  font-weight: $font-weight-light;
+  font-size: $font-size-normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  & > li {
+    display: inline;
+
+    & > a {
+      color: #96A0AA;
+    }
+
+    &:last-child {
+      & > span {
+        color: $white;
+      }
+    }
+  }
+}

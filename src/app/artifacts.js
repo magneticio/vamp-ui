@@ -202,7 +202,7 @@ Artifacts.prototype.all = function () {
           name: "mergeTo",
           title: "Merge to",
           action: "merge",
-          active: "!($ctrl.mergeWith | isEmpty)",
+          active: "!($artifactCtrl.mergeWith | isEmpty)",
           class: "btn-primary"
         },
         {
@@ -210,7 +210,7 @@ Artifacts.prototype.all = function () {
           title: "Remove from",
           action: "remove",
           class: "btn-danger",
-          active: "!($ctrl.removeFrom | isEmpty)"
+          active: "!($artifactCtrl.removeFrom | isEmpty)"
         }
       ]
     },

@@ -23,29 +23,33 @@
 <body ng-app="app">
 <div class="page">
 
-    <div id="wrapper" ng-controller="layoutController as $layout">
-
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-          <menu>
-          </menu>
-        </div>
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper" ng-class="{'footer-expanded': $layout.uiStates.footer == 'expanded'}">
-
-            <ui-view name="main"></ui-view>
-            <side></side>
-
-
-        </div>
-        <!-- /#page-content-wrapper -->
-        <events class="events-panel"></events>
-
-        <overlay-manager></overlay-manager>
+  <div class="body" id="wrapper" ng-class="{'expand-left' : $layout.uiStates.left, 'expand-right' : $layout.uiStates.right, 'footer-expanded' : $layout.uiStates.footer}" ng-controller="layoutController as $layout">
+    <div class="nav" id="left-panel-wrapper">
+      <menu>
+      </menu>
     </div>
+    <div class="site" id="site-wrapper">
+      <div class="header" id="header">
+        <header>
+        </header>
+      </div>
+      <div class="content" id="page-content-wrapper">
+        <div class="center" id="page-main-wrapper">
+          <ui-view name="main"></ui-view>
+          <side></side>
+        </div>
+        <div class="right" id="right-panel-wrapper">
 
+          <ui-view name="right-panel"></ui-view>
+        </div>
+      </div>
+      <div class="events-panel">
+
+        <events ></events>
+      </div>
+    </div>
+    <overlay-manager></overlay-manager>
+  </div>
 
 </div>
 </body>

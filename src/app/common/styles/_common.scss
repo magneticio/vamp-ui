@@ -5,6 +5,59 @@
 /* Drop down */
 @import "_dropdown";
 
+/* Popover style */
+@import "_popover";
+
+/* Lists style */
+@import "_lists";
+
+/* Table style */
+@import "_table";
+
+
+/* Containers */
+.container-fluid {
+
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+
+  &.no-padding {
+    padding:0;
+  }
+
+  &.main-view {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  &.stretch-height {
+    display: flex;
+    flex-direction: column;
+    height: calc(100%);
+    padding-bottom: 1.5rem;
+
+    .row:last-child {
+      flex: 1;
+
+      & > div:only-child {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        & > div {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    }
+  }
+
+  .row.section:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+}
+
 /* Inputs */
 
 .form-control {
@@ -12,7 +65,8 @@
   color: $medium-blue;
   background-color: $pitch;
   border: none;
-  border-radius: 2rem;
+  min-height: $button-size-normal;
+  border-radius: .5rem;
 
   &:hover,
   &:focus {
@@ -26,7 +80,7 @@
   color: $dark-blue ;
   background-color: $pitch;
   border: none;
-  border-radius: 2rem;
+  border-radius: .5rem;
 }
 
 .input-group {
@@ -121,6 +175,9 @@ input[type="text"]:-ms-input-placeholder {
 /* Alerts */
 @import "_alerts";
 
+/* Breadcrumb */
+@import "_breadcrumbs";
+
 /* Editor */
 #editor {
   &.editor-error {
@@ -138,3 +195,5 @@ input[type="text"]:-ms-input-placeholder {
   visibility: hidden;
   position: absolute;
 }
+
+@import "_header";

@@ -2,12 +2,62 @@
   font-size: $font-size-normal;
   font-weight: $font-weight-light;
 
+
   .btn {
     text-align: left;
   }
 
   .dropdown-menu {
-    font-size: $font-size-normal;
-    font-weight: $font-weight-light;
+    margin-right: .5rem;
+    background-color: $pitch;
+
+    & > li {
+      background: none;
+      background-color: $pitch;
+      font-size: $font-size-normal;
+      font-weight: $font-weight-light;
+
+      &.divider {
+        background-color: $night-sky;
+      }
+
+      &:not(.disabled) {
+
+        & > a,
+        & > .btn-link {
+          cursor: pointer;
+        }
+      }
+
+      & > a,
+      & > .btn-link {
+        font-weight: $font-weight-light;
+        color: $misty;
+
+        &:hover,
+        &:focus {
+          background: none;
+          background-color: $night-sky;
+          color: $misty;
+        }
+      }
+    }
+
+    &.triangle {
+      top : calc(100% + 1.5rem);
+
+      &::before {
+        content: '';
+        background-color: $pitch;
+        position: absolute;
+        width:2rem;
+        height:2rem;
+        transform: rotate(45deg);
+        display: block;
+        top:-1rem;
+        right:1rem;
+        z-index: -1;
+      }
+    }
   }
 }

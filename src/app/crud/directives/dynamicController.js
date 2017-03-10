@@ -8,8 +8,10 @@ angular.module('app').directive('dynamicControllerAs', ['$compile', '$interpolat
         var ctrlName = $interpolate(attrs.dynamicControllerAs)(scope);
         elem.removeAttr('dynamic-controller-as');
 
+        var aliasName = attrs.dynamicControllerAlias || '$ctrl';
+
         if (ctrlName) {
-          elem.attr('ng-controller', ctrlName + ' as $ctrl');
+          elem.attr('ng-controller', ctrlName + ' as ' + aliasName);
         }
 
         $compile(elem)(scope);

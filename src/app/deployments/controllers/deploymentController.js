@@ -2,9 +2,18 @@ angular.module('app')
   .controller('DeploymentCtrl', DeploymentCtrl);
 
 /** @ngInject */
-function DeploymentCtrl($scope, $uibModal, $vamp, $state, toastr) {
+function DeploymentCtrl($scope, $uibModal, $uibTooltip, $vamp, $state, toastr) {
   var $ctrl = this;
+  var actionsMenu = null;
   $ctrl.deployment = $scope.artifact;
+
+  $ctrl.openActionsMenu = function ($event) {
+    actionsMenu = $uibTooltip($event.targetElement,
+      {placement: 'bottom',
+      contentTemplate: 'app/crud/templates/actionsMenu.html'
+      });
+    actionsMenu.$promise.then(actionsMenu.show);
+  };
 
   $ctrl.exportDeployment = function ($event) {
     $event.stopPropagation();
@@ -31,7 +40,7 @@ function DeploymentCtrl($scope, $uibModal, $vamp, $state, toastr) {
         return $vamp.await(function () {
           $vamp.put('/blueprints/' + data.name, JSON.stringify(blueprint));
         }).then(function () {
-          $state.go('artifacts.view.source', {kind: 'blueprints', name: data.name});
+          $state.go('artifacts.one.source.view', {kind: 'blueprints', name: data.name});
           toastr.success('\'' + blueprint.name + '\' has been successfully exported as \'' + data.name + '\'.');
         }).catch(function (response) {
           if (response) {

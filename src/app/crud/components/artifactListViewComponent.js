@@ -1,13 +1,13 @@
 angular.module('app')
   .controller('listViewController', function ($scope, $element, util, interpolateFilter) {
-    var $lv = this;
+    var $ctrl = this;
 
-    $lv.getKeyValue = function (item, key) {
+    $ctrl.getKeyValue = function (item, key) {
       var value = util.getValueByString(item, key);
       return value;
     };
 
-    $lv.getArrayTypeValue = function (item, field, context) {
+    $ctrl.getArrayTypeValue = function (item, field, context) {
       var value = (item[field.valuePath] || item);
 
       if (field.expression) {
@@ -17,14 +17,14 @@ angular.module('app')
       return value;
     };
 
-    $lv.onItemClick = function (item) {
-      $lv.artifactsCtrl.view(item);
+    $ctrl.onItemClick = function (item) {
+      $ctrl.artifactsCtrl.view(item);
     };
 
-    $lv.performAction = function (action, artifact, $event) {
+    $ctrl.performAction = function (action, artifact, $event) {
       $event.stopPropagation();
 
-      $lv.artifactsCtrl[action](artifact, $event);
+      $ctrl.artifactsCtrl[action](artifact, $event);
     };
   })
   .component('artifactListView', {
@@ -35,5 +35,5 @@ angular.module('app')
     },
     templateUrl: 'app/crud/templates/listView.html',
     controller: 'listViewController',
-    controllerAs: '$lv'
+    controllerAs: '$ctrl'
   });

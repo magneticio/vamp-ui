@@ -1,17 +1,18 @@
 <div ng-show="$ctrl.deployment">
-    <header title="{{$ctrl.title}}">
-        <buttons>
-            <button class="btn btn-ghost btn-primary" type="submit" title="VIEW" ng-click="$ctrl.edit()">
-                View source
-            </button>
-            <button class="btn btn-ghost btn-danger" type="submit" title="DELETE"
+    <div class="container-fluid main-view deployment">
+        <div class="row">
+          <div class="col-md-12">
+            <span>{{ $ctrl.name}}</span>
+            <button class="btn btn-danger pull-right" type="submit" title="Delete"
                     ng-disabled="!$ctrl.deployment"
                     ng-click="$ctrl.delete()">
                 Delete
             </button>
-        </buttons>
-    </header>
-    <div class="container-fluid deployment">
+            <button class="btn btn-primary pull-right" type="submit" title="View Source" ng-click="$ctrl.edit()">
+                View source
+            </button>
+          </div>
+        </div>
         <div class="row deployment-charts">
             <div class="col-md-4 deployment-chart-column">
                 <p>HEALTH&nbsp;
@@ -59,9 +60,9 @@
                     <div class="vamp-table__header scale-col">
                         <span class="v-label">SCALE</span>
                     </div>
-                    <div class="vamp-table__header instances-col">
+                    <!--<div class="vamp-table__header instances-col">
                         <span class="v-label">INSTANCES</span>
-                    </div>
+                    </div>-->
                     <div class="vamp-table__header ports-col">
                         <span class="v-label">PORTS</span>
                     </div>
@@ -72,7 +73,8 @@
 
                 <div class="vamp-table__row" ng-repeat="service in cluster.services | orderBy:'breed.name'">
                     <div class="vamp-table__col name-col">
-                        <span class="v-value v-value--emphasis v-value--state"
+                        <span ui-sref="artifacts.one.cluster.service({cluster: cluster.name ,service: service.breed.name})"
+                        class="v-value v-value--emphasis v-value--state clickable"
                               ng-class="{'v-value--state--update': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'v-value--state--error-alert': $ctrl.serviceStatus(service) === 'failed', 'v-value--state--highlight': $ctrl.addedService(cluster, service)}">
                             {{service.breed.name}}
 
@@ -114,7 +116,7 @@
                         </div>
                     </div>
 
-                    <div class="vamp-table__col instances-col">
+                    <!--<div class="vamp-table__col instances-col">
                         <div class="vamp-table__col__list">
                             <div class="vamp-table__col__list__action" ng-show="service.instances.length > 0"
                                  ng-click="$ctrl.showInstances(cluster, service)">
@@ -142,14 +144,14 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="vamp-table__col ports-col">
                         <div class="vamp-table__col__list">
                             <div class="vamp-table__col__list__item"
                                  ng-repeat="(portName, port) in service.breed.ports | orderByKeys">
                                 <span class="v-value">
-                                    <a ui-sref="artifacts.view({kind: 'gateways', name: '{{$ctrl.deployment.name}}/{{cluster.name}}/{{portName}}'})"
+                                    <a ui-sref="artifacts.one({kind: 'gateways', name: '{{$ctrl.deployment.name}}/{{cluster.name}}/{{portName}}'})"
                                        href="">{{portName}}</a>
                                 </span>
                             </div>

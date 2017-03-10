@@ -8,6 +8,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $bre
 
   this.gateway = null;
   this.kind = $stateParams.kind;
+  this.name = $stateParams.name;
   this.title = $filter('decodeName')($stateParams.name);
 
   var charts = new TimeSeriesCharts();
@@ -17,7 +18,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $bre
   this.sliderOptions = slider.weightOptions;
 
   this.edit = function () {
-    $state.go('.source');
+    $state.go('.source.view');
   };
 
   this.delete = function () {

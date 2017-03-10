@@ -151,7 +151,7 @@ function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $breadcrumb, 
   };
 
   $ctrl.view = function (artifact) {
-    $state.go('.view', {name: artifact.name});
+    $state.go('.one', {name: artifact.name});
   };
 
   $ctrl.deleteSelected = function () {
