@@ -308,6 +308,7 @@ table.vamp-lv {
     }
 
     input[type="checkbox"] {
+      margin-right: 1.5rem;
       -moz-transform: scale(1.25, 1.25);
       &:hover {
         cursor: pointer;
