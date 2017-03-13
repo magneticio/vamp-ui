@@ -13,8 +13,9 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
   $ctrl.instanceName = $stateParams.instance;
 
   $ctrl.instance = _.find(serviceData.instances, {name: $ctrl.instanceName});
+  var currentHost = Environment.prototype.origin() || window.location.host;
 
-  var host = $ctrl.host = 'http://' + Environment.prototype.origin().substring(0, Environment.prototype.origin().indexOf(':'));
+  var host = $ctrl.host = 'http://' + currentHost.substring(0, currentHost.indexOf(':'));
   $ctrl.isFollowLog = true;
   $ctrl.stdout = [];
   $ctrl.stderr = [];
