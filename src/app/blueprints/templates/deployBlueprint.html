@@ -12,9 +12,17 @@
             <span class="help-block" ng-show="form.name.$error.required">Deployment must have a name.</span>
             <span class="help-block" ng-show="form.name.$error.pattern">Deployment must not contain whitespace or slash characters.</span>
         </div>
+        <div ng-if="availability != null">
+          <div class="alert alert-warning">
+            <strong>Warning!</strong> {{ availability.message }}
+            ({{ availability.memory.available }}MB available / {{ availability.memory.needed }}MB
+            required and {{ availability.cpu.available }}CPUs available / {{ availability.cpu.needed }}CPUs required).
+          </div>
+        </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-info" ng-disabled="form.$invalid" type="submit">Deploy</button>
+        <button ng-if="availability != null" class="btn btn-warning" ng-disabled="form.$invalid" type="submit">Deploy anyway</button>
+        <button ng-if="availability == null" class="btn btn-info" ng-disabled="form.$invalid" type="submit">Deploy</button>
         <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
     </div>
 </form>

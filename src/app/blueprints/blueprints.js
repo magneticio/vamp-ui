@@ -13,8 +13,9 @@ function BlueprintsController($scope, artifactsMetadata, $vampBlueprint, $contro
 }
 
 /** @ngInject */
-function DeployBlueprintController($scope, $uibModalInstance, blueprint) {
+function DeployBlueprintController($scope, $uibModalInstance, blueprint, availability) {
   $scope.blueprint = blueprint;
+  $scope.availability = availability;
   $scope.name = angular.copy(blueprint.name);
 
   $scope.ok = function () {

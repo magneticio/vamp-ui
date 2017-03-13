@@ -2,17 +2,20 @@
 /* eslint camelcase: ["error", {properties: "never"}] */
 'use strict';
 angular.module('app')
-  .factory('$vamp', ['$log', '$rootScope', '$websocket', '$timeout', function ($log, $rootScope, $websocket, $timeout) {
-    return new Vamp($log, $rootScope, $websocket, $timeout);
+  .factory('$vamp', ['$http', '$log', '$rootScope', '$websocket', '$timeout', function ($http, $log, $rootScope, $websocket, $timeout) {
+    return new Vamp($http, $log, $rootScope, $websocket, $timeout);
   }])
   .run(['$vamp', function ($vamp) {
     $vamp.init();
   }]);
 
-function Vamp($log, $rootScope, $websocket, $timeout) {
+function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   var $this = this;
   var stream;
   var transaction = 1;
+
+  // API url for Cross Origin Http requests
+  var origin = 'http://' + Environment.prototype.origin() + '/api/v1';
 
   $this.info = {};
 
@@ -50,6 +53,10 @@ function Vamp($log, $rootScope, $websocket, $timeout) {
   this.connected = function () {
     return !_.isEmpty(stream);
   };
+
+  this.httpGet = function (path, params, accept) {
+    return $http.get(origin + path, { params: params });
+  }
 
   this.peek = function (path, data, params, accept) {
     request(path, 'PEEK', data, params ? params : {}, accept ? accept : 'JSON');
