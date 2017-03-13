@@ -1,9 +1,7 @@
-/* global Environment */
-
 angular.module('app')
   .controller('instanceController', InstanceController);
 
-function InstanceController($scope, $http, $interval, $element, $state, $stateParams, clusterData, serviceData) {
+function InstanceController($scope, $http, $interval, $element, $state, $stateParams, clusterData, serviceData, $vamp) {
   var $ctrl = this;
 
   $ctrl.kind = $stateParams.kind;
@@ -13,7 +11,7 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
   $ctrl.instanceName = $stateParams.instance;
 
   $ctrl.instance = _.find(serviceData.instances, {name: $ctrl.instanceName});
-  var currentHost = Environment.prototype.origin() || window.location.host;
+  var currentHost = $vamp.origin;
 
   var host = $ctrl.host = 'http://' + currentHost.substring(0, currentHost.indexOf(':'));
   $ctrl.isFollowLog = true;
@@ -67,8 +65,11 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
 
   function scrollToBottom() {
     if ($ctrl.isFollowLog) {
-      var scrolledContainer = $($element).find('.panel-body');
-      scrolledContainer.scrollTop(scrolledContainer.prop('scrollHeight'));
+      var scrolledContainer = $($element).find('div.active pre');
+
+      if (scrolledContainer) {
+        scrolledContainer.scrollTop(scrolledContainer.prop('scrollHeight'));
+      }
     }
   }
 

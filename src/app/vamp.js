@@ -15,7 +15,8 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   var transaction = 1;
 
   // API url for Cross Origin Http requests
-  var origin = 'http://' + Environment.prototype.origin() + '/api/v1';
+  this.origin = Environment.prototype.origin() || window.location.host;
+  var apiHost = 'http://' + this.origin + '/api/v1';
 
   $this.info = {};
 
@@ -55,7 +56,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   };
 
   this.httpGet = function (path, params) {
-    return $http.get(origin + path, {params: params});
+    return $http.get(apiHost + path, {params: params});
   };
 
   this.peek = function (path, data, params, accept) {
