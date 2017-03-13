@@ -14,6 +14,8 @@ angular.module('app')
 function routesConfig($stateProvider, $urlRouterProvider) {
   var artifacts = Artifacts.prototype.all();
 
+  var origin = Environment.prototype.origin() || window.location.host;
+
   $urlRouterProvider.otherwise('/vamp/deployments');
 
   $stateProvider
@@ -103,7 +105,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         artifactData: function ($http, $stateParams) {
           return $http({
             method: 'GET',
-            url: 'http://' + Environment.prototype.origin() + '/api/v1/' + $stateParams.kind + '/' + $stateParams.name
+            url: 'http://' + origin + '/api/v1/' + $stateParams.kind + '/' + $stateParams.name
           }).then(function (response) {
             var artifact = response.data;
 
@@ -300,9 +302,4 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         label: 'Backend configuration'
       }
     });
-
-  // $stateProvider.state('vga', {url: '/vga', views: {main: {template: '<vga></vga>'}}});
-  // $stateProvider.state('log', {url: '/log', views: {main: {template: '<log></log>'}}});
-  // $stateProvider.state('info', {url: '/info', views: {main: {template: '<info></info>'}}});
-  // $stateProvider.state('configuration', {url: '/configuration', views: {main: {template: '<configuration></configuration>'}}});
 }
