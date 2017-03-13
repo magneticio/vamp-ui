@@ -32,14 +32,14 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
     */
   function getAvailability(blueprint, containerDriver) {
     if (containerDriver.type === 'marathon') {
-      let availableResources = _.reduce(containerDriver.container.mesos.slaves, function (ar, slave) {
+      var availableResources = _.reduce(containerDriver.container.mesos.slaves, function (ar, slave) {
         return {
           totalMemory: ar.totalMemory + slave.unreserved_resources.mem,
           totalCPUs: ar.totalCPUs + slave.unreserved_resources.cpus
         };
       }, {totalMemory: 0, totalCPUs: 0});
 
-      let blueprintResources = _.reduce(blueprint.clusters, function (br, cluster) {
+      var blueprintResources = _.reduce(blueprint.clusters, function (br, cluster) {
         var scaleResources = _.reduce(cluster.services, function (sr, service) {
           return {
             totalMemory: sr.totalMemory + (transformMemory(service.scale.memory) * service.scale.instances),
@@ -52,7 +52,7 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
         };
       }, {totalMemory: 0, totalCPUs: 0});
 
-      let afterDeployment = {
+      var afterDeployment = {
         totalMemory: availableResources.totalMemory - blueprintResources.totalMemory,
         totalCPUs: availableResources.totalCPUs - blueprintResources.totalCPUs
       };
