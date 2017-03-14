@@ -13,8 +13,8 @@ menu {
 
   .sidebar-nav {
     position: absolute;
-    height: calc(100% - $header-height;);
-    top: $header-height;;
+    height: calc(100% - #{$header-height});
+    top: $header-height;
     width: 25rem;
     margin: 0;
     padding: 0;
@@ -28,8 +28,8 @@ menu {
     border-bottom: 1px solid $dark-blue;
 
     a {
+      padding-left: 2rem;
       color: $white;
-      //background-color: $vamp-red;
       display: flex;
       align-items: center;
       height: 100%;
@@ -71,7 +71,7 @@ menu {
        }
 		 }
 
-    li {
+    li:not(.sidebar-brand) {
 			user-select:none;
       line-height: 6rem;
       cursor: pointer;
@@ -83,27 +83,15 @@ menu {
         outline: none !important;
       }
 
-      &.active,
-      &[data-toggle=collapse]:not(.collapsed)
-			{
+      &.has-sub-menu.menu-open,
+      &.active:not(.sub-menu-item) {
         border-left-width: .5rem;
         background-color: $night;
         text-decoration: none;
 
-				& > .btn-link,
+        & > .btn-link,
 				& > a {
-					text-decoration: none;
-					background-color: $night;
           padding-left: 2rem;
-          font-weight: $font-weight-bold;
-          color: $misty;
-
-					&:hover {
-						background-color: $night;
-            text-decoration: none;
-            font-weight: $font-weight-bold;
-            color: $misty;
-					}
 				}
 
         ul.sub-menu {
@@ -115,6 +103,23 @@ menu {
           }
         }
 			}
+
+      &.active:not(.has-sub-menu) {
+        & > .btn-link,
+				& > a {
+					text-decoration: none;
+					background-color: $night;
+          font-weight: $font-weight-bold;
+          color: $misty;
+
+					&:hover {
+						background-color: $night;
+            text-decoration: none;
+            font-weight: $font-weight-bold;
+            color: $misty;
+					}
+				}
+      }
 
 			.btn-link,
       a {
@@ -147,10 +152,5 @@ menu {
         }
       }
     }
-   }
-
-  .sidebar-nav,
-  .sidebar-bottom-docked {
-
   }
 }

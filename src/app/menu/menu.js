@@ -5,9 +5,13 @@ angular.module('app').component('menu', {
   controller: MenuController
 });
 
-function MenuController(uiStatesFactory) {
+function MenuController(uiStatesFactory, $state, $timeout) {
   var $ctrl = this;
 
   $ctrl.leftPanelState = uiStatesFactory.viewStates.left;
   $ctrl.artifacts = Artifacts.prototype.all();
+
+  $timeout(function () {
+    $ctrl.adminSubMenu = $state.includes('admin');
+  });
 }

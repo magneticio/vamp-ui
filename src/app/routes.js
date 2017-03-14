@@ -227,7 +227,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       }
     })
     .state('admin', {
-      url: '/settings',
+      url: '/admin',
       abstract: true
     })
     .state('admin.vga', {

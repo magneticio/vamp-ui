@@ -15,32 +15,32 @@
         <span>{{artifact.kind}}</span>
       </a>
   </li>
-  <li data-toggle="collapse" data-target="#settings" class="collapsed">
-    <a class="btn-link">
+  <li class="has-sub-menu" ui-sref-active="{ 'active': 'admin' }" ng-class="{ 'menu-open' : $ctrl.adminSubMenu}">
+    <a class="btn-link" ng-click="$ctrl.adminSubMenu = !$ctrl.adminSubMenu">
       <i></i>
       <span>Admin</span>
     </a>
-    <ul id="settings" class="sub-menu collapse">
-      <li>
-        <a ui-sref="admin.configuration" ui-sref-active="active" href="#">
+    <ul class="sub-menu" uib-collapse="!$ctrl.adminSubMenu">
+      <li class="sub-menu-item" ui-sref="admin.configuration" ui-sref-active="active">
+        <a class="btn-link" href="#">
           <i></i>
           <span>Backend configuration</span>
         </a>
       </li>
-      <li>
-        <a ui-sref="admin.vga" ui-sref-active="active" href="#">
+      <li class="sub-menu-item" ui-sref="admin.vga" ui-sref-active="active">
+        <a class="btn-link" href="#">
           <i></i>
           <span>VGA configuration</span>
         </a>
       </li>
-      <li>
-        <a ui-sref="admin.info" ui-sref-active="active" href="#">
+      <li class="sub-menu-item" ui-sref="admin.info" ui-sref-active="active">
+        <a class="btn-link" href="#">
           <i></i>
           <span>Extended info</span>
         </a>
       </li>
-      <li>
-        <a ui-sref="admin.log" ui-sref-active="active" href="#">
+      <li class="sub-menu-item" ui-sref="admin.log" ui-sref-active="active">
+        <a class="btn-link" href="#">
           <i></i>
           <span>Log</span>
         </a>
