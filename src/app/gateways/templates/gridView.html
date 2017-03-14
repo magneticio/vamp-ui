@@ -1,14 +1,11 @@
 <div class="artifact-properties">
-    <tag value="artifact.deployed ? 'port : ' + artifact.port : 'deploying'" has-progress="true"
-      success="artifact.deployed" in-progress="!artifact.deployed"
-    ></tag>
-    <!--<span class="label" ng-class="{'label-info': !$ctrl.gateway.deployed, 'label-success': $ctrl.gateway.deployed}">
-        {{$ctrl.gateway.deployed ? 'port : ' + $ctrl.gateway.port : 'deploying'}}&nbsp;
-        <i ng-if="$ctrl.gateway.deployed" class="fa fa-check"></i>
-        <i ng-if="!$ctrl.gateway.deployed" class="fa fa-cog fa-spin"></i>
-    </span>-->
-    <tag value="artifact.internal ? 'internal' : 'external'"></tag>
-    <!--<span class="label label-primary">{{ $ctrl.gateway.internal ? 'internal' : 'external'}}</span>-->
+  <div class="artifact-labels">
+      <tag value="artifact.deployed ? 'port : ' + artifact.port : 'deploying'" has-progress="true"
+        success="artifact.deployed" in-progress="!artifact.deployed"
+      ></tag>
+
+      <tag value="artifact.internal ? 'internal' : 'external'"></tag>
+    </div>
     <p></p>
     <div class="list" ng-if="!(artifact.virtual_hosts | isEmpty)">
         <p class="v-label">virtual hosts :</p>

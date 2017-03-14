@@ -1,11 +1,8 @@
-@import "_service";
-@import "_instance";
-
-.deployment {
+.gateway {
   padding: 2.5rem;
   margin-top: 1rem;
 
-  .title-row {
+  .gateway-title {
     color: $white;
     font-size: $font-size-xl;
   }

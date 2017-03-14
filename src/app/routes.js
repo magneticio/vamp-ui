@@ -78,7 +78,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       ncyBreadcrumb: {
-        label: 'New {{ $ctrl.singular }}'
+        label: 'New {{ $ctrl.singular }}',
+        showLast: true
       }
     })
     .state('artifacts.one', {
@@ -146,7 +147,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       ncyBreadcrumb: {
-        label: 'View source'
+        label: 'View source',
+        showLast: true
       }
     })
     .state('artifacts.one.source.edit', {
@@ -164,7 +166,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       ncyBreadcrumb: {
-        label: 'Edit source'
+        label: 'Edit source',
+        showLast: true
       }
     })
     .state('artifacts.one.cluster', {
@@ -253,7 +256,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       ncyBreadcrumb: {
-        label: 'VGA configuration'
+        label: 'VGA configuration',
+        showLast: true
       }
     })
     .state('admin.log', {
@@ -271,7 +275,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       ncyBreadcrumb: {
-        label: 'Log'
+        label: 'Log',
+        showLast: true
       }
     })
     .state('admin.info', {
@@ -289,7 +294,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       ncyBreadcrumb: {
-        label: 'Extended info'
+        label: 'Extended info',
+        showLast: true
       }
     })
     .state('admin.configuration', {
@@ -307,7 +313,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       ncyBreadcrumb: {
-        label: 'Backend configuration'
+        label: 'Backend configuration',
+        showLast: true
       }
     });
 }
