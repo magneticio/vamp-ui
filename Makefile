@@ -24,7 +24,6 @@ all: default
 default:
 	docker pull $(BUILD_SERVER)
 	docker run \
-		--name buildserver \
 		--interactive \
 		--tty \
 		--rm \
@@ -52,11 +51,9 @@ build:
 
 
 .PHONY: pack
-pack:
-	make build
+pack: default
 	docker volume create packer
 	docker run \
-		--name buildserver \
 		--interactive \
 		--tty \
 		--rm \
