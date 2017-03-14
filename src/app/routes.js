@@ -60,8 +60,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       ncyBreadcrumb: {
-        label: '{{ $ctrl.kind }}',
-        hideIfCurrent: true
+        label: '{{ $ctrl.kind }}'
       }
     })
     .state('artifacts.add', {
@@ -117,7 +116,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         allowedKinds: ['deployments', 'gateways']
       },
       ncyBreadcrumb: {
-        label: '{{ $ctrl.name }}'
+        label: '{{ $ctrl.kind.substring(0, $ctrl.kind.length - 1) }} : {{ $ctrl.name }}'
       }
     })
     .state('artifacts.one.source', {
@@ -144,13 +143,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
             $scope.ncyBreadcrumbIgnore = true;
           },
           template: ''
-        }/*
-        "right-panel@": {
-          controller: 'revisionsController as $ctrl',
-          templateUrl: 'app/crud/templates/revisions.html'
-        }*/
+        }
       },
-
       ncyBreadcrumb: {
         label: 'View source'
       }
@@ -189,7 +183,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       ncyBreadcrumb: {
-        label: '{{ $ctrl.cluster }}'
+        label: 'Cluster : {{ $ctrl.cluster }}'
       }
     })
     .state('artifacts.one.cluster.service', {
@@ -219,7 +213,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       ncyBreadcrumb: {
-        label: '{{ $ctrl.serviceName }}'
+        label: 'Service : {{ $ctrl.serviceName }}'
       }
     })
     .state('artifacts.one.cluster.service.instance', {

@@ -5,7 +5,7 @@ function ($scope, $state, $stateParams, $breadcrumb, $timeout, $element, $vamp, 
 
   $ctrl.kind = $stateParams.kind;
   // naive singularization
-  $ctrl.singular = $ctrl.kind.substring(0, this.kind.length - 1);
+  $ctrl.singular = $ctrl.kind.substring(0, $ctrl.kind.length - 1);
   $ctrl.title = 'New ' + $ctrl.singular;
 
   var path = '/' + $ctrl.kind;

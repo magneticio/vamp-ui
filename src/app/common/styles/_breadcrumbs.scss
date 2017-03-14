@@ -13,6 +13,10 @@ ol.breadcrumb {
   & > li {
     display: inline;
 
+    & + li:before {
+      content: '>'
+    }
+
     & > a {
       color: #96A0AA;
     }
