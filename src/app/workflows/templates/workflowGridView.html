@@ -1,42 +1,36 @@
 <div class="artifact-properties" ng-controller="WorkflowController as $ctrl">
-    <tag
-      value="artifact.status"
-      has-progress="true"
-      success="artifact.status === 'running'"
-      in-progress="$ctrl.updating()"
-      paused="artifact.status === 'suspended'">
-    </tag>
-    <p></p>
-    <tag ng-if="artifact.breed.name" value="'breed: ' + artifact.breed.name"></tag>
-    <tag ng-if="artifact.breed.reference" value="'breed: ' + artifact.breed.reference"></tag>
-    <p></p>
+    <div class="artifact-labels">
+      <tag
+        value="artifact.status"
+        has-progress="true"
+        success="artifact.status === 'running'"
+        in-progress="$ctrl.updating()"
+        paused="artifact.status === 'suspended'">
+      </tag>
+      <p></p>
+      <tag ng-if="artifact.breed.name" value="'breed: ' + artifact.breed.name"></tag>
+      <tag ng-if="artifact.breed.reference" value="'breed: ' + artifact.breed.reference"></tag>
 
-    <tag ng-if="artifact.schedule === 'daemon'" value="'schedule : daemon'"></tag>
-    <tag ng-if="!(artifact.schedule.event | isEmpty)" value="'schedule : event'"></tag>
-    <tag ng-if="!(artifact.schedule.time | isEmpty)" value="'schedule : time'"></tag>
+      <p></p>
 
-    <div class="artifact-card-actions">
-        <button class="btn btn-ghost btn-success" ng-if="artifact.status === 'suspended'" ng-click="$ctrl.start($event)">
-            <i class="fa fa-play"></i>&nbsp;&nbsp;Start
-        </button>
-        <button class="btn btn-ghost btn-primary" ng-if="artifact.status === 'running'" ng-click="$ctrl.suspend($event)">
-            <i class="fa fa-pause"></i>&nbsp;&nbsp;Suspend
-        </button>
-        <button class="btn btn-ghost btn-primary" ng-if="artifact.status === 'running'" ng-click="$ctrl.restart($event)">
-            <i class="fa fa-refresh"></i>&nbsp;&nbsp;Restart
-        </button>
+      <tag ng-if="artifact.schedule === 'daemon'" value="'schedule : daemon'"></tag>
+      <tag ng-if="!(artifact.schedule.event | isEmpty)" value="'schedule : event'"></tag>
+      <tag ng-if="!(artifact.schedule.time | isEmpty)" value="'schedule : time'"></tag>
     </div>
 
-    <div ng-repeat="instance in artifact.instances">
-        <div ng-repeat="(portName, port) in instance.ports | orderByKeys">
-            <span class="label label-success"
-                  ng-if="proxy(artifact, instance, portName)">
-                <a class="proxy-anchor"
-                   ng-click="proxy(artifact, instance, portName, $event)">
-                    {{instance.name | limitTo: 20 }} : {{portName}}
-                </a>
-            </span>
-        </div>
+    <div class="list">
+        <p class="v-label">Ports :</p>
+        <ul>
+            <li ng-repeat="instance in artifact.instances">
+              <div ng-repeat="(portName, port) in instance.ports | orderByKeys"
+                        ng-if="proxy(artifact, instance, portName)">
+                  <span class="clickable"
+                     ng-click="proxy(artifact, instance, portName, $event)">
+                      {{instance.name | limitTo: 20 }} : {{portName}}
+                  </span>
+              </div>
+            </li>
+        </ul>
     </div>
 
 </div>
