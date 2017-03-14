@@ -1,9 +1,21 @@
+
+
 .popover {
   background-color: $pitch;
   color: $misty;
   font-size: $font-size-small;
   font-weight: $font-weight-light;
   border: none;
+
+  &.top {
+    & > .arrow {
+      bottom: -10px;
+
+      &::after {
+        border-top-color: $pitch;
+      }
+    }
+  }
 
   &.bottom {
     & > .arrow {

@@ -177,8 +177,15 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       abstract: true,
       url: '^/{kind:deployments}/:name/:cluster',
       resolve: {
-        clusterData: function (artifactData, $stateParams) {
-          return artifactData.clusters[$stateParams.cluster];
+        clusterData: function ($http, $stateParams) {
+          return $http({
+            method: 'GET',
+            url: 'http://' + origin + '/api/v1/' + $stateParams.kind + '/' + $stateParams.name
+          }).then(function (response) {
+            var artifact = response.data;
+
+            return artifact.clusters[$stateParams.cluster];
+          });
         }
       },
       ncyBreadcrumb: {
@@ -200,8 +207,15 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        serviceData: function (clusterData, $stateParams) {
-          return _.find(clusterData.services, ['breed.name', $stateParams.service]);
+        serviceData: function ($http, $stateParams) {
+          return $http({
+            method: 'GET',
+            url: 'http://' + origin + '/api/v1/' + $stateParams.kind + '/' + $stateParams.name
+          }).then(function (response) {
+            var artifact = response.data;
+
+            return _.find(artifact.clusters[$stateParams.cluster].services, ['breed.name', $stateParams.service]);
+          });
         }
       },
       ncyBreadcrumb: {

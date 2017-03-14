@@ -6,124 +6,99 @@
         <div class="col-md-12">
           <div class="title-row">
             <div>
-              <span class="service-title">{{ $ctrl.serviceName }}</span>
-              <span ng-if="$ctrl.health" class="label"
-                    ng-class="{'label-success': $ctrl.health != 'none', 'label-red-alert': $ctrl.health == 'none'}">
-                  {{ $ctrl.health + ' %' }}
-              </span>
-            </div>
-            <div class="update-time">Last updated : {{ $ctrl.service.status.phase.since | date:'medium' }}</div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-          <div class="col-md-12">
-            <div>
-              <span>CPU : {{$ctrl.service.scale.cpu }}</span>
-              <span>MEMORY : {{$ctrl.service.scale.memory }}</span>
-            </div>
-            <div>
-              <span>{{$ctrl.service.health.running}} / {{$ctrl.service.scale.instances }} Instances running </span>
-              <button class="btn btn-primary btn-small" type="submit" title="Edit scale"
+              <span class="service-title">{{ $ctrl.serviceName | capitalize }}</span>
+              <button class="btn btn-primary pull-right" type="submit" title="Edit scale"
                 ng-click="$ctrl.editScale()">
                 Scale service
               </button>
             </div>
+            <div class="update-time">Last updated : {{ $ctrl.service.status.phase.since | date:'medium' }}</div>
           </div>
+
+        </div>
+
+      </div>
+      <div class="row">
+          <div class="col-md-6">
+            <div class="scale-data">
+              <span class="scale-item">
+                <span class="scale-lable">CPU</span>
+                <span class="scale-value">{{ $ctrl.service.scale.cpu }}</span>
+              </span>
+              <span class="scale-item">
+                <span class="scale-lable">MEMORY</span>
+                <span class="scale-value">{{$ctrl.service.scale.memory }}</span>
+              </span>
+              <span class="scale-item">
+                <span class="status-point success"></span>
+                <span class="scale-lable">{{ $ctrl.service.health.healthy }} healthy</span>
+              </span>
+              <span class="scale-item">
+                <span class="status-point faliure"></span>
+                <span class="scale-lable">{{ $ctrl.service.health.unhealthy }} unhealthy</span>
+              </span>
+              <span class="scale-item">
+                <span class="status-point default"></span>
+                <span class="scale-lable">{{ $ctrl.service.health.unknown }} unspecified</span>
+              </span>
+            </div>
+
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <uib-progress max="$ctrl.service.health.running">
+            <uib-bar value="$ctrl.service.health.healthy" type="success"><span ng-hide="$ctrl.service.health.healthy == 0">{{ ($ctrl.service.health.healthy / $ctrl.service.health.running ) * 100 }} %</span></uib-bar>
+            <uib-bar value="$ctrl.service.health.unhealthy" type="danger"><span ng-hide="$ctrl.service.health.unhealthy == 0">{{ ($ctrl.service.health.healthy / $ctrl.service.health.running ) * 100 }} %</span></uib-bar>
+            <uib-bar value="$ctrl.service.health.unknown" type="default"><span ng-hide="$ctrl.service.health.unknown == 0">{{ ($ctrl.service.health.unknown / $ctrl.service.health.running ) * 100 }} %</span></uib-bar>
+          </uib-progress>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="row">
     <div class="col-md-12">
-      <table class="table v2">
-        <thead>
-          <tr>
-            <th>
-              INSTANCE
-            </th>
-            <th>
-              HOST
-            </th>
-            <th>
-              PORTS
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="instance in $ctrl.service.instances | orderBy: 'name'">
-            <td>
-              <span class="clickable" ui-sref="artifacts.one.cluster.service.instance({instance: instance.name})">
-                {{instance.name}}
-              </span>
-            </td>
-            <td>
-              {{instance.host}}
-            </td>
-            <td>
-              <span ng-repeat="(portName, port) in (items = instance.ports | orderByKeys) | limitTo:2">
-                <span ng-if="$index == 0">{{port}}</span>
-                <span ng-if="$index < 0"
-                uib-popover-template="'app/crud/templates/listViewArrayPopup.html'"
-                popover-append-to-body="true"
-                popover-placement="top-right"
-                popover-trigger="mouseenter">...</span>
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table v2">
+          <thead>
+            <tr>
+              <th>
+                INSTANCE
+              </th>
+              <th>
+                HOST
+              </th>
+              <th>
+                PORTS
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="instance in $ctrl.service.instances | orderBy: 'name'">
+              <td>
+                <span class="clickable" ui-sref="artifacts.one.cluster.service.instance({instance: instance.name})">
+                  {{instance.name}}
+                </span>
+              </td>
+              <td>
+                {{instance.host}}
+              </td>
+              <td>
+                <span ng-repeat="(portName, port) in (items = instance.ports | orderByKeys) | limitTo:2">
+                  <span ng-if="$index == 0">{{port}}</span>
+                  <span ng-if="$index == 1" class="clickable"
+                  uib-popover-template="'app/deployments/templates/portsPopOver.html'"
+                  popover-append-to-body="true"
+                  popover-placement="top-right"
+                  popover-trigger="mouseenter">...</span>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </div>
-
-
-
-<!--
-
-  <div class="vamp-table cluster-table">
-      <div class="vamp-table__group">
-          <div class="vamp-table__group__name">
-              <span class="v-value">&nbsp;INSTANCES</span>
-              <span class="v-label">&nbsp;{{$ctrl.service.health.running}} / {{$ctrl.service.instances.length }} running </span>
-          </div>
-
-          <div class="vamp-table__headers">
-              <div class="vamp-table__header instance-name-col">
-                  <span class="v-label">Name</span>
-              </div>
-              <div class="vamp-table__header ports-col">
-                <span class="v-label">HOST</span>
-              </div>
-              <div class="vamp-table__header ports-col">
-                  <span class="v-label">PORTS</span>
-              </div>
-          </div>
-
-          <div class="vamp-table__row" style="min-height:7rem;margin-top: .8rem;" ng-repeat="instance in $ctrl.service.instances | orderBy: 'name'">
-              <div class="vamp-table__col instance-name-col">
-                  <span ui-sref="artifacts.one.cluster.service.instance({instance: instance.name})"
-                  class="v-value v-value--emphasis v-value--state clickable">
-                      {{instance.name}}
-                  </span>
-              </div>
-
-              <div class="vamp-table__col ports-col">
-                {{instance.host}}
-              </div>
-
-
-              <div class="vamp-table__col ports-col">
-                  <div class="vamp-table__col__list">
-                      <div class="vamp-table__col__list__item"
-                           ng-repeat="(portName, port) in instance.ports | orderByKeys">
-                          <span class="v-value">{{portName + ' : ' + port}}
-                          </span>
-                      </div>
-                  </div>
-              </div>
-
-          </div>
-
-      </div>
-  </div>-->
 </div>

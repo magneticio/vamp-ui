@@ -11,6 +11,7 @@ function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, ar
 
   $ctrl.service = serviceData;
   $ctrl.health = null;
+  $ctrl.service.health.unknown = $ctrl.service.health.running - $ctrl.service.health.unhealthy - $ctrl.service.health.healthy;
   var path = '/deployments/' + $stateParams.name;
 
   $ctrl.editScale = function () {
@@ -26,7 +27,7 @@ function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, ar
           return clusterData;
         },
         service: function () {
-          return serviceData;
+          return $ctrl.service;
         }
       }
     }).result.then(function (scale) {
@@ -49,6 +50,7 @@ function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, ar
 
     var s = _.find(services, ['breed.name', $ctrl.serviceName]);
     $ctrl.service = angular.copy(s);
+    $ctrl.service.health.unknown = $ctrl.service.health.running - $ctrl.service.health.unhealthy - $ctrl.service.health.healthy;
 
     peekEvents();
   });

@@ -27,6 +27,9 @@ table.table.v2 {
         line-height: 6rem;
         padding: 0 0 0 2.5rem;
         border-bottom: 1px solid $panel;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

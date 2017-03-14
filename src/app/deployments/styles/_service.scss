@@ -1,13 +1,44 @@
 .service {
+  padding: 2.5rem;
+  margin-top: 1rem;
+
   .service-title {
-    font-size: $font-size-xxl;
+    color: $white;
+    font-size: $font-size-xl;
   }
   .service-description {
-    color: $medium-blue;
+    color: $new-gray;
     font-size: $font-size-tiny;
   }
   .update-time {
-    color: $medium-blue;
+    color: $new-gray;
     font-size: $font-size-tiny;
+  }
+
+  .scale-data {
+    margin-bottom: 1rem;
+
+    .scale-item {
+      margin-right: 2.5rem;
+      display: inline-block;
+
+      &:not(:fisrt-child) {
+          margin-left: 1rem;
+      }
+
+      .status-point {
+        margin: 0 .2rem;
+      }
+
+      .scale-lable {
+        font-size: $font-size-tiny;
+        text-transform: uppercase;
+      }
+
+      .scale-value {
+        color: $white;
+        padding-left: .5rem;
+      }
+    }
   }
 }

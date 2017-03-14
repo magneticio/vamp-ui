@@ -3,6 +3,14 @@ pre.container-log {
 }
 
 .instances {
+  padding: 2.5rem;
+  padding-top: 2.5rem !important;
+
+  .instance-title {
+    color: $white;
+    font-size: $font-size-xl;
+  }
+
   .tab-content {
     flex: 1;
     display: flex;
