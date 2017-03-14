@@ -10,7 +10,7 @@ function DeploymentCtrl($scope, $uibModal, $uibTooltip, $vamp, $state, toastr) {
   $ctrl.openActionsMenu = function ($event) {
     actionsMenu = $uibTooltip($event.targetElement,
       {placement: 'bottom',
-      contentTemplate: 'app/crud/templates/actionsMenu.html'
+        contentTemplate: 'app/crud/templates/actionsMenu.html'
       });
     actionsMenu.$promise.then(actionsMenu.show);
   };
