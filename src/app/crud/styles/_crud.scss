@@ -1,3 +1,4 @@
+@import "_revisions";
 
 .main-content {
   height: 100%;
@@ -465,7 +466,7 @@ table.vamp-lv {
   .panel-heading {
     color: $off-white;
     font-weight: $font-weight-light;
-    line-height: 3rem;
+    line-height: 3.5rem;
 
     .panel-title {
       display: inline-flex;
@@ -501,36 +502,24 @@ table.vamp-lv {
     flex: 1;
     overflow-x: hidden;
     overflow-y: auto;
-  }
-}
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    background-color: $pitch;
 
-.artifact-revisions {
-  width: 250px;
-  min-width: 250px;
-  vertical-align: top;
+    .editor {
+      transition: flex 300ms ease;
+      flex: 0 0 0rem;
 
-  .title {
-    margin: 0;
-    padding: 20px;
-    width: 100%;
-    color: $color-text;
-    font-size: $font-size-large;
-  }
+      &.visible {
+        flex: 1;
+      }
+    }
 
-  table {
-    width: 100%;
-  }
-
-  .revision {
-    width: 100%;
-    margin: 0;
-    padding: 20px;
-    color: $color-text;
-    font-size: $font-size-normal;
-
-    &:hover {
-      cursor: pointer;
-      background-color: $blue;
+    .close-revision {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
     }
   }
 }

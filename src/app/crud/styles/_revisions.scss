@@ -1,0 +1,33 @@
+
+.artifact-revisions {
+  width: 100%;
+  //min-width: 250px;
+  vertical-align: top;
+
+  .revisions-title {
+    margin: 0;
+    padding: 1.5rem;
+    line-height: 3.5rem;
+    background-color: $pitch;
+    border-bottom: 1px solid $dark-blue;
+    width: 100%;
+    color: $color-text;
+    font-size: $font-size-normal;
+  }
+
+  .revision {
+    width: 100%;
+    margin: 0;
+    height: 4rem;
+    line-height: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: $color-text;
+    font-size: $font-size-small;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $blue;
+    }
+  }
+}

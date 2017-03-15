@@ -1,6 +1,6 @@
 angular.module('app').controller('edit',
 
-function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcrumb, $timeout, uiStatesFactory, $element, $vamp, artifact, snippet, toastr, alert) {
+function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcrumb, $timeout, uiStatesFactory, revisionsService, $element, $vamp, artifact, snippet, toastr, alert) {
   var $ctrl = this;
 
   this.kind = $stateParams.kind;
@@ -19,7 +19,7 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
   this.source = null;
 
   // $ctrl.revisions = revisionsService.revisions;
-  // $ctrl.activeRevisiton = revisionsService.activeRevision;
+  $ctrl.activeRevisiton = revisionsService.activeRevision;
 
   this.valid = true;
   $ctrl.inEdit = false;
@@ -67,6 +67,10 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
     $state.go('^.view').then(function () {
       uiStatesFactory.setRightPanelViewState(true);
     });
+  };
+
+  $ctrl.closeRevision = function () {
+    revisionsService.clearSelected();
   };
 
   this.peek = function () {
@@ -173,7 +177,7 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
   function goBack() {
     validation = false;
     ignoreChange = true;
-    $state.go('^');
+    $state.go('^.view');
   }
 
   init();

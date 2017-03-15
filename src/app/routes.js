@@ -140,10 +140,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           templateUrl: 'app/crud/templates/editor.html'
         },
         "right-panel@": {
-          controller: function ($scope) {
-            $scope.ncyBreadcrumbIgnore = true;
-          },
-          template: ''
+          controller: 'revisionsController as $ctrl',
+          templateUrl: 'app/crud/templates/revisions.html'
         }
       },
       ncyBreadcrumb: {
