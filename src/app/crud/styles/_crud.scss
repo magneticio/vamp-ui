@@ -499,7 +499,7 @@ table.vamp-lv {
 
   .panel-body {
     padding:0;
-    flex: 1;
+    flex: 1 1 0;
     overflow-x: hidden;
     overflow-y: auto;
     display: flex;
@@ -512,7 +512,7 @@ table.vamp-lv {
       flex: 0 0 0rem;
 
       &.visible {
-        flex: 1;
+        flex: 1 1 0;
       }
     }
 

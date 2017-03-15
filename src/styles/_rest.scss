@@ -35,42 +35,24 @@ body {
   width: 100vw;
   display: flex;
   flex-direction: column;
+  -moz-flex-direction: column;
   position: relative;
 }
 
 /* Toggle Styles */
 
 #wrapper {
-  flex: 1;
+  flex: 1 1 0;
+  -moz-flex: 1 1 0;
   display: flex;
   flex-direction: row;
-
-  /*padding-left: 7rem;
-  padding-right: 0rem;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;*/
+  -moz-flex-direction: row;
 }
-
-/*#wrapper.expand-left {
-   padding-left: 25rem;
-}
-
-#wrapper.expand-right {
-   padding-right: 30rem;
-}*/
 
 #left-panel-wrapper {
    flex: 0 0 7rem;
+   -moz-flex: 0 0 7rem;
    width: 7rem;
-   /*z-index: 999;
-   position: fixed;
-   left: 25rem;
-   width: 7rem;
-   min-width: 7rem;
-   height: 100%;
-   margin-left: -25rem;*/
    overflow-x: hidden;
    overflow-y: auto;
    background-color: $pitch;
@@ -83,6 +65,7 @@ body {
 
 #wrapper.expand-left #left-panel-wrapper {
    flex: 0 0 25rem;
+   -moz-flex: 0 0 25rem;
    width: 25rem;
    -webkit-transition: all 0.5s ease;
    -moz-transition: all 0.5s ease;
@@ -91,7 +74,8 @@ body {
 }
 
 #site-wrapper {
-  flex: 1;
+  flex: 1 1 0;
+  -moz-flex: 1 1 0;
   display: flex;
   flex-direction: column;
 
@@ -109,30 +93,14 @@ body {
 
 #header {
   flex: 0 0 $header-height;
-  /*
-  z-index: 999;
-  position: fixed;
-  right: 0;
-  width: calc(100% - 7rem);
+  -moz-flex: 0 0 $header-height;
   height: $header-height;
-  overflow-x: hidden;
-  overflow-y: hidden;*/
 }
 
-/*#wrapper.expand-left  #header {
-  width: calc(100% - 25rem);
-}*/
-
 #right-panel-wrapper {
-  /*z-index: 999;
-  position: fixed;
-  right: 30rem;
-  top: $header-height;
-  width: 0;
-  height: calc(100% - $header-height - 5rem);
-  margin-right: -30rem;*/
   width:0;
   flex: 0 0 0rem;
+  -moz-flex: 0 0 0rem;
   border-left: 1px solid $background-lighter;
 
   -webkit-transition: all 0.5s ease;
@@ -143,6 +111,7 @@ body {
 
 #wrapper.expand-right #right-panel-wrapper {
     flex: 0 0 25rem;
+    -moz-flex: 0 0 25rem;
     width: 25rem;
 
     -webkit-transition: all 0.5s ease;
@@ -151,20 +120,12 @@ body {
     transition: all 0.5s ease;
 }
 
-/*  #wrapper.footer-expanded #right-panel-wrapper {
-  height: calc(100% - $header-height - 40rem);
-}*/
-
 #page-content-wrapper {
-   /*top: $header-height;
-   height: calc(100% - $header-height - 5rem);
-   width: calc(100% - 7rem);
-   position: absolute;
-   overflow-y: auto;
-   overflow-x: hidden;*/
-   flex: 1;
+   flex: 1 1 0;
+   -moz-flex: 1 1 0;
    display: flex;
    flex-direction: row;
+   -moz-flex-direction: row;
    overflow-x: hidden;
    overflow-y: auto;
 
@@ -174,27 +135,9 @@ body {
     transition: flex-basis 0.5s ease;
 }
 
-/*#wrapper.expand-left #page-content-wrapper {
-  position: absolute;
-  width: calc(100% - 25rem);
-}
-
-#wrapper.expand-right  #page-content-wrapper {
-  position: absolute;
-  width: calc(100% - 7rem - 30rem);
-}
-
-#wrapper.expand-right.expand-left #page-content-wrapper {
-  width: calc(100% - 30rem - 25rem);
-}
-
-#wrapper.footer-expanded #page-content-wrapper {
-  position: absolute;
-  height: calc(100% - $header-height - 40rem);
-}*/
-
 #page-main-wrapper {
-  flex: 1;
+  flex: 1 1 0;
+  -moz-flex: 1 1 0;
 
   -webkit-transition: flex-basis 0.5s ease;
   -moz-transition: flex-basis 0.5s ease;
@@ -203,13 +146,11 @@ body {
 }
 
 .events-panel {
-  /*position: fixed;
-  width: calc(100% - 7rem);
-  right:0;
-  bottom: 0;*/
   height: 5rem;
   flex: 0 0 5rem;
+  -moz-flex: 0 0 5rem;
   flex-order: -1;
+  -moz-flex-order: -1;
 
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -220,16 +161,13 @@ body {
 #wrapper.footer-expanded .events-panel {
   height: 40rem;
   flex: 0 0 40rem;
+  -moz-flex: 0 0 40rem;
 
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
-
-/*#wrapper.expand-left .events-panel {
-  width: calc(100% - 25rem);
-}*/
 
 
 /// Mixin to customize scrollbars
@@ -659,7 +597,7 @@ p, div {
 .app-center {
   position: relative;
   overflow-y: scroll;
-  flex: 1;
+  flex: 1 1 0;
 }
 
 .condition-weights {
