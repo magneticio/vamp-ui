@@ -161,8 +161,10 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
     $vamp.await(function () {
       $vamp.put(path, $ctrl.source, {}, 'JSON');
     }).then(function () {
-      goBack();
-      toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');
+        $ctrl.base = $ctrl.source;
+        $ctrl.peek();
+        goBack();
+        toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');
     }).catch(function (response) {
       validation = true;
       ignoreChange = false;
@@ -177,7 +179,8 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
   function goBack() {
     validation = false;
     ignoreChange = true;
-    $state.go('^.view');
+
+    $ctrl.stopEdit();
   }
 
   init();
