@@ -258,18 +258,29 @@ table.vamp-lv {
 }
 
 .artifacts {
-  /*margin: 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  color: $color-text;*/
+  justify-content: space-around;
+  align-items: flex-start;
 }
 
 .artifacts-list {
   display:table-row-group;
   margin: 0;
   color: $color-text;
+  display: flex;
+}
+
+.artifact-card {
+    flex: 1 0 26rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+
+    &:empty {
+      height: 0;
+      border: none;
+    }
 }
 
 .artifact {

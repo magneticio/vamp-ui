@@ -41,9 +41,9 @@
 
     <div ng-if="$ctrl.artifacts.length > 0">
       <div ng-if="$ctrl.viewStates.main == 'grid'" class="artifacts container-fluid">
-        <div class="row">
+
           <div ng-repeat="artifact in $ctrl.filteredArtifacts | limitTo: $ctrl.itemsPerPage: (($ctrl.currentPage - 1) * $ctrl.itemsPerPage) track by $index"
-            class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            class="artifact-card">
             <div class="artifact" ng-class="{selected: $ctrl.isSelected(artifact)}"
               dynamic-controller-as="{{$ctrl.artifactsMetadata.gridViewController}}"
               dynamic-controller-alias="$artifactCtrl">
@@ -74,9 +74,19 @@
 
             </div>
           </div>
-        </div>
-
-
+          <!-- Flexbox grid clearfix -->
+          <div class="artifact-card">
+          </div>
+          <div class="artifact-card">
+          </div>
+          <div class="artifact-card">
+          </div>
+          <div class="artifact-card">
+          </div>
+          <div class="artifact-card">
+          </div>
+          <div class="artifact-card">
+          </div>
       </div>
 
       <div ng-if="$ctrl.viewStates.main == 'table'">
