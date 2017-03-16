@@ -110,14 +110,20 @@ body {
 }
 
 #wrapper.expand-right #right-panel-wrapper {
-    flex: 0 0 25rem;
-    -moz-flex: 0 0 25rem;
-    width: 25rem;
+    flex: 0 0 30rem;
+    -moz-flex: 0 0 30rem;
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
 
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+
+    ui-view {
+      flex: 1 1 0;
+    }
 }
 
 #page-content-wrapper {

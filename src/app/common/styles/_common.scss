@@ -211,7 +211,10 @@ input[type="text"]:-ms-input-placeholder {
     background-color: $vamp-red;
     box-shadow: 0 0 .5rem $vamp-red;
   }
+}
 
+iframe {
+  border: none;
 }
 
 // PRELOADING IMAGES

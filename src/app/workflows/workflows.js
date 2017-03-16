@@ -3,7 +3,7 @@ angular.module('app')
   .controller('WorkflowsController', WorkflowsController);
 
 /** @ngInject */
-function WorkflowsController($scope, artifactsMetadata, $controller, uiStatesFactory) {
+function WorkflowsController($scope, artifactsMetadata, $controller, uiStatesFactory, workflowWebPortService) {
   var $ctrl = this;
 
   $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope, artifactsMetadata: artifactsMetadata});
@@ -21,9 +21,8 @@ function WorkflowsController($scope, artifactsMetadata, $controller, uiStatesFac
     }
     if ($event) {
       $event.stopPropagation();
-      uiStatesFactory.setProxyPanelViewState(path);
-      uiStatesFactory.setInfoPanelViewState(false);
-      uiStatesFactory.setHelpPanelViewState(false);
+      workflowWebPortService.selectPort(path);
+      uiStatesFactory.setRightPanelViewState(true);
     }
     return path;
   };

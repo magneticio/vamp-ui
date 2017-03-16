@@ -107,6 +107,10 @@ Artifacts.prototype.all = function () {
     {
       kind: "workflows",
       mainController: 'WorkflowsController',
+      listViewRightPanel: {
+        controller: 'workflowWebPortViewController',
+        templateUrl: 'app/workflows/templates/webPort.html'
+      },
       deployable: true,
       gridViewController: "WorkflowController",
       artifactGridView: 'app/workflows/templates/workflowGridView.html',

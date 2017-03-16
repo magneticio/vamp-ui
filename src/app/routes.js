@@ -15,6 +15,9 @@ function routesConfig($stateProvider, $urlRouterProvider) {
   var artifacts = Artifacts.prototype.all();
 
   var origin = Environment.prototype.origin() || window.location.host;
+  var emptyController = ['$scope', function ($scope) {
+    $scope.ncyBreadcrumbIgnore = true;
+  }];
 
   $urlRouterProvider.otherwise('/vamp/deployments');
 
@@ -53,10 +56,21 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           controllerAs: '$ctrl'
         },
         "right-panel@": {
-          controller: function ($scope) {
-            $scope.ncyBreadcrumbIgnore = true;
+          controllerProvider: function (artifactsMetadata) {
+            if (artifactsMetadata.listViewRightPanel) {
+              return artifactsMetadata.listViewRightPanel.controller;
+            }
+
+            return emptyController;
           },
-          template: ''
+          controllerAs: '$ctrl',
+          templateProvider: function ($templateCache, artifactsMetadata) {
+            if (artifactsMetadata.listViewRightPanel) {
+              return $templateCache.get(artifactsMetadata.listViewRightPanel.templateUrl);
+            }
+
+            return '';
+          }
         }
       },
       ncyBreadcrumb: {
@@ -109,7 +123,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           }).then(function (response) {
             var artifact = response.data;
 
-            return artifact;// _.find(clusterServices, ['breed.name', $stateParams.service]);
+            return artifact;
           });
         }
       },
@@ -153,7 +167,6 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       url: '/edit',
       views: {
         "editor": {
-          // controller: 'edit as $ctrl',
           templateUrl: 'app/crud/templates/editor.html'
         },
         "right-panel@": {
