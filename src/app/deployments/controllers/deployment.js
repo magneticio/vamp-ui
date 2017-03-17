@@ -67,23 +67,6 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $breadcrumb
     });
   };
 
-  this.showInstances = function (cluster, service) {
-    var instances = '';
-    _.forEach(service.instances, function (instance) {
-      instances += '- name: ' + instance.name + '\n';
-      instances += '  deployed: ' + instance.deployed + '\n';
-      instances += '  host: ' + instance.host + '\n';
-      if (instance.ports) {
-        instances += '  ports:\n';
-        _.forEach(instance.ports, function (number, port) {
-          instances += '  - ' + port + ' : ' + number + '\n';
-        });
-      }
-      instances += '\n';
-    });
-    snippet.show('Instances', header(cluster, service) + instances, 'lg', {deployment: this.deployment, cluster: cluster, instances: service.instances});
-  };
-
   this.showEnvironmentVariables = function (cluster, service) {
     var longest = _.reduce(service.environment_variables, function (longest, e) {
       return e.name.length > longest ? e.name.length : longest;
