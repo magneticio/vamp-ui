@@ -24,10 +24,6 @@ all: default
 default:
 	docker pull $(BUILD_SERVER)
 	docker run \
-		--interactive \
-		--tty \
-		--rm \
-		--volume $(CURDIR):/srv/src \
 		--workdir=/srv/src \
 		--env BUILD_UID=$(shell id -u) \
 		--env BUILD_GID=$(shell id -g) \
@@ -54,10 +50,6 @@ build:
 pack: default
 	docker volume create packer
 	docker run \
-		--interactive \
-		--tty \
-		--rm \
-    		--volume $(CURDIR)/dist:/usr/local/src \
     		--volume packer:/usr/local/stash \
     		$(BUILD_SERVER) \
       			push vamp-ui $(VERSION)
