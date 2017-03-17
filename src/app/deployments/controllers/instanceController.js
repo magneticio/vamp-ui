@@ -63,6 +63,10 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
       });
   }
 
+  $ctrl.toggleFollowOnOff = function () {
+    scrollToBottom();
+  };
+
   function scrollToBottom() {
     if ($ctrl.isFollowLog) {
       var scrolledContainer = $($element).find('div.active pre');

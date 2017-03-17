@@ -8,7 +8,8 @@ angular.module('app', [
   'toastr',
   'ngAnimate',
   'rzModule',
-  'ncy-angular-breadcrumb'
+  'ncy-angular-breadcrumb',
+  'uiSwitch'
 ]);
 
 function ExternalPluginsLoader() {

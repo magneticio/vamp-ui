@@ -35,10 +35,7 @@
           <div class="pull-right">
 
             Follow log:&nbsp;
-            <toggle ng-model="$ctrl.isFollowLog" style="vamp-toggle"
-              ng-change="$ctrl.toggleFollowOnOff()" onstyle="btn-success"
-              offstyle="btn-primary" size="btn-xs" ng-model="toggleValue"
-              ng-change="changed()"></toggle>
+            <switch id="enabled" name="enabled" ng-change="$ctrl.toggleFollowOnOff()" ng-model="$ctrl.isFollowLog" class="green pull-right"></switch>
           </div>
         </div>
         <div class="panel-body">
