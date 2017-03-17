@@ -24,8 +24,6 @@ all: default
 default:
 	docker pull $(BUILD_SERVER)
 	docker run \
-		--interactive \
-		--tty \
 		--rm \
 		--volume $(CURDIR):/srv/src \
 		--workdir=/srv/src \
@@ -54,8 +52,6 @@ build:
 pack: default
 	docker volume create packer
 	docker run \
-		--interactive \
-		--tty \
 		--rm \
     		--volume $(CURDIR)/dist:/usr/local/src \
     		--volume packer:/usr/local/stash \
