@@ -41,10 +41,16 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
 
       var blueprintResources = _.reduce(blueprint.clusters, function (br, cluster) {
         var scaleResources = _.reduce(cluster.services, function (sr, service) {
-          return {
-            totalMemory: sr.totalMemory + (transformMemory(service.scale.memory) * service.scale.instances),
-            totalCPUs: sr.totalCPUs + (service.scale.cpu * service.scale.instances)
-          };
+          var availability = null;
+          if (service.scale === undefined || service.scale === null) {
+            availability = {totalMemory: sr.totalMemory + 0, totalCPUs: sr.totalMemory + 0};
+          } else {
+            availability = {
+              totalMemory: sr.totalMemory + (transformMemory(service.scale.memory) * service.scale.instances),
+              totalCPUs: sr.totalCPUs + (service.scale.cpu * service.scale.instances)
+            };
+          }
+          return availability;
         }, {totalMemory: 0, totalCPUs: 0});
         return {
           totalMemory: br.totalMemory + scaleResources.totalMemory,
