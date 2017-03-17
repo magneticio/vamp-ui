@@ -126,3 +126,7 @@
 :not(.btn-group) > button.btn {
   min-width: $button-size-normal
 }
+
+span.btn {
+  display: table-cell;
+}

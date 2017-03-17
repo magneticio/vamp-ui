@@ -7,9 +7,22 @@ angular.module('app')
   }]);
 
 /** @ngInject */
-function BlueprintsController($scope, artifactsMetadata, $vampBlueprint, $controller) {
+function BlueprintsController($scope, artifactsMetadata, $vampBlueprint, $controller, $uibModal, $state) {
   var $ctrl = this;
   $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope, artifactsMetadata: artifactsMetadata});
+
+  $ctrl.upload = function () {
+    $uibModal.open({
+      animation: true,
+      backdrop: 'static',
+      controller: 'importBlueprintControler',
+      templateUrl: 'app/blueprints/templates/importBlueprint.html',
+      resolve: {
+      }
+    }).result.then(function (data) {
+      $state.go('.add', {importData: data.blueprint});
+    });
+  };
 }
 
 /** @ngInject */

@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h4 class="modal-title">CONVERT DOCKER COMPOSE FILE</h4>
+</div>
+<form novalidate name="form" ng-submit="ok()">
+    <div class="modal-body">
+      <p>Please select a Docker Compose file to convert into a new Vamp Blueprint.</p>
+      <br>
+      <div class="form-group" ng-class="{'has-error': validationError}">
+
+        <div class="input-group">
+            <label class="input-group-btn">
+                <span class="btn btn-primary">
+                    Browse&hellip; <input type="file" name="file" file-change="fileSelected()" ng-model="file" style="display:none" accept=".yaml"/>
+                </span>
+            </label>
+            <input type="text" class="form-control" ng-model="file.name" readonly>
+        </div>
+
+        <span class="help-block" ng-show="validationError">Error converting file.</span>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info" ng-if="file" type="submit">Convert</button>
+        <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</form>

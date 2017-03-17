@@ -75,6 +75,10 @@
     border:none;
     box-shadow: none;
   }
+
+  &[readonly] {
+    background-color: lighten($pitch, 0.5);
+  }
 }
 
 .input-group-addon {
@@ -87,9 +91,6 @@
 
 .input-group {
   font-size: $font-size-normal;
-  .form-control:not(:first-child) {
-    padding-left: 0;
-  }
 }
 
 input[type="checkbox"] {

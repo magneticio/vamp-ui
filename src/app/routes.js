@@ -91,6 +91,9 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           template: ''
         }
       },
+      params: {
+        importData: undefined
+      },
       ncyBreadcrumb: {
         label: 'New {{ $ctrl.singular }}',
         showLast: true

@@ -34,6 +34,9 @@
         <button class="btn btn-ghost btn-primary" type="submit" ng-click="$ctrl.add()">
             Add
         </button>
+        <button ng-if="$ctrl.kind == 'blueprints'" class="btn btn-ghost btn-primary" type="submit" ng-click="$ctrl.upload()">
+            Docker Compose
+        </button>
       </div>
     </div>
   </div>
@@ -63,8 +66,10 @@
 
                       <span class="artifact-actions-button"
                         uib-popover-template="'app/crud/templates/actionsMenu.html'"
+                        ng-controller="actionMenuController"
                         popover-append-to-body="true"
                         popover-trigger="'outsideClick'"
+                        popover-is-open="isOpen"
                         popover-placement="bottom-right"><i class="icon-options-vertical"></i>
                       </span>
                     </div>

@@ -9,7 +9,6 @@ function ($scope, $state, $stateParams, $breadcrumb, $timeout, $element, $vamp, 
   $ctrl.title = 'New ' + $ctrl.singular;
 
   var path = '/' + $ctrl.kind;
-  var composePath = '/docker-compose';
 
   $ctrl.errorClass = '';
   $ctrl.errorMessage = '';
@@ -17,13 +16,10 @@ function ($scope, $state, $stateParams, $breadcrumb, $timeout, $element, $vamp, 
   $ctrl.expandError = false;
   $ctrl.editor = artifact.editor;
 
-  $ctrl.source = null;
-
-  $ctrl.composeName = null;
+  $ctrl.source = $stateParams.importData || null;
 
   $ctrl.valid = true;
   $ctrl.inEdit = true;
-  $ctrl.inCompose = false;
   var validation = true;
   var ignoreChange = false;
 
@@ -72,15 +68,7 @@ function ($scope, $state, $stateParams, $breadcrumb, $timeout, $element, $vamp, 
   });
 
   this.validate = function () {
-    if ($ctrl.inCompose) {
-      if ($ctrl.composeName) {
-        artifact.validate(composePath, $ctrl.source, validation, $ctrl.composeName);
-      } else {
-        toastr.error('No name.', 'The blueprint from docker-compose needs a name.');
-      }
-    } else {
-      artifact.validate(path, $ctrl.source, validation);
-    }
+    artifact.validate(path, $ctrl.source, validation);
   };
 
   this.isModified = function () {
@@ -100,15 +88,7 @@ function ($scope, $state, $stateParams, $breadcrumb, $timeout, $element, $vamp, 
     ignoreChange = true;
 
     $vamp.await(function () {
-      if ($ctrl.inCompose) {
-        if ($ctrl.composeName) {
-          $vamp.put(composePath, $ctrl.source, {name: $ctrl.composeName}, 'JSON');
-        } else {
-          toastr.error('No name.', 'The blueprint from docker-compose needs a name.');
-        }
-      } else {
-        $vamp.put(path, $ctrl.source, {}, 'JSON');
-      }
+      $vamp.put(path, $ctrl.source, {}, 'JSON');
     }).then(function () {
       goBack();
       toastr.success('New ' + $ctrl.singular + ' has been successfully created.');
@@ -125,24 +105,6 @@ function ($scope, $state, $stateParams, $breadcrumb, $timeout, $element, $vamp, 
 
   this.isBlueprint = function () {
     return this.kind === 'blueprints';
-  };
-
-  this.startCompose = function () {
-    if ($ctrl.isBlueprint()) {
-      $ctrl.inCompose = true;
-      $timeout(function () {
-        $($element).find('#editor textarea').focus();
-      });
-    }
-  };
-
-  this.stopCompose = function () {
-    if ($ctrl.isBlueprint()) {
-      $ctrl.inCompose = false;
-      $timeout(function () {
-        $($element).find('#editor textarea').focus();
-      });
-    }
   };
 
   function goBack() {

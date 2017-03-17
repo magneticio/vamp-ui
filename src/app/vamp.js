@@ -18,6 +18,11 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   this.origin = Environment.prototype.origin() || window.location.host;
   var apiHost = 'http://' + this.origin + '/api/v1';
 
+  var responseAcceptTypes = {
+    JSON: 'application/json',
+    YAML: 'application/x-yaml'
+  };
+
   $this.info = {};
 
   var notify = function (name, value) {
@@ -59,16 +64,20 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     return $http.get(apiHost + path, {params: params});
   };
 
+  this.post = function (path, data, params, accept) {
+    return request('POST', path, data, params, accept);
+  };
+
   this.peek = function (path, data, params, accept) {
-    request(path, 'PEEK', data, params ? params : {}, accept ? accept : 'JSON');
+    websocketRequest(path, 'PEEK', data, params ? params : {}, accept ? accept : 'JSON');
   };
 
   this.put = function (path, data, params, accept) {
-    request(path, 'PUT', data, params ? params : {}, accept ? accept : 'JSON');
+    websocketRequest(path, 'PUT', data, params ? params : {}, accept ? accept : 'JSON');
   };
 
   this.remove = function (path, data, params, accept) {
-    request(path, 'REMOVE', data, params ? params : {}, accept ? accept : 'JSON');
+    websocketRequest(path, 'REMOVE', data, params ? params : {}, accept ? accept : 'JSON');
   };
 
   this.await = function (request) {
@@ -125,7 +134,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     websocket();
   };
 
-  function request(path, action, data, params, accept) {
+  function websocketRequest(path, action, data, params, accept) {
     if (!stream) {
       return null;
     }
@@ -142,6 +151,26 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
 
     $log.debug('websocket send: ' + JSON.stringify(message));
     stream.send(message);
+  }
+
+  function request(method, path, data, params, accept) {
+    // default return type
+    accept = accept || 'JSON';
+
+    var config = {
+      method: method,
+      url: apiHost + path,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': responseAcceptTypes[accept]
+      },
+      data: data,
+      params: params
+    };
+
+    $log.debug('http request sent: ' + JSON.stringify(config));
+
+    return $http(config);
   }
 
   $rootScope.$on('/info', function (event, data) {
