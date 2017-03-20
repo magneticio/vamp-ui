@@ -65,9 +65,9 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
     $ctrl.inEdit = false;
 
     $state.go('^.view').then(function () {
-       $timeout(function() {
-         $ctrl.peek();
-       })
+      $timeout(function () {
+        $ctrl.peek();
+      });
 
       uiStatesFactory.setRightPanelViewState(true);
     });
