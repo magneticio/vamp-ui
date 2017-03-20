@@ -2,7 +2,7 @@
   <div class="revisions-title text-center">Revisions</div>
   <ul class="list-unstyled">
     <li ng-repeat="revision in $ctrl.revisions | orderBy: 'timestamp':true" class="revision" ng-class="{'active-revision' : $ctrl.activeRevision.id == revision.id}" ng-click="$ctrl.toggleRevisiton(revision)">
-        <span class="pull-left">{{ revision.timestamp | date:'mediumDate' }}</span><span class="pull-right">{{ revision.timestamp | date:'shortTime' }}</span>
+        <span class="pull-left">{{ revision.timestamp | date:'shortTime' }}</span><span class="pull-right">{{ revision.timestamp | date:'mediumDate' }}</span>
     </li>
   </ul>
 </div>

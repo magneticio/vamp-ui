@@ -65,6 +65,10 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
     $ctrl.inEdit = false;
 
     $state.go('^.view').then(function () {
+       $timeout(function() {
+         $ctrl.peek();
+       })
+
       uiStatesFactory.setRightPanelViewState(true);
     });
   };
@@ -162,7 +166,6 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
       $vamp.put(path, $ctrl.source, {}, 'JSON');
     }).then(function () {
       $ctrl.base = $ctrl.source;
-      $ctrl.peek();
       goBack();
       toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');
     }).catch(function (response) {

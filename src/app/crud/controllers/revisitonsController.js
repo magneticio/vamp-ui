@@ -28,11 +28,15 @@ function revisionsController($scope, revisionsService, $stateParams, $vamp) {
     revisionsService.clearRevisions();
   });
 
-  $vamp.peek('/events', JSON.stringify({
-    tags: [
-      'archive', $ctrl.kind + ':' + $ctrl.name
-    ]
-  }), {type: 'archive'});
+  $ctrl.peek = function() {
+    $vamp.peek('/events', JSON.stringify({
+      tags: [
+        'archive', $ctrl.kind + ':' + $ctrl.name
+      ]
+    }), {type: 'archive'});
+  }
+
+  $ctrl.peek();
 }
 
 revisionsController.$inject = ['$scope', 'revisionsService', '$stateParams', '$vamp'];
