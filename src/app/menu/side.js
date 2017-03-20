@@ -33,8 +33,7 @@ function SideController($sce, $scope, $rootScope, $location, $vamp, uiStatesFact
 
       if (isAdminState) {
         path = toState.name.substring(toState.name.lastIndexOf('.') + 1);
-      }
-      else {
+      } else {
         path = toParams.kind;
       }
 
