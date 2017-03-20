@@ -4,7 +4,7 @@ angular.module('app').component('side', {
   controller: SideController
 });
 
-function SideController($sce, $scope, $rootScope, $location, $vamp, uiStatesFactory) {
+function SideController($sce, $scope, $rootScope, $location, $vamp, uiStatesFactory, $state) {
   var $ctrl = this;
   $scope.info = $vamp.info;
   $scope.help = {
@@ -27,17 +27,15 @@ function SideController($sce, $scope, $rootScope, $location, $vamp, uiStatesFact
   };
 
   $rootScope.$on('$stateChangeSuccess',
-    function () {
-      var path = $location.url().substring(1);
-      var last = path.indexOf('/');
-      if (last !== -1) {
-        path = path.substring(0, last);
-      }
+    function (event, toState, toParams) {
+      var isAdminState = $state.includes('admin');
+      var path;
 
-      // handling qs params
-      var qs = path.indexOf('?');
-      if (qs !== -1) {
-        path = path.substring(0, qs);
+      if (isAdminState) {
+        path = toState.name.substring(toState.name.lastIndexOf('.') + 1);
+      }
+      else {
+        path = toParams.kind;
       }
 
       if (Help.prototype.entries()[path]) {
