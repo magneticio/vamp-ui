@@ -7,13 +7,15 @@ menu {
     outline: none !important;
   }
 
+  padding: 0;
+  margin: 0;
+  z-index: 999;
   height: 100%;
   width: 100%;
   position: relative;
 
   .sidebar-nav {
     position: absolute;
-    height: calc(100% - #{$header-height});
     top: $header-height;
     width: 25rem;
     margin: 0;
