@@ -17,49 +17,55 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
   $ctrl.isFollowLog = true;
   $ctrl.stdout = [];
   $ctrl.stderr = [];
+  $ctrl.canAccessLogs = false;
 
   var stopInterval;
 
   function init() {
-    $http.get(host + ':5050/master/state.json')
+    $vamp.get('/gateways/mesos')
       .then(function (res) {
-        var marathonFramework = _.find(res.data.frameworks, {name: 'marathon'});
-        var task = _.find(marathonFramework.tasks, {id: $stateParams.instance});
-        var slave = _.find(res.data.slaves, {id: task.slave_id});
+        var mesosGateway = res.data;
+        $http.get('http://' + mesosGateway.service.host + ':' + mesosGateway.port + '/master/state.json')
+          .then(function (res) {
+            var marathonFramework = _.find(res.data.frameworks, {name: 'marathon'});
+            var task = _.find(marathonFramework.tasks, {id: $stateParams.instance});
+            var slave = _.find(res.data.slaves, {id: task.slave_id});
 
-        host = host + ":" + slave.pid.substring(slave.pid.lastIndexOf(':') + 1);
-        return $http.get(host + '/files/debug');
-      })
-      .then(function (res) {
-        var logLocation = _.find(_.values(res.data), function (val) {
-          return val.indexOf($stateParams.instance) !== -1;
-        });
+            host = host + ":" + slave.pid.substring(slave.pid.lastIndexOf(':') + 1);
+            return $http.get(host + '/files/debug');
+          })
+          .then(function (res) {
+            $ctrl.canAccessLogs = true;
+            var logLocation = _.find(_.values(res.data), function (val) {
+              return val.indexOf($stateParams.instance) !== -1;
+            });
 
-        var stdoutUrl = host + '/files/read?path=/var' + logLocation + '/stdout&offset=0';
-        $http.get(stdoutUrl).then(function (res) {
-          $ctrl.stdout = res.data.data;
-          scrollToBottom();
-        });
-
-        var url = host + '/files/read?path=/var' + logLocation + '/stderr&offset=0';
-        $http.get(url).then(function (res) {
-          $ctrl.stderr = res.data.data;
-          scrollToBottom();
-        });
-
-        stopInterval = $interval(function () {
-          $http.get(stdoutUrl).then(function (res) {
-            if (res.data.data !== $ctrl.stdout) {
+            var stdoutUrl = host + '/files/read?path=/var' + logLocation + '/stdout&offset=0';
+            $http.get(stdoutUrl).then(function (res) {
               $ctrl.stdout = res.data.data;
               scrollToBottom();
-            }
-          });
+            });
 
-          $http.get(url).then(function (res) {
-            $ctrl.stderr = res.data.data;
-            scrollToBottom();
+            var url = host + '/files/read?path=/var' + logLocation + '/stderr&offset=0';
+            $http.get(url).then(function (res) {
+              $ctrl.stderr = res.data.data;
+              scrollToBottom();
+            });
+
+            stopInterval = $interval(function () {
+              $http.get(stdoutUrl).then(function (res) {
+                if (res.data.data !== $ctrl.stdout) {
+                  $ctrl.stdout = res.data.data;
+                  scrollToBottom();
+                }
+              });
+
+              $http.get(url).then(function (res) {
+                $ctrl.stderr = res.data.data;
+                scrollToBottom();
+              });
+            }, 1000);
           });
-        }, 1000);
       });
   }
 

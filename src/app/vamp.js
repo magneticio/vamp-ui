@@ -64,6 +64,10 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     return $http.get(apiHost + path, {params: params});
   };
 
+  this.get = function (path, params, accept) {
+    return request('GET', path, params, accept);
+  };
+
   this.post = function (path, data, params, accept) {
     return request('POST', path, data, params, accept);
   };
