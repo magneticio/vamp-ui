@@ -17,8 +17,9 @@ ol.breadcrumb {
       content: '>'
     }
 
-    & > a {
-      color: #96A0AA;
+    & > a,
+    & > span {
+      color: $new-gray;
     }
 
     &:last-child {

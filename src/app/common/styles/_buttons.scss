@@ -2,7 +2,7 @@
 .open .btn {
   font-weight: $font-weight-bold;
   color: $white;
-  height: $button-size-normal;
+  padding: 9px 12px;
   font-size: $font-size-normal;
   box-shadow: none;
   text-shadow: none;
@@ -18,10 +18,8 @@
   }
 
   &.btn-small {
-    height: $button-size-small;
     font-size: $font-size-small;
-    padding-top:0.2rem;
-    padding-bottom: 0.2rem;
+    padding: 6px 12px;
   }
 
   &.btn-transparent {
