@@ -78,15 +78,15 @@
           </thead>
           <tbody>
             <tr ng-repeat="instance in $ctrl.service.instances | orderBy: 'name'">
-              <td>
+              <td class="col-8">
                 <span class="clickable" ui-sref="artifacts.one.cluster.service.instance({instance: instance.name})">
                   {{instance.name}}
                 </span>
               </td>
-              <td>
+              <td class="col-2">
                 {{instance.host}}
               </td>
-              <td>
+              <td class="col-2">
                 <span ng-repeat="(portName, port) in (items = instance.ports | orderByKeys) | limitTo:2">
                   <span ng-if="$index == 0">{{port}}</span>
                   <span ng-if="$index == 1" class="clickable"
