@@ -18,16 +18,35 @@
   .revision {
     width: 100%;
     margin: 0;
-    height: 4rem;
-    line-height: 4rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    height: 5rem;
+    line-height: 5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     color: $color-text;
     font-size: $font-size-small;
+    border-bottom: 1px solid $background-lighter;
+    position: relative;
 
     &:hover {
       cursor: pointer;
       background-color: $blue;
+    }
+
+    &.active-revision {
+      background-color: $dark-blue;
+
+      &::after {
+        content : '';
+        display: block;
+        position: absolute;
+        transform: rotate(45deg);
+        padding: 7px;
+        background-color: $dark-blue;
+        border-bottom: 1px solid $background-lighter;
+        border-left: 1px solid $background-lighter;
+        left: -8px;
+        top:1.6rem;
+      }
     }
   }
 }

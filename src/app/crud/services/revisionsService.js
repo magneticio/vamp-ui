@@ -21,7 +21,12 @@ function revisionsService() {
 
     var source = event.value || '';
     if (source) {
-      source = JSON.parse(source);
+      try {
+        source = JSON.parse(source);
+      } catch (e) {
+        source = JSON.parse(JSON.stringify(source));
+      }
+
       try {
         source = JSON.stringify(JSON.parse(source), null, '  ');
       } catch (e) {
