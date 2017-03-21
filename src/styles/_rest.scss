@@ -14,8 +14,8 @@ html {
 
 }
 
-@media only screen and (min-width:1200px) and (min-device-pixel-ratio: 2),
-    only screen and (min-width:1200px) and (min-resolution: 192dpi) {
+@media only screen and (min-device-pixel-ratio: 2),
+    only screen and (min-resolution: 192dpi) {
   html {
     font-size: 8px;
   }
