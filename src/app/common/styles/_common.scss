@@ -221,6 +221,10 @@ iframe {
   border: none;
 }
 
+#toast-container {
+  z-index: 99999;
+}
+
 // PRELOADING IMAGES
 :root:before {
   content: url('/styles/resources/app/common/images/disconnected-triangle.svg');
