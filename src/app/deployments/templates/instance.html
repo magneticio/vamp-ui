@@ -11,7 +11,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <uib-tabset active="$ctrl.canAccessLogs ? 0 : 2">
+      <uib-tabset active="$ctrl.activeTabIndex">
         <uib-tab index="0" ng-if="$ctrl.canAccessLogs" heading="Output log">
           <div class="panel panel-default log-panel">
             <div class="panel-heading">
