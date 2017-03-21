@@ -17,7 +17,7 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
   $ctrl.isFollowLog = true;
   $ctrl.stdout = [];
   $ctrl.stderr = [];
-  $ctrl.canAccessLogs = false;
+  $ctrl.activeTabIndex = 2;
 
   var stopInterval;
 
@@ -35,7 +35,7 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
             return $http.get(host + '/files/debug');
           })
           .then(function (res) {
-            $ctrl.canAccessLogs = true;
+            $ctrl.activeTabIndex = 0;
             var logLocation = _.find(_.values(res.data), function (val) {
               return val.indexOf($stateParams.instance) !== -1;
             });
