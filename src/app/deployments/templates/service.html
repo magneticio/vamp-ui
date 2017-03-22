@@ -53,7 +53,7 @@
             <uib-bar value="$ctrl.service.health.unhealthy" type="danger"><span ng-hide="$ctrl.service.health.unhealthy == 0">{{ ($ctrl.service.health.healthy / $ctrl.service.health.running ) * 100 }} %</span></uib-bar>
             <uib-bar value="$ctrl.service.health.unknown" type="default"><span ng-hide="$ctrl.service.health.unknown == 0">{{ ($ctrl.service.health.unknown / $ctrl.service.health.running ) * 100 }} %</span></uib-bar>
           </uib-progress> -->
-          <uib-progressbar max="100" value="$ctrl.health" type="success">{{$ctrl.health + ' %'}}</uib-progress>
+          <uib-progressbar max="100" value="$ctrl.health" type="success">{{$ctrl.health ? $ctrl.health + ' %' : '' }}</uib-progress>
         </div>
       </div>
     </div>
