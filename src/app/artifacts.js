@@ -128,7 +128,7 @@ Artifacts.prototype.all = function () {
               value: "artifact.status",
               hasProgress: true,
               success: "artifact.status === 'running'",
-              inProgress: "$ctrl.updating()",
+              inProgress: "updating()",
               paused: "artifact.status === 'suspended'"
             },
             {

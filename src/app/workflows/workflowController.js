@@ -8,7 +8,7 @@ function WorkflowController($scope, $vamp, toastr) {
   var path = '/workflows/' + $scope.artifact.name;
   $ctrl.workflow = $scope.artifact;
 
-  $ctrl.updating = function () {
+  $scope.updating = function () {
     return $scope.artifact.status === 'starting' ||
       $scope.artifact.status === 'stopping' ||
       $scope.artifact.status === 'restarting' ||

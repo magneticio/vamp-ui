@@ -9,7 +9,7 @@ function WorkflowsController($scope, artifactsMetadata, $controller, uiStatesFac
   $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope, artifactsMetadata: artifactsMetadata});
 
   $ctrl.onStreamEvent = function (response) {
-    if (_.includes(response.data.tags, 'workflows')) {
+    if (_.includes(response.data.tags, 'workflows') || _.includes(response.data.tags, 'workflow-statuses')) {
       $ctrl.peek();
     }
   };

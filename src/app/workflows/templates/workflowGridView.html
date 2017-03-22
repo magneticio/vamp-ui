@@ -4,7 +4,7 @@
         value="artifact.status"
         has-progress="true"
         success="artifact.status === 'running'"
-        in-progress="$ctrl.updating()"
+        in-progress="updating()"
         paused="artifact.status === 'suspended'">
       </tag>
       <p></p>
@@ -18,7 +18,7 @@
       <tag ng-if="!(artifact.schedule.time | isEmpty)" value="'schedule : time'"></tag>
     </div>
 
-    <div class="list">
+    <div class="list" ng-if="artifact.instances && artifact.instances.length > 0">
         <p class="v-label">Ports :</p>
         <ul>
             <li ng-repeat="instance in artifact.instances">
