@@ -190,6 +190,11 @@ table.vamp-lv {
             font-size: $font-size-large;
           }
 
+          .vamp-lv-col-tags {
+            height: 3rem;
+            line-height: 3rem;
+          }
+
           &.row-select {
             width: 4rem;
           }
