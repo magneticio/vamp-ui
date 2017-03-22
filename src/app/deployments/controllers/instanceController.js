@@ -23,9 +23,8 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
 
   function init() {
     $vamp.get('/gateways/mesos')
-      .then(function (res) {
-        var mesosGateway = res.data;
-        $http.get('http://' + mesosGateway.service.host + ':' + mesosGateway.port + '/master/state.json')
+      .then(function () {
+        $http.get('http://' + $ctrl.origin + '/proxy/gateways/mesos/master/state.json')
           .then(function (res) {
             var marathonFramework = _.find(res.data.frameworks, {name: 'marathon'});
             var task = _.find(marathonFramework.tasks, {id: $stateParams.instance});
