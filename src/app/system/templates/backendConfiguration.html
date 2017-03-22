@@ -41,17 +41,17 @@
             </div>
             <div class="col-md-6">
               <div class="pull-right">
-                <button class="btn bootstrap-btn btn-small btn-ghost btn-primary"
+                <button class="btn bootstrap-btn btn-small btn-primary"
                   ng-if="$ctrl.type === 'dynamic' && !$ctrl.inEdit"
                   ng-click="$ctrl.startEdit()">
                     <span class="btn-text">edit</span>
                 </button>
-                <button class="btn bootstrap-btn btn-small btn-ghost btn-primary"
+                <button class="btn bootstrap-btn btn-small btn-primary"
                   ng-if="$ctrl.type === 'dynamic' && $ctrl.inEdit"
                   ng-click="$ctrl.setType('dynamic')">
                     <span class="btn-text">cancel</span>
                 </button>
-                <button class="btn bootstrap-btn btn-small btn-ghost btn-success"
+                <button class="btn bootstrap-btn btn-small btn-success"
                   ng-if="$ctrl.type === 'dynamic' && $ctrl.inEdit && $ctrl.dirty()"
                   ng-click="$ctrl.dirty() && $ctrl.update()">
                     <span class="btn-text">save</span>

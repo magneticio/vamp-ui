@@ -26,15 +26,15 @@
     </div>
     <div class="col-md-5">
       <div class="pull-right">
-        <button class="btn btn-ghost btn-danger" type="submit"
+        <button class="btn btn-danger" type="submit"
                 ng-if="$ctrl.isSelectedAny()"
                 ng-click="$ctrl.deleteSelected()">
             Delete selected
         </button>
-        <button class="btn btn-ghost btn-primary" type="submit" ng-click="$ctrl.add()">
+        <button class="btn btn-primary" type="submit" ng-click="$ctrl.add()">
             Add
         </button>
-        <button ng-if="$ctrl.kind == 'blueprints'" class="btn btn-ghost btn-primary" type="submit" ng-click="$ctrl.upload()">
+        <button ng-if="$ctrl.kind == 'blueprints'" class="btn btn-primary" type="submit" ng-click="$ctrl.upload()">
             Docker Compose
         </button>
       </div>
@@ -52,18 +52,15 @@
               dynamic-controller-alias="$artifactCtrl">
                <div class="artifact-content">
                  <div class="artifact-header">
-                    <!--<div class="header-context"
-                      ng-class="{'deploying' : artifact.status === 'updating' || artifact.status === 'deploying' || artifact.status === 'undeploying'}">
+                   <!--<div class="header-context"
+                     ng-class="{'deploying' : artifact.status === 'updating' || artifact.status === 'deploying' || artifact.status === 'undeploying'}">
 
-                    </div>-->
+                   </div>-->
                     <input type="checkbox"
                         ng-checked="$ctrl.isSelected(artifact)"
                         ng-click="$ctrl.updateSelection($event, artifact)">
                     <span class="artifact-title clickable" ng-click="$ctrl.view(artifact)">{{ artifact.name }}</span>
-
-
                     <div ng-if="$ctrl.artifactsMetadata.actions && $ctrl.artifactsMetadata.actions.length > 0" class="dropdown pull-right">
-
                       <span class="artifact-actions-button"
                         uib-popover-template="'app/crud/templates/actionsMenu.html'"
                         ng-controller="actionMenuController"

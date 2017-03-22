@@ -30,17 +30,17 @@
             </div>
             <div class="col-md-6">
               <div class="pull-right">
-                <button class="btn bootstrap-btn btn-small btn-ghost btn-primary"
+                <button class="btn bootstrap-btn btn-small btn-primary"
                   ng-if="$ctrl.mode() == 'template' && !$ctrl.inEdit"
                   ng-click="$ctrl.startEdit()">
                     <span class="btn-text">edit</span>
                 </button>
-                <button class="btn bootstrap-btn btn-small btn-ghost btn-primary"
+                <button class="btn bootstrap-btn btn-small btn-primary"
                   ng-click="$ctrl.discardChanges()"
                   ng-if="$ctrl.mode() == 'template' && $ctrl.inEdit">
                     <span class="btn-text">cancel</span>
                 </button>
-                <button class="btn bootstrap-btn btn-small btn-ghost btn-success"
+                <button class="btn bootstrap-btn btn-small btn-success"
                   ng-click="$ctrl.update()"
                   ng-if="$ctrl.mode() == 'template' && $ctrl.inEdit && $ctrl.dirty()">
                     <span class="btn-text">save</span>

@@ -258,7 +258,7 @@ body {
 }
 
 .label-info {
-  color: $color-white;
+  color: $night !important;
   background-color: $warm-warning !important;
 }
 
@@ -498,7 +498,7 @@ p, div {
   }
 
   .label-warning {
-    color: white;
+    color: $night;
     background-color: $warm-warning;
   }
 
@@ -1048,7 +1048,7 @@ a.editable-click:hover {
     }
 
     &.label-info {
-      color: $color-white;
+      color: $night;
       background-color: $warm-warning;
     }
   }
@@ -1226,6 +1226,7 @@ snippet {
     &--update {
       @extend .label-info;
       background-color: $warm-warning !important;
+      color: $night !important;
     }
 
     &--error-alert {

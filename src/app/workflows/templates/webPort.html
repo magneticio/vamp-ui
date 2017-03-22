@@ -1,6 +1,6 @@
 <div ng-if="$ctrl.viewStates.right" class="workflow-webport-view">
   <div class="webport-view-header">
-    <button class="btn btn-ghost pull-right" title="Close" ng-click="$ctrl.close()"><i class="fa fa-times"></i></button>
+    <button class="btn pull-right" title="Close" ng-click="$ctrl.close()"><i class="fa fa-times"></i></button>
   </div>
   <iframe ng-if="$ctrl.webport.url" ng-src="{{$ctrl.webport.url | trustUrl}}"></iframe>
 </div>

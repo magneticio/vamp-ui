@@ -3,12 +3,12 @@
     <div class="row">
       <div class="col-md-12">
         <span class="title-row">{{ $ctrl.name | capitalize}}</span>
-        <button class="btn btn-danger btn-ghost pull-right" type="submit" title="Delete"
+        <button class="btn btn-danger pull-right" type="submit" title="Delete"
                 ng-disabled="!$ctrl.deployment"
                 ng-click="$ctrl.delete()">
             Delete
         </button>
-        <button class="btn btn-primary btn-ghost pull-right" type="submit" title="View Source" ng-click="$ctrl.edit()">
+        <button class="btn btn-primary pull-right" type="submit" title="View Source" ng-click="$ctrl.edit()">
             View source
         </button>
       </div>

@@ -2,10 +2,10 @@
   <div class="row section">
     <div class="col-md-12">
       <span class="gateway-title">{{ $ctrl.name | capitalize}}</span>
-      <button class="btn btn-ghost btn-primary pull-right" title="View source" type="submit" ng-click="$ctrl.edit()">
+      <button class="btn btn-primary pull-right" title="View source" type="submit" ng-click="$ctrl.edit()">
           View source
       </button>
-      <button class="btn btn-ghost btn-danger pull-right" type="submit" title="Delete"
+      <button class="btn btn-danger pull-right" type="submit" title="Delete"
                 ng-disabled="!$ctrl.gateway || $ctrl.gateway.internal"
                 ng-click="$ctrl.delete()">
             Delete
