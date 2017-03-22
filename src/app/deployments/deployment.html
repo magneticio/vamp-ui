@@ -60,9 +60,6 @@
                 <div class="vamp-table__header scale-col">
                     <span class="v-label">SCALE</span>
                 </div>
-                <!--<div class="vamp-table__header instances-col">
-                    <span class="v-label">INSTANCES</span>
-                </div>-->
                 <div class="vamp-table__header ports-col">
                     <span class="v-label">PORTS</span>
                 </div>
@@ -74,10 +71,12 @@
             <div class="vamp-table__row" ng-repeat="service in cluster.services | orderBy:'breed.name'">
                 <div class="vamp-table__col name-col">
                     <span ui-sref="artifacts.one.cluster.service({cluster: cluster.name ,service: service.breed.name})"
-                    class="v-value v-value--emphasis v-value--state clickable"
-                          ng-class="{'v-value--state--update': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'v-value--state--error-alert': $ctrl.serviceStatus(service) === 'failed', 'v-value--state--highlight': $ctrl.addedService(cluster, service)}">
+                     class="v-value v-value--state clickable">
                         {{service.breed.name}}
-
+                    </span>
+                    <span class="v-value v-value--emphasis v-value--state"
+                          ng-class="{'v-value--state--update': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'v-value--state--error-alert': $ctrl.serviceStatus(service) === 'failed', 'v-value--state--highlight': $ctrl.addedService(cluster, service)}">
+                        {{$ctrl.serviceStatus(service)}}
                         <i class="fa"
                            ng-class="{'fa-cog': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'fa-spin': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'fa-exclamation-triangle': $ctrl.serviceStatus(service) === 'failed'}"></i>
                     </span>
@@ -115,7 +114,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="vamp-table__col ports-col">
                     <div class="vamp-table__col__list">
                         <div class="vamp-table__col__list__item"

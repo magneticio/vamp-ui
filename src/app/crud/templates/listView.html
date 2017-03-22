@@ -6,6 +6,9 @@
           <input type="checkbox" title="Select all" ng-checked="$ctrl.artifactsCtrl.isSelectedAll()"
             class="checkbox vamp-checkbox vamp-lv-checkbox">
         </td>
+        <td class="vamp-lv-col">
+          Name
+        </td>
         <td class="vamp-lv-col"
            ng-repeat="field in $ctrl.artifactsMetadata.artifactInfo">
           {{ field.title }}
@@ -21,7 +24,12 @@
           <input type="checkbox" class="checkbox vamp-lv-checkbox"
              ng-checked="$ctrl.artifactsCtrl.isSelected(artifact)">
         </td>
-        <td class="vamp" ng-click="$ctrl.onItemClick(artifact, $event)" ng-repeat="field in $ctrl.artifactsMetadata.artifactInfo" field-name="{{field.title}}">
+        <td class="vamp-lv-col-string" field-name="Name">
+          <span class="clickable" ng-click="$ctrl.onItemClick(artifact, $event)">
+            {{ artifact.name }}
+          </span>
+        </td>
+        <td class="vamp" ng-repeat="field in $ctrl.artifactsMetadata.artifactInfo" field-name="{{field.title}}">
           <div ng-switch="field.type">
             <div class="vamp-lv-col-tags" ng-switch-when="tags">
               <tag ng-repeat="tag in field.tags" ng-show="tag.visible === undefined ? true : (tag.visible | interpolate:this)" value="tag.value | interpolate:this"

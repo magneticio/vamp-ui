@@ -13,11 +13,6 @@ Artifacts.prototype.all = function () {
       artifactGridView: 'app/deployments/templates/deploymentGridView.html',
       artifactInfo: [
         {
-          title: "Name",
-          valuePath: "name",
-          type: "string"
-        },
-        {
           title: "",
           type: "tags",
           tags: [
@@ -69,11 +64,6 @@ Artifacts.prototype.all = function () {
       artifactGridView: 'app/gateways/templates/gridView.html',
       artifactInfo: [
         {
-          title: "Name",
-          valuePath: "name",
-          type: "string"
-        },
-        {
           title: "",
           type: "tags",
           tags: [
@@ -115,11 +105,6 @@ Artifacts.prototype.all = function () {
       gridViewController: "WorkflowController",
       artifactGridView: 'app/workflows/templates/workflowGridView.html',
       artifactInfo: [
-        {
-          title: "Name",
-          valuePath: "name",
-          type: "string"
-        },
         {
           title: "",
           type: "tags",
@@ -189,11 +174,6 @@ Artifacts.prototype.all = function () {
       artifactGridView: 'app/blueprints/templates/blueprintGridView.html',
       gridViewController: "BlueprintController",
       artifactInfo: [
-        {
-          title: "Name",
-          valuePath: "name",
-          type: "string"
-        }
       ],
       actions: [
         {
@@ -224,11 +204,6 @@ Artifacts.prototype.all = function () {
       artifactGridView: 'app/breeds/templates/breedGridView.html',
       artifactInfo: [
         {
-          title: "Name",
-          valuePath: "name",
-          type: "string"
-        },
-        {
           title: "Deployable",
           valuePath: "deployable.type",
           type: "string"
@@ -246,11 +221,6 @@ Artifacts.prototype.all = function () {
       mainController: 'ArtifactsController',
       artifactGridView: 'app/scales/templates/scaleGridView.html',
       artifactInfo: [
-        {
-          title: "Name",
-          valuePath: "name",
-          type: "string"
-        },
         {
           title: "CPU",
           valuePath: "cpu",
@@ -274,11 +244,6 @@ Artifacts.prototype.all = function () {
       mainController: 'ArtifactsController',
       artifactGridView: 'app/conditions/templates/gridView.html',
       artifactInfo: [
-        {
-          title: "Name",
-          valuePath: "name",
-          type: "string"
-        },
         {
           title: "Condition",
           valuePath: "condition",

@@ -87,9 +87,9 @@
                 {{instance.host}}
               </td>
               <td class="col-2">
-                <span ng-repeat="(portName, port) in (items = instance.ports | orderByKeys) | limitTo:2">
-                  <span ng-if="$index == 0">{{port}}</span>
-                  <span ng-if="$index == 1" class="clickable"
+                <span ng-repeat="(portName, port) in (items = instance.ports | orderByKeys) | limitTo:3">
+                  <span ng-if="$index < 2">{{port}}<span ng-if="$index < 1">,</span></span>
+                  <span ng-if="$index == 2" style="cursor:pointer"
                   uib-popover-template="'app/deployments/templates/portsPopOver.html'"
                   popover-append-to-body="true"
                   popover-placement="bottom"

@@ -245,12 +245,13 @@ body {
 
 
 .label {
-  font-size: 100%;
+  font-size: $font-size-small;
+  font-weight: $font-weight-light;
 }
 
 .label-success {
-  background-color: rgba($brand-success, 0.7);
-  color: $color-white;
+  background-color: $brand-success;
+  color: $white;
 }
 
 .label-primary {
@@ -1043,8 +1044,8 @@ a.editable-click:hover {
     margin-right: .5rem;
 
     &.label-success {
-      color: $color-white;
-      background-color: rgba($brand-success, 0.7);
+      color: $white;
+      background-color: $brand-success;
     }
 
     &.label-info {
@@ -1215,7 +1216,6 @@ snippet {
 
 .v-value {
   color: $gray-lighter;
-  font-size: 22px;
   font-weight: 300 !important;
 
   &--state {
@@ -1248,6 +1248,7 @@ snippet {
 
     &__name {
       margin-bottom: -2.2rem;
+      font-size: $font-size-large;
     }
   }
 
@@ -1264,6 +1265,7 @@ snippet {
     border-radius: 5px;
     min-height: 10rem;
     margin-top: .2rem;
+    font-size: $font-size-normal;
 
     align-items: center;
 
@@ -1272,12 +1274,11 @@ snippet {
     }
 
     .v-value {
-      font-size: $font-size-normal;
 
       &--emphasis {
         padding: .5rem 1rem;
         border-radius: 5px;
-        font-size: $font-size-large;
+        font-size: $font-size-small;
         background-color: rgba($color-blue-light, .2);
       }
 
@@ -1294,6 +1295,12 @@ snippet {
           top: 0.1rem;
           //font-size: $font-size-normal;
         }
+      }
+    }
+
+    &:hover {
+      .name-col > .clickable {
+        text-decoration: underline;
       }
     }
   }
@@ -1364,6 +1371,12 @@ snippet {
 
   .name-col {
     width: 20%;
+    display: flex;
+    font-size: $font-size-large;
+
+    .clickable {
+      margin-right: 1.5rem;
+    }
   }
 
   .instance-name-col {
@@ -1397,7 +1410,7 @@ snippet {
 
 .side-button {
   padding: 5px;
-  color: $color-white;
+  color: $white;
   text-align: center;
   text-decoration: underline;
   &:hover {
@@ -1405,7 +1418,7 @@ snippet {
     color: $color-bg;
   }
   &:focus {
-    color: $color-white;
+    color: $white;
   }
 
   &.toggled {
@@ -1414,7 +1427,15 @@ snippet {
 }
 
 .proxy-anchor {
-  @extend .side-button;
+  //@extend .side-button;
+  cursor: pointer;
+  color: #1D96B2;
+  font-size: $font-size-normal;
+
+  &:hover,
+  &:focus {
+    color: #1D96B2;
+  }
 }
 
 .proxy-container {

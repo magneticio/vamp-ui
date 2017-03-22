@@ -21,11 +21,5 @@ ol.breadcrumb {
     & > span {
       color: $new-gray;
     }
-
-    &:last-child {
-      & > span {
-        color: $white;
-      }
-    }
   }
 }

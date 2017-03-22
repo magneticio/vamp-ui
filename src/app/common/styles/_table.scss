@@ -21,6 +21,7 @@ table.table.v2 {
 
   tbody {
     tr {
+
       td {
         background-color: $night-sky;
         height: 6rem;
@@ -66,6 +67,12 @@ table.table.v2 {
         }
         &.col-12 {
           width: 100%;
+        }
+      }
+
+      &:hover {
+        .clickable {
+          text-decoration: underline;
         }
       }
     }

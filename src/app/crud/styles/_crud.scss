@@ -173,17 +173,15 @@ table.vamp-lv {
         font-size: $font-size-normal;
 
         &:hover {
-          td[field-name='Name'] {
+          .clickable {
             text-decoration: underline;
           }
-          //background-color: $dark-blue;
         }
 
         td {
           vertical-align: middle !important;
           white-space: nowrap;
           height: 6rem;
-          cursor: pointer;
           padding: .5rem;
 
           &[field-name='Name'] {
