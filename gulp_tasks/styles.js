@@ -8,6 +8,10 @@ const autoprefixer = require('autoprefixer');
 const svgSprite = require('gulp-svg-sprite');
 const concat = require('gulp-concat');
 
+var iconfont = require('gulp-iconfont');
+var iconfontCss = require('gulp-iconfont-css');
+var runTimestamp = Math.round(Date.now()/1000);
+
 const conf = require('../conf/gulp.conf');
 
 gulp.task('css', styles);
@@ -25,6 +29,25 @@ function styles() {
     .pipe(gulp.dest(conf.path.tmp('styles')))
     .pipe(browserSync.stream());
 }
+
+gulp.task('Iconfont', function(){
+  return gulp.src(conf.path.src('**/*.svg'))
+    .pipe(iconfontCss({
+      fontName: 'vampIcons',
+      path: 'scss',
+      targetPath: '../styles/_icons.scss',
+      fontPath: 'resources/fonts/',
+      cssClass: 'vampIcons'
+    }))
+    .pipe(iconfont({
+      fontName: 'vampIcons', // required
+      prependUnicode: true, // recommended option
+      formats: ['ttf', 'eot', 'woff', 'woff2', 'svg'], // default, 'woff2' and 'svg' are available
+      timestamp: runTimestamp, // recommended to get consistent builds when watching files
+      normalize: true
+    }))
+    .pipe(gulp.dest(conf.path.src('/fonts')));
+});
 
 gulp.task('fonts', function() {
   return gulp.src(conf.path.src('fonts/**/*'))

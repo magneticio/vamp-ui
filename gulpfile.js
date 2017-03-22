@@ -33,6 +33,7 @@ function watch(done) {
   gulp.watch(conf.path.src('**/*.html'), gulp.series('partials', reloadBrowserSync));
   gulp.watch([
     conf.path.src('**/*.scss'),
+    `!${conf.path.src('styles/_icons.scss')}`,
     conf.path.src('**/*.css')
   ], gulp.series('styles'));
   gulp.watch(conf.path.src('**/*.js'), gulp.series('prepare'));
