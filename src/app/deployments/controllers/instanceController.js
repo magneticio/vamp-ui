@@ -16,6 +16,7 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
   $ctrl.isFollowLog = true;
   $ctrl.stdout = [];
   $ctrl.stderr = [];
+  $ctrl.canAccessLogs = false;
   $ctrl.activeTabIndex = 2;
 
   var agent;
@@ -40,6 +41,8 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
           })
           .then(function (res) {
             $ctrl.activeTabIndex = 0;
+            $ctrl.canAccessLogs = true;
+
             var logLocation = _.find(_.values(res.data), function (val) {
               return val.indexOf($stateParams.instance) !== -1;
             });
