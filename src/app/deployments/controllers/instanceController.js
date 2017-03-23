@@ -13,25 +13,30 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
   $ctrl.instance = _.find(serviceData.instances, {name: $ctrl.instanceName});
   $ctrl.origin = $vamp.origin;
 
-  var host = $ctrl.host = 'http://' + $ctrl.origin.substring(0, $ctrl.origin.indexOf(':'));
   $ctrl.isFollowLog = true;
   $ctrl.stdout = [];
   $ctrl.stderr = [];
   $ctrl.activeTabIndex = 2;
 
+  var agent;
   var stopInterval;
+  var mesos = 'http://' + $ctrl.origin + '/proxy/gateways/mesos';
 
   function init() {
     $vamp.get('/gateways/mesos')
       .then(function () {
-        $http.get('http://' + $ctrl.origin + '/proxy/gateways/mesos/master/state.json')
+        $http.get(mesos + '/master/state.json')
           .then(function (res) {
             var marathonFramework = _.find(res.data.frameworks, {name: 'marathon'});
             var task = _.find(marathonFramework.tasks, {id: $stateParams.instance});
             var slave = _.find(res.data.slaves, {id: task.slave_id});
 
-            host = host + ":" + slave.pid.substring(slave.pid.lastIndexOf(':') + 1);
-            return $http.get(host + '/files/debug');
+            var host = slave.pid.substring(slave.pid.lastIndexOf('@') + 1, slave.pid.lastIndexOf(':'));
+            var port = slave.pid.substring(slave.pid.lastIndexOf(':') + 1);
+
+            agent = 'http://' + $ctrl.origin + '/proxy/host/' + host + '/port/' + port;
+
+            return $http.get(agent + '/files/debug');
           })
           .then(function (res) {
             $ctrl.activeTabIndex = 0;
@@ -39,13 +44,14 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
               return val.indexOf($stateParams.instance) !== -1;
             });
 
-            var stdoutUrl = host + '/files/read?path=/var' + logLocation + '/stdout&offset=0';
+            var stdoutUrl = agent + '/files/read?path=/var' + logLocation + '/stdout&offset=0';
+
             $http.get(stdoutUrl).then(function (res) {
               $ctrl.stdout = res.data.data;
               scrollToBottom();
             });
 
-            var url = host + '/files/read?path=/var' + logLocation + '/stderr&offset=0';
+            var url = agent + '/files/read?path=/var' + logLocation + '/stderr&offset=0';
             $http.get(url).then(function (res) {
               $ctrl.stderr = res.data.data;
               scrollToBottom();
