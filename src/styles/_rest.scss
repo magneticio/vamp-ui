@@ -1370,8 +1370,7 @@ snippet {
   }
 
   .name-col {
-    width: 20%;
-    display: flex;
+    width: 30%;
     font-size: $font-size-large;
 
     .clickable {
@@ -1396,11 +1395,11 @@ snippet {
   }
 
   .ports-col {
-    width: 10%;
+    width: 15%;
   }
 
   .env-col {
-    width: 25%;
+    width: 20%;
   }
 }
 

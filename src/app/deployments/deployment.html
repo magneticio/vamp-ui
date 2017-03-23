@@ -74,12 +74,8 @@
                      class="v-value v-value--state clickable">
                         {{service.breed.name}}
                     </span>
-                    <span class="v-value v-value--emphasis v-value--state"
-                          ng-class="{'v-value--state--update': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'v-value--state--error-alert': $ctrl.serviceStatus(service) === 'failed', 'v-value--state--highlight': $ctrl.addedService(cluster, service)}">
-                        {{$ctrl.serviceStatus(service)}}
-                        <i class="fa"
-                           ng-class="{'fa-cog': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'fa-spin': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'fa-exclamation-triangle': $ctrl.serviceStatus(service) === 'failed'}"></i>
-                    </span>
+                    <i class="fa" ng-if="$ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying' || $ctrl.serviceStatus(service) === 'failed'"
+                       ng-class="{'fa-cog fa-spin': $ctrl.serviceStatus(service) === 'updating' || $ctrl.serviceStatus(service) === 'deploying' || $ctrl.serviceStatus(service) === 'undeploying', 'fa-exclamation-triangle': $ctrl.serviceStatus(service) === 'failed'}"></i>
                 </div>
 
                 <div class="vamp-table__col vamp-table__col--chart health-col">
