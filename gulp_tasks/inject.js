@@ -50,11 +50,11 @@ function angularDeps() {
   var pluginModules = getDirectories(path.resolve(__dirname, '../' + conf.path.src('externalPlugins')));
   console.log('External plugins loaded: ' + pluginModules);
   if (pluginModules && pluginModules.length > 0 ) {
-    return gulp.src(conf.path.src('index.js'))
-      .pipe(ngInject({file: 'index.js', module: pluginModules.join(',')}))
+    return gulp.src(conf.path.src('vamp-ui.js'))
+      .pipe(ngInject({file: 'vamp-ui.js', module: pluginModules.join(',')}))
       .pipe(gulp.dest(conf.paths.tmp));
   } else {
-    return gulp.src(conf.path.src('index.js'));
+    return gulp.src(conf.path.src('vamp-ui.js'));
   }
 }
 
