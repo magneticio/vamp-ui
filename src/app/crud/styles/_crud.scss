@@ -299,7 +299,7 @@ table.vamp-lv {
   position: relative;
   //border: 2px solid transparent;
   //background: $night-sky no-repeat url('/styles/resources/app/crud/images/background-pattern-alpha.png');
-  background-size: contain;
+
 
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   //transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
@@ -391,6 +391,7 @@ table.vamp-lv {
       border-bottom-left-radius: .5rem;
       border-bottom-right-radius: .5rem;
       background: $night-sky no-repeat url('/styles/resources/app/crud/images/background-pattern-alpha.png');
+      background-size: cover;
       padding: .5rem;
     }
   }
@@ -492,13 +493,22 @@ table.vamp-lv {
 
       .error-message-container {
         display: inline-block;
+        width:90%;
 
         .error-message {
+          width: inherit;
           white-space: pre;
 
           &.first-line {
             display: inline-flex;
             align-items: center;
+            width: inherit;
+
+            .message {
+              width:inherit;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
 
             i {
               cursor: pointer;
