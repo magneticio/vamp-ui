@@ -4,26 +4,12 @@
       <div class="instance-title">
         {{ $ctrl.instanceName }}
       </div>
-
     </div>
-
   </div>
-
   <div class="row">
     <div class="col-md-12">
       <uib-tabset>
-        <uib-tab ng-repeat="(portName, port) in $ctrl.instance.ports | orderByKeys" index="$index" heading="{{portName}}">
-          <div class="panel panel-default log-panel">
-            <div class="panel-heading">
-              <div class="pull-right">
-                <a class="btn btn-small btn-primary" href="{{ 'http://' + $ctrl.origin + '/proxy/deployments/' + $ctrl.name + '/clusters/' + $ctrl.cluster + '/services/' + $ctrl.serviceName + '/instances/' + $ctrl.instanceName + '/ports/' + portName + '/' }}" target="_blank" >Open in new tab</a>
-              </div>
-            </div>
-            <div class="panel-body">
-              <iframe ng-src="{{ 'http://' + $ctrl.origin + '/proxy/deployments/' + $ctrl.name + '/clusters/' + $ctrl.cluster + '/services/' + $ctrl.serviceName + '/instances/' + $ctrl.instanceName + '/ports/' + portName + '/' | trustUrl}}"></iframe>
-            </div>
-        </uib-tab>
-        <uib-tab index="$ctrl.instance.ports.length" ng-if="$ctrl.canAccessLogs" heading="Output log">
+        <uib-tab index="0" ng-if="$ctrl.canAccessLogs" heading="Output log">
           <div class="panel panel-default log-panel">
             <div class="panel-heading">
               <div class="panel-title">
@@ -45,7 +31,7 @@
               </pre>
             </div>
         </uib-tab>
-        <uib-tab index="$ctrl.instance.ports.length + 1" ng-if="$ctrl.canAccessLogs" heading="Error log">
+        <uib-tab index="1" ng-if="$ctrl.canAccessLogs" heading="Error log">
           <div class="panel panel-default log-panel">
             <div class="panel-heading">
               <div class="panel-title">
@@ -63,6 +49,17 @@
               <pre class="container-log">
                 {{$ctrl.stderr}}
               </pre>
+            </div>
+        </uib-tab>
+        <uib-tab ng-repeat="(portName, port) in $ctrl.instance.ports | orderByKeys" index="$index + 2" heading="{{portName}}">
+          <div class="panel panel-default log-panel">
+            <div class="panel-heading">
+              <div class="pull-right">
+                <a class="btn btn-small btn-primary" href="{{ 'http://' + $ctrl.origin + '/proxy/deployments/' + $ctrl.name + '/clusters/' + $ctrl.cluster + '/services/' + $ctrl.serviceName + '/instances/' + $ctrl.instanceName + '/ports/' + portName + '/' }}" target="_blank" >Open in new tab</a>
+              </div>
+            </div>
+            <div class="panel-body">
+              <iframe ng-src="{{ 'http://' + $ctrl.origin + '/proxy/deployments/' + $ctrl.name + '/clusters/' + $ctrl.cluster + '/services/' + $ctrl.serviceName + '/instances/' + $ctrl.instanceName + '/ports/' + portName + '/' | trustUrl}}"></iframe>
             </div>
         </uib-tab>
       </uib-tabset>
