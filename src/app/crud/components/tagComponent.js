@@ -1,4 +1,4 @@
-angular.module('app').component('tag', {
+angular.module('vamp-ui').component('tag', {
   bindings: {
     value: '=',
     hasProgress: '<',

@@ -1,4 +1,4 @@
-angular.module('app').component('events', {
+angular.module('vamp-ui').component('events', {
   templateUrl: 'app/events/events.html',
   controller: EventController
 });

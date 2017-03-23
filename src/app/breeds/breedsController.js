@@ -11,4 +11,4 @@ function BreedsController(
   };
 }
 
-angular.module('app').controller('BreedsController', BreedsController);
+angular.module('vamp-ui').controller('BreedsController', BreedsController);

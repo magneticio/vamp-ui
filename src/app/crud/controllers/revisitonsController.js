@@ -48,4 +48,4 @@ function revisionsController($scope, $rootScope, revisionsService, $stateParams,
 }
 
 revisionsController.$inject = ['$scope', '$rootScope', 'revisionsService', '$stateParams', '$vamp'];
-angular.module('app').controller('revisionsController', revisionsController);
+angular.module('vamp-ui').controller('revisionsController', revisionsController);

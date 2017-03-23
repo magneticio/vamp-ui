@@ -190,7 +190,7 @@ function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $breadcrumb, 
   $ctrl.peek();
 }
 
-angular.module('app').controller('BaseArtifactsController', BaseArtifactsController);
+angular.module('vamp-ui').controller('BaseArtifactsController', BaseArtifactsController);
 
 ArtifactsController.$inject = ['$scope', 'artifactsMetadata', '$controller'];
 
@@ -200,4 +200,4 @@ function ArtifactsController(
   $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope, artifactsMetadata: artifactsMetadata});
 }
 
-angular.module('app').controller('ArtifactsController', ArtifactsController);
+angular.module('vamp-ui').controller('ArtifactsController', ArtifactsController);

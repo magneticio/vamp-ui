@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('vamp-ui')
   .controller('BlueprintsController', BlueprintsController)
   .controller('DeployBlueprintController', DeployBlueprintController)
   .controller('UpdateDeploymentController', UpdateDeploymentController)

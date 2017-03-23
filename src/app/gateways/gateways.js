@@ -1,5 +1,5 @@
 angular
-  .module('app')
+  .module('vamp-ui')
   .controller('GatewaysController', function ($scope, artifactsMetadata, $vamp, namifyFilter, $controller) {
     var $ctrl = this;
 

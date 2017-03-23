@@ -1,4 +1,4 @@
-angular.module('app').controller('infoController', InfoController);
+angular.module('vamp-ui').controller('infoController', InfoController);
 
 function InfoController($scope, $timeout, $vamp, artifact) {
   var $ctrl = this;

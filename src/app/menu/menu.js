@@ -1,6 +1,6 @@
 /* global Artifacts */
 /* eslint dot-notation: ["error", { "allowPattern": "^[a-z]+(_[a-z]+)+$" }] */
-angular.module('app').component('menu', {
+angular.module('vamp-ui').component('menu', {
   templateUrl: 'app/menu/templates/menu-v2.html',
   controller: MenuController
 });

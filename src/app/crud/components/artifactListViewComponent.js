@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('vamp-ui')
   .controller('listViewController', function ($scope, $element, util, interpolateFilter) {
     var $ctrl = this;
 

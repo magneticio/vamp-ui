@@ -37,7 +37,7 @@ function overlayFactory() {
 }
 
 overlayFactory.$inject = [];
-angular.module('app').factory('overlayFactory', overlayFactory);
+angular.module('vamp-ui').factory('overlayFactory', overlayFactory);
 
 overlayService.$inject = ['uiStatesFactory', 'overlayFactory'];
-angular.module('app').service('overlayService', overlayService);
+angular.module('vamp-ui').service('overlayService', overlayService);

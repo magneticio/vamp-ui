@@ -54,4 +54,4 @@ function revisionsService() {
   };
 }
 
-angular.module('app').service('revisionsService', revisionsService);
+angular.module('vamp-ui').service('revisionsService', revisionsService);

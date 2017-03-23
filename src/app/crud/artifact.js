@@ -6,9 +6,9 @@ function ArtifactController($scope) {
 }
 
 ArtifactController.$inject = ['$scope'];
-angular.module('app').controller('ArtifactController', ArtifactController);
+angular.module('vamp-ui').controller('ArtifactController', ArtifactController);
 
-angular.module('app').factory('artifact', ['$vamp', function ($vamp) {
+angular.module('vamp-ui').factory('artifact', ['$vamp', function ($vamp) {
   return new ArtifactService($vamp);
 }]);
 

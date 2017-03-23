@@ -1,4 +1,4 @@
-angular.module('app').component('editable', {
+angular.module('vamp-ui').component('editable', {
   templateUrl: 'app/editable/editable.html',
   controller: function () {
     var $ctrl = this;

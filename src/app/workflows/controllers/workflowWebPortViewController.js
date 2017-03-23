@@ -14,4 +14,4 @@ function workflowWebPortViewController($scope, uiStatesFactory, workflowWebPortS
 }
 
 workflowWebPortViewController.$inject = ['$scope', 'uiStatesFactory', 'workflowWebPortService'];
-angular.module('app').controller('workflowWebPortViewController', workflowWebPortViewController);
+angular.module('vamp-ui').controller('workflowWebPortViewController', workflowWebPortViewController);

@@ -57,4 +57,4 @@ function uiStatesFactory() {
 
 uiStatesFactory.$inject = [];
 
-angular.module('app').factory('uiStatesFactory', uiStatesFactory);
+angular.module('vamp-ui').factory('uiStatesFactory', uiStatesFactory);

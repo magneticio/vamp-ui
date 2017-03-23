@@ -1,7 +1,7 @@
 /* global Artifacts */
 /* global Environment */
 
-angular.module('app')
+angular.module('vamp-ui')
   .config(function ($breadcrumbProvider) {
     $breadcrumbProvider.setOptions({
       templateUrl: 'app/common/templates/breadcrumb.html',

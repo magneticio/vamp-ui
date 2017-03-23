@@ -1,6 +1,6 @@
 /* global Environment */
 /* eslint camelcase: ["error", {properties: "never"}] */
-angular.module('app')
+angular.module('vamp-ui')
   .config(function ($mixpanelProvider) {
     if (Environment.prototype.mixpanel()) {
       $mixpanelProvider.apiKey(Environment.prototype.mixpanel());

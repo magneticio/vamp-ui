@@ -15,4 +15,4 @@ function utilService() {
   };
 }
 
-angular.module('app').service('util', utilService);
+angular.module('vamp-ui').service('util', utilService);

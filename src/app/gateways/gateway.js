@@ -1,5 +1,5 @@
 /* global Environment,TimeSeriesCharts */
-angular.module('app').controller('GatewayController', GatewayController);
+angular.module('vamp-ui').controller('GatewayController', GatewayController);
 
 /** @ngInject */
 function GatewayController($scope, $filter, $stateParams, $timeout, $state, $breadcrumb, $vamp, uiStatesFactory, slider, alert, toastr, $uibModal) {

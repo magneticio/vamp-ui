@@ -1,4 +1,4 @@
-angular.module('app').directive('autoFocus', ['$timeout', function ($timeout) {
+angular.module('vamp-ui').directive('autoFocus', ['$timeout', function ($timeout) {
   return {
     restrict: 'A',
     link: function ($scope, $element) {

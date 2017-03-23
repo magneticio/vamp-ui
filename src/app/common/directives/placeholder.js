@@ -1,5 +1,5 @@
 /* global vampPluginsLoader*/
-angular.module('app').directive('placeholder', ['$placeholders', '$compile', function ($placeholders, $compile) {
+angular.module('vamp-ui').directive('placeholder', ['$placeholders', '$compile', function ($placeholders, $compile) {
   return {
     restrict: 'E',
     link: function (scope, elem, attrs) {

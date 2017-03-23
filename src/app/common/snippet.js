@@ -1,4 +1,4 @@
-angular.module('app').component('snippet', {
+angular.module('vamp-ui').component('snippet', {
   templateUrl: 'app/common/snippet.html',
   bindings: {
     resolve: '<',

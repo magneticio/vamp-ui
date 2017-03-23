@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('vamp-ui')
   .controller('instanceController', InstanceController);
 
 function InstanceController($scope, $http, $interval, $element, $state, $stateParams, clusterData, serviceData, $vamp) {

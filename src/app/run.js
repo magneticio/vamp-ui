@@ -1,4 +1,4 @@
-angular.module('app').run(function ($rootScope, $state) {
+angular.module('vamp-ui').run(function ($rootScope, $state) {
   $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState) {
     if (toState.name === 'artifacts.one') {
       var result = toState.data.allowedKinds.indexOf(toParams.kind);

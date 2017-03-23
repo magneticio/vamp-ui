@@ -7,4 +7,4 @@ function actionMenuController($scope) {
 }
 
 actionMenuController.$inject = ['$scope'];
-angular.module('app').controller('actionMenuController', actionMenuController);
+angular.module('vamp-ui').controller('actionMenuController', actionMenuController);

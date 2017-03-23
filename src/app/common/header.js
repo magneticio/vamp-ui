@@ -1,4 +1,4 @@
-angular.module('app').component('header', {
+angular.module('vamp-ui').component('header', {
   templateUrl: 'app/common/header.html',
   controller: function ($scope, $rootScope, uiStatesFactory) {
     var $ctrl = this;

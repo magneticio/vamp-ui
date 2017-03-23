@@ -1,4 +1,4 @@
-angular.module('app').component('editScale', {
+angular.module('vamp-ui').component('editScale', {
   restrict: 'E',
   templateUrl: 'app/deployments/editScale.html',
   controller: EditScale,

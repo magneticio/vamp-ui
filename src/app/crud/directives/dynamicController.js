@@ -1,4 +1,4 @@
-angular.module('app').directive('dynamicControllerAs', ['$compile', '$interpolate',
+angular.module('vamp-ui').directive('dynamicControllerAs', ['$compile', '$interpolate',
   function ($compile, $interpolate) {
     return {
       restrict: 'A',

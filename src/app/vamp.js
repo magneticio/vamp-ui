@@ -1,7 +1,7 @@
 /* global Environment */
 /* eslint camelcase: ["error", {properties: "never"}] */
 'use strict';
-angular.module('app')
+angular.module('vamp-ui')
   .factory('$vamp', ['$http', '$log', '$rootScope', '$websocket', '$timeout', function ($http, $log, $rootScope, $websocket, $timeout) {
     return new Vamp($http, $log, $rootScope, $websocket, $timeout);
   }])

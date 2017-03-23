@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('vamp-ui')
   .directive('onRenderEnd', function ($timeout) {
     return {
       restrict: 'A',

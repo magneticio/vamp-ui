@@ -1,4 +1,4 @@
-angular.module('app').controller('addController',
+angular.module('vamp-ui').controller('addController',
 
 function ($scope, $state, $stateParams, $breadcrumb, $timeout, $element, $vamp, artifact, toastr, alert) {
   var $ctrl = this;

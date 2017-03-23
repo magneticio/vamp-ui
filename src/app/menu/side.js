@@ -1,5 +1,5 @@
 /* global Help */
-angular.module('app').component('side', {
+angular.module('vamp-ui').component('side', {
   templateUrl: 'app/menu/side.html',
   controller: SideController
 });

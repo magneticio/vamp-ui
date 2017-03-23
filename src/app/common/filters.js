@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('vamp-ui')
   .filter('encodeName', function () {
     return function (input) {
       return input ? input.replace(/\//g, '~2F') : '';

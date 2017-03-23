@@ -12,4 +12,4 @@ function workflowWebPortService() {
   };
 }
 
-angular.module('app').service('workflowWebPortService', workflowWebPortService);
+angular.module('vamp-ui').service('workflowWebPortService', workflowWebPortService);

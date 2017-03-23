@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('vamp-ui')
   .controller('DeploymentsController', DeploymentsController)
   .factory('$vampDeployment', ['$filter', function ($filter) {
     return new DeploymentService($filter);

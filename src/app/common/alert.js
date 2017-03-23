@@ -1,4 +1,4 @@
-angular.module('app').component('alert', {
+angular.module('vamp-ui').component('alert', {
   templateUrl: 'app/common/alert.html',
   bindings: {
     resolve: '<',

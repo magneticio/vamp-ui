@@ -1,5 +1,5 @@
 
-angular.module('app', [
+angular.module('vamp-ui', [
   'ui.router',
   'ui.bootstrap',
   'angular-websocket',

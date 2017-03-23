@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('vamp-ui')
   .controller('serviceController', ServiceController);
 
 function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, artifactData, clusterData, serviceData, $vamp, $vampDeployment, alert, toastr) {

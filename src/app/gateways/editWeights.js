@@ -1,4 +1,4 @@
-angular.module('app').component('editWeights', {
+angular.module('vamp-ui').component('editWeights', {
   restrict: 'E',
   templateUrl: 'app/gateways/editWeights.html',
   controller: EditWeights,

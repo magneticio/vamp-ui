@@ -1,4 +1,4 @@
-angular.module('app').directive('highlighter', function ($timeout) {
+angular.module('vamp-ui').directive('highlighter', function ($timeout) {
   return {
     restrict: 'A',
     scope: {

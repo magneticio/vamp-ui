@@ -35,9 +35,9 @@ function importBlueprintControler($scope, $uibModalInstance, $vamp) {
 }
 
 importBlueprintControler.$inject = ['$scope', '$uibModalInstance', '$vamp'];
-angular.module('app').controller('importBlueprintControler', importBlueprintControler);
+angular.module('vamp-ui').controller('importBlueprintControler', importBlueprintControler);
 
-angular.module('app').directive('fileChange', fileChange);
+angular.module('vamp-ui').directive('fileChange', fileChange);
 
 function fileChange() {
   return {

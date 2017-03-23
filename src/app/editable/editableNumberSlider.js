@@ -1,4 +1,4 @@
-angular.module('app').component('editableNumberSlider', {
+angular.module('vamp-ui').component('editableNumberSlider', {
   templateUrl: 'app/editable/editableNumberSlider.html',
   controller: function () {
     var $ctrl = this;

@@ -1,4 +1,4 @@
-angular.module('app').directive('overlayManager', [function () {
+angular.module('vamp-ui').directive('overlayManager', [function () {
   return {
     restrict: 'E',
     controller: function ($scope, $rootScope, $element, overlayService) {

@@ -1,5 +1,5 @@
 /* global Environment,TimeSeriesCharts */
-angular.module('app').controller('DeploymentController', DeploymentController);
+angular.module('vamp-ui').controller('DeploymentController', DeploymentController);
 
 /** @ngInject */
 function DeploymentController(uiStatesFactory, $scope, $stateParams, $breadcrumb, $timeout, $state, $vamp, $vampDeployment, $uibModal, snippet, alert, toastr) {

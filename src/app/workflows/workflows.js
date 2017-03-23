@@ -1,5 +1,5 @@
 /* global Environment */
-angular.module('app')
+angular.module('vamp-ui')
   .controller('WorkflowsController', WorkflowsController);
 
 /** @ngInject */

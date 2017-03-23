@@ -1,4 +1,4 @@
-angular.module('app').controller('vgaController', VgaController);
+angular.module('vamp-ui').controller('vgaController', VgaController);
 
 function VgaController($state, $scope, $timeout, $element, $vamp, $q, toastr, alert, artifact) {
   var $ctrl = this;

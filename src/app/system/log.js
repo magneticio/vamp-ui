@@ -1,4 +1,4 @@
-angular.module('app').controller('logController', LogController)
+angular.module('vamp-ui').controller('logController', LogController)
 .factory('$vampLog', ['$log', '$rootScope', '$vamp', function ($log, $rootScope, $vamp) {
   return new VampLogService($log, $rootScope, $vamp);
 }]).run(['$vampLog', function ($vampLog) {

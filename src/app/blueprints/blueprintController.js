@@ -1,4 +1,4 @@
-angular.module('app')
+angular.module('vamp-ui')
   .controller('BlueprintController', BlueprintController);
 
 /** @ngInject */
