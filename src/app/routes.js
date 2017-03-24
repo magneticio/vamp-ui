@@ -1,5 +1,4 @@
 /* global Artifacts */
-/* global Environment */
 
 angular.module('vamp-ui')
   .config(function ($breadcrumbProvider) {
@@ -14,7 +13,6 @@ angular.module('vamp-ui')
 function routesConfig($stateProvider, $urlRouterProvider) {
   var artifacts = Artifacts.prototype.all();
 
-  var origin = Environment.prototype.origin() || window.location.host;
   var emptyController = ['$scope', function ($scope) {
     $scope.ncyBreadcrumbIgnore = true;
   }];
@@ -119,15 +117,13 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        artifactData: function ($http, $stateParams) {
-          return $http({
-            method: 'GET',
-            url: 'http://' + origin + '/api/v1/' + $stateParams.kind + '/' + $stateParams.name
-          }).then(function (response) {
-            var artifact = response.data;
+        artifactData: function ($vamp, $stateParams) {
+          return $vamp.get('/' + $stateParams.kind + '/' + $stateParams.name)
+            .then(function (response) {
+              var artifact = response.data;
 
-            return artifact;
-          });
+              return artifact;
+            });
         }
       },
       data: {
@@ -188,15 +184,13 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       abstract: true,
       url: '^/{kind:deployments}/:name/:cluster',
       resolve: {
-        clusterData: function ($http, $stateParams) {
-          return $http({
-            method: 'GET',
-            url: 'http://' + origin + '/api/v1/' + $stateParams.kind + '/' + $stateParams.name
-          }).then(function (response) {
-            var artifact = response.data;
+        clusterData: function ($vamp, $stateParams) {
+          return $vamp.get('/' + $stateParams.kind + '/' + $stateParams.name)
+            .then(function (response) {
+              var artifact = response.data;
 
-            return artifact.clusters[$stateParams.cluster];
-          });
+              return artifact.clusters[$stateParams.cluster];
+            });
         }
       },
       ncyBreadcrumb: {
@@ -218,15 +212,13 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        serviceData: function ($http, $stateParams) {
-          return $http({
-            method: 'GET',
-            url: 'http://' + origin + '/api/v1/' + $stateParams.kind + '/' + $stateParams.name
-          }).then(function (response) {
-            var artifact = response.data;
+        serviceData: function ($vamp, $stateParams) {
+          return $vamp.get('/' + $stateParams.kind + '/' + $stateParams.name)
+            .then(function (response) {
+              var artifact = response.data;
 
-            return _.find(artifact.clusters[$stateParams.cluster].services, ['breed.name', $stateParams.service]);
-          });
+              return _.find(artifact.clusters[$stateParams.cluster].services, ['breed.name', $stateParams.service]);
+            });
         }
       },
       ncyBreadcrumb: {

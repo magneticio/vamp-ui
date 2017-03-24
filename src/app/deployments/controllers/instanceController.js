@@ -20,7 +20,7 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
 
   var agent;
   var stopInterval;
-  var mesos = 'http://' + $ctrl.origin + '/proxy/gateways/mesos';
+  var mesos = 'http://' + $ctrl.origin + 'proxy/gateways/mesos';
 
   function init() {
     $vamp.get('/gateways/mesos')
@@ -34,7 +34,7 @@ function InstanceController($scope, $http, $interval, $element, $state, $statePa
             var host = slave.pid.substring(slave.pid.lastIndexOf('@') + 1, slave.pid.lastIndexOf(':'));
             var port = slave.pid.substring(slave.pid.lastIndexOf(':') + 1);
 
-            agent = 'http://' + $ctrl.origin + '/proxy/host/' + host + '/port/' + port;
+            agent = 'http://' + $ctrl.origin + 'proxy/host/' + host + '/port/' + port;
 
             return $http.get(agent + '/files/debug');
           })
