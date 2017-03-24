@@ -13,10 +13,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   var $this = this;
   var stream;
   var transaction = 1;
-
-  // API url for Cross Origin Http requests
-  this.origin = Environment.prototype.origin() || window.location.host;
-  var apiHost = 'http://' + this.origin + '/api/v1';
+  var apiHost;
 
   var responseAcceptTypes = {
     JSON: 'application/json',
@@ -60,10 +57,6 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     return !_.isEmpty(stream);
   };
 
-  this.httpGet = function (path, params) {
-    return $http.get(apiHost + path, {params: params});
-  };
-
   this.get = function (path, params, accept) {
     return request('GET', path, params, accept);
   };
@@ -105,14 +98,25 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   };
 
   this.init = function () {
+    // API url for Cross Origin Http requests
+
     var url;
+    // var ws;
     if (Environment.prototype.origin()) {
-      url = 'ws://' + Environment.prototype.origin() + '/websocket';
+      // url = 'ws://' + Environment.prototype.origin() + '/websocket';
+      this.origin = Environment.prototype.origin() + '/';
     } else {
-      url = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-      url += window.location.host;
-      url += window.location.pathname.endsWith('/') ? window.location.pathname + 'websocket' : window.location.pathname + '/websocket';
+      this.origin = window.location.host;
+      this.origin += window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
+
+      // url = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+      // url += window.location.host;
+      // url += window.location.pathname.endsWith('/') ? window.location.pathname + 'websocket' : window.location.pathname + '/websocket';
     }
+
+    url = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+    url += this.origin + 'websocket';
+    apiHost = window.location.protocol + '//' + this.origin + 'api/v1';
 
     var websocket = function () {
       $log.debug('websocket: ' + url);

@@ -93,7 +93,7 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
           return $ctrl.blueprint;
         },
         availability: function () {
-          return $vamp.httpGet('/info', {on: 'container_driver'})
+          return $vamp.get('/info', {on: 'container_driver'})
             .then(function (response) {
               return getAvailability($ctrl.blueprint, response.data.container_driver);
             }, function () {
