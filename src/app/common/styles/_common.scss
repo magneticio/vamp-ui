@@ -1,3 +1,9 @@
+// PRELOADING IMAGES
+:root:before {
+  content: url('/styles/resources/app/common/images/disconnected-triangle.svg');
+  visibility: hidden;
+  position: absolute;
+}
 
 /* Button styles */
 @import "_buttons";
@@ -225,11 +231,10 @@ iframe {
   z-index: 99999;
 }
 
-// PRELOADING IMAGES
-:root:before {
-  content: url('/styles/resources/app/common/images/disconnected-triangle.svg');
-  visibility: hidden;
-  position: absolute;
+.table-responsive {
+  border: none;
 }
+
+
 
 @import "_header";
