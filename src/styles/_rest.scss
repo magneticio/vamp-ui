@@ -639,6 +639,7 @@ a.editable-click:hover {
 
 .menu-button {
   font-size: $font-size-large;
+  display: inline-block;
   //color: $color-text;
   &:hover {
     //color: $color-text-dark;
