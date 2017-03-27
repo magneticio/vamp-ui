@@ -1,4 +1,4 @@
-/* global Environment,TimeSeriesCharts */
+/* global TimeSeriesCharts */
 angular.module('vamp-ui').controller('GatewayController', GatewayController);
 
 /** @ngInject */
@@ -244,9 +244,9 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $bre
     if (!$ctrl.gateway || !$ctrl.gateway.deployed || !$ctrl.gateway.service || !$ctrl.gateway.service.port.endsWith('/http')) {
       return null;
     }
-    var path = '/proxy/gateways/' + encodeURIComponent($ctrl.gateway.name) + '/';
-    if (Environment.prototype.origin()) {
-      path = 'http://' + Environment.prototype.origin() + path;
+    var path = 'proxy/gateways/' + encodeURIComponent($ctrl.gateway.name) + '/';
+    if ($vamp.origin) {
+      path = 'http://' + $vamp.origin + path;
     }
     if ($event) {
       uiStatesFactory.setProxyPanelViewState(path);
