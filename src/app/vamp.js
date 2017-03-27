@@ -65,6 +65,10 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     return request('POST', path, data, params, accept);
   };
 
+  this.httpPut = function (path, data, params, accept) {
+    return request('PUT', path, data, params, accept);
+  };
+
   this.peek = function (path, data, params, accept) {
     websocketRequest(path, 'PEEK', data, params ? params : {}, accept ? accept : 'JSON');
   };

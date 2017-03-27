@@ -31,52 +31,50 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
     * info and returns an warning message with stats if there are not enough resources available.
     */
   function getAvailability(blueprint, containerDriver) {
-    if (containerDriver.type === 'marathon') {
-      var availableResources = _.reduce(containerDriver.container.mesos.slaves, function (ar, slave) {
-        return {
-          totalMemory: ar.totalMemory + slave.unreserved_resources.mem,
-          totalCPUs: ar.totalCPUs + slave.unreserved_resources.cpus
-        };
-      }, {totalMemory: 0, totalCPUs: 0});
-
-      var blueprintResources = _.reduce(blueprint.clusters, function (br, cluster) {
-        var scaleResources = _.reduce(cluster.services, function (sr, service) {
-          var availability = null;
-          if (service.scale === undefined || service.scale === null) {
-            availability = {totalMemory: sr.totalMemory + 0, totalCPUs: sr.totalMemory + 0};
-          } else {
-            availability = {
-              totalMemory: sr.totalMemory + (transformMemory(service.scale.memory) * service.scale.instances),
-              totalCPUs: sr.totalCPUs + (service.scale.cpu * service.scale.instances)
-            };
-          }
-          return availability;
-        }, {totalMemory: 0, totalCPUs: 0});
-        return {
-          totalMemory: br.totalMemory + scaleResources.totalMemory,
-          totalCPUs: br.totalCPUs + scaleResources.totalCPUs
-        };
-      }, {totalMemory: 0, totalCPUs: 0});
-
-      var afterDeployment = {
-        totalMemory: availableResources.totalMemory - blueprintResources.totalMemory,
-        totalCPUs: availableResources.totalCPUs - blueprintResources.totalCPUs
+    var availableResources = _.reduce(containerDriver.container.mesos.slaves, function (ar, slave) {
+      return {
+        totalMemory: ar.totalMemory + slave.unreserved_resources.mem,
+        totalCPUs: ar.totalCPUs + slave.unreserved_resources.cpus
       };
+    }, {totalMemory: 0, totalCPUs: 0});
 
-      if (afterDeployment.totalCPUs < 0 || afterDeployment.totalMemory < 0) {
-        return {
-          message: "The container driver probably does not have enough resources available " +
-          "to successfully deploy the '" + blueprint.name + "' blueprint.",
-          memory: {
-            available: availableResources.totalMemory,
-            needed: blueprintResources.totalMemory
-          },
-          cpu: {
-            available: availableResources.totalCPUs,
-            needed: blueprintResources.totalCPUs
-          }
-        };
-      }
+    var blueprintResources = _.reduce(blueprint.clusters, function (br, cluster) {
+      var scaleResources = _.reduce(cluster.services, function (sr, service) {
+        var availability = null;
+        if (service.scale === undefined || service.scale === null) {
+          availability = {totalMemory: sr.totalMemory + 0, totalCPUs: sr.totalMemory + 0};
+        } else {
+          availability = {
+            totalMemory: sr.totalMemory + (transformMemory(service.scale.memory) * service.scale.instances),
+            totalCPUs: sr.totalCPUs + (service.scale.cpu * service.scale.instances)
+          };
+        }
+        return availability;
+      }, {totalMemory: 0, totalCPUs: 0});
+      return {
+        totalMemory: br.totalMemory + scaleResources.totalMemory,
+        totalCPUs: br.totalCPUs + scaleResources.totalCPUs
+      };
+    }, {totalMemory: 0, totalCPUs: 0});
+
+    var afterDeployment = {
+      totalMemory: availableResources.totalMemory - blueprintResources.totalMemory,
+      totalCPUs: availableResources.totalCPUs - blueprintResources.totalCPUs
+    };
+
+    if (afterDeployment.totalCPUs < 0 || afterDeployment.totalMemory < 0) {
+      return {
+        message: "The container driver probably does not have enough resources available " +
+        "to successfully deploy the '" + blueprint.name + "' blueprint.",
+        memory: {
+          available: availableResources.totalMemory,
+          needed: blueprintResources.totalMemory
+        },
+        cpu: {
+          available: availableResources.totalCPUs,
+          needed: blueprintResources.totalCPUs
+        }
+      };
     }
   }
 
@@ -95,7 +93,12 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
         availability: function () {
           return $vamp.get('/info', {on: 'container_driver'})
             .then(function (response) {
-              return getAvailability($ctrl.blueprint, response.data.container_driver);
+              if (response.data.container_driver.type === 'marathon') {
+                return $vamp.httpPut('/deployments/' + $ctrl.blueprint.name + '?validate_only=true', angular.toJson($ctrl.blueprint))
+                  .then(function (deploymentData) {
+                    return getAvailability(deploymentData.data[0], response.data.container_driver);
+                  });
+              }
             }, function () {
               return null;
             });
