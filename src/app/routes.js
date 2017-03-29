@@ -20,21 +20,23 @@ function routesConfig($stateProvider, $urlRouterProvider) {
 
   if (!eeRouting) {
     $urlRouterProvider.otherwise('/vamp/deployments');
+
+    $stateProvider
+      .state('vamp', {
+        url: '/vamp',
+        abstract: true,
+        views: {
+          app: {
+            templateUrl: 'app/home/templates/home.html'
+          }
+        },
+        ncyBreadcrumb: {
+          skip: true
+        }
+      });
   }
 
   $stateProvider
-    .state('vamp', {
-      url: '/vamp',
-      abstract: true,
-      views: {
-        app: {
-          templateUrl: 'app/home/templates/home.html'
-        }
-      },
-      ncyBreadcrumb: {
-        skip: true
-      }
-    })
     .state('artifacts', {
       parent: eeRouting && eeRouting.rootName || 'vamp',
       url: '/:kind?page&searchTerm',
