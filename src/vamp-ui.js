@@ -1,3 +1,5 @@
+/* eslint-disable */
+var VAMP = {};
 
 angular.module('vamp-ui', [
   'ui.router',
