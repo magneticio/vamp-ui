@@ -1,4 +1,4 @@
-/* global VAMP */
+/* global Artifacts */
 
 angular.module('vamp-ui')
   .config(function ($breadcrumbProvider) {
@@ -11,34 +11,24 @@ angular.module('vamp-ui')
 
 /** @ngInject */
 function routesConfig($stateProvider, $urlRouterProvider) {
-  var artifacts = VAMP.Artifacts.prototype.all();
-  var eeRouting = VAMP.EnterpriseRoutingConfig;
+  var artifacts = Artifacts.prototype.all();
 
   var emptyController = ['$scope', function ($scope) {
     $scope.ncyBreadcrumbIgnore = true;
   }];
 
-  if (!eeRouting) {
-    $urlRouterProvider.otherwise('/vamp/deployments');
-
-    $stateProvider
-      .state('vamp', {
-        url: '/vamp',
-        abstract: true,
-        views: {
-          app: {
-            templateUrl: 'app/home/templates/home.html'
-          }
-        },
-        ncyBreadcrumb: {
-          skip: true
-        }
-      });
-  }
+  $urlRouterProvider.otherwise('/vamp/deployments');
 
   $stateProvider
+    .state('vamp', {
+      abstract: true,
+      url: '/vamp',
+      ncyBreadcrumb: {
+        skip: true
+      }
+    })
     .state('artifacts', {
-      parent: eeRouting && eeRouting.rootName || 'vamp',
+      parent: 'vamp',
       url: '/:kind?page&searchTerm',
       params: {
         page: {
@@ -56,14 +46,14 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       views: {
-        "main@vamp": {
+        "main@": {
           controllerProvider: function (artifactsMetadata) {
             return artifactsMetadata.mainController;
           },
           templateUrl: 'app/crud/artifacts.html',
           controllerAs: '$ctrl'
         },
-        "right-panel@vamp": {
+        "right-panel@": {
           controllerProvider: function (artifactsMetadata) {
             if (artifactsMetadata.listViewRightPanel) {
               return artifactsMetadata.listViewRightPanel.controller;
@@ -88,11 +78,11 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('artifacts.add', {
       url: '/add',
       views: {
-        "main@vamp": {
+        "main@": {
           controller: 'addController as $ctrl',
           templateUrl: 'app/crud/templates/addArtifact.html'
         },
-        "right-panel@vamp": {
+        "right-panel@": {
           controller: function ($scope) {
             $scope.ncyBreadcrumbIgnore = true;
           },
@@ -110,7 +100,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('artifacts.one', {
       url: '/:name',
       views: {
-        "main@vamp": {
+        "main@": {
           controllerProvider: function (artifactsMetadata) {
             return artifactsMetadata.artifactViewController;
           },
@@ -119,7 +109,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
             return _.find(artifacts, {kind: params.kind}).artifactViewTemplate;
           }
         },
-        "right-panel@vamp": {
+        "right-panel@": {
           controller: function ($scope) {
             $scope.ncyBreadcrumbIgnore = true;
           },
@@ -147,7 +137,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       abstract: true,
       url: '/source',
       views: {
-        "main@vamp": {
+        "main@": {
           controller: 'edit as $ctrl',
           templateUrl: 'app/crud/edit.html'
         }
@@ -162,7 +152,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         "editor": {
           templateUrl: 'app/crud/templates/editor.html'
         },
-        "right-panel@vamp": {
+        "right-panel@": {
           controller: 'revisionsController as $ctrl',
           templateUrl: 'app/crud/templates/revisions.html'
         }
@@ -178,7 +168,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         "editor": {
           templateUrl: 'app/crud/templates/editor.html'
         },
-        "right-panel@vamp": {
+        "right-panel@": {
           controller: function ($scope) {
             $scope.ncyBreadcrumbIgnore = true;
           },
@@ -210,11 +200,11 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('artifacts.one.cluster.service', {
       url: '/:service',
       views: {
-        "main@vamp": {
+        "main@": {
           controller: 'serviceController as $ctrl',
           templateUrl: 'app/deployments/templates/service.html'
         },
-        "right-panel@vamp": {
+        "right-panel@": {
           controller: function ($scope) {
             $scope.ncyBreadcrumbIgnore = true;
           },
@@ -238,11 +228,11 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('artifacts.one.cluster.service.instance', {
       url: '/:instance',
       views: {
-        "main@vamp": {
+        "main@": {
           controller: 'instanceController as $ctrl',
           templateUrl: 'app/deployments/templates/instance.html'
         },
-        "right-panel@vamp": {
+        "right-panel@": {
           controller: function ($scope) {
             $scope.ncyBreadcrumbIgnore = true;
           },
@@ -260,11 +250,11 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('admin.vga', {
       url: '/vga',
       views: {
-        "main@vamp": {
+        "main@": {
           controller: 'vgaController as $ctrl',
           templateUrl: 'app/system/templates/vgaConfiguration.html'
         },
-        "right-panel@vamp": {
+        "right-panel@": {
           controller: function ($scope) {
             $scope.ncyBreadcrumbIgnore = true;
           },
@@ -279,11 +269,11 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('admin.log', {
       url: '/log',
       views: {
-        "main@vamp": {
+        "main@": {
           controller: 'logController as $ctrl',
           templateUrl: 'app/system/templates/log.html'
         },
-        "right-panel@vamp": {
+        "right-panel@": {
           controller: function ($scope) {
             $scope.ncyBreadcrumbIgnore = true;
           },
@@ -298,11 +288,11 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('admin.info', {
       url: '/info',
       views: {
-        "main@vamp": {
+        "main@": {
           controller: 'infoController as $ctrl',
           templateUrl: 'app/system/templates/infoConfiguration.html'
         },
-        "right-panel@vamp": {
+        "right-panel@": {
           controller: function ($scope) {
             $scope.ncyBreadcrumbIgnore = true;
           },
@@ -317,11 +307,11 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('admin.configuration', {
       url: '/configuration',
       views: {
-        "main@vamp": {
+        "main@": {
           controller: 'configurationController as $ctrl',
           templateUrl: 'app/system/templates/backendConfiguration.html'
         },
-        "right-panel@vamp": {
+        "right-panel@": {
           controller: function ($scope) {
             $scope.ncyBreadcrumbIgnore = true;
           },

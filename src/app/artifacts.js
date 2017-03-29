@@ -1,9 +1,7 @@
-/* global VAMP */
+function Artifacts() {
+}
 
-VAMP.Artifacts = function () {
-};
-
-VAMP.Artifacts.prototype.all = function () {
+Artifacts.prototype.all = function () {
   return [
     {
       kind: "deployments",
