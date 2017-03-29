@@ -1,6 +1,6 @@
 angular.module('vamp-ui').controller('addController',
 
-function ($scope, $state, $stateParams, $breadcrumb, $timeout, $element, $vamp, artifact, toastr, alert) {
+function ($scope, $state, $stateParams,   $timeout, $element, $vamp, artifact, toastr, alert) {
   var $ctrl = this;
 
   $ctrl.kind = $stateParams.kind;

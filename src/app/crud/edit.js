@@ -1,6 +1,6 @@
 angular.module('vamp-ui').controller('edit',
 
-function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcrumb, $timeout, uiStatesFactory, revisionsService, $element, $vamp, artifact, snippet, toastr, alert) {
+function ArtifactEditController($scope, $filter, $state, $stateParams,   $timeout, uiStatesFactory, revisionsService, $element, $vamp, artifact, snippet, toastr, alert) {
   var $ctrl = this;
 
   this.kind = $stateParams.kind;

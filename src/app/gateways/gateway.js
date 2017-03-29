@@ -2,7 +2,7 @@
 angular.module('vamp-ui').controller('GatewayController', GatewayController);
 
 /** @ngInject */
-function GatewayController($scope, $filter, $stateParams, $timeout, $state, $breadcrumb, $vamp, uiStatesFactory, slider, alert, toastr, $uibModal) {
+function GatewayController($scope, $filter, $stateParams, $timeout, $state,   $vamp, uiStatesFactory, slider, alert, toastr, $uibModal) {
   var $ctrl = this;
   var path = '/gateways/' + $stateParams.name;
 
