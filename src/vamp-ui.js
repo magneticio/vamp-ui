@@ -10,7 +10,7 @@ angular.module('vamp-ui', [
   'toastr',
   'ngAnimate',
   'rzModule',
-  'ncy-angular-breadcrumb',
+  'angularUtils.directives.uiBreadcrumbs',
   'uiSwitch'
 ]);
 

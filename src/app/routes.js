@@ -1,13 +1,7 @@
 /* global VAMP */
 
 angular.module('vamp-ui')
-  .config(function ($breadcrumbProvider) {
-    $breadcrumbProvider.setOptions({
-      templateUrl: 'app/common/templates/breadcrumb.html',
-      includeAbstract: true
-    });
-  })
-   .config(routesConfig);
+ .config(routesConfig);
 
 /** @ngInject */
 function routesConfig($stateProvider, $urlRouterProvider) {
@@ -15,7 +9,6 @@ function routesConfig($stateProvider, $urlRouterProvider) {
   var eeRouting = VAMP.EnterpriseRoutingConfig;
 
   var emptyController = ['$scope', function ($scope) {
-    $scope.ncyBreadcrumbIgnore = true;
   }];
 
   if (!eeRouting) {
@@ -31,8 +24,10 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           templateUrl: 'app/home/templates/home.html'
         }
       },
-      ncyBreadcrumb: {
-        skip: true
+      data: {
+        breadcrumb: {
+          title: 'Vamp'
+        }
       }
     })
     .state('artifacts', {
@@ -79,8 +74,10 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           }
         }
       },
-      ncyBreadcrumb: {
-        label: '{{ $ctrl.kind }}'
+      data: {
+        breadcrumb: {
+          title: '{{ artifactsMetadata.kind | capitalize }}'
+        }
       }
     })
     .state('artifacts.add', {
@@ -89,20 +86,20 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         "main@vamp": {
           controller: 'addController as $ctrl',
           templateUrl: 'app/crud/templates/addArtifact.html'
-        },
-        "right-panel@vamp": {
-          controller: function ($scope) {
-            $scope.ncyBreadcrumbIgnore = true;
-          },
-          template: ''
+        }
+      },
+      resolve : {
+        singular: function(artifactsMetadata) {
+          return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
         }
       },
       params: {
         importData: undefined
       },
-      ncyBreadcrumb: {
-        label: 'New {{ $ctrl.singular }}',
-        showLast: true
+      data: {
+        breadcrumb: {
+          title: 'New {{ singular }}'
+        }
       }
     })
     .state('artifacts.one', {
@@ -116,12 +113,6 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           templateUrl: function (params) {
             return _.find(artifacts, {kind: params.kind}).artifactViewTemplate;
           }
-        },
-        "right-panel@vamp": {
-          controller: function ($scope) {
-            $scope.ncyBreadcrumbIgnore = true;
-          },
-          template: ''
         }
       },
       resolve: {
@@ -132,13 +123,16 @@ function routesConfig($stateProvider, $urlRouterProvider) {
 
               return artifact;
             });
+        },
+        singular: function(artifactsMetadata) {
+          return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
         }
       },
       data: {
-        allowedKinds: ['deployments', 'gateways']
-      },
-      ncyBreadcrumb: {
-        label: '{{ $ctrl.kind.substring(0, $ctrl.kind.length - 1) }} : {{ $ctrl.name }}'
+        allowedKinds: ['deployments', 'gateways'],
+        breadcrumb: {
+          title: '{{ singular | capitalize }} : {{ artifactData.name }}'
+        }
       }
     })
     .state('artifacts.one.source', {
@@ -149,9 +143,6 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           controller: 'edit as $ctrl',
           templateUrl: 'app/crud/edit.html'
         }
-      },
-      ncyBreadcrumb: {
-        skip: true
       }
     })
     .state('artifacts.one.source.view', {
@@ -165,9 +156,10 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           templateUrl: 'app/crud/templates/revisions.html'
         }
       },
-      ncyBreadcrumb: {
-        label: 'View source',
-        showLast: true
+      data: {
+        breadcrumb: {
+          title: 'View source'
+        }
       }
     })
     .state('artifacts.one.source.edit', {
@@ -175,22 +167,20 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       views: {
         "editor": {
           templateUrl: 'app/crud/templates/editor.html'
-        },
-        "right-panel@vamp": {
-          controller: function ($scope) {
-            $scope.ncyBreadcrumbIgnore = true;
-          },
-          template: ''
         }
       },
-      ncyBreadcrumb: {
-        label: 'Edit source',
-        showLast: true
+      data: {
+        breadcrumb: {
+          title: 'Edit source'
+        }
       }
     })
     .state('artifacts.one.cluster', {
       abstract: true,
-      url: '^/{kind:deployments}/:name/:cluster',
+      url: '^/vamp/{kind:deployments}/:name/:cluster',
+      controller: function ($state) {
+        $state.go('^');
+      },
       resolve: {
         clusterData: function ($vamp, $stateParams) {
           return $vamp.get('/' + $stateParams.kind + '/' + $stateParams.name)
@@ -201,8 +191,10 @@ function routesConfig($stateProvider, $urlRouterProvider) {
             });
         }
       },
-      ncyBreadcrumb: {
-        label: 'Cluster : {{ $ctrl.cluster }}'
+      data: {
+        breadcrumb: {
+          title: 'Cluster : {{ clusterData.name }}'
+        }
       }
     })
     .state('artifacts.one.cluster.service', {
@@ -211,12 +203,6 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         "main@vamp": {
           controller: 'serviceController as $ctrl',
           templateUrl: 'app/deployments/templates/service.html'
-        },
-        "right-panel@vamp": {
-          controller: function ($scope) {
-            $scope.ncyBreadcrumbIgnore = true;
-          },
-          template: ''
         }
       },
       resolve: {
@@ -229,8 +215,10 @@ function routesConfig($stateProvider, $urlRouterProvider) {
             });
         }
       },
-      ncyBreadcrumb: {
-        label: 'Service : {{ $ctrl.serviceName }}'
+      data: {
+        breadcrumb: {
+          title: 'Service : {{ $stateParams.service }}'
+        }
       }
     })
     .state('artifacts.one.cluster.service.instance', {
@@ -239,16 +227,12 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         "main@vamp": {
           controller: 'instanceController as $ctrl',
           templateUrl: 'app/deployments/templates/instance.html'
-        },
-        "right-panel@vamp": {
-          controller: function ($scope) {
-            $scope.ncyBreadcrumbIgnore = true;
-          },
-          template: ''
         }
       },
-      ncyBreadcrumb: {
-        label: '{{ $ctrl.instanceName }}'
+      data: {
+        breadcrumb: {
+          title: 'Instance : {{ $stateParams.instance }}'
+        }
       }
     })
     .state('admin', {
@@ -261,17 +245,12 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         "main@vamp": {
           controller: 'vgaController as $ctrl',
           templateUrl: 'app/system/templates/vgaConfiguration.html'
-        },
-        "right-panel@vamp": {
-          controller: function ($scope) {
-            $scope.ncyBreadcrumbIgnore = true;
-          },
-          template: ''
         }
       },
-      ncyBreadcrumb: {
-        label: 'VGA configuration',
-        showLast: true
+      data: {
+        breadcrumb: {
+          title: 'VGA configuration'
+        }
       }
     })
     .state('admin.log', {
@@ -280,17 +259,12 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         "main@vamp": {
           controller: 'logController as $ctrl',
           templateUrl: 'app/system/templates/log.html'
-        },
-        "right-panel@vamp": {
-          controller: function ($scope) {
-            $scope.ncyBreadcrumbIgnore = true;
-          },
-          template: ''
         }
       },
-      ncyBreadcrumb: {
-        label: 'Log',
-        showLast: true
+      data: {
+        breadcrumb: {
+          title: 'Log'
+        }
       }
     })
     .state('admin.info', {
@@ -299,17 +273,12 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         "main@vamp": {
           controller: 'infoController as $ctrl',
           templateUrl: 'app/system/templates/infoConfiguration.html'
-        },
-        "right-panel@vamp": {
-          controller: function ($scope) {
-            $scope.ncyBreadcrumbIgnore = true;
-          },
-          template: ''
         }
       },
-      ncyBreadcrumb: {
-        label: 'Extended info',
-        showLast: true
+      data: {
+        breadcrumb: {
+          title: 'Extended info'
+        }
       }
     })
     .state('admin.configuration', {
@@ -318,17 +287,12 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         "main@vamp": {
           controller: 'configurationController as $ctrl',
           templateUrl: 'app/system/templates/backendConfiguration.html'
-        },
-        "right-panel@vamp": {
-          controller: function ($scope) {
-            $scope.ncyBreadcrumbIgnore = true;
-          },
-          template: ''
         }
       },
-      ncyBreadcrumb: {
-        label: 'Backend configuration',
-        showLast: true
+      data: {
+        breadcrumb: {
+          title: 'Backend configuration'
+        }
       }
     });
 }

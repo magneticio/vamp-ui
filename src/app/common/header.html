@@ -1,7 +1,9 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12 header-content">
-      <div ncy-breadcrumb></div>
+      <ui-breadcrumbs displayname-property="data.breadcrumb.title"
+                template-url="app/common/templates/breadcrumb.html">
+      </ui-breadcrumbs>
       <div class="info-button pull-right">
           <i class="icon-info" aria-hidden="true"
              ng-click="$ctrl.toggleInfoPanel()"></i>
