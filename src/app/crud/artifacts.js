@@ -1,7 +1,7 @@
 BaseArtifactsController.$inject = ['$ctrl', '$scope', 'artifactsMetadata', '$vamp', 'uiStatesFactory', '$state', '$stateParams',
   '$filter', 'filterFilter', 'toastr', 'alert'];
 
-function BaseArtifactsController($ctrl, $scope, artifactsMetadata,  $vamp, uiStatesFactory,
+function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $vamp, uiStatesFactory,
   $state, $stateParams, $filter, filterFilter, toastr, alert) {
   $ctrl.searchTerm = $stateParams.searchTerm;
   $ctrl.initialized = false;

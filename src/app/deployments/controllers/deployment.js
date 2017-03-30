@@ -2,7 +2,7 @@
 angular.module('vamp-ui').controller('DeploymentController', DeploymentController);
 
 /** @ngInject */
-function DeploymentController(uiStatesFactory, $scope, $stateParams,   $timeout, $state, $vamp, $vampDeployment, $uibModal, snippet, alert, toastr) {
+function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $state, $vamp, $vampDeployment, $uibModal, snippet, alert, toastr) {
   var $ctrl = this;
   var path = '/deployments/' + $stateParams.name;
 

@@ -8,7 +8,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
   var artifacts = VAMP.Artifacts.prototype.all();
   var eeRouting = VAMP.EnterpriseRoutingConfig;
 
-  var emptyController = ['$scope', function ($scope) {
+  var emptyController = ['$scope', function () {
   }];
 
   if (!eeRouting) {
@@ -88,8 +88,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           templateUrl: 'app/crud/templates/addArtifact.html'
         }
       },
-      resolve : {
-        singular: function(artifactsMetadata) {
+      resolve: {
+        singular: function (artifactsMetadata) {
           return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
         }
       },
@@ -124,7 +124,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
               return artifact;
             });
         },
-        singular: function(artifactsMetadata) {
+        singular: function (artifactsMetadata) {
           return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
         }
       },
@@ -165,7 +165,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('artifacts.one.source.edit', {
       url: '/edit',
       views: {
-        "editor": {
+        editor: {
           templateUrl: 'app/crud/templates/editor.html'
         }
       },
