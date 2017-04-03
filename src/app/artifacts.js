@@ -1,5 +1,4 @@
 /* global VAMP */
-
 VAMP.Artifacts = function () {
 };
 

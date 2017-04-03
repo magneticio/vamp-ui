@@ -237,12 +237,17 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     })
     .state('admin', {
       url: '/admin',
-      abstract: true
+      abstract: true,
+      views: {
+        app: {
+          templateUrl: 'app/home/templates/home.html'
+        }
+      }
     })
     .state('admin.vga', {
       url: '/vga',
       views: {
-        "main@vamp": {
+        "main@admin": {
           controller: 'vgaController as $ctrl',
           templateUrl: 'app/system/templates/vgaConfiguration.html'
         }
@@ -256,7 +261,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('admin.log', {
       url: '/log',
       views: {
-        "main@vamp": {
+        "main@admin": {
           controller: 'logController as $ctrl',
           templateUrl: 'app/system/templates/log.html'
         }
@@ -270,7 +275,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('admin.info', {
       url: '/info',
       views: {
-        "main@vamp": {
+        "main@admin": {
           controller: 'infoController as $ctrl',
           templateUrl: 'app/system/templates/infoConfiguration.html'
         }
@@ -284,7 +289,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('admin.configuration', {
       url: '/configuration',
       views: {
-        "main@vamp": {
+        "main@admin": {
           controller: 'configurationController as $ctrl',
           templateUrl: 'app/system/templates/backendConfiguration.html'
         }
