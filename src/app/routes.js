@@ -32,7 +32,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     })
     .state('artifacts', {
       parent: eeRouting && eeRouting.rootName || 'vamp',
-      url: '/:kind?page&searchTerm',
+      url: '/{kind:(?:' + _.map(artifacts, function(a) {return a.kind;}).join('|') + ')}?page&searchTerm',
       params: {
         page: {
           value: '1',
@@ -236,18 +236,14 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       }
     })
     .state('admin', {
+      parent: eeRouting && eeRouting.rootName || 'vamp',
       url: '/admin',
-      abstract: true,
-      views: {
-        app: {
-          templateUrl: 'app/home/templates/home.html'
-        }
-      }
+      abstract: true
     })
     .state('admin.vga', {
       url: '/vga',
       views: {
-        "main@admin": {
+        "main@vamp": {
           controller: 'vgaController as $ctrl',
           templateUrl: 'app/system/templates/vgaConfiguration.html'
         }
@@ -261,7 +257,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('admin.log', {
       url: '/log',
       views: {
-        "main@admin": {
+        "main@vamp": {
           controller: 'logController as $ctrl',
           templateUrl: 'app/system/templates/log.html'
         }
@@ -275,7 +271,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('admin.info', {
       url: '/info',
       views: {
-        "main@admin": {
+        "main@vamp": {
           controller: 'infoController as $ctrl',
           templateUrl: 'app/system/templates/infoConfiguration.html'
         }
@@ -289,7 +285,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('admin.configuration', {
       url: '/configuration',
       views: {
-        "main@admin": {
+        "main@vamp": {
           controller: 'configurationController as $ctrl',
           templateUrl: 'app/system/templates/backendConfiguration.html'
         }
