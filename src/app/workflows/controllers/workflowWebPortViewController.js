@@ -5,11 +5,11 @@ function workflowWebPortViewController($scope, uiStatesFactory, workflowWebPortS
   $ctrl.webport = workflowWebPortService.webport;
   $ctrl.viewStates = uiStatesFactory.viewStates;
   $ctrl.close = function () {
-    uiStatesFactory.setRightPanelViewState(false);
+    uiStatesFactory.setRightPanelViewState(uiStatesFactory.STATE_ENUM.HIDDEN);
   };
 
   $scope.$on('$destroy', function () {
-    uiStatesFactory.setRightPanelViewState(false);
+    uiStatesFactory.setRightPanelViewState(uiStatesFactory.STATE_ENUM.HIDDEN);
   });
 }
 

@@ -22,7 +22,7 @@ function WorkflowsController($scope, artifactsMetadata, $controller, uiStatesFac
     if ($event) {
       $event.stopPropagation();
       workflowWebPortService.selectPort(path);
-      uiStatesFactory.setRightPanelViewState(true);
+      uiStatesFactory.setRightPanelViewState(uiStatesFactory.STATE_ENUM.EXPANDED);
     }
     return path;
   };

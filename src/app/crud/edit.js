@@ -35,7 +35,7 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
   }
 
   $scope.$on('$destroy', function () {
-    uiStatesFactory.setRightPanelViewState(false);
+    uiStatesFactory.setRightPanelViewState(uiStatesFactory.STATE_ENUM.HIDDEN);
   });
 
   function transformErrorMessage(message) {
@@ -53,7 +53,7 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
     $ctrl.inEdit = true;
 
     $state.go('^.edit').then(function () {
-      uiStatesFactory.setRightPanelViewState(false);
+      uiStatesFactory.setRightPanelViewState(uiStatesFactory.STATE_ENUM.HIDDEN);
       $timeout(function () {
         $($element).find('#editor textarea').focus();
       });
@@ -69,7 +69,7 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
         $ctrl.peek();
       });
 
-      uiStatesFactory.setRightPanelViewState(true);
+      uiStatesFactory.setRightPanelViewState(uiStatesFactory.STATE_ENUM.EXPANDED);
     });
   };
 

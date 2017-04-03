@@ -1,4 +1,10 @@
-<div class="body" id="wrapper" ng-class="{'expand-left' : $layout.uiStates.left, 'expand-right' : $layout.uiStates.right, 'footer-expanded' : $layout.uiStates.footer}" ng-controller="layoutController as $layout">
+<div class="body" id="wrapper" ng-controller="layoutController as $layout"
+    ng-class="{
+        'expand-left' : $layout.uiStates.left === $layout.stateEnum.EXPANDED,
+        'collapse-left' : $layout.uiStates.left === $layout.stateEnum.COLLAPSED,
+        'expand-right' : $layout.uiStates.right === $layout.stateEnum.EXPANDED,
+        'footer-expanded' : $layout.uiStates.footer
+      }">
   <div class="nav" id="left-panel-wrapper" ui-view="left-panel">
     <menu>
     </menu>

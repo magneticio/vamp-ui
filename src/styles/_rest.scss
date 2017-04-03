@@ -50,9 +50,9 @@ body {
 }
 
 #left-panel-wrapper {
-   flex: 0 0 7rem;
-   -moz-flex: 0 0 7rem;
-   width: 7rem;
+   width:0;
+   flex: 0 0 0rem;
+   -moz-flex: 0 0 0rem;
    overflow-x: hidden;
    overflow-y: auto;
    background-color: $pitch;
@@ -61,6 +61,16 @@ body {
    -moz-transition: flex-basis 0.5s ease;
    -o-transition: flex-basis 0.5s ease;
    transition: flex-basis 0.5s ease;
+}
+
+#wrapper.collapse-left #left-panel-wrapper {
+  flex: 0 0 7rem;
+  -moz-flex: 0 0 7rem;
+  width: 7rem;
+   -webkit-transition: all 0.5s ease;
+   -moz-transition: all 0.5s ease;
+   -o-transition: all 0.5s ease;
+   transition: all 0.5s ease;
 }
 
 #wrapper.expand-left #left-panel-wrapper {
@@ -79,12 +89,16 @@ body {
   display: flex;
   flex-direction: column;
 
-  max-width: calc(100% - 7rem);
+  max-width: calc(100% - 0rem);
 
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
+}
+
+#wrapper.collapse-left #site-wrapper {
+  max-width: calc(100% - 7rem);
 }
 
 #wrapper.expand-left #site-wrapper {
