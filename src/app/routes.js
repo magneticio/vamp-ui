@@ -8,6 +8,10 @@ function routesConfig($stateProvider, $urlRouterProvider) {
   var artifacts = VAMP.Artifacts.prototype.all();
   var eeRouting = VAMP.EnterpriseRoutingConfig;
 
+  var artifactKinds = _.map(artifacts, function (a) {
+    return a.kind;
+  });
+
   var emptyController = ['$scope', function () {
   }];
 
@@ -32,7 +36,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     })
     .state('artifacts', {
       parent: eeRouting && eeRouting.rootName || 'vamp',
-      url: '/{kind:(?:' + _.map(artifacts, function(a) {return a.kind;}).join('|') + ')}?page&searchTerm',
+      url: '/{kind:(?:' + artifactKinds.join('|') + ')}?page&searchTerm',
       params: {
         page: {
           value: '1',
