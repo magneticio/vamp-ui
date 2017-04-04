@@ -32,6 +32,10 @@ table.table.v2 {
         overflow: hidden;
         text-overflow: ellipsis;
 
+        &:last-child {
+          padding-right: 2.5rem;
+        }
+
         &.col-1 {
           width: 8.33333333%;
         }
