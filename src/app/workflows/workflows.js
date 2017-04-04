@@ -1,9 +1,8 @@
-/* global Environment */
 angular.module('vamp-ui')
   .controller('WorkflowsController', WorkflowsController);
 
 /** @ngInject */
-function WorkflowsController($scope, artifactsMetadata, $controller, uiStatesFactory, workflowWebPortService) {
+function WorkflowsController($scope, $vamp, artifactsMetadata, $controller, uiStatesFactory, workflowWebPortService) {
   var $ctrl = this;
 
   $controller('BaseArtifactsController', {$ctrl: $ctrl, $scope: $scope, artifactsMetadata: artifactsMetadata});
@@ -15,9 +14,9 @@ function WorkflowsController($scope, artifactsMetadata, $controller, uiStatesFac
   };
 
   $scope.proxy = function (workflow, instance, port, $event) {
-    var path = '/proxy/workflows/' + workflow.name + '/instances/' + instance.name + '/ports/' + port + '/';
-    if (Environment.prototype.origin()) {
-      path = 'http://' + Environment.prototype.origin() + path;
+    var path = 'proxy/workflows/' + workflow.name + '/instances/' + instance.name + '/ports/' + port + '/';
+    if ($vamp.origin) {
+      path = 'http://' + $vamp.origin + path;
     }
     if ($event) {
       $event.stopPropagation();
