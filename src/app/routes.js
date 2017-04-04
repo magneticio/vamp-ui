@@ -78,6 +78,12 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           }
         }
       },
+      onEnter: function (uiStatesFactory) {
+        uiStatesFactory.setLeftPanelViewState(uiStatesFactory.STATE_ENUM.EXPANDED);
+      },
+      onExit: function (uiStatesFactory) {
+        uiStatesFactory.setLeftPanelViewState(uiStatesFactory.STATE_ENUM.HIDDEN);
+      },
       data: {
         breadcrumb: {
           title: '{{ artifactsMetadata.kind | capitalize }}'
