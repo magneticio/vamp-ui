@@ -41,7 +41,7 @@ Help.prototype.entries = function () {
       ]
     },
     deployments: {
-      description: "Deployments are running blueprints. You can track the health of deployed clusters and their services here and adjust their scale.",
+      description: "Deployments are running blueprints. You can track the health of deployed clusters and their services here, adjust their scale and access specific service instances.",
       links: [
         {
           title: 'Using deployments',
@@ -79,7 +79,7 @@ Help.prototype.entries = function () {
       ]
     },
     workflows: {
-      description: "Workflows are apps (services) deployed on cluster to measure activity and dynamically change the runtime configuration. You can use this page to create your own workflows. Note that the Health and Metrics workflows are required by the Vamp UI.",
+      description: "Workflows are apps (services) deployed on cluster to measure activity and dynamically change the runtime configuration. Click on a workflow port to view executions and access the execution log. You can suspend or restart a workflow from its action menu. Note that the Health and Metrics workflows are required by the Vamp UI.",
       links: [
         {
           title: 'Using workflows',
@@ -92,7 +92,7 @@ Help.prototype.entries = function () {
       ]
     },
     blueprints: {
-      description: "Blueprints are static artifacts. They describe how breeds work in runtime and what properties they should have. You can create, edit and deploy blueprints from here.",
+      description: "Blueprints are static artifacts. They describe how breeds work in runtime and what properties they should have. Blueprints stored here can be deployed individually, or merged and deleted from current deployments.",
       links: [
         {
           title: 'Using blueprints',
@@ -113,7 +113,7 @@ Help.prototype.entries = function () {
       ]
     },
     breeds: {
-      description: "Breeds are static artifacts that describe single services and their dependencies. Breeds stored here can be referenced in blueprints as part of a deployment or used as a workflow.",
+      description: "Breeds are static artifacts. They describe single services and their dependencies. Breeds stored here can be referenced in blueprints or workflows.",
       links: [
         {
           title: 'Using breeds',
@@ -130,7 +130,7 @@ Help.prototype.entries = function () {
       ]
     },
     scales: {
-      description: "Scales are static artifacts that define the size of a deployed service. Scales stored here can be referenced in blueprints as part of a deployment or applied to a workflow.",
+      description: "Scales are static artifacts. They define the size of a deployed service. Scales stored here can be referenced in blueprints or workflows. ",
       links: [
         {
           title: 'Using scales',
@@ -147,7 +147,7 @@ Help.prototype.entries = function () {
       ]
     },
     conditions: {
-      description: "Conditions are static artifacts that define filters for incoming traffic. They can be stored here, then referenced and applied to gateways to target specific traffic for routing between services.",
+      description: "Conditions are static artifacts. They define filters to target specific incoming traffic for routing between services. Conditions stored here can be referenced in gateways.",
       links: [
         {
           title: 'Using conditions',
