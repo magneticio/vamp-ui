@@ -1,4 +1,4 @@
-/* global Environment,TimeSeriesCharts */
+/* global TimeSeriesCharts */
 angular.module('vamp-ui').controller('DeploymentController', DeploymentController);
 
 /** @ngInject */
@@ -252,8 +252,8 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
 
   $ctrl.proxy = function (cluster, service, instance, port, $event) {
     var path = '/proxy/deployments/' + $ctrl.deployment.name + '/clusters/' + cluster.name + '/services/' + service.breed.name + '/instances/' + instance.name + '/ports/' + port + '/';
-    if (Environment.prototype.origin()) {
-      path = 'http://' + Environment.prototype.origin() + path;
+    if ($vamp.origin) {
+      path = 'http://' + $vamp.origin + path;
     }
     if ($event) {
       uiStatesFactory.setProxyPanelViewState(path);
