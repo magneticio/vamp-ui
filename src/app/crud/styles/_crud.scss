@@ -481,6 +481,7 @@ table.vamp-lv {
     color: $off-white;
     font-weight: $font-weight-light;
     line-height: 3.5rem;
+    height: 6.5rem;
 
     .panel-title {
       display: inline-flex;
@@ -533,6 +534,8 @@ table.vamp-lv {
     .editor {
       transition: flex 300ms ease;
       flex: 0 0 0rem;
+      width: 0;
+      position: relative;
 
       &.visible {
         flex: 1 1 0;
@@ -541,12 +544,10 @@ table.vamp-lv {
           border-left: 1px solid $background-lighter;
         }
       }
-    }
 
-    .close-revision {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
+      .editor-buttons {
+        padding: 1.5rem;
+      }
     }
   }
 }

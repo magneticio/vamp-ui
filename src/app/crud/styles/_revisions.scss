@@ -26,6 +26,7 @@
     font-size: $font-size-small;
     border-bottom: 1px solid $background-lighter;
     position: relative;
+    user-select: none;
 
     &:hover {
       cursor: pointer;

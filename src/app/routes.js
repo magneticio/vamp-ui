@@ -152,18 +152,18 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         "main@vamp": {
           controller: 'edit as $ctrl',
           templateUrl: 'app/crud/edit.html'
+        },
+        "right-panel@vamp": {
+          controller: 'revisionsController as $ctrl',
+          templateUrl: 'app/crud/templates/revisions.html'
         }
       }
     })
     .state('artifacts.one.source.view', {
       url: '/view',
       views: {
-        "editor": {
+        editor: {
           templateUrl: 'app/crud/templates/editor.html'
-        },
-        "right-panel@vamp": {
-          controller: 'revisionsController as $ctrl',
-          templateUrl: 'app/crud/templates/revisions.html'
         }
       },
       data: {
@@ -248,7 +248,13 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('admin', {
       parent: eeRouting && eeRouting.rootName || 'vamp',
       url: '/admin',
-      abstract: true
+      abstract: true,
+      onEnter: function (uiStatesFactory) {
+        uiStatesFactory.setLeftPanelViewState(uiStatesFactory.STATE_ENUM.EXPANDED);
+      },
+      onExit: function (uiStatesFactory) {
+        uiStatesFactory.setLeftPanelViewState(uiStatesFactory.STATE_ENUM.HIDDEN);
+      }
     })
     .state('admin.vga', {
       url: '/vga',

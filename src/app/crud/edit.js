@@ -53,7 +53,7 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
     $ctrl.inEdit = true;
 
     $state.go('^.edit').then(function () {
-      uiStatesFactory.setRightPanelViewState(uiStatesFactory.STATE_ENUM.HIDDEN);
+      uiStatesFactory.setRightPanelViewState(uiStatesFactory.STATE_ENUM.EXPANDED);
       $timeout(function () {
         $($element).find('#editor textarea').focus();
       });
