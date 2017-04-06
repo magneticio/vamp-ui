@@ -58,6 +58,15 @@ pack: default
     		$(BUILD_SERVER) \
       			push vamp-ui $(VERSION)
 
+pack-local:
+	docker volume create packer
+	docker run \
+		--rm \
+    		--volume $(CURDIR)/dist:/usr/local/src \
+    		--volume packer:/usr/local/stash \
+    		$(BUILD_SERVER) \
+      			push vamp-ui $(VERSION)
+
 .PHONY: clean
 clean:
 	rm -rf $(CURDIR)/src/app/environment.js
