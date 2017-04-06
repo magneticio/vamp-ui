@@ -191,7 +191,7 @@ input[type="text"]:-ms-input-placeholder {
 @import "_breadcrumbs";
 
 /* Editor */
-#editor {
+.editor {
   &.editor-error {
     border-top : 1px solid $vamp-red;
   }

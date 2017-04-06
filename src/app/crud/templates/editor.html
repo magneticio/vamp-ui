@@ -1,5 +1,5 @@
 <div class="panel-body">
-  <div class="editor visible">
+  <div class="editor visible" ng-class="{'editor-error' : ($ctrl.isModified() && !$ctrl.valid)}">
     <div class="editor-buttons clearfix">
       <button ng-if="!$ctrl.inEdit" class="btn btn-small btn-primary pull-right" type="submit" ng-click="$ctrl.startEdit()">
           Edit
@@ -11,7 +11,7 @@
           Cancel
       </button>
     </div>
-    <div id="editor" ng-class="{'editor-error' : ($ctrl.isModified() && !$ctrl.valid)}"
+    <div id="editor"
       ui-ace="$ctrl.editor"
       ng-model="$ctrl.source"
       ng-change="$ctrl.validate($event)"
