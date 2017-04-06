@@ -77,6 +77,17 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
     revisionsService.clearSelected();
   };
 
+  $ctrl.copyRevisionContent = function () {
+    alertIfDirty(function () {
+      if (!$ctrl.inEdit) {
+        $ctrl.startEdit();
+      }
+
+      $ctrl.source = $ctrl.activeRevisiton.source;
+      $ctrl.closeRevision();
+    });
+  };
+
   this.peek = function () {
     $vamp.peek(path, '', {}, 'YAML');
     $vamp.peek('/events', JSON.stringify({
@@ -125,7 +136,7 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
   $scope.$on('$stateChangeStart', function (event, toState, toParams) {
     if (!ignoreChange && $ctrl.isModified()) {
       event.preventDefault();
-      alert.show('Warning', '\'' + $ctrl.name + '\' has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel', function () {
+      alertIfDirty(function () {
         $ctrl.base = $ctrl.source = null;
         $state.go(toState, toParams);
       });
@@ -151,12 +162,16 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
   };
 
   this.cancel = function () {
-    if ($ctrl.isModified()) {
-      alert.show('Warning', '\'' + $ctrl.name + '\' has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel', $ctrl.stopEdit);
-    } else {
-      $ctrl.stopEdit();
-    }
+    alertIfDirty($ctrl.stopEdit);
   };
+
+  function alertIfDirty(callback) {
+    if ($ctrl.isModified()) {
+      alert.show('Warning', '\'' + $ctrl.name + '\' has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel', callback);
+    } else {
+      callback();
+    }
+  }
 
   this.save = function () {
     validation = false;
