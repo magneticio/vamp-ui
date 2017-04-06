@@ -17,9 +17,11 @@ ol.breadcrumb {
       content: '>'
     }
 
-    & > a,
-    & > span {
+    & > a {
       color: $new-gray;
+    }
+    & > span {
+      color: $misty;
     }
   }
 }
