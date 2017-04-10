@@ -78,6 +78,14 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
     }
   }
 
+  function cannotDeployException(value) {
+    this.value = value;
+    this.message = ' cannot be deployed.';
+    this.toString = function () {
+      return this.value + this.message;
+    };
+  }
+
   $ctrl.deploy = function ($event) {
     $event.stopPropagation();
 
@@ -94,10 +102,18 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
           return $vamp.get('/info', {on: 'container_driver'})
             .then(function (response) {
               if (response.data.container_driver.type === 'marathon') {
-                return $vamp.httpPut('/deployments/' + $ctrl.blueprint.name + '?validate_only=true', angular.toJson($ctrl.blueprint))
-                  .then(function (deploymentData) {
-                    return getAvailability(deploymentData.data[0], response.data.container_driver);
-                  });
+                return $vamp.await(function () {
+                  $vamp.put('/deployments/' + $ctrl.blueprint.name + '?validate_only=true', angular.toJson($ctrl.blueprint));
+                }).then(function (deploymentData) {
+                  return getAvailability(deploymentData.data[0], response.data.container_driver);
+                }).catch(function (response) {
+                  if (response) {
+                    toastr.error(response.data.message, 'Cannot deploy \'' + $ctrl.blueprint.name + '\'.');
+                  } else {
+                    toastr.error('Server timeout.', 'Deployment of \'' + $ctrl.blueprint.name + '\' failed.');
+                  }
+                  throw cannotDeployException($ctrl.blueprint.name);
+                });
               }
             }, function () {
               return null;
