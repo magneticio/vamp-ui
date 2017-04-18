@@ -127,7 +127,11 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       views: {
         "main@vamp": {
           controllerProvider: function (artifactsMetadata) {
-            return artifactsMetadata.oneMainView.controller;
+            if (artifactsMetadata.oneMainView) {
+              return artifactsMetadata.oneMainView.controller;
+            }
+
+            return emptyController;
           },
           controllerAs: '$ctrl',
           templateProvider: function ($templateCache, artifactsMetadata) {
