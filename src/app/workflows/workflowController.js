@@ -2,17 +2,17 @@ angular.module('vamp-ui')
   .controller('WorkflowController', WorkflowController);
 
 /** @ngInject */
-function WorkflowController($scope, $vamp, toastr) {
+function WorkflowController($scope, $vamp, toastr, workflowWebPortService, uiStatesFactory) {
   var $ctrl = this;
 
-  var path = '/workflows/' + $scope.artifact.name;
-  $ctrl.workflow = $scope.artifact;
+  var path = '/workflows/' + $scope.item.name;
+  $ctrl.workflow = $scope.item;
 
   $scope.updating = function () {
-    return $scope.artifact.status === 'starting' ||
-      $scope.artifact.status === 'stopping' ||
-      $scope.artifact.status === 'restarting' ||
-      $scope.artifact.status === 'suspending';
+    return $scope.item.status === 'starting' ||
+      $scope.item.status === 'stopping' ||
+      $scope.item.status === 'restarting' ||
+      $scope.item.status === 'suspending';
   };
 
   $ctrl.start = function ($event) {
@@ -41,5 +41,18 @@ function WorkflowController($scope, $vamp, toastr) {
         toastr.error('Server timeout.', operation + ' failed.');
       }
     });
+  };
+
+  $ctrl.proxy = function (instance, port, $event) {
+    var path = 'proxy/workflows/' + $ctrl.workflow.name + '/instances/' + instance.name + '/ports/' + port + '/';
+    if ($vamp.origin) {
+      path = 'http://' + $vamp.origin + path;
+    }
+    if ($event) {
+      $event.stopPropagation();
+      workflowWebPortService.selectPort(path);
+      uiStatesFactory.setRightPanelViewState(uiStatesFactory.STATE_ENUM.EXPANDED);
+    }
+    return path;
   };
 }

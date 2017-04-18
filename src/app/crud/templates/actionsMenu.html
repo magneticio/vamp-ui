@@ -1,6 +1,6 @@
 <div>
   <ul class="menu-list">
-    <li ng-repeat="action in $ctrl.artifactsMetadata.actions"
+    <li ng-repeat="action in $explorer.itemTypeConfig.actions"
       ng-if="action.active ? (action.active | interpolate:this) : true"
       ng-click="close(); $artifactCtrl[action.action]($event)">
       <a class="btn-link">

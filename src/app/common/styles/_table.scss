@@ -3,7 +3,6 @@ table.table.v2 {
   font-size: $font-size-normal;
 
   thead {
-
     tr {
       border: 1px solid $night-sky;
 
@@ -13,15 +12,16 @@ table.table.v2 {
         line-height: 5rem;
         padding: 0 0 0 2.5rem;
         background-color: $panel;
+        color: $medium-blue;
         font-weight: $font-weight-light;
         font-size: $font-size-tiny;
+        text-transform: uppercase;
       }
     }
   }
 
   tbody {
     tr {
-
       td {
         background-color: $night-sky;
         height: 6rem;
@@ -80,5 +80,10 @@ table.table.v2 {
         }
       }
     }
+  }
+
+  .center-content {
+    text-align: center;
+    vertical-align: middle;
   }
 }

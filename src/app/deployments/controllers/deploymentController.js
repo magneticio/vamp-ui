@@ -5,7 +5,7 @@ angular.module('vamp-ui')
 function DeploymentCtrl($scope, $uibModal, $uibTooltip, $vamp, $state, toastr) {
   var $ctrl = this;
   var actionsMenu = null;
-  $ctrl.deployment = $scope.artifact;
+  $ctrl.deployment = $scope.item;
 
   $ctrl.openActionsMenu = function ($event) {
     actionsMenu = $uibTooltip($event.targetElement,

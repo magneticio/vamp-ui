@@ -1,0 +1,12 @@
+<td class="clickable col-5" ng-click="$explorer.view(item)">
+  {{ item.name }}
+</td>
+<td class="col-1">
+  {{ item.cpu }}
+</td>
+<td class="col-1">
+  {{(item.memory | asNumber:0) + ' MB'}}
+</td>
+<td class="col-3">
+  {{ item.instances }}
+</td>

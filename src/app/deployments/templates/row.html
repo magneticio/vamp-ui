@@ -1,0 +1,21 @@
+<td class="clickable col-3" ng-click="$explorer.view(item)">
+  {{ item.name }}
+</td>
+<td class="col-2">
+  <span>cpu : {{ item.scale.cpu }}</span>
+  <span>memory : {{ item.scale.memory }} MB</span>
+  <span>instances : {{ item.scale.instances }}</span>
+</td>
+<td class="col-4">
+  <tag value="item.status" has-progress="true"
+    success="item.status=== 'deployed'"
+    in-progress="item.status === 'updating' ||
+      item.status=== 'deploying' || item.status=== 'undeploying'"
+    error="item.status === 'failed'"
+  ></tag>
+</td>
+<td class="col-2">
+  <span class="pull-right">
+    <button class="btn btn-primary" ng-click="$artifactCtrl.exportDeployment($event)">Export as a blueprint</button>
+  </span>
+</td>

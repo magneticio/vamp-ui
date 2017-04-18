@@ -55,23 +55,33 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       views: {
         "main@vamp": {
           controllerProvider: function (artifactsMetadata) {
+            if (artifactsMetadata.artifactsMainView) {
+              return artifactsMetadata.artifactsMainView.controller;
+            }
+
             return artifactsMetadata.mainController;
           },
-          templateUrl: 'app/crud/artifacts.html',
+          templateProvider: function ($templateCache, artifactsMetadata) {
+            if (artifactsMetadata.artifactsMainView) {
+              return $templateCache.get(artifactsMetadata.artifactsMainView.templateUrl);
+            }
+
+            return $templateCache.get('app/crud/artifacts.html');
+          },
           controllerAs: '$ctrl'
         },
         "right-panel@vamp": {
           controllerProvider: function (artifactsMetadata) {
-            if (artifactsMetadata.listViewRightPanel) {
-              return artifactsMetadata.listViewRightPanel.controller;
+            if (artifactsMetadata.artifactsRightPanel) {
+              return artifactsMetadata.artifactsRightPanel.controller;
             }
 
             return emptyController;
           },
           controllerAs: '$ctrl',
           templateProvider: function ($templateCache, artifactsMetadata) {
-            if (artifactsMetadata.listViewRightPanel) {
-              return $templateCache.get(artifactsMetadata.listViewRightPanel.templateUrl);
+            if (artifactsMetadata.artifactsRightPanel) {
+              return $templateCache.get(artifactsMetadata.artifactsRightPanel.templateUrl);
             }
 
             return '';
@@ -117,11 +127,15 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       views: {
         "main@vamp": {
           controllerProvider: function (artifactsMetadata) {
-            return artifactsMetadata.artifactViewController;
+            return artifactsMetadata.oneMainView.controller;
           },
           controllerAs: '$ctrl',
-          templateUrl: function (params) {
-            return _.find(artifacts, {kind: params.kind}).artifactViewTemplate;
+          templateProvider: function ($templateCache, artifactsMetadata) {
+            if (artifactsMetadata.oneMainView) {
+              return $templateCache.get(artifactsMetadata.oneMainView.templateUrl);
+            }
+
+            return '';
           }
         }
       },

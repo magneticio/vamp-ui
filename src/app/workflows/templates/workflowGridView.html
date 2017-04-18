@@ -1,31 +1,31 @@
 <div class="artifact-properties">
     <div class="artifact-labels">
       <tag
-        value="artifact.status"
+        value="item.status"
         has-progress="true"
-        success="artifact.status === 'running'"
+        success="item.status === 'running'"
         in-progress="updating()"
-        paused="artifact.status === 'suspended'">
+        paused="item.status === 'suspended'">
       </tag>
       <p></p>
-      <tag ng-if="artifact.breed.name" value="'breed: ' + artifact.breed.name"></tag>
-      <tag ng-if="artifact.breed.reference" value="'breed: ' + artifact.breed.reference"></tag>
+      <tag ng-if="item.breed.name" value="'breed: ' + item.breed.name"></tag>
+      <tag ng-if="item.breed.reference" value="'breed: ' + item.breed.reference"></tag>
 
       <p></p>
 
-      <tag ng-if="artifact.schedule === 'daemon'" value="'schedule : daemon'"></tag>
-      <tag ng-if="!(artifact.schedule.event | isEmpty)" value="'schedule : event'"></tag>
-      <tag ng-if="!(artifact.schedule.time | isEmpty)" value="'schedule : time'"></tag>
+      <tag ng-if="item.schedule === 'daemon'" value="'schedule : daemon'"></tag>
+      <tag ng-if="!(item.schedule.event | isEmpty)" value="'schedule : event'"></tag>
+      <tag ng-if="!(item.schedule.time | isEmpty)" value="'schedule : time'"></tag>
     </div>
 
-    <div class="list" ng-if="artifact.instances && artifact.instances.length > 0">
+    <div class="list" ng-if="item.instances && item.instances.length > 0">
         <p class="v-label">Ports :</p>
         <ul>
-            <li ng-repeat="instance in artifact.instances">
+            <li ng-repeat="instance in item.instances">
               <div ng-repeat="(portName, port) in instance.ports | orderByKeys"
-                        ng-if="proxy(artifact, instance, portName)">
+                        ng-if="$artifactCtrl.proxy(instance, portName)">
                   <span class="clickable"
-                     ng-click="proxy(artifact, instance, portName, $event)">
+                     ng-click="$artifactCtrl.proxy(instance, portName, $event)">
                       {{instance.name | limitTo: 20 }} : {{port}}
                   </span>
               </div>
