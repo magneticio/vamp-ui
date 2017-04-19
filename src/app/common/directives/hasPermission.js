@@ -12,9 +12,6 @@ angular.module('vamp-ui').directive('hasPermission', ['$injector', '$interpolate
       var authenticationService = $injector.get('authenticationService');
 
       allowedRoles = $interpolate(allowedRoles)(scope).trim().split(',');
-      if (allowedRoles.length === 1) {
-        allowedRoles = [allowedRoles];
-      }
 
       if (authenticationService.isInAnyRole(allowedRoles)) {
         return;
