@@ -19,7 +19,6 @@
     "angularjs-slider": "5.5.1",
     "animate.css": "3.5.2",
     "simple-line-icons": "^2.4.1",
-    "angular-utils-ui-breadcrumbs": "0.2.2",
     "angular-ui-switch": "0.1.1"
   },
   "devDependencies": {
