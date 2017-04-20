@@ -88,12 +88,6 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           }
         }
       },
-      onEnter: function (uiStatesFactory) {
-        uiStatesFactory.setLeftPanelViewState(uiStatesFactory.STATE_ENUM.EXPANDED);
-      },
-      onExit: function (uiStatesFactory) {
-        uiStatesFactory.setLeftPanelViewState(uiStatesFactory.STATE_ENUM.HIDDEN);
-      },
       data: {
         breadcrumb: {
           title: '{{ artifactsMetadata.kind | capitalize }}'
@@ -266,13 +260,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     .state('admin', {
       parent: eeRouting && eeRouting.rootName || 'vamp',
       url: '/admin',
-      abstract: true,
-      onEnter: function (uiStatesFactory) {
-        uiStatesFactory.setLeftPanelViewState(uiStatesFactory.STATE_ENUM.EXPANDED);
-      },
-      onExit: function (uiStatesFactory) {
-        uiStatesFactory.setLeftPanelViewState(uiStatesFactory.STATE_ENUM.HIDDEN);
-      }
+      abstract: true
     })
     .state('admin.vga', {
       url: '/vga',
