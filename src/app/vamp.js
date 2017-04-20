@@ -7,13 +7,18 @@ angular.module('vamp-ui')
   }])
   .run(['$vamp', function ($vamp) {
     $vamp.init();
+    if (Environment.prototype.connect()) {
+      $vamp.connect();
+    }
   }]);
 
 function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   var $this = this;
   var stream;
   var transaction = 1;
+
   var apiHost;
+  var namespace;
 
   var responseAcceptTypes = {
     JSON: 'application/json',
@@ -98,25 +103,28 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   };
 
   this.init = function () {
-    // API url for Cross Origin Http requests
-
-    var url;
-    // var ws;
     if (Environment.prototype.origin()) {
-      // url = 'ws://' + Environment.prototype.origin() + '/websocket';
       this.origin = Environment.prototype.origin() + '/';
     } else {
       this.origin = window.location.host;
       this.origin += window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
+    }
+  };
 
-      // url = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-      // url += window.location.host;
-      // url += window.location.pathname.endsWith('/') ? window.location.pathname + 'websocket' : window.location.pathname + '/websocket';
+  this.connect = function (ns) {
+    namespace = ns;
+
+    var url = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+    url += this.origin;
+    apiHost = window.location.protocol + '//' + this.origin;
+
+    if (namespace) {
+      url += namespace + '/';
+      apiHost += namespace + '/';
     }
 
-    url = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-    url += this.origin + 'websocket';
-    apiHost = window.location.protocol + '//' + this.origin + 'api/v1';
+    url += 'websocket';
+    apiHost += 'api/v1';
 
     var websocket = function () {
       $log.debug('websocket: ' + url);
@@ -146,6 +154,15 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     if (!stream) {
       return null;
     }
+
+    if (!path.startsWith('/')) {
+      path = '/' + path;
+    }
+
+    if (namespace) {
+      path = '/' + namespace + path;
+    }
+
     var message = {
       api: 'v1',
       path: path,

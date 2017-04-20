@@ -51,6 +51,10 @@ Environment.prototype.version = function () {
   return '${VERSION}';
 };
 
+Environment.prototype.connect = function () {
+  return true;
+};
+
 Environment.prototype.debug = function () {
   return ${DEBUG};
 };
