@@ -1,6 +1,61 @@
+
+@mixin table-row($table-width) {
+  tbody {
+    tr {
+      td {
+        &.col-1 {
+          width: calc(1 / 12 * #{$table-width});// 8.33333333%;
+        }
+        &.col-2 {
+          width: calc(2 / 12 * #{$table-width}); //16.66666667%;
+        }
+        &.col-3 {
+          width: calc(3 / 12 * #{$table-width}); //25%;
+        }
+        &.col-4 {
+          width: calc(4 / 12 * #{$table-width});//33.33333333%;
+        }
+        &.col-5 {
+          width: calc(5 / 12 * #{$table-width});//41.66666667%;
+        }
+        &.col-6 {
+          width: calc(6 / 12 * #{$table-width});//50%;
+        }
+        &.col-7 {
+          width: calc(7 / 12 * #{$table-width});//58.33333333%;
+        }
+        &.col-8 {
+          width: calc(8 / 12 * #{$table-width});//66.66666667%;
+        }
+        &.col-9 {
+          width: calc(9 / 12 * #{$table-width});//75%;
+        }
+        &.col-10 {
+          width: calc(10 / 12 * #{$table-width});//83.33333333%;
+        }
+        &.col-11 {
+          width: calc(11 / 12 * #{$table-width});//91.66666667%;
+        }
+        &.col-12 {
+          width: calc(#{$table-width});//100%;
+        }
+      }
+    }
+  }
+
+}
+
 table.table.v2 {
   font-weight: $font-weight-light;
   font-size: $font-size-normal;
+
+
+
+  @include table-row(100%);
+
+  &.selection-enabled {
+    @include table-row(calc( 100% - 5rem ));
+  }
 
   thead {
     tr {
@@ -36,41 +91,22 @@ table.table.v2 {
           padding-right: 2.5rem;
         }
 
-        &.col-1 {
-          width: 8.33333333%;
+        &.row-selection {
+          width: 5rem;
         }
-        &.col-2 {
-          width: 16.66666667%;
-        }
-        &.col-3 {
-          width: 25%;
-        }
-        &.col-4 {
-          width: 33.33333333%;
-        }
-        &.col-5 {
-          width: 41.66666667%;
-        }
-        &.col-6 {
-          width: 50%;
-        }
-        &.col-7 {
-          width: 58.33333333%;
-        }
-        &.col-8 {
-          width: 66.66666667%;
-        }
-        &.col-9 {
-          width: 75%;
-        }
-        &.col-10 {
-          width: 83.33333333%;
-        }
-        &.col-11 {
-          width: 91.66666667%;
-        }
-        &.col-12 {
-          width: 100%;
+
+        .row-action {
+          color :$misty;
+
+          &:hover {
+            cursor: pointer;
+          //  font-weight: $font-weight-bold;
+            color: $white
+          }
+
+          i {
+            padding: .5rem;
+          }
         }
       }
 

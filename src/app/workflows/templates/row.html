@@ -1,11 +1,11 @@
-<td class="clickable col-2" ng-click="$explorer.view(item)">
+<td class="clickable col-4" ng-click="$explorer.view(item)">
   {{ item.name }}
 </td>
 <td class="col-3" >
   <span ng-repeat="instance in item.instances">
     <div ng-repeat="(portName, port) in instance.ports | orderByKeys"
               ng-if="$artifactCtrl.proxy(instance, portName)">
-        <span class="clickable"
+        <span class="row-action"
            ng-click="$artifactCtrl.proxy(instance, portName, $event)">
             {{instance.name | limitTo: 20 }} : {{port}}
         </span>
@@ -28,8 +28,8 @@
 </td>
 <td class="col-2">
   <span class="pull-right">
-    <button class="btn btn-primary" ng-if="item.status === 'running'" ng-click="$artifactCtrl.suspend($event)">Suspend</button>
-    <button class="btn btn-primary" ng-if="item.status !== 'suspended'" ng-click="$artifactCtrl.restart($event)">Restart</button>
-    <button class="btn btn-success" ng-if="item.status === 'suspended'" ng-click="$artifactCtrl.start($event)">Start</button>
+    <span class="row-action" ng-if="item.status === 'running'" ng-click="$artifactCtrl.suspend($event)"><i class="icon-control-pause"></i>Suspend</span>
+    <span class="row-action" ng-if="item.status !== 'suspended'" ng-click="$artifactCtrl.restart($event)"><i class="icon-reload"></i>Restart</span>
+    <span class="row-action" ng-if="item.status === 'suspended'" ng-click="$artifactCtrl.start($event)"><i class="icon-control-play"></i>Start</span>
   </span>
 </td>

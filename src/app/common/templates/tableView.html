@@ -1,5 +1,5 @@
 <div class="table-responsive">
-  <table class="table v2">
+  <table class="table v2 selection-enabled">
     <thead>
       <tr>
         <th class="clickable center-content" ng-click="$explorer.toggleSelection()">
@@ -16,7 +16,7 @@
         ng-repeat="item in ($explorer.filteredItems | filter:{name:$explorer.searchTerm} | limitTo : $explorer.itemsPerPage : (($explorer.currentPage - 1) * $explorer.itemsPerPage)) track by $index"
         dynamic-controller-as="{{$explorer.itemTypeConfig.artifactsMainView.gridItem.controller}}"
         dynamic-controller-alias="$artifactCtrl">
-        <td class="col-1 center-content clickable" ng-click="$explorer.updateSelection($event, item)">
+        <td class="center-content clickable row-selection" ng-click="$explorer.updateSelection($event, item)">
           <input type="checkbox" class="checkbox vamp-lv-checkbox"
              ng-checked="$explorer.isSelected(item)">
         </td>
