@@ -1,6 +1,7 @@
 function deploymentsController($scope, $state, $stateParams, artifactsMetadata, $vamp, $vampDeployment) {
   var $ctrl = this;
 
+  var _deployments = [];
   $ctrl.deployments = [];
   $ctrl.config = artifactsMetadata;
   var path = '/deployments';
@@ -28,7 +29,8 @@ function deploymentsController($scope, $state, $stateParams, artifactsMetadata, 
   });
 
   $scope.$on(path, function (e, response) {
-    angular.copy(_.orderBy(response.data, 'name'), $ctrl.deployments);
+    angular.copy(_.orderBy(response.data, 'name'), _deployments);
+    angular.copy(_deployments, $ctrl.deployments);
     angular.forEach($ctrl.deployments, function (ar) {
       ar.scale = getScale(ar);
       ar.status = getStatus(ar);
