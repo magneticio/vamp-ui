@@ -118,7 +118,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   };
 
   this.connect = function (ns) {
-    if (ns === namespace) {
+    if (namespace && ns === namespace) {
       return;
     }
 
