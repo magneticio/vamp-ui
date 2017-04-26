@@ -5,15 +5,15 @@ angular.module('vamp-ui').directive('hasPermission', ['$injector', '$interpolate
       var allowedRoles = attrs.hasPermission;
       element.removeAttr('has-permission');
 
-      if (!allowedRoles || !$injector.has('authenticationService')) {
+      if (!allowedRoles || !$injector.has('principal')) {
         return;
       }
 
-      var authenticationService = $injector.get('authenticationService');
+      var principal = $injector.get('principal');
 
       allowedRoles = $interpolate(allowedRoles)(scope).trim().split(',');
 
-      if (authenticationService.isInAnyRole(allowedRoles)) {
+      if (principal.isInAnyRole(allowedRoles)) {
         return;
       }
 

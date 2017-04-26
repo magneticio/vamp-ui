@@ -55,7 +55,13 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
       delete awaiting[response.transaction];
     }
 
-    notify(response.path, response);
+    var path = response.path;
+
+    if (namespace) {
+      path = path.substring(('/' + namespace).length);
+    }
+
+    notify(path, response);
   };
 
   this.connected = function () {
@@ -127,6 +133,11 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     apiHost += 'api/v1';
 
     var websocket = function () {
+      if (stream) {
+        stream.close();
+        stream = null;
+      }
+
       $log.debug('websocket: ' + url);
       stream = $websocket(url);
 
@@ -136,6 +147,10 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
       });
 
       stream.onClose(function () {
+        if (!stream) {
+          return;
+        }
+
         $log.info('websocket closed, will try to reconnect in 5 seconds...');
         notify('$vamp:connection', 'closed');
         stream = null;
