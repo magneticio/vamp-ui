@@ -2,19 +2,19 @@
     <div class="list">
         <p class="v-label">deployable :</p>
         <ul>
-            <li>{{ artifact.deployable.type }}</li>
-            <li ng-if="artifact.deployable.type !== 'application/javascript'">
-                {{ artifact.deployable.definition }}
+            <li>{{ item.deployable.type }}</li>
+            <li ng-if="item.deployable.type !== 'application/javascript'">
+                {{ item.deployable.definition }}
             </li>
         </ul>
     </div>
-    <div class="list" ng-if="!(artifact.ports | isEmpty)">
+    <div class="list" ng-if="!(item.ports | isEmpty)">
         <p class="v-label">ports :</p>
         <ul>
-            <li ng-repeat="port in artifact.ports | limitTo: 5">
+            <li ng-repeat="port in item.ports | limitTo: 5">
               {{ port.name }} : {{ port.value }}
             </li>
-            <li ng-if="(artifact.ports | countKeys) > 5"><i class="fa fa-ellipsis-h"></i></li>
+            <li ng-if="(item.ports | countKeys) > 5"><i class="fa fa-ellipsis-h"></i></li>
         </ul>
     </div>
 </div>

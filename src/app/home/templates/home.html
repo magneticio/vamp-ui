@@ -1,0 +1,33 @@
+<div class="body" id="wrapper" ng-controller="layoutController as $layout"
+    ng-class="{
+        'expand-left' : $layout.uiStates.left === $layout.stateEnum.EXPANDED,
+        'collapse-left' : $layout.uiStates.left === $layout.stateEnum.COLLAPSED,
+        'expand-right' : $layout.uiStates.right === $layout.stateEnum.EXPANDED,
+        'footer-expanded' : $layout.uiStates.footer
+      }">
+  <div class="nav" id="left-panel-wrapper" ui-view="left-panel">
+    <menu>
+    </menu>
+  </div>
+  <div class="site" id="site-wrapper">
+    <div class="header" id="header" ui-view="header">
+      <header>
+      </header>
+    </div>
+    <div class="content" id="page-content-wrapper">
+      <div class="center" id="page-main-wrapper">
+        <ui-view name="main"></ui-view>
+        <side></side>
+      </div>
+      <div class="right" id="right-panel-wrapper">
+
+        <ui-view name="right-panel"></ui-view>
+      </div>
+    </div>
+    <div class="events-panel">
+
+      <events ></events>
+    </div>
+  </div>
+  <overlay-manager></overlay-manager>
+</div>

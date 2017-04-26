@@ -1,0 +1,20 @@
+<td class="clickable col-3" ng-click="$explorer.view(item)">
+  {{ item.name }}
+</td>
+<td class="col-3">
+    <span ng-repeat="host in item.virtual_hosts | orderBy:'length'">
+        {{ host }}
+    </span>
+</td>
+<td class="col-3">
+  <span ng-repeat="route in item.routes | orderBy:'name'">
+      {{ route.name }}
+  </span>
+</td>
+<td class="col-3">
+  <tag value="item.deployed ? 'port : ' + item.port : 'deploying'" has-progress="true"
+    success="item.deployed" in-progress="!item.deployed"
+  ></tag>
+
+  <tag value="item.internal ? 'internal' : 'external'"></tag>
+</td>

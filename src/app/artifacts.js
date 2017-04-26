@@ -1,16 +1,28 @@
-function Artifacts() {
-}
+/* global VAMP */
+VAMP.Artifacts = function () {
+};
 
-Artifacts.prototype.all = function () {
+VAMP.Artifacts.prototype.all = function () {
   return [
     {
       kind: "deployments",
-      mainController: 'DeploymentsController',
+      artifactsMainView: {
+        templateUrl: 'app/deployments/deployments.html',
+        controller: 'deploymentsController',
+        gridItem: {
+          templateUrl: 'app/deployments/templates/deploymentGridView.html',
+          controller: 'DeploymentCtrl'
+        },
+        tableView: {
+          columns: ['name', 'scale', null, null],
+          rowTemplateUrl: 'app/deployments/templates/row.html'
+        }
+      },
+      oneMainView: {
+        controller: 'DeploymentController',
+        templateUrl: 'app/deployments/deployment.html'
+      },
       deployable: true,
-      artifactViewController: 'DeploymentController',
-      artifactViewTemplate: 'app/deployments/deployment.html',
-      gridViewController: "DeploymentCtrl",
-      artifactGridView: 'app/deployments/templates/deploymentGridView.html',
       artifactInfo: [
         {
           title: "",
@@ -57,124 +69,80 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "gateways",
-      mainController: 'GatewaysController',
-      deployable: true,
-      artifactViewController: 'GatewayController',
-      artifactViewTemplate: 'app/gateways/gateway.html',
-      artifactGridView: 'app/gateways/templates/gridView.html',
-      artifactInfo: [
-        {
-          title: "",
-          type: "tags",
-          tags: [
-            {
-              value: "artifact.deployed ? 'port : ' + artifact.port : 'deploying'",
-              hasProgress: true,
-              success: "artifact.deployed",
-              inProgress: "!artifact.deployed"
-            },
-            {
-              value: "artifact.internal ? 'internal' : 'external'",
-              hasProgress: false
-            }
-          ]
+      artifactsMainView: {
+        templateUrl: 'app/gateways/gateways.html',
+        controller: 'gatewaysController',
+        gridItem: {
+          templateUrl: 'app/gateways/templates/gridView.html'
         },
-        {
-          title: "Virtual Hosts",
-          arrayPath: "virtual_hosts",
-          valuePath: "",
-          type: "array"
-
-        },
-        {
-          title: "Routes",
-          arrayPath: "routes",
-          valuePath: "name",
-          type: "array"
+        tableView: {
+          columns: ['name', 'Virtual Hosts', 'Routes', null],
+          rowTemplateUrl: 'app/gateways/templates/row.html'
         }
-      ]
+      },
+      oneMainView: {
+        controller: 'GatewayController',
+        templateUrl: 'app/gateways/gateway.html'
+      },
+      deployable: true
     },
     {
       kind: "workflows",
-      mainController: 'WorkflowsController',
-      listViewRightPanel: {
+      artifactsMainView: {
+        templateUrl: 'app/workflows/workflows.html',
+        controller: 'workflowsController',
+        gridItem: {
+          templateUrl: 'app/workflows/templates/workflowGridView.html',
+          controller: 'WorkflowController'
+        },
+        tableView: {
+          columns: ['name', 'ports', null, null],
+          rowTemplateUrl: 'app/workflows/templates/row.html'
+        }
+      },
+      artifactsRightPanel: {
         controller: 'workflowWebPortViewController',
         templateUrl: 'app/workflows/templates/webPort.html'
       },
       deployable: true,
-      gridViewController: "WorkflowController",
-      artifactGridView: 'app/workflows/templates/workflowGridView.html',
-      artifactInfo: [
-        {
-          title: "",
-          type: "tags",
-          tags: [
-            {
-              value: "artifact.status",
-              hasProgress: true,
-              success: "artifact.status === 'running'",
-              inProgress: "updating()",
-              paused: "artifact.status === 'suspended'"
-            },
-            {
-              value: "'breed: ' + artifact.breed.name",
-              hasProgress: false,
-              visible: "artifact.breed.name !== undefined"
-            },
-            {
-              value: "'breed: ' + artifact.breed.reference",
-              hasProgress: false,
-              visible: "artifact.breed.reference !== undefined"
-            },
-            {
-              value: "'schedule : daemon'",
-              hasProgress: false,
-              visible: "artifact.schedule === 'daemon'"
-            },
-            {
-              value: "'schedule : event'",
-              hasProgress: false,
-              visible: "!(artifact.schedule.event | isEmpty)"
-            },
-            {
-              value: "'schedule : time'",
-              hasProgress: false,
-              visible: "!(artifact.schedule.time | isEmpty)"
-            }
-          ]
-        }
-      ],
       actions: [
         {
           name: "suspend",
           title: "Suspend",
           action: "suspend",
-          active: "artifact.status === 'running'",
+          active: "item.status === 'running'",
           class: "btn-primary"
         },
         {
           name: "restart",
           title: "Restart",
           action: "restart",
-          active: "artifact.status !== 'suspended'",
+          active: "item.status !== 'suspended'",
           class: "btn-primary"
         },
         {
           name: "start",
           title: "Start",
           action: "start",
-          active: "artifact.status === 'suspended'",
+          active: "item.status === 'suspended'",
           class: "btn-success"
         }
       ]
     },
     {
       kind: "blueprints",
-      mainController: "BlueprintsController",
-      artifactGridView: 'app/blueprints/templates/blueprintGridView.html',
-      gridViewController: "BlueprintController",
-      artifactInfo: [
-      ],
+      artifactsMainView: {
+        templateUrl: 'app/blueprints/blueprints.html',
+        controller: 'blueprintsController',
+        gridItem: {
+          templateUrl: 'app/blueprints/templates/blueprintGridView.html',
+          controller: 'BlueprintController'
+        },
+        tableView: {
+          columns: ['name', null],
+          rowTemplateUrl: 'app/blueprints/templates/row.html'
+        }
+      },
       actions: [
         {
           name: "deployAs",
@@ -200,56 +168,45 @@ Artifacts.prototype.all = function () {
     },
     {
       kind: "breeds",
-      mainController: 'BreedsController',
-      artifactGridView: 'app/breeds/templates/breedGridView.html',
-      artifactInfo: [
-        {
-          title: "Deployable",
-          valuePath: "deployable.type",
-          type: "string"
+      artifactsMainView: {
+        templateUrl: 'app/breeds/breeds.html',
+        controller: 'breedsController',
+        gridItem: {
+          templateUrl: 'app/breeds/templates/breedGridView.html'
         },
-        {
-          title: "Ports",
-          arrayPath: "ports",
-          type: "array",
-          expression: "item.name + ' : ' + item.value"
+        tableView: {
+          columns: ['name', 'deployable', 'ports'],
+          rowTemplateUrl: 'app/breeds/templates/row.html'
         }
-      ]
+      }
     },
     {
       kind: "scales",
-      mainController: 'ArtifactsController',
-      artifactGridView: 'app/scales/templates/scaleGridView.html',
-      artifactInfo: [
-        {
-          title: "CPU",
-          valuePath: "cpu",
-          type: "string"
+      artifactsMainView: {
+        templateUrl: 'app/scales/scales.html',
+        controller: 'scalesController',
+        gridItem: {
+          templateUrl: 'app/scales/templates/scaleGridView.html'
         },
-        {
-          title: "Memory",
-          valuePath: "memory",
-          type: "string",
-          expression: "(artifact.memory | asNumber:0) + ' MB'"
-        },
-        {
-          title: "Instances",
-          valuePath: "instances",
-          type: "string"
+        tableView: {
+          columns: ['name', 'cpu', 'memory', 'instances'],
+          rowTemplateUrl: 'app/scales/templates/row.html'
         }
-      ]
+      }
     },
     {
       kind: "conditions",
-      mainController: 'ArtifactsController',
-      artifactGridView: 'app/conditions/templates/gridView.html',
-      artifactInfo: [
-        {
-          title: "Condition",
-          valuePath: "condition",
-          type: "string"
+      artifactsMainView: {
+        templateUrl: 'app/conditions/conditions.html',
+        controller: 'conditionsController',
+        gridItem: {
+          templateUrl: 'app/conditions/templates/gridView.html'
+        },
+        tableView: {
+          columns: ['name'],
+          rowTemplateUrl: 'app/conditions/templates/row.html'
         }
-      ]
+      }
     }
   ];
 };

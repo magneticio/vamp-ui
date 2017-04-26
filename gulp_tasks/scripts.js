@@ -9,16 +9,12 @@ function isFixed(file) {
 
 const conf = require('../conf/gulp.conf');
 
-gulp.task('scripts', function () {
-  return gulp.src(conf.path.src('**/*.js'))
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(gulp.dest(conf.path.tmp()));
-});
-
 gulp.task('lint-n-fix', function () {
 
-	return gulp.src(conf.path.src('**/*.js'))
+	return gulp.src([
+		conf.path.src('**/*.js'),
+		`!${conf.path.src('3rd-party/**/*.js')}`
+	])
 		.pipe(eslint({
 			fix: true
 		}))
@@ -28,8 +24,27 @@ gulp.task('lint-n-fix', function () {
 });
 
 gulp.task('failAfterError', function () {
-  return gulp.src(conf.path.src('**/*.js'))
+	return gulp.src([
+		conf.path.src('**/*.js'),
+		`!${conf.path.src('3rd-party/**/*.js')}`
+	])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
 });
+
+gulp.task('copyJS', function () {
+  return gulp.src(conf.path.src('**/*.js'))
+    .pipe(gulp.dest(conf.path.tmp()));
+});
+
+gulp.task('lint', function () {
+  return gulp.src([
+		conf.path.src('**/*.js'),
+		`!${conf.path.src('3rd-party/**/*.js')}`
+	])
+    .pipe(eslint())
+    .pipe(eslint.format());
+});
+
+gulp.task('scripts', gulp.series('lint', 'copyJS'));

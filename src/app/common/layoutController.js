@@ -3,4 +3,5 @@ angular.module('vamp-ui')
     var $layout = this;
 
     $layout.uiStates = uiStatesFactory.viewStates;
+    $layout.stateEnum = uiStatesFactory.STATE_ENUM;
   });

@@ -1,3 +1,5 @@
+/* eslint-disable */
+var VAMP = {};
 
 angular.module('vamp-ui', [
   'ui.router',
@@ -8,7 +10,7 @@ angular.module('vamp-ui', [
   'toastr',
   'ngAnimate',
   'rzModule',
-  'ncy-angular-breadcrumb',
+  'angularUtils.directives.uiBreadcrumbs',
   'uiSwitch'
 ]);
 

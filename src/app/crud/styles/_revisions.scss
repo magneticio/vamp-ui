@@ -1,8 +1,9 @@
 
 .artifact-revisions {
   width: 100%;
-  //min-width: 250px;
+  height: 100%;
   vertical-align: top;
+  background-color: $pitch;
 
   .revisions-title {
     margin: 0;
@@ -18,35 +19,29 @@
   .revision {
     width: 100%;
     margin: 0;
-    height: 5rem;
     line-height: 5rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
     color: $color-text;
     font-size: $font-size-small;
     border-bottom: 1px solid $background-lighter;
     position: relative;
+    user-select: none;
+    border-left: 0 solid $vamp-red;
 
     &:hover {
       cursor: pointer;
-      background-color: $blue;
+      font-weight: $font-weight-bold;
+      background-color: $night;
+      color: $misty;
     }
 
     &.active-revision {
-      background-color: $dark-blue;
-
-      &::after {
-        content : '';
-        display: block;
-        position: absolute;
-        transform: rotate(45deg);
-        padding: 7px;
-        background-color: $dark-blue;
-        border-bottom: 1px solid $background-lighter;
-        border-left: 1px solid $background-lighter;
-        left: -8px;
-        top:1.6rem;
-      }
+      border-left-width: .5rem;
+      padding-left: 2rem;
+      background-color: $night;
+      font-weight: $font-weight-bold;
+      color: $misty;
     }
   }
 }

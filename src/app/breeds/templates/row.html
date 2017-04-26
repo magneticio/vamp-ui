@@ -1,0 +1,9 @@
+<td class="clickable col-5" ng-click="$explorer.view(item)">
+  {{ item.name }}
+</td>
+<td class="col-2">
+  {{ item.deployable.type }}
+</td>
+<td class="col-5">
+  <span ng-repeat="port in item.ports">{{ port.name }} : {{ port.value }}</span>
+</td>

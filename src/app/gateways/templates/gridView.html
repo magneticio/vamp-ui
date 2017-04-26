@@ -1,30 +1,30 @@
 <div class="artifact-properties">
   <div class="artifact-labels">
-      <tag value="artifact.deployed ? 'port : ' + artifact.port : 'deploying'" has-progress="true"
-        success="artifact.deployed" in-progress="!artifact.deployed"
+      <tag value="item.deployed ? 'port : ' + item.port : 'deploying'" has-progress="true"
+        success="item.deployed" in-progress="!item.deployed"
       ></tag>
 
-      <tag value="artifact.internal ? 'internal' : 'external'"></tag>
+      <tag value="item.internal ? 'internal' : 'external'"></tag>
     </div>
     <p></p>
-    <div class="list" ng-if="!(artifact.virtual_hosts | isEmpty)">
+    <div class="list" ng-if="!(item.virtual_hosts | isEmpty)">
         <p class="v-label">virtual hosts :</p>
         <ul>
-            <li ng-repeat="host in artifact.virtual_hosts | limitTo: 2 | orderBy:'length'">
+            <li ng-repeat="host in item.virtual_hosts | limitTo: 2 | orderBy:'length'">
                 <p ng-if="host.length <= 25">{{ host }}</p>
                 <p ng-if="host.length > 25">{{ host | limitTo: 25 }} ...</p>
             </li>
-            <li><i ng-if="artifact.virtual_hosts.length > 2" class="fa fa-ellipsis-h"></i></li>
+            <li><i ng-if="item.virtual_hosts.length > 2" class="fa fa-ellipsis-h"></i></li>
         </ul>
     </div>
     <div class="list">
         <p class="v-label">routes :</p>
         <ul>
-            <li ng-repeat="route in artifact.routes | limitTo: 3 | orderBy:'name'">
+            <li ng-repeat="route in item.routes | limitTo: 3 | orderBy:'name'">
                 <p ng-if="route.name.length <= 25">{{ route.name }}</p>
                 <p ng-if="route.name.length > 25">{{ route.name | limitTo: 25 }} ...</p>
             </li>
-            <li><i ng-if="(artifact.routes | countKeys) > 3" class="fa fa-ellipsis-h"></i></li>
+            <li><i ng-if="(item.routes | countKeys) > 3" class="fa fa-ellipsis-h"></i></li>
         </ul>
     </div>
 </div>

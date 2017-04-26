@@ -1,8 +1,14 @@
 function uiStatesFactory() {
+  var STATE_ENUM = {
+    EXPANDED: 1,
+    COLLAPSED: 2,
+    HIDDEN: 3
+  };
+
   var viewStates = {
     main: 'grid',
-    left: true,
-    right: false,
+    left: STATE_ENUM.EXPANDED,
+    right: STATE_ENUM.HIDDEN,
     infoPanel: false,
     helpPanel: false,
     proxyPanel: '',
@@ -43,6 +49,7 @@ function uiStatesFactory() {
   }
 
   return {
+    STATE_ENUM: STATE_ENUM,
     viewStates: viewStates,
     setMainViewState: setMainViewState,
     setLeftPanelViewState: setLeftPanelViewState,

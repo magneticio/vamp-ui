@@ -5,7 +5,7 @@ angular.module('vamp-ui')
 function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlueprint) {
   var $ctrl = this;
 
-  $ctrl.blueprint = $scope.artifact;
+  $ctrl.blueprint = $scope.item;
 
   this.mergeWith = [];
   this.removeFrom = [];

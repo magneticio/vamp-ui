@@ -1,9 +1,6 @@
 <ol class="breadcrumb">
-  <li ng-repeat="step in steps"
-    ng-class="{active: $last, 'truncate' : steps.length > 3 && $index < 2}"
-    ng-if="!$last || step.ncyBreadcrumb.showLast"
-    ng-switch="$last || !!step.abstract">
-    <a ng-switch-when="false" href="{{step.ncyBreadcrumbLink}}">{{step.ncyBreadcrumbLabel | capitalize}}</a>
-    <span title="{{step.ncyBreadcrumbLabel | capitalize}}" ng-switch-when="true">{{step.ncyBreadcrumbLabel | capitalize}}</span>
+  <li ng-repeat="crumb in breadcrumbs" has-permission="{{crumb.data.roles && crumb.data.roles.join(',')}}">
+      <a ng-if="!$last" ui-sref="{{ crumb.route }}" ui-sref-opts="{reload:true}" >{{ crumb.displayName }} </a>
+      <span ng-if="$last">{{ crumb.displayName }}</span>
   </li>
 </ol>

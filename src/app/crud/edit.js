@@ -1,6 +1,6 @@
 angular.module('vamp-ui').controller('edit',
 
-function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcrumb, $timeout, uiStatesFactory, revisionsService, $element, $vamp, artifact, snippet, toastr, alert) {
+function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout, uiStatesFactory, revisionsService, $element, $vamp, artifact, snippet, toastr, alert) {
   var $ctrl = this;
 
   this.kind = $stateParams.kind;
@@ -35,7 +35,7 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
   }
 
   $scope.$on('$destroy', function () {
-    uiStatesFactory.setRightPanelViewState(false);
+    uiStatesFactory.setRightPanelViewState(uiStatesFactory.STATE_ENUM.HIDDEN);
   });
 
   function transformErrorMessage(message) {
@@ -53,7 +53,7 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
     $ctrl.inEdit = true;
 
     $state.go('^.edit').then(function () {
-      uiStatesFactory.setRightPanelViewState(false);
+      uiStatesFactory.setRightPanelViewState(uiStatesFactory.STATE_ENUM.EXPANDED);
       $timeout(function () {
         $($element).find('#editor textarea').focus();
       });
@@ -69,12 +69,23 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
         $ctrl.peek();
       });
 
-      uiStatesFactory.setRightPanelViewState(true);
+      uiStatesFactory.setRightPanelViewState(uiStatesFactory.STATE_ENUM.EXPANDED);
     });
   };
 
   $ctrl.closeRevision = function () {
     revisionsService.clearSelected();
+  };
+
+  $ctrl.copyRevisionContent = function () {
+    alertIfDirty(function () {
+      if (!$ctrl.inEdit) {
+        $ctrl.startEdit();
+      }
+
+      $ctrl.source = $ctrl.activeRevisiton.source;
+      $ctrl.closeRevision();
+    });
   };
 
   this.peek = function () {
@@ -125,7 +136,7 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
   $scope.$on('$stateChangeStart', function (event, toState, toParams) {
     if (!ignoreChange && $ctrl.isModified()) {
       event.preventDefault();
-      alert.show('Warning', '\'' + $ctrl.name + '\' has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel', function () {
+      alertIfDirty(function () {
         $ctrl.base = $ctrl.source = null;
         $state.go(toState, toParams);
       });
@@ -151,12 +162,16 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $breadcru
   };
 
   this.cancel = function () {
-    if ($ctrl.isModified()) {
-      alert.show('Warning', '\'' + $ctrl.name + '\' has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel', $ctrl.stopEdit);
-    } else {
-      $ctrl.stopEdit();
-    }
+    alertIfDirty($ctrl.stopEdit);
   };
+
+  function alertIfDirty(callback) {
+    if ($ctrl.isModified()) {
+      alert.show('Warning', '\'' + $ctrl.name + '\' has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel', callback);
+    } else {
+      callback();
+    }
+  }
 
   this.save = function () {
     validation = false;

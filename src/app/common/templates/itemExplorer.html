@@ -1,0 +1,80 @@
+<div class="container-fluid no-padding main-content">
+  <div class="row content-header">
+    <div class="col-md-5">
+      <div class="artifacts-search-box">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="icon-magnifier"></i></span>
+          <input type="text" ng-change="$explorer.onSearchTermChange()" auto-focus class="form-control" ng-model="$explorer.searchTerm" placeholder="Search" />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 text-center">
+      <div style="display:inline-block">
+        <div ng-if="$explorer.items.length !== 0">
+          <div class="btn-group vamp-btn-group">
+              <button title="Grid view" class="btn bootstrap-btn btn-icon vamp-btn icon-grid"
+                ng-class="{'vamp-btn-selected' : $explorer.viewStates.main == 'grid'}"
+                type="button" ng-click="$explorer.toggleView('grid')">
+              </button>
+              <button title="List view" class="btn bootstrap-btn btn-icon vamp-btn icon-list"
+                ng-class="{'vamp-btn-selected' : $explorer.viewStates.main == 'table'}"
+                type="button" ng-click="$explorer.toggleView('table')">
+              </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="pull-right">
+        <div ng-transclude="buttonsSlot">
+        </div>
+        <button class="btn btn-danger" type="submit"
+                ng-if="$explorer.isSelectedAny()"
+                ng-click="$explorer.deleteSelected()">
+            Delete selected
+        </button>
+        <button class="btn btn-primary" type="submit" ng-click="$explorer.add()">
+            Add
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row artifacts-panel">
+
+    <div ng-if="$explorer.items.length > 0">
+      <div ng-if="$explorer.viewStates.main == 'grid'">
+        <grid-view >
+        </grid-view>
+      </div>
+
+      <div ng-if="$explorer.viewStates.main == 'table'">
+        <table-view>
+        </table-view>
+      </div>
+    </div>
+
+    <nav ng-show="$explorer.pages > 1" class="artifact-pagination text-center">
+      <ul class="pagination vamp-pagination">
+        <li>
+          <a ng-click="$explorer.previousPage()"
+            ng-disabled="$explorer.currentPage === 1"
+            ng-class="{'vamp-page-disabled' : $explorer.currentPage === 1 }">
+            <i class="fa fa-angle-left"></i>
+          </a>
+        </li>
+        <li ng-repeat="page in ($explorer.getPages($explorer.pages) | limitTo:5:($explorer.getCurrentPageStartingIndex()))">
+          <a ng-click="$explorer.goToPage(page + 1)"
+            ng-class="{'vamp-page-selected' : $explorer.currentPage == (page + 1) }">{{page + 1}}</a>
+        </li>
+        <li>
+          <a ng-click="$explorer.nextPage()"
+            ng-disabled="$explorer.currentPage === $explorer.pages"
+            ng-class="{'vamp-page-disabled' : $explorer.currentPage === $explorer.pages }">
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+</div>

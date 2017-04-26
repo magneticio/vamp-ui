@@ -1,9 +1,9 @@
 <div class="artifact-properties">
     <div class="list" >
         <ul>
-            <li>cpu:&nbsp;{{ artifact.cpu }}</li>
-            <li>memory:&nbsp;{{ artifact.memory | asNumber:0 }} MB</li>
-            <li>instances:&nbsp;{{ artifact.instances }}</li>
+            <li>cpu:&nbsp;{{ item.cpu }}</li>
+            <li>memory:&nbsp;{{ item.memory | asNumber:0 }} MB</li>
+            <li>instances:&nbsp;{{ item.instances }}</li>
         </ul>
     </div>
 </div>
