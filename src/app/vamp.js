@@ -118,6 +118,10 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   };
 
   this.connect = function (ns) {
+    if (ns === namespace) {
+      return;
+    }
+
     namespace = ns;
 
     var url = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
