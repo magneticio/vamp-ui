@@ -15,6 +15,7 @@ angular.module('vamp-ui')
 function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   var $this = this;
   var stream;
+  var openConnections = [];
   var transaction = 1;
 
   var apiHost;
@@ -138,20 +139,23 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
 
     var websocket = function () {
       if (stream) {
-        stream.close();
+        stream.close(true);
         stream = null;
       }
 
       $log.debug('websocket: ' + url);
       stream = $websocket(url);
 
-      stream.onOpen(function () {
+      stream.onOpen(function (ev) {
+        openConnections.push(ev.target.url);
         $log.debug('websocket is opened');
         notify('$vamp:connection', 'opened');
       });
 
-      stream.onClose(function () {
-        if (!stream) {
+      stream.onClose(function (ev) {
+        openConnections.splice(openConnections.indexOf(ev.target.url), 1);
+
+        if (openConnections.length > 0) {
           return;
         }
 
