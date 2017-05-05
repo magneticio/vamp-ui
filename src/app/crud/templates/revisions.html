@@ -1,5 +1,5 @@
 <div class="artifact-revisions">
-  <div class="revisions-title text-center">Revisions</div>
+  <div class="revisions-title text-center">Change log</div>
   <ul class="list-unstyled">
     <li ng-repeat="revision in $ctrl.revisions | orderBy: 'timestamp':true" class="revision clearfix" ng-class="{'active-revision' : $ctrl.activeRevision.id == revision.id}" ng-click="$ctrl.toggleRevisiton(revision)">
         <span class="pull-left" title="{{ revision.timestamp | date:'shortTime' }}">{{ revision.timestamp | date:'shortTime' }}</span>
