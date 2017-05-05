@@ -10,11 +10,13 @@
                ng-class="{'deploying' : artifact.status === 'updating' || artifact.status === 'deploying' || artifact.status === 'undeploying'}">
 
              </div>-->
-              <input type="checkbox"
-                  ng-checked="$explorer.isSelected(item)"
-                  ng-click="$explorer.updateSelection($event, item)">
-              <span class="artifact-title clickable" ng-click="$explorer.view(item)">{{ item.name }}</span>
-              <div ng-if="$explorer.itemTypeConfig.actions && $explorer.itemTypeConfig.actions.length > 0" class="dropdown pull-right">
+             <span class="artifact-selection">
+               <input type="checkbox"
+                   ng-checked="$explorer.isSelected(item)"
+                   ng-click="$explorer.updateSelection($event, item)">
+             </span>
+             <span class="artifact-title clickable" ng-click="$explorer.view(item)" title="{{ item.name }}">{{ item.name }}</span>
+              <div ng-if="$explorer.itemTypeConfig.actions && $explorer.itemTypeConfig.actions.length > 0" class="artifact-actions dropdown">
                 <span class="artifact-actions-button"
                   uib-popover-template="'app/crud/templates/actionsMenu.html'"
                   ng-controller="actionMenuController"

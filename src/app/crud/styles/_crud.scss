@@ -340,8 +340,20 @@ table.vamp-lv {
       color: $white;
       font-size: $font-size-large;
 
+      display: flex;
+      flex-direction: row;
+
+      .artifact-selection {
+        flex: 0 0 3rem;
+        -moz-flex: 0 0 3rem;
+      }
+
       .artifact-title {
-        position: absolute;
+        flex: 1 1 0;
+        -moz-flex: 1 1 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
 
       .header-context {
@@ -374,15 +386,19 @@ table.vamp-lv {
         }
       }
 
+      .artifact-actions {
+        flex: 0 0 3rem;
+        -moz-flex: 0 0 3rem;
 
-
-      .artifact-actions-button {
-        border-top-right-radius: .5rem;
-        padding: 0 2rem;
-        background: none;
-        cursor: pointer;
-        display: inline-block;
+        .artifact-actions-button {
+          border-top-right-radius: .5rem;
+          padding: 0 2rem;
+          background: none;
+          cursor: pointer;
+          display: inline-block;
+        }
       }
+
     }
 
     .artifact-body {
