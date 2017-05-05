@@ -6,10 +6,5 @@
     <span class="row-action" ng-click="$artifactCtrl.deploy($event)"><i class="icon-cloud-upload"></i>Deploy as</span>
     <span class="row-action" ng-if="!($artifactCtrl.mergeWith | isEmpty)" ng-click="$artifactCtrl.merge($event)"><i class="icon-organization"></i>Merge to</span>
     <span class="row-action" ng-if="!($artifactCtrl.removeFrom | isEmpty)" ng-click="$artifactCtrl.remove($event)"><i class="icon-close"></i>Remove from</span>
-    <!--
-    <button class="btn btn-primary" >Deploy as</button>
-    <button class="btn btn-primary" >Merge to</button>
-    <button class="btn btn-danger" >Remove from</button>
-  -->
   </span>
 </td>
