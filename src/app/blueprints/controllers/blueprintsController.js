@@ -17,6 +17,8 @@ function blueprintsController($scope, $state, $stateParams, artifactsMetadata, $
 
   $ctrl.delete = function (blueprint) {
     $vamp.remove(path + '/' + blueprint.name, angular.toJson(blueprint));
+
+    peek();
   };
 
   $ctrl.upload = function () {

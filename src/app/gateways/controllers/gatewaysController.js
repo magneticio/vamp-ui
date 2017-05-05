@@ -17,6 +17,8 @@ function gatewaysController($scope, $state, $stateParams, artifactsMetadata, $va
 
   $ctrl.delete = function (gateway) {
     $vamp.remove(path + '/' + gateway.name, angular.toJson(gateway));
+
+    peek();
   };
 
   // $scope event listenters

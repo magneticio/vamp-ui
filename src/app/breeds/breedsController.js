@@ -32,6 +32,8 @@ function breedsController($scope, $state, $stateParams, artifactsMetadata, $vamp
 
   $ctrl.delete = function (breed) {
     $vamp.remove(path + '/' + breed.name, angular.toJson(breed));
+
+    peek();
   };
 
   // $scope event listenters

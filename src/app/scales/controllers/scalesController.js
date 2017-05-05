@@ -17,6 +17,8 @@ function scalesController($scope, $state, $stateParams, artifactsMetadata, $vamp
 
   $ctrl.delete = function (scale) {
     $vamp.remove(path + '/' + scale.name, angular.toJson(scale));
+
+    peek();
   };
 
   // $scope event listenters

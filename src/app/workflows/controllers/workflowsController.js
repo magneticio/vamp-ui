@@ -17,6 +17,8 @@ function workflowsController($scope, $state, $stateParams, artifactsMetadata, $v
 
   $ctrl.delete = function (workflow) {
     $vamp.remove(path + '/' + workflow.name, angular.toJson(workflow));
+
+    peek();
   };
 
   // $scope event listenters
