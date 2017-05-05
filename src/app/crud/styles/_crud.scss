@@ -497,7 +497,7 @@ table.vamp-lv {
     color: $off-white;
     font-weight: $font-weight-light;
     line-height: 3.5rem;
-    height: 6.5rem;
+    min-height: 6.5rem;
 
     .panel-title {
       display: inline-flex;
