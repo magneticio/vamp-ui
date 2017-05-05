@@ -10,14 +10,18 @@ function deploymentsController($scope, $state, $stateParams, artifactsMetadata, 
     $state.go('.add');
   };
 
-  $ctrl.onView = function (condition) {
+  $ctrl.onView = function (deployment) {
     $state.go('.one', {
-      name: condition.name
+      name: deployment.name
     });
   };
 
-  $ctrl.delete = function (condition) {
-    $vamp.remove(path + '/' + condition.name, angular.toJson(condition));
+  $ctrl.delete = function (deployment) {
+    var index = _.findIndex(_deployments, {
+      name: deployment.name
+    });
+
+    $vamp.remove(path + '/' + _deployments[index].name, angular.toJson(_deployments[index]));
   };
 
   // $scope event listenters
