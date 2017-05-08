@@ -70,7 +70,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   };
 
   this.get = function (path, params, accept) {
-    return request('GET', path, params, accept);
+    return request('GET', path, null, params, accept);
   };
 
   this.post = function (path, data, params, accept) {
