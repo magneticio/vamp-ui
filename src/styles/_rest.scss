@@ -160,7 +160,8 @@ body {
   flex: 1 1 0;
   -moz-flex: 1 1 0;
   position: relative;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   -webkit-transition: flex-basis 0.5s ease;
   -moz-transition: flex-basis 0.5s ease;
