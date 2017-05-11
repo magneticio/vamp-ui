@@ -89,7 +89,13 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
   };
 
   this.peek = function () {
-    $vamp.peek(path, '', {}, 'YAML');
+    $vamp.get(path, null, 'YAML').then(function (response) {
+      if ($ctrl.base === null) {
+        $ctrl.valid = true;
+        $ctrl.base = $ctrl.source = response.data;
+      }
+    });
+
     $vamp.peek('/events', JSON.stringify({
       tags: [
         'archive', $ctrl.kind + ':' + $ctrl.name
@@ -100,10 +106,6 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
   this.peek();
 
   $scope.$on(path, function (e, response) {
-    if ($ctrl.base === null && response.status === 'OK' && response.content === 'YAML') {
-      $ctrl.valid = true;
-      $ctrl.base = $ctrl.source = response.data;
-    }
     if (response.content === 'JSON') {
       if (response.status === 'ERROR') {
         $ctrl.valid = false;
