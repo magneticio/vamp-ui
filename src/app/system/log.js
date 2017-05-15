@@ -65,7 +65,7 @@ function LogController($scope, $element, $vampLog) {
   };
 
   $ctrl.pushFiltered = function (log) {
-    if (!$ctrl.filter[log.level.toLowerCase()]) {
+    if (!log.level || !$ctrl.filter[log.level.toLowerCase()]) {
       return;
     }
     $ctrl.filteredLogs.push(log);
