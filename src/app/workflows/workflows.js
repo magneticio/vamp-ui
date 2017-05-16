@@ -15,8 +15,8 @@ function WorkflowsController($scope, $vamp, artifactsMetadata, $controller, uiSt
 
   $scope.proxy = function (workflow, instance, port, $event) {
     var path = 'proxy/workflows/' + workflow.name + '/instances/' + instance.name + '/ports/' + port + '/';
-    if ($vamp.origin) {
-      path = 'http://' + $vamp.origin + path;
+    if ($vamp.baseUrl) {
+      path = 'http://' + $vamp.baseUrl + path;
     }
     if ($event) {
       $event.stopPropagation();

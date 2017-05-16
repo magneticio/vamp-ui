@@ -245,8 +245,8 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vam
       return null;
     }
     var path = 'proxy/gateways/' + encodeURIComponent($ctrl.gateway.name) + '/';
-    if ($vamp.origin) {
-      path = 'http://' + $vamp.origin + path;
+    if ($vamp.baseUrl) {
+      path = 'http://' + $vamp.baseUrl + path;
     }
     if ($event) {
       uiStatesFactory.setProxyPanelViewState(path);

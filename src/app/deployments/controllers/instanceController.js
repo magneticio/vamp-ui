@@ -11,7 +11,7 @@ function InstanceController($scope, $http, $location, $interval, $element, $stat
   $ctrl.instanceName = $stateParams.instance;
 
   $ctrl.instance = _.find(serviceData.instances, {name: $ctrl.instanceName});
-  $ctrl.origin = $vamp.origin;
+  $ctrl.url = $vamp.baseUrl;
 
   $ctrl.isFollowLog = true;
   $ctrl.stdout = [];
@@ -56,15 +56,15 @@ function InstanceController($scope, $http, $location, $interval, $element, $stat
       };
     } else if (mesosUrl) {
       logEndpoints = {
-        masterState: 'http://' + $ctrl.origin + 'proxy/host/' + mesosUrl.host + '/port/' + mesosUrl.port + '/master/state.json',
+        masterState: 'http://' + $ctrl.url + 'proxy/host/' + mesosUrl.host + '/port/' + mesosUrl.port + '/master/state.json',
         slaveDebug: function (slave) {
-          return 'http://' + $ctrl.origin + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/debug';
+          return 'http://' + $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/debug';
         },
         stdout: function (slave, logLocation) {
-          return 'http://' + $ctrl.origin + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stdout';
+          return 'http://' + $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stdout';
         },
         stderr: function (slave, logLocation) {
-          return 'http://' + $ctrl.origin + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stderr';
+          return 'http://' + $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stderr';
         }
       };
     }

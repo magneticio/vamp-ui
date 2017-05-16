@@ -124,17 +124,17 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     }
 
     namespace = ns;
-
-    var url = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-    url += this.origin;
-    apiHost = window.location.protocol + '//' + this.origin;
+    this.baseUrl = this.origin;
 
     if (namespace) {
-      url += namespace + '/';
-      apiHost += namespace + '/';
+      this.baseUrl += namespace + '/';
     }
 
-    url += 'websocket';
+    var ws = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+    ws += this.baseUrl;
+    apiHost = window.location.protocol + '//' + this.baseUrl;
+
+    ws += 'websocket';
     apiHost += 'api/v1';
 
     var websocket = function () {
@@ -143,8 +143,8 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
         stream = null;
       }
 
-      $log.debug('websocket: ' + url);
-      stream = $websocket(url);
+      $log.debug('websocket: ' + ws);
+      stream = $websocket(ws);
 
       stream.onOpen(function (ev) {
         openConnections.push(ev.target.url);

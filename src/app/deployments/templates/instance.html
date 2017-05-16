@@ -55,11 +55,11 @@
           <div class="panel panel-default log-panel">
             <div class="panel-heading">
               <div class="pull-right">
-                <a class="btn btn-small btn-primary" href="{{ 'http://' + $ctrl.origin + 'proxy/deployments/' + $ctrl.name + '/clusters/' + $ctrl.cluster + '/services/' + $ctrl.serviceName + '/instances/' + $ctrl.instanceName + '/ports/' + portName + '/' }}" target="_blank" >Open in new tab</a>
+                <a class="btn btn-small btn-primary" href="{{ 'http://' + $ctrl.url + 'proxy/deployments/' + $ctrl.name + '/clusters/' + $ctrl.cluster + '/services/' + $ctrl.serviceName + '/instances/' + $ctrl.instanceName + '/ports/' + portName + '/' }}" target="_blank" >Open in new tab</a>
               </div>
             </div>
             <div class="panel-body">
-            <iframe ng-src="{{ 'http://' + $ctrl.origin + 'proxy/deployments/' + $ctrl.name + '/clusters/' + $ctrl.cluster + '/services/' + $ctrl.serviceName + '/instances/' + $ctrl.instanceName + '/ports/' + portName + '/' | trustUrl}}"></iframe>
+            <iframe ng-src="{{ 'http://' + $ctrl.url + 'proxy/deployments/' + $ctrl.name + '/clusters/' + $ctrl.cluster + '/services/' + $ctrl.serviceName + '/instances/' + $ctrl.instanceName + '/ports/' + portName + '/' | trustUrl}}"></iframe>
             </div>
         </uib-tab>
       </uib-tabset>
