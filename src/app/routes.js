@@ -50,6 +50,12 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       resolve: {
         artifactsMetadata: function ($stateParams) {
           return _.find(artifacts, {kind: $stateParams.kind});
+        },
+        typeConfig: function ($stateParams) {
+          return {
+            type: $stateParams.kind,
+            path: '/' + $stateParams.kind
+          };
         }
       },
       views: {

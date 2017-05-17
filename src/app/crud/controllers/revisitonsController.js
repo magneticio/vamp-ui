@@ -1,9 +1,9 @@
-function revisionsController($scope, $rootScope, revisionsService, $stateParams, $vamp) {
+function revisionsController($scope, $rootScope, revisionsService, $stateParams, $vamp, typeConfig) {
   var $ctrl = this;
 
   $scope.ncyBreadcrumbIgnore = true;
 
-  $ctrl.kind = $stateParams.kind;
+  $ctrl.kind = typeConfig.type;
   $ctrl.name = $stateParams.name;
   $ctrl.revisions = revisionsService.revisions;
   $ctrl.activeRevision = revisionsService.activeRevision;
@@ -47,5 +47,5 @@ function revisionsController($scope, $rootScope, revisionsService, $stateParams,
   $ctrl.peek();
 }
 
-revisionsController.$inject = ['$scope', '$rootScope', 'revisionsService', '$stateParams', '$vamp'];
+revisionsController.$inject = ['$scope', '$rootScope', 'revisionsService', '$stateParams', '$vamp', 'typeConfig'];
 angular.module('vamp-ui').controller('revisionsController', revisionsController);
