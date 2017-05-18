@@ -15,6 +15,18 @@ function routesConfig($stateProvider, $urlRouterProvider) {
   var emptyController = ['$scope', function () {
   }];
 
+  var artifactsReslove = {
+    artifactsMetadata: ['$stateParams', function ($stateParams) {
+      return _.find(artifacts, {kind: $stateParams.kind});
+    }],
+    typeConfig: ['$stateParams', function ($stateParams) {
+      return {
+        type: $stateParams.kind,
+        path: '/' + $stateParams.kind
+      };
+    }]
+  };
+
   if (!eeRouting) {
     $urlRouterProvider.otherwise('/vamp/deployments');
   }
@@ -47,17 +59,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           squash: true
         }
       },
-      resolve: {
-        artifactsMetadata: function ($stateParams) {
-          return _.find(artifacts, {kind: $stateParams.kind});
-        },
-        typeConfig: function ($stateParams) {
-          return {
-            type: $stateParams.kind,
-            path: '/' + $stateParams.kind
-          };
-        }
-      },
+      resolve: eeRouting && eeRouting.rootResolve || artifactsReslove,
       views: {
         "main@vamp": {
           controllerProvider: function (artifactsMetadata) {
@@ -144,8 +146,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        artifactData: function ($vamp, $stateParams) {
-          return $vamp.get('/' + $stateParams.kind + '/' + $stateParams.name)
+        artifactData: function ($vamp, $stateParams, artifactsMetadata) {
+          return $vamp.get('/' + artifactsMetadata.kind + '/' + $stateParams.name)
             .then(function (response) {
               var artifact = response.data;
 
