@@ -111,9 +111,9 @@ function EventController($scope, $vamp, $interval, uiStatesFactory, overlayServi
 
   function startPolling() {
     info();
-    if (!polling) {
-      polling = $interval(info, 15000);
-    }
+    // if (!polling) {
+    //   polling = $interval(info, 15000);
+    // }
     $ctrl.connected = true;
 
     overlayService.hide();

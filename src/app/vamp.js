@@ -17,8 +17,6 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   var stream;
   var openConnections = [];
   var transaction = 1;
-
-  var apiHost;
   var namespace;
 
   var responseAcceptTypes = {
@@ -77,16 +75,16 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     return request('POST', path, data, params, accept);
   };
 
-  this.peek = function (path, data, params, accept) {
-    websocketRequest(path, 'PEEK', data, params ? params : {}, accept ? accept : 'JSON');
+  this.peek = function (path, data, params, accept, ns) {
+    websocketRequest(path, 'PEEK', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : namespace);
   };
 
-  this.put = function (path, data, params, accept) {
-    websocketRequest(path, 'PUT', data, params ? params : {}, accept ? accept : 'JSON');
+  this.put = function (path, data, params, accept, ns) {
+    websocketRequest(path, 'PUT', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : namespace);
   };
 
-  this.remove = function (path, data, params, accept) {
-    websocketRequest(path, 'REMOVE', data, params ? params : {}, accept ? accept : 'JSON');
+  this.remove = function (path, data, params, accept, ns) {
+    websocketRequest(path, 'REMOVE', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : namespace);
   };
 
   this.await = function (request) {
@@ -132,10 +130,10 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
 
     var ws = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
     ws += this.baseUrl;
-    apiHost = window.location.protocol + '//' + this.baseUrl;
+    $this.apiHost = window.location.protocol + '//' + this.baseUrl;
 
     ws += 'websocket';
-    apiHost += 'api/v1';
+    $this.apiHost += 'api/v1';
 
     var websocket = function () {
       if (stream) {
@@ -173,7 +171,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     websocket();
   };
 
-  function websocketRequest(path, action, data, params, accept) {
+  function websocketRequest(path, action, data, params, accept, namespace) {
     if (!stream) {
       return null;
     }
@@ -207,7 +205,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
 
     var config = {
       method: method,
-      url: apiHost + path,
+      url: $this.apiHost + path,
       headers: {
         'Content-Type': 'application/json',
         'Accept': responseAcceptTypes[accept]
