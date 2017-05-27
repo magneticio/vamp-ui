@@ -58,4 +58,16 @@ function SideController($sce, $scope, $rootScope, $location, $vamp, uiStatesFact
       $vamp.peek('/info');
     }
   });
+
+  var path = ($state.params && $state.params.kind) || '';
+
+  if (Help.prototype.entries()[path]) {
+    $scope.help.title = path;
+    $scope.help.description = Help.prototype.entries()[path].description;
+    $scope.help.links = Help.prototype.entries()[path].links;
+  } else {
+    $scope.help.title = 'help';
+    $scope.help.description = Help.prototype.entries().default.description;
+    $scope.help.links = Help.prototype.entries().default.links;
+  }
 }

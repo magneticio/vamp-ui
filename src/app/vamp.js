@@ -225,7 +225,8 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
       return;
     }
     data = data.data;
-    if (!data.persistence || !data.pulse || !data.key_value || !data.gateway_driver || !data.container_driver || !data.workflow_driver) {
+
+    if (!data.persistence || !data.pulse || !data.key_value) {
       return;
     }
 
@@ -236,6 +237,11 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     $this.info.persistence = data.persistence.database.type === 'key-value' ? data.key_value.type : data.persistence.database.type;
     $this.info.pulse = data.pulse.type;
     $this.info.key_value_store = data.key_value.type;
+
+    if (!data.gateway_driver || !data.container_driver || !data.workflow_driver) {
+      return;
+    }
+
     $this.info.container_driver = data.container_driver.type;
 
     $this.info.gateway_driver = '';
