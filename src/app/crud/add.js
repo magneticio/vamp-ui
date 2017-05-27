@@ -3,7 +3,7 @@ angular.module('vamp-ui').controller('addController',
 function ($scope, $state, $stateParams, $timeout, $element, $vamp, artifact, toastr, alert) {
   var $ctrl = this;
 
-  $ctrl.kind = $stateParams.kind;
+  $ctrl.kind = $scope.$resolve.model;
   // naive singularization
   $ctrl.singular = $ctrl.kind.substring(0, $ctrl.kind.length - 1);
   $ctrl.title = 'New ' + $ctrl.singular;

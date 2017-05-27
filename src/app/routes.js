@@ -116,6 +116,9 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         singular: function (artifactsMetadata) {
           var model = (artifactsMetadata.model || artifactsMetadata.kind);
           return model.substring(0, model.length - 1);
+        },
+        model: function (artifactsMetadata) {
+          return artifactsMetadata.model || artifactsMetadata.kind;
         }
       },
       params: {
@@ -164,7 +167,6 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       data: {
-        model: '{{ model }}',
         allowedKinds: ['deployments', 'gateways'],
         breadcrumb: {
           title: '{{ singular | capitalize }} : {{ artifactData.metadata.title || artifactData.name }}'
