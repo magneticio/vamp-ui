@@ -5,7 +5,7 @@ function ($scope, $state, $stateParams, $timeout, $element, $vamp, artifact, toa
 
   $ctrl.kind = $scope.$resolve.model;
   // naive singularization
-  $ctrl.singular = $ctrl.kind.substring(0, $ctrl.kind.length - 1);
+  $ctrl.singular = $stateParams.kind.substring(0, $stateParams.kind.length - 1);
   $ctrl.title = 'New ' + $ctrl.singular;
 
   var path = '/' + $ctrl.kind;
@@ -110,7 +110,7 @@ function ($scope, $state, $stateParams, $timeout, $element, $vamp, artifact, toa
   function goBack() {
     validation = false;
     ignoreChange = true;
-    $state.go('artifacts', {kind: $ctrl.kind});
+    $state.go('artifacts', {kind: $stateParams.kind});
   }
 
   init();
