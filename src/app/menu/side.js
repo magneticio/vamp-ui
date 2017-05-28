@@ -4,7 +4,7 @@ angular.module('vamp-ui').component('side', {
   controller: SideController
 });
 
-function SideController($sce, $scope, $rootScope, $location, $vamp, uiStatesFactory, $state) {
+function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state) {
   var $ctrl = this;
   $scope.info = $vamp.info;
   $scope.help = {
@@ -57,6 +57,10 @@ function SideController($sce, $scope, $rootScope, $location, $vamp, uiStatesFact
     if (connection === 'opened') {
       $vamp.peek('/info');
     }
+  });
+
+  $scope.$on('/info', function () {
+    $scope.info = $vamp.info;
   });
 
   var path = ($state.params && $state.params.kind) || '';
