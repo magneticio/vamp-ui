@@ -1,8 +1,11 @@
+/* global Environment */
 angular.module('vamp-ui').controller('logController', LogController)
 .factory('$vampLog', ['$log', '$rootScope', '$vamp', function ($log, $rootScope, $vamp) {
   return new VampLogService($log, $rootScope, $vamp);
 }]).run(['$vampLog', function ($vampLog) {
-  $vampLog.init();
+  if (Environment.prototype.connect()) {
+    $vampLog.init();
+  }
 }]);
 
 function LogController($scope, $element, $vampLog) {
@@ -95,6 +98,7 @@ function VampLogService($log, $rootScope, $vamp) {
   var $level = 'INFO';
 
   $service.logs = [];
+  $service.initialized = false;
 
   this.level = function (level) {
     if (level && level !== $level) {
@@ -105,6 +109,7 @@ function VampLogService($log, $rootScope, $vamp) {
   };
 
   this.init = function () {
+    $service.initialized = true;
     $service.peek();
   };
 
@@ -137,6 +142,9 @@ function VampLogService($log, $rootScope, $vamp) {
   };
 
   this.peek = function () {
+    if (!$service.initialized) {
+      return;
+    }
     $log.debug('log level: ' + $level);
     $vamp.peek('/log', '', {logger: 'io.vamp', level: $level});
   };
