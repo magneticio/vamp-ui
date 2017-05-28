@@ -56,7 +56,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
 
     var path = response.path;
 
-    if (namespace) {
+    if (namespace && path.startsWith('/' + namespace + '/')) {
       path = path.substring(('/' + namespace).length);
     }
 

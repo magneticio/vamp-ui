@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-  <li ng-repeat="crumb in breadcrumbs" has-permission="{{crumb.data.roles && crumb.data.roles.join(',')}}">
+  <li ng-repeat="crumb in breadcrumbs">
       <a ng-if="!crumb.data.breadcrumb.preventTransition && !$last" ui-sref="{{ crumb.route }}" ui-sref-opts="{reload:true}" >{{ crumb.displayName }} </a>
       <span ng-if="(crumb.data.breadcrumb.preventTransition) || $last">{{ crumb.displayName }}</span>
   </li>
