@@ -15,9 +15,8 @@ angular.module('vamp-ui')
 function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   var $this = this;
   var stream;
-  var openConnections = [];
+  var connections = [];
   var transaction = 1;
-  var namespace;
 
   var responseAcceptTypes = {
     JSON: 'application/json',
@@ -25,6 +24,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   };
 
   $this.info = {};
+  $this.requestNamespace = $this.connectionNamespace = null;
 
   var notify = function (name, value) {
     $log.debug('websocket notify: ' + name + ' :: ' + JSON.stringify(value));
@@ -56,11 +56,27 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
 
     var path = response.path;
 
-    if (namespace && path.startsWith('/' + namespace + '/')) {
-      path = path.substring(('/' + namespace).length);
+    if ($this.connectionNamespace && path.startsWith('/' + $this.connectionNamespace + '/')) {
+      path = path.substring(('/' + $this.connectionNamespace).length);
+    }
+
+    if ($this.requestNamespace && path.startsWith('/' + $this.requestNamespace + '/')) {
+      path = path.substring(('/' + $this.requestNamespace).length);
     }
 
     notify(path, response);
+  };
+
+  this.apiHostPath = function () {
+    var baseUrl = this.origin;
+
+    if ($this.requestNamespace) {
+      baseUrl += $this.requestNamespace + '/';
+    } else if ($this.connectionNamespace) {
+      baseUrl += $this.connectionNamespace + '/';
+    }
+
+    return window.location.protocol + '//' + baseUrl + 'api/v1';
   };
 
   this.connected = function () {
@@ -76,15 +92,15 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   };
 
   this.peek = function (path, data, params, accept, ns) {
-    websocketRequest(path, 'PEEK', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : namespace);
+    websocketRequest(path, 'PEEK', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : $this.requestNamespace);
   };
 
   this.put = function (path, data, params, accept, ns) {
-    websocketRequest(path, 'PUT', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : namespace);
+    websocketRequest(path, 'PUT', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : $this.requestNamespace);
   };
 
   this.remove = function (path, data, params, accept, ns) {
-    websocketRequest(path, 'REMOVE', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : namespace);
+    websocketRequest(path, 'REMOVE', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : $this.requestNamespace);
   };
 
   this.await = function (request) {
@@ -116,24 +132,15 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     }
   };
 
-  this.connect = function (ns) {
-    if (namespace && ns === namespace) {
-      return;
-    }
+  this.connect = function () {
+    var baseUrl = this.origin;
 
-    namespace = ns;
-    this.baseUrl = this.origin;
-
-    if (namespace) {
-      this.baseUrl += namespace + '/';
+    if ($this.connectionNamespace) {
+      baseUrl += $this.connectionNamespace + '/';
     }
 
     var ws = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-    ws += this.baseUrl;
-    $this.apiHost = window.location.protocol + '//' + this.baseUrl;
-
-    ws += 'websocket';
-    $this.apiHost += 'api/v1';
+    ws += baseUrl + 'websocket';
 
     var websocket = function () {
       if (stream) {
@@ -145,15 +152,13 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
       stream = $websocket(ws);
 
       stream.onOpen(function (ev) {
-        openConnections.push(ev.target.url);
+        connections.push(ev.target.url);
         $log.debug('websocket is opened');
         notify('$vamp:connection', 'opened');
       });
 
-      stream.onClose(function (ev) {
-        openConnections.splice(openConnections.indexOf(ev.target.url), 1);
-
-        if (openConnections.length > 0) {
+      stream.onClose(function () {
+        if (!connections) {
           return;
         }
 
@@ -171,6 +176,15 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     websocket();
   };
 
+  this.disconnect = function () {
+    if (stream) {
+      connections.length = 0;
+      stream.close();
+      stream = null;
+    }
+    $this.connectionNamespace = $this.requestNamespace = null;
+  };
+
   function websocketRequest(path, action, data, params, accept, namespace) {
     if (!stream) {
       return null;
@@ -182,6 +196,10 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
 
     if (namespace) {
       path = '/' + namespace + path;
+    } else if ($this.requestNamespace) {
+      path = '/' + $this.requestNamespace + path;
+    } else if ($this.connectionNamespace) {
+      path = '/' + $this.connectionNamespace + path;
     }
 
     var message = {
@@ -205,7 +223,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
 
     var config = {
       method: method,
-      url: $this.apiHost + path,
+      url: $this.apiHostPath() + path,
       headers: {
         'Content-Type': 'application/json',
         'Accept': responseAcceptTypes[accept]
