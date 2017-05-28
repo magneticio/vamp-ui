@@ -114,8 +114,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       },
       resolve: {
         singular: function (artifactsMetadata) {
-          var model = (artifactsMetadata.model || artifactsMetadata.kind);
-          return model.substring(0, model.length - 1);
+          return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
         },
         model: function (artifactsMetadata) {
           return artifactsMetadata.model || artifactsMetadata.kind;

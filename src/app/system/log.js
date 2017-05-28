@@ -113,6 +113,10 @@ function VampLogService($log, $rootScope, $vamp) {
     $service.peek();
   };
 
+  this.shutdown = function () {
+    $service.initialized = false;
+  };
+
   this.clear = function () {
     $service.logs = [];
   };
