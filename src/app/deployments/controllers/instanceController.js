@@ -1,7 +1,7 @@
 angular.module('vamp-ui')
   .controller('instanceController', InstanceController);
 
-function InstanceController($scope, $http, $location, $interval, $element, $state, $stateParams, clusterData, serviceData, $vamp) {
+function InstanceController($scope, $http, $interval, $element, $stateParams, clusterData, serviceData, $vamp) {
   var $ctrl = this;
 
   $ctrl.kind = $stateParams.kind;
@@ -11,7 +11,15 @@ function InstanceController($scope, $http, $location, $interval, $element, $stat
   $ctrl.instanceName = $stateParams.instance;
 
   $ctrl.instance = _.find(serviceData.instances, {name: $ctrl.instanceName});
-  $ctrl.url = $vamp.baseUrl;
+  $ctrl.url = '';
+  if ($vamp.baseUrl) {
+    $ctrl.url = window.location.protocol + '//' + $vamp.baseUrl;
+  }
+  if ($vamp.getRequestNamespace()) {
+    $ctrl.url += $vamp.getRequestNamespace() + '/';
+  } else if ($vamp.getConnectionNamespace()) {
+    $ctrl.url += $vamp.getConnectionNamespace() + '/';
+  }
 
   $ctrl.isFollowLog = true;
   $ctrl.stdout = [];
@@ -43,28 +51,28 @@ function InstanceController($scope, $http, $location, $interval, $element, $stat
     // Based on urls the logEndpoints object gets instantiated
     if (dcosUrl) {
       logEndpoints = {
-        masterState: 'http://' + dcosUrl + '/mesos/master/state.json',
+        masterState: window.location.protocol + '//' + dcosUrl + '/mesos/master/state.json',
         slaveDebug: function (slave) {
-          return 'http://' + dcosUrl + '/agent/' + slave.id + '/files/debug';
+          return window.location.protocol + '//' + dcosUrl + '/agent/' + slave.id + '/files/debug';
         },
         stdout: function (slaveId, logLocation) {
-          return 'http://' + dcosUrl + '/agent/' + slave.id + '/files/read?offset=0&path=' + logLocation + '/stdout';
+          return window.location.protocol + '//' + dcosUrl + '/agent/' + slave.id + '/files/read?offset=0&path=' + logLocation + '/stdout';
         },
         stderr: function (slaveId, logLocation) {
-          return 'http://' + dcosUrl + '/agent/' + slave.id + '/files/read?offset=0&path=' + logLocation + '/stderr';
+          return window.location.protocol + '//' + dcosUrl + '/agent/' + slave.id + '/files/read?offset=0&path=' + logLocation + '/stderr';
         }
       };
     } else if (mesosUrl) {
       logEndpoints = {
-        masterState: 'http://' + $ctrl.url + 'proxy/host/' + mesosUrl.host + '/port/' + mesosUrl.port + '/master/state.json',
+        masterState: $ctrl.url + 'proxy/host/' + mesosUrl.host + '/port/' + mesosUrl.port + '/master/state.json',
         slaveDebug: function (slave) {
-          return 'http://' + $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/debug';
+          return $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/debug';
         },
         stdout: function (slave, logLocation) {
-          return 'http://' + $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stdout';
+          return $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stdout';
         },
         stderr: function (slave, logLocation) {
-          return 'http://' + $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stderr';
+          return $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stderr';
         }
       };
     }
