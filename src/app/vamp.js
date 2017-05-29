@@ -24,7 +24,9 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   };
 
   $this.info = {};
-  $this.requestNamespace = $this.connectionNamespace = null;
+
+  var requestNamespace = null;
+  var connectionNamespace = null;
 
   var notify = function (name, value) {
     $log.debug('websocket notify: ' + name + ' :: ' + JSON.stringify(value));
@@ -56,24 +58,48 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
 
     var path = response.path;
 
-    if ($this.connectionNamespace && path.startsWith('/' + $this.connectionNamespace + '/')) {
-      path = path.substring(('/' + $this.connectionNamespace).length);
+    if (connectionNamespace && path.startsWith('/' + connectionNamespace + '/')) {
+      path = path.substring(('/' + connectionNamespace).length);
     }
 
-    if ($this.requestNamespace && path.startsWith('/' + $this.requestNamespace + '/')) {
-      path = path.substring(('/' + $this.requestNamespace).length);
+    if (requestNamespace && path.startsWith('/' + requestNamespace + '/')) {
+      path = path.substring(('/' + requestNamespace).length);
     }
 
     notify(path, response);
   };
 
+  this.getRequestNamespace = function () {
+    return requestNamespace;
+  };
+
+  this.setRequestNamespace = function (namespace) {
+    var changed = requestNamespace !== namespace;
+    requestNamespace = namespace;
+    if (changed) {
+      notify('$vamp:namespace', 'changed');
+    }
+  };
+
+  this.getConnectionNamespace = function () {
+    return connectionNamespace;
+  };
+
+  this.setConnectionNamespace = function (namespace) {
+    var changed = connectionNamespace !== namespace;
+    connectionNamespace = namespace;
+    if (changed) {
+      notify('$vamp:namespace', 'changed');
+    }
+  };
+
   this.apiHostPath = function () {
     var baseUrl = this.origin;
 
-    if ($this.requestNamespace) {
-      baseUrl += $this.requestNamespace + '/';
-    } else if ($this.connectionNamespace) {
-      baseUrl += $this.connectionNamespace + '/';
+    if (requestNamespace) {
+      baseUrl += requestNamespace + '/';
+    } else if (connectionNamespace) {
+      baseUrl += connectionNamespace + '/';
     }
 
     return window.location.protocol + '//' + baseUrl + 'api/v1';
@@ -92,15 +118,15 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   };
 
   this.peek = function (path, data, params, accept, ns) {
-    websocketRequest(path, 'PEEK', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : $this.requestNamespace);
+    websocketRequest(path, 'PEEK', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : requestNamespace);
   };
 
   this.put = function (path, data, params, accept, ns) {
-    websocketRequest(path, 'PUT', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : $this.requestNamespace);
+    websocketRequest(path, 'PUT', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : requestNamespace);
   };
 
   this.remove = function (path, data, params, accept, ns) {
-    websocketRequest(path, 'REMOVE', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : $this.requestNamespace);
+    websocketRequest(path, 'REMOVE', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : requestNamespace);
   };
 
   this.await = function (request) {
@@ -135,8 +161,8 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   this.connect = function () {
     var baseUrl = this.origin;
 
-    if ($this.connectionNamespace) {
-      baseUrl += $this.connectionNamespace + '/';
+    if (connectionNamespace) {
+      baseUrl += connectionNamespace + '/';
     }
 
     var ws = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
@@ -182,7 +208,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
       stream.close();
       stream = null;
     }
-    $this.connectionNamespace = $this.requestNamespace = null;
+    connectionNamespace = requestNamespace = null;
   };
 
   function websocketRequest(path, action, data, params, accept, namespace) {
@@ -196,10 +222,10 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
 
     if (namespace) {
       path = '/' + namespace + path;
-    } else if ($this.requestNamespace) {
-      path = '/' + $this.requestNamespace + path;
-    } else if ($this.connectionNamespace) {
-      path = '/' + $this.connectionNamespace + path;
+    } else if (requestNamespace) {
+      path = '/' + requestNamespace + path;
+    } else if (connectionNamespace) {
+      path = '/' + connectionNamespace + path;
     }
 
     var message = {
