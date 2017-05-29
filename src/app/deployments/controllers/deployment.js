@@ -252,8 +252,13 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
 
   $ctrl.proxy = function (cluster, service, instance, port, $event) {
     var path = '/proxy/deployments/' + $ctrl.deployment.name + '/clusters/' + cluster.name + '/services/' + service.breed.name + '/instances/' + instance.name + '/ports/' + port + '/';
+    if ($vamp.getRequestNamespace()) {
+      path = $vamp.getRequestNamespace() + '/' + path;
+    } else if ($vamp.getConnectionNamespace()) {
+      path = $vamp.getConnectionNamespace() + '/' + path;
+    }
     if ($vamp.baseUrl) {
-      path = 'http://' + $vamp.baseUrl + path;
+      path = window.location.protocol + '//' + $vamp.baseUrl + path;
     }
     if ($event) {
       uiStatesFactory.setProxyPanelViewState(path);

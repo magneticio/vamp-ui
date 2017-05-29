@@ -45,8 +45,13 @@ function WorkflowController($scope, $vamp, toastr, workflowWebPortService, uiSta
 
   $ctrl.proxy = function (instance, port, $event) {
     var path = 'proxy/workflows/' + $ctrl.workflow.name + '/instances/' + instance.name + '/ports/' + port + '/';
+    if ($vamp.getRequestNamespace()) {
+      path = $vamp.getRequestNamespace() + '/' + path;
+    } else if ($vamp.getConnectionNamespace()) {
+      path = $vamp.getConnectionNamespace() + '/' + path;
+    }
     if ($vamp.baseUrl) {
-      path = 'http://' + $vamp.baseUrl + path;
+      path = window.location.protocol + '//' + $vamp.baseUrl + path;
     }
     if ($event) {
       $event.stopPropagation();

@@ -51,15 +51,15 @@
                 <td>KEY VALUE STORE</td>
                 <td>{{info.key_value_store}}</td>
             </tr>
-            <tr>
+            <tr ng-if="info.gateway_driver">
                 <td>GATEWAY DRIVER</td>
                 <td>{{info.gateway_driver}}</td>
             </tr>
-            <tr>
+            <tr ng-if="info.container_driver">
                 <td>CONTAINER DRIVER</td>
                 <td>{{info.container_driver}}</td>
             </tr>
-            <tr>
+            <tr ng-if="info.workflow_driver">
                 <td>WORKFLOW DRIVER</td>
                 <td>{{info.workflow_driver}}</td>
             </tr>

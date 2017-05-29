@@ -3,7 +3,7 @@ angular.module('vamp-ui').controller('edit',
 function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout, uiStatesFactory, revisionsService, $element, $vamp, artifact, snippet, toastr, alert) {
   var $ctrl = this;
 
-  this.kind = $stateParams.kind;
+  this.kind = $scope.$resolve.model;
   this.name = $stateParams.name;
   this.title = $filter('decodeName')(this.name);
 
@@ -18,7 +18,6 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
   this.base = null;
   this.source = null;
 
-  // $ctrl.revisions = revisionsService.revisions;
   $ctrl.activeRevisiton = revisionsService.activeRevision;
 
   this.valid = true;

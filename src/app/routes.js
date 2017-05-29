@@ -1,21 +1,23 @@
 /* global VAMP */
 
-angular.module('vamp-ui')
- .config(routesConfig);
+angular.module('vamp-ui').config(routesConfig);
 
 /** @ngInject */
 function routesConfig($stateProvider, $urlRouterProvider) {
+  var external = VAMP.External;
   var artifacts = VAMP.Artifacts.prototype.all();
-  var eeRouting = VAMP.EnterpriseRoutingConfig;
+
+  if (external && external.artifacts) {
+    artifacts = artifacts.concat(external.artifacts());
+  }
 
   var artifactKinds = _.map(artifacts, function (a) {
     return a.kind;
   });
 
-  var emptyController = ['$scope', function () {
-  }];
+  var emptyController = ['$scope', function () {}];
 
-  var artifactsReslove = {
+  var artifactsResolve = {
     artifactsMetadata: ['$stateParams', function ($stateParams) {
       return _.find(artifacts, {kind: $stateParams.kind});
     }],
@@ -27,7 +29,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     }]
   };
 
-  if (!eeRouting) {
+  if (!external) {
     $urlRouterProvider.otherwise('/vamp/deployments');
   }
 
@@ -47,7 +49,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       }
     })
     .state('artifacts', {
-      parent: eeRouting && eeRouting.rootName || 'vamp',
+      parent: external && external.name || 'vamp',
       url: '/{kind:(?:' + artifactKinds.join('|') + ')}?page&searchTerm',
       params: {
         page: {
@@ -59,7 +61,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           squash: true
         }
       },
-      resolve: eeRouting && eeRouting.rootResolve || artifactsReslove,
+      resolve: external && external.resolve || artifactsResolve,
       views: {
         "main@vamp": {
           controllerProvider: function (artifactsMetadata) {
@@ -113,6 +115,9 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       resolve: {
         singular: function (artifactsMetadata) {
           return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
+        },
+        model: function (artifactsMetadata) {
+          return artifactsMetadata.model || artifactsMetadata.kind;
         }
       },
       params: {
@@ -147,21 +152,23 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       },
       resolve: {
         artifactData: function ($vamp, $stateParams, artifactsMetadata) {
-          return $vamp.get('/' + artifactsMetadata.kind + '/' + $stateParams.name)
+          var model = (artifactsMetadata.model || artifactsMetadata.kind);
+          return $vamp.get('/' + model + '/' + $stateParams.name)
             .then(function (response) {
-              var artifact = response.data;
-
-              return artifact;
+              return response.data;
             });
         },
         singular: function (artifactsMetadata) {
           return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
+        },
+        model: function (artifactsMetadata) {
+          return artifactsMetadata.model || artifactsMetadata.kind;
         }
       },
       data: {
         allowedKinds: ['deployments', 'gateways'],
         breadcrumb: {
-          title: '{{ singular | capitalize }} : {{ artifactData.name }}'
+          title: '{{ singular | capitalize }} : {{ artifactData.metadata.title || artifactData.name }}'
         }
       }
     })
@@ -266,7 +273,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       }
     })
     .state('admin', {
-      parent: eeRouting && eeRouting.rootName || 'vamp',
+      parent: external && external.name || 'vamp',
       url: '/admin',
       abstract: true
     })

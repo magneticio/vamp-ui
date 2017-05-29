@@ -29,11 +29,11 @@
         <div ng-transclude="buttonsSlot">
         </div>
         <button class="btn btn-danger" type="submit"
-                ng-if="$explorer.isSelectedAny()"
+                ng-if="!$explorer.noDelete && $explorer.isSelectedAny()"
                 ng-click="$explorer.deleteSelected()">
             Delete selected
         </button>
-        <button class="btn btn-primary" type="submit" ng-click="$explorer.add()">
+        <button ng-if="!$explorer.noAdd" class="btn btn-primary" type="submit" ng-click="$explorer.add()">
             Add
         </button>
       </div>

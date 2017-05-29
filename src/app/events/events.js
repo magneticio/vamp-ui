@@ -99,6 +99,10 @@ function EventController($scope, $vamp, $interval, uiStatesFactory, overlayServi
     onEvent(response.data);
   });
 
+  $scope.$on('$vamp:namespace', function () {
+    start();
+  });
+
   // jvm metrics
 
   var polling;

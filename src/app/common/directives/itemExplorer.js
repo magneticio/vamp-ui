@@ -4,6 +4,8 @@ angular.module('vamp-ui').directive('itemExplorer', [function () {
     scope: {
       items: '=',
       itemTypeConfig: '=',
+      noDelete: '=',
+      noAdd: '=',
       onView: '&',
       onDelete: '&',
       onAdd: '&'
@@ -36,6 +38,8 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
   // Init
   $explorer.itemTypeConfig = $scope.itemTypeConfig;
   $explorer.type = $explorer.itemTypeConfig.type;
+  $explorer.noDelete = $scope.noDelete;
+  $explorer.noAdd = $scope.noAdd;
 
   if (!$explorer.path) {
     $explorer.path = $explorer.itemTypeConfig.path;

@@ -4,7 +4,7 @@ angular.module('vamp-ui').component('side', {
   controller: SideController
 });
 
-function SideController($sce, $scope, $rootScope, $location, $vamp, uiStatesFactory, $state) {
+function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state) {
   var $ctrl = this;
   $scope.info = $vamp.info;
   $scope.help = {
@@ -58,4 +58,20 @@ function SideController($sce, $scope, $rootScope, $location, $vamp, uiStatesFact
       $vamp.peek('/info');
     }
   });
+
+  $scope.$on('/info', function () {
+    $scope.info = $vamp.info;
+  });
+
+  var path = ($state.params && $state.params.kind) || '';
+
+  if (Help.prototype.entries()[path]) {
+    $scope.help.title = path;
+    $scope.help.description = Help.prototype.entries()[path].description;
+    $scope.help.links = Help.prototype.entries()[path].links;
+  } else {
+    $scope.help.title = 'help';
+    $scope.help.description = Help.prototype.entries().default.description;
+    $scope.help.links = Help.prototype.entries().default.links;
+  }
 }
