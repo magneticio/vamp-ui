@@ -108,21 +108,21 @@ function VgaController($state, $scope, $timeout, $element, $vamp, $q, toastr, al
 
   $ctrl.load = function () {
     $ctrl.inEdit = false;
-    $vamp.await(function () {
-      $vamp.peek('vga/' + $ctrl.marshaller() + '/' + $ctrl.mode(), '', {}, 'YAML');
-    }).then(function (response) {
-      $timeout(function () {
-        var data = response.data || '';
-        $ctrl.source = data;
-        if ($ctrl.mode() === 'template') {
-          $ctrl.template.base = data;
-          $ctrl.template.current = data;
-        } else {
-          $ctrl.template.base = null;
-          $ctrl.template.current = null;
-        }
-      }, 0);
-    });
+
+    $vamp.get('/vga/' + $ctrl.marshaller() + '/' + $ctrl.mode(), null, 'YAML')
+      .then(function (res) {
+        $timeout(function () {
+          var data = res.data || '';
+          $ctrl.source = data;
+          if ($ctrl.mode() === 'template') {
+            $ctrl.template.base = data;
+            $ctrl.template.current = data;
+          } else {
+            $ctrl.template.base = null;
+            $ctrl.template.current = null;
+          }
+        }, 0);
+      });
   };
 
   $vamp.await(function () {

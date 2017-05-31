@@ -6,13 +6,12 @@ function InfoController($scope, $timeout, $vamp, artifact) {
   $ctrl.source = '';
 
   $ctrl.peek = function load() {
-    $vamp.await(function () {
-      $vamp.peek('info', '', {}, 'YAML');
-    }).then(function (response) {
-      $timeout(function () {
-        $ctrl.source = response.data || '';
-      }, 0);
-    });
+    $vamp.get('/info', null, 'YAML')
+      .then(function (res) {
+        $timeout(function () {
+          $ctrl.source = res.data || '';
+        }, 0);
+      });
   };
 
   $scope.$on('$vamp:connection', function (event, connection) {
