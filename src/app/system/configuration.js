@@ -47,24 +47,24 @@ function ConfigurationController($scope, $timeout, $element, $state, artifact, $
     $ctrl.source = '';
     $ctrl.inEdit = false;
 
-    $vamp.await(function () {
-      $vamp.peek('configuration', '', {type: type, flatten: $ctrl.flatten}, 'YAML');
-    }).then(function (response) {
-      $timeout(function () {
-        var data = response.data || '';
-        $ctrl.type = type;
-        $ctrl.source = data;
-        if (type === 'dynamic') {
-          $ctrl.dynamic.base = data;
-          $ctrl.dynamic.current = data;
-        }
-      }, 0);
-    }).catch(function () {
-      $timeout(function () {
-        $ctrl.type = 'ERROR';
-        $ctrl.source = '';
-      }, 0);
-    });
+    $vamp.get('/configuration', {type: type, flatten: $ctrl.flatten}, 'YAML')
+      .then(function (res) {
+        $timeout(function () {
+          var data = res.data || '';
+          $ctrl.type = type;
+          $ctrl.source = data;
+          if (type === 'dynamic') {
+            $ctrl.dynamic.base = data;
+            $ctrl.dynamic.current = data;
+          }
+        }, 0);
+      })
+      .catch(function () {
+        $timeout(function () {
+          $ctrl.type = 'ERROR';
+          $ctrl.source = '';
+        }, 0);
+      });
   };
 
   $ctrl.update = function () {
