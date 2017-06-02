@@ -185,7 +185,7 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
       addedServices = _.difference(flatten(deployment), flatten($ctrl.deployment));
       $timeout(function () {
         addedServices = [];
-      }, 20000);
+      }, 2000);
     }
   }
 

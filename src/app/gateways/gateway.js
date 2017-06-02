@@ -162,7 +162,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vam
       addedRoutes = _.difference(_.map(gateway.routes, 'lookup_name'), _.map($ctrl.gateway.routes, 'lookup_name'));
       $timeout(function () {
         addedRoutes = [];
-      }, 20000);
+      }, 2000);
     }
   }
 
