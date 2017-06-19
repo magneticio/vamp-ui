@@ -136,7 +136,6 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     var promise = new Promise(function (resolve, reject) {
       awaiting[current].reject = reject;
       awaiting[current].resolve = resolve;
-      console.log($timeout);
       $timeout(function () {
         if (awaiting[current]) {
           awaiting[current].reject();
@@ -188,11 +187,11 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
         if (!connections) {
           return;
         }
-
-        $log.info('websocket closed, will try to reconnect in 5 seconds...');
+        var retryPeriod = 3; // seconds
+        $log.info('websocket closed, will try to reconnect in ' + retryPeriod + ' seconds...');
         notify('$vamp:connection', 'closed');
         stream = null;
-        $timeout(websocket, 20000);
+        $timeout(websocket, retryPeriod * 1000);
       });
 
       stream.onMessage(function (message) {
