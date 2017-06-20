@@ -106,6 +106,7 @@ function EventController($scope, $vamp, $interval, uiStatesFactory, overlayServi
   // jvm metrics
 
   var polling;
+  var showDisconnected = 0;
 
   $ctrl.connected = false;
 
@@ -119,16 +120,12 @@ function EventController($scope, $vamp, $interval, uiStatesFactory, overlayServi
       polling = $interval(info, 15000);
     }
     $ctrl.connected = true;
-
-    overlayService.hide();
   }
 
   function stopPolling() {
     $ctrl.connected = false;
     $interval.cancel(polling);
     polling = undefined;
-
-    overlayService.display('error.disconnected');
   }
 
   if ($vamp.connected()) {
@@ -138,13 +135,19 @@ function EventController($scope, $vamp, $interval, uiStatesFactory, overlayServi
   $scope.$on('$vamp:connection', function (event, connection) {
     if (connection === 'opened') {
       startPolling();
+      showDisconnected = 0;
+      overlayService.hide();
     } else {
       stopPolling();
+      showDisconnected++;
+      if (showDisconnected > 1) {
+        overlayService.display('error.disconnected');
+      }
     }
   });
 
   $scope.$on('/info', function (event, data) {
-    if (data.content === 'JSON') {
+    if (data.content === 'JSON' && data.data.jvm) {
       var info = data.data;
       $ctrl.jvm = {
         systemLoad: info.jvm.operating_system.system_load_average,
