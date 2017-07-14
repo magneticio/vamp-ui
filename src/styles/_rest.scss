@@ -430,11 +430,11 @@ edit, add {
   transition: right 0.3s ease-in-out;
 
   .table tbody tr {
-    vertical-align: bottom;
+    vertical-align: top;
     :nth-child(1) {
       color: $color-text-dark;
       font-size: $font-size-small !important;
-      vertical-align: bottom !important;
+      vertical-align: top !important;
       a {
         color: $color-text;
       }
@@ -1428,22 +1428,9 @@ snippet {
   padding: 5px;
   color: $white;
   text-align: center;
-  text-decoration: underline;
-  &:hover {
-    cursor: pointer;
-    color: $color-bg;
-  }
-  &:focus {
-    color: $white;
-  }
-
-  &.toggled {
-    background-color: rgba(0, 0, 0, 0.3);
-  }
 }
 
 .proxy-anchor {
-  //@extend .side-button;
   cursor: pointer;
   color: #1D96B2;
   font-size: $font-size-normal;

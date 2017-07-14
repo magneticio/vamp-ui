@@ -1,6 +1,8 @@
-
 /* Sidebar Styles */
 
+svgicon {
+  display: inline-block;
+}
 
 menu {
   :focus {
@@ -22,12 +24,11 @@ menu {
     padding: 0;
     overflow-y: auto;
     overflow-x: hidden;
-   }
+  }
 
-   li.sidebar-brand {
+  li.sidebar-brand {
     height: $header-height;
     line-height: $header-height;
-    border-bottom: 1px solid $dark-blue;
 
     a {
       padding-left: 2rem;
@@ -44,37 +45,46 @@ menu {
       }
 
       .vamp-logo {
-       height : 4rem;
-       margin-right: 1.8rem;
+        height: 3.5rem;
+        margin-right: 1.8rem;
       }
       .vamp-title {
-       height : 2.9rem;
-       margin-top: 1.1rem
+        height: 2.9rem;
+        margin-top: 1.1rem
       }
     }
-   }
+  }
 
-   ul {
-     list-style: none;
-     font-size: $font-size-normal;
-     font-weight: $font-weight-light;
-		 margin-bottom: 0px;
-		 padding:0;
-		 width:25rem;
-		 margin:0;
+  ul {
+    list-style: none;
+    font-size: 14px;
+    font-weight: $font-weight-light;
+    margin-bottom: 0px;
+    padding: 0;
+    width: 25rem;
+    margin: 0;
 
-		 &.sub-menu {
-       & > li {
-         .btn-link,
-          a {
-            padding-left: 4.5rem;
-            background-color: $night;
-          }
-       }
-		 }
+    li:not(.sidebar-brand):not(.sub-menu-item):nth-of-type(3),
+    li:not(.sidebar-brand):not(.sub-menu-item):nth-of-type(7) {
+      margin-bottom: 50px;
+    }
+
+    li:not(.sidebar-brand):not(.sub-menu-item):last-of-type {
+      margin-top: 160px;
+    }
+
+    &.sub-menu {
+      & > li {
+        .btn-link,
+        a {
+          padding-left: 4.5rem;
+          background-color: $night;
+        }
+      }
+    }
 
     li:not(.sidebar-brand) {
-			user-select:none;
+      user-select: none;
       line-height: 6rem;
       cursor: pointer;
       background-color: $pitch;
@@ -92,38 +102,49 @@ menu {
         text-decoration: none;
 
         & > .btn-link,
-				& > a {
+        & > a {
           padding-left: 2rem;
-				}
-
-        ul.sub-menu {
-          & > li {
-            .btn-link,
-             a {
-               padding-left: 4rem;
-             }
+          & > svgicon {
+            svg {
+              fill: $color-icon-active;
+              g, path {
+                fill: $color-icon-active;
+                stroke: $color-icon-active;
+              }
+            }
           }
         }
-			}
+
+        ul.sub-menu {
+          font-size: 12px;
+          & > li {
+            .btn-link,
+            a {
+              padding-left: 4rem;
+            }
+
+          }
+        }
+      }
 
       &.active:not(.has-sub-menu) {
         & > .btn-link,
-				& > a {
-					text-decoration: none;
-					background-color: $night;
+        & > a {
+          text-decoration: none;
+          background-color: $night;
           font-weight: $font-weight-bold;
           color: $misty;
 
-					&:hover {
-						background-color: $night;
+          &:hover {
+            background-color: $night;
             text-decoration: none;
             font-weight: $font-weight-bold;
             color: $misty;
-					}
-				}
+          }
+        }
       }
 
-			.btn-link,
+      .btn-link,
       a {
         font-weight: $font-weight-light;
         color: $medium-blue;
@@ -132,11 +153,30 @@ menu {
         text-decoration: none;
         transition: padding-left 200ms ease;
 
-        & > span {
-          display: block;
+        & > svgicon {
+          padding-right: 16px;
+          svg {
+            margin-bottom: -6px;
+            width: 20px;
+            height: 20px;
+          }
+          &:not(.collapse-btn) {
+            svg {
+              fill: $color-icon-inactive;
+              g, path {
+                fill: $color-icon-inactive;
+                stroke: $color-icon-inactive;
+              }
+            }
+          }
+        }
 
-          &::first-letter {
-            text-transform: capitalize;
+        & > span {
+          display: inline;
+          text-transform: capitalize;
+
+          & > .icon-dropdown {
+            margin-left: 8rem;
           }
         }
 
@@ -149,8 +189,8 @@ menu {
 
         &:focus {
           text-decoration: none;
-					font-weight: $font-weight-bold;
-					color: $misty;
+          font-weight: $font-weight-bold;
+          color: $misty;
         }
       }
     }
