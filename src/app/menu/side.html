@@ -39,15 +39,15 @@
                 <td>UI VERSION</td>
                 <td>{{info.ui_version}}</td>
             </tr>
-            <tr>
+            <tr ng-if="info.persistence">
                 <td>PERSISTENCE</td>
                 <td>{{info.persistence}}</td>
             </tr>
-            <tr>
+            <tr ng-if="info.pulse">
                 <td>PULSE</td>
                 <td>{{info.pulse}}</td>
             </tr>
-            <tr>
+            <tr ng-if="info.key_value_store">
                 <td>KEY VALUE STORE</td>
                 <td>{{info.key_value_store}}</td>
             </tr>

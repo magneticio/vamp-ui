@@ -270,14 +270,15 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     }
     data = data.data;
 
-    if (!data.persistence || !data.pulse || !data.key_value) {
-      return;
-    }
-
     $this.info.message = data.message;
     $this.info.running_since = data.running_since;
     $this.info.version = data.version;
     $this.info.ui_version = Environment.prototype.version();
+
+    if (!data.persistence || !data.pulse || !data.key_value) {
+      return;
+    }
+
     $this.info.persistence = data.persistence.database.type === 'key-value' ? data.key_value.type : data.persistence.database.type;
     $this.info.pulse = data.pulse.type;
     $this.info.key_value_store = data.key_value.type;
