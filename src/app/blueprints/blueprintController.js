@@ -101,7 +101,7 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
         availability: function () {
           return $vamp.get('/info', {on: 'container_driver'})
             .then(function (response) {
-              if (response.data.container_driver.type === 'marathon') {
+              if (response.data.container_driver && response.data.container_driver.type === 'marathon') {
                 return $vamp.await(function () {
                   $vamp.put('/deployments/' + $ctrl.blueprint.name + '?validate_only=true', angular.toJson($ctrl.blueprint));
                 }).then(function (deploymentData) {
