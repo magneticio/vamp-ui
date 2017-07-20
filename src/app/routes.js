@@ -15,6 +15,12 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     return a.kind;
   });
 
+  var allowedKinds = ['deployments', 'gateways'];
+
+  if (external && external.allowedKinds) {
+    allowedKinds = allowedKinds.concat(external.allowedKinds());
+  }
+
   var emptyController = ['$scope', function () {}];
 
   var artifactsResolve = {
@@ -108,8 +114,19 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       url: '/add',
       views: {
         "main@vamp": {
-          controller: 'addController as $ctrl',
-          templateUrl: 'app/crud/templates/addArtifact.html'
+          controllerProvider: function (artifactsMetadata) {
+            if (artifactsMetadata.addMainView) {
+              return artifactsMetadata.addMainView.controller;
+            }
+            return 'addController';
+          },
+          controllerAs: '$ctrl',
+          templateProvider: function ($templateCache, artifactsMetadata) {
+            if (artifactsMetadata.addMainView) {
+              return $templateCache.get(artifactsMetadata.addMainView.templateUrl);
+            }
+            return $templateCache.get('app/crud/templates/addArtifact.html');
+          }
         }
       },
       resolve: {
@@ -166,7 +183,7 @@ function routesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       data: {
-        allowedKinds: ['deployments', 'gateways'],
+        allowedKinds: allowedKinds,
         breadcrumb: {
           title: '{{ singular | capitalize }} : {{ artifactData.metadata.title || artifactData.name }}'
         }
