@@ -2,7 +2,7 @@
   item-type-config="$ctrl.config"
   on-view="$ctrl.onView(item)" on-add="$ctrl.add()" on-delete="$ctrl.delete(item)" >
   <buttons>
-    <button class="btn btn-primary" type="submit" ng-click="$ctrl.upload()">
+    <button ng-if="!$ctrl.readOnly()" class="btn btn-primary" type="submit" ng-click="$ctrl.upload()">
         Docker Compose
     </button>
   </buttons>

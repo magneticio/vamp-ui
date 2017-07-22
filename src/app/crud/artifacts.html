@@ -34,7 +34,7 @@
         <button ng-if="!$ctrl.noAdd" class="btn btn-primary" type="submit" ng-click="$ctrl.add()">
             Add
         </button>
-        <button ng-if="$ctrl.kind == 'blueprints'" class="btn btn-primary" type="submit" ng-click="$ctrl.upload()">
+        <button ng-if="!$ctrl.noAdd && $ctrl.kind == 'blueprints'" class="btn btn-primary" type="submit" ng-click="$ctrl.upload()">
             Docker Compose
         </button>
       </div>

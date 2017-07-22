@@ -29,17 +29,19 @@ angular.module('vamp-ui').directive('itemExplorer', [function () {
 }]);
 
 itemExplorerController.$inject = ['$scope', '$vamp', 'uiStatesFactory', '$state', '$stateParams',
-  '$filter', 'filterFilter', 'toastr', 'alert', 'CRUD_CONFIG'];
+  '$filter', 'filterFilter', 'toastr', 'alert', 'CRUD_CONFIG', '$authorization'];
 
 function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $stateParams,
-  $filter, filterFilter, toastr, alert, CRUD_CONFIG) {
+  $filter, filterFilter, toastr, alert, CRUD_CONFIG, $authorization) {
   var $explorer = this;
+
+  var readOnly = $authorization.readOnly($scope.itemTypeConfig.kind);
 
   // Init
   $explorer.itemTypeConfig = $scope.itemTypeConfig;
   $explorer.type = $explorer.itemTypeConfig.type;
-  $explorer.noDelete = $scope.noDelete;
-  $explorer.noAdd = $scope.noAdd;
+  $explorer.noDelete = $scope.noDelete || readOnly;
+  $explorer.noAdd = $scope.noAdd || readOnly;
 
   if (!$explorer.path) {
     $explorer.path = $explorer.itemTypeConfig.path;

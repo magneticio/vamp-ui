@@ -1,6 +1,6 @@
 angular.module('vamp-ui').controller('edit',
 
-function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout, uiStatesFactory, revisionsService, $element, $vamp, artifact, snippet, toastr, alert) {
+function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout, uiStatesFactory, revisionsService, $element, $vamp, artifact, snippet, toastr, alert, $authorization) {
   var $ctrl = this;
 
   this.kind = $scope.$resolve.model;
@@ -24,6 +24,10 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
   $ctrl.inEdit = false;
   var validation = true;
   var ignoreChange = false;
+
+  $ctrl.readOnly = function () {
+    return $authorization.readOnly($ctrl.kind);
+  };
 
   function init() {
     if ($state.current.name === 'artifacts.one.source.view') {

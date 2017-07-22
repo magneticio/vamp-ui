@@ -1,7 +1,7 @@
 <div class="panel-body">
   <div class="editor visible" ng-class="{'editor-error' : ($ctrl.isModified() && !$ctrl.valid)}">
     <div class="editor-buttons clearfix">
-      <button ng-if="!$ctrl.inEdit" class="btn btn-small btn-primary pull-right" type="submit" ng-click="$ctrl.startEdit()">
+      <button ng-if="!$ctrl.inEdit && !$ctrl.readOnly()" class="btn btn-small btn-primary pull-right" type="submit" ng-click="$ctrl.startEdit()">
           Edit
       </button>
       <button class="btn btn-small btn-success pull-right" type="submit" ng-if="$ctrl.inEdit && !(!$ctrl.isModified() || !$ctrl.valid)" ng-click="$ctrl.save()">

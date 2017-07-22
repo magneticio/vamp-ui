@@ -2,10 +2,14 @@ angular.module('vamp-ui')
   .controller('DeploymentCtrl', DeploymentCtrl);
 
 /** @ngInject */
-function DeploymentCtrl($scope, $uibModal, $uibTooltip, $vamp, $state, toastr) {
+function DeploymentCtrl($scope, $uibModal, $uibTooltip, $vamp, $state, toastr, $authorization) {
   var $ctrl = this;
   var actionsMenu = null;
   $ctrl.deployment = $scope.item;
+
+  $ctrl.readOnly = function () {
+    return $authorization.readOnly('deployments');
+  };
 
   $ctrl.openActionsMenu = function ($event) {
     actionsMenu = $uibTooltip($event.targetElement,

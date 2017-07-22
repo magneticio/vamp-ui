@@ -5,7 +5,8 @@
         <span class="title-row">{{ $ctrl.name}}</span>
         <button class="btn btn-danger pull-right" type="submit" title="Delete"
                 ng-disabled="!$ctrl.deployment"
-                ng-click="$ctrl.delete()">
+                ng-click="$ctrl.delete()"
+                ng-if="!$ctrl.readOnly()">
             Delete
         </button>
         <button class="btn btn-primary pull-right" type="submit" title="View Source" ng-click="$ctrl.edit()">
@@ -90,7 +91,7 @@
 
                 <div class="vamp-table__col scale-col">
                     <div class="vamp-table__col__list">
-                        <div class="vamp-table__col__list__action" ng-click="$ctrl.editScale(cluster, service)">
+                        <div class="vamp-table__col__list__action" ng-if="!$ctrl.readOnly()" ng-click="$ctrl.editScale(cluster, service)">
                             <i class="fa fa-pencil"></i>
                         </div>
                         <div class="vamp-table__col__list__item">

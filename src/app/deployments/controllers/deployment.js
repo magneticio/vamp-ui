@@ -2,7 +2,7 @@
 angular.module('vamp-ui').controller('DeploymentController', DeploymentController);
 
 /** @ngInject */
-function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $state, $vamp, $vampDeployment, $uibModal, snippet, alert, toastr) {
+function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $state, $vamp, $vampDeployment, $uibModal, snippet, alert, toastr, $authorization) {
   var $ctrl = this;
   var path = '/deployments/' + $stateParams.name;
 
@@ -16,6 +16,10 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
   var charts = new TimeSeriesCharts();
 
   this.last = [];
+
+  $ctrl.readOnly = function () {
+    return $authorization.readOnly('deployments');
+  };
 
   this.edit = function () {
     $state.go('.source.view');

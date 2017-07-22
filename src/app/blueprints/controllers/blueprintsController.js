@@ -1,9 +1,13 @@
-function blueprintsController($scope, $state, $stateParams, artifactsMetadata, $vamp, $uibModal) {
+function blueprintsController($scope, $state, $stateParams, artifactsMetadata, $vamp, $uibModal, $authorization) {
   var $ctrl = this;
 
   $ctrl.blueprints = [];
   $ctrl.config = artifactsMetadata;
   var path = '/blueprints';
+
+  $ctrl.readOnly = function () {
+    return $authorization.readOnly('blueprints');
+  };
 
   $ctrl.add = function () {
     $state.go('.add');
@@ -59,5 +63,5 @@ function blueprintsController($scope, $state, $stateParams, artifactsMetadata, $
   peek();
 }
 
-blueprintsController.$inject = ['$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp', '$uibModal'];
+blueprintsController.$inject = ['$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp', '$uibModal', '$authorization'];
 angular.module('vamp-ui').controller('blueprintsController', blueprintsController);

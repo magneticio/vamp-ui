@@ -2,11 +2,15 @@ angular.module('vamp-ui')
   .controller('WorkflowController', WorkflowController);
 
 /** @ngInject */
-function WorkflowController($scope, $vamp, toastr, workflowWebPortService, uiStatesFactory) {
+function WorkflowController($scope, $vamp, toastr, workflowWebPortService, uiStatesFactory, $authorization) {
   var $ctrl = this;
 
   var path = '/workflows/' + $scope.item.name;
   $ctrl.workflow = $scope.item;
+
+  $ctrl.readOnly = function () {
+    return $authorization.readOnly('workflows');
+  };
 
   $scope.updating = function () {
     return $scope.item.status === 'starting' ||

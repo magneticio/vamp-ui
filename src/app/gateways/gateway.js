@@ -2,7 +2,7 @@
 angular.module('vamp-ui').controller('GatewayController', GatewayController);
 
 /** @ngInject */
-function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vamp, uiStatesFactory, slider, alert, toastr, $uibModal) {
+function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vamp, uiStatesFactory, slider, alert, toastr, $uibModal, $authorization) {
   var $ctrl = this;
   var path = '/gateways/' + $stateParams.name;
 
@@ -16,6 +16,10 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vam
   this.last = [];
   var addedRoutes = [];
   this.sliderOptions = slider.weightOptions;
+
+  $ctrl.readOnly = function () {
+    return $authorization.readOnly('blueprints');
+  };
 
   this.edit = function () {
     $state.go('.source.view');

@@ -2,13 +2,17 @@ angular.module('vamp-ui')
   .controller('BlueprintController', BlueprintController);
 
 /** @ngInject */
-function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlueprint) {
+function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlueprint, $authorization) {
   var $ctrl = this;
 
   $ctrl.blueprint = $scope.item;
 
   this.mergeWith = [];
   this.removeFrom = [];
+
+  $ctrl.manageDeployments = function () {
+    return !$authorization.readOnly('deployments');
+  };
 
   function peekDeployments() {
     $vampBlueprint.mergeWithDeployments($ctrl.mergeWith, $ctrl.blueprint);

@@ -16,6 +16,6 @@
 </td>
 <td class="col-2">
   <span class="pull-right">
-    <span class="row-action" ng-click="$artifactCtrl.exportDeployment($event)"><i class="fa fa-file-code-o"></i>Export as a blueprint</span>
+    <span class="row-action" ng-if="!$artifactCtrl.readOnly()" ng-click="$artifactCtrl.exportDeployment($event)"><i class="fa fa-file-code-o"></i>Export as a blueprint</span>
   </span>
 </td>

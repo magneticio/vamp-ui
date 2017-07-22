@@ -7,7 +7,8 @@
       </button>
       <button class="btn btn-danger pull-right" type="submit" title="Delete"
                 ng-disabled="!$ctrl.gateway || $ctrl.gateway.internal"
-                ng-click="$ctrl.delete()">
+                ng-click="$ctrl.delete()"
+                ng-if="!$ctrl.readOnly()">
             Delete
       </button>
     </div>
@@ -40,7 +41,7 @@
         </div>
         <div class="col-md-3 gateway-row">
             <p>STICKY</p>
-            <editable-drop-down ng-if="$ctrl.gateway && $ctrl.gateway.deployed && $ctrl.gateway.service.port.endsWith('/http')" active="true"
+            <editable-drop-down ng-if="$ctrl.gateway && $ctrl.gateway.deployed && $ctrl.gateway.service.port.endsWith('/http')" active="!$ctrl.readOnly()"
                                 values="$ctrl.stickyValues" selected="$ctrl.sticky(value)">
                 <span highlighter="$ctrl.gateway.sticky" class="label gateway-sticky"
                       ng-class="{'label-success': $ctrl.gateway.sticky, 'label-primary': !$ctrl.gateway.sticky}">
@@ -87,7 +88,7 @@
         <div class="col-md-4 gateway-route-header-column">
             <div class="col-sm-8 gateway-route-header-column">ROUTE</div>
             <div class="col-sm-4 gateway-route-header-column">
-                <editable on-click="$ctrl.editWeights()" active="($ctrl.gateway.routes | countKeys) > 1">
+                <editable on-click="$ctrl.editWeights()" active="!$ctrl.readOnly() && ($ctrl.gateway.routes | countKeys) > 1">
                     WEIGHT
                 </editable>
             </div>
@@ -143,7 +144,7 @@
         </div>
         <div class="col-md-4 gateway-route-condition">
             <div class="col-sm-8 gateway-row">
-                <editable-text active="true" text="{{route.condition.condition}}"
+                <editable-text active="!$ctrl.readOnly()" text="{{route.condition.condition}}"
                                edited="$ctrl.saveCondition(name, value)">
                     <span highlighter="route.condition.condition" class="label"
                           ng-class="{'label-success': route.condition.condition, 'label-primary': !label-default}">
@@ -152,7 +153,7 @@
                 </editable-text>
             </div>
             <div class="col-sm-4 gateway-row gateway-route-condition-strength">
-                <editable-number-slider active="route.condition.condition"
+                <editable-number-slider active="!$ctrl.readOnly() && route.condition.condition"
                                         options="$ctrl.sliderOptions"
                                         number="route.condition_strength"
                                         edited="$ctrl.saveConditionStrength(name, value)">
