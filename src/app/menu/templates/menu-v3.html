@@ -1,0 +1,63 @@
+<ul>
+    <li class="sidebar-brand">
+        <a href="#">
+            <img class="vamp-logo" src="styles/resources/img/logo.svg">
+        </a>
+    </li>
+</ul>
+<ul class="sidebar-nav">
+    <li
+            ng-repeat="artifact in $ctrl.artifacts"
+            ui-sref="artifacts({kind : artifact.kind, page: 1})" ui-sref-active="active">
+        <a class="btn-link" href="#">
+            <svgicon type="{{artifact.kind}}"></svgicon>
+            <span class="icon-label in hidden-xs">{{artifact.kind}}</span>
+        </a>
+    </li>
+    <li class="has-sub-menu" ui-sref-active="{ 'active': 'admin' }" ng-class="{ 'menu-open' : $ctrl.adminSubMenu}">
+        <a class="btn-link" ng-click="$ctrl.toggleAdminSubMenu()">
+            <svgicon type="admin"></svgicon>
+            <span class="icon-label hidden-xs">
+                Admin
+                <i class="fa fa-caret-down icon-dropdown" ng-if="!$ctrl.adminSubMenu"></i>
+                <i class="fa fa-caret-up icon-dropdown" ng-if="$ctrl.adminSubMenu"></i>
+            </span>
+        </a>
+        <ul class="sub-menu" uib-collapse="!$ctrl.adminSubMenu">
+            <li class="sub-menu-item" ui-sref="admin.configuration" ui-sref-active="active">
+                <a class="btn-link" href="#">
+                    <i></i>
+                    <span>Backend configuration</span>
+                </a>
+            </li>
+            <li class="sub-menu-item" ui-sref="admin.vga" ui-sref-active="active">
+                <a class="btn-link" href="#">
+                    <i></i>
+                    <span>VGA configuration</span>
+                </a>
+            </li>
+            <li class="sub-menu-item" ui-sref="admin.info" ui-sref-active="active">
+                <a class="btn-link" href="#">
+                    <i></i>
+                    <span>Extended info</span>
+                </a>
+            </li>
+            <li class="sub-menu-item" ui-sref="admin.log" ui-sref-active="active">
+                <a class="btn-link" href="#">
+                    <i></i>
+                    <span>Log</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a class="btn-link" ng-click="$ctrl.toggleSidebar()">
+            <svgicon class="collapse-btn" ng-if="$ctrl.isPanelExpanded()" type="nav_collapse"></svgicon>
+            <svgicon class="collapse-btn" ng-if="!$ctrl.isPanelExpanded()" type="nav_expand"></svgicon>
+            <span class="icon-label in hidden-xs">Collapse menu</span>
+        </a>
+    </li>
+</ul>
+
+<div class="sidebar-bottom-docked">
+</div>

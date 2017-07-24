@@ -7,7 +7,7 @@
 
     <div class="container-fluid">
         <div class="col-sm-4">
-            <a class="side-button" ng-class="{'toggled': $ctrl.pin}" href="" ng-click="$ctrl.pin = !$ctrl.pin">
+            <a class="side-button" href="" ng-click="$ctrl.pin = !$ctrl.pin">
                 <i class="fa fa-thumb-tack" aria-hidden="true"></i>
             </a>
         </div>
@@ -17,13 +17,13 @@
             </a>
         </div>
         <div class="col-sm-4">
-            <i class="fa fa-arrow-right clickable pull-right" aria-hidden="true" ng-click="$ctrl.closePanel()"></i>
+            <i class="fa fa-arrow-right side-button clickable pull-right" aria-hidden="true" ng-click="$ctrl.closePanel()"></i>
         </div>
     </div>
 
     <br><br>
 
-    <div class="" ng-show="$ctrl.uiStates.infoPanel">
+    <div ng-show="$ctrl.uiStates.infoPanel">
         <span class="info-message">{{info.message}}</span>
         <br><br>
         <table class="table">
