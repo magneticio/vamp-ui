@@ -12,14 +12,16 @@
       <div style="display:inline-block">
         <div ng-if="$explorer.items.length !== 0">
           <div class="btn-group vamp-btn-group">
-              <button title="Grid view" class="btn bootstrap-btn btn-icon vamp-btn icon-grid"
-                ng-class="{'vamp-btn-selected' : $explorer.viewStates.main == 'grid'}"
-                type="button" ng-click="$explorer.toggleView('grid')">
-              </button>
-              <button title="List view" class="btn bootstrap-btn btn-icon vamp-btn icon-list"
-                ng-class="{'vamp-btn-selected' : $explorer.viewStates.main == 'table'}"
-                type="button" ng-click="$explorer.toggleView('table')">
-              </button>
+            <button class="btn bootstrap-btn btn-icon vamp-btn icon-grid"
+              ng-class="{'vamp-btn-selected' : $explorer.viewStates.main == 'grid'}"
+              type="button" ng-click="$explorer.toggleView('grid')"
+              uib-tooltip="Grid view" tooltip-placement="bottom">
+            </button>
+            <button class="btn bootstrap-btn btn-icon vamp-btn icon-list"
+              ng-class="{'vamp-btn-selected' : $explorer.viewStates.main == 'table'}"
+              type="button" ng-click="$explorer.toggleView('table')"
+              uib-tooltip="List view" tooltip-placement="bottom">
+            </button>
           </div>
         </div>
       </div>

@@ -14,6 +14,10 @@ $new-gray: #96A0AA;
 $white: #FFFFFF;
 $off-white: #F0F5FA;
 $misty: #C3D2CD;
+$light-azure: #F1F6F7;
+$ship-cove: #7F8FA4;
+$black-pearl: #001c29;
+$astronaut-blue: #174256;
 $medium-blue: #6991AA;
 $shadow: rgba(0,0,0,0.15);
 
@@ -91,8 +95,8 @@ $color-bg-dark: rgb(20, 45, 60);
 $color-text: $gray-lighter;
 $color-text-dark: $gray-light;
 
-$color-icon-active: #F1F6F7;
-$color-icon-inactive: #7F8FA4;
+$color-icon-active: $light-azure;
+$color-icon-inactive: $ship-cove;
 
 $font-weight-light: 300;
 $font-weight-regular: 300;
