@@ -27,7 +27,6 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   $ctrl.canAccessLogs = false;
 
   // Configuration values and endpoints
-  var dcosUrl;
   var mesosUrl;
   var logEndpoints;
   var slave;
@@ -39,43 +38,36 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   }).then(function (response) {
     var data = response.data || '';
 
-    if (data['vamp.container-driver.dcos.url']) {
-      dcosUrl = data['vamp.container-driver.dcos.url'];
-    } else if (data['vamp.container-driver.mesos.url']) {
-      var mesos = data['vamp.container-driver.mesos.url'];
-      var mesosHost = mesos.substring(mesos.lastIndexOf('/') + 1, mesos.lastIndexOf(':'));
-      var mesosPort = mesos.substring(mesos.lastIndexOf(':') + 1);
-      mesosUrl = {host: mesosHost, port: mesosPort};
-    }
+    var mesos = data['vamp.container-driver.mesos.url'];
+    var mesosHost = mesos.substring(mesos.lastIndexOf('/') + 1, mesos.lastIndexOf(':'));
+    var mesosPort = mesos.substring(mesos.lastIndexOf(':') + 1);
+    mesosUrl = {host: mesosHost, port: mesosPort};
 
     // Based on urls the logEndpoints object gets instantiated
-    if (dcosUrl) {
-      logEndpoints = {
-        masterState: window.location.protocol + '//' + dcosUrl + '/mesos/master/state.json',
-        slaveDebug: function (slave) {
-          return window.location.protocol + '//' + dcosUrl + '/agent/' + slave.id + '/files/debug';
-        },
-        stdout: function (slaveId, logLocation) {
-          return window.location.protocol + '//' + dcosUrl + '/agent/' + slave.id + '/files/read?offset=0&path=' + logLocation + '/stdout';
-        },
-        stderr: function (slaveId, logLocation) {
-          return window.location.protocol + '//' + dcosUrl + '/agent/' + slave.id + '/files/read?offset=0&path=' + logLocation + '/stderr';
+    logEndpoints = {
+      masterState: $ctrl.url + 'proxy/host/' + mesosUrl.host + '/port/' + mesosUrl.port + '/master/state.json',
+      slaveDebug: function (slave) {
+        return $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/debug';
+      },
+      stdout: function (slave, logLocation) {
+        var r = null;
+        try {
+          r = $http.get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stdout');
+        } catch (e) {
+          r = $http.get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=' + logLocation + '/stdout');
         }
-      };
-    } else if (mesosUrl) {
-      logEndpoints = {
-        masterState: $ctrl.url + 'proxy/host/' + mesosUrl.host + '/port/' + mesosUrl.port + '/master/state.json',
-        slaveDebug: function (slave) {
-          return $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/debug';
-        },
-        stdout: function (slave, logLocation) {
-          return $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stdout';
-        },
-        stderr: function (slave, logLocation) {
-          return $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stderr';
+        return r;
+      },
+      stderr: function (slave, logLocation) {
+        var r = null;
+        try {
+          r = $http.get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stderr');
+        } catch (e) {
+          r = $http.get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=' + logLocation + '/stderr');
         }
-      };
-    }
+        return r;
+      }
+    };
 
     init();
   });
@@ -108,32 +100,36 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
             return val.indexOf($stateParams.instance) !== -1;
           });
 
-          var stdoutUrl = logEndpoints.stdout(slave, logLocation);
-
-          $http.get(stdoutUrl).then(function (res) {
-            $ctrl.stdout = res.data.data;
-            scrollToBottom();
-          });
-
-          var url = logEndpoints.stderr(slave, logLocation);
-
-          $http.get(url).then(function (res) {
-            $ctrl.stderr = res.data.data;
-            scrollToBottom();
-          });
-
-          stopInterval = $interval(function () {
-            $http.get(stdoutUrl).then(function (res) {
-              if (res.data.data !== $ctrl.stdout) {
-                $ctrl.stdout = res.data.data;
-                scrollToBottom();
-              }
+          logEndpoints
+            .stdout(slave, logLocation)
+            .then(function (res) {
+              $ctrl.stdout = res.data.data;
+              scrollToBottom();
             });
 
-            $http.get(url).then(function (res) {
+          logEndpoints
+            .stderr(slave, logLocation)
+            .then(function (res) {
               $ctrl.stderr = res.data.data;
               scrollToBottom();
             });
+
+          stopInterval = $interval(function () {
+            logEndpoints
+              .stdout(slave, logLocation)
+              .then(function (res) {
+                if (res.data.data !== $ctrl.stdout) {
+                  $ctrl.stdout = res.data.data;
+                  scrollToBottom();
+                }
+              });
+
+            logEndpoints
+              .stderr(slave, logLocation)
+              .then(function (res) {
+                $ctrl.stderr = res.data.data;
+                scrollToBottom();
+              });
           }, 1000);
         });
     }
