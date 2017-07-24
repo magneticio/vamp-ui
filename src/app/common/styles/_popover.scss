@@ -1,5 +1,3 @@
-
-
 .popover {
   background-color: $pitch;
   color: $misty;
@@ -43,34 +41,25 @@
 }
 
 .tooltip {
+  border-radius: 3px;
+  background-color: $black-pearl;
+  box-shadow: 0 25px 50px 0 rgba(0, 0, 0, 0.2);
+  border: solid 1px $astronaut-blue;;
 
   &.in {
     opacity: 1;
   }
 
-  &.bottom {
-    & > .tooltip-arrow {
-        border-bottom-color: $pitch;
-    }
-  }
-
-  &.left {
-    & > .tooltip-arrow {
-        border-left-color: $pitch;
-    }
-  }
-
-  &.top {
-    & > .tooltip-arrow {
-        border-top-color: $pitch;
-    }
+  .tooltip-arrow {
+    display: none;
   }
 
   .tooltip-inner {
-    background-color: $pitch;
-    color: $misty;
-    font-size: $font-size-small;
+    background-color: $black-pearl;
+    color: $light-azure;
+    font-size: 10px;
     font-weight: $font-weight-light;
     max-width: none;
+    white-space: nowrap;
   }
 }

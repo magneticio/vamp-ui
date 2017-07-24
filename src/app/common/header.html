@@ -5,11 +5,11 @@
                 template-url="app/common/templates/breadcrumb.html"
                 include-state-data="true">
       </ui-breadcrumbs>
-      <div class="info-button pull-right">
+      <div class="info-button pull-right" uib-tooltip="Information" tooltip-placement="left-bottom">
           <i class="icon-info" aria-hidden="true"
              ng-click="$ctrl.toggleInfoPanel()"></i>
       </div>
-      <div class="help-button pull-right">
+      <div class="help-button pull-right" uib-tooltip="Help" tooltip-placement="left-bottom">
           <i class="icon-question" aria-hidden="true"
              ng-click="$ctrl.toggleHelpPanel()"></i>
       </div>

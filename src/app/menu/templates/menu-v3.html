@@ -10,14 +10,14 @@
             ng-repeat="artifact in $ctrl.artifacts"
             ui-sref="artifacts({kind : artifact.kind, page: 1})" ui-sref-active="active">
         <a class="btn-link" href="#">
-            <svgicon type="{{artifact.kind}}"></svgicon>
-            <span class="icon-label in hidden-xs">{{artifact.kind}}</span>
+            <svgicon type="{{artifact.kind}}" uib-tooltip="{{artifact.kind}}" tooltip-placement="bottom"></svgicon>
+            <span class="icon-label visible-xs">{{artifact.kind}}</span>
         </a>
     </li>
-    <li class="has-sub-menu" ui-sref-active="{ 'active': 'admin' }" ng-class="{ 'menu-open' : $ctrl.adminSubMenu}">
+    <li class="has-sub-menu" ui-sref-active="{ 'active': 'admin' }" ng-class="{'menu-open' : $ctrl.adminSubMenu}">
         <a class="btn-link" ng-click="$ctrl.toggleAdminSubMenu()">
-            <svgicon type="admin"></svgicon>
-            <span class="icon-label hidden-xs">
+            <svgicon type="admin" uib-tooltip="Admin menu" tooltip-placement="bottom"></svgicon>
+            <span class="icon-label visible-xs">
                 Admin
                 <i class="fa fa-caret-down icon-dropdown" ng-if="!$ctrl.adminSubMenu"></i>
                 <i class="fa fa-caret-up icon-dropdown" ng-if="$ctrl.adminSubMenu"></i>
@@ -53,8 +53,9 @@
     <li>
         <a class="btn-link" ng-click="$ctrl.toggleSidebar()">
             <svgicon class="collapse-btn" ng-if="$ctrl.isPanelExpanded()" type="nav_collapse"></svgicon>
-            <svgicon class="collapse-btn" ng-if="!$ctrl.isPanelExpanded()" type="nav_expand"></svgicon>
-            <span class="icon-label in hidden-xs">Collapse menu</span>
+            <svgicon class="collapse-btn" ng-if="!$ctrl.isPanelExpanded()" type="nav_expand"
+                     uib-tooltip="Expand panel" tooltip-placement="right"></svgicon>
+            <span class="icon-label visible-xs">Collapse menu</span>
         </a>
     </li>
 </ul>
