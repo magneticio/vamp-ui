@@ -63,7 +63,7 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
       })
       .catch(function () {
         $http
-          .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stdout')
+          .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?&offset=0&path=/var/' + logLocation + '/stdout')
           .then(function (res) {
             $ctrl.stdout = res.data.data;
             scrollToBottom();
@@ -80,7 +80,7 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
       })
       .catch(function () {
         $http
-          .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=' + logLocation + '/stderr')
+          .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?&offset=0&path=' + logLocation + '/stderr')
           .then(function (res) {
             $ctrl.stderr = res.data.data;
             scrollToBottom();
