@@ -48,29 +48,45 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
       masterState: $ctrl.url + 'proxy/host/' + mesosUrl.host + '/port/' + mesosUrl.port + '/master/state.json',
       slaveDebug: function (slave) {
         return $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/debug';
-      },
-      stdout: function (slave, logLocation) {
-        var r = null;
-        try {
-          r = $http.get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stdout');
-        } catch (e) {
-          r = $http.get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=' + logLocation + '/stdout');
-        }
-        return r;
-      },
-      stderr: function (slave, logLocation) {
-        var r = null;
-        try {
-          r = $http.get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stderr');
-        } catch (e) {
-          r = $http.get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=' + logLocation + '/stderr');
-        }
-        return r;
       }
     };
 
     init();
   });
+
+  function stdout(slave, logLocation) {
+    $http
+      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=' + logLocation + '/stdout')
+      .then(function (res) {
+        $ctrl.stdout = res.data.data;
+        scrollToBottom();
+      })
+      .catch(function () {
+        $http
+          .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stdout')
+          .then(function (res) {
+            $ctrl.stdout = res.data.data;
+            scrollToBottom();
+          });
+      });
+  }
+
+  function stderr(slave, logLocation) {
+    $http
+      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stderr')
+      .then(function (res) {
+        $ctrl.stderr = res.data.data;
+        scrollToBottom();
+      })
+      .catch(function () {
+        $http
+          .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=' + logLocation + '/stderr')
+          .then(function (res) {
+            $ctrl.stderr = res.data.data;
+            scrollToBottom();
+          });
+      });
+  }
 
   // Retrieves host endpoint from slave pid string
   function getHost(slave) {
@@ -100,36 +116,14 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
             return val.indexOf($stateParams.instance) !== -1;
           });
 
-          logEndpoints
-            .stdout(slave, logLocation)
-            .then(function (res) {
-              $ctrl.stdout = res.data.data;
-              scrollToBottom();
-            });
+          stdout(slave, logLocation);
 
-          logEndpoints
-            .stderr(slave, logLocation)
-            .then(function (res) {
-              $ctrl.stderr = res.data.data;
-              scrollToBottom();
-            });
+          stderr(slave, logLocation);
 
           stopInterval = $interval(function () {
-            logEndpoints
-              .stdout(slave, logLocation)
-              .then(function (res) {
-                if (res.data.data !== $ctrl.stdout) {
-                  $ctrl.stdout = res.data.data;
-                  scrollToBottom();
-                }
-              });
+            stdout(slave, logLocation);
 
-            logEndpoints
-              .stderr(slave, logLocation)
-              .then(function (res) {
-                $ctrl.stderr = res.data.data;
-                scrollToBottom();
-              });
+            stderr(slave, logLocation);
           }, 1000);
         });
     }
