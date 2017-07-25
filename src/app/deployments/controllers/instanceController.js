@@ -56,14 +56,14 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
 
   function stdout(slave, logLocation) {
     $http
-      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=' + logLocation + '/stdout')
+      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=/var/' + logLocation + '/stdout')
       .then(function (res) {
         $ctrl.stdout = res.data.data;
         scrollToBottom();
       })
       .catch(function () {
         $http
-          .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?&offset=0&path=/var/' + logLocation + '/stdout')
+          .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?&offset=0&path=' + logLocation + '/stdout')
           .then(function (res) {
             $ctrl.stdout = res.data.data;
             scrollToBottom();
