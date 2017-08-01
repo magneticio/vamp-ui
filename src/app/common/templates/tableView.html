@@ -2,9 +2,11 @@
   <table class="table v2 selection-enabled">
     <thead>
       <tr>
-        <th class="clickable center-content" ng-click="$explorer.toggleSelection()">
-          <input type="checkbox" title="Select all" ng-checked="$explorer.isSelectedAll()"
-            class="checkbox vamp-checkbox vamp-lv-checkbox">
+        <th class="clickable center-content" ng-click="$explorer.toggleSelection($event)">
+          <div class="styled-checkbox">
+            <input type="checkbox" title="Select all" ng-checked="$explorer.isSelectedAll()" id="select-all">
+            <label for="select-all"></label>
+          </div>
         </th>
         <th ng-repeat="column in $explorer.itemTypeConfig.artifactsMainView.tableView.columns track by $index">
           {{ column }}
@@ -17,8 +19,10 @@
         dynamic-controller-as="{{$explorer.itemTypeConfig.artifactsMainView.gridItem.controller}}"
         dynamic-controller-alias="$artifactCtrl">
         <td class="center-content clickable row-selection" ng-click="$explorer.updateSelection($event, item)">
-          <input type="checkbox" class="checkbox vamp-lv-checkbox"
-             ng-checked="$explorer.isSelected(item)">
+          <div class="styled-checkbox">
+            <input type="checkbox" id="{{item.name}}_select" ng-checked="$explorer.isSelected(item)">
+            <label for="{{item.name}}_select" ></label>
+          </div>
         </td>
         <td ng-include src="$explorer.itemTypeConfig.artifactsMainView.tableView.rowTemplateUrl" include-replace></td>
       </tr>

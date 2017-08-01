@@ -2,20 +2,23 @@
   {{ item.name }}
 </td>
 <td class="col-2">
-  <span>cpu : {{ item.scale.cpu }}</span>
-  <span>memory : {{ item.scale.memory }} MB</span>
-  <span>instances : {{ item.scale.instances }}</span>
-</td>
-<td class="col-4">
   <tag value="item.status" has-progress="true"
-    success="item.status=== 'deployed'"
-    in-progress="item.status === 'updating' ||
+       success="item.status=== 'deployed'"
+       in-progress="item.status === 'updating' ||
       item.status=== 'deploying' || item.status=== 'undeploying'"
-    error="item.status === 'failed'"
+       error="item.status === 'failed'"
   ></tag>
 </td>
+<td class="col-1"> {{ item.scale.cpu }} </td>
+<td class="col-1"> {{ item.scale.memory }} </td>
+<td class="col-1"> {{ item.scale.instances }} </td>
 <td class="col-2">
   <span class="pull-right">
-    <span class="row-action" ng-if="!$artifactCtrl.readOnly()" ng-click="$artifactCtrl.exportDeployment($event)"><i class="fa fa-file-code-o"></i>Export as a blueprint</span>
+    <span class="row-action" ng-click="$artifactCtrl.exportDeployment($event)">
+      <svgicon type="export_as_blueprint"></svgicon>
+      <label>Export as a blueprint</label>
+    </span>
+    <span class="row-action" ng-click="$explorer.view(item)"><svgicon type="edit" uib-tooltip="EDIT" tooltip-placement="bottom-left"></svgicon></span>
+    <span class="row-action" ng-click="$explorer.delete(item)"><svgicon type="remove" uib-tooltip="DELETE" tooltip-placement="bottom-left"></svgicon></span>
   </span>
 </td>

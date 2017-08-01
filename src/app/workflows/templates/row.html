@@ -1,6 +1,24 @@
 <td class="clickable col-4" ng-click="$explorer.view(item)">
   {{ item.name }}
 </td>
+<td class="col-2">
+  <tag
+    value="item.status"
+    has-progress="true"
+    success="item.status === 'running'"
+    in-progress="updating()"
+    paused="item.status === 'suspended'">
+  </tag>
+</td>
+<td class="col-2">
+  <span ng-if="item.breed.name">{{ item.breed.name }}</span>
+  <span ng-if="item.breed.reference">{{ item.breed.reference }}</span>
+</td>
+<td class="col-2">
+  <span ng-if="item.schedule === 'daemon'">daemon</span>
+  <span ng-if="!(item.schedule.event | isEmpty)">event</span>
+  <span ng-if="!(item.schedule.time | isEmpty)">time</span>
+</td>
 <td class="col-3" >
   <span ng-repeat="instance in item.instances">
     <div ng-repeat="(portName, port) in instance.ports | orderByKeys"
@@ -12,24 +30,21 @@
     </div>
   </span>
 </td>
-<td class="col-3">
-  <tag
-    value="item.status"
-    has-progress="true"
-    success="item.status === 'running'"
-    in-progress="updating()"
-    paused="item.status === 'suspended'">
-  </tag>
-  <tag ng-if="item.breed.name" value="'breed: ' + item.breed.name"></tag>
-  <tag ng-if="item.breed.reference" value="'breed: ' + item.breed.reference"></tag>
-  <tag ng-if="item.schedule === 'daemon'" value="'schedule : daemon'"></tag>
-  <tag ng-if="!(item.schedule.event | isEmpty)" value="'schedule : event'"></tag>
-  <tag ng-if="!(item.schedule.time | isEmpty)" value="'schedule : time'"></tag>
-</td>
 <td class="col-2">
   <span class="pull-right">
-    <span class="row-action" ng-if="!$artifactCtrl.readOnly() && item.status === 'running'" ng-click="$artifactCtrl.suspend($event)"><i class="icon-control-pause"></i>Suspend</span>
-    <span class="row-action" ng-if="!$artifactCtrl.readOnly() && item.status !== 'suspended'" ng-click="$artifactCtrl.restart($event)"><i class="icon-reload"></i>Restart</span>
-    <span class="row-action" ng-if="!$artifactCtrl.readOnly() && item.status === 'suspended'" ng-click="$artifactCtrl.start($event)"><i class="icon-control-play"></i>Start</span>
+    <span class="row-action" ng-if="item.status === 'running'" ng-click="$artifactCtrl.suspend($event)">
+      <svgicon type="suspend"></svgicon>
+      <label>suspend</label>
+    </span>
+    <span class="row-action" ng-if="item.status === 'suspended'" ng-click="$artifactCtrl.start($event)">
+      <svgicon type="start"></svgicon>
+      <label>start</label>
+    </span>
+    <span class="row-action" ng-if="item.status !== 'suspended'" ng-click="$artifactCtrl.restart($event)">
+      <svgicon type="restart"></svgicon>
+      <label>restart</label>
+    </span>
+    <span class="row-action" ng-click="$explorer.view(item)"><svgicon type="edit" uib-tooltip="EDIT" tooltip-placement="bottom-right"></svgicon></span>
+    <span class="row-action" ng-click="$explorer.delete(item)"><svgicon type="remove" uib-tooltip="DELETE" tooltip-placement="bottom-right"></svgicon></span>
   </span>
 </td>

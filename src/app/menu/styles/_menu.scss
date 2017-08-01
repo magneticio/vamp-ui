@@ -1,7 +1,17 @@
 /* Sidebar Styles */
 
 svgicon {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    svg {
+      g, path {
+        fill: $color-icon-active;
+      }
+    }
+  }
 }
 
 menu {
@@ -36,9 +46,6 @@ menu {
       display: flex;
       align-items: center;
       height: 100%;
-
-      &:hover {
-      }
 
       img {
         vertical-align: text-bottom;
@@ -121,6 +128,7 @@ menu {
         & > a {
           padding-left: 2.5rem;
           & > svgicon {
+            display: inline;
             svg {
               fill: $color-icon-active;
               g, path {
@@ -159,6 +167,7 @@ menu {
 
         & > svgicon {
           padding-right: 16px;
+          display: inline;
           svg {
             margin-bottom: -6px;
             width: 20px;
