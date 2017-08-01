@@ -1,4 +1,4 @@
-<td class="clickable col-5" ng-click="$explorer.view(item)">
+<td class="clickable col-4" ng-click="$explorer.view(item)">
   {{ item.name }}
 </td>
 <td class="col-2">
@@ -7,6 +7,12 @@
 <td class="col-2">
   {{(item.memory | asNumber:0) + ' MB'}}
 </td>
-<td class="col-3">
+<td class="col-2">
   {{ item.instances }}
+</td>
+<td class="col-2">
+  <span class="pull-right">
+    <span class="row-action" ng-click="$explorer.view(item)"><svgicon type="edit" uib-tooltip="EDIT" tooltip-placement="bottom-left"></svgicon></span>
+    <span class="row-action" ng-click="$explorer.delete(item)"><svgicon type="remove" uib-tooltip="DELETE" tooltip-placement="bottom-left"></svgicon></span>
+  </span>
 </td>

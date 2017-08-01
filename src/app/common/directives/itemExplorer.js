@@ -118,7 +118,9 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
   // Item selections
   $explorer.selected = [];
 
-  $explorer.toggleSelection = function () {
+  $explorer.toggleSelection = function ($event) {
+    $event.stopPropagation();
+    $event.preventDefault();
     var all = $explorer.isSelectedAll();
     $explorer.selected.length = 0;
     if (!all) {
@@ -143,7 +145,10 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
   };
 
   $explorer.updateSelection = function ($event, item) {
-    $event.stopPropagation();
+    if ($explorer.viewStates.main === 'table') {
+      $event.stopPropagation();
+      $event.preventDefault();
+    }
 
     if ($explorer.isSelected(item)) {
       _.remove($explorer.selected, function (a) {
@@ -164,6 +169,22 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
 
   $explorer.view = function (item) {
     $scope.onView({item: item});
+  };
+
+  $explorer.delete = function (item) {
+    alert.show('Warning', 'Are you sure you want to delete: ' + item.name + '?', 'Delete', 'Cancel', function () {
+      $vamp.await(function () {
+        $scope.onDelete({item: item});
+      }).then(function () {
+        toastr.success('\'' + item.name + '\' has been successfully deleted.');
+      }).catch(function (response) {
+        if (response) {
+          toastr.error(response.data.message, 'Deletion of \'' + item.name + '\' failed.');
+        } else {
+          toastr.error('Server timeout.', 'Deletion of \'' + item.name + '\' failed.');
+        }
+      });
+    }, null, 'btn-danger');
   };
 
   $explorer.deleteSelected = function () {

@@ -14,7 +14,7 @@ VAMP.Artifacts.prototype.all = function () {
           controller: 'DeploymentCtrl'
         },
         tableView: {
-          columns: ['name', 'scale', null, null],
+          columns: ['name', 'status', 'cpu', 'memory', 'instances'],
           rowTemplateUrl: 'app/deployments/templates/row.html'
         }
       },
@@ -76,7 +76,7 @@ VAMP.Artifacts.prototype.all = function () {
           templateUrl: 'app/gateways/templates/gridView.html'
         },
         tableView: {
-          columns: ['name', 'Virtual Hosts', 'Routes', null],
+          columns: ['name', 'status', 'port', 'type', 'virtual hosts', 'routes'],
           rowTemplateUrl: 'app/gateways/templates/row.html'
         }
       },
@@ -96,7 +96,7 @@ VAMP.Artifacts.prototype.all = function () {
           controller: 'WorkflowController'
         },
         tableView: {
-          columns: ['name', 'ports', null, null],
+          columns: ['name', 'status', 'breed', 'schedule', 'ports'],
           rowTemplateUrl: 'app/workflows/templates/row.html'
         }
       },
@@ -139,7 +139,7 @@ VAMP.Artifacts.prototype.all = function () {
           controller: 'BlueprintController'
         },
         tableView: {
-          columns: ['name', null],
+          columns: ['name'],
           rowTemplateUrl: 'app/blueprints/templates/row.html'
         }
       },
