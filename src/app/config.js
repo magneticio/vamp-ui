@@ -1,7 +1,11 @@
 /* global Environment */
-angular.module('vamp-ui').config(function ($logProvider, $compileProvider, toastrConfig) {
+angular.module('vamp-ui').config(function ($logProvider, $compileProvider, toastrConfig, $uibTooltipProvider) {
   $logProvider.debugEnabled(Environment.prototype.debug());
   $compileProvider.debugInfoEnabled(Environment.prototype.debug());
+
+  $uibTooltipProvider.options({
+    appendToBody: true
+  });
 
   // Configuration of the angular-toastr plugin. See: https://github.com/Foxandxss/angular-toastr
   angular.extend(toastrConfig, {

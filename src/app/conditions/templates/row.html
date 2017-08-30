@@ -1,3 +1,9 @@
-<td class="col-12 clickable" ng-click="$explorer.view(item)">
+<td class="col-10 clickable" ng-click="$explorer.view(item)">
   {{item.name}}
+</td>
+<td class="col-2">
+  <span class="pull-right">
+    <span class="row-action" ng-click="$explorer.view(item)"><svgicon type="edit" uib-tooltip="EDIT" tooltip-placement="bottom-left"></svgicon></span>
+    <span class="row-action" ng-click="$explorer.delete(item)"><svgicon type="remove" uib-tooltip="DELETE" tooltip-placement="bottom-left"></svgicon></span>
+  </span>
 </td>

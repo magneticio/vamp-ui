@@ -1,4 +1,3 @@
-
 @mixin table-row($table-width) {
   tbody {
     tr {
@@ -42,14 +41,11 @@
       }
     }
   }
-
 }
 
 table.table.v2 {
   font-weight: $font-weight-light;
   font-size: $font-size-normal;
-
-
 
   @include table-row(100%);
 
@@ -96,17 +92,37 @@ table.table.v2 {
         }
 
         .row-action {
-          color :$misty;
-          margin-left: 1rem;
+          color: $misty;
 
-          &:hover {
+          cursor: pointer;
+
+          & > label {
             cursor: pointer;
-          //  font-weight: $font-weight-bold;
-            color: $white
+            color: $medium-blue;
+            font-weight: $font-weight-light;
+            font-size: $font-size-tiny;
+            text-transform: uppercase;
+            margin-left: 5px;
+            margin-bottom: 0;
           }
 
-          i {
-            padding: .5rem;
+          svgicon {
+            margin-left: 15px;
+            vertical-align: middle;
+          }
+
+          &:hover {
+            & > label {
+              color: $white;
+            }
+            svgicon {
+              svg {
+                fill: $color-icon-active;
+                g, path {
+                  fill: $color-icon-active;
+                }
+              }
+            }
           }
         }
       }

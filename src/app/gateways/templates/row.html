@@ -1,6 +1,18 @@
 <td class="clickable col-3" ng-click="$explorer.view(item)">
   {{ item.name }}
 </td>
+<td>
+    <tag value="item.deployed ? 'deployed' : 'deploying'" has-progress="true"
+         success="item.deployed" in-progress="!item.deployed"
+    ></tag>
+</td>
+<td class="col-1">
+    {{ item.port }}
+</td>
+<td class="col-2">
+    <span ng-if="item.internal">internal</span>
+    <span ng-if="!item.internal">external</span>
+</td>
 <td class="col-3">
     <span ng-repeat="host in item.virtual_hosts | orderBy:'length'">
         {{ host }}
@@ -11,10 +23,7 @@
       {{ route.name }}
   </span>
 </td>
-<td class="col-3">
-  <tag value="item.deployed ? 'port : ' + item.port : 'deploying'" has-progress="true"
-    success="item.deployed" in-progress="!item.deployed"
-  ></tag>
-
-  <tag value="item.internal ? 'internal' : 'external'"></tag>
+<td>
+    <span class="row-action" ng-click="$explorer.view(item)"><svgicon type="edit" uib-tooltip="EDIT" tooltip-placement="bottom-right"></svgicon></span>
+    <span class="row-action" ng-click="$explorer.delete(item)"><svgicon type="remove" uib-tooltip="DELETE" tooltip-placement="bottom-right"></svgicon></span>
 </td>
