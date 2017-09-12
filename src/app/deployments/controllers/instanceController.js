@@ -33,16 +33,29 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   var stopInterval;
 
   // Retrieve config from VAMP API to check for either dcos url or mesos url
-  $vamp.await(function () {
-    $vamp.peek('configuration', '', {type: 'applied', flatten: true}, 'JSON');
-  }).then(function (response) {
-    var data = response.data || '';
+  $vamp.get('/configuration', {type: 'applied', flatten: true}, 'JSON')
+    .then(function (response) {
+      var data = response.data || '';
+      var mesos = data['vamp.container-driver.mesos.url'];
+      var mesosHost = mesos.substring(mesos.lastIndexOf('/') + 1, mesos.lastIndexOf(':'));
+      var mesosPort = mesos.substring(mesos.lastIndexOf(':') + 1);
+      initLogEndpoints(mesosHost, mesosPort);
+      init();
+    })
+    .catch(function () {
+      $http.get($ctrl.url + 'proxy/host/leader.mesos/port/5050/').then(function () {
+        initLogEndpoints('leader.mesos', '5050');
+        init();
+      }, function () {
+        $http.get($ctrl.url + 'proxy/host/localhost/port/5050/').then(function () {
+          initLogEndpoints('localhost', '5050');
+          init();
+        });
+      });
+    });
 
-    var mesos = data['vamp.container-driver.mesos.url'];
-    var mesosHost = mesos.substring(mesos.lastIndexOf('/') + 1, mesos.lastIndexOf(':'));
-    var mesosPort = mesos.substring(mesos.lastIndexOf(':') + 1);
+  function initLogEndpoints(mesosHost, mesosPort) {
     mesosUrl = {host: mesosHost, port: mesosPort};
-
     // Based on urls the logEndpoints object gets instantiated
     logEndpoints = {
       masterState: $ctrl.url + 'proxy/host/' + mesosUrl.host + '/port/' + mesosUrl.port + '/master/state.json',
@@ -50,9 +63,7 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
         return $ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/debug';
       }
     };
-
-    init();
-  });
+  }
 
   function stdout(slave, logLocation) {
     $http
