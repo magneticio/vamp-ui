@@ -1,9 +1,9 @@
 .switch {
-  background-color: $blue;
-  border-color: $dark-blue;
+  background-color: $primary-button-color;
+  border-color: $outline-color;
   height: 20px;
 
   small {
-    top: -5px;;
+    top: -5px;
   }
 }

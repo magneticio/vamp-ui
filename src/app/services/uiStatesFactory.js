@@ -7,7 +7,7 @@ function uiStatesFactory() {
 
   var viewStates = {
     main: 'grid',
-    left: STATE_ENUM.COLLAPSED,
+    left: STATE_ENUM.EXPANDED,
     right: STATE_ENUM.HIDDEN,
     infoPanel: false,
     helpPanel: false,

@@ -1,8 +1,7 @@
 .header-content {
-  background-color: $pitch;
+  background-color: $background-color;
   height: $header-height;
   line-height: $header-height;
-  border-bottom: 1px solid $dark-blue;
-
+  border-bottom: 1px solid $outline-color;
   overflow: hidden;
 }

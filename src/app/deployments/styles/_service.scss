@@ -3,15 +3,15 @@
   margin-top: 1rem;
 
   .service-title {
-    color: $white;
+    color: $text-color;
     font-size: $font-size-xl;
   }
   .service-description {
-    color: $new-gray;
+    color: $inactive-text-color;
     font-size: $font-size-tiny;
   }
   .update-time {
-    color: $new-gray;
+    color: $inactive-text-color;
     font-size: $font-size-tiny;
   }
 
@@ -22,7 +22,7 @@
       margin-right: 2.5rem;
       display: inline-block;
 
-      &:not(:fisrt-child) {
+      &:not(:first-child) {
           margin-left: 1rem;
       }
 
@@ -36,7 +36,7 @@
       }
 
       .scale-value {
-        color: $white;
+        color: $text-color;
         padding-left: .5rem;
       }
     }

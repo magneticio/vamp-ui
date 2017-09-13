@@ -12,13 +12,13 @@
             ui-sref="artifacts({kind : artifact.kind, page: 1})" ui-sref-active="active">
         <a class="btn-link" href="#">
             <svgicon type="{{artifact.kind}}" uib-tooltip="{{artifact.kind}}" tooltip-placement="bottom"></svgicon>
-            <span class="icon-label visible-xs">{{artifact.kind}}</span>
+            <span class="icon-label hidden-xs">{{artifact.kind}}</span>
         </a>
     </li>
     <li class="has-sub-menu" ui-sref-active="{ 'active': 'admin' }" ng-class="{'menu-open' : $ctrl.adminSubMenu}">
         <a class="btn-link" ng-click="$ctrl.toggleAdminSubMenu()">
             <svgicon type="admin" uib-tooltip="Admin menu" tooltip-placement="bottom"></svgicon>
-            <span class="icon-label visible-xs">
+            <span class="icon-label hidden-xs">
                 Admin
                 <i class="fa fa-caret-down icon-dropdown" ng-if="!$ctrl.adminSubMenu"></i>
                 <i class="fa fa-caret-up icon-dropdown" ng-if="$ctrl.adminSubMenu"></i>
@@ -52,7 +52,7 @@
             <svgicon class="collapse-icon" ng-if="$ctrl.isPanelExpanded()" type="nav_collapse"></svgicon>
             <svgicon class="collapse-icon" ng-if="!$ctrl.isPanelExpanded()" type="nav_expand"
                      uib-tooltip="Expand panel" tooltip-placement="right"></svgicon>
-            <span class="icon-label visible-xs">Collapse menu</span>
+            <span class="icon-label hidden-xs">Collapse menu</span>
         </a>
     </li>
 </ul>

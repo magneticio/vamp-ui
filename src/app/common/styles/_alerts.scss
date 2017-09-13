@@ -1,10 +1,10 @@
 .alert {
   &.alert-danger {
-    color: $off-white;
+    color: $text-color;
     font-weight: $font-weight-light;
     background: none;
     background-color: rgba(255,61,90,0.25);
-    border: 1px solid $vamp-red;
+    border: 1px solid $danger-button-color;
     box-shadow: none;
     text-shadow: none;
   }

@@ -1,14 +1,14 @@
 ul.nav-tabs {
   position: relative;
-  border-bottom: 1px solid $night-sky;
+  border-bottom: 1px solid $header-color;
 
   li {
     user-select : none;
     & > a {
       cursor: pointer;
-      border: 1px solid $night-sky;
-      color: $blue;
-      background-color: $night-sky;
+      border: 1px solid $header-color;
+      color: $inactive-text-color;
+      background-color: $header-color;
       padding: 2rem;
       font-weight: $font-weight-light;
       font-size: $font-size-normal;
@@ -18,16 +18,9 @@ ul.nav-tabs {
       }
 
       &:hover {
-        border: 1px solid $night-sky;
-        background-color: $night-sky;
-        color: $medium-blue;
-      }
-    }
-
-    &.tab-highlight {
-      & > a {
-        border-color: $informative !important;
-        background-color: $informative !important;
+        border: 1px solid $header-color;
+        background-color: $header-color;
+        color: $hover-text-color;
       }
     }
 
@@ -42,16 +35,16 @@ ul.nav-tabs {
 
       & > a {
         font-weight: $font-weight-bold;
-        border: 1px solid $night-sky;
-        color: $off-white;
-        background-color: $night-sky;
+        border: 1px solid $header-color;
+        color: $text-color;
+        background-color: $header-color;
         margin-right: 1.5rem;
 
         &:hover,
         &:focus {
-          color: $off-white;
-          background-color: $night-sky;
-          border: 1px solid $night-sky;
+          color: $text-color;
+          background-color: $header-color;
+          border: 1px solid $header-color;
         }
       }
     }
@@ -60,18 +53,14 @@ ul.nav-tabs {
 
 .tab-content {
   position: relative;
-  background-color: $night-sky;
-  box-shadow: 0px -3px 5px $shadow;
+  background-color: $header-color;
+  box-shadow: 0px -3px 5px $shadow-color;
 
   .tab-pane {
     padding-bottom:1.5rem;
 
     .tab-pane-header {
       padding: 1rem 0;
-
-      &.tab-highlight {
-        background-color: $informative;
-      }
     }
   }
 }

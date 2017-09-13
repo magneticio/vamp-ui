@@ -73,8 +73,8 @@
 
 .form-control {
   font-size: $font-size-normal;
-  color: $medium-blue;
-  background-color: $pitch;
+  color: $inactive-text-color;
+  background-color: $background-color;
   border: none;
   min-height: $button-size-normal;
   border-radius: .5rem;
@@ -86,14 +86,14 @@
   }
 
   &[readonly] {
-    background-color: lighten($pitch, 0.5);
+    background-color: lighten($background-color, 0.5);
   }
 }
 
 .input-group-addon {
   font-size: $font-size-normal;
-  color: $dark-blue ;
-  background-color: $pitch;
+  color: $inactive-text-color;
+  background-color: $background-color;
   border: none;
   border-radius: .5rem;
 }
@@ -130,7 +130,7 @@
     background: #051c27;
     top: 2px;
     left: 3px;
-    border: 2px solid $new-gray;
+    border: 2px solid $outline-color;
     border-top: none;
     border-right: none;
     transform: rotate(-45deg);
@@ -142,19 +142,19 @@ input[type="checkbox"] {
 }
 
 input[type="text"]::-webkit-input-placeholder {
-  color: $dark-blue !important;
+  color: $inactive-text-color !important;
 }
 
 input[type="text"]:-moz-placeholder { /* Firefox 18- */
-  color: $dark-blue !important;
+  color: $inactive-text-color !important;
 }
 
 input[type="text"]::-moz-placeholder {  /* Firefox 19+ */
-  color: $dark-blue !important;
+  color: $inactive-text-color !important;
 }
 
 input[type="text"]:-ms-input-placeholder {
-  color: $dark-blue !important;
+  color: $inactive-text-color !important;
 }
 
 /* Tabs */
@@ -167,25 +167,25 @@ input[type="text"]:-ms-input-placeholder {
 /* Others */
 /* Panels */
 .panel {
- box-shadow: 0px -3px 5px $shadow;
+ box-shadow: 0px -3px 5px $shadow-color;
  border:none;
- background-color: $night-sky;
+ background-color: $header-color;
  font-size: $font-size-normal;
  font-weight: $font-weight-light;
- color: $blue;
+ color: $inactive-text-color;
 
  .panel-heading {
    .panel-title {
-     color: $white;
+     color: $text-color;
      display: inline-block;
      font-weight: $font-weight-light;
      font-size: $font-size-normal;
    }
-   color: $blue;
+   color: $inactive-text-color;
    padding: 1.5rem;
    background: none;
-   background-color: $night-sky;
-   border-bottom: 1px solid $panel;
+   background-color: $header-color;
+   border-bottom: 1px solid $outline-color;
  }
 }
 
@@ -228,11 +228,11 @@ input[type="text"]:-ms-input-placeholder {
 /* Editor */
 .editor {
   &.editor-error {
-    border-top : 1px solid $vamp-red;
+    border-top : 1px solid $danger-button-color;
   }
 
   &.editor-changed {
-    border-top : 1px solid $great-times;
+    border-top : 1px solid $success-button-color;
   }
 }
 
@@ -243,18 +243,18 @@ input[type="text"]:-ms-input-placeholder {
   border-radius: .5rem;
 
   &.default {
-    background-color: $new-gray;
-    box-shadow: 0 0 .5rem $new-gray;
+    background-color: $info-button-color;
+    box-shadow: 0 0 .5rem $info-button-color;
   }
 
   &.success {
-    background-color: $great-times;
-    box-shadow: 0 0 .5rem $great-times;
+    background-color: $success-button-color;
+    box-shadow: 0 0 .5rem $success-button-color;
   }
 
-  &.faliure {
-    background-color: $vamp-red;
-    box-shadow: 0 0 .5rem $vamp-red;
+  &.failure {
+    background-color: $danger-button-color;
+    box-shadow: 0 0 .5rem $danger-button-color;
   }
 }
 
