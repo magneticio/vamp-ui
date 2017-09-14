@@ -55,15 +55,15 @@ table.table.v2 {
 
   thead {
     tr {
-      border: 1px solid $night-sky;
+      border: 1px solid $outline-color;
 
       th {
         border: none;
         height: 5rem;
         line-height: 5rem;
         padding: 0 0 0 2.5rem;
-        background-color: $panel;
-        color: $medium-blue;
+        background-color: $header-color;
+        color: $inactive-text-color;
         font-weight: $font-weight-light;
         font-size: $font-size-tiny;
         text-transform: uppercase;
@@ -74,11 +74,11 @@ table.table.v2 {
   tbody {
     tr {
       td {
-        background-color: $night-sky;
+        background-color: $box-color;
         height: 6rem;
         line-height: 6rem;
         padding: 0 0 0 2.5rem;
-        border-bottom: 1px solid $panel;
+        border-bottom: 1px solid $header-color;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -92,13 +92,12 @@ table.table.v2 {
         }
 
         .row-action {
-          color: $misty;
-
+          color: $text-color;
           cursor: pointer;
 
           & > label {
             cursor: pointer;
-            color: $medium-blue;
+            color: $inactive-text-color;
             font-weight: $font-weight-light;
             font-size: $font-size-tiny;
             text-transform: uppercase;
@@ -113,13 +112,13 @@ table.table.v2 {
 
           &:hover {
             & > label {
-              color: $white;
+              color: $text-color;
             }
             svgicon {
               svg {
-                fill: $color-icon-active;
+                fill: $active-icon-color;
                 g, path {
-                  fill: $color-icon-active;
+                  fill: $active-icon-color;
                 }
               }
             }

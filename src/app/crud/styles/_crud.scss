@@ -6,14 +6,13 @@
   overflow-y: auto;
   font-size: $font-size-normal;
   font-weight: $font-weight-light;
-  color: $misty;
 
   .content-header {
     margin: 2rem 1rem;
 
     .header-title {
       font-size: $font-size-xl;
-      color: $white;
+      color: $text-color;
     }
   }
 }
@@ -34,7 +33,6 @@ main {
 }
 
 .vamp-btn-group {
-  //display: flex;
   align-items: center;
 
   .btn.vamp-btn {
@@ -43,7 +41,7 @@ main {
     line-height: 1 ;
     text-shadow: none ;
     padding: 5px ;
-    color: $medium-blue ;
+    color: $inactive-text-color ;
     font-weight: $font-weight-bold ;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -54,18 +52,16 @@ main {
     width: 4rem;
 
     &.vamp-btn-selected {
-      background-color: $gray-base;
-      color: $medium-blue;
+      background-color: $background-color;
     }
 
     &:hover:not(.vamp-btn-selected) {
-      background-color: $dark-blue;
+      background-color: $box-color;
     }
   }
 }
 
 .vamp-pagination {
-
   li {
     text-align: center;
     user-select:none;
@@ -76,10 +72,10 @@ main {
       font-size: $font-size-large ;
       border: none ;
       line-height: 1 ;
-      background-color:  $gray-base;
+      background-color: $background-color;
       text-shadow: none ;
       padding: 10px ;
-      color: $medium-blue;
+      color: $inactive-text-color;
       font-weight: $font-weight-regular;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -87,22 +83,22 @@ main {
       width: 4rem;
 
       &:hover {
-        background-color: $dark-blue;
-        color: $medium-blue;
+        background-color: $box-color;
+        color: $hover-text-color;
       }
 
       &:active {
-        color: $medium-blue;
+        color: $text-color;
       }
 
       &.vamp-page-selected {
         text-decoration: underline;
         font-weight: $font-weight-bold;
-        color: $off-white;
+        color: $inactive-text-color;
 
         &:hover {
-          background-color: $gray-base;
-          color: $gray-lighter ;
+          background-color: $background-color;
+          color: $hover-text-color;
         }
       }
 
@@ -111,8 +107,8 @@ main {
         opacity: 0.3;
 
         &:hover {
-          background-color: $gray-base;
-          color: $gray-lighter ;
+          background-color: $background-color;
+          color: $text-color ;
         }
       }
     }
@@ -130,7 +126,7 @@ table.vamp-lv {
 
   & > thead {
     font-weight: $font-weight-light;
-    color: $brand-info;
+    color: $info-button-color;
     font-size: $font-size-normal;
 
     & > tr {
@@ -141,8 +137,8 @@ table.vamp-lv {
       }
 
       & > th {
-        background-color: $night-sky;
-        box-shadow: 0px 3px 5px $shadow;
+        background-color: $box-color;
+        box-shadow: 0px 3px 5px $shadow-color;
         border-bottom:none;
       }
     }
@@ -169,7 +165,7 @@ table.vamp-lv {
 
     tr {
       &.vamp-lv-data-row {
-        background: $night-sky;
+        background: $box-color;
         font-size: $font-size-normal;
 
         &:hover {
@@ -199,7 +195,7 @@ table.vamp-lv {
 
           &.actions {
             width: 2rem;
-            background-color: $pitch;
+            background-color: $background-color;
           }
         }
 
@@ -229,34 +225,34 @@ table.vamp-lv {
 .vamp-tag {
     font-size: $font-size-small !important;
     font-weight: $font-weight-light;
-    color: $white;
+    color: $text-color;
     border-radius: 2px;
     margin-right: 5px;
-    background-color: $gray-light;
+    background-color: $pill-background-color;
 
     &.label-success {
       color: white;
-      background-color: $brand-success;
+      background-color: $success-button-color;
     }
 
     &.label-primary {
       color: white;
-      background-color: $brand-primary;
+      background-color: $primary-button-color;
     }
 
     &.label-warning {
-      color: $night;
-      background-color: $warm-warning;
+      color: black;
+      background-color: $warning-button-color;
     }
 
     &.label-danger {
       color: white;
-      background-color: $brand-danger;
+      background-color: $danger-button-color;
     }
 
     &.label-info {
       color: white;
-      background-color: $brand-info;
+      background-color: $info-button-color;
     }
 }
 
@@ -271,7 +267,7 @@ table.vamp-lv {
 .artifacts-list {
   display:table-row-group;
   margin: 0;
-  color: $color-text;
+  color: $text-color;
 }
 
 .artifact-card {
@@ -298,8 +294,6 @@ table.vamp-lv {
   //cursor: pointer;
   position: relative;
   //border: 2px solid transparent;
-  //background: $night-sky no-repeat url('/styles/resources/app/crud/images/background-pattern-alpha.png');
-
 
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   //transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
@@ -318,7 +312,7 @@ table.vamp-lv {
     }
 
     &.selected {
-      border-color: $gray-light;
+      border-color: $outline-color;
     }
 
     input[type="checkbox"] {
@@ -333,11 +327,11 @@ table.vamp-lv {
       position: relative;
       border-top-left-radius: .5rem;
       border-top-right-radius: .5rem;
-      background-color: $pitch;
+      background-color: $background-color;
       height: 6rem;
       line-height: 6rem;
       padding-left: 2rem;
-      color: $white;
+      color: $text-color;
       font-size: $font-size-large;
 
       display: flex;
@@ -370,7 +364,7 @@ table.vamp-lv {
         &.deploying {
           transition: opacity 300ms ease-in;
           opacity: 1;
-          background-color: $blue;
+          background-color: $primary-button-color;
           background-size: 30px 30px;
           background-image: linear-gradient(
             135deg,
@@ -406,7 +400,7 @@ table.vamp-lv {
       height: calc(100% - 6rem);
       border-bottom-left-radius: .5rem;
       border-bottom-right-radius: .5rem;
-      background: $night-sky no-repeat url('/styles/resources/app/crud/images/background-pattern-alpha.png');
+      background: $box-color no-repeat url('/styles/resources/app/crud/images/background-pattern-alpha.png');
       background-size: cover;
       padding: .5rem;
     }
@@ -421,7 +415,7 @@ table.vamp-lv {
 }
 
 .has-error .help-block {
-  color: $color-pink;
+  color: $danger-button-color;
 }
 
 .artifact-card-actions {
@@ -437,29 +431,11 @@ table.vamp-lv {
     margin-top: .5rem;
     text-align: center;
     margin-left: 0px !important;
-    background-color: $night-sky !important;
+    background-color: $box-color !important;
   }
 }
 
-/*.deployment-actions {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: absolute;
-  bottom: 1.6rem;
-  left: 1.6rem;
-  right: 1.6rem;
-
-  & > button.btn {
-    margin: 0;
-    text-align: center;
-    margin-left: 0px !important;
-    background-color: $night-sky !important;
-  }
-}*/
-
 .artifact-properties {
-
   .artifact-labels {
     width: 100%;
     padding: 1.5rem;
@@ -470,7 +446,7 @@ table.vamp-lv {
     font-weight: $font-weight-light;
     border-radius: 2px;
     padding: 1.5rem;
-    color: $gray-lighter !important;
+    color: $text-color !important;
 
     p {
       margin: 0;
@@ -482,7 +458,7 @@ table.vamp-lv {
     }
 
     .v-label {
-      color: $gray-light !important;
+      color: $inactive-text-color !important;
       margin-bottom: 2px;
     }
   }
@@ -494,7 +470,7 @@ table.vamp-lv {
   height: 100%;
 
   .panel-heading {
-    color: $off-white;
+    color: $text-color;
     font-weight: $font-weight-light;
     line-height: 3.5rem;
     min-height: 6.5rem;
@@ -545,7 +521,7 @@ table.vamp-lv {
     display: flex;
     flex-direction: row;
     position: relative;
-    background-color: $pitch;
+    background-color: $background-color;
 
     .editor {
       transition: flex 300ms ease;
@@ -557,7 +533,7 @@ table.vamp-lv {
         flex: 1 1 0;
 
         &:not(:first-child) {
-          border-left: 1px solid $background-lighter;
+          border-left: 1px solid $outline-color;
         }
       }
 

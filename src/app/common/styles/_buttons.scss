@@ -1,7 +1,7 @@
 .btn,
 .open .btn {
   font-weight: $font-weight-bold;
-  color: $white;
+  color: $text-color;
   padding: 9px 12px;
   font-size: $font-size-normal;
   box-shadow: none;
@@ -23,32 +23,19 @@
   }
 
   &.btn-transparent {
-    color: $blue;
+    color: $inactive-text-color;
     background-color: transparent;
 
     &:hover {
-      color: $medium-blue;
+      color: $inactive-text-color;
       background-color: transparent;
-      border: 1px solid $pitch;
-    }
-
-    &:active {
-      //box-shadow: none;
+      border: 1px solid $outline-color;
     }
 
     &.active {
-      color: $off-white;
+      color: $text-color;
       box-shadow: none;
-      background-color: $pitch;
-
-      &:hover {
-        color: $off-white;
-        background-color: $pitch;
-      }
-
-      &:active {
-        //box-shadow: none;
-      }
+      background-color: $outline-color;
     }
   }
 
@@ -56,55 +43,27 @@
     background: none !important;
     text-shadow: none;
     box-shadow: none;
-
-    &.btn-success {
-      @include colorize-ghost-btn($great-times);
-    }
-
-    &.btn-primary {
-      @include colorize-ghost-btn($medium-blue);
-    }
-
-    &.btn-info {
-      @include colorize-ghost-btn($informative);
-    }
-
-    &.btn-white {
-      @include colorize-ghost-btn($white);
-    }
-
-    &.btn-warning {
-      @include colorize-ghost-btn($warm-warning);
-    }
-
-    &.btn-danger {
-      @include colorize-ghost-btn($vamp-red);
-    }
   }
 
   &.btn-success {
-    @include colorize-btn($great-times);
+    @include colorize-btn($success-button-color);
   }
 
   &.btn-primary {
-    @include colorize-btn($blue);
+    @include colorize-btn($primary-button-color);
   }
 
   &.btn-info {
-    @include colorize-btn($informative);
-  }
-
-  &.btn-white {
-    @include colorize-btn($white);
+    @include colorize-btn($info-button-color);
   }
 
   &.btn-warning {
-    @include colorize-btn($warm-warning);
+    @include colorize-btn($warning-button-color);
     color: #000;
   }
 
   &.btn-danger {
-    @include colorize-btn($vamp-red);
+    @include colorize-btn($danger-button-color);
   }
 
   &[disabled=disabled] {

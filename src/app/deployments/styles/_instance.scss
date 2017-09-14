@@ -7,7 +7,7 @@ pre.container-log {
   padding-top: 2.5rem !important;
 
   .instance-title {
-    color: $white;
+    color: $text-color;
     font-size: $font-size-xl;
   }
 
@@ -40,14 +40,13 @@ pre.container-log {
     }
 
     pre {
-      background-color: $pitch;
-      color : $misty;
+      background-color: $background-color;
       margin: 0;
       border-radius: 0;
     }
 
     iframe {
-      background-color: $white;
+      background-color: white;
     }
   }
 }

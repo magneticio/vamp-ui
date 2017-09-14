@@ -1,6 +1,5 @@
 .popover {
-  background-color: $pitch;
-  color: $misty;
+  background-color: $background-color;
   font-size: $font-size-small;
   font-weight: $font-weight-light;
   border: none;
@@ -10,7 +9,7 @@
       bottom: -10px;
 
       &::after {
-        border-top-color: $pitch;
+        border-top-color: $background-color;
       }
     }
   }
@@ -20,7 +19,7 @@
       top: -10px;
 
       &::after {
-        border-bottom-color: $pitch;
+        border-bottom-color: $background-color;
       }
     }
   }
@@ -30,7 +29,7 @@
       right: -10px;
 
       &::after {
-        border-left-color: $pitch;
+        border-left-color: $background-color;
       }
     }
   }
@@ -42,9 +41,9 @@
 
 .tooltip {
   border-radius: 3px;
-  background-color: $black-pearl;
+  background-color: $header-color;
   box-shadow: 0 25px 50px 0 rgba(0, 0, 0, 0.2);
-  border: solid 1px $astronaut-blue;;
+  border: solid 1px $outline-color;
 
   &.in {
     opacity: 1;
@@ -55,8 +54,8 @@
   }
 
   .tooltip-inner {
-    background-color: $black-pearl;
-    color: $light-azure;
+    background-color: $header-color;
+    color: $text-color;
     font-size: 10px;
     font-weight: $font-weight-light;
     max-width: none;

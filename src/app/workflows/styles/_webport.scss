@@ -2,14 +2,14 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  width:100%;
+  width: 100%;
   position: absolute;
 
   .webport-view-header {
     height: 4rem;
     line-height: 4rem;
-    background-color: $pitch;
-    border-bottom: 1px solid $dark-blue;
+    background-color: $background-color;
+    border-bottom: 1px solid $box-color;
   }
 
   iframe {

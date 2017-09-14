@@ -25,9 +25,9 @@ body {
   font-size: $font-size-normal;
   font-family: 'Roboto', sans-serif;
   font-weight: $font-weight-light;
-  color: $color-text;
+  color: $text-color;
   overflow: hidden;
-  background-color: $panel;
+  background-color: $header-color;
 }
 
 .page {
@@ -55,7 +55,7 @@ body {
    -moz-flex: 0 0 0rem;
    overflow-x: hidden;
    overflow-y: auto;
-   background-color: $pitch;
+   background-color: $background-color;
 
    -webkit-transition: flex-basis 0.5s ease;
    -moz-transition: flex-basis 0.5s ease;
@@ -115,7 +115,7 @@ body {
   width:0;
   flex: 0 0 0rem;
   -moz-flex: 0 0 0rem;
-  border-left: 1px solid $background-lighter;
+  border-left: 1px solid $outline-color;
 
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -234,16 +234,16 @@ body {
 
   .stat-value {
     display: inline-block;
-    color: $color-text;
+    color: $text-color;
   }
 
   .stat-label {
-    color: $color-text-dark;
+    color: $hover-text-color;
   }
 
   .stat-content {
     .detail {
-      color: $color-text-dark;
+      color: $hover-text-color;
     }
   }
 }
@@ -258,25 +258,23 @@ body {
   }
 }
 
-
-
 .label {
   font-size: $font-size-small;
   font-weight: $font-weight-light;
 }
 
 .label-success {
-  background-color: $brand-success;
-  color: $white;
+  background-color: $success-button-color;
+  color: $text-color;
 }
 
 .label-primary {
-  background-color: $brand-primary;
+  background-color: $primary-button-color;
 }
 
 .label-info {
-  color: $night !important;
-  background-color: $warm-warning !important;
+  color: black !important;
+  background-color: $warning-button-color !important;
 }
 
 edit, add {
@@ -292,9 +290,9 @@ edit, add {
   .message-expand-icon {
     margin-left: 15px;
     cursor: pointer;
-    color: $color-text-dark;
+    color: $inactive-text-color;
     &:hover {
-      color: $color-text;
+      color: $hover-text-color;
     }
   }
 }
@@ -308,21 +306,6 @@ edit, add {
   top: initial;
   bottom: 15px;
   right: 15px;
-}
-
-.bars-container {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
-
-  background-color: rgba(black, 0.1);
-  overflow: hidden;
-}
-
-.bar {
-  transition: all ease-in-out 0.5s;
 }
 
 .status-col {
@@ -354,7 +337,7 @@ edit, add {
 
   tbody > tr > td {
     letter-spacing: 0.05em;
-    color: $gray-lighter;
+    color: $text-color;
     font-size: $font-size-normal;
     font-weight: $font-weight-regular;
     border: none;
@@ -386,20 +369,6 @@ edit, add {
   margin-bottom: 22px;
 }
 
-.bar-fix {
-  padding: 10px 0;
-}
-
-.condition-labels {
-  .label {
-    margin-right: 4px;
-  }
-}
-
-.condition-form {
-  display: inline-block;
-}
-
 .overlay {
   z-index:1000;
   position: fixed;
@@ -415,15 +384,16 @@ edit, add {
     display: block;
   }
 }
+
 .info-panel {
   z-index: 1001;
   position: fixed;
-  top: 0px;
+  top: 0;
   width: 25%;
   max-width: 400rem;
-  bottom: 0px;
-  background-color: $pitch;
-  color: $color-text;
+  bottom: 0;
+  background-color: $background-color;
+  color: $text-color;
   padding: 22px;
   overflow-y: scroll;
   right: -25%;
@@ -432,11 +402,11 @@ edit, add {
   .table tbody tr {
     vertical-align: top;
     :nth-child(1) {
-      color: $color-text-dark;
+      color: $inactive-text-color;
       font-size: $font-size-small !important;
       vertical-align: top !important;
       a {
-        color: $color-text;
+        color: $text-color;
       }
       i {
         padding-bottom: 3px;
@@ -444,7 +414,7 @@ edit, add {
     }
     td {
       border: none;
-      color: $color-text;
+      color: $text-color;
 
       .help-link {
         font-weight: $font-weight-bold;
@@ -471,7 +441,7 @@ edit, add {
 .clickable {
   cursor: pointer;
   &:hover {
-    color: $color-text-dark;
+    color: $hover-text-color;
   }
 }
 
@@ -491,42 +461,41 @@ p, div {
   }
 }
 
-
 .event-panel-content {
   height: 100%;
   position: relative;
   z-index: 888;
-  background-color: $night-sky;
+  background-color: $header-color;
   box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.15);
   transition: 0.5s height ease-in-out;
 
   .timestamp {
-    color: $gray-lighter;
+    color: $text-color;
   }
 
   .label-success {
     color: white;
-    background-color: $brand-success;
+    background-color: $success-button-color;
   }
 
   .label-primary {
     color: white;
-    background-color: $brand-primary;
+    background-color: $primary-button-color;
   }
 
   .label-warning {
-    color: $night;
-    background-color: $warm-warning;
+    color: black;
+    background-color: $warning-button-color;
   }
 
   .label-danger {
     color: white;
-    background-color: $brand-danger;
+    background-color: $danger-button-color;
   }
 
   .label-info {
     color: white;
-    background-color: $brand-info;
+    background-color: $info-button-color;
   }
 
   .head {
@@ -537,16 +506,16 @@ p, div {
     font-size: $font-size-normal;
     cursor: pointer;
     font-weight: $font-weight-regular;
-    background-color: $night-sky;
+    background-color: $header-color;
 
     .category {
       cursor: pointer;
       margin: 0;
       line-height: 5rem;
-      color: $color-text;
+      color: $text-color;
       display: inline-block;
       &:hover {
-        color: $color-text-dark;
+        color: $hover-text-color;
       }
     }
 
@@ -565,32 +534,32 @@ p, div {
     }
 
     a {
-      color: $color-text;
+      color: $text-color;
       &:hover {
-        color: $color-text-dark;
+        color: $hover-text-color;
       }
     }
   }
 
   .container-fluid {
-    background-color: $panel;
+    background-color: $header-color;
     height: 35rem;
     overflow-y: scroll;
-    color: $color-text !important;
+    color: $text-color !important;
 
     table tbody tr {
-      color: $color-text-dark;
+      color: $inactive-text-color;
       font-weight: $font-weight-regular;
       th {
         font-weight: $font-weight-light;
         border-top: none;
         font-size: $font-size-small !important;
-        border-bottom: 1px solid $color-bg-dark;
+        border-bottom: 1px solid $background-color;
       }
       td {
-        border-top: 1px $color-bg-dark solid;
+        border-top: 1px $background-color solid;
         font-size: $font-size-normal !important;
-        color: $color-text;
+        color: $text-color;
         font-weight: $font-weight-light;
         span {
           font-size: $font-size-normal !important;
@@ -607,17 +576,11 @@ p, div {
   }
 
   padding: 10px 0;
-  border-bottom: 1px solid $color-white;
+  border-bottom: 1px solid $text-color;
 
   &:last-of-type {
     border-bottom: none;
   }
-}
-
-.app-center {
-  position: relative;
-  overflow-y: scroll;
-  flex: 1 1 0;
 }
 
 .condition-weights {
@@ -630,24 +593,10 @@ p, div {
   }
 }
 
-a.editable-click {
-  color: #337ab7;
-  border-bottom: none;
-  font-style: normal;
-  font-weight: bold;
-}
-
-a.editable-click:hover {
-  color: #337ab7;
-  text-decoration: underline;
-  font-style: normal;
-  font-weight: bold;
-}
-
 .chart-header {
   padding: 8px 0 2px 8px;
   vertical-align: middle !important;
-  color: rgba($color-yellow, 0.5);
+  color: rgba($warning-button-color, 0.5);
   border-top: none !important;
   font-size: $font-size-normal !important;
   font-weight: 500;
@@ -656,16 +605,12 @@ a.editable-click:hover {
 .menu-button {
   font-size: $font-size-large;
   display: inline-block;
-  //color: $color-text;
-  &:hover {
-    //color: $color-text-dark;
-  }
 }
 
 .info-button i {
   @extend .menu-button;
   margin-left: 1.5rem;
-  @include colorize-ghost-btn($medium-blue);
+  @include colorize-ghost-btn($inactive-text-color);
   border: none;
   cursor: pointer;
 }
@@ -673,7 +618,7 @@ a.editable-click:hover {
 .help-button i {
   @extend .menu-button;
   margin-left: 1.5rem;
-  @include colorize-ghost-btn($medium-blue);
+  @include colorize-ghost-btn($inactive-text-color);
   border: none;
   cursor: pointer;
 }
@@ -700,39 +645,38 @@ a.editable-click:hover {
   background-color: darkgrey;
 
   &.red {
-    background-color: $color-pink;
+    background-color: $danger-button-color;
   }
 
   &.green {
-    background-color: $color-green-dark;
+    background-color: $success-button-color;
   }
 
   &.yellow {
-    background-color: $color-yellow;
+    background-color: $warning-button-color;
   }
 }
 
 // slider style
-
 .rzslider {
   margin-top: 45px;
 
   .rz-bar {
     height: 10px;
     border-radius: 2px;
-    background-color: $color-blue-dark;
+    background-color: $box-color;
     box-shadow: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
   }
 
   .rz-bubble {
-    color: $color-text;
+    color: $text-color;
     font-size: $font-size-normal;
   }
 
   .rz-limit {
-    color: $color-text !important;
+    color: $text-color !important;
     font-size: 12px;
     background-color: rgba(black, 0.2);
     min-width: 30px;
@@ -742,13 +686,13 @@ a.editable-click:hover {
   }
 
   .rz-selection {
-    background-color: $color-pink;
+    background-color: $danger-button-color;
     height: 10px;
   }
 
   .rz-pointer {
-    background-color: $color-pink;
-    border: 2px solid $color-white;
+    background-color: $danger-button-color;
+    border: 2px solid $text-color;
     top: -7px;
     width: 23px;
     height: 23px;
@@ -759,7 +703,7 @@ a.editable-click:hover {
   }
 
   .rz-selection {
-    background-color: $color-pink !important;
+    background-color: $danger-button-color !important;
   }
 }
 
@@ -772,11 +716,11 @@ a.editable-click:hover {
 }
 
 .not-available {
-  color: rgba($color-yellow, 0.3);
+  color: rgba($warning-button-color, 0.3);
   cursor: default;
 
   &:hover {
-    color: rgba($color-yellow, 0.3);
+    color: rgba($warning-button-color, 0.3);
   }
 }
 
@@ -787,27 +731,27 @@ a.editable-click:hover {
     margin-left: 6px;
     cursor: pointer;
     i {
-      color: $color-text-dark;
+      color: $inactive-text-color;
       &:hover {
-        color: $color-text;
+        color: $text-color;
       }
     }
     &.disabled {
       cursor: default;
       i {
-        color: rgba($color-text-dark, 0.4);
+        color: rgba($inactive-text-color, 0.4);
       }
     }
   }
 }
 
 .editable-text {
-  color: $color-bg-dark;
+  color: $background-color;
   input {
     width: 70%;
-    color: $color-text;
-    background-color: $color-bg;
-    border: 1px solid $color-text-dark;
+    color: $text-color;
+    background-color: $background-color;
+    border: 1px solid $outline-color;
     border-radius: .3em;
     padding: 2px 4px;
   }
@@ -816,7 +760,7 @@ a.editable-click:hover {
 .editable-text-buttons, .editable-number-slider-buttons {
   display: inline-flex;
   button {
-    background-color: $color-blue;
+    background-color: $box-color;
     border-radius: .25em;
     border: none;
     color: aliceblue;
@@ -825,14 +769,14 @@ a.editable-click:hover {
 }
 
 .dropdown-menu-list ul {
-  background-color: $color-bg;
+  background-color: $background-color;
   margin-top: 10px;
-  @include box-shadow($color-blue-dark);
+  @include box-shadow($box-color);
   li a {
-    color: $color-text;
+    color: $text-color;
     &:hover {
-      background: $color-bg-dark none;
-      color: $color-text;
+      background: $background-color none;
+      color: $text-color;
     }
   }
 }
@@ -858,22 +802,22 @@ a.editable-click:hover {
 
 @keyframes redAlert {
   0% {
-    background-color: $brand-danger;
-    color: $color-white;
+    background-color: $danger-button-color;
+    color: $text-color;
     font-weight: $font-weight-regular;
-    @include box-shadow($brand-danger);
+    @include box-shadow($danger-button-color);
   }
   50% {
-    background-color: $warm-warning;
-    color: $color-white;
+    background-color: $warning-button-color;
+    color: black;
     font-weight: $font-weight-regular;
-    @include box-shadow($warm-warning);
+    @include box-shadow($warning-button-color);
   }
   100% {
-    background-color: $brand-danger;
-    color: $color-white;
+    background-color: $danger-button-color;
+    color: $text-color;
     font-weight: $font-weight-regular;
-    @include box-shadow($brand-danger);
+    @include box-shadow($danger-button-color);
   }
 }
 
@@ -888,10 +832,7 @@ a.editable-click:hover {
   @extend .label-red-alert;
 }
 
-
-
 // gateway view
-
 .gateway {
   p, span {
     opacity: 1;
@@ -900,7 +841,7 @@ a.editable-click:hover {
 
 .gateway-header {
   padding: 10px;
-  background-color: rgba($gray-dark, 0.2);
+  background-color: rgba($header-color, 0.2);
   margin-bottom: 2rem;
 
   & > .gateway-row {
@@ -930,7 +871,7 @@ a.editable-click:hover {
 }
 
 .gateway-route-row {
-  background-color: rgba($gray-dark, 0.2);
+  background-color: rgba($header-color, 0.2);
   border-radius: 5px;
   padding: 1rem 0 0 0;
   min-height: 13rem;
@@ -959,7 +900,7 @@ a.editable-click:hover {
   @extend .gateway-route-header;
   margin: 0;
   padding: 0;
-  color: $color-text-dark;
+  color: $inactive-text-color;
 }
 
 .gateway-route-sparklines {
@@ -991,11 +932,7 @@ a.editable-click:hover {
   }
 }
 
-.gateway-route-condition-strength {
-}
-
 // deployment
-
 .deployment {
   @extend .gateway;
 }
@@ -1017,21 +954,11 @@ a.editable-click:hover {
   overflow: hidden;
 }
 
-.deployment-cluster-row-header {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  margin-left: -.3rem;
-  text-align: left;
-
-  color: $gray;
-
-}
-
 .deployment-cluster-name {
   span {
     font-size: $font-size-large !important;
     font-weight: $font-weight-light;
-    color: $gray-lighter;
+    color: $text-color;
     margin: 1rem;
 
     text-overflow: ellipsis;
@@ -1051,107 +978,6 @@ a.editable-click:hover {
   margin-right: 2rem;
 }
 
-.deployment-row-no-padding {
-  padding: 0;
-}
-
-.deployment-row {
-  text-align: left;
-  padding: 0;
-
-  span {
-    font-size: $font-size-normal !important;
-    font-weight: $font-weight-light;
-    background-color: rgba($color-blue-light, .2);
-    color: inherit;
-    border-radius: .3em;
-    margin-right: .5rem;
-
-    &.label-success {
-      color: $white;
-      background-color: $brand-success;
-    }
-
-    &.label-info {
-      color: $night;
-      background-color: $warm-warning;
-    }
-  }
-
-  p a {
-    color: $color-text-dark;
-    &:hover {
-      color: $color-text;
-      text-decoration: none;
-    }
-  }
-}
-
-.deployment-row-center {
-  @extend .deployment-row;
-  text-align: center;
-
-  p {
-    margin-top: 1rem;
-  }
-}
-
-.deployment-cluster-service-row {
-}
-
-.deployment-cluster-service {
-  height: 100%;
-}
-
-.deployment-cluster-service-name {
-  padding-top: 4.6rem;
-
-  height: 100%;
-
-  span {
-    font-size: $font-size-large !important;
-  }
-}
-
-.deployment-column-sparkline {
-  padding: 3px 0 0 0;
-}
-
-.deployment-column-scale {
-  padding: 0;
-}
-
-.deployment-column-instances {
-  padding: 3px 0 0 0;
-}
-
-.deployment-column-ports {
-  padding: 0 0 0 2rem;
-}
-
-.deployment-float-1 {
-  float: left;
-}
-
-.deployment-float-2 {
-  float: left;
-  padding-left: 10px;
-}
-
-.deployment-action-icons {
-  i {
-    cursor: pointer;
-    color: $color-text-dark;
-    &:hover {
-      color: $color-text;
-    }
-    &.disabled {
-      cursor: default;
-      color: rgba($color-text-dark, 0.4);
-    }
-  }
-}
-
 .deployment-cluster-list {
   ul {
     list-style-type: none;
@@ -1168,16 +994,14 @@ a.editable-click:hover {
       background-color: transparent;
       text-transform: uppercase;
       font-size: $font-size-small !important;
-      color: $color-text-dark;
+      color: $inactive-text-color;
       font-weight: $font-weight-regular;
     }
   }
 }
 
-//
-
 .modal-content {
-  background-color: $color-bg;
+  background-color: $background-color;
   border-radius: 2px;
   margin: 1rem;
   padding: 1rem;
@@ -1185,13 +1009,13 @@ a.editable-click:hover {
 
 .modal-header {
   font-size: $font-size-large;
-  background-color: $color-bg;
-  border-bottom: 1px solid $color-text;
+  background-color: $background-color;
+  border-bottom: 1px solid $text-color;
   text-transform: uppercase;
 }
 
 .modal-footer {
-  background-color: $color-bg;
+  background-color: $background-color;
   border-top: none;
 }
 
@@ -1202,13 +1026,13 @@ a.editable-click:hover {
       letter-spacing: 1px;
       font-size: $font-size-normal;
       font-weight: $font-weight-light;
-      background-color: rgba($color-blue-light, .2);
+      background-color: rgba($pill-background-color, .2);
       color: inherit;
       border-radius: .3em;
     }
   }
   label {
-    color: $color-text-dark;
+    color: $inactive-text-color;
     text-transform: uppercase;
     font-size: $font-size-normal;
   }
@@ -1227,19 +1051,19 @@ snippet {
   }
 
   pre {
-    color: $color-text;
-    background: rgba($color-text, 0.1);
+    color: $text-color;
+    background: rgba($text-color, 0.1);
   }
 }
 
 .v-label {
-  color: $gray;
+  color: $inactive-text-color;
   font-size: $font-size-normal;
   text-transform: uppercase;
 }
 
 .v-value {
-  color: $gray-lighter;
+  color: $text-color;
   font-weight: 300 !important;
 
   &--state {
@@ -1249,8 +1073,8 @@ snippet {
 
     &--update {
       @extend .label-info;
-      background-color: $warm-warning !important;
-      color: $night !important;
+      background-color: $warning-button-color !important;
+      color: black !important;
     }
 
     &--error-alert {
@@ -1285,7 +1109,7 @@ snippet {
     width: 100%;
     display: flex;
     font-weight: 300;
-    background-color: rgba($gray-dark, 0.2);
+    background-color: rgba($header-color, 0.2);
     border-radius: 5px;
     min-height: 10rem;
     margin-top: .2rem;
@@ -1303,7 +1127,7 @@ snippet {
         padding: .5rem 1rem;
         border-radius: 5px;
         font-size: $font-size-small;
-        background-color: rgba($color-blue-light, .2);
+        background-color: rgba($box-color, .2);
       }
 
       a {
@@ -1361,12 +1185,12 @@ snippet {
         padding-left: 1rem;
         display: flex;
         align-items: center;
-        border-left: 1px solid $gray;
-        color: $gray;
+        border-left: 1px solid $outline-color;
+        color: $inactive-text-color;
         cursor: pointer;
 
         &:hover {
-          color: $gray-light;
+          color: $hover-text-color;
         }
 
       }
@@ -1433,7 +1257,7 @@ snippet {
 
 .side-button {
   padding: 5px;
-  color: $white;
+  color: $text-color;
   text-align: center;
 }
 

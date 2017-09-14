@@ -1,16 +1,16 @@
 .progress {
   margin-bottom: 0;
   background: none;
-  background-color: $pitch;
+  background-color: $background-color;
 
   .progress-bar-success {
-    background-color: $great-times;
+    background-color: $success-button-color;
   }
   .progress-bar-danger {
-    background-color: $vamp-red;
+    background-color: $danger-button-color;
   }
   .progress-bar-default {
-    background-color: $new-gray;
-    background-image: linear-gradient(to bottom, $new-gray 0%, darken($new-gray, 0.5) 100%)
+    background-color: $inactive-icon-color;
+    background-image: linear-gradient(to bottom, $inactive-icon-color 0%, darken($inactive-icon-color, 0.5) 100%)
   }
 }
