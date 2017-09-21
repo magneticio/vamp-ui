@@ -224,7 +224,7 @@ body {
   }
 }
 
-@include scrollbars(.5rem, #959FA9, #09181E);
+@include scrollbars(.5rem, $scrollbar-foreground-color, $scrollbar-background-color);
 
 .stats {
   float:right;
@@ -783,13 +783,13 @@ p, div {
 
 @keyframes highlightChange {
   0% {
-    background-color: #ec971f;
+    background-color: $warning-button-color;
   }
   50% {
     background-color: transparent;
   }
   100% {
-    background-color: #ec971f;
+    background-color: $warning-button-color;
   }
 }
 
@@ -1131,7 +1131,7 @@ snippet {
       }
 
       a {
-        color: #1D96B2;
+        color: $hyperlink-text-color;
         padding-left: .6rem;
         font-size: $font-size-normal;
 
@@ -1141,7 +1141,6 @@ snippet {
           left: -.5rem;
           position: absolute;
           top: 0.1rem;
-          //font-size: $font-size-normal;
         }
       }
     }
@@ -1199,7 +1198,6 @@ snippet {
     &__action {
       cursor: pointer;
       position: absolute;
-      background-color: red;
       top: 0;
       bottom: 0;
       left: 11rem;
@@ -1263,12 +1261,12 @@ snippet {
 
 .proxy-anchor {
   cursor: pointer;
-  color: #1D96B2;
+  color: $hyperlink-text-color;
   font-size: $font-size-normal;
 
   &:hover,
   &:focus {
-    color: #1D96B2;
+    color: $hyperlink-text-color;
   }
 }
 
