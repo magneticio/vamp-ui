@@ -67,35 +67,19 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
 
   function stdout(slave, logLocation) {
     $http
-      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=' + logLocation + '/stdout')
+      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?&offset=0&path=' + logLocation + '/stdout')
       .then(function (res) {
         $ctrl.stdout = res.data.data;
         scrollToBottom();
-      })
-      .catch(function () {
-        $http
-          .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?&offset=0&path=' + logLocation + '/stdout')
-          .then(function (res) {
-            $ctrl.stdout = res.data.data;
-            scrollToBottom();
-          });
       });
   }
 
   function stderr(slave, logLocation) {
     $http
-      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?offset=0&path=' + logLocation + '/stderr')
+      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?&offset=0&path=' + logLocation + '/stderr')
       .then(function (res) {
         $ctrl.stderr = res.data.data;
         scrollToBottom();
-      })
-      .catch(function () {
-        $http
-          .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?&offset=0&path=' + logLocation + '/stderr')
-          .then(function (res) {
-            $ctrl.stderr = res.data.data;
-            scrollToBottom();
-          });
       });
   }
 
@@ -126,6 +110,10 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
           var logLocation = _.find(_.values(res.data), function (val) {
             return val.indexOf($stateParams.instance) !== -1;
           });
+
+          if (logLocation.indexOf('/var') === -1) {
+            logLocation = "/var" + logLocation;
+          }
 
           stdout(slave, logLocation);
 
