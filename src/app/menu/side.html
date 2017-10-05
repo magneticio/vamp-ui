@@ -35,13 +35,13 @@
                 <td>VERSION</td>
                 <td>{{info.version}}</td>
             </tr>
-            <tr ng-if="info.ui_version !== info.version">
+            <tr ng-if="session.user.role === 'superuser'">
+                <td>VERSION</td>
+                <td>{{info.version}}</td>
+            </tr>
+            <tr ng-if="session.user.role === 'superuser' && info.ui_version !== info.version">
                 <td>UI VERSION</td>
                 <td>{{info.ui_version}}</td>
-            </tr>
-            <tr ng-if="info.persistence">
-                <td>PERSISTENCE</td>
-                <td>{{info.persistence}}</td>
             </tr>
             <tr ng-if="info.pulse">
                 <td>PULSE</td>
