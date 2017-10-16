@@ -7,12 +7,15 @@ angular.module('vamp-ui').component('side', {
 function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state) {
   var $ctrl = this;
   $scope.info = $vamp.info;
-  $scope.role = $rootScope.session.user.role;
   $scope.help = {
     title: '',
     description: '',
     links: []
   };
+
+  if($rootScope.session) {
+    $scope.role = $rootScope.session.user.role;
+  }
 
   $ctrl.pin = false;
   $ctrl.uiStates = uiStatesFactory.viewStates;
