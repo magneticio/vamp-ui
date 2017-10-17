@@ -66,14 +66,14 @@ function UpdateDeploymentController($scope, $uibModalInstance, blueprint, deploy
 function BlueprintService($rootScope, $vamp) {
   var deployments = [];
 
-  var peek = _.throttle(function () {
-    $vamp.peek('/deployments');
+  var get = _.throttle(function () {
+    $vamp.get('/deployments');
   }, 1000, {
     leading: true,
     trailing: false
   });
 
-  peek();
+  get();
 
   $rootScope.$on('/deployments', function (e, response) {
     if (response.status === 'OK') {
@@ -114,7 +114,7 @@ function BlueprintService($rootScope, $vamp) {
 
   $rootScope.$on('/events/stream', function (e, response) {
     if ((_.includes(response.data.tags, 'deployments') && _.includes(response.data.tags, 'archive')) || _.includes(response.data.tags, 'synchronization')) {
-      peek();
+      get();
     }
   });
 }

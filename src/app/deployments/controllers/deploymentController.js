@@ -1,5 +1,5 @@
 angular.module('vamp-ui')
-  .controller('DeploymentCtrl', DeploymentCtrl);
+.controller('DeploymentCtrl', DeploymentCtrl);
 
 /** @ngInject */
 function DeploymentCtrl($scope, $uibModal, $uibTooltip, $vamp, $state, toastr, $authorization) {
@@ -13,7 +13,8 @@ function DeploymentCtrl($scope, $uibModal, $uibTooltip, $vamp, $state, toastr, $
 
   $ctrl.openActionsMenu = function ($event) {
     actionsMenu = $uibTooltip($event.targetElement,
-      {placement: 'bottom',
+      {
+        placement: 'bottom',
         contentTemplate: 'app/crud/templates/actionsMenu.html'
       });
     actionsMenu.$promise.then(actionsMenu.show);
@@ -41,9 +42,8 @@ function DeploymentCtrl($scope, $uibModal, $uibTooltip, $vamp, $state, toastr, $
       }
     }).result.then(function (data) {
       function save(blueprint) {
-        return $vamp.await(function () {
-          $vamp.put('/blueprints/' + data.name, JSON.stringify(blueprint));
-        }).then(function () {
+        return $vamp.httpPut('/blueprints/' + data.name, JSON.stringify(blueprint))
+        .then(function () {
           $state.go('artifacts', {kind: 'blueprints'});
           toastr.success('\'' + blueprint.name + '\' has been successfully exported as \'' + data.name + '\'.');
         }).catch(function (response) {
@@ -55,9 +55,8 @@ function DeploymentCtrl($scope, $uibModal, $uibTooltip, $vamp, $state, toastr, $
         });
       }
 
-      $vamp.await(function () {
-        $vamp.peek('/deployments/' + $ctrl.deployment.name, '', {as_blueprint: true});
-      }).then(function (blueprint) {
+      $vamp.get('/deployments/' + $ctrl.deployment.name, '', {as_blueprint: true})
+      .then(function (blueprint) {
         blueprint.data.name = data.name;
         if (data.overwrite) {
           save(blueprint.data);

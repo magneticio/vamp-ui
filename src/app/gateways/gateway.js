@@ -27,18 +27,17 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vam
 
   this.delete = function () {
     alert.show('Warning', 'Are you sure you want to delete gateway \'' + $ctrl.gateway.name + '\'?', 'Delete', 'Cancel', function () {
-      $vamp.await(function () {
-        $vamp.remove(path);
-      }).then(function () {
-        $state.go('^');
-        toastr.success('Gateway \'' + $ctrl.gateway.name + '\' has been successfully deleted.');
-      }).catch(function (response) {
-        if (response) {
-          toastr.error(response.data.message, 'Deletion of gateway \'' + $ctrl.gateway.name + '\' failed.');
-        } else {
-          toastr.error('Server timeout.', 'Deletion of gateway \'' + $ctrl.gateway.name + '\' failed.');
-        }
-      });
+      $vamp.delete(path)
+        .then(function () {
+          $state.go('^');
+          toastr.success('Gateway \'' + $ctrl.gateway.name + '\' has been successfully deleted.');
+        }).catch(function (response) {
+          if (response) {
+            toastr.error(response.data.message, 'Deletion of gateway \'' + $ctrl.gateway.name + '\' failed.');
+          } else {
+            toastr.error('Server timeout.', 'Deletion of gateway \'' + $ctrl.gateway.name + '\' failed.');
+          }
+        });
     });
   };
 
@@ -152,13 +151,12 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vam
   });
 
   function save(gateway, message) {
-    $vamp.await(function () {
-      $vamp.put(path, JSON.stringify(gateway));
-    }).then(function () {
-      toastr.success(message);
-    }).catch(function (response) {
-      toastr.error(response.data.message, 'Update of gateway \'' + $ctrl.gateway.name + '\' failed.');
-    });
+    $vamp.httpPut(path, JSON.stringify(gateway))
+      .then(function () {
+        toastr.success(message);
+      }).catch(function (response) {
+        toastr.error(response.data.message, 'Update of gateway \'' + $ctrl.gateway.name + '\' failed.');
+      });
   }
 
   function updateAddedRoutes(gateway) {

@@ -1,5 +1,5 @@
 angular.module('vamp-ui')
-  .controller('BlueprintController', BlueprintController);
+.controller('BlueprintController', BlueprintController);
 
 /** @ngInject */
 function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlueprint, $authorization) {
@@ -31,9 +31,9 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
   }
 
   /**
-    * Calculates the availability based on the blueprint and the containerDriver
-    * info and returns an warning message with stats if there are not enough resources available.
-    */
+  * Calculates the availability based on the blueprint and the containerDriver
+  * info and returns an warning message with stats if there are not enough resources available.
+  */
   function getAvailability(blueprint, containerDriver) {
     var availableResources = _.reduce(containerDriver.container.mesos.slaves, function (ar, slave) {
       return {
@@ -104,31 +104,29 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
         },
         availability: function () {
           return $vamp.get('/info', {on: 'container_driver'})
-            .then(function (response) {
-              if (response.data.container_driver && response.data.container_driver.type === 'marathon') {
-                return $vamp.await(function () {
-                  $vamp.put('/deployments/' + $ctrl.blueprint.name + '?validate_only=true', angular.toJson($ctrl.blueprint));
-                }).then(function (deploymentData) {
-                  return getAvailability(deploymentData.data[0], response.data.container_driver);
-                }).catch(function (response) {
-                  if (response) {
-                    toastr.error(response.data.message, 'Cannot deploy \'' + $ctrl.blueprint.name + '\'.');
-                  } else {
-                    toastr.error('Server timeout.', 'Deployment of \'' + $ctrl.blueprint.name + '\' failed.');
-                  }
-                  throw cannotDeployException($ctrl.blueprint.name);
-                });
-              }
-            }, function () {
-              return null;
-            });
+          .then(function (response) {
+            if (response.data.container_driver && response.data.container_driver.type === 'marathon') {
+              return $vamp.httpPut('/deployments/' + $ctrl.blueprint.name + '?validate_only=true', angular.toJson($ctrl.blueprint))
+              .then(function (deploymentData) {
+                return getAvailability(deploymentData.data[0], response.data.container_driver);
+              }).catch(function (response) {
+                if (response) {
+                  toastr.error(response.data.message, 'Cannot deploy \'' + $ctrl.blueprint.name + '\'.');
+                } else {
+                  toastr.error('Server timeout.', 'Deployment of \'' + $ctrl.blueprint.name + '\' failed.');
+                }
+                throw cannotDeployException($ctrl.blueprint.name);
+              });
+            }
+          }, function () {
+            return null;
+          });
         }
       }
     }).result.then(function (data) {
       var deployment = data.name;
-      $vamp.await(function () {
-        $vamp.put('/deployments/' + deployment, angular.toJson($ctrl.blueprint));
-      }).then(function () {
+      $vamp.httpPut('/deployments/' + deployment, angular.toJson($ctrl.blueprint))
+      .then(function () {
         gotoDeployment(deployment);
         toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully deployed as \'' + deployment + '\'.');
       }).catch(function (response) {
@@ -154,18 +152,17 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
 
     modal.result.then(function (data) {
       var name = data.deployment.name;
-      $vamp.await(function () {
-        $vamp.put('/deployments/' + name, angular.toJson($ctrl.blueprint));
-      }).then(function () {
-        gotoDeployment(name);
-        toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully merged to \'' + name + '\'.');
-      }).catch(function (response) {
-        if (response) {
-          toastr.error(response.data.message, 'Merge of \'' + $ctrl.blueprint.name + '\' failed.');
-        } else {
-          toastr.error('Server timeout.', 'Merge of \'' + $ctrl.blueprint.name + '\' failed.');
-        }
-      });
+      $vamp.put('/deployments/' + name, angular.toJson($ctrl.blueprint))
+        .then(function () {
+          gotoDeployment(name);
+          toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully merged to \'' + name + '\'.');
+        }).catch(function (response) {
+          if (response) {
+            toastr.error(response.data.message, 'Merge of \'' + $ctrl.blueprint.name + '\' failed.');
+          } else {
+            toastr.error('Server timeout.', 'Merge of \'' + $ctrl.blueprint.name + '\' failed.');
+          }
+        });
     });
   };
 
@@ -182,9 +179,8 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
 
     modal.result.then(function (data) {
       var name = data.deployment.name;
-      $vamp.await(function () {
-        $vamp.remove('/deployments/' + name, angular.toJson($ctrl.blueprint));
-      }).then(function () {
+      $vamp.delete('/deployments/' + name, angular.toJson($ctrl.blueprint))
+      .then(function () {
         gotoDeployment(name);
         toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully removed from \'' + name + '\'.');
       }).catch(function (response) {

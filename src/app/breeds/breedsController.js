@@ -31,16 +31,14 @@ function breedsController($scope, $state, $stateParams, artifactsMetadata, $vamp
   };
 
   $ctrl.delete = function (breed) {
-    $vamp.remove(path + '/' + breed.name, angular.toJson(breed));
-
-    peek();
+    $vamp.delete(path + '/' + breed.name, angular.toJson(breed)).then(get);
   };
 
   // $scope event listenters
 
   $scope.$on('$vamp:connection', function (e, connection) {
     if (connection === 'opened') {
-      peek();
+      get();
     }
   });
 
@@ -54,15 +52,15 @@ function breedsController($scope, $state, $stateParams, artifactsMetadata, $vamp
 
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'breeds')) {
-      peek();
+      get();
     }
   });
 
-  function peek() {
-    $vamp.peek(path);
+  function get() {
+    $vamp.get(path);
   }
 
-  peek();
+  get();
 }
 
 breedsController.$inject = ['$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp', 'namifyFilter'];

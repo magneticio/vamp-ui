@@ -2,8 +2,8 @@
 /* eslint camelcase: ["error", {properties: "never"}] */
 'use strict';
 angular.module('vamp-ui')
-  .factory('$vamp', ['$http', '$log', '$rootScope', '$websocket', '$timeout', function ($http, $log, $rootScope, $websocket, $timeout) {
-    return new Vamp($http, $log, $rootScope, $websocket, $timeout);
+  .factory('$vamp', ['$http', '$log', '$rootScope', '$websocket', '$timeout', '$q', function ($http, $log, $rootScope, $websocket, $timeout, $q) {
+    return new Vamp($http, $log, $rootScope, $websocket, $timeout, $q);
   }])
   .run(['$vamp', function ($vamp) {
     $vamp.init();
@@ -12,7 +12,7 @@ angular.module('vamp-ui')
     }
   }]);
 
-function Vamp($http, $log, $rootScope, $websocket, $timeout) {
+function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
   var $this = this;
   var stream;
   var connections = [];
@@ -117,6 +117,14 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     return request('POST', path, data, params, accept);
   };
 
+  this.httpPut = function (path, data, params, accept) {
+    return request('PUT', path, data, params, accept);
+  };
+
+  this.delete = function (path, data, params, accept) {
+    return request('DELETE', path, null, params, accept);
+  };
+
   this.peek = function (path, data, params, accept, ns) {
     websocketRequest(path, 'PEEK', data, params ? params : {}, accept ? accept : 'JSON', ns ? ns : requestNamespace);
   };
@@ -212,6 +220,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
   };
 
   function websocketRequest(path, action, data, params, accept, namespace) {
+    console.warn(path, action);
     if (!stream) {
       return null;
     }
@@ -260,7 +269,19 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
 
     $log.debug('http request sent: ' + JSON.stringify(config));
 
-    return $http(config);
+    return $http(config).then(function (message) {
+      console.log(message.data);
+      if (message.data) {
+        notify(path, message);
+      }
+      return $q(function (resolve, reject) {
+        if (message) {
+          resolve(message);
+        } else {
+          reject();
+        }
+      });
+    });
   }
 
   $rootScope.$on('/info', function (event, data) {

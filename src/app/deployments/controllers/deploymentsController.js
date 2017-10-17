@@ -21,14 +21,14 @@ function deploymentsController($scope, $state, $stateParams, artifactsMetadata, 
       name: deployment.name
     });
 
-    $vamp.remove(path + '/' + _deployments[index].name, angular.toJson(_deployments[index]));
+    $vamp.delete(path + '/' + _deployments[index].name, angular.toJson(_deployments[index]));
   };
 
   // $scope event listenters
 
   $scope.$on('$vamp:connection', function (e, connection) {
     if (connection === 'opened') {
-      peek();
+      get();
     }
   });
 
@@ -46,15 +46,15 @@ function deploymentsController($scope, $state, $stateParams, artifactsMetadata, 
           _.includes(response.data.tags, 'deployed') ||
           _.includes(response.data.tags, 'undeployed') ||
          _.includes(response.data.tags, 'synchronization')) || _.includes(response.data.tags, 'deployments')) {
-      peek();
+      get();
     }
   });
 
-  function peek() {
-    $vamp.peek(path);
+  function get() {
+    $vamp.get(path);
   }
 
-  peek();
+  get();
 
   function getScale(deployment) {
     return $vampDeployment.scale(deployment);

@@ -34,17 +34,16 @@ function WorkflowController($scope, $vamp, toastr, workflowWebPortService, uiSta
   $ctrl.update = function ($event, status) {
     $event.stopPropagation();
     var operation = status.charAt(0).toUpperCase() + status.substr(1).toLowerCase();
-    $vamp.await(function () {
-      $vamp.put(path + '/status', status, {}, 'JSON');
-    }).then(function () {
-      toastr.success(operation + ' initiated.');
-    }).catch(function (response) {
-      if (response) {
-        toastr.error(response.data.message, operation + ' failed.');
-      } else {
-        toastr.error('Server timeout.', operation + ' failed.');
-      }
-    });
+    $vamp.put(path + '/status', status, {}, 'JSON')
+      .then(function () {
+        toastr.success(operation + ' initiated.');
+      }).catch(function (response) {
+        if (response) {
+          toastr.error(response.data.message, operation + ' failed.');
+        } else {
+          toastr.error('Server timeout.', operation + ' failed.');
+        }
+      });
   };
 
   $ctrl.proxy = function (instance, port, $event) {

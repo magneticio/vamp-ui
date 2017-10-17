@@ -168,20 +168,19 @@ function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $vamp, uiStat
         $ctrl.selected.length = 0;
 
         _.forEach(names, function (name) {
-          $vamp.await(function () {
-            var artifact = _.find(_artifacts, function (artifact) {
-              return artifact.name === name;
-            });
-            $vamp.remove($ctrl.path + '/' + name, angular.toJson(artifact));
-          }).then(function () {
-            toastr.success('\'' + name + '\' has been successfully deleted.');
-          }).catch(function (response) {
-            if (response) {
-              toastr.error(response.data.message, 'Deletion of \'' + name + '\' failed.');
-            } else {
-              toastr.error('Server timeout.', 'Deletion of \'' + name + '\' failed.');
-            }
+          var artifact = _.find(_artifacts, function (artifact) {
+            return artifact.name === name;
           });
+          $vamp.delete($ctrl.path + '/' + name, angular.toJson(artifact))
+            .then(function () {
+              toastr.success('\'' + name + '\' has been successfully deleted.');
+            }).catch(function (response) {
+              if (response) {
+                toastr.error(response.data.message, 'Deletion of \'' + name + '\' failed.');
+              } else {
+                toastr.error('Server timeout.', 'Deletion of \'' + name + '\' failed.');
+              }
+            });
         });
       }, null, 'btn-danger');
     }

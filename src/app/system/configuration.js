@@ -68,26 +68,25 @@ function ConfigurationController($scope, $timeout, $element, $state, artifact, $
   };
 
   $ctrl.update = function () {
-    $vamp.await(function () {
-      $vamp.put('configuration', $ctrl.source, {}, 'YAML');
-    }).then(function () {
-      $timeout(function () {
-        toastr.success('Configuration has been successfully updated. Connection with Vamp should be established again in few moments.');
-        $ctrl.dynamic.base = $ctrl.dynamic.current;
-        $ctrl.reload('applied');
-      }, 0);
-      $timeout(function () {
-        $vamp.peek('/info');
-      }, 3000);
-    }).catch(function (response) {
-      $timeout(function () {
-        if (response) {
-          toastr.error(response.data.message, 'Updating configuration failed.');
-        } else {
-          toastr.error('Server timeout.', 'Updating configuration failed.');
-        }
-      }, 0);
-    });
+    $vamp.httpPut('/configuration', $ctrl.source, {}, 'YAML')
+      .then(function () {
+        $timeout(function () {
+          toastr.success('Configuration has been successfully updated. Connection with Vamp should be established again in few moments.');
+          $ctrl.dynamic.base = $ctrl.dynamic.current;
+          $ctrl.reload('applied');
+        }, 0);
+        $timeout(function () {
+          $vamp.peek('/info');
+        }, 3000);
+      }).catch(function (response) {
+        $timeout(function () {
+          if (response) {
+            toastr.error(response.data.message, 'Updating configuration failed.');
+          } else {
+            toastr.error('Server timeout.', 'Updating configuration failed.');
+          }
+        }, 0);
+      });
   };
 
   $ctrl.toggleFlatten = function () {

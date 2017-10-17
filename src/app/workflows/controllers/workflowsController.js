@@ -16,16 +16,14 @@ function workflowsController($scope, $state, $stateParams, artifactsMetadata, $v
   };
 
   $ctrl.delete = function (workflow) {
-    $vamp.remove(path + '/' + workflow.name, angular.toJson(workflow));
-
-    peek();
+    $vamp.delete(path + '/' + workflow.name, angular.toJson(workflow)).then(get);
   };
 
   // $scope event listenters
 
   $scope.$on('$vamp:connection', function (e, connection) {
     if (connection === 'opened') {
-      peek();
+      get();
     }
   });
 
@@ -35,15 +33,15 @@ function workflowsController($scope, $state, $stateParams, artifactsMetadata, $v
 
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'workflows') || _.includes(response.data.tags, 'workflow-statuses')) {
-      peek();
+      get();
     }
   });
 
-  function peek() {
-    $vamp.peek(path);
+  function get() {
+    $vamp.get(path);
   }
 
-  peek();
+  get();
 }
 
 workflowsController.$inject = ['$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp'];

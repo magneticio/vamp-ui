@@ -16,16 +16,14 @@ function conditionsController($scope, $state, $stateParams, artifactsMetadata, $
   };
 
   $ctrl.delete = function (condition) {
-    $vamp.remove(path + '/' + condition.name, angular.toJson(condition));
-
-    peek();
+    $vamp.delete(path + '/' + condition.name, angular.toJson(condition)).then(get);
   };
 
   // $scope event listenters
 
   $scope.$on('$vamp:connection', function (e, connection) {
     if (connection === 'opened') {
-      peek();
+      get();
     }
   });
 
@@ -35,15 +33,15 @@ function conditionsController($scope, $state, $stateParams, artifactsMetadata, $
 
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'conditions')) {
-      peek();
+      get();
     }
   });
 
-  function peek() {
-    $vamp.peek(path);
+  function get() {
+    $vamp.get(path);
   }
 
-  peek();
+  get();
 }
 
 conditionsController.$inject = ['$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp'];
