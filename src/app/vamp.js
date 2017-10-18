@@ -220,7 +220,6 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
   };
 
   function websocketRequest(path, action, data, params, accept, namespace) {
-    console.warn(path, action);
     if (!stream) {
       return null;
     }
@@ -270,7 +269,6 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
     $log.debug('http request sent: ' + JSON.stringify(config));
 
     return $http(config).then(function (message) {
-      console.log(message.data);
       if (message.data) {
         notify(path, message);
       }
