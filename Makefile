@@ -7,6 +7,8 @@ SHELL             := bash
 
 # Constants, these can be overwritten in your Makefile.local
 BUILD_SERVER := magneticio/buildserver
+DIR_NPM	     := $(HOME)/.npm
+DIR_GYP	     := $(HOME)/.node-gyp
 
 # if Makefile.local exists, include it.
 ifneq ("$(wildcard Makefile.local)", "")
@@ -14,6 +16,7 @@ ifneq ("$(wildcard Makefile.local)", "")
 endif
 
 VERSION := $(shell git describe --tags)
+PROJECT := vamp-ui
 
 # Targets
 .PHONY: all
@@ -24,8 +27,11 @@ all: default
 default:
 	docker pull $(BUILD_SERVER)
 	docker run \
+		--name buildui \
 		--rm \
 		--volume $(CURDIR):/srv/src \
+		--volume $(DIR_NPM):/home/vamp/.npm \
+		--volume $(DIR_GYP):/home/vamp/.node-gyp \
 		--workdir=/srv/src \
 		--env BUILD_UID=$(shell id -u) \
 		--env BUILD_GID=$(shell id -g) \
@@ -35,41 +41,43 @@ default:
 
 .PHONY: build
 build:
-	npm install gulp gulp-cli bower
-
-	node --version
-	npm --version
-	bower --version
-	gulp --version
-
+	npm rebuild node-sass
 	npm install
-	bower install
+	npm update
+	npm prune
+	npm run bower install
+	npm run bower update
+	npm run bower prune
 	./environment.sh
-	gulp build
+	npm run build
 
 
 .PHONY: pack
 pack: default
 	docker volume create packer
 	docker run \
+		--name packer \
 		--rm \
     		--volume $(CURDIR)/dist:/usr/local/src \
     		--volume packer:/usr/local/stash \
     		$(BUILD_SERVER) \
-      			push vamp-ui $(VERSION)
+      			push $(PROJECT) $(VERSION)
 
-pack-local:
+.PHONY: pack-local
+pack-local: build
 	docker volume create packer
 	docker run \
+		--name packer \
 		--rm \
     		--volume $(CURDIR)/dist:/usr/local/src \
     		--volume packer:/usr/local/stash \
     		$(BUILD_SERVER) \
-      			push vamp-ui $(VERSION)
+      			push $(PROJECT) $(VERSION)
 
 .PHONY: clean
 clean:
 	rm -rf $(CURDIR)/src/app/environment.js
+	rm -rf $(CURDIR)/.tmp
 	rm -rf $(CURDIR)/dist
 	rm -rf $(CURDIR)/ui
 	rm -rf $(CURDIR)/ui.tar.bz2

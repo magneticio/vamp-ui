@@ -8,3 +8,4 @@ src/app/environment.js
 Makefile.local
 ui.tar.bz2
 ui/
+/npm-debug.log
