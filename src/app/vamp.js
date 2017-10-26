@@ -42,8 +42,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
     if (response.content === 'JSON' && response.data) {
       try {
         response.data = JSON.parse(response.data);
-      } catch (e) {
-      }
+      } catch (e) {}
     }
 
     if (awaiting[response.transaction]) {
@@ -206,7 +205,6 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
         process(message.data);
       });
     };
-
     websocket();
   };
 
