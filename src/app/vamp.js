@@ -205,6 +205,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
         process(message.data);
       });
     };
+
     websocket();
   };
 
