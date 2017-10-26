@@ -9,6 +9,7 @@ SHELL             := bash
 BUILD_SERVER := magneticio/buildserver
 DIR_NPM	     := $(HOME)/.npm
 DIR_GYP	     := $(HOME)/.node-gyp
+DIR_BOWER	 := $(HOME)/.cache/bower
 
 # if Makefile.local exists, include it.
 ifneq ("$(wildcard Makefile.local)", "")
@@ -32,6 +33,7 @@ default:
 		--volume $(CURDIR):/srv/src \
 		--volume $(DIR_NPM):/home/vamp/.npm \
 		--volume $(DIR_GYP):/home/vamp/.node-gyp \
+		--volume $(DIR_BOWER):/home/vamp/.cache/bower \
 		--workdir=/srv/src \
 		--env BUILD_UID=$(shell id -u) \
 		--env BUILD_GID=$(shell id -g) \
