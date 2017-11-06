@@ -182,21 +182,20 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
     validation = false;
     ignoreChange = true;
 
-    $vamp.await(function () {
-      $vamp.put(path, $ctrl.source, {}, 'JSON');
-    }).then(function () {
-      $ctrl.base = $ctrl.source;
-      goBack();
-      toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');
-    }).catch(function (response) {
-      validation = true;
-      ignoreChange = false;
-      if (response) {
-        toastr.error(response.data.message, 'Save of \'' + $ctrl.name + '\'failed.');
-      } else {
-        toastr.error('Server timeout.', 'Save of \'' + $ctrl.name + '\'failed.');
-      }
-    });
+    $vamp.httpPut(path, $ctrl.source, {}, 'JSON')
+      .then(function () {
+        $ctrl.base = $ctrl.source;
+        goBack();
+        toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');
+      }).catch(function (response) {
+        validation = true;
+        ignoreChange = false;
+        if (response) {
+          toastr.error(response.data.message, 'Save of \'' + $ctrl.name + '\'failed.');
+        } else {
+          toastr.error('Server timeout.', 'Save of \'' + $ctrl.name + '\'failed.');
+        }
+      });
   };
 
   function goBack() {

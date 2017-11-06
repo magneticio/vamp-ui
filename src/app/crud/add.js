@@ -87,15 +87,13 @@ function ($scope, $state, $stateParams, $timeout, $element, $vamp, artifact, toa
     validation = false;
     ignoreChange = true;
 
-    $vamp.await(function () {
-      $vamp.put(path, $ctrl.source, {}, 'JSON');
-    }).then(function () {
+    $vamp.post(path, $ctrl.source, {}, 'JSON').then(function () {
       goBack();
       toastr.success('New ' + $ctrl.singular + ' has been successfully created.');
     }).catch(function (response) {
       validation = true;
       ignoreChange = false;
-      if (response) {
+      if (response && response.data) {
         toastr.error(response.data.message, 'Creation failed.');
       } else {
         toastr.error('Server timeout.', 'Creation failed.');

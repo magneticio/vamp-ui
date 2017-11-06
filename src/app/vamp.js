@@ -2,8 +2,8 @@
 /* eslint camelcase: ["error", {properties: "never"}] */
 'use strict';
 angular.module('vamp-ui')
-  .factory('$vamp', ['$http', '$log', '$rootScope', '$websocket', '$timeout', function ($http, $log, $rootScope, $websocket, $timeout) {
-    return new Vamp($http, $log, $rootScope, $websocket, $timeout);
+  .factory('$vamp', ['$http', '$log', '$rootScope', '$websocket', '$timeout', '$q', function ($http, $log, $rootScope, $websocket, $timeout, $q) {
+    return new Vamp($http, $log, $rootScope, $websocket, $timeout, $q);
   }])
   .run(['$vamp', function ($vamp) {
     $vamp.init();
@@ -12,7 +12,7 @@ angular.module('vamp-ui')
     }
   }]);
 
-function Vamp($http, $log, $rootScope, $websocket, $timeout) {
+function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
   var $this = this;
   var stream;
   var connections = [];
@@ -42,8 +42,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
     if (response.content === 'JSON' && response.data) {
       try {
         response.data = JSON.parse(response.data);
-      } catch (e) {
-      }
+      } catch (e) {}
     }
 
     if (awaiting[response.transaction]) {
@@ -115,6 +114,14 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
 
   this.post = function (path, data, params, accept) {
     return request('POST', path, data, params, accept);
+  };
+
+  this.httpPut = function (path, data, params, accept) {
+    return request('PUT', path, data, params, accept);
+  };
+
+  this.delete = function (path, data, params, accept) {
+    return request('DELETE', path, null, params, accept);
   };
 
   this.peek = function (path, data, params, accept, ns) {
@@ -260,7 +267,18 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout) {
 
     $log.debug('http request sent: ' + JSON.stringify(config));
 
-    return $http(config);
+    return $http(config).then(function (message) {
+      if (message.data) {
+        notify(path, message);
+      }
+      return $q(function (resolve, reject) {
+        if (message) {
+          resolve(message);
+        } else {
+          reject();
+        }
+      });
+    });
   }
 
   $rootScope.$on('/info', function (event, data) {

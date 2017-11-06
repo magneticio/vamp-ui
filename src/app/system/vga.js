@@ -85,25 +85,24 @@ function VgaController($state, $scope, $timeout, $element, $vamp, $q, toastr, al
 
   $ctrl.update = function () {
     ignoreChange = true;
-    $vamp.await(function () {
-      $vamp.put('vga/' + $ctrl.marshaller() + '/' + $ctrl.mode(), $ctrl.source, {}, 'YAML');
-    }).then(function () {
-      $timeout(function () {
-        toastr.success('Template has been successfully updated.');
-        $ctrl.template.base = $ctrl.template.current;
-        $ctrl.mode('configuration');
-        ignoreChange = false;
-      }, 0);
-    }).catch(function (response) {
-      $timeout(function () {
-        ignoreChange = false;
-        if (response) {
-          toastr.error(response.data.message, 'Updating template failed.');
-        } else {
-          toastr.error('Server timeout.', 'Updating template failed.');
-        }
-      }, 0);
-    });
+    $vamp.httpPut('/vga/' + $ctrl.marshaller() + '/' + $ctrl.mode(), $ctrl.source, {}, 'YAML')
+      .then(function () {
+        $timeout(function () {
+          toastr.success('Template has been successfully updated.');
+          $ctrl.template.base = $ctrl.template.current;
+          $ctrl.mode('configuration');
+          ignoreChange = false;
+        }, 0);
+      }).catch(function (response) {
+        $timeout(function () {
+          ignoreChange = false;
+          if (response) {
+            toastr.error(response.data.message, 'Updating template failed.');
+          } else {
+            toastr.error('Server timeout.', 'Updating template failed.');
+          }
+        }, 0);
+      });
   };
 
   $ctrl.load = function () {
@@ -125,23 +124,22 @@ function VgaController($state, $scope, $timeout, $element, $vamp, $q, toastr, al
       });
   };
 
-  $vamp.await(function () {
-    $vamp.peek('info?on=gateway_driver');
-  }).then(function (response) {
-    $timeout(function () {
-      var data = response.data || {};
-      var marshallers = new Set();
-      for (var marshaller in data.gateway_driver.marshallers) {
-        if (marshaller && data.gateway_driver.marshallers.hasOwnProperty(marshaller)) {
-          marshallers.add(data.gateway_driver.marshallers[marshaller].type + '/' + marshaller);
+  $vamp.get('/info?on=gateway_driver')
+    .then(function (response) {
+      $timeout(function () {
+        var data = response.data || {};
+        var marshallers = new Set();
+        for (var marshaller in data.gateway_driver.marshallers) {
+          if (marshaller && data.gateway_driver.marshallers.hasOwnProperty(marshaller)) {
+            marshallers.add(data.gateway_driver.marshallers[marshaller].type + '/' + marshaller);
+          }
         }
-      }
-      $ctrl.marshallers = Array.from(marshallers);
-      if ($ctrl.marshallers) {
-        $ctrl.marshaller($ctrl.marshallers[0]);
-      }
-    }, 0);
-  });
+        $ctrl.marshallers = Array.from(marshallers);
+        if ($ctrl.marshallers) {
+          $ctrl.marshaller($ctrl.marshallers[0]);
+        }
+      }, 0);
+    });
 
   $scope.$on('/events/stream', function (e, response) {
     var m = marshaller.split('/', 2);

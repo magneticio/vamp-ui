@@ -27,18 +27,17 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
 
   this.delete = function () {
     alert.show('Warning', 'Are you sure you want to delete deployment \'' + $ctrl.deployment.name + '\'?', 'Delete', 'Cancel', function () {
-      $vamp.await(function () {
-        $vamp.remove(path, JSON.stringify(original));
-      }).then(function () {
-        $state.go('^');
-        toastr.success('Deployment \'' + $ctrl.title + '\' has been successfully deleted.');
-      }).catch(function (response) {
-        if (response) {
-          toastr.error(response.data.message, 'Deletion of deployment \'' + $ctrl.deployment.name + '\' failed.');
-        } else {
-          toastr.error('Server timeout.', 'Deletion of deployment \'' + $ctrl.deployment.name + '\' failed.');
-        }
-      });
+      $vamp.delete(path, JSON.stringify(original))
+        .then(function () {
+          $state.go('^');
+          toastr.success('Deployment \'' + $ctrl.title + '\' has been successfully deleted.');
+        }).catch(function (response) {
+          if (response) {
+            toastr.error(response.data.message, 'Deletion of deployment \'' + $ctrl.deployment.name + '\' failed.');
+          } else {
+            toastr.error('Server timeout.', 'Deletion of deployment \'' + $ctrl.deployment.name + '\' failed.');
+          }
+        });
     });
   };
 
@@ -61,13 +60,12 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
         }
       }
     }).result.then(function (scale) {
-      $vamp.await(function () {
-        $vamp.put(path + '/clusters/' + cluster.name + '/services/' + service.breed.name + '/scale', angular.toJson(scale));
-      }).then(function () {
-        toastr.success('Scale for service \'' + service.breed.name + '\' has been successfully updated.');
-      }).catch(function (response) {
-        toastr.error(response.data.message, 'Update of scale for service \'' + service.breed.name + '\' failed.');
-      });
+      $vamp.httpPut(path + '/clusters/' + cluster.name + '/services/' + service.breed.name + '/scale', angular.toJson(scale))
+        .then(function () {
+          toastr.success('Scale for service \'' + service.breed.name + '\' has been successfully updated.');
+        }).catch(function (response) {
+          toastr.error(response.data.message, 'Update of scale for service \'' + service.breed.name + '\' failed.');
+        });
     });
   };
 
@@ -85,9 +83,7 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
     return _.includes(addedServices, cluster.name + '/' + service.breed.name);
   };
 
-  $vamp.await(function () {
-    $vamp.peek(path);
-  }).catch(function () {
+  $vamp.get(path).catch(function () {
     $state.go('^');
     alert.show('Error', 'Deployment \'' + $stateParams.name + '\' cannot be found.', 'OK', null, function () {
     });
@@ -124,9 +120,8 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
     if ($ctrl.deployment) {
       if (_.includes(event.tags, 'deployments:' + $ctrl.deployment.name)) {
         if (_.includes(event.tags, 'synchronization') || _.includes(event.tags, 'archive')) {
-          $vamp.await(function () {
-            $vamp.peek(path);
-          }).catch(function () {
+          $vamp.get(path)
+          .catch(function () {
             $ctrl.deployment.clusters = {};
             alert.show('Warning', '\'' + $ctrl.deployment.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
               $state.go('^');

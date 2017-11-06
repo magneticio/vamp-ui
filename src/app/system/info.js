@@ -5,7 +5,7 @@ function InfoController($scope, $timeout, $vamp, artifact) {
   $ctrl.editor = artifact.editor;
   $ctrl.source = '';
 
-  $ctrl.peek = function load() {
+  $ctrl.get = function load() {
     $vamp.get('/info', null, 'YAML')
       .then(function (res) {
         $timeout(function () {
@@ -16,9 +16,9 @@ function InfoController($scope, $timeout, $vamp, artifact) {
 
   $scope.$on('$vamp:connection', function (event, connection) {
     if (connection === 'opened') {
-      $ctrl.peek();
+      $ctrl.get();
     }
   });
 
-  $ctrl.peek();
+  $ctrl.get();
 }

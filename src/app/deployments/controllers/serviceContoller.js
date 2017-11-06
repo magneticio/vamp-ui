@@ -34,13 +34,12 @@ function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, ar
         }
       }
     }).result.then(function (scale) {
-      $vamp.await(function () {
-        $vamp.put(path + '/clusters/' + clusterData.name + '/services/' + $ctrl.service.breed.name + '/scale', angular.toJson(scale));
-      }).then(function () {
-        toastr.success('Scale for service \'' + $ctrl.service.breed.name + '\' has been successfully updated.');
-      }).catch(function (response) {
-        toastr.error(response.data.message, 'Update of scale for service \'' + $ctrl.service.breed.name + '\' failed.');
-      });
+      $vamp.httpPut(path + '/clusters/' + clusterData.name + '/services/' + $ctrl.service.breed.name + '/scale', angular.toJson(scale))
+        .then(function () {
+          toastr.success('Scale for service \'' + $ctrl.service.breed.name + '\' has been successfully updated.');
+        }).catch(function (response) {
+          toastr.error(response.data.message, 'Update of scale for service \'' + $ctrl.service.breed.name + '\' failed.');
+        });
     });
   };
 
