@@ -1036,6 +1036,9 @@ p, div {
     text-transform: uppercase;
     font-size: $font-size-normal;
   }
+  .form-control {
+    border: 1px solid $outline-color;
+  }
 }
 
 .deployment-selection {
