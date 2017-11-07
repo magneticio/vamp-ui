@@ -16,7 +16,7 @@ function AuthorizationService($rootScope, $vamp) {
   };
 
   this.authorized = function (artifacts, action) {
-    if (!$rootScope.session || !$rootScope.session.user || $rootScope.session.user.role) {
+    if (!$rootScope.session || !$rootScope.session.user) {
       return true;
     }
     var access = '/' + $vamp.getRequestNamespace() + '/' + artifacts;
