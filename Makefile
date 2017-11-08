@@ -6,6 +6,7 @@ SHELL             := bash
 .SUFFIXES:
 
 # Constants, these can be overwritten in your Makefile.local
+PACKER       ?= packer
 BUILD_SERVER := magneticio/buildserver
 DIR_NPM	     := $(HOME)/.npm
 DIR_GYP	     := $(HOME)/.node-gyp
@@ -55,21 +56,21 @@ build:
 
 .PHONY: pack
 pack: default
-	docker volume create packer
+	docker volume create $(PACKER)
 	docker run \
 		--rm \
     		--volume $(CURDIR)/dist:/usr/local/src \
-    		--volume packer:/usr/local/stash \
+    		--volume $(PACKER):/usr/local/stash \
     		$(BUILD_SERVER) \
       			push $(PROJECT) $(VERSION)
 
 .PHONY: pack-local
 pack-local: build
-	docker volume create packer
+	docker volume create $(PACKER)
 	docker run \
 		--rm \
     		--volume $(CURDIR)/dist:/usr/local/src \
-    		--volume packer:/usr/local/stash \
+    		--volume $(PACKER):/usr/local/stash \
     		$(BUILD_SERVER) \
       			push $(PROJECT) $(VERSION)
 
