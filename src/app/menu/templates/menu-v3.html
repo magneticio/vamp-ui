@@ -1,3 +1,9 @@
+<a class="btn-link collapse-btn" ng-click="$ctrl.toggleSidebar()" ng-class="{'collapsed': !$ctrl.isPanelExpanded()}">
+    <svgicon class="collapse-icon" ng-if="$ctrl.isPanelExpanded()" type="nav_collapse"></svgicon>
+    <svgicon class="collapse-icon" ng-if="!$ctrl.isPanelExpanded()" type="nav_collapse"
+             uib-tooltip="Expand panel" tooltip-placement="right"></svgicon>
+    <span class="icon-label hidden-xs"></span>
+</a>
 <ul>
     <li class="sidebar-brand">
         <a ng-class="{expanded: $ctrl.isPanelExpanded()}" href="#">
@@ -46,14 +52,6 @@
                 </a>
             </li>
         </ul>
-    </li>
-    <li>
-        <a class="btn-link collapse-btn" ng-click="$ctrl.toggleSidebar()">
-            <svgicon class="collapse-icon" ng-if="$ctrl.isPanelExpanded()" type="nav_collapse"></svgicon>
-            <svgicon class="collapse-icon" ng-if="!$ctrl.isPanelExpanded()" type="nav_expand"
-                     uib-tooltip="Expand panel" tooltip-placement="right"></svgicon>
-            <span class="icon-label hidden-xs">Collapse menu</span>
-        </a>
     </li>
 </ul>
 

@@ -12,6 +12,19 @@ svgicon {
   }
 }
 
+.collapse-btn {
+  cursor: pointer;
+  position: fixed;
+  z-index: 999;
+  left: 255px;
+  top: 1.9em;
+  transition: left 350ms linear;
+  &.collapsed {
+    transition: left 200ms ease-out;
+    left: 80px;
+  }
+}
+
 menu {
   :focus {
     outline: none !important;
@@ -37,6 +50,7 @@ menu {
   li.sidebar-brand {
     height: $header-height;
     line-height: $header-height;
+    text-align: center;
 
     a {
       padding-left: 24px;
@@ -47,6 +61,10 @@ menu {
 
       img {
         vertical-align: text-bottom;
+      }
+
+      &:hover {
+        text-decoration: none;
       }
 
       .vamp-logo {
@@ -178,9 +196,13 @@ menu {
         & > span {
           display: inline;
           text-transform: capitalize;
+          position: relative;
+          width: 100%;
 
           & > .icon-dropdown {
-            margin-left: 15rem;
+            position: absolute;
+            top: 2px;
+            left: 150px;
           }
         }
 

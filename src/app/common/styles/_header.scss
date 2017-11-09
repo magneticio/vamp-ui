@@ -4,4 +4,11 @@
   line-height: $header-height;
   border-bottom: 1px solid $outline-color;
   overflow: hidden;
+  padding-left: 35px;
+}
+
+ol.breadcrumb {
+  > li > a:hover {
+   cursor: pointer;
+ }
 }
