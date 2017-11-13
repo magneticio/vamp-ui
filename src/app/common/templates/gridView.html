@@ -1,4 +1,4 @@
-<div class="artifacts container-fluid">
+<div class="artifacts">
     <div ng-repeat="item in $explorer.filteredItems | limitTo : $explorer.itemsPerPage : (($explorer.currentPage - 1) * $explorer.itemsPerPage) track by $index"
       class="artifact-card">
       <div class="artifact" ng-class="{selected: $explorer.isSelected(item)}"
@@ -35,18 +35,5 @@
          </div>
 
       </div>
-    </div>
-    <!-- Flexbox grid clearfix -->
-    <div class="artifact-card">
-    </div>
-    <div class="artifact-card">
-    </div>
-    <div class="artifact-card">
-    </div>
-    <div class="artifact-card">
-    </div>
-    <div class="artifact-card">
-    </div>
-    <div class="artifact-card">
     </div>
 </div>

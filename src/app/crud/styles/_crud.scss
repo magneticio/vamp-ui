@@ -1,9 +1,6 @@
 @import "_revisions";
 
 .main-content {
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
   font-size: $font-size-normal;
   font-weight: $font-weight-light;
 
@@ -223,45 +220,48 @@ table.vamp-lv {
 }
 
 .vamp-tag {
-    font-size: $font-size-small !important;
-    font-weight: $font-weight-light;
-    color: $text-color;
-    border-radius: 2px;
-    margin-right: 5px;
-    background-color: $pill-background-color;
+  font-size: $font-size-small !important;
+  font-weight: $font-weight-light;
+  color: $text-color;
+  border-radius: 2px;
+  margin-right: 5px;
+  background-color: $pill-background-color;
 
-    &.label-success {
-      color: white;
-      background-color: $success-button-color;
-    }
+  &.label-success {
+    color: white;
+    background-color: $success-button-color;
+  }
 
-    &.label-primary {
-      color: white;
-      background-color: $primary-button-color;
-    }
+  &.label-primary {
+    color: white;
+    background-color: $primary-button-color;
+  }
 
-    &.label-warning {
-      color: black;
-      background-color: $warning-button-color;
-    }
+  &.label-warning {
+    color: black;
+    background-color: $warning-button-color;
+  }
 
-    &.label-danger {
-      color: white;
-      background-color: $danger-button-color;
-    }
+  &.label-danger {
+    color: white;
+    background-color: $danger-button-color;
+  }
 
-    &.label-info {
-      color: white;
-      background-color: $info-button-color;
-    }
+  &.label-info {
+    color: white;
+    background-color: $info-button-color;
+  }
 }
 
 .artifacts {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: flex-start;
+  width: 100%;
+  display: grid;
+  grid-column: 3fr;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 33%));
+  grid-auto-rows: minmax(250px, auto);
+  @media screen and (max-width: 900px) {
+    grid-template-columns: repeat(auto-fill, minmax(210px, 50%));
+  }
 }
 
 .artifacts-list {
@@ -271,36 +271,21 @@ table.vamp-lv {
 }
 
 .artifact-card {
-    flex: 1 0 26rem;
-    margin-right: 1rem;
-    margin-left: 1rem;
+  height: 100%;
+  padding: 15px;
 
-    &:empty {
-      height: 0;
-      border: none;
-    }
+  &:empty {
+    height: 0;
+    border: none;
+  }
 }
 
 .artifact {
-  position:relative;
-  //overflow:hidden;
-  padding-bottom:100%;
-  margin: 15px 0;
-  //height: 31rem;
-  //width: 31rem;
-  //border-radius: 5px;
-  //margin: 10px;
-  //padding: 15px;
-  //cursor: pointer;
-  position: relative;
-  //border: 2px solid transparent;
-
+  height: 100%;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   //transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
 
   .artifact-content {
-    position:absolute;
-    width: 100%;
     height: 100%;
 
     &:hover {
@@ -324,6 +309,8 @@ table.vamp-lv {
     }
 
     .artifact-header {
+      display: grid;
+      grid-template-columns: 25px 2fr 20px;
       position: relative;
       border-top-left-radius: .5rem;
       border-top-right-radius: .5rem;
@@ -333,25 +320,16 @@ table.vamp-lv {
       padding-left: 2rem;
       color: $text-color;
       font-size: $font-size-large;
-
-      display: flex;
-      flex-direction: row;
-
-      .artifact-selection {
-        flex: 0 0 3rem;
-        -moz-flex: 0 0 3rem;
-      }
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 
       .artifact-title {
-        flex: 1 1 0;
-        -moz-flex: 1 1 0;
-        overflow: hidden;
-        white-space: nowrap;
         text-overflow: ellipsis;
+         overflow: hidden;
+         white-space: nowrap;
       }
 
       .header-context {
-        position: absolute;
+        // position: absolute;
         top: 0;
         left: 0;
         right: 0;
@@ -367,26 +345,23 @@ table.vamp-lv {
           background-color: $primary-button-color;
           background-size: 30px 30px;
           background-image: linear-gradient(
-            135deg,
-            rgba(white, 0.1)  25%,
-            transparent       25%,
-            transparent       50%,
-            rgba(white, 0.1)  50%,
-            rgba(white, 0.1)  75%,
-            transparent       75%,
-            transparent
+          135deg,
+          rgba(white, 0.1)  25%,
+          transparent       25%,
+          transparent       50%,
+          rgba(white, 0.1)  50%,
+          rgba(white, 0.1)  75%,
+          transparent       75%,
+          transparent
           );
           animation: barberpole 1s linear infinite;
         }
       }
 
       .artifact-actions {
-        flex: 0 0 3rem;
-        -moz-flex: 0 0 3rem;
 
         .artifact-actions-button {
           border-top-right-radius: .5rem;
-          padding: 0 2rem;
           background: none;
           cursor: pointer;
           display: inline-block;
@@ -402,6 +377,7 @@ table.vamp-lv {
       border-bottom-right-radius: .5rem;
       background: $box-color no-repeat url('/styles/resources/app/crud/images/background-pattern-alpha.png');
       background-size: cover;
+      background-position: 100%;
       padding: .5rem;
     }
   }

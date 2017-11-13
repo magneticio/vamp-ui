@@ -1,5 +1,5 @@
 <div class="container-fluid no-padding main-content">
-  <div class="row content-header">
+  <div class="content-header container-fluid">
     <div class="col-md-5">
       <div class="artifacts-search-box">
         <div class="input-group">
@@ -41,11 +41,11 @@
       </div>
     </div>
   </div>
-  <div class="row artifacts-panel">
+  <div class="artifacts-panel">
 
     <div ng-if="$explorer.items.length > 0">
       <div ng-if="$explorer.viewStates.main == 'grid'">
-        <grid-view >
+        <grid-view>
         </grid-view>
       </div>
 
