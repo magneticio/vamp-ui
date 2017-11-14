@@ -16,6 +16,7 @@
 
 .artifacts-panel {
   padding-bottom: 1.5rem;
+  padding: 15px;
   margin: 0 .5rem;
 }
 
@@ -256,11 +257,15 @@ table.vamp-lv {
 .artifacts {
   width: 100%;
   display: grid;
-  grid-column: 3fr;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 33%));
-  grid-auto-rows: minmax(250px, auto);
-  @media screen and (max-width: 900px) {
-    grid-template-columns: repeat(auto-fill, minmax(210px, 50%));
+  grid-template-columns: repeat(auto-fill, 382px);
+  grid-auto-rows: minmax(280px, auto);
+  @media (min-width: 1441px) {
+    grid-template-columns: repeat(auto-fill, 405px);
+    grid-auto-rows: minmax(280px, auto);
+  }
+  @media (min-width: 2560px) {
+    grid-template-columns: repeat(auto-fill, 754px);
+    grid-auto-rows: minmax(450px, auto);
   }
 }
 
@@ -310,7 +315,7 @@ table.vamp-lv {
 
     .artifact-header {
       display: grid;
-      grid-template-columns: 25px 2fr 20px;
+      grid-template-columns: 35px 2fr 35px;
       position: relative;
       border-top-left-radius: .5rem;
       border-top-right-radius: .5rem;
