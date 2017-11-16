@@ -121,7 +121,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
   };
 
   this.delete = function (path, data, params, accept) {
-    return request('DELETE', path, null, params, accept);
+    return request('DELETE', path, data, params, accept);
   };
 
   this.peek = function (path, data, params, accept, ns) {
