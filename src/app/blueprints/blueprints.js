@@ -76,7 +76,7 @@ function BlueprintService($rootScope, $vamp) {
   get();
 
   $rootScope.$on('/deployments', function (e, response) {
-    if (response.status === 'OK') {
+    if (response.statusText === 'OK') {
       deployments = _.sortBy(response.data, ['name']);
       $rootScope.$broadcast('deployments');
     }
