@@ -26,9 +26,7 @@
               </div>
             </div>
             <div class="panel-body">
-              <pre class="container-log" ng-show="$ctrl.canAccessLogs">
-                {{$ctrl.stdout}}
-              </pre>
+              <pre class="container-log" ng-show="$ctrl.canAccessLogs">{{$ctrl.stdout}}</pre>
             </div>
         </uib-tab>
         <uib-tab index="1" heading="Error log">
@@ -46,9 +44,7 @@
               </div>
             </div>
             <div class="panel-body">
-              <pre class="container-log" ng-show="$ctrl.canAccessLogs">
-                {{$ctrl.stderr}}
-              </pre>
+              <pre class="container-log" ng-show="$ctrl.canAccessLogs">{{$ctrl.stderr}}</pre>
             </div>
         </uib-tab>
         <uib-tab ng-repeat="(portName, port) in $ctrl.instance.ports | orderByKeys" index="$index + 2" heading="{{portName}}">
