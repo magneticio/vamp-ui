@@ -20,7 +20,8 @@
   </div>
   <div class="editor" ng-class="{'visible' : $ctrl.activeRevisiton.source}">
     <div class="editor-buttons clearfix">
-      <button class="btn btn-small btn-primary pull-right" ng-click="$ctrl.copyRevisionContent()" ng-if="$ctrl.activeRevisiton.source">
+      {{$ctrl.readOnly}}
+      <button class="btn btn-small btn-primary pull-right" ng-click="$ctrl.copyRevisionContent()" ng-if="$ctrl.activeRevisiton.source && !$ctrl.readOnly">
         Use revision
       </button>
       <button class="btn btn-small btn-primary pull-right" ng-click="$ctrl.closeRevision()" ng-if="$ctrl.activeRevisiton.source">

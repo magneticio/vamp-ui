@@ -82,7 +82,7 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
 
   $ctrl.copyRevisionContent = function () {
     alertIfDirty(function () {
-      if (!$ctrl.inEdit) {
+      if (!$ctrl.inEdit && !$ctrl.readOnly) {
         $ctrl.startEdit();
       }
 
