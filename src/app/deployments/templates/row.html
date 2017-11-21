@@ -14,11 +14,11 @@
 <td class="col-1"> {{ item.scale.instances }} </td>
 <td class="col-2">
   <span class="pull-right">
-    <span class="row-action" ng-click="$artifactCtrl.exportDeployment($event)">
+    <span class="row-action" ng-click="!$explorer.readOnly && $artifactCtrl.exportDeployment($event)"  ng-class="{disabled: $explorer.readOnly}">
       <svgicon type="export_as_blueprint"></svgicon>
       <label>Export as a blueprint</label>
     </span>
-    <span class="row-action" ng-click="$explorer.view(item)"><svgicon type="edit" uib-tooltip="EDIT" tooltip-placement="bottom-left"></svgicon></span>
-    <span class="row-action" ng-click="$explorer.delete(item)"><svgicon type="remove" uib-tooltip="DELETE" tooltip-placement="bottom-left"></svgicon></span>
+    <span class="row-action" ng-click="!$explorer.readOnly && $explorer.view(item)" ng-class="{disabled: $explorer.readOnly}"><svgicon type="edit" uib-tooltip="EDIT" tooltip-placement="bottom-left"></svgicon></span>
+    <span class="row-action" ng-click="!$explorer.readOnly && $explorer.delete(item)" ng-class="{disabled: $explorer.readOnly}"><svgicon type="remove" uib-tooltip="DELETE" tooltip-placement="bottom-left"></svgicon></span>
   </span>
 </td>

@@ -3,19 +3,19 @@
 </td>
 <td class="col-6">
   <span class="pull-right">
-    <span class="row-action" ng-click="$artifactCtrl.deploy($event)">
+    <span class="row-action" ng-click="!$explorer.readOnly && $artifactCtrl.deploy($event)" ng-class="{disabled: $explorer.readOnly}">
       <svgicon type="deploy_as"></svgicon>
       <label>deploy as</label>
     </span>
-    <span class="row-action" ng-if="!($artifactCtrl.mergeWith | isEmpty)" ng-click="$artifactCtrl.merge($event)">
+    <span class="row-action" ng-if="!($artifactCtrl.mergeWith | isEmpty)" ng-click="!$explorer.readOnly && $artifactCtrl.merge($event)" ng-class="{disabled: $explorer.readOnly}">
       <svgicon type="merge_to"></svgicon>
       <label>merge to</label>
     </span>
-    <span class="row-action" ng-if="!($artifactCtrl.removeFrom | isEmpty)" ng-click="$artifactCtrl.remove($event)">
+    <span class="row-action" ng-if="!($artifactCtrl.removeFrom | isEmpty)" ng-click="!$explorer.readOnly && $artifactCtrl.remove($event)" ng-class="{disabled: $explorer.readOnly}">
       <svgicon type="remove_from"></svgicon>
       <label>remove from</label>
     </span>
-    <span class="row-action" ng-click="$explorer.view(item)"><svgicon type="edit" uib-tooltip="EDIT" tooltip-placement="bottom-right"></svgicon></span>
-    <span class="row-action" ng-click="$explorer.delete(item)"><svgicon type="remove" uib-tooltip="DELETE" tooltip-placement="bottom-right"></svgicon></span>
+    <span class="row-action" ng-click="!$explorer.readOnly && $explorer.view(item)" ng-class="{disabled: $explorer.readOnly}"><svgicon type="edit" uib-tooltip="EDIT" tooltip-placement="bottom-right"></svgicon></span>
+    <span class="row-action" ng-click="!$explorer.readOnly && $explorer.delete(item)" ng-class="{disabled: $explorer.readOnly}"><svgicon type="remove" uib-tooltip="DELETE" tooltip-placement="bottom-right"></svgicon></span>
   </span>
 </td>

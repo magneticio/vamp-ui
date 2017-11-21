@@ -32,19 +32,19 @@
 </td>
 <td class="col-2">
   <span class="pull-right">
-    <span class="row-action" ng-if="item.status === 'running'" ng-click="$artifactCtrl.suspend($event)">
+    <span class="row-action" ng-if="item.status === 'running'" ng-click="!$explorer.readOnly && $artifactCtrl.suspend($event)" ng-class="{disabled: $explorer.readOnly}">
       <svgicon type="suspend"></svgicon>
       <label>suspend</label>
     </span>
-    <span class="row-action" ng-if="item.status === 'suspended'" ng-click="$artifactCtrl.start($event)">
+    <span class="row-action" ng-if="item.status === 'suspended'" ng-click="!$explorer.readOnly && $artifactCtrl.start($event)" ng-class="{disabled: $explorer.readOnly}">
       <svgicon type="start"></svgicon>
       <label>start</label>
     </span>
-    <span class="row-action" ng-if="item.status !== 'suspended'" ng-click="$artifactCtrl.restart($event)">
+    <span class="row-action" ng-if="item.status !== 'suspended'" ng-click="!$explorer.readOnly && $artifactCtrl.restart($event)" ng-class="{disabled: $explorer.readOnly}">
       <svgicon type="restart"></svgicon>
       <label>restart</label>
     </span>
-    <span class="row-action" ng-click="$explorer.view(item)"><svgicon type="edit" uib-tooltip="EDIT" tooltip-placement="bottom-right"></svgicon></span>
-    <span class="row-action" ng-click="$explorer.delete(item)"><svgicon type="remove" uib-tooltip="DELETE" tooltip-placement="bottom-right"></svgicon></span>
+    <span class="row-action" ng-click="!$explorer.readOnly && $explorer.view(item)" ng-class="{disabled: $explorer.readOnly}"><svgicon type="edit" uib-tooltip="EDIT" tooltip-placement="bottom-right"></svgicon></span>
+    <span class="row-action" ng-click="!$explorer.readOnly && $explorer.delete(item)" ng-class="{disabled: $explorer.readOnly}"><svgicon type="remove" uib-tooltip="DELETE" tooltip-placement="bottom-right"></svgicon></svgicon></span>
   </span>
 </td>

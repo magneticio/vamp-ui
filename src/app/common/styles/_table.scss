@@ -95,6 +95,16 @@ table.table.v2 {
           color: $text-color;
           cursor: pointer;
 
+          &.disabled {
+            cursor: not-allowed;
+            &:hover {
+              & > label {
+                cursor: not-allowed;
+                color: $inactive-text-color;
+              }
+            }
+          }
+
           & > label {
             cursor: pointer;
             color: $inactive-text-color;
