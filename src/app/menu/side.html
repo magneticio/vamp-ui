@@ -31,11 +31,11 @@
                 <td>RUNNING SINCE</td>
                 <td>{{info.running_since | date: 'dd-MM-yyyy HH:mm:ss'}}</td>
             </tr>
-            <tr ng-if="!role || role === 'superuser'">
+            <tr ng-if="!role || role === 'admin'">
                 <td>VERSION</td>
                 <td>{{info.version}}</td>
             </tr>
-            <tr ng-if="!role || (role === 'superuser' && info.ui_version !== info.version)">
+            <tr ng-if="!role || (role === 'admin' && info.ui_version !== info.version)">
                 <td>UI VERSION</td>
                 <td>{{info.ui_version}}</td>
             </tr>
