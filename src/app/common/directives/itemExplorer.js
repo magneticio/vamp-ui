@@ -29,7 +29,8 @@ angular.module('vamp-ui').directive('itemExplorer', [function () {
 }]);
 
 itemExplorerController.$inject = ['$scope', '$vamp', 'uiStatesFactory', '$state', '$stateParams',
-  '$filter', 'filterFilter', 'toastr', 'alert', 'CRUD_CONFIG', '$authorization'];
+  '$filter', 'filterFilter', 'toastr', 'alert', 'CRUD_CONFIG', '$authorization'
+];
 
 function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $stateParams,
   $filter, filterFilter, toastr, alert, CRUD_CONFIG, $authorization) {
@@ -42,6 +43,7 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
   $explorer.type = $explorer.itemTypeConfig.type;
   $explorer.noDelete = $scope.noDelete || readOnly;
   $explorer.noAdd = $scope.noAdd || readOnly;
+  $explorer.readOnly = readOnly;
 
   if (!$explorer.path) {
     $explorer.path = $explorer.itemTypeConfig.path;
@@ -170,13 +172,17 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
   };
 
   $explorer.view = function (item) {
-    $scope.onView({item: item});
+    $scope.onView({
+      item: item
+    });
   };
 
   $explorer.delete = function (item) {
     alert.show('Warning', 'Are you sure you want to delete: ' + item.name + '?', 'Delete', 'Cancel', function () {
       $vamp.await(function () {
-        $scope.onDelete({item: item});
+        $scope.onDelete({
+          item: item
+        });
       }).then(function () {
         toastr.success('\'' + item.name + '\' has been successfully deleted.');
       }).catch(function (response) {
@@ -208,7 +214,9 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
               return item.name === name;
             });
 
-            $scope.onDelete({item: item});
+            $scope.onDelete({
+              item: item
+            });
           }).then(function () {
             toastr.success('\'' + name + '\' has been successfully deleted.');
           }).catch(function (response) {

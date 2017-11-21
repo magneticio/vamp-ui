@@ -20,7 +20,7 @@
                 </div>
              </span>
              <span class="artifact-title clickable" ng-click="$explorer.view(item)" title="{{ item.name }}">{{ item.name }}</span>
-              <div ng-if="$explorer.itemTypeConfig.actions && $explorer.itemTypeConfig.actions.length > 0" class="artifact-actions dropdown">
+              <div ng-if="$explorer.itemTypeConfig.actions && $explorer.itemTypeConfig.actions.length > 0 && !$explorer.readOnly" class="artifact-actions dropdown">
                 <span class="artifact-actions-button"
                   uib-popover-template="'app/crud/templates/actionsMenu.html'"
                   ng-controller="actionMenuController"
