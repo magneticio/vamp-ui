@@ -55,15 +55,14 @@ function DeploymentCtrl($scope, $uibModal, $uibTooltip, $vamp, $state, toastr, $
         });
       }
 
-      $vamp.get('/deployments/' + $ctrl.deployment.name, '', {as_blueprint: true})
+      $vamp.get('/deployments/' + $ctrl.deployment.name, {as_blueprint: true})
       .then(function (blueprint) {
         blueprint.data.name = data.name;
         if (data.overwrite) {
           save(blueprint.data);
         } else {
-          $vamp.await(function () {
-            $vamp.peek('/blueprints/' + data.name);
-          }).then(function () {
+          $vamp.get('/blueprints/' + data.name)
+          .then(function () {
             toastr.error('Blueprint \'' + data.name + '\' already exists.');
           }).catch(function (response) {
             if (response) {
