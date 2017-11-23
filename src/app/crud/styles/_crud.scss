@@ -256,17 +256,8 @@ table.vamp-lv {
 
 .artifacts {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 382px);
-  grid-auto-rows: minmax(280px, auto);
-  @media (min-width: 1441px) {
-    grid-template-columns: repeat(auto-fill, 405px);
-    grid-auto-rows: minmax(280px, auto);
-  }
-  @media (min-width: 2560px) {
-    grid-template-columns: repeat(auto-fill, 754px);
-    grid-auto-rows: minmax(450px, auto);
-  }
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .artifacts-list {
@@ -276,8 +267,23 @@ table.vamp-lv {
 }
 
 .artifact-card {
-  height: 100%;
+  display: flex;
   padding: 15px;
+  width: 350px;
+  min-height: 300px;
+
+  @media (min-width: 1440px) {
+    width: 381px;
+    min-height: 330px;
+  }
+  @media (min-width: 1920px) {
+    width: 405px;
+    min-height: 350px;
+  }
+  @media (min-width: 2559px) {
+    width: 755px;
+    min-height: 600px;
+  }
 
   &:empty {
     height: 0;
@@ -286,6 +292,7 @@ table.vamp-lv {
 }
 
 .artifact {
+  width: 100%;
   height: 100%;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
   //transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
@@ -295,7 +302,6 @@ table.vamp-lv {
 
     &:hover {
       //box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-
       .artifact-title {
         text-decoration: underline;
       }
@@ -314,8 +320,7 @@ table.vamp-lv {
     }
 
     .artifact-header {
-      display: grid;
-      grid-template-columns: 35px 2fr 35px;
+      display: flex;
       position: relative;
       border-top-left-radius: .5rem;
       border-top-right-radius: .5rem;
@@ -328,13 +333,14 @@ table.vamp-lv {
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 
       .artifact-title {
+        margin-left: 12px;
+        margin-right: 4px;
         text-overflow: ellipsis;
          overflow: hidden;
          white-space: nowrap;
       }
 
       .header-context {
-        // position: absolute;
         top: 0;
         left: 0;
         right: 0;
@@ -366,6 +372,9 @@ table.vamp-lv {
       .artifact-actions {
 
         .artifact-actions-button {
+          margin-right: 8px;
+          min-width: 20px;
+          text-align: center;
           border-top-right-radius: .5rem;
           background: none;
           cursor: pointer;
