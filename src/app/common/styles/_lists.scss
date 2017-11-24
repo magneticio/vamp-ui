@@ -6,7 +6,7 @@ ol.menu-list {
   background-color: $background-color;
   min-width: 17rem;
   border-radius: 6px;
-  
+
   & > li {
     padding: 1rem;
     cursor: pointer;
@@ -19,6 +19,19 @@ ol.menu-list {
     &:first-child {
       border-bottom-left-radius: 6px;
       border-bottom-right-radius: 6px;
+    }
+
+    &.disabled {
+      & > a {
+        color: $inactive-text-color;
+      }
+      &:hover {
+        cursor: not-allowed;
+        & > a {
+          color: $inactive-text-color;
+        }
+        background-color: $background-color;
+      }
     }
 
     &:hover {

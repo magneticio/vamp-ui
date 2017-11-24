@@ -63,7 +63,7 @@ VAMP.Artifacts.prototype.all = function () {
           name: "export",
           title: "Export as a blueprint",
           action: "exportDeployment",
-          active: "!$artifactCtrl.readOnly()",
+          active: "true",
           class: "btn-primary"
         }
       ]
@@ -111,21 +111,21 @@ VAMP.Artifacts.prototype.all = function () {
           name: "suspend",
           title: "Suspend",
           action: "suspend",
-          active: "!$artifactCtrl.readOnly() && item.status === 'running'",
+          active: "item.status === 'running'",
           class: "btn-primary"
         },
         {
           name: "restart",
           title: "Restart",
           action: "restart",
-          active: "!$artifactCtrl.readOnly() && item.status !== 'suspended'",
+          active: "item.status !== 'suspended'",
           class: "btn-primary"
         },
         {
           name: "start",
           title: "Start",
           action: "start",
-          active: "!$artifactCtrl.readOnly() && item.status === 'suspended'",
+          active: "item.status === 'suspended'",
           class: "btn-success"
         }
       ]
@@ -149,14 +149,14 @@ VAMP.Artifacts.prototype.all = function () {
           name: "deployAs",
           title: "Deploy as",
           action: "deploy",
-          active: "$artifactCtrl.manageDeployments()",
+          active: "true",
           class: "btn-primary"
         },
         {
           name: "mergeTo",
           title: "Merge to",
           action: "merge",
-          active: "$artifactCtrl.manageDeployments() && !($artifactCtrl.mergeWith | isEmpty)",
+          active: "!($artifactCtrl.mergeWith | isEmpty)",
           class: "btn-primary"
         },
         {
@@ -164,7 +164,7 @@ VAMP.Artifacts.prototype.all = function () {
           title: "Remove from",
           action: "remove",
           class: "btn-danger",
-          active: "$artifactCtrl.manageDeployments() && !($artifactCtrl.removeFrom | isEmpty)"
+          active: "!($artifactCtrl.removeFrom | isEmpty)"
         }
       ]
     },

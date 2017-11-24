@@ -1,8 +1,9 @@
 <div>
   <ul class="menu-list">
     <li ng-repeat="action in $explorer.itemTypeConfig.actions"
-      ng-if="action.active ? (action.active | interpolate:this) : true"
-      ng-click="close(); $artifactCtrl[action.action]($event)">
+      ng-class="{disabled: $explorer.readOnly}"
+      ng-if="(action.active | interpolate:this)"
+      ng-click="!$explorer.readOnly && $artifactCtrl[action.action]($event); close();">
       <a class="btn-link">
         {{ action.title }}
       </a>
