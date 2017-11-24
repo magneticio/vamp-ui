@@ -23,6 +23,7 @@
       &:not(.disabled) {
         & > a,
         & > .btn-link {
+          color: $text-color;
           cursor: pointer;
         }
       }
