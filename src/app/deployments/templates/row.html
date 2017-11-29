@@ -9,9 +9,9 @@
        error="item.status === 'failed'"
   ></tag>
 </td>
-<td class="col-1"> {{ item.scale.cpu }} </td>
-<td class="col-1"> {{ item.scale.memory }} </td>
-<td class="col-1"> {{ item.scale.instances }} </td>
+<td class="col-1"> {{ item.scale.cpu || 0 }} </td>
+<td class="col-1"> {{ item.scale.memory || 0 }} </td>
+<td class="col-1"> {{ item.scale.instances || 0 }} </td>
 <td class="col-2">
   <span class="pull-right">
     <span class="row-action" ng-click="!$explorer.readOnly && $artifactCtrl.exportDeployment($event)"  ng-class="{disabled: $explorer.readOnly}">

@@ -12,8 +12,8 @@
       <div class="list">
           <p class="v-label">Scale :</p>
           <ul>
-              <li>cpu : {{ item.scale.cpu }}</li>
-              <li>memory : {{ item.scale.memory }} MB</li>
+              <li>cpu : {{ item.scale.cpu || 0}}</li>
+              <li>memory : {{ item.scale.memory || 0 }} MB</li>
               <li>instances : {{ item.scale.instances }}</li>
           </ul>
       </div>
