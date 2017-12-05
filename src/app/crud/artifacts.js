@@ -14,9 +14,9 @@ function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $vamp, uiStat
   $ctrl.artifacts = [];
   $ctrl.filteredArtifacts = filterFilter($ctrl.artifacts, {name: $ctrl.searchTerm});
   var _artifacts = [];
-  $ctrl.peek = function () {
-    $vamp.peek($ctrl.path);
-  };
+  // $ctrl.peek = function () {
+  //   $vamp.peek($ctrl.path);
+  // };
 
   $ctrl.onSearchTermChange = function () {
     $stateParams.searchTerm = $ctrl.searchTerm;
@@ -24,11 +24,11 @@ function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $vamp, uiStat
     $ctrl.calcPagination();
   };
 
-  $scope.$on('$vamp:connection', function (e, connection) {
-    if (connection === 'opened') {
-      $ctrl.peek();
-    }
-  });
+  // $scope.$on('$vamp:connection', function (e, connection) {
+  //   if (connection === 'opened') {
+  //     $ctrl.peek();
+  //   }
+  // });
 
   $scope.$on($ctrl.path, function (e, response) {
     angular.copy(_.orderBy(response.data, 'name'), _artifacts);
