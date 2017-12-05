@@ -190,15 +190,17 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
         notify('$vamp:connection', 'opened');
       });
 
-      stream.onClose(function () {
+      stream.onClose(function (forcedClose) {
         if (!connections) {
           return;
         }
-        var retryPeriod = 3; // seconds
-        $log.info('websocket closed, will try to reconnect in ' + retryPeriod + ' seconds...');
-        notify('$vamp:connection', 'closed');
         stream = null;
-        $timeout(websocket, retryPeriod * 1000);
+        if(!forcedClose) {
+          var retryPeriod = 3; // seconds
+          $log.info('websocket closed, will try to reconnect in ' + retryPeriod + ' seconds...');
+          notify('$vamp:connection', 'closed');
+          $timeout(websocket, retryPeriod * 1000);
+        }
       });
 
       stream.onMessage(function (message) {
@@ -212,7 +214,8 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
   this.disconnect = function () {
     if (stream) {
       connections.length = 0;
-      stream.close();
+      //force closing
+      stream.close(true);
       stream = null;
     }
     connectionNamespace = requestNamespace = null;
