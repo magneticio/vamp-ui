@@ -2,8 +2,8 @@
 /* eslint camelcase: ["error", {properties: "never"}] */
 'use strict';
 angular.module('vamp-ui')
-  .factory('$vamp', ['$http', '$log', '$rootScope', '$websocket', '$timeout', '$q', 'overlayService', function ($http, $log, $rootScope, $websocket, $timeout, $q, overlayService) {
-    return new Vamp($http, $log, $rootScope, $websocket, $timeout, $q, overlayService);
+  .factory('$vamp', ['$http', '$log', '$rootScope', '$websocket', '$timeout', '$q', function ($http, $log, $rootScope, $websocket, $timeout, $q) {
+    return new Vamp($http, $log, $rootScope, $websocket, $timeout, $q);
   }])
   .run(['$vamp', function ($vamp) {
     $vamp.init();
@@ -12,15 +12,11 @@ angular.module('vamp-ui')
     }
   }]);
 
-function Vamp($http, $log, $rootScope, $websocket, $timeout, $q, overlayService) {
+function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
   var $this = this;
   var stream;
   var connections = [];
   var transaction = 1;
-  $timeout(function() {
-    overlayService.display('error.disconnected');
-
-  }, 2000);
   var responseAcceptTypes = {
     JSON: 'application/json',
     YAML: 'application/x-yaml'
@@ -198,7 +194,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout, $q, overlayService)
           return;
         }
         stream = null;
-        if( !forcedClose) {
+        if (!forcedClose) {
           var retryPeriod = 3; // seconds
           $log.info('websocket closed, will try to reconnect in ' + retryPeriod + ' seconds...');
           notify('$vamp:connection', 'closed');
