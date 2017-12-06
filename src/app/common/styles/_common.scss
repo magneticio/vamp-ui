@@ -192,28 +192,22 @@ input[type="text"]:-ms-input-placeholder {
 /* Overlay */
 .overlay-root {
   user-select:none;
-  z-index:1100;
-  position: fixed;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
+  z-index: 1100;
+  position: absolute;
+  top: -50px;
+  width: 240px;
+  height: 40px;
+  left: 0;
+  margin: auto;
+  right: 0;
   display: block;
-  background-color: rgba(0,0,0,0.8);
+  background-color: $primary-button-color;
+  border-radius: 4px;
+  transition: top linear 500ms;
 
   &.active {
-    display: block;
-  }
-
-  .error-container {
-    width: 45rem;
-    height: 30rem;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    transition: top linear 1s;
+    top: 18px;
   }
 
   @import "_errors";
