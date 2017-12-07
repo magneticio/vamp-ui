@@ -43,7 +43,7 @@
   </div>
   <div class="artifacts-panel">
 
-    <div ng-if="$explorer.items.length > 110">
+    <div ng-if="$explorer.items.length > 0">
       <div ng-if="$explorer.viewStates.main == 'grid'">
         <grid-view>
         </grid-view>
@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <div class="loading-artifacts" ng-if="$explorer.items.length > 0">
+    <div class="loading-artifacts" ng-if="$explorer.items.length == 0">
       <object type="image/svg+xml" data="styles/resources/img/vamp-loading.svg"></object>
       <p>
         LOADING ARTIFACTS
