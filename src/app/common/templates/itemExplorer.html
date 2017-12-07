@@ -56,10 +56,7 @@
     </div>
 
     <div class="loading-artifacts" ng-if="$explorer.items.length == 0">
-      <object type="image/svg+xml" data="styles/resources/img/vamp-loading.svg"></object>
-      <p>
-        LOADING ARTIFACTS
-      </p>
+      <div class="loader"></div>
     </div>
 
     <nav ng-show="$explorer.pages > 1" class="artifact-pagination text-center">
