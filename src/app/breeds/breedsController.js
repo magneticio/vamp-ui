@@ -43,8 +43,8 @@ function breedsController($scope, $state, $stateParams, artifactsMetadata, $vamp
   });
 
   $scope.$on(path, function (e, response) {
+    $scope.artifactsLoaded = true;
     angular.copy(_.orderBy(response.data, 'name'), $ctrl.breeds);
-
     angular.forEach($ctrl.breeds, function (ar) {
       ar.ports = namifyFilter(ar.ports);
     });

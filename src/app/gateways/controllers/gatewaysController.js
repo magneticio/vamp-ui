@@ -28,6 +28,7 @@ function gatewaysController($scope, $state, $stateParams, artifactsMetadata, $va
   });
 
   $scope.$on(path, function (e, response) {
+    $scope.artifactsLoaded = true;
     angular.copy(_.orderBy(response.data, 'name'), $ctrl.gateways);
     angular.forEach($ctrl.gateways, function (a) {
       a.routes = namifyFilter(a.routes);

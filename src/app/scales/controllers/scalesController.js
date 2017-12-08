@@ -30,6 +30,7 @@ function scalesController($scope, $state, $stateParams, artifactsMetadata, $vamp
   });
 
   $scope.$on(path, function (e, response) {
+    $scope.artifactsLoaded = true;
     angular.copy(_.orderBy(response.data, 'name'), $ctrl.scales);
   });
 

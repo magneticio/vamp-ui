@@ -28,6 +28,7 @@ function workflowsController($scope, $state, $stateParams, artifactsMetadata, $v
   });
 
   $scope.$on(path, function (e, response) {
+    $scope.artifactsLoaded = true;
     angular.copy(_.orderBy(response.data, 'name'), $ctrl.workflows);
   });
 

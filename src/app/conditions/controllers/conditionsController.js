@@ -28,6 +28,7 @@ function conditionsController($scope, $state, $stateParams, artifactsMetadata, $
   });
 
   $scope.$on(path, function (e, response) {
+    $scope.artifactsLoaded = true;
     angular.copy(_.orderBy(response.data, 'name'), $ctrl.conditions);
   });
 

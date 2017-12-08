@@ -1,4 +1,7 @@
 <item-explorer items="$ctrl.deployments"
-  item-type-config="$ctrl.config"
-  on-view="$ctrl.onView(item)" on-add="$ctrl.add()" on-delete="$ctrl.delete(item)" >
+item-type-config="$ctrl.config"
+on-view="$ctrl.onView(item)" on-add="$ctrl.add()" on-delete="$ctrl.delete(item)" >
 </item-explorer>
+<div class="loading-artifacts" ng-hide="artifactsLoaded">
+  <div class="loader"></div>
+</div>
