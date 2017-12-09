@@ -71,7 +71,7 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
       .then(function (res) {
         var blb = new Blob([res.data]);
         var reader = new FileReader();
-        reader.addEventListener('loadend', function(e) {
+        reader.addEventListener('loadend', function (e) {
           $ctrl.stdout = e.srcElement.result;
           scrollToBottom();
         });
@@ -85,7 +85,7 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
       .then(function (res) {
         var blb = new Blob([res.data]);
         var reader = new FileReader();
-        reader.addEventListener('loadend', function(e) {
+        reader.addEventListener('loadend', function (e) {
           $ctrl.stderr = e.srcElement.result;
           scrollToBottom();
         });
