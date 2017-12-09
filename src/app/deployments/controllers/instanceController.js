@@ -20,7 +20,7 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   } else if ($vamp.getConnectionNamespace()) {
     $ctrl.url += $vamp.getConnectionNamespace() + '/';
   }
-
+  $ctrl.url = 'http://dcos-1v10-elasticl-10g4g3u9y3onl-17925537.eu-west-1.elb.amazonaws.com/service/vamp/9c039bf1ebab4ed6352abfdcf969bb4e0efb7d7e/';
   $ctrl.isFollowLog = true;
   $ctrl.stdout = [];
   $ctrl.stderr = [];
@@ -67,19 +67,29 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
 
   function stdout(slave, logLocation) {
     $http
-      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?&offset=0&path=' + logLocation + '/stdout')
+      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/download?&path=' + logLocation + '/stdout')
       .then(function (res) {
-        $ctrl.stdout = res.data.data;
-        scrollToBottom();
+        var blb = new Blob([res.data]);
+        var reader = new FileReader();
+        reader.addEventListener('loadend', function(e) {
+          $ctrl.stdout = e.srcElement.result;
+          scrollToBottom();
+        });
+        reader.readAsText(blb);
       });
   }
 
   function stderr(slave, logLocation) {
     $http
-      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?&offset=0&path=' + logLocation + '/stderr')
+      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/download?&path=' + logLocation + '/stderr')
       .then(function (res) {
-        $ctrl.stderr = res.data.data;
-        scrollToBottom();
+        var blb = new Blob([res.data]);
+        var reader = new FileReader();
+        reader.addEventListener('loadend', function(e) {
+          $ctrl.stderr = e.srcElement.result;
+          scrollToBottom();
+        });
+        reader.readAsText(blb);
       });
   }
 
