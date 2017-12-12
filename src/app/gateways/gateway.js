@@ -103,9 +103,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vam
     return _.includes(addedRoutes, route.lookup_name);
   };
 
-  $vamp.await(function () {
-    $vamp.peek(path);
-  }).catch(function () {
+  $vamp.get(path).then(function () {}, function () {
     $state.go('^');
     alert.show('Error', 'Gateway \'' + $stateParams.name + '\' cannot be found.', 'OK', null, function () {
     });
