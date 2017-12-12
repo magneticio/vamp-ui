@@ -20,7 +20,6 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   } else if ($vamp.getConnectionNamespace()) {
     $ctrl.url += $vamp.getConnectionNamespace() + '/';
   }
-  $ctrl.url = 'http://dcos-1v10-elasticl-10g4g3u9y3onl-17925537.eu-west-1.elb.amazonaws.com/service/vamp/9c039bf1ebab4ed6352abfdcf969bb4e0efb7d7e/';
   $ctrl.isFollowLog = true;
   $ctrl.stdout = [];
   $ctrl.stderr = [];
