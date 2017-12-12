@@ -33,10 +33,9 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   var stopInterval;
 
   // Retrieve config from VAMP API to check for either dcos url or mesos url
-  $vamp.get('/configuration', {type: 'applied', flatten: true}, 'JSON')
+  $vamp.get('/mesosconfig', {type: 'applied', flatten: true}, 'JSON')
     .then(function (response) {
-      var data = response.data || '';
-      var mesos = data['vamp.container-driver.mesos.url'];
+      var mesos = response.data;
       var mesosHost = mesos.substring(mesos.lastIndexOf('/') + 1, mesos.lastIndexOf(':'));
       var mesosPort = mesos.substring(mesos.lastIndexOf(':') + 1);
       initLogEndpoints(mesosHost, mesosPort);
@@ -85,7 +84,7 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
 
   // Retrieves host endpoint from slave pid string
   function getHost(slave) {
-    return slave.pid.substring(slave.pid.lastIndexOf('@') + 1, slave.pid.lastIndexOf(':'));
+    return slave.hostname;
   }
 
   // Retrieves port from slave pid string
