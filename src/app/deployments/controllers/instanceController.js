@@ -33,13 +33,15 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   var logEndpoints;
   var slave;
   var stopInterval;
-  var stdoutOffset = 0, stderrOffset = 0, logsChunkLength = 1024;
+  var stdoutOffset = 0;
+  var stderrOffset = 0;
+  var logsChunkLength = 1024;
 
   // Retrieve config from VAMP API to check for either dcos url or mesos url
   $vamp.get('/mesosconfig', {
-      type: 'applied',
-      flatten: true
-    }, 'JSON')
+    type: 'applied',
+    flatten: true
+  }, 'JSON')
     .then(function (response) {
       var mesos = response.data;
       var mesosHost = mesos.substring(mesos.lastIndexOf('/') + 1, mesos.lastIndexOf(':'));
@@ -75,10 +77,10 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
 
   function stdout(slave, logLocation) {
     $http
-      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?path=' + logLocation + '/stdout&offset='+ stdoutOffset+'&length=' + logsChunkLength)
+      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?path=' + logLocation + '/stdout&offset=' + stdoutOffset + '&length=' + logsChunkLength)
       .then(function (res) {
         var responseLength = res.data.data.length;
-        if(responseLength) {
+        if (responseLength) {
           $ctrl.stdout += res.data.data;
           stdoutOffset += responseLength;
           scrollToBottom();
@@ -88,11 +90,10 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
 
   function stderr(slave, logLocation) {
     $http
-      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?path=' + logLocation + '/stderr&offset='+stdoutOffset+'&length=' + logsChunkLength)
+      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?path=' + logLocation + '/stderr&offset=' + stderrOffset + '&length=' + logsChunkLength)
       .then(function (res) {
-
         var responseLength = res.data.data.length;
-        if(responseLength) {
+        if (responseLength) {
           $ctrl.stderr += res.data.data;
           stderrOffset += responseLength;
           scrollToBottom();
