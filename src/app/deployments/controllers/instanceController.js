@@ -10,7 +10,9 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   $ctrl.serviceName = $stateParams.service;
   $ctrl.instanceName = $stateParams.instance;
 
-  $ctrl.instance = _.find(serviceData.instances, {name: $ctrl.instanceName});
+  $ctrl.instance = _.find(serviceData.instances, {
+    name: $ctrl.instanceName
+  });
   $ctrl.url = '';
   if ($vamp.baseUrl) {
     $ctrl.url = window.location.protocol + '//' + $vamp.baseUrl;
@@ -20,9 +22,10 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   } else if ($vamp.getConnectionNamespace()) {
     $ctrl.url += $vamp.getConnectionNamespace() + '/';
   }
+  $ctrl.url = 'http://localhost:8080/b630680a45b8d65297c848124c0824c35370475b/';
   $ctrl.isFollowLog = true;
-  $ctrl.stdout = [];
-  $ctrl.stderr = [];
+  $ctrl.stdout = '';
+  $ctrl.stderr = '';
   $ctrl.canAccessLogs = false;
 
   // Configuration values and endpoints
@@ -30,9 +33,13 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   var logEndpoints;
   var slave;
   var stopInterval;
+  var stdoutOffset = 0, stderrOffset = 0, logsChunkLength = 1024;
 
   // Retrieve config from VAMP API to check for either dcos url or mesos url
-  $vamp.get('/mesosconfig', {type: 'applied', flatten: true}, 'JSON')
+  $vamp.get('/mesosconfig', {
+      type: 'applied',
+      flatten: true
+    }, 'JSON')
     .then(function (response) {
       var mesos = response.data;
       var mesosHost = mesos.substring(mesos.lastIndexOf('/') + 1, mesos.lastIndexOf(':'));
@@ -53,7 +60,10 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
     });
 
   function initLogEndpoints(mesosHost, mesosPort) {
-    mesosUrl = {host: mesosHost, port: mesosPort};
+    mesosUrl = {
+      host: mesosHost,
+      port: mesosPort
+    };
     // Based on urls the logEndpoints object gets instantiated
     logEndpoints = {
       masterState: $ctrl.url + 'proxy/host/' + mesosUrl.host + '/port/' + mesosUrl.port + '/master/state.json',
@@ -65,29 +75,28 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
 
   function stdout(slave, logLocation) {
     $http
-      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/download?&path=' + logLocation + '/stdout')
+      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?path=' + logLocation + '/stdout&offset='+ stdoutOffset+'&length=' + logsChunkLength)
       .then(function (res) {
-        var blb = new Blob([res.data]);
-        var reader = new FileReader();
-        reader.addEventListener('loadend', function (e) {
-          $ctrl.stdout = e.srcElement.result;
+        var responseLength = res.data.data.length;
+        if(responseLength) {
+          $ctrl.stdout += res.data.data;
+          stdoutOffset += responseLength;
           scrollToBottom();
-        });
-        reader.readAsText(blb);
+        }
       });
   }
 
   function stderr(slave, logLocation) {
     $http
-      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/download?&path=' + logLocation + '/stderr')
+      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?path=' + logLocation + '/stderr&offset='+stdoutOffset+'&length=' + logsChunkLength)
       .then(function (res) {
-        var blb = new Blob([res.data]);
-        var reader = new FileReader();
-        reader.addEventListener('loadend', function (e) {
-          $ctrl.stderr = e.srcElement.result;
+
+        var responseLength = res.data.data.length;
+        if(responseLength) {
+          $ctrl.stderr += res.data.data;
+          stderrOffset += responseLength;
           scrollToBottom();
-        });
-        reader.readAsText(blb);
+        }
       });
   }
 
@@ -106,9 +115,15 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
     if (logEndpoints) {
       $http.get(logEndpoints.masterState)
         .then(function (res) {
-          var marathonFramework = _.find(res.data.frameworks, {name: 'marathon'});
-          var task = _.find(marathonFramework.tasks, {id: $stateParams.instance});
-          slave = _.find(res.data.slaves, {id: task.slave_id});
+          var marathonFramework = _.find(res.data.frameworks, {
+            name: 'marathon'
+          });
+          var task = _.find(marathonFramework.tasks, {
+            id: $stateParams.instance
+          });
+          slave = _.find(res.data.slaves, {
+            id: task.slave_id
+          });
 
           return $http.get(logEndpoints.slaveDebug(slave));
         })
