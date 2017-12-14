@@ -22,7 +22,7 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   } else if ($vamp.getConnectionNamespace()) {
     $ctrl.url += $vamp.getConnectionNamespace() + '/';
   }
-  $ctrl.url = 'http://localhost:8080/b630680a45b8d65297c848124c0824c35370475b/';
+
   $ctrl.isFollowLog = true;
   $ctrl.stdout = '';
   $ctrl.stderr = '';
