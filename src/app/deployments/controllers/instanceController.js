@@ -77,7 +77,7 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
 
   function stdout(slave, logLocation) {
     $http
-      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?path=' + logLocation + '/stdout&offset=' + stdoutOffset + '&length=' + logsChunkLength)
+      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?&path=' + logLocation + '/stdout&offset=' + stdoutOffset + '&length=' + logsChunkLength)
       .then(function (res) {
         var responseLength = res.data.data.length;
         if (responseLength) {
@@ -90,7 +90,7 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
 
   function stderr(slave, logLocation) {
     $http
-      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?path=' + logLocation + '/stderr&offset=' + stderrOffset + '&length=' + logsChunkLength)
+      .get($ctrl.url + 'proxy/host/' + getHost(slave) + '/port/' + getPort(slave) + '/files/read?&path=' + logLocation + '/stderr&offset=' + stderrOffset + '&length=' + logsChunkLength)
       .then(function (res) {
         var responseLength = res.data.data.length;
         if (responseLength) {
