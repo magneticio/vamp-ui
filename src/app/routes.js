@@ -115,6 +115,9 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       views: {
         "main@vamp": {
           controllerProvider: function (artifactsMetadata) {
+            if (artifactsMetadata.kind === "blueprints") {
+              return 'addBlueprintController';
+            }
             if (artifactsMetadata.addMainView) {
               return artifactsMetadata.addMainView.controller;
             }
@@ -124,6 +127,9 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           templateProvider: function ($templateCache, artifactsMetadata) {
             if (artifactsMetadata.addMainView) {
               return $templateCache.get(artifactsMetadata.addMainView.templateUrl);
+            }
+            if (artifactsMetadata.kind === "blueprints") {
+              return $templateCache.get('app/blueprints/templates/addBlueprint.html');
             }
             return $templateCache.get('app/crud/templates/addArtifact.html');
           }

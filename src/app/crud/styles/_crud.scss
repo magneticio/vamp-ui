@@ -586,3 +586,55 @@ table.vamp-lv {
   padding: 1rem;
   text-align: left;
 }
+
+h4 {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  margin: 30px 0;
+    span {
+      content:"";
+       flex: 1 1 auto;
+       margin-left: 20px;
+       border-top: 1px solid $inactive-text-color;
+    }
+}
+
+.vamp-form {
+  .switch {
+    margin-top: 15px;
+    height: 12px;
+    width: 40px;
+    small {
+      top: -4px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+  input {
+    color: $text-color;
+    &::placeholder {
+      color: $inactive-text-color;
+    }
+  }
+  .has-error .ng-invalid{
+    border: 1px solid $danger-button-color;
+  }
+  .form-buttons {
+    margin-top: 30px;
+  }
+  label {
+    color: $inactive-text-color;
+  }
+  div.btn {
+    color: $hover-text-color;
+    &:hover {
+      opacity: 0.8;
+      text-decoration: none;
+    }
+  }
+}
+
+.form-container {
+  padding: 10px 40px;
+}
