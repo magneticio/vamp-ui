@@ -33,16 +33,17 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   var mesosUrl;
   var logEndpoints;
   var slave;
-  var stopErrInterval, stopOutInterval;
+  var stopErrInterval;
+  var stopOutInterval;
   var stdoutOffset = 0;
   var stderrOffset = 0;
   var logsChunkLength = 1024 * 10;
 
   // Retrieve config from VAMP API to check for either dcos url or mesos url
   $vamp.get('/mesosconfig', {
-      type: 'applied',
-      flatten: true
-    }, 'JSON')
+    type: 'applied',
+    flatten: true
+  }, 'JSON')
     .then(function (response) {
       var mesos = response.data;
       var mesosHost = mesos.substring(mesos.lastIndexOf('/') + 1, mesos.lastIndexOf(':'));
@@ -86,12 +87,10 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
           stdoutOffset += responseLength;
           scrollToBottom();
           stdout(slave, logLocation);
-        } else {
-          if (!stopOutInterval) {
-            stopOutInterval = $interval(function () {
-              stdout(slave, logLocation);
-            }, 2000);
-          }
+        } else if (!stopOutInterval) {
+          stopOutInterval = $interval(function () {
+            stdout(slave, logLocation);
+          }, 2000);
         }
       });
   }
@@ -106,12 +105,10 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
           stderrOffset += responseLength;
           scrollToBottom();
           stderr(slave, logLocation);
-        } else {
-          if (!stopErrInterval) {
-            stopErrInterval = $interval(function () {
-              stderr(slave, logLocation);
-            }, 2000);
-          }
+        } else if (!stopErrInterval) {
+          stopErrInterval = $interval(function () {
+            stderr(slave, logLocation);
+          }, 2000);
         }
       });
   }
@@ -155,9 +152,7 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
           }
 
           stdout(slave, logLocation);
-
           stderr(slave, logLocation);
-
         });
     }
   }
@@ -177,9 +172,10 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   }
 
   $scope.$on('$destroy', function () {
-    if (stopInterval) {
-      $interval.cancel(stopInterval);
-      stopInterval = null;
+    if (stopErrInterval && stopOutInterval) {
+      $interval.cancel(stopErrInterval);
+      $interval.cancel(stopOutInterval);
+      stopErrInterval = null;
     }
   });
 }
