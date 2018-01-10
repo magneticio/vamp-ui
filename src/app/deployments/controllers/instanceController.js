@@ -171,6 +171,10 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
     }
   }
 
+  $ctrl.changeTab = function () {
+    scrollToBottom();
+  };
+
   $scope.$on('$destroy', function () {
     if (stopErrInterval) {
       $interval.cancel(stopErrInterval);

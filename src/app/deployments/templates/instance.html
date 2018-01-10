@@ -9,7 +9,7 @@
   <div class="row">
     <div class="col-md-12">
       <uib-tabset>
-        <uib-tab index="0" heading="Output log">
+        <uib-tab index="0" heading="Output log" ng-click="$ctrl.changeTab()">
           <div class="panel panel-default log-panel">
             <div class="panel-heading">
               <div class="panel-title">
@@ -29,7 +29,7 @@
               <pre class="container-log" ng-show="$ctrl.canAccessLogs">{{$ctrl.stdout}}</pre>
             </div>
         </uib-tab>
-        <uib-tab index="1" heading="Error log">
+        <uib-tab index="1" heading="Error log" ng-click="$ctrl.changeTab()">
           <div class="panel panel-default log-panel">
             <div class="panel-heading">
               <div class="panel-title">
