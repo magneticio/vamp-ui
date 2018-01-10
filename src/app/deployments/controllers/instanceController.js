@@ -172,10 +172,13 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
   }
 
   $scope.$on('$destroy', function () {
-    if (stopErrInterval && stopOutInterval) {
+    if (stopErrInterval) {
       $interval.cancel(stopErrInterval);
-      $interval.cancel(stopOutInterval);
       stopErrInterval = null;
+    }
+    if (stopOutInterval) {
+      $interval.cancel(stopOutInterval);
+      stopOutInterval = null;
     }
   });
 }
