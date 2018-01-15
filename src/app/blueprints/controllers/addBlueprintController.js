@@ -27,7 +27,7 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr) {
       ],
       variables: [
         {
-          name: '',
+          key: '',
           value: ''
         }
       ]
@@ -78,33 +78,41 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr) {
       clusters: {}
     };
     finalBlueprint.clusters[blueprint.name] = {
-      services: {
-        breed: {
-          name: blueprint.name,
-          deployable: blueprint.breed.deployable,
-          ports: {},
-          environment_variables: {}
-        },
-        scale: {
-          cpu: blueprint.scale.cpu,
-          memory: blueprint.scale.memory,
-          instances: blueprint.scale.instances
-        },
-        dialects: {
-          marathon: {
-            container: {
-              docker: {
-                forcePullImage: blueprint.dialects.forceimage,
-                parameters: prepareParams(blueprint.dialects.params)
+      services: [
+        {
+          breed: {
+            name: blueprint.name,
+            deployable: {
+              definition: blueprint.breed.deployable
+            },
+            ports: {},
+            environment_variables: {}
+          },
+          scale: {
+            cpu: blueprint.scale.cpu,
+            memory: blueprint.scale.memory,
+            instances: blueprint.scale.instances
+          },
+          dialects: {
+            marathon: {
+              container: {
+                docker: {
+                  forcePullImage: blueprint.dialects.forceimage,
+                  parameters: prepareParams(blueprint.dialects.params)
+                }
               }
             }
           }
         }
-      }
+      ]
     };
 
     blueprint.breed.ports.forEach(function (port) {
-      finalBlueprint.clusters[blueprint.name].services.breed.ports[port.name] = port.port + '/' + port.protocol;
+      finalBlueprint.clusters[blueprint.name].services[0].breed.ports[port.name] = port.port + '/' + port.protocol;
+    });
+
+    blueprint.breed.variables.forEach(function (variable) {
+      finalBlueprint.clusters[blueprint.name].services[0].breed.environment_variables[variable.key] = variable.value;
     });
 
     function prepareParams(params) {
@@ -123,7 +131,6 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr) {
   $ctrl.save = function () {
     var finalBlueprint = prepareBlueprint($ctrl.blueprint);
     var yaml = json2yaml(finalBlueprint);
-
     $vamp.post(path, yaml, {}).then(function () {
       $ctrl.goBack();
       toastr.success('New blueprint has been successfully created.');

@@ -1,7 +1,7 @@
-(function (self) { 
+(function (self) {
   /*
-   * TODO, lots of concatenation (slow in js)
-   */
+  * TODO, lots of concatenation (slow in js)
+  */
   var spacing = "  ";
 
   function getType(obj) {
@@ -26,23 +26,23 @@
 
     switch(type) {
       case 'array':
-        convertArray(obj, ret);
-        break;
+      convertArray(obj, ret);
+      break;
       case 'hash':
-        convertHash(obj, ret);
-        break;
+      convertHash(obj, ret);
+      break;
       case 'string':
-        convertString(obj, ret);
-        break;
+      convertString(obj, ret);
+      break;
       case 'null':
-        ret.push('null');
-        break;
+      ret.push('null');
+      break;
       case 'number':
-        ret.push(obj.toString());
-        break;
+      ret.push(obj.toString());
+      break;
       case 'boolean':
-        ret.push(obj ? 'true' : 'false');
-        break;
+      ret.push(obj ? 'true' : 'false');
+      break;
     }
   }
 
@@ -86,9 +86,13 @@
   }
 
   function convertString(obj, ret) {
-    ret.push(normalizeString(obj));
+    //escape colons in json
+    var string = normalizeString(obj).replace(/\\x3A/g, ":");
+    //escape symbols on list line
+    string = string.replace(/\\x24/g, "");
+    ret.push(string);
   }
-  
+
   self.json2yaml = function(obj) {
     if (typeof obj == 'string') {
       obj = JSON.parse(obj);
@@ -96,6 +100,7 @@
 
     var ret = [];
     convert(obj, ret);
+    ret.pop();
     return ret.join("\n");
   };
 })(this);

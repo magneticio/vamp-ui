@@ -41,7 +41,9 @@ function revisionsController($scope, $rootScope, revisionsService, $stateParams,
       tags: [
         'archive', $ctrl.kind + ':' + $ctrl.name
       ]
-    }), {type: 'archive'});
+    }), {
+      type: 'archive'
+    });
   };
 
   $ctrl.peek();
