@@ -25,7 +25,6 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
 
   this.valid = true;
   $ctrl.inEdit = false;
-  $ctrl.isRevision = false;
   var validation = true;
   var ignoreChange = false;
   $ctrl.readOnly = function () {
@@ -34,12 +33,9 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
 
   $scope.$watch('activeRevision', function (oldVal, newVal) {
     if (oldVal !== newVal) {
-
       if (_.isEmpty(newVal)) {
         $ctrl.source = $ctrl.sourceCopy;
-        $ctrl.isRevision = true;
       } else {
-        $ctrl.isRevision = false;
         $ctrl.inEdit = false;
         $ctrl.source = YAML.parse(newVal.source);
 
