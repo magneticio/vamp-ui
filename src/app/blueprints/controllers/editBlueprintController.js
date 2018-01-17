@@ -31,14 +31,13 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
     return $authorization.readOnly($ctrl.kind);
   };
 
-  $scope.$watch('activeRevision', function (oldVal, newVal) {
+  $scope.$watch('activeRevision', function (newVal, oldVal) {
     if (oldVal !== newVal) {
       if (_.isEmpty(newVal)) {
         $ctrl.source = $ctrl.sourceCopy;
       } else {
         $ctrl.inEdit = false;
         $ctrl.source = YAML.parse(newVal.source);
-
       }
       populateBlueprint();
     }
@@ -139,9 +138,7 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
       tags: [
         'archive', $ctrl.kind + ':' + $ctrl.name
       ]
-    }), {
-      type: 'archive'
-    });
+    }), {type: 'archive'});
   }
 
   function populateBlueprint() {
@@ -217,15 +214,6 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
     }
   });
 
-  $scope.$on('$stateChangeStart', function (event, toState, toParams) {
-    if (!ignoreChange && $ctrl.isModified()) {
-      event.preventDefault();
-      alertIfDirty(function () {
-        $ctrl.base = $ctrl.source = null;
-        $state.go(toState, toParams);
-      });
-    }
-  });
 
   $scope.$on('$vamp:connection', function (event, connection) {
     if (connection === 'opened') {
@@ -260,10 +248,9 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
   this.save = function () {
     validation = false;
     ignoreChange = true;
-
+    $ctrl.sourceCopy = angular.copy($ctrl.source);
     var finalBlueprint = prepareBlueprint($ctrl.blueprint);
     var yaml = json2yaml(finalBlueprint);
-
     $vamp.httpPut(path, yaml, {}, 'JSON')
     .then(function (resp) {
       $ctrl.base = yaml;
@@ -283,7 +270,6 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
   function goBack() {
     validation = false;
     ignoreChange = true;
-
     $ctrl.stopEdit();
   }
 
@@ -313,11 +299,16 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
   };
 
   function prepareBlueprint(blueprint) {
-    var finalBlueprint = {
-      name: blueprint.name,
-      gateways: {},
-      clusters: {}
-    };
+    var finalBlueprint = blueprint;
+    if(!finalBlueprint.clusters) {
+      finalBlueprint = {
+        name: blueprint.name,
+        kind: "blueprints",
+        gateways: {},
+        clusters: {}
+      };
+    }
+
     finalBlueprint.clusters[blueprint.name] = {
       services: [
         {
