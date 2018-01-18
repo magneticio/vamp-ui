@@ -169,12 +169,20 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
     }
 
     $ctrl.blueprint.breed.variables = [];
-    for (varName in $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.environment_variables) {
+    if($ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.environment_variables) {
+      for (varName in $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.environment_variables) {
+        $ctrl.blueprint.breed.variables.push({
+          key: varName,
+          value: $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.environment_variables[varName]
+        })
+      }
+    } else {
       $ctrl.blueprint.breed.variables.push({
-        key: varName,
-        value: $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.environment_variables[varName]
-      })
+        key: '',
+        value: ''
+      });
     }
+
 
     for (paramName in $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.parameters) {
       $ctrl.blueprint.dialects.params = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.parameters;
@@ -340,11 +348,15 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
     };
 
     blueprint.breed.ports.forEach(function (port) {
-      finalBlueprint.clusters[blueprint.name].services[0].breed.ports[port.name] = port.port + '/' + port.protocol;
+      if(port.key !== '' && port.name !== '' && port.port !== '') {
+        finalBlueprint.clusters[blueprint.name].services[0].breed.ports[port.name] = port.port + '/' + port.protocol;
+      }
     });
 
     blueprint.breed.variables.forEach(function (variable) {
-      finalBlueprint.clusters[blueprint.name].services[0].breed.environment_variables[variable.key] = variable.value;
+      if(variable.key !== '' && variable.name !== '') {
+        finalBlueprint.clusters[blueprint.name].services[0].breed.environment_variables[variable.key] = variable.value;
+      }
     });
 
     function prepareParams(params) {

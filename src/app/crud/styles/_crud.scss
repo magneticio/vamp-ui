@@ -615,6 +615,7 @@ h4 {
     color: $text-color;
     &::placeholder {
       color: $inactive-text-color;
+      opacity: 0.5;
     }
   }
   .has-error .ng-invalid{
