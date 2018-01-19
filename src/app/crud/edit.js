@@ -178,24 +178,33 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
     }
   }
 
+  function alertConfirmation(callback) {
+    if ($ctrl.kind === "deployments") {
+      alert.show('Confirmation ', '\'' + $ctrl.name + '\' will be re-deployed. Are you sure?', 'Deploy', 'Cancel', callback);
+    } else {
+      callback();
+    }
+  }
+
   this.save = function () {
     validation = false;
     ignoreChange = true;
-
-    $vamp.httpPut(path, $ctrl.source, {}, 'JSON')
-      .then(function () {
-        $ctrl.base = $ctrl.source;
-        goBack();
-        toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');
-      }).catch(function (response) {
-        validation = true;
-        ignoreChange = false;
-        if (response) {
-          toastr.error(response.data.message, 'Save of \'' + $ctrl.name + '\'failed.');
-        } else {
-          toastr.error('Server timeout.', 'Save of \'' + $ctrl.name + '\'failed.');
-        }
-      });
+    alertConfirmation(function() {
+      $vamp.httpPut(path, $ctrl.source, {}, 'JSON')
+        .then(function () {
+          $ctrl.base = $ctrl.source;
+          goBack();
+          toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');
+        }).catch(function (response) {
+          validation = true;
+          ignoreChange = false;
+          if (response) {
+            toastr.error(response.data.message, 'Save of \'' + $ctrl.name + '\'failed.');
+          } else {
+            toastr.error('Server timeout.', 'Save of \'' + $ctrl.name + '\'failed.');
+          }
+        });
+    })
   };
 
   function goBack() {

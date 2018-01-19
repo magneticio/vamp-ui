@@ -157,7 +157,9 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
 
     $ctrl.blueprint.breed.deployable = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.deployable.definition;
     $ctrl.blueprint.scale = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].scale;
-    $ctrl.blueprint.dialects.forceimage = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.forcePullImage;
+    if($ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon) {
+      $ctrl.blueprint.dialects.forceimage = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.forcePullImage;
+    }
 
     $ctrl.blueprint.breed.ports = [];
     for (portName in $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.ports) {
@@ -183,10 +185,12 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
       });
     }
 
-
-    for (paramName in $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.parameters) {
-      $ctrl.blueprint.dialects.params = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.parameters;
+    if($ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon) {
+      for (paramName in $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.parameters) {
+        $ctrl.blueprint.dialects.params = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.parameters;
+      }
     }
+
   }
 
   this.peek();
