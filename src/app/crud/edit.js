@@ -189,7 +189,7 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
   this.save = function () {
     validation = false;
     ignoreChange = true;
-    alertConfirmation(function() {
+    alertConfirmation(function () {
       $vamp.httpPut(path, $ctrl.source, {}, 'JSON')
         .then(function () {
           $ctrl.base = $ctrl.source;
@@ -204,7 +204,7 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
             toastr.error('Server timeout.', 'Save of \'' + $ctrl.name + '\'failed.');
           }
         });
-    })
+    });
   };
 
   function goBack() {
