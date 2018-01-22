@@ -27,7 +27,7 @@ all: default
 # Using our buildserver which contains all the necessary dependencies
 .PHONY: default
 default:
-	docker pull $(BUILD_SERVER)
+	test "$(DEPS_OK)" = "true" || docker pull $(BUILD_SERVER)
 	docker run \
 		--rm \
 		--volume "$(CURDIR)":/srv/src \
