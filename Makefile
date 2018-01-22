@@ -8,9 +8,9 @@ SHELL             := bash
 # Constants, these can be overwritten in your Makefile.local
 PACKER       ?= packer
 BUILD_SERVER := magneticio/buildserver
-DIR_NPM	     := "$(abspath $(HOME))"/.npm
-DIR_GYP	     := "$(abspath $(HOME))"/.node-gyp
-DIR_BOWER	 := "$(abspath $(HOME))"/.cache/bower
+DIR_NPM	     := "$(HOME)"/.npm
+DIR_GYP	     := "$(HOME)"/.node-gyp
+DIR_BOWER	 := "$(HOME)"/.cache/bower
 
 # if Makefile.local exists, include it.
 ifneq ("$(wildcard Makefile.local)", "")
