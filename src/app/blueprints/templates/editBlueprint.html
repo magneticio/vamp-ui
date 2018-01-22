@@ -63,7 +63,10 @@
             </div>
           </div>
           <div class="form-group col-sm-12" ng-repeat="port in $ctrl.blueprint.breed.ports">
-            <label for="breed_ports" class="col-sm-3 control-label"> <span ng-show="$index == 0">PORTS</span></label>
+            <label for="breed_ports" class="col-sm-3 control-label"> <span ng-show="$index == 0">PORTS</span>
+            <span class="clickable" ng-show="$index !== 0 && $ctrl.inEdit" ng-click="$ctrl.removePort($index)">[ X ]</span>
+            </label>
+
             <div class="col-sm-3">
               <input id="breed_ports" name="breed_ports" placeholder="name" class="form-control" type="text" ng-model="$ctrl.blueprint.breed.ports[$index].name" ng-readonly="!$ctrl.inEdit">
             </div>
@@ -80,7 +83,9 @@
             </div>
           </div>
           <div class="form-group col-sm-12" ng-repeat="param in $ctrl.blueprint.breed.variables">
-            <label for="instances" class="col-sm-3 control-label"> <span ng-show="$index == 0">ENVIRONMENT VARIABLES</span></label>
+            <label for="instances" class="col-sm-3 control-label"> <span ng-show="$index == 0">ENVIRONMENT VARIABLES</span>
+              <span class="clickable" ng-show="$index !== 0 && $ctrl.inEdit" ng-click="$ctrl.removeEnvVars($index)">[ X ]</span>
+            </label>
             <div class="col-sm-5">
               <input id="variables" placeholder="name" class="form-control" type="text" ng-model="$ctrl.blueprint.breed.variables[$index].key" ng-readonly="!$ctrl.inEdit">
             </div>
@@ -124,7 +129,9 @@
           </div>
 
           <div class="form-group col-sm-12" ng-class="{'has-error': form.instances.$invalid && form.$submitted}" ng-repeat="param in $ctrl.blueprint.dialects.params">
-            <label for="instances" class="col-sm-3 control-label"><span ng-show="$index == 0">PARAMETERS</span></label>
+            <label for="instances" class="col-sm-3 control-label"><span ng-show="$index == 0">PARAMETERS</span>
+            <span class="clickable" ng-show="$index !== 0 && $ctrl.inEdit" ng-click="$ctrl.removeParams($index)">[ X ]</span>
+            </label>
             <div class="col-sm-5">
               <input id="param_key" placeholder="key" class="form-control" type="text" ng-model="$ctrl.blueprint.dialects.params[$index].key" ng-readonly="!$ctrl.inEdit">
             </div>
