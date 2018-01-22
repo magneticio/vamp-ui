@@ -376,4 +376,14 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
     return finalBlueprint;
   }
 
+  $ctrl.removePort = function (index) {
+    $ctrl.blueprint.breed.ports.splice(index, 1);
+  }
+  $ctrl.removeParams = function (index) {
+    $ctrl.blueprint.dialects.params.splice(index, 1);
+  }
+  $ctrl.removeEnvVars = function (index) {
+    $ctrl.blueprint.breed.variables.splice(index, 1);
+  }
+
 });
