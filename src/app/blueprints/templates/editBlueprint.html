@@ -37,11 +37,11 @@
           <div class="form-group col-sm-12" ng-class="{'has-error': (form.gateway_name.$invalid || form.gateway_port.$invalid) && form.$submitted}">
             <label for="gateway_name" class="col-sm-3 control-label">GATEWAY PORT</label>
             <div class="col-sm-3">
-              <input id="gateway_port" name="gateway_port" placeholder="port" class="form-control" type="number" ng-model="$ctrl.blueprint.gateways.port" required ng-readonly="!$ctrl.inEdit">
+              <input id="gateway_port" name="gateway_port" placeholder="port" class="form-control" type="number" ng-model="$ctrl.blueprint.gateways.port" ng-readonly="!$ctrl.inEdit">
             </div>
             <label for="gateway_name" class="col-sm-3 control-label">PORT NAME</label>
             <div class="col-sm-3">
-              <input id="gateway_port" name="gateway_port" placeholder="port" class="form-control" type="text" ng-model="$ctrl.blueprint.gateways.name" required ng-readonly="!$ctrl.inEdit">
+              <input id="gateway_name" name="gateway_port" placeholder="port" class="form-control" type="text" ng-model="$ctrl.blueprint.gateways.name" ng-readonly="!$ctrl.inEdit">
             </div>
           </div>
         </div>

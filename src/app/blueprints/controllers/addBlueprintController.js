@@ -81,7 +81,7 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr) {
       services: [
         {
           breed: {
-            name: blueprint.name,
+            name: blueprint.breed.deployable.split('/')[1],
             deployable: {
               definition: blueprint.breed.deployable
             },
@@ -108,11 +108,15 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr) {
     };
 
     blueprint.breed.ports.forEach(function (port) {
-      finalBlueprint.clusters[blueprint.name].services[0].breed.ports[port.name] = port.port + '/' + port.protocol;
+      if(port.port !== 'null' && port.name !== '' && port.protocol !== '') {
+        finalBlueprint.clusters[blueprint.name].services[0].breed.ports[port.name] = port.port + '/' + port.protocol;
+      }
     });
 
     blueprint.breed.variables.forEach(function (variable) {
-      finalBlueprint.clusters[blueprint.name].services[0].breed.environment_variables[variable.key] = variable.value;
+      if(variable.key !== '' && variable.value !== '') {
+        finalBlueprint.clusters[blueprint.name].services[0].breed.environment_variables[variable.key] = variable.value;
+      }
     });
 
     function prepareParams(params) {
@@ -124,7 +128,9 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr) {
       return params;
     }
 
-    finalBlueprint.gateways[blueprint.gateways.port] = blueprint.name + '/' + blueprint.gateways.name;
+    if(blueprint.gateways.port !== 'null' && blueprint.gateways.name !== '') {
+      finalBlueprint.gateways[blueprint.gateways.port] = blueprint.name + '/' + blueprint.gateways.name;
+    }
     return finalBlueprint;
   }
 

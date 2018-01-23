@@ -20,16 +20,16 @@
       <div class="col-sm-6">
 
         <div class="row">
-          <div class="form-group col-sm-12" ng-class="{'has-error': (form.gateway_name.$invalid || form.gateway_port.$invalid) && form.$submitted}">
+          <div class="form-group col-sm-12">
             <label for="gateway_name" class="col-sm-3 control-label">GATEWAY PORT</label>
             <div class="col-sm-3">
               <input id="gateway_port" name="gateway_port" placeholder="port" class="form-control" type="number"
-              ng-model="$ctrl.blueprint.gateways.port" required>
+              ng-model="$ctrl.blueprint.gateways.port">
             </div>
             <label for="gateway_name" class="col-sm-3 control-label">PORT NAME</label>
             <div class="col-sm-3">
               <input id="gateway_port" name="gateway_port" placeholder="port" class="form-control" type="text"
-              ng-model="$ctrl.blueprint.gateways.name" required>
+              ng-model="$ctrl.blueprint.gateways.name">
             </div>
           </div>
         </div>
@@ -120,7 +120,7 @@
             </div>
           </div>
 
-          <div class="form-group col-sm-12" ng-class="{'has-error': form.instances.$invalid && form.$submitted}" ng-repeat="param in $ctrl.blueprint.dialects.params">
+          <div class="form-group col-sm-12" ng-repeat="param in $ctrl.blueprint.dialects.params">
             <label for="instances" class="col-sm-3 control-label"><span ng-show="$index == 0">PARAMETERS</span></label>
             <div class="col-sm-5">
               <input id="param_key" placeholder="key" class="form-control" type="text"

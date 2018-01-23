@@ -147,49 +147,68 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
     for (port in $ctrl.source.gateways) {
       $ctrl.blueprint.gateways.port = parseInt(port);
     }
+    $ctrl.blueprint.name = $ctrl.source.name;
 
-    for (portName in $ctrl.source.gateways[$ctrl.blueprint.gateways.port].routes) {
-      var blueprint_name = portName.split("/")[0];
-      var port_name = portName.split("/")[1];
-      $ctrl.blueprint.name = blueprint_name;
-      $ctrl.blueprint.gateways.name = port_name;
-    }
-
-    $ctrl.blueprint.breed.deployable = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.deployable.definition;
-    $ctrl.blueprint.scale = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].scale;
-    if($ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon) {
-      $ctrl.blueprint.dialects.forceimage = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.forcePullImage;
-    }
-
-    $ctrl.blueprint.breed.ports = [];
-    for (portName in $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.ports) {
-      $ctrl.blueprint.breed.ports.push({
-        name: portName,
-        port: parseInt($ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.ports[portName].split("/")[0]),
-        protocol: $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.ports[portName].split("/")[1]
-      })
-    }
-
-    $ctrl.blueprint.breed.variables = [];
-    if($ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.environment_variables) {
-      for (varName in $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.environment_variables) {
-        $ctrl.blueprint.breed.variables.push({
-          key: varName,
-          value: $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.environment_variables[varName]
-        })
-      }
-    } else {
-      $ctrl.blueprint.breed.variables.push({
-        key: '',
-        value: ''
-      });
-    }
-
-    if($ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon) {
-      for (paramName in $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.parameters) {
-        $ctrl.blueprint.dialects.params = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.parameters;
+    if($ctrl.source.gateways && $ctrl.blueprint.gateways.port) {
+      for (portName in $ctrl.source.gateways[$ctrl.blueprint.gateways.port].routes) {
+        var blueprint_name = portName.split("/")[0];
+        var port_name = portName.split("/")[1];
+        $ctrl.blueprint.gateways.name = port_name;
       }
     }
+    if($ctrl.blueprint.name && $ctrl.source.clusters[$ctrl.blueprint.name]) {
+      $ctrl.blueprint.breed.deployable = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.deployable.definition;
+      $ctrl.blueprint.scale = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].scale;
+      if($ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon) {
+        $ctrl.blueprint.dialects.forceimage = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.forcePullImage;
+      }
+
+      $ctrl.blueprint.breed.ports = [];
+      if($ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.ports) {
+        for (portName in $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.ports) {
+          $ctrl.blueprint.breed.ports.push({
+            name: portName,
+            port: parseInt($ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.ports[portName].split("/")[0]),
+            protocol: $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.ports[portName].split("/")[1]
+          })
+        }
+      }
+
+      if($ctrl.blueprint.breed.ports.length == 0) {
+        $ctrl.blueprint.breed.ports = [{
+          port: '',
+          name: '',
+          protocol: ''
+        }];
+      }
+
+      $ctrl.blueprint.breed.variables = [];
+      if($ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.environment_variables) {
+        for (varName in $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.environment_variables) {
+          $ctrl.blueprint.breed.variables.push({
+            key: varName,
+            value: $ctrl.source.clusters[$ctrl.blueprint.name].services[0].breed.environment_variables[varName]
+          })
+        }
+      }
+
+      if($ctrl.blueprint.breed.variables.length == 0) {
+        $ctrl.blueprint.breed.variables = [{
+          key: '',
+          value: ''
+        }];
+      }
+
+      if($ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon) {
+        for (paramName in $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.parameters) {
+          $ctrl.blueprint.dialects.params = $ctrl.source.clusters[$ctrl.blueprint.name].services[0].dialects.marathon.container.docker.parameters;
+        }
+      }
+    }
+
+
+
+
 
   }
 
@@ -325,7 +344,7 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
       services: [
         {
           breed: {
-            name: blueprint.name,
+            name: blueprint.breed.deployable.split('/')[1],
             deployable: {
               definition: blueprint.breed.deployable
             },
@@ -371,8 +390,10 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
       }
       return params;
     }
+    if(blueprint.gateways.port !== '' && blueprint.gateways.name !== '') {
+      finalBlueprint.gateways[blueprint.gateways.port] = blueprint.name + '/' + blueprint.gateways.name;
+    }
 
-    finalBlueprint.gateways[blueprint.gateways.port] = blueprint.name + '/' + blueprint.gateways.name;
     return finalBlueprint;
   }
 
