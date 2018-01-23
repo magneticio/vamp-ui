@@ -29,6 +29,10 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
     return $authorization.readOnly($ctrl.kind);
   };
 
+  $ctrl.toggleViewMode = function () {
+    $state.go('artifacts.one.source-form.view');
+  };
+
   function init() {
     if ($state.current.name === 'artifacts.one.source.view') {
       $ctrl.stopEdit();

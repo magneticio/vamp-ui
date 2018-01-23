@@ -115,6 +115,42 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     views: {
       "main@vamp": {
         controllerProvider: function (artifactsMetadata) {
+          if (artifactsMetadata.addMainView) {
+            return artifactsMetadata.addMainView.controller;
+          }
+          return 'addController';
+        },
+        controllerAs: '$ctrl',
+        templateProvider: function ($templateCache, artifactsMetadata) {
+          if (artifactsMetadata.addMainView) {
+            return $templateCache.get(artifactsMetadata.addMainView.templateUrl);
+          }
+          return $templateCache.get('app/crud/templates/addArtifact.html');
+        }
+      }
+    },
+    resolve: {
+      singular: function (artifactsMetadata) {
+        return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
+      },
+      model: function (artifactsMetadata) {
+        return artifactsMetadata.model || artifactsMetadata.kind;
+      }
+    },
+    params: {
+      importData: undefined
+    },
+    data: {
+      breadcrumb: {
+        title: 'New {{ singular }}'
+      }
+    }
+  })
+  .state('artifacts.add-form', {
+    url: '/add-form',
+    views: {
+      "main@vamp": {
+        controllerProvider: function (artifactsMetadata) {
           if (artifactsMetadata.kind === "blueprints") {
             return 'addBlueprintController';
           }
@@ -131,7 +167,6 @@ function routesConfig($stateProvider, $urlRouterProvider) {
           if (artifactsMetadata.kind === "blueprints") {
             return $templateCache.get('app/blueprints/templates/addBlueprint.html');
           }
-          return $templateCache.get('app/crud/templates/addArtifact.html');
         }
       }
     },
@@ -200,12 +235,28 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     url: '/source',
     views: {
       "main@vamp": {
+        controllerProvider: function () {
+          return 'edit';
+        },
+        controllerAs: '$ctrl',
+        templateUrl: 'app/crud/edit.html'
+      },
+      "right-panel@vamp": {
+        controller: 'revisionsController as $ctrl',
+        templateUrl: 'app/crud/templates/revisions.html'
+      }
+    }
+  })
+  .state('artifacts.one.source-form', {
+    abstract: true,
+    url: '/source-form',
+    views: {
+      "main@vamp": {
         controllerProvider: ['$stateParams',
           function ($stateParams) {
             if ($stateParams.kind === "blueprints") {
               return 'editBlueprintController';
             }
-            return 'edit';
           }],
         controllerAs: '$ctrl',
         templateUrl: 'app/crud/edit.html'
@@ -223,10 +274,26 @@ function routesConfig($stateProvider, $urlRouterProvider) {
       editor: {
         templateProvider: ['$stateParams', '$rootScope', '$templateCache',
           function ($stateParams, $rootScope, $templateCache) {
+            return $templateCache.get('app/crud/templates/editor.html');
+          }]
+      }
+    },
+    data: {
+      breadcrumb: {
+        title: 'View source'
+      }
+    }
+  })
+  .state('artifacts.one.source-form.view', {
+    url: '/view',
+    controllerAs: '$ctrl',
+    views: {
+      editor: {
+        templateProvider: ['$stateParams', '$rootScope', '$templateCache',
+          function ($stateParams, $rootScope, $templateCache) {
             if ($stateParams.kind === "blueprints") {
               return $templateCache.get('app/blueprints/templates/editBlueprint.html');
             }
-            return $templateCache.get('app/crud/templates/editor.html');
           }]
       }
     },
@@ -240,12 +307,27 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     url: '/edit',
     views: {
       editor: {
+        templateProvider: ['$rootScope', '$templateCache',
+          function ($rootScope, $templateCache) {
+            return $templateCache.get('app/crud/templates/editor.html');
+          }]
+      }
+    },
+    data: {
+      breadcrumb: {
+        title: 'Edit source'
+      }
+    }
+  })
+  .state('artifacts.one.source-form.edit', {
+    url: '/edit',
+    views: {
+      editor: {
         templateProvider: ['$stateParams', '$rootScope', '$templateCache',
           function ($stateParams, $rootScope, $templateCache) {
             if ($stateParams.kind === "blueprints") {
               return $templateCache.get('app/blueprints/templates/editBlueprint.html');
             }
-            return $templateCache.get('app/crud/templates/editor.html');
           }]
       }
     },

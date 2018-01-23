@@ -79,15 +79,16 @@
 
   function normalizeString(str) {
     if (str.match(/^[\w]+$/)) {
-      return str;
+      return str.replace(/\\x3A/g, ":");
     } else {
-      return '"'+escape(str).replace(/%u/g,'\\u').replace(/%U/g,'\\U').replace(/%/g,'\\x')+'"';
+      var a = '"'+escape(str).replace(/%u/g,'\\u').replace(/%U/g,'\\U').replace(/%/g,'\\x')+'"';
+      return a.replace(/\\x3A/g, ":");
     }
   }
 
   function convertString(obj, ret) {
     //escape colons in json
-    var string = normalizeString(obj).replace(/\\x3A/g, ":");
+    var string = normalizeString(obj);
     //escape symbols on list line
     string = string.replace(/\\x24/g, "");
     ret.push(string);

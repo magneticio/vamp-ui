@@ -13,6 +13,10 @@ function blueprintsController($scope, $state, $stateParams, artifactsMetadata, $
     $state.go('.add');
   };
 
+  $ctrl.addForm = function () {
+    $state.go('.add-form');
+  };
+
   $ctrl.onView = function (blueprint) {
     $state.go('.one', {
       name: blueprint.name

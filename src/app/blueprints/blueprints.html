@@ -1,9 +1,14 @@
 <item-explorer items="$ctrl.blueprints"
   item-type-config="$ctrl.config"
-  on-view="$ctrl.onView(item)" on-add="$ctrl.add()" on-delete="$ctrl.delete(item)" >
+  on-view="$ctrl.onView(item)" on-add="$ctrl.addForm()" on-delete="$ctrl.delete(item)" >
   <buttons>
     <button ng-if="!$ctrl.readOnly()" class="btn btn-primary" type="submit" ng-click="$ctrl.upload()">
         Docker Compose
+    </button>
+  </buttons>
+  <buttons>
+    <button ng-if="!$ctrl.readOnly()" class="btn btn-primary" type="submit" ng-click="$ctrl.add()">
+        Advanced
     </button>
   </buttons>
 </item-explorer>

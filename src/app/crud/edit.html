@@ -4,18 +4,25 @@
       <div class="panel panel-default editor-panel">
         <div class="panel-heading">
           <div class="row">
-            <div class="panel-title col-md-8" ng-if="$ctrl.isModified() && !$ctrl.valid" >
-              <img class="error-icon" src="styles/resources/app/common/images/error_triangle.svg">
-              <div class="error-message-container">
-                <div class="error-message first-line"><!--
-                --><span title="{{$ctrl.errorMessage}}" class="message">{{$ctrl.errorMessage}}</span><!--
-                --><i ng-if="$ctrl.restOfMessage && !$ctrl.expandError" class="icon-size-fullscreen" title="Show full error message" ng-click="$ctrl.expandError = true"></i><!--
-                --><i ng-if="$ctrl.restOfMessage && $ctrl.expandError" class="icon-size-actual" title="Hide full error message" ng-click="$ctrl.expandError = false"></i><!--
-             --></div>
-                <div class="error-message" ng-if="$ctrl.restOfMessage" ng-show="$ctrl.expandError"><!--
-                -->{{$ctrl.restOfMessage}}<!--
-            --></div>
+            <div class="panel-title col-md-8">
+              <div ng-if="$ctrl.isModified() && !$ctrl.valid">
+                <img class="error-icon" src="styles/resources/app/common/images/error_triangle.svg">
+                <div class="error-message-container">
+                  <div class="error-message first-line"><!--
+                  --><span title="{{$ctrl.errorMessage}}" class="message">{{$ctrl.errorMessage}}</span><!--
+                  --><i ng-if="$ctrl.restOfMessage && !$ctrl.expandError" class="icon-size-fullscreen" title="Show full error message" ng-click="$ctrl.expandError = true"></i><!--
+                  --><i ng-if="$ctrl.restOfMessage && $ctrl.expandError" class="icon-size-actual" title="Hide full error message" ng-click="$ctrl.expandError = false"></i><!--
+               --></div>
+                  <div class="error-message" ng-if="$ctrl.restOfMessage" ng-show="$ctrl.expandError"><!--
+                  -->{{$ctrl.restOfMessage}}<!--
+              --></div>
+                </div>
               </div>
+            </div>
+            <div class="col-md-4 text-right" ng-if="$ctrl.kind == 'blueprints'">
+              <button ng-if="!$ctrl.readOnly()" class="btn btn-primary" type="submit" ng-click="$ctrl.toggleViewMode()" ng-disabled="$ctrl.inEdit">
+                  {{ $ctrl.formMode ? 'Advanced' : 'Basic' }}
+              </button>
             </div>
           </div>
         </div>
