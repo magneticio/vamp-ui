@@ -500,6 +500,15 @@ table.vamp-lv {
   }
 }
 
+#confirmation-editor {
+  max-height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  .ace_gutter, .ace_scroller {
+    overflow: initial;
+  }
+}
+
 .panel.editor-panel {
   display: flex;
   flex-direction: column;

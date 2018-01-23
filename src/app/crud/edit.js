@@ -1,6 +1,6 @@
 angular.module('vamp-ui').controller('edit',
 
-function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout, uiStatesFactory, revisionsService, $element, $vamp, artifact, snippet, toastr, alert, $authorization) {
+function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout, uiStatesFactory, revisionsService, $element, $vamp, artifact, snippet, toastr, alert, $authorization, $uibModal) {
   var $ctrl = this;
 
   this.kind = $scope.$resolve.model;
@@ -178,19 +178,42 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
     }
   }
 
-  function alertConfirmation(callback) {
-    if ($ctrl.kind === "deployments") {
-      alert.show('Confirmation ', '\'' + $ctrl.name + '\' will be re-deployed. Are you sure?', 'Deploy', 'Cancel', callback);
+  function alertConfirmation(skipConfirmation, callback) {
+    if ($ctrl.kind === "deployments" && !skipConfirmation) {
+      openDeploymentConfirmation();
     } else {
       callback();
     }
   }
 
-  this.save = function () {
+  function openDeploymentConfirmation() {
+    $uibModal.open({
+      animation: true,
+      backdrop: 'static',
+      controller: 'DeploymentConfirmationController',
+      templateUrl: 'app/deployments/templates/deploymentConfirmation.html',
+      resolve: {
+        deployment: function () {
+          return $ctrl.source;
+        },
+        editor: function () {
+          return $ctrl.editor;
+        }
+      }
+    }).result.then(function (action) {
+      if(action === 'save') {
+        $ctrl.save(true);
+      } else if (action == 'cancel') {
+        goBack();
+      }
+    });
+  }
+
+  this.save = function (skipConfirmation) {
     validation = false;
     ignoreChange = true;
-    alertConfirmation(function () {
-      $vamp.httpPut(path, $ctrl.source, {}, 'JSON')
+    alertConfirmation(skipConfirmation, function () {
+        $vamp.httpPut(path, $ctrl.source, {}, 'JSON')
         .then(function () {
           $ctrl.base = $ctrl.source;
           goBack();
