@@ -201,9 +201,9 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
         }
       }
     }).result.then(function (action) {
-      if(action === 'save') {
+      if (action === 'save') {
         $ctrl.save(true);
-      } else if (action == 'cancel') {
+      } else if (action === 'cancel') {
         goBack();
       }
     });
@@ -213,20 +213,20 @@ function ArtifactEditController($scope, $filter, $state, $stateParams, $timeout,
     validation = false;
     ignoreChange = true;
     alertConfirmation(skipConfirmation, function () {
-        $vamp.httpPut(path, $ctrl.source, {}, 'JSON')
-        .then(function () {
-          $ctrl.base = $ctrl.source;
-          goBack();
-          toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');
-        }).catch(function (response) {
-          validation = true;
-          ignoreChange = false;
-          if (response) {
-            toastr.error(response.data.message, 'Save of \'' + $ctrl.name + '\'failed.');
-          } else {
-            toastr.error('Server timeout.', 'Save of \'' + $ctrl.name + '\'failed.');
-          }
-        });
+      $vamp.httpPut(path, $ctrl.source, {}, 'JSON')
+      .then(function () {
+        $ctrl.base = $ctrl.source;
+        goBack();
+        toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');
+      }).catch(function (response) {
+        validation = true;
+        ignoreChange = false;
+        if (response) {
+          toastr.error(response.data.message, 'Save of \'' + $ctrl.name + '\'failed.');
+        } else {
+          toastr.error('Server timeout.', 'Save of \'' + $ctrl.name + '\'failed.');
+        }
+      });
     });
   };
 
