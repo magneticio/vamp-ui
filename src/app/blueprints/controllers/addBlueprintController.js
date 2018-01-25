@@ -9,6 +9,7 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr) {
   // naive singularization
   $ctrl.singular = $stateParams.kind.substring(0, $stateParams.kind.length - 1);
   $ctrl.title = 'New ' + $ctrl.singular;
+  $ctrl.gatewayPort = '';
 
   $ctrl.blueprint = {
     name: '',
