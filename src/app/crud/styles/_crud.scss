@@ -647,4 +647,11 @@ h4 {
 
 .form-container {
   padding: 10px 40px;
+  div[class^='col-'] {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+  label {
+    word-break: break-word;
+  }
 }

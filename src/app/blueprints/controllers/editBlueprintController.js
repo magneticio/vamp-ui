@@ -12,6 +12,7 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
   this.errorClass = '';
   this.errorMessage = '';
   $ctrl.restOfMessage = '';
+  $ctrl.gatewayPort = '';
   this.editor = artifact.editor;
   $ctrl.expandError = false;
   $ctrl.sourceCopy = {};
