@@ -130,8 +130,19 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr) {
     }
 
     if(blueprint.gateways.port !== 'null' && blueprint.gateways.name !== '') {
-      finalBlueprint.gateways[blueprint.gateways.port] = blueprint.name + '/' + blueprint.gateways.name;
+      if(blueprint.gateways.vhost && blueprint.gateways.vhost.length) {
+        finalBlueprint.gateways[blueprint.gateways.port] = {
+          routes: blueprint.name + '/' + blueprint.gateways.name
+        }
+        if(blueprint.gateway.vhost !== '') {
+          blueprint.gateways.vhost = blueprint.gateways.vhost.toString();
+          finalBlueprint.gateways[blueprint.gateways.port].virtual_hosts = [blueprint.gateways.vhost];
+        }
+      } else {
+        finalBlueprint.gateways[blueprint.gateways.port] = blueprint.name + '/' + blueprint.gateways.name;
+      }
     }
+
     return finalBlueprint;
   }
 

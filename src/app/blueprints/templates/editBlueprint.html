@@ -44,6 +44,13 @@
               <input id="gateway_name" name="gateway_port" placeholder="port" class="form-control" type="text" ng-model="$ctrl.blueprint.gateways.name" ng-readonly="!$ctrl.inEdit">
             </div>
           </div>
+          <div class="form-group col-sm-12" ng-repeat="host in $ctrl.blueprint.gateways.vhosts" ng-if="$first">
+            <label for="gateway_name" class="col-sm-3 control-label">VIRTUAL HOST</label>
+            <div class="col-sm-9">
+              <input id="gateway_vhost" name="gateway_vhost" class="form-control" type="text"
+              ng-model="$ctrl.blueprint.gateways.vhosts[$index]" ng-readonly="!$ctrl.inEdit">
+            </div>
+          </div>
         </div>
       </div>
 

@@ -164,6 +164,11 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
         var port_name = portName.split("/")[1];
         $ctrl.blueprint.gateways.name = port_name;
       }
+      if($ctrl.source.gateways[$ctrl.blueprint.gateways.port].virtual_hosts.length) {
+          $ctrl.blueprint.gateways.vhosts = $ctrl.source.gateways[$ctrl.blueprint.gateways.port].virtual_hosts;
+      } else {
+        $ctrl.blueprint.gateways.vhosts = [''];
+      }
     }
     if($ctrl.blueprint.name && clusterName) {
       $ctrl.blueprint.breed.deployable = $ctrl.source.clusters[clusterName].services[0].breed.deployable.definition;
@@ -396,7 +401,15 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
       return params;
     }
     if(blueprint.gateways.port !== '' && blueprint.gateways.name !== '') {
-      finalBlueprint.gateways[blueprint.gateways.port] = clusterName + '/' + blueprint.gateways.name;
+      if(blueprint.gateways.vhosts[0] !== '') {
+        blueprint.gateways.vhosts[0] = blueprint.gateways.vhosts[0].toString();
+        finalBlueprint.gateways[blueprint.gateways.port] = {
+          routes: blueprint.name + '/' + blueprint.gateways.name,
+          virtual_hosts: blueprint.gateways.vhosts
+        }
+      } else {
+        finalBlueprint.gateways[blueprint.gateways.port] = clusterName + '/' + blueprint.gateways.name;
+      }
     }
 
     return finalBlueprint;
