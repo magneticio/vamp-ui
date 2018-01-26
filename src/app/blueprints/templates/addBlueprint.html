@@ -94,7 +94,7 @@
             </div>
           </div>
           <div class="form-group col-sm-12" ng-repeat="param in $ctrl.blueprint.breed.variables">
-            <label for="instances" class="col-sm-3 control-label"> <span ng-show="$index == 0">ENVIRONMENT VARIABLES</span></label>
+            <label for="variables" class="col-sm-3 control-label"> <span ng-show="$index == 0">ENVIRONMENT VARIABLES</span></label>
             <div class="col-sm-5">
               <input id="variables" placeholder="name" class="form-control" type="text"
               ng-model="$ctrl.blueprint.breed.variables[$index].key">
@@ -157,6 +157,22 @@
           <div class="form-group col-sm-12">
             <div class="col-sm-3 text-right col-sm-offset-9">
               <div class="btn" ng-click="$ctrl.addParams()">+ ADD</div>
+            </div>
+          </div>
+          <div class="form-group col-sm-12" ng-repeat="param in $ctrl.blueprint.dialects.labels">
+            <label for="labels" class="col-sm-3 control-label"> <span ng-show="$index == 0">MARATHON LABELS</span></label>
+            <div class="col-sm-5">
+              <input id="labels" placeholder="label key" class="form-control" type="text"
+              ng-model="$ctrl.blueprint.dialects.labels[$index].key">
+            </div>
+            <div class="col-sm-4">
+              <input id="labels-value" placeholder="label value" class="form-control" type="text"
+              ng-model="$ctrl.blueprint.dialects.labels[$index].value">
+            </div>
+          </div>
+          <div class="form-group col-sm-12">
+            <div class="col-sm-3 text-right col-sm-offset-9">
+              <div class="btn" ng-click="$ctrl.addLabels()">+ ADD</div>
             </div>
           </div>
           <div class="form-group col-sm-12 text-right form-buttons">

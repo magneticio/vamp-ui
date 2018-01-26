@@ -127,6 +127,10 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
       params: [{
         key: '',
         value: ''
+      }],
+      labels: [{
+        key: '',
+        value: ''
       }]
     }
   };
@@ -149,7 +153,7 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
   }
 
   function populateBlueprint() {
-
+    console.log($ctrl.source);
     var clusterName = Object.keys($ctrl.source.clusters)[0];
 
     //* Populate bounded blueprint
@@ -216,6 +220,16 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
       if($ctrl.source.clusters[clusterName].services[0].dialects.marathon) {
         for (paramName in $ctrl.source.clusters[clusterName].services[0].dialects.marathon.container.docker.parameters) {
           $ctrl.blueprint.dialects.params = $ctrl.source.clusters[clusterName].services[0].dialects.marathon.container.docker.parameters;
+        }
+
+        if($ctrl.source.clusters[clusterName].services[0].dialects.marathon.container.docker.labels) {
+          $ctrl.blueprint.dialects.labels = [];
+          for (varName in $ctrl.source.clusters[clusterName].services[0].dialects.marathon.container.docker.labels) {
+            $ctrl.blueprint.dialects.labels.push({
+              key: varName,
+              value: $ctrl.source.clusters[clusterName].services[0].dialects.marathon.container.docker.labels[varName]
+            })
+          }
         }
       }
     }
@@ -330,6 +344,13 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
     };
     $ctrl.blueprint.breed.variables.push(newVar);
   };
+  $ctrl.addLabels = function () {
+    var newLabel = {
+      name: '',
+      value: ''
+    };
+    $ctrl.blueprint.dialects.labels.push(newLabel);
+  };
   $ctrl.addParams = function () {
     var newParam = {
       key: '',
@@ -371,7 +392,8 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
               container: {
                 docker: {
                   forcePullImage: blueprint.dialects.forceimage,
-                  parameters: prepareParams(blueprint.dialects.params)
+                  parameters: prepareParams(blueprint.dialects.params),
+                  labels: {}
                 }
               }
             }
@@ -389,6 +411,11 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
     blueprint.breed.variables.forEach(function (variable) {
       if(variable.key !== '' && variable.name !== '') {
         finalBlueprint.clusters[clusterName].services[0].breed.environment_variables[variable.key] = variable.value;
+      }
+    });
+    blueprint.dialects.labels.forEach(function (label) {
+      if(label.key !== '' && label.name !== '') {
+        finalBlueprint.clusters[clusterName].services[0].dialects.marathon.container.docker.labels[label.key] = label.value;
       }
     });
 
@@ -423,6 +450,9 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
   }
   $ctrl.removeEnvVars = function (index) {
     $ctrl.blueprint.breed.variables.splice(index, 1);
+  }
+  $ctrl.removeLabels = function (index) {
+    $ctrl.blueprint.dialects.labels.splice(index, 1);
   }
 
 });

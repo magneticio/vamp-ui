@@ -164,6 +164,23 @@
             </div>
           </div>
 
+          <div class="form-group col-sm-12" ng-repeat="param in $ctrl.blueprint.dialects.labels">
+            <label for="labels" class="col-sm-3 control-label"> <span ng-show="$index == 0">MARATHON LABELS</span>
+              <span class="clickable" ng-show="$index !== 0 && $ctrl.inEdit" ng-click="$ctrl.removeLabels($index)">[ X ]</span>
+            </label>
+            <div class="col-sm-5">
+              <input id="variables" placeholder="name" class="form-control" type="text" ng-model="$ctrl.blueprint.dialects.labels[$index].key" ng-readonly="!$ctrl.inEdit">
+            </div>
+            <div class="col-sm-4">
+              <input id="variables-value" placeholder="value" class="form-control" type="text" ng-model="$ctrl.blueprint.dialects.labels[$index].value" ng-readonly="!$ctrl.inEdit">
+            </div>
+          </div>
+          <div class="form-group col-sm-12">
+            <div class="col-sm-3 text-right col-sm-offset-9">
+              <div class="btn" ng-click="$ctrl.addLabels()" ng-hide="!$ctrl.inEdit">+ ADD</div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

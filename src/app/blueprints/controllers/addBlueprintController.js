@@ -45,6 +45,12 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr) {
           key: '',
           value: ''
         }
+      ],
+      labels: [
+        {
+          key: '',
+          value: ''
+        }
       ]
     }
   };
@@ -63,6 +69,13 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr) {
       value: ''
     };
     $ctrl.blueprint.breed.variables.push(newVar);
+  };
+  $ctrl.addLabels = function () {
+    var newLabel = {
+      name: '',
+      value: ''
+    };
+    $ctrl.blueprint.dialects.labels.push(newLabel);
   };
   $ctrl.addParams = function () {
     var newParam = {
@@ -99,7 +112,8 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr) {
               container: {
                 docker: {
                   forcePullImage: blueprint.dialects.forceimage,
-                  parameters: prepareParams(blueprint.dialects.params)
+                  parameters: prepareParams(blueprint.dialects.params),
+                  labels: {}
                 }
               }
             }
@@ -117,6 +131,11 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr) {
     blueprint.breed.variables.forEach(function (variable) {
       if(variable.key !== '' && variable.value !== '') {
         finalBlueprint.clusters[blueprint.name].services[0].breed.environment_variables[variable.key] = variable.value;
+      }
+    });
+    blueprint.dialects.labels.forEach(function (label) {
+      if(label.key !== '' && label.value !== '') {
+        finalBlueprint.clusters[blueprint.name].services[0].dialects.marathon.container.docker.labels[label.key] = label.value;
       }
     });
 

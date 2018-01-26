@@ -101,7 +101,7 @@
 
     var ret = [];
     convert(obj, ret);
-    ret.pop();
+    // ret.pop();
     return ret.join("\n");
   };
 })(this);
