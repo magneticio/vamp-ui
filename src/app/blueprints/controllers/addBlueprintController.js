@@ -153,7 +153,7 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr) {
         finalBlueprint.gateways[blueprint.gateways.port] = {
           routes: blueprint.name + '/' + blueprint.gateways.name
         }
-        if(blueprint.gateway.vhost !== '') {
+        if(blueprint.gateways.vhost !== '') {
           blueprint.gateways.vhost = blueprint.gateways.vhost.toString();
           finalBlueprint.gateways[blueprint.gateways.port].virtual_hosts = [blueprint.gateways.vhost];
         }
