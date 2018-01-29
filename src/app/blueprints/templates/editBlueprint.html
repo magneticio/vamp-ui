@@ -44,11 +44,12 @@
               <input id="gateway_name" name="gateway_port" placeholder="port" class="form-control" type="text" ng-model="$ctrl.blueprint.gateways.name" ng-readonly="!$ctrl.inEdit">
             </div>
           </div>
-          <div class="form-group col-sm-12" ng-repeat="host in $ctrl.blueprint.gateways.vhosts" ng-if="$first">
+
+          <div class="form-group col-sm-12" >
             <label for="gateway_name" class="col-sm-3 control-label">VIRTUAL HOST</label>
             <div class="col-sm-9">
               <input id="gateway_vhost" name="gateway_vhost" class="form-control" type="text"
-              ng-model="$ctrl.blueprint.gateways.vhosts[$index]" ng-readonly="!$ctrl.inEdit">
+              ng-model="$ctrl.blueprint.gateways.vhosts[0]" ng-readonly="!$ctrl.inEdit">
             </div>
           </div>
         </div>
@@ -76,15 +77,14 @@
             <div class="col-sm-1 text-center">
 
               <div class="radio">
-                <label><input type="radio" name="breed_gateway_port" ng-model="$ctrl.blueprint.gateways.name" ng-value="$ctrl.blueprint.breed.ports[$index].name" ng-disabled="!$ctrl.blueprint.breed.ports[$index].name || !$ctrl.blueprint.breed.ports[$index].port || !$ctrl.blueprint.breed.ports[$index].protocol"></label>
+                <label><input type="radio" name="breed_gateway_port" ng-model="$ctrl.blueprint.gateways.name" ng-value="$ctrl.blueprint.breed.ports[$index].name" ng-disabled="!$ctrl.blueprint.breed.ports[$index].name || !$ctrl.blueprint.breed.ports[$index].port || !$ctrl.blueprint.breed.ports[$index].protocol || !$ctrl.inEdit"></label>
               </div>
+
               <!-- initial gateway empty selection -->
               <div class="radio" ng-if="$last" style="display: none">
                 <label><input type="radio" name="breed_gateway_port" ng-model="$ctrl.blueprint.gateways.name" ng-value="$ctrl.gatewayPort">x</label>
               </div>
             </div>
-
-
 
             <div class="col-sm-3">
               <input id="breed_ports" name="breed_ports" placeholder="name" class="form-control" type="text" ng-model="$ctrl.blueprint.breed.ports[$index].name" ng-readonly="!$ctrl.inEdit">

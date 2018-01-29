@@ -156,9 +156,7 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
     var clusterName = Object.keys($ctrl.source.clusters)[0];
 
     //* Populate bounded blueprint
-    for (port in $ctrl.source.gateways) {
-      $ctrl.blueprint.gateways.port = parseInt(port);
-    }
+    $ctrl.blueprint.gateways.port = parseInt(Object.keys($ctrl.source.gateways)[0]);
     $ctrl.blueprint.name = $ctrl.source.name;
 
     if($ctrl.source.gateways && $ctrl.blueprint.gateways.port) {
@@ -167,7 +165,8 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
         var port_name = portName.split("/")[1];
         $ctrl.blueprint.gateways.name = port_name;
       }
-      if($ctrl.source.gateways[$ctrl.blueprint.gateways.port].virtual_hosts.length) {
+
+      if($ctrl.source.gateways[$ctrl.blueprint.gateways.port].virtual_hosts && $ctrl.source.gateways[$ctrl.blueprint.gateways.port].virtual_hosts.length) {
           $ctrl.blueprint.gateways.vhosts = $ctrl.source.gateways[$ctrl.blueprint.gateways.port].virtual_hosts;
       } else {
         $ctrl.blueprint.gateways.vhosts = [''];
@@ -232,6 +231,7 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
         }
       }
     }
+    console.log($ctrl.blueprint);
   }
 
   this.peek();
@@ -426,6 +426,7 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
       }
       return params;
     }
+
     if(blueprint.gateways.port !== '' && blueprint.gateways.name !== '') {
       if(blueprint.gateways.vhosts[0] !== '') {
         blueprint.gateways.vhosts[0] = blueprint.gateways.vhosts[0].toString();
@@ -437,7 +438,6 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
         finalBlueprint.gateways[blueprint.gateways.port] = clusterName + '/' + blueprint.gateways.name;
       }
     }
-
     return finalBlueprint;
   }
 
