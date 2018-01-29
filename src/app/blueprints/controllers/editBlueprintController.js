@@ -153,7 +153,6 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
   }
 
   function populateBlueprint() {
-    console.log($ctrl.source);
     var clusterName = Object.keys($ctrl.source.clusters)[0];
 
     //* Populate bounded blueprint
