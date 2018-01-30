@@ -152,7 +152,7 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
 
     modal.result.then(function (data) {
       var name = data.deployment.name;
-      $vamp.put('/deployments/' + name, angular.toJson($ctrl.blueprint))
+      $vamp.httpPut('/deployments/' + name, angular.toJson($ctrl.blueprint))
         .then(function () {
           gotoDeployment(name);
           toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully merged to \'' + name + '\'.');
