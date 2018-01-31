@@ -78,12 +78,8 @@
   }
 
   function normalizeString(str) {
-    if (str.match(/^[\w]+$/)) {
-      return str.replace(/\\x3A/g, ":");
-    } else {
-      var a = '"'+escape(str).replace(/%u/g,'\\u').replace(/%U/g,'\\U').replace(/%/g,'\\x')+'"';
-      return a.replace(/\\x3A/g, ":");
-    }
+    var string = '"'+escape(str).replace(/%u/g,'\\u').replace(/%U/g,'\\U').replace(/%/g,'\\x')+'"';
+    return string.replace(/\\x3A/g, ":");
   }
 
   function convertString(obj, ret) {
