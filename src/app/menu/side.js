@@ -53,15 +53,15 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
     }
   );
 
-  // if ($vamp.connected()) {
-  //   $vamp.peek('/info');
-  // }
+  if ($vamp.connected()) {
+    $vamp.peek('/info');
+  }
 
-  // $scope.$on('$vamp:connection', function (event, connection) {
-  //   if (connection === 'opened') {
-  //     $vamp.peek('/info');
-  //   }
-  // });
+  $scope.$on('$vamp:connection', function (event, connection) {
+    if (connection === 'opened') {
+      $vamp.peek('/info');
+    }
+  });
 
   $scope.$on('/info', function () {
     $scope.info = $vamp.info;

@@ -75,9 +75,9 @@ function ConfigurationController($scope, $timeout, $element, $state, artifact, $
           $ctrl.dynamic.base = $ctrl.dynamic.current;
           $ctrl.reload('applied');
         }, 0);
-        // $timeout(function () {
-        //   $vamp.peek('/info');
-        // }, 3000);
+        $timeout(function () {
+          $vamp.peek('/info');
+        }, 3000);
       }).catch(function (response) {
         $timeout(function () {
           if (response) {
