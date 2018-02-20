@@ -52,7 +52,7 @@ Environment.prototype.version = function () {
 };
 
 Environment.prototype.connect = function () {
-  return false;
+  return true;
 };
 
 Environment.prototype.debug = function () {
