@@ -1,10 +1,10 @@
-/* global Help */
+/* global Help, Ui */
 angular.module('vamp-ui').component('side', {
-  templateUrl: 'app/menu/side.html',
+  templateUrl: 'app/menu/templates/side.html',
   controller: SideController
 });
 
-function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state) {
+function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state, toastr) {
   var $ctrl = this;
   $scope.info = $vamp.info;
   $scope.help = {
@@ -20,6 +20,8 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
   $ctrl.pin = false;
   $ctrl.uiStates = uiStatesFactory.viewStates;
 
+  $ctrl.config = Ui.config;
+
   $ctrl.trust = function (src) {
     return $sce.trustAsResourceUrl(src);
   };
@@ -27,6 +29,7 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
   $ctrl.closePanel = function () {
     uiStatesFactory.setInfoPanelViewState(false);
     uiStatesFactory.setHelpPanelViewState(false);
+    uiStatesFactory.setConfigPanelViewState(false);
     uiStatesFactory.setProxyPanelViewState('');
   };
 
@@ -78,4 +81,12 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
     $scope.help.description = Help.prototype.entries().default.description;
     $scope.help.links = Help.prototype.entries().default.links;
   }
+
+  $ctrl.saveConfig = function () {
+    if (Ui.save()) {
+      toastr.success('Configuration has been saved!');
+    } else {
+      toastr.error('Configuration cannot be saved!');
+    }
+  };
 }

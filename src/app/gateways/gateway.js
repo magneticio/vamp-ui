@@ -257,6 +257,7 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vam
       uiStatesFactory.setProxyPanelViewState(path);
       uiStatesFactory.setInfoPanelViewState(false);
       uiStatesFactory.setHelpPanelViewState(false);
+      uiStatesFactory.setConfigPanelViewState(false);
     }
     return path;
   };

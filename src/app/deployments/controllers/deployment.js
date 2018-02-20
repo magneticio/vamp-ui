@@ -263,6 +263,7 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
       uiStatesFactory.setProxyPanelViewState(path);
       uiStatesFactory.setInfoPanelViewState(false);
       uiStatesFactory.setHelpPanelViewState(false);
+      uiStatesFactory.setConfigPanelViewState(false);
     }
     return path;
   };

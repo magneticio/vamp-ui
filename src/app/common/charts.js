@@ -1,8 +1,6 @@
-/* global SmoothieChart, TimeSeries */
+/* global SmoothieChart, TimeSeries, Ui */
 (function (exports) {
   var charts = {};
-  var resetValueTimeout = 12500;
-  var resetValueAfterLast = 7500;
 
   function TimeSeriesCharts() {
   }
@@ -152,8 +150,8 @@
     if (value !== null && value !== undefined) {
       lasts[id] = value;
       if (charts[id] && charts[id].series) {
-        if (charts[id].tail < timestamp - resetValueTimeout) {
-          charts[id].series.append(timestamp - resetValueTimeout, 0);
+        if (charts[id].tail < timestamp - Ui.config.chartNoValueFailureTimeout) {
+          charts[id].series.append(timestamp - Ui.config.chartNoValueFailureTimeout, 0);
         }
         charts[id].series.append(timestamp, value);
       }
@@ -178,9 +176,9 @@
         clearTimeout(charts[id].timeout);
         charts[id].tail = timestamp;
         charts[id].timeout = setTimeout(function () {
-          $this.append(id, timestamp + resetValueAfterLast, 0, lasts);
+          $this.append(id, timestamp + Ui.config.chartResetValueTimeout, 0, lasts);
           resolve();
-        }, resetValueTimeout);
+        }, Ui.config.chartNoValueFailureTimeout);
       } else {
         reject();
       }

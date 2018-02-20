@@ -623,6 +623,14 @@ p, div {
   cursor: pointer;
 }
 
+.config-button i {
+  @extend .menu-button;
+  margin-left: 1.5rem;
+  @include colorize-ghost-btn($inactive-text-color);
+  border: none;
+  cursor: pointer;
+}
+
 .navbar-brand {
   padding: 0;
 
@@ -1285,4 +1293,15 @@ snippet {
   width: 100%;
   color: black;
   background-color: white;
+}
+
+.edit-config {
+  label {
+    color: $inactive-text-color;
+    text-transform: uppercase;
+    font-size: $font-size-normal;
+  }
+  .form-control {
+    border: 1px solid $outline-color;
+  }
 }

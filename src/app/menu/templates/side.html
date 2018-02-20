@@ -1,9 +1,9 @@
 <div class="overlay"
      ng-if="!$ctrl.pin"
-     ng-class="{'active': $ctrl.uiStates.infoPanel || $ctrl.uiStates.helpPanel || $ctrl.uiStates.proxyPanel}"
+     ng-class="{'active': $ctrl.uiStates.infoPanel || $ctrl.uiStates.helpPanel || $ctrl.uiStates.proxyPanel || $ctrl.uiStates.configPanel}"
      ng-click="$ctrl.closePanel()">
 </div>
-<div class="info-panel hidden-xs hidden-sm" ng-class="{'active': $ctrl.uiStates.infoPanel || $ctrl.uiStates.helpPanel || $ctrl.uiStates.proxyPanel}">
+<div class="info-panel hidden-xs hidden-sm" ng-class="{'active': $ctrl.uiStates.infoPanel || $ctrl.uiStates.helpPanel || $ctrl.uiStates.proxyPanel || $ctrl.uiStates.configPanel}">
 
     <div class="container-fluid">
         <div class="col-sm-4">
@@ -74,6 +74,34 @@
                 </a></td>
             </tr>
         </table>
+    </div>
+
+    <div ng-show="$ctrl.uiStates.configPanel">
+        <form novalidate name="form" ng-submit="$ctrl.saveConfig()">
+            <span class="info-message">UI settings</span>
+            <div class="pull-right">
+                <button class="btn btn-info" ng-disabled="form.$invalid" type="submit">Save</button>
+            </div>
+            <br><br>
+            <div class="edit-config">
+                <div class="form-group" ng-class="{'has-error': form.toastTimeout.$invalid}">
+                    <label for="chartResetValueTimeout" class="control-label">chart reset value timeout</label>
+                    <input id="chartResetValueTimeout" placeholder="chart reset value timeout" class="form-control" type="number"
+                           min="0" ng-model="$ctrl.config.chartResetValueTimeout" required>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.toastTimeout.$invalid}">
+                    <label for="chartNoValueFailureTimeout" class="control-label">chart no value failure timeout</label>
+                    <input id="chartNoValueFailureTimeout" placeholder="chart no value failure timeout" class="form-control" type="number"
+                           min="0" ng-model="$ctrl.config.chartNoValueFailureTimeout" required>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.toastTimeout.$invalid}">
+                    <label for="toastTimeout" class="control-label">toast timeout (requires page reload)</label>
+                    <input id="toastTimeout" placeholder="toast timeout" class="form-control" type="number"
+                           min="0" ng-model="$ctrl.config.toastTimeout" required>
+                </div>
+            </div>
+        </form>
+
     </div>
 
     <div ng-show="$ctrl.uiStates.proxyPanel" class="proxy-container">

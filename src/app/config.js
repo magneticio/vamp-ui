@@ -1,4 +1,4 @@
-/* global Environment */
+/* global Environment, Ui */
 angular.module('vamp-ui').config(function ($logProvider, $compileProvider, toastrConfig, $uibTooltipProvider) {
   $logProvider.debugEnabled(Environment.prototype.debug());
   $compileProvider.debugInfoEnabled(Environment.prototype.debug());
@@ -10,7 +10,7 @@ angular.module('vamp-ui').config(function ($logProvider, $compileProvider, toast
   // Configuration of the angular-toastr plugin. See: https://github.com/Foxandxss/angular-toastr
   angular.extend(toastrConfig, {
     autoDismiss: true,
-    timeOut: 5000,
+    timeOut: Ui.config.toastTimeout,
     extendedTimeOut: 0,
     allowHtml: false,
     closeButton: true,
