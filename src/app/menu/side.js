@@ -20,7 +20,8 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
   $ctrl.pin = false;
   $ctrl.uiStates = uiStatesFactory.viewStates;
 
-  $ctrl.config = Ui.config;
+  $ctrl.config = angular.copy(Ui.config);
+  $ctrl.defaultConfig = Ui.defaultConfig;
 
   $ctrl.trust = function (src) {
     return $sce.trustAsResourceUrl(src);
@@ -83,10 +84,11 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
   }
 
   $ctrl.saveConfig = function () {
-    if (Ui.save()) {
+    if (Ui.save($ctrl.config)) {
       toastr.success('Configuration has been saved!');
     } else {
       toastr.error('Configuration cannot be saved!');
     }
+    $ctrl.config = angular.copy(Ui.config);
   };
 }
