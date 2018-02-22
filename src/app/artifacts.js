@@ -111,7 +111,7 @@ VAMP.Artifacts.prototype.all = function () {
           name: "suspend",
           title: "Suspend",
           action: "suspend",
-          active: "item.status === 'running'",
+          active: "item.status !== 'suspended'",
           class: "btn-primary"
         },
         {

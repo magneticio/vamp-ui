@@ -32,7 +32,7 @@
 </td>
 <td class="col-2">
   <span class="pull-right">
-    <span class="row-action" ng-if="item.status === 'running'" ng-click="!$explorer.readOnly && $artifactCtrl.suspend($event)" ng-class="{disabled: $explorer.readOnly}">
+    <span class="row-action" ng-if="item.status !== 'suspended'" ng-click="!$explorer.readOnly && $artifactCtrl.suspend($event)" ng-class="{disabled: $explorer.readOnly}">
       <svgicon type="suspend"></svgicon>
       <label>suspend</label>
     </span>
