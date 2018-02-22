@@ -93,31 +93,32 @@
                            min="1" ng-model="$ctrl.config.chartPollingPeriod" required>
                 </div>
                 <div class="form-group" ng-class="{'has-error': form.chartResetValueTimeout.$invalid}">
-                    <label for="chartResetValueTimeout" class="control-label">chart reset value timeout [sec]</label>
+                    <label for="chartResetValueTimeout" class="control-label">chart reset value timeout [sec] <sup>*</sup></label>
                     <input id="chartResetValueTimeout" placeholder="{{$ctrl.defaultConfig.chartResetValueTimeout}}" class="form-control"
                            type="number"
                            min="1" ng-model="$ctrl.config.chartResetValueTimeout" required>
                 </div>
                 <div class="form-group" ng-class="{'has-error': form.chartNoValueFailureTimeout.$invalid}">
                     <label for="chartNoValueFailureTimeout" class="control-label">chart no value failure timeout
-                        [sec]</label>
+                        [sec] <sup>*</sup></label>
                     <input id="chartNoValueFailureTimeout" placeholder="{{$ctrl.defaultConfig.chartNoValueFailureTimeout}}"
                            class="form-control" type="number"
                            min="1" ng-model="$ctrl.config.chartNoValueFailureTimeout" required>
                 </div>
                 <div class="form-group" ng-class="{'has-error': form.chartResolution.$invalid}">
-                    <label for="chartResolution" class="control-label">chart resolution</label>
+                    <label for="chartResolution" class="control-label">chart resolution <sup>*</sup></label>
                     <input id="chartResolution" placeholder="{{$ctrl.defaultConfig.chartResolution}}" class="form-control" type="number"
                            min="1" ng-model="$ctrl.config.chartResolution" required>
                 </div>
                 <div class="form-group" ng-class="{'has-error': form.toastTimeout.$invalid}">
-                    <label for="toastTimeout" class="control-label">toast timeout [sec] (page reload required)</label>
+                    <label for="toastTimeout" class="control-label">toast timeout [sec]</label>
                     <input id="toastTimeout" placeholder="{{$ctrl.defaultConfig.toastTimeout}}" class="form-control" type="number"
                            min="1" ng-model="$ctrl.config.toastTimeout" required>
                 </div>
             </div>
         </form>
-
+        <br>
+        <label class="side-footer"><sup>*</sup> page reload required</label>
     </div>
 
     <div ng-show="$ctrl.uiStates.proxyPanel" class="proxy-container">

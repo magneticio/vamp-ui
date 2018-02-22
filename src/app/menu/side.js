@@ -4,7 +4,7 @@ angular.module('vamp-ui').component('side', {
   controller: SideController
 });
 
-function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state, toastr) {
+function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state, toastr, toastrConfig) {
   var $ctrl = this;
   $scope.info = $vamp.info;
   $scope.help = {
@@ -85,6 +85,17 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
 
   $ctrl.saveConfig = function () {
     if (Ui.save($ctrl.config)) {
+      $rootScope.$broadcast('/vamp/settings/update');
+      angular.extend(toastrConfig, {
+        autoDismiss: true,
+        timeOut: 1000 * Ui.config.toastTimeout,
+        extendedTimeOut: 0,
+        allowHtml: false,
+        closeButton: true,
+        tapToDismiss: true,
+        positionClass: 'toast-top-right',
+        preventOpenDuplicates: true
+      });
       toastr.success('Configuration has been saved!');
     } else {
       toastr.error('Configuration cannot be saved!');

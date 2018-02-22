@@ -1305,3 +1305,8 @@ snippet {
     border: 1px solid $outline-color;
   }
 }
+
+.side-footer {
+  color: $inactive-text-color;
+  font-size: $font-size-normal;
+}

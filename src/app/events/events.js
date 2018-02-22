@@ -156,4 +156,8 @@ function EventController($scope, $vamp, $interval, uiStatesFactory, overlayServi
       };
     }
   });
+
+  $scope.$on('$destroy', function () {
+    stopPolling();
+  });
 }

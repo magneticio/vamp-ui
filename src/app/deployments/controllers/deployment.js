@@ -1,8 +1,8 @@
-/* global TimeSeriesCharts */
+/* global TimeSeriesCharts, Ui */
 angular.module('vamp-ui').controller('DeploymentController', DeploymentController);
 
 /** @ngInject */
-function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $state, $vamp, $vampDeployment, $uibModal, snippet, alert, toastr, $authorization) {
+function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams, $timeout, $interval, $state, $vamp, $vampDeployment, $uibModal, snippet, alert, toastr, $authorization) {
   var $ctrl = this;
   var path = '/deployments/' + $stateParams.name;
 
@@ -16,6 +16,7 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
   var charts = new TimeSeriesCharts();
 
   this.last = [];
+  var polling;
 
   $ctrl.readOnly = function () {
     return $authorization.readOnly('deployments');
@@ -108,11 +109,18 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
       });
     }, 0);
 
-    peekEvents();
+    startPolling();
+  });
+
+  var rootScopeUnregister = $rootScope.$on('/vamp/settings/update', function () {
+    stopPolling();
+    startPolling();
   });
 
   $scope.$on('$destroy', function () {
+    rootScopeUnregister();
     charts.invalidate();
+    stopPolling();
   });
 
   $scope.$on('/events/stream', function (e, response) {
@@ -192,12 +200,12 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
     var nameTag = 'deployments:' + $ctrl.deployment.name;
     var requests = _.concat(
       [
-        {tags: [nameTag, 'deployment', 'health'], timestamp: {gte: 'now-1m'}},
-        {tags: [nameTag, 'allocation'], timestamp: {gte: 'now-1m'}}
+        {tags: [nameTag, 'deployment', 'health'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
+        {tags: [nameTag, 'allocation'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}}
       ],
       _.flatMap(_.map(services, function (service) {
         return [
-          {tags: [nameTag, 'service', 'health', 'services:' + service.breed.name], timestamp: {gte: 'now-1m'}}
+          {tags: [nameTag, 'service', 'health', 'services:' + service.breed.name], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}}
         ];
       }))
     );
@@ -267,4 +275,16 @@ function DeploymentController(uiStatesFactory, $scope, $stateParams, $timeout, $
     }
     return path;
   };
+
+  function startPolling() {
+    if (!polling) {
+      peekEvents();
+      polling = $interval(peekEvents, Ui.config.chartPollingPeriod * 1000);
+    }
+  }
+
+  function stopPolling() {
+    $interval.cancel(polling);
+    polling = undefined;
+  }
 }
