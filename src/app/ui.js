@@ -4,7 +4,7 @@
 var Ui = null;
 
 var UiConfig = function () {
-  const defaultConfig = {
+  var defaultConfig = {
     toastTimeout: 5,
     chartPollingPeriod: 60,
     chartNoValueFailureTimeout: 150,
@@ -12,30 +12,33 @@ var UiConfig = function () {
     chartResolution: 12
   };
 
-  const config = JSON.parse(JSON.stringify(defaultConfig));
+  var config = JSON.parse(JSON.stringify(defaultConfig));
 
-  const load = function () {
+  var load = function (namespace) {
+    namespace = namespace || '*';
     if (typeof (Storage) !== 'undefined') {
+      var local = {};
       try {
-        const local = JSON.parse(localStorage.getItem('ui-config.' + Environment.prototype.namespace()));
-        for (var property in defaultConfig) {
-          if (defaultConfig.hasOwnProperty(property)) {
-            config[property] = local[property] || config[property];
-          }
-        }
+        local = JSON.parse(localStorage.getItem('ui-config.' + namespace)) || {};
       } catch (e) {
+      }
+      for (var property in defaultConfig) {
+        if (defaultConfig.hasOwnProperty(property)) {
+          config[property] = local[property] || defaultConfig[property];
+        }
       }
     }
   };
 
-  const save = function (cfg) {
+  var save = function (cfg, namespace) {
+    namespace = namespace || '*';
     for (var property in defaultConfig) {
       if (defaultConfig.hasOwnProperty(property)) {
         config[property] = cfg[property] || config[property];
       }
     }
     if (typeof (Storage) !== 'undefined') {
-      localStorage.setItem('ui-config.' + Environment.prototype.namespace(), JSON.stringify(config));
+      localStorage.setItem('ui-config.' + namespace, JSON.stringify(config));
       return true;
     }
     return false;

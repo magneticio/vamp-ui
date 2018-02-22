@@ -55,10 +55,6 @@ Environment.prototype.connect = function () {
   return true;
 };
 
-Environment.prototype.namespace = function () {
-  return '';
-};
-
 Environment.prototype.debug = function () {
   return ${DEBUG};
 };

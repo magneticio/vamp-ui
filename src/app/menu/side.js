@@ -36,6 +36,7 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
 
   $rootScope.$on('$stateChangeSuccess',
     function (event, toState, toParams) {
+      $ctrl.config = angular.copy(Ui.config);
       var isAdminState = $state.includes('admin');
       var path;
 
@@ -84,7 +85,12 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
   }
 
   $ctrl.saveConfig = function () {
-    if (Ui.save($ctrl.config)) {
+    var namespace = null;
+    try {
+      namespace = $rootScope.session.environment.name;
+    } catch (e) {
+    }
+    if (Ui.save($ctrl.config, namespace)) {
       $rootScope.$broadcast('/vamp/settings/update');
       angular.extend(toastrConfig, {
         autoDismiss: true,

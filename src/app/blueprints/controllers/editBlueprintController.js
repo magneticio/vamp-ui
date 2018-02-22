@@ -411,7 +411,6 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
         finalBlueprint.clusters[clusterName].services[0].breed.environment_variables[variable.key] = variable.value;
       }
     });
-    console.log(blueprint.dialects.labels);
     blueprint.dialects.labels.forEach(function (label) {
       if(label.key !== '' && label.name !== '') {
         finalBlueprint.clusters[clusterName].services[0].dialects.marathon.container.docker.labels[label.key] = label.value.toString();

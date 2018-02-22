@@ -10,7 +10,7 @@
   TimeSeriesCharts.sparkline = 'sparkline';
   TimeSeriesCharts.healthSparkline = 'shealth-parkline';
 
-  const chartOptions = function () {
+  var chartOptions = function () {
     return {
       maxValueScale: 1,
       interpolation: 'bezier',
@@ -35,9 +35,9 @@
     };
   };
 
-  const healthChartOptions = chartOptions;
+  var healthChartOptions = chartOptions;
 
-  const sparklineOptions = function () {
+  var sparklineOptions = function () {
     return {
       maxValueScale: 1,
       interpolation: 'bezier',
@@ -62,9 +62,9 @@
     };
   };
 
-  const healthSparklineOptions = sparklineOptions;
+  var healthSparklineOptions = sparklineOptions;
 
-  const chartTimeSeriesOptions = function () {
+  var chartTimeSeriesOptions = function () {
     return {
       lineWidth: 3,
       strokeStyle: '#29719b',
@@ -72,7 +72,7 @@
     };
   };
 
-  const healthChartTimeSeriesOptions = function () {
+  var healthChartTimeSeriesOptions = function () {
     return {
       lineWidth: 3,
       strokeStyle: '#3ABA5E',
@@ -80,9 +80,9 @@
     };
   };
 
-  const sparklineTimeSeriesOptions = chartTimeSeriesOptions;
+  var sparklineTimeSeriesOptions = chartTimeSeriesOptions;
 
-  const healthSparklineTimeSeriesOptions = healthChartTimeSeriesOptions;
+  var healthSparklineTimeSeriesOptions = healthChartTimeSeriesOptions;
 
   function merge() {
     var result = {};
