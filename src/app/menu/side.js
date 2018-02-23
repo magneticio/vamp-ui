@@ -1,10 +1,10 @@
-/* global Help */
+/* global Help, Ui */
 angular.module('vamp-ui').component('side', {
-  templateUrl: 'app/menu/side.html',
+  templateUrl: 'app/menu/templates/side.html',
   controller: SideController
 });
 
-function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state) {
+function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state, toastr, toastrConfig) {
   var $ctrl = this;
   $scope.info = $vamp.info;
   $scope.help = {
@@ -20,6 +20,9 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
   $ctrl.pin = false;
   $ctrl.uiStates = uiStatesFactory.viewStates;
 
+  $ctrl.config = angular.copy(Ui.config);
+  $ctrl.defaultConfig = Ui.defaultConfig;
+
   $ctrl.trust = function (src) {
     return $sce.trustAsResourceUrl(src);
   };
@@ -27,11 +30,13 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
   $ctrl.closePanel = function () {
     uiStatesFactory.setInfoPanelViewState(false);
     uiStatesFactory.setHelpPanelViewState(false);
+    uiStatesFactory.setConfigPanelViewState(false);
     uiStatesFactory.setProxyPanelViewState('');
   };
 
   $rootScope.$on('$stateChangeSuccess',
     function (event, toState, toParams) {
+      $ctrl.config = angular.copy(Ui.config);
       var isAdminState = $state.includes('admin');
       var path;
 
@@ -53,15 +58,15 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
     }
   );
 
-  // if ($vamp.connected()) {
-  //   $vamp.peek('/info');
-  // }
+  if ($vamp.connected()) {
+    $vamp.peek('/info');
+  }
 
-  // $scope.$on('$vamp:connection', function (event, connection) {
-  //   if (connection === 'opened') {
-  //     $vamp.peek('/info');
-  //   }
-  // });
+  $scope.$on('$vamp:connection', function (event, connection) {
+    if (connection === 'opened') {
+      $vamp.peek('/info');
+    }
+  });
 
   $scope.$on('/info', function () {
     $scope.info = $vamp.info;
@@ -78,4 +83,29 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
     $scope.help.description = Help.prototype.entries().default.description;
     $scope.help.links = Help.prototype.entries().default.links;
   }
+
+  $ctrl.saveConfig = function () {
+    var namespace = null;
+    try {
+      namespace = $rootScope.session.environment.name;
+    } catch (e) {
+    }
+    if (Ui.save($ctrl.config, namespace)) {
+      $rootScope.$broadcast('/vamp/settings/update');
+      angular.extend(toastrConfig, {
+        autoDismiss: true,
+        timeOut: 1000 * Ui.config.toastTimeout,
+        extendedTimeOut: 0,
+        allowHtml: false,
+        closeButton: true,
+        tapToDismiss: true,
+        positionClass: 'toast-top-right',
+        preventOpenDuplicates: true
+      });
+      toastr.success('Configuration has been saved!');
+    } else {
+      toastr.error('Configuration cannot be saved!');
+    }
+    $ctrl.config = angular.copy(Ui.config);
+  };
 }

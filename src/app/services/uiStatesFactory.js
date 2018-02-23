@@ -11,6 +11,7 @@ function uiStatesFactory() {
     right: STATE_ENUM.HIDDEN,
     infoPanel: false,
     helpPanel: false,
+    configPanel: false,
     proxyPanel: '',
     footer: false,
     overlay: false
@@ -36,6 +37,10 @@ function uiStatesFactory() {
     viewStates.helpPanel = type;
   }
 
+  function setConfigPanelViewState(type) {
+    viewStates.configPanel = type;
+  }
+
   function setProxyPanelViewState(type) {
     viewStates.proxyPanel = type;
   }
@@ -56,6 +61,7 @@ function uiStatesFactory() {
     setRightPanelViewState: setRightPanelViewState,
     setInfoPanelViewState: setInfoPanelViewState,
     setHelpPanelViewState: setHelpPanelViewState,
+    setConfigPanelViewState: setConfigPanelViewState,
     setProxyPanelViewState: setProxyPanelViewState,
     setFooterViewState: setFooterViewState,
     setOverlayState: setOverlayState

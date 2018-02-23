@@ -117,7 +117,7 @@ menu {
       }
 
       ul.sub-menu {
-        font-size: $font-size-normal;
+        font-size: $font-size-large;
         & > li {
           background-color: $highlight-color;
           line-height: 15px;
@@ -125,6 +125,7 @@ menu {
           padding-bottom: 15px;
           .btn-link,
           a {
+            padding-top: 1rem;
             padding-left: 4rem;
           }
         }

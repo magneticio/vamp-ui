@@ -1,8 +1,6 @@
-/* global SmoothieChart, TimeSeries */
+/* global SmoothieChart, TimeSeries, Ui */
 (function (exports) {
   var charts = {};
-  var resetValueTimeout = 12500;
-  var resetValueAfterLast = 7500;
 
   function TimeSeriesCharts() {
   }
@@ -12,66 +10,74 @@
   TimeSeriesCharts.sparkline = 'sparkline';
   TimeSeriesCharts.healthSparkline = 'shealth-parkline';
 
-  var chartOptions = {
-    maxValueScale: 1,
-    interpolation: 'bezier',
-    sharpLines: true,
-    grid: {
-      fillStyle: 'transparent',
-      strokeStyle: '#37647D',
-      millisPerLine: 10000,
-      verticalSections: 4,
-      borderVisible: true
-    },
-    labels: {
-      fillStyle: '#b9c8d2',
-      fontSize: 10,
-      precision: 0
-    },
-    timestampFormatter: SmoothieChart.timeFormatter,
-    minValue: 0,
-    millisPerPixel: 100,
-    maxDataSetLength: 8,
-    enableDpiScaling: false
+  var chartOptions = function () {
+    return {
+      maxValueScale: 1,
+      interpolation: 'bezier',
+      sharpLines: true,
+      grid: {
+        fillStyle: 'transparent',
+        strokeStyle: '#37647D',
+        millisPerLine: 10000 * Ui.config.chartResolution,
+        verticalSections: 4,
+        borderVisible: true
+      },
+      labels: {
+        fillStyle: '#b9c8d2',
+        fontSize: 10,
+        precision: 0
+      },
+      timestampFormatter: SmoothieChart.timeFormatter,
+      minValue: 0,
+      millisPerPixel: 100 * Ui.config.chartResolution,
+      maxDataSetLength: 8,
+      enableDpiScaling: false
+    };
   };
 
   var healthChartOptions = chartOptions;
 
-  var sparklineOptions = {
-    maxValueScale: 1,
-    interpolation: 'bezier',
-    sharpLines: true,
-    borderVisible: false,
-    grid: {
-      fillStyle: 'transparent',
-      strokeStyle: '#b3b3b3',
-      millisPerLine: 10000,
-      verticalSections: 4
-    },
-    minValue: 0,
-    millisPerPixel: 330,
-    labels: {
-      disabled: true
-    },
-    timestampFormatter: function () {
-      return '';
-    },
-    maxDataSetLength: 8,
-    enableDpiScaling: false
+  var sparklineOptions = function () {
+    return {
+      maxValueScale: 1,
+      interpolation: 'bezier',
+      sharpLines: true,
+      borderVisible: false,
+      grid: {
+        fillStyle: 'transparent',
+        strokeStyle: '#b3b3b3',
+        millisPerLine: 10000 * Ui.config.chartResolution,
+        verticalSections: 4
+      },
+      minValue: 0,
+      millisPerPixel: 330 * Ui.config.chartResolution,
+      labels: {
+        disabled: true
+      },
+      timestampFormatter: function () {
+        return '';
+      },
+      maxDataSetLength: 8,
+      enableDpiScaling: false
+    };
   };
 
   var healthSparklineOptions = sparklineOptions;
 
-  var chartTimeSeriesOptions = {
-    lineWidth: 3,
-    strokeStyle: '#29719b',
-    fillStyle: 'rgba(41, 113, 155, 0.4)'
+  var chartTimeSeriesOptions = function () {
+    return {
+      lineWidth: 3,
+      strokeStyle: '#29719b',
+      fillStyle: 'rgba(41, 113, 155, 0.4)'
+    };
   };
 
-  var healthChartTimeSeriesOptions = {
-    lineWidth: 3,
-    strokeStyle: '#3ABA5E',
-    fillStyle: 'rgba(58, 186, 94, 0.3)'
+  var healthChartTimeSeriesOptions = function () {
+    return {
+      lineWidth: 3,
+      strokeStyle: '#3ABA5E',
+      fillStyle: 'rgba(58, 186, 94, 0.3)'
+    };
   };
 
   var sparklineTimeSeriesOptions = chartTimeSeriesOptions;
@@ -121,18 +127,18 @@
 
     _.forEach(definitions, function (definition) {
       if (!charts[definition.canvasId]) {
-        var co = chartOptions;
-        var tso = chartTimeSeriesOptions;
+        var co = chartOptions();
+        var tso = chartTimeSeriesOptions();
 
         if (TimeSeriesCharts.healthChart === definition.type) {
-          co = healthChartOptions;
-          tso = healthChartTimeSeriesOptions;
+          co = healthChartOptions();
+          tso = healthChartTimeSeriesOptions();
         } else if (TimeSeriesCharts.sparkline === definition.type) {
-          co = sparklineOptions;
-          tso = sparklineTimeSeriesOptions;
+          co = sparklineOptions();
+          tso = sparklineTimeSeriesOptions();
         } else if (TimeSeriesCharts.healthSparkline === definition.type) {
-          co = healthSparklineOptions;
-          tso = healthSparklineTimeSeriesOptions;
+          co = healthSparklineOptions();
+          tso = healthSparklineTimeSeriesOptions();
         }
 
         co = merge(co, definition.chartOptions);
@@ -152,8 +158,8 @@
     if (value !== null && value !== undefined) {
       lasts[id] = value;
       if (charts[id] && charts[id].series) {
-        if (charts[id].tail < timestamp - resetValueTimeout) {
-          charts[id].series.append(timestamp - resetValueTimeout, 0);
+        if (charts[id].tail < timestamp - 1000 * Ui.config.chartNoValueFailureTimeout) {
+          charts[id].series.append(timestamp - 1000 * Ui.config.chartNoValueFailureTimeout, 0);
         }
         charts[id].series.append(timestamp, value);
       }
@@ -178,9 +184,9 @@
         clearTimeout(charts[id].timeout);
         charts[id].tail = timestamp;
         charts[id].timeout = setTimeout(function () {
-          $this.append(id, timestamp + resetValueAfterLast, 0, lasts);
+          $this.append(id, timestamp + 1000 * Ui.config.chartResetValueTimeout, 0, lasts);
           resolve();
-        }, resetValueTimeout);
+        }, 1000 * Ui.config.chartNoValueFailureTimeout);
       } else {
         reject();
       }

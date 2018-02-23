@@ -1,7 +1,7 @@
 /* global VAMP */
 /* eslint dot-notation: ["error", { "allowPattern": "^[a-z]+(_[a-z]+)+$" }] */
 angular.module('vamp-ui').component('menu', {
-  templateUrl: 'app/menu/templates/menu-v3.html',
+  templateUrl: 'app/menu/templates/menu.html',
   controller: MenuController
 });
 

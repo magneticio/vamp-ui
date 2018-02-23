@@ -1,0 +1,128 @@
+<div class="overlay"
+     ng-if="!$ctrl.pin"
+     ng-class="{'active': $ctrl.uiStates.infoPanel || $ctrl.uiStates.helpPanel || $ctrl.uiStates.proxyPanel || $ctrl.uiStates.configPanel}"
+     ng-click="$ctrl.closePanel()">
+</div>
+<div class="info-panel hidden-xs hidden-sm"
+     ng-class="{'active': $ctrl.uiStates.infoPanel || $ctrl.uiStates.helpPanel || $ctrl.uiStates.proxyPanel || $ctrl.uiStates.configPanel}">
+
+    <div class="container-fluid">
+        <div class="col-sm-4">
+            <a class="side-button" href="" ng-click="$ctrl.pin = !$ctrl.pin">
+                <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="col-sm-4 side-button-center">
+            <a class="side-button" ng-if="$ctrl.uiStates.proxyPanel" ng-href="{{ $ctrl.uiStates.proxyPanel }}"
+               target="_blank">
+                <i class="fa fa-external-link" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="col-sm-4">
+            <i class="fa fa-arrow-right side-button clickable pull-right" aria-hidden="true"
+               ng-click="$ctrl.closePanel()"></i>
+        </div>
+    </div>
+
+    <br><br>
+
+    <div ng-show="$ctrl.uiStates.infoPanel">
+        <span class="info-message">{{info.message}}</span>
+        <br><br>
+        <table class="table">
+            <tr>
+                <td>RUNNING SINCE</td>
+                <td>{{info.running_since | date: 'dd-MM-yyyy HH:mm:ss'}}</td>
+            </tr>
+            <tr ng-if="!role || role === 'admin'">
+                <td>VERSION</td>
+                <td>{{info.version}}</td>
+            </tr>
+            <tr ng-if="!role || (role === 'admin' && info.ui_version !== info.version)">
+                <td>UI VERSION</td>
+                <td>{{info.ui_version}}</td>
+            </tr>
+            <tr ng-if="info.pulse">
+                <td>PULSE</td>
+                <td>{{info.pulse}}</td>
+            </tr>
+            <tr ng-if="info.key_value_store">
+                <td>KEY VALUE STORE</td>
+                <td>{{info.key_value_store}}</td>
+            </tr>
+            <tr ng-if="info.gateway_driver">
+                <td>GATEWAY DRIVER</td>
+                <td>{{info.gateway_driver}}</td>
+            </tr>
+            <tr ng-if="info.container_driver">
+                <td>CONTAINER DRIVER</td>
+                <td>{{info.container_driver}}</td>
+            </tr>
+            <tr ng-if="info.workflow_driver">
+                <td>WORKFLOW DRIVER</td>
+                <td>{{info.workflow_driver}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div ng-show="$ctrl.uiStates.helpPanel">
+        <span class="info-message">{{ help.title | uppercase }}</span>
+        <br><br>
+        <span class="help-description">{{ help.description }}</span>
+        <br><br>
+        <table class="table">
+            <tr ng-repeat="link in help.links">
+                <td><a class="help-link" href="{{ link.url }}" target="_blank">
+                    {{ link.title | uppercase }}&nbsp;&nbsp;<i class="fa fa-external-link" aria-hidden="true"></i>
+                </a></td>
+            </tr>
+        </table>
+    </div>
+
+    <div ng-show="$ctrl.uiStates.configPanel">
+        <form novalidate name="form" ng-submit="$ctrl.saveConfig()">
+            <span class="info-message">UI settings</span>
+            <div class="pull-right">
+                <button class="btn btn-info" ng-disabled="form.$invalid" type="submit">Save</button>
+            </div>
+            <br><br>
+            <div class="edit-config">
+                <div class="form-group" ng-class="{'has-error': form.chartPollingPeriod.$invalid}">
+                    <label for="chartPollingPeriod" class="control-label">chart polling period [sec]</label>
+                    <input id="chartPollingPeriod" placeholder="{{$ctrl.defaultConfig.chartPollingPeriod}}" class="form-control" type="number"
+                           min="1" ng-model="$ctrl.config.chartPollingPeriod" required>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.chartResetValueTimeout.$invalid}">
+                    <label for="chartResetValueTimeout" class="control-label">chart reset value timeout [sec] <sup>*</sup></label>
+                    <input id="chartResetValueTimeout" placeholder="{{$ctrl.defaultConfig.chartResetValueTimeout}}" class="form-control"
+                           type="number"
+                           min="1" ng-model="$ctrl.config.chartResetValueTimeout" required>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.chartNoValueFailureTimeout.$invalid}">
+                    <label for="chartNoValueFailureTimeout" class="control-label">chart no value failure timeout
+                        [sec] <sup>*</sup></label>
+                    <input id="chartNoValueFailureTimeout" placeholder="{{$ctrl.defaultConfig.chartNoValueFailureTimeout}}"
+                           class="form-control" type="number"
+                           min="1" ng-model="$ctrl.config.chartNoValueFailureTimeout" required>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.chartResolution.$invalid}">
+                    <label for="chartResolution" class="control-label">chart resolution <sup>*</sup></label>
+                    <input id="chartResolution" placeholder="{{$ctrl.defaultConfig.chartResolution}}" class="form-control" type="number"
+                           min="1" ng-model="$ctrl.config.chartResolution" required>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.toastTimeout.$invalid}">
+                    <label for="toastTimeout" class="control-label">toast timeout [sec]</label>
+                    <input id="toastTimeout" placeholder="{{$ctrl.defaultConfig.toastTimeout}}" class="form-control" type="number"
+                           min="1" ng-model="$ctrl.config.toastTimeout" required>
+                </div>
+            </div>
+        </form>
+        <br>
+        <label class="side-footer"><sup>*</sup> page reload required</label>
+    </div>
+
+    <div ng-show="$ctrl.uiStates.proxyPanel" class="proxy-container">
+        <iframe ng-src="{{ $ctrl.trust($ctrl.uiStates.proxyPanel) }}" scrolling="no" frameborder="0"
+                class="proxy-frame"></iframe>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-function revisionsController($scope, $rootScope, revisionsService, $stateParams, $vamp, typeConfig) {
+function revisionsController($scope, revisionsService, $stateParams, $vamp, typeConfig) {
   var $ctrl = this;
 
   $scope.ncyBreadcrumbIgnore = true;
@@ -26,7 +26,7 @@ function revisionsController($scope, $rootScope, revisionsService, $stateParams,
     _.forEach(response.data, checkEventForData);
   });
 
-  $rootScope.$on('/events/stream', function (e, response) {
+  $scope.$on('/events/stream', function (e, response) {
     var event = response.data;
 
     checkEventForData(event);
@@ -49,5 +49,5 @@ function revisionsController($scope, $rootScope, revisionsService, $stateParams,
   $ctrl.peek();
 }
 
-revisionsController.$inject = ['$scope', '$rootScope', 'revisionsService', '$stateParams', '$vamp', 'typeConfig'];
+revisionsController.$inject = ['$scope', 'revisionsService', '$stateParams', '$vamp', 'typeConfig'];
 angular.module('vamp-ui').controller('revisionsController', revisionsController);

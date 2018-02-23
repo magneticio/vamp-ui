@@ -1,8 +1,8 @@
-/* global TimeSeriesCharts */
+/* global TimeSeriesCharts, Ui */
 angular.module('vamp-ui').controller('GatewayController', GatewayController);
 
 /** @ngInject */
-function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vamp, uiStatesFactory, slider, alert, toastr, $uibModal, $authorization) {
+function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, $interval, $state, $vamp, uiStatesFactory, slider, alert, toastr, $uibModal, $authorization) {
   var $ctrl = this;
   var path = '/gateways/' + $stateParams.name;
 
@@ -16,6 +16,8 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vam
   this.last = [];
   var addedRoutes = [];
   this.sliderOptions = slider.weightOptions;
+
+  var polling;
 
   $ctrl.readOnly = function () {
     return $authorization.readOnly('blueprints');
@@ -116,11 +118,18 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vam
     updateAddedRoutes(response.data);
     $ctrl.gateway = response.data;
     $timeout(updateCharts, 0);
-    peekEvents();
+    startPolling();
+  });
+
+  var rootScopeUnregister = $rootScope.$on('/vamp/settings/update', function () {
+    stopPolling();
+    startPolling();
   });
 
   $scope.$on('$destroy', function () {
+    rootScopeUnregister();
     charts.invalidate();
+    stopPolling();
   });
 
   $scope.$on('/events/stream', function (e, response) {
@@ -170,15 +179,15 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vam
     var nameTag = 'gateways:' + $ctrl.gateway.name;
     var requests = _.concat(
       [
-        {tags: [nameTag, 'gateway', 'health'], timestamp: {gte: 'now-1m'}},
-        {tags: [nameTag, 'gateway', 'metrics:rate'], timestamp: {gte: 'now-1m'}},
-        {tags: [nameTag, 'gateway', 'metrics:responseTime'], timestamp: {gte: 'now-1m'}}
+        {tags: [nameTag, 'gateway', 'health'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
+        {tags: [nameTag, 'gateway', 'metrics:rate'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
+        {tags: [nameTag, 'gateway', 'metrics:responseTime'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}}
       ],
       _.flatMap(_.map($ctrl.gateway.routes, function (v, n) {
         return [
-          {tags: [nameTag, 'route', 'health', 'routes:' + n], timestamp: {gte: 'now-1m'}},
-          {tags: [nameTag, 'route', 'metrics:rate', 'routes:' + n], timestamp: {gte: 'now-1m'}},
-          {tags: [nameTag, 'route', 'metrics:responseTime', 'routes:' + n], timestamp: {gte: 'now-1m'}}
+          {tags: [nameTag, 'route', 'health', 'routes:' + n], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
+          {tags: [nameTag, 'route', 'metrics:rate', 'routes:' + n], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
+          {tags: [nameTag, 'route', 'metrics:responseTime', 'routes:' + n], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}}
         ];
       }))
     );
@@ -257,7 +266,20 @@ function GatewayController($scope, $filter, $stateParams, $timeout, $state, $vam
       uiStatesFactory.setProxyPanelViewState(path);
       uiStatesFactory.setInfoPanelViewState(false);
       uiStatesFactory.setHelpPanelViewState(false);
+      uiStatesFactory.setConfigPanelViewState(false);
     }
     return path;
   };
+
+  function startPolling() {
+    if (!polling) {
+      peekEvents();
+      polling = $interval(peekEvents, Ui.config.chartPollingPeriod * 1000);
+    }
+  }
+
+  function stopPolling() {
+    $interval.cancel(polling);
+    polling = undefined;
+  }
 }
