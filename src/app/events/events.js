@@ -1,9 +1,10 @@
+/* global Ui */
 angular.module('vamp-ui').component('events', {
   templateUrl: 'app/events/events.html',
   controller: EventController
 });
 
-function EventController($scope, $vamp, $interval, uiStatesFactory, overlayService) {
+function EventController($rootScope, $scope, $vamp, $interval, uiStatesFactory, overlayService) {
   var $ctrl = this;
 
   var maxLength = 50;
@@ -12,9 +13,9 @@ function EventController($scope, $vamp, $interval, uiStatesFactory, overlayServi
   this.show = false;
 
   this.filters = {
-    health: true,
-    metrics: true,
-    allocation: true
+    health: Ui.config.eventsHealth,
+    metrics: Ui.config.eventsMetrics,
+    allocation: Ui.config.eventsAllocation
   };
 
   this.toggle = function ($event) {
@@ -43,6 +44,12 @@ function EventController($scope, $vamp, $interval, uiStatesFactory, overlayServi
 
       $($event.target).find('input[type=checkbox]').prop('checked', false);
     }
+
+    Ui.save({
+      eventsHealth: $ctrl.filters.health,
+      eventsMetrics: $ctrl.filters.metrics,
+      eventsAllocation: $ctrl.filters.allocation
+    }, $rootScope);
   };
 
   function start() {

@@ -277,7 +277,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
   };
 
   function startPolling() {
-    if (!polling) {
+    if (Ui.config.chartPollingPeriod > 0 && !polling) {
       peekEvents();
       polling = $interval(peekEvents, Ui.config.chartPollingPeriod * 1000);
     }

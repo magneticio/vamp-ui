@@ -90,7 +90,7 @@
                 <div class="form-group" ng-class="{'has-error': form.chartPollingPeriod.$invalid}">
                     <label for="chartPollingPeriod" class="control-label">chart polling period [sec]</label>
                     <input id="chartPollingPeriod" placeholder="{{$ctrl.defaultConfig.chartPollingPeriod}}" class="form-control" type="number"
-                           min="1" ng-model="$ctrl.config.chartPollingPeriod" required>
+                           min="0" ng-model="$ctrl.config.chartPollingPeriod" required>
                 </div>
                 <div class="form-group" ng-class="{'has-error': form.chartResetValueTimeout.$invalid}">
                     <label for="chartResetValueTimeout" class="control-label">chart reset value timeout [sec] <sup>*</sup></label>

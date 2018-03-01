@@ -87,7 +87,7 @@
 
   &[readonly] {
     background-color: lighten($background-color, 0.5);
-    color: rgba(55, 100, 125, 0.7);
+    color: $inactive-text-color;
   }
 }
 
