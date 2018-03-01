@@ -1,0 +1,11 @@
+<item-explorer items="$ctrl.schedulerRouting"
+               item-type-config="$ctrl.config"
+               on-add="$ctrl.add()"
+               add-caption="'Create Gateway from Selection'"
+               no-delete="true"
+               custom-search="true"
+               on-search="$ctrl.onSearch(term)">
+</item-explorer>
+<div class="loading-artifacts" ng-hide="artifactsLoaded">
+    <div class="loader"></div>
+</div>

@@ -1,0 +1,12 @@
+<div class="artifact-properties">
+    <tag value="item.kind"></tag>
+    <tag ng-if="item.image" value="item.image"></tag>
+    <div class="list">
+        <p class="v-label">labels :</p>
+        <ul>
+            <li ng-repeat="(key, value) in item.labels">
+            <p>{{ key + ': ' + value }}</p>
+            </li>
+        </ul>
+    </div>
+</div>

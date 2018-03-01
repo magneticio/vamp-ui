@@ -99,7 +99,8 @@ menu {
     margin: 0;
 
     li:not(.sidebar-brand):not(.sub-menu-item):nth-of-type(3),
-    li:not(.sidebar-brand):not(.sub-menu-item):nth-of-type(7) {
+    li:not(.sidebar-brand):not(.sub-menu-item):nth-of-type(7),
+    li:not(.sidebar-brand):not(.sub-menu-item):nth-of-type(8) {
       margin-bottom: 3.57rem;
     }
 
