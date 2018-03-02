@@ -68,9 +68,11 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
   $explorer.searchTerm = $stateParams.searchTerm;
   $explorer.onSearchTermChange = function () {
     if ($scope.customSearch) {
+      $stateParams.searchTerm = $explorer.searchTerm;
       $scope.onSearch({
         term: $explorer.searchTerm
       });
+      $explorer.calcPagination();
     } else {
       $stateParams.searchTerm = $explorer.searchTerm;
       $explorer.filteredItems = filterFilter($explorer.items, {
@@ -261,6 +263,13 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
         initItems();
       }
     });
+
+  if ($scope.customSearch && $explorer.searchTerm) {
+    $scope.onSearch({
+      term: $explorer.searchTerm
+    });
+    $explorer.calcPagination();
+  }
 
   initItems();
 }

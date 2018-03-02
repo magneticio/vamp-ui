@@ -16,7 +16,7 @@
     </thead>
     <tbody>
       <tr class=""
-        ng-repeat="item in ($explorer.filteredItems | filter:{name:$explorer.searchTerm} | limitTo : $explorer.itemsPerPage : (($explorer.currentPage - 1) * $explorer.itemsPerPage)) track by $index"
+        ng-repeat="item in ($explorer.filteredItems | limitTo : $explorer.itemsPerPage : (($explorer.currentPage - 1) * $explorer.itemsPerPage)) track by $index"
         dynamic-controller-as="{{$explorer.itemTypeConfig.artifactsMainView.gridItem.controller}}"
         dynamic-controller-alias="$artifactCtrl">
         <td class="center-content clickable row-selection" ng-click="$explorer.updateSelection($event, item)">
