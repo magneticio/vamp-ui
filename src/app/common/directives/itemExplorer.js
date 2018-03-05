@@ -68,7 +68,6 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
   $explorer.searchTerm = $stateParams.searchTerm;
   $explorer.onSearchTermChange = function () {
     if ($scope.customSearch) {
-      $stateParams.searchTerm = $explorer.searchTerm;
       $scope.onSearch({
         term: $explorer.searchTerm
       });
