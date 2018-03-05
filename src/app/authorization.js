@@ -12,7 +12,10 @@ function AuthorizationService($rootScope, $vamp) {
   };
 
   this.readOnly = function (artifacts) {
-    return artifacts === 'scheduler' ? !$this.authorized('gateways', $this.action.write) : !$this.authorized(artifacts, $this.action.write);
+    if (artifacts === 'scheduler') {
+      artifacts = 'gateways';
+    }
+    return !$this.authorized(artifacts, $this.action.write);
   };
 
   this.authorized = function (artifacts, action) {
