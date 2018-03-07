@@ -136,7 +136,7 @@ function ($scope, $state, $stateParams, $vamp, artifact, $interval, toastr, $fil
   };
 
   this.peek = function () {
-    $vamp.get(path, null, 'JSON').then(function (response) {
+    $vamp.get(path + '?expand_references=true', null, 'JSON').then(function (response) {
       if ($ctrl.base === null) {
         $ctrl.valid = true;
         $ctrl.base = $ctrl.source = response.data;

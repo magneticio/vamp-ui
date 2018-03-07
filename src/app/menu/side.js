@@ -85,12 +85,7 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
   }
 
   $ctrl.saveConfig = function () {
-    var namespace = null;
-    try {
-      namespace = $rootScope.session.environment.name;
-    } catch (e) {
-    }
-    if (Ui.save($ctrl.config, namespace)) {
+    if (Ui.save($ctrl.config, $rootScope)) {
       $rootScope.$broadcast('/vamp/settings/update');
       angular.extend(toastrConfig, {
         autoDismiss: true,

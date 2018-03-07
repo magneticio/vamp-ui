@@ -87,7 +87,7 @@
 
   &[readonly] {
     background-color: lighten($background-color, 0.5);
-    color: rgba(55, 100, 125, 0.7);
+    color: $inactive-text-color;
   }
 }
 
@@ -135,7 +135,7 @@
     background: $background-color;
     top: 2px;
     left: 3px;
-    border: 2px solid $outline-color;
+    border: 2px solid $inactive-text-color;
     border-top: none;
     border-right: none;
     transform: rotate(-45deg);

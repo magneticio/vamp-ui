@@ -24,6 +24,9 @@ function ($scope, $state, $stateParams, $timeout, $element, $vamp, artifact, toa
   var ignoreChange = false;
 
   function init() {
+    if ($ctrl.source) {
+      $ctrl.validate();
+    }
     $timeout(function () {
       $($element).find('#editor textarea').focus();
     });

@@ -209,6 +209,20 @@ VAMP.Artifacts.prototype.all = function () {
           rowTemplateUrl: 'app/conditions/templates/row.html'
         }
       }
+    },
+    {
+      kind: "scheduler",
+      artifactsMainView: {
+        templateUrl: 'app/scheduler/scheduler.html',
+        controller: 'schedulerController',
+        gridItem: {
+          templateUrl: 'app/scheduler/templates/gridView.html'
+        },
+        tableView: {
+          columns: ['namespace/name', 'kind', 'image', 'labels', 'instance #', 'port #'],
+          rowTemplateUrl: 'app/scheduler/templates/row.html'
+        }
+      }
     }
   ];
 };

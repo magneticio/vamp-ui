@@ -1,4 +1,5 @@
-function uiStatesFactory() {
+/* global Ui */
+function UiStatesFactory($rootScope) {
   var STATE_ENUM = {
     EXPANDED: 1,
     COLLAPSED: 2,
@@ -6,7 +7,7 @@ function uiStatesFactory() {
   };
 
   var viewStates = {
-    main: 'grid',
+    main: Ui.config.view,
     left: STATE_ENUM.EXPANDED,
     right: STATE_ENUM.HIDDEN,
     infoPanel: false,
@@ -19,6 +20,7 @@ function uiStatesFactory() {
 
   function setMainViewState(type) {
     viewStates.main = type;
+    Ui.save({view: type}, $rootScope);
   }
 
   function setLeftPanelViewState(type) {
@@ -68,6 +70,8 @@ function uiStatesFactory() {
   };
 }
 
-uiStatesFactory.$inject = [];
+UiStatesFactory.$inject = [];
 
-angular.module('vamp-ui').factory('uiStatesFactory', uiStatesFactory);
+angular.module('vamp-ui').factory('uiStatesFactory', ['$rootScope', function ($rootScope) {
+  return new UiStatesFactory($rootScope);
+}]);

@@ -6,9 +6,12 @@ angular.module('vamp-ui').directive('itemExplorer', [function () {
       itemTypeConfig: '=',
       noDelete: '=',
       noAdd: '=',
+      addCaption: '=',
+      customSearch: '=',
       onView: '&',
       onDelete: '&',
-      onAdd: '&'
+      onAdd: '&',
+      onSearch: '&'
     },
     transclude: {
       buttonsSlot: '?buttons'
@@ -44,6 +47,8 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
   $explorer.noDelete = $scope.noDelete || readOnly;
   $explorer.noAdd = $scope.noAdd || readOnly;
   $explorer.readOnly = readOnly;
+  $explorer.addCaption = $scope.addCaption || 'Add';
+  $explorer.searchPlaceholder = $scope.customSearch ? '' : 'Search';
 
   if (!$explorer.path) {
     $explorer.path = $explorer.itemTypeConfig.path;
@@ -62,11 +67,18 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
   // Search
   $explorer.searchTerm = $stateParams.searchTerm;
   $explorer.onSearchTermChange = function () {
-    $stateParams.searchTerm = $explorer.searchTerm;
-    $explorer.filteredItems = filterFilter($explorer.items, {
-      name: $explorer.searchTerm
-    });
-    $explorer.calcPagination();
+    if ($scope.customSearch) {
+      $scope.onSearch({
+        term: $explorer.searchTerm
+      });
+      $explorer.calcPagination();
+    } else {
+      $stateParams.searchTerm = $explorer.searchTerm;
+      $explorer.filteredItems = filterFilter($explorer.items, {
+        name: $explorer.searchTerm
+      });
+      $explorer.calcPagination();
+    }
   };
 
   // Pagination
@@ -234,10 +246,13 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
   function initItems() {
     angular.copy($scope.items, _items);
     angular.copy(_.orderBy(_items, 'name'), $explorer.items);
-    $explorer.filteredItems = filterFilter($explorer.items, {
-      name: $explorer.searchTerm
-    });
-
+    if ($scope.customSearch) {
+      $explorer.filteredItems = $explorer.items;
+    } else {
+      $explorer.filteredItems = filterFilter($explorer.items, {
+        name: $explorer.searchTerm
+      });
+    }
     $explorer.calcPagination();
   }
 
@@ -247,6 +262,13 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
         initItems();
       }
     });
+
+  if ($scope.customSearch && $explorer.searchTerm) {
+    $scope.onSearch({
+      term: $explorer.searchTerm
+    });
+    $explorer.calcPagination();
+  }
 
   initItems();
 }

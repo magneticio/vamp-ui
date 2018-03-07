@@ -3,12 +3,12 @@
   on-view="$ctrl.onView(item)" on-add="$ctrl.addForm()" on-delete="$ctrl.delete(item)" >
   <buttons>
     <button ng-if="!$ctrl.readOnly()" class="btn btn-primary" type="submit" ng-click="$ctrl.upload()">
-        Docker Compose
+        Import Docker Compose
     </button>
   </buttons>
   <buttons>
     <button ng-if="!$ctrl.readOnly()" class="btn btn-primary" type="submit" ng-click="$ctrl.add()">
-        Advanced
+        Add YAML/JSON
     </button>
   </buttons>
 </item-explorer>

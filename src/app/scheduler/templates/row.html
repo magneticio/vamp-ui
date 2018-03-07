@@ -1,0 +1,10 @@
+<td class="col-1">{{ item.name.substr(0, 20) }}</td>
+<td class="col-1">{{ item.kind }}</td>
+<td class="col-1">{{ item.image }}</td>
+<td class="col-1">
+    <span ng-repeat="(key, value) in item.labels">
+        &nbsp;&nbsp;{{ key + ': ' + value }}&nbsp;&nbsp;
+    </span>
+</td>
+<td class="col-1">{{ item.instances.length }}</td>
+<td class="col-1">{{ item.instances.length > 0 ? item.instances[0].ports.length : 0 }}</td>

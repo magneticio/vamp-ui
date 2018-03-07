@@ -12,6 +12,9 @@ function AuthorizationService($rootScope, $vamp) {
   };
 
   this.readOnly = function (artifacts) {
+    if (artifacts === 'scheduler') {
+      artifacts = 'gateways';
+    }
     return !$this.authorized(artifacts, $this.action.write);
   };
 
