@@ -101,7 +101,9 @@ function BlueprintService($rootScope, $vamp) {
         }
         return _.find(bc.services, function (bs) {
           return _.find(dc.services, function (ds) {
-            return bs.breed.name === ds.breed.name;
+            var b1 = bs.breed.name || bs.breed.reference;
+            var b2 = ds.breed.name || ds.breed.reference;
+            return b1 === b2;
           });
         });
       });
