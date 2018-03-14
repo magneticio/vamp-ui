@@ -246,8 +246,9 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
         }
       }
     } else if (_.includes(event.tags, 'allocation')) {
-      appendToChart('cpu', event.value.cpu, event.timestamp);
-      appendToChart('memory', event.value.memory, event.timestamp);
+      var scale = JSON.parse(event.value);
+      appendToChart('cpu', scale.cpu, event.timestamp);
+      appendToChart('memory', scale.memory, event.timestamp);
     }
   }
 
