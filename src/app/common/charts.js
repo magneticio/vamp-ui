@@ -156,7 +156,12 @@
   TimeSeriesCharts.prototype.append = function (id, timestamp, value, lasts) {
     timestamp = timestamp || Date.now();
     if (value !== null && value !== undefined) {
-      lasts[id] = value;
+      if (!lasts[id] || lasts[id].timestamp < timestamp) {
+        lasts[id] = {
+          value: value,
+          timestamp: timestamp
+        };
+      }
       if (charts[id] && charts[id].series) {
         if (charts[id].tail < timestamp - 1000 * Ui.config.chartNoValueFailureTimeout) {
           charts[id].series.append(timestamp - 1000 * Ui.config.chartNoValueFailureTimeout, 0);
@@ -167,7 +172,10 @@
     var promise = this.timeout(id, timestamp, lasts);
     if (promise) {
       promise.then(function () {
-        lasts[id] = 'none';
+        lasts[id] = {
+          value: 'none',
+          timestamp: Date.now()
+        };
       }).catch(function () {
       });
     }

@@ -18,8 +18,8 @@
         <div class="col-md-4 deployment-chart-column">
             <p>HEALTH&nbsp;
                 <span ng-if="$ctrl.last['health'] != null" class="label"
-                      ng-class="{'label-success': $ctrl.last['health'] != 'none', 'label-red-alert': $ctrl.last['health'] == 'none'}">
-                    {{ $ctrl.last['health'] == 'none' ? 'none' : $ctrl.last['health'] + ' %' }}
+                      ng-class="{'label-success': $ctrl.last['health'].value != 'none', 'label-red-alert': $ctrl.last['health'].value == 'none'}">
+                    {{ $ctrl.last['health'].value == 'none' ? 'none' : $ctrl.last['health'].value + ' %' }}
                 </span>
             </p>
             <canvas class="chart" id="health" width="330"></canvas>
@@ -27,8 +27,8 @@
         <div class="col-md-4 deployment-chart-column">
             <p>CPU&nbsp;
                 <span ng-if="$ctrl.last['cpu'] != null" class="label"
-                      ng-class="{'label-success': $ctrl.last['cpu'] != 'none', 'label-red-alert': $ctrl.last['cpu'] == 'none'}">
-                    {{ $ctrl.last['cpu'] == 'none' ? 'none' : $ctrl.last['cpu'] }}
+                      ng-class="{'label-success': $ctrl.last['cpu'].value != 'none', 'label-red-alert': $ctrl.last['cpu'].value == 'none'}">
+                    {{ $ctrl.last['cpu'].value == 'none' ? 'none' : $ctrl.last['cpu'].value }}
                 </span>
             </p>
             <canvas class="chart" id="cpu" width="330"></canvas>
@@ -36,8 +36,8 @@
         <div class="col-md-4 deployment-chart-column">
             <p>MEMORY&nbsp;
                 <span ng-if="$ctrl.last['memory'] != null" class="label"
-                      ng-class="{'label-success': $ctrl.last['memory'] != 'none', 'label-red-alert': $ctrl.last['memory'] == 'none'}">
-                    {{ $ctrl.last['memory'] == 'none' ? 'none' : $ctrl.last['memory'] + ' MB' }}
+                      ng-class="{'label-success': $ctrl.last['memory'].value != 'none', 'label-red-alert': $ctrl.last['memory'].value == 'none'}">
+                    {{ $ctrl.last['memory'].value == 'none' ? 'none' : $ctrl.last['memory'].value + ' MB' }}
                 </span>
             </p>
             <canvas class="chart" id="memory" width="330"></canvas>
@@ -83,8 +83,8 @@
                     <canvas class="chart" id="health-{{service.breed.name}}" width="100" height="40"></canvas>
                     <p>
                         <span ng-if="$ctrl.last['health-' + service.breed.name] != null" class="label"
-                              ng-class="{'label-success': $ctrl.last['health-' + service.breed.name] != 'none', 'label-red-alert': $ctrl.last['health-' + service.breed.name] == 'none'}">
-                        {{ $ctrl.last['health-' + service.breed.name] == 'none' ? 'none' : $ctrl.last['health-' + service.breed.name] + ' %'}}
+                              ng-class="{'label-success': $ctrl.last['health-' + service.breed.name].value != 'none', 'label-red-alert': $ctrl.last['health-' + service.breed.name].value == 'none'}">
+                        {{ $ctrl.last['health-' + service.breed.name].value == 'none' ? 'none' : $ctrl.last['health-' + service.breed.name].value + ' %'}}
                         </span>
                     </p>
                 </div>
