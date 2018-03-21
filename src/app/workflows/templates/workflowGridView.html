@@ -26,6 +26,7 @@
                         ng-if="$artifactCtrl.proxy(instance, portName)">
                   <span class="clickable"
                      ng-click="$artifactCtrl.proxy(instance, portName, $event)">
+                       <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;
                       {{instance.name | limitTo: 20 }} : {{port}}
                   </span>
               </div>

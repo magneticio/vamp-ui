@@ -22,7 +22,8 @@
             <span ng-if="$ctrl.proxy()">
                 <a class="proxy-anchor"
                    ng-click="$ctrl.proxy($event)">
-                    {{$ctrl.gateway.service.host}} - {{$ctrl.gateway.service.port}}
+                    <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;
+                    {{ $ctrl.gateway.service.host ? $ctrl.gateway.service.host + ' : ' : ''}}{{$ctrl.gateway.service.port}}
                 </a>
             </span>
         </div>

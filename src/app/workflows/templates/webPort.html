@@ -1,5 +1,10 @@
 <div ng-if="$ctrl.viewStates.right" class="workflow-webport-view">
   <div class="webport-view-header">
+    <a class="btn btn-ghost" title="External Link"
+            ng-href="{{ $ctrl.webport.url }}"
+            target="_blank">
+      <i class="fa fa-external-link"></i>
+    </a>
     <button class="btn btn-ghost pull-right" title="Close" ng-click="$ctrl.close()"><i class="fa fa-times"></i></button>
   </div>
   <iframe ng-if="$ctrl.webport.url" ng-src="{{$ctrl.webport.url | trustUrl}}"></iframe>
