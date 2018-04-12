@@ -48,7 +48,6 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
   $explorer.noAdd = $scope.noAdd || readOnly;
   $explorer.readOnly = readOnly;
   $explorer.addCaption = $scope.addCaption || 'Add';
-  $explorer.searchPlaceholder = $scope.customSearch ? '' : 'Search';
 
   if (!$explorer.path) {
     $explorer.path = $explorer.itemTypeConfig.path;
