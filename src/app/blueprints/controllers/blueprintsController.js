@@ -25,7 +25,7 @@ function blueprintsController($scope, $state, $stateParams, artifactsMetadata, $
 
   $ctrl.delete = function (blueprint) {
     $vamp.delete(path + '/' + blueprint.name, angular.toJson(blueprint)).then(function () {
-      get();
+      $vamp.emit(path);
     });
   };
 
@@ -42,11 +42,9 @@ function blueprintsController($scope, $state, $stateParams, artifactsMetadata, $
     });
   };
 
-  // $scope event listenters
-
   $scope.$on('$vamp:connection', function (e, connection) {
     if (connection === 'opened') {
-      get();
+      $vamp.emit(path);
     }
   });
 
@@ -57,15 +55,11 @@ function blueprintsController($scope, $state, $stateParams, artifactsMetadata, $
 
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'blueprints')) {
-      get();
+      $vamp.emit(path);
     }
   });
 
-  function get() {
-    $vamp.get(path);
-  }
-
-  get();
+  $vamp.emit(path);
 }
 
 blueprintsController.$inject = ['$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp', '$uibModal', '$authorization'];

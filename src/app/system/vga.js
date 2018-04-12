@@ -70,12 +70,12 @@ function VgaController($state, $scope, $timeout, $element, $vamp, $q, toastr, al
     var def = $q.defer();
     if ($ctrl.dirty()) {
       alert.show('Warning', 'Template has been changed. If you proceed, all changes will be lost.', 'Proceed', 'Cancel',
-      function () {
-        def.resolve();
-      },
-      function () {
-        def.reject();
-      });
+        function () {
+          def.resolve();
+        },
+        function () {
+          def.reject();
+        });
     } else {
       def.resolve();
     }
@@ -93,7 +93,8 @@ function VgaController($state, $scope, $timeout, $element, $vamp, $q, toastr, al
           $ctrl.mode('configuration');
           ignoreChange = false;
         }, 0);
-      }).catch(function (response) {
+      })
+      .catch(function (response) {
         $timeout(function () {
           ignoreChange = false;
           if (response) {

@@ -15,11 +15,7 @@ function WorkflowsController($scope, $vamp, artifactsMetadata, $controller, uiSt
 
   $scope.proxy = function (workflow, instance, port, $event) {
     var path = 'proxy/workflows/' + workflow.name + '/instances/' + instance.name + '/ports/' + port + '/';
-    if ($vamp.getRequestNamespace()) {
-      path = $vamp.getRequestNamespace() + '/' + path;
-    } else if ($vamp.getConnectionNamespace()) {
-      path = $vamp.getConnectionNamespace() + '/' + path;
-    }
+    path = $vamp.getNamespace() + '/' + path;
     if ($vamp.baseUrl) {
       path = window.location.protocol + '//' + $vamp.baseUrl + path;
     }

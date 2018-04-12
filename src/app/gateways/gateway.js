@@ -33,7 +33,8 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
         .then(function () {
           $state.go('^');
           toastr.success('Gateway \'' + $ctrl.gateway.name + '\' has been successfully deleted.');
-        }).catch(function (response) {
+        })
+        .catch(function (response) {
           if (response) {
             toastr.error(response.data.message, 'Deletion of gateway \'' + $ctrl.gateway.name + '\' failed.');
           } else {
@@ -105,7 +106,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
     return _.includes(addedRoutes, route.lookup_name);
   };
 
-  $vamp.get(path).then(function () {}, function () {
+  $vamp.get(path).catch(function () {
     $state.go('^');
     alert.show('Error', 'Gateway \'' + $stateParams.name + '\' cannot be found.', 'OK', null, function () {
     });
@@ -138,12 +139,12 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
       if (_.includes(event.tags, 'archive:delete')) {
         $state.go('^');
       } else if (_.includes(event.tags, 'archive:update') || _.includes(event.tags, 'deployed')) {
-        $vamp.peek(path);
+        $vamp.emit(path);
       } else {
         chartUpdate(event);
       }
     } else if (_.includes(response.data.tags, 'synchronization')) {
-      $vamp.peek(path);
+      $vamp.emit(path);
     }
   });
 
@@ -161,7 +162,8 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
     $vamp.httpPut(path, JSON.stringify(gateway))
       .then(function () {
         toastr.success(message);
-      }).catch(function (response) {
+      })
+      .catch(function (response) {
         toastr.error(response.data.message, 'Update of gateway \'' + $ctrl.gateway.name + '\' failed.');
       });
   }
@@ -185,14 +187,23 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
       ],
       _.flatMap(_.map($ctrl.gateway.routes, function (v, n) {
         return [
-          {tags: [nameTag, 'route', 'health', 'routes:' + n], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
-          {tags: [nameTag, 'route', 'metrics:rate', 'routes:' + n], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
-          {tags: [nameTag, 'route', 'metrics:responseTime', 'routes:' + n], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}}
+          {
+            tags: [nameTag, 'route', 'health', 'routes:' + n],
+            timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}
+          },
+          {
+            tags: [nameTag, 'route', 'metrics:rate', 'routes:' + n],
+            timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}
+          },
+          {
+            tags: [nameTag, 'route', 'metrics:responseTime', 'routes:' + n],
+            timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}
+          }
         ];
       }))
     );
     _.forEach(requests, function (request) {
-      $vamp.peek('/events', JSON.stringify(request));
+      $vamp.emit('/events', JSON.stringify(request));
     });
   }
 
@@ -254,11 +265,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
       return null;
     }
     var path = 'proxy/gateways/' + encodeURIComponent($ctrl.gateway.name) + '/';
-    if ($vamp.getRequestNamespace()) {
-      path = $vamp.getRequestNamespace() + '/' + path;
-    } else if ($vamp.getConnectionNamespace()) {
-      path = $vamp.getConnectionNamespace() + '/' + path;
-    }
+    path = $vamp.getNamespace() + '/' + path;
     if ($vamp.baseUrl) {
       path = window.location.protocol + '//' + $vamp.baseUrl + path;
     }

@@ -21,7 +21,8 @@ function routesConfig($stateProvider, $urlRouterProvider) {
     allowedKinds = allowedKinds.concat(external.allowedKinds());
   }
 
-  var emptyController = ['$scope', function () {}];
+  var emptyController = ['$scope', function () {
+  }];
 
   var artifactsResolve = {
     artifactsMetadata: ['$stateParams', function ($stateParams) {
@@ -40,422 +41,420 @@ function routesConfig($stateProvider, $urlRouterProvider) {
   }
 
   $stateProvider
-  .state('vamp', {
-    url: '/vamp',
-    abstract: true,
-    views: {
-      app: {
-        templateUrl: 'app/home/templates/home.html'
-      }
-    },
-    data: {
-      breadcrumb: {
-        title: 'Vamp'
-      }
-    }
-  })
-  .state('artifacts', {
-    parent: external && external.name || 'vamp',
-    url: '/{kind:(?:' + artifactKinds.join('|') + ')}?page&searchTerm',
-    params: {
-      page: {
-        value: '1',
-        squash: true
+    .state('vamp', {
+      url: '/vamp',
+      abstract: true,
+      views: {
+        app: {
+          templateUrl: 'app/home/templates/home.html'
+        }
       },
-      searchTerm: {
-        value: '',
-        squash: true
-      }
-    },
-    resolve: external && external.resolve || artifactsResolve,
-    views: {
-      "main@vamp": {
-        controllerProvider: function (artifactsMetadata) {
-          if (artifactsMetadata.artifactsMainView) {
-            return artifactsMetadata.artifactsMainView.controller;
-          }
-
-          return artifactsMetadata.mainController;
-        },
-        templateProvider: function ($templateCache, artifactsMetadata) {
-          if (artifactsMetadata.artifactsMainView) {
-            return $templateCache.get(artifactsMetadata.artifactsMainView.templateUrl);
-          }
-
-          return $templateCache.get('app/crud/artifacts.html');
-        },
-        controllerAs: '$ctrl'
-      },
-      "right-panel@vamp": {
-        controllerProvider: function (artifactsMetadata) {
-          if (artifactsMetadata.artifactsRightPanel) {
-            return artifactsMetadata.artifactsRightPanel.controller;
-          }
-
-          return emptyController;
-        },
-        controllerAs: '$ctrl',
-        templateProvider: function ($templateCache, artifactsMetadata) {
-          if (artifactsMetadata.artifactsRightPanel) {
-            return $templateCache.get(artifactsMetadata.artifactsRightPanel.templateUrl);
-          }
-
-          return '';
+      data: {
+        breadcrumb: {
+          title: 'Vamp'
         }
       }
-    },
-    data: {
-      breadcrumb: {
-        title: '{{ artifactsMetadata.kind | capitalize }}'
-      }
-    }
-  })
-  .state('artifacts.add', {
-    url: '/add',
-    views: {
-      "main@vamp": {
-        controllerProvider: function (artifactsMetadata) {
-          if (artifactsMetadata.addMainView) {
-            return artifactsMetadata.addMainView.controller;
-          }
-          return 'addController';
+    })
+    .state('artifacts', {
+      parent: external && external.name || 'vamp',
+      url: '/{kind:(?:' + artifactKinds.join('|') + ')}?page&searchTerm',
+      params: {
+        page: {
+          value: '1',
+          squash: true
         },
-        controllerAs: '$ctrl',
-        templateProvider: function ($templateCache, artifactsMetadata) {
-          if (artifactsMetadata.addMainView) {
-            return $templateCache.get(artifactsMetadata.addMainView.templateUrl);
-          }
-          return $templateCache.get('app/crud/templates/addArtifact.html');
+        searchTerm: {
+          value: '',
+          squash: true
         }
-      }
-    },
-    resolve: {
-      singular: function (artifactsMetadata) {
-        return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
       },
-      model: function (artifactsMetadata) {
-        return artifactsMetadata.model || artifactsMetadata.kind;
-      }
-    },
-    params: {
-      importData: undefined
-    },
-    data: {
-      breadcrumb: {
-        title: 'New {{ singular }}'
-      }
-    }
-  })
-  .state('artifacts.add-form', {
-    url: '/add-form',
-    views: {
-      "main@vamp": {
-        controllerProvider: function (artifactsMetadata) {
-          if (artifactsMetadata.kind === "blueprints") {
-            return 'addBlueprintController';
-          }
-          if (artifactsMetadata.addMainView) {
-            return artifactsMetadata.addMainView.controller;
-          }
-          return 'addController';
-        },
-        controllerAs: '$ctrl',
-        templateProvider: function ($templateCache, artifactsMetadata) {
-          if (artifactsMetadata.addMainView) {
-            return $templateCache.get(artifactsMetadata.addMainView.templateUrl);
-          }
-          if (artifactsMetadata.kind === "blueprints") {
-            return $templateCache.get('app/blueprints/templates/addBlueprint.html');
-          }
-        }
-      }
-    },
-    resolve: {
-      singular: function (artifactsMetadata) {
-        return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
-      },
-      model: function (artifactsMetadata) {
-        return artifactsMetadata.model || artifactsMetadata.kind;
-      }
-    },
-    params: {
-      importData: undefined
-    },
-    data: {
-      breadcrumb: {
-        title: 'New {{ singular }}'
-      }
-    }
-  })
-  .state('artifacts.one', {
-    url: '/:name',
-    views: {
-      "main@vamp": {
-        controllerProvider: function (artifactsMetadata) {
-          if (artifactsMetadata.oneMainView) {
-            return artifactsMetadata.oneMainView.controller;
-          }
-
-          return emptyController;
-        },
-        controllerAs: '$ctrl',
-        templateProvider: function ($templateCache, artifactsMetadata) {
-          if (artifactsMetadata.oneMainView) {
-            return $templateCache.get(artifactsMetadata.oneMainView.templateUrl);
-          }
-
-          return '';
-        }
-      }
-    },
-    resolve: {
-      artifactData: function ($vamp, $stateParams, artifactsMetadata) {
-        var model = (artifactsMetadata.model || artifactsMetadata.kind);
-        return $vamp.get('/' + model + '/' + $stateParams.name)
-        .then(function (response) {
-          return response.data;
-        });
-      },
-      singular: function (artifactsMetadata) {
-        return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
-      },
-      model: function (artifactsMetadata) {
-        return artifactsMetadata.model || artifactsMetadata.kind;
-      }
-    },
-    data: {
-      allowedKinds: allowedKinds,
-      breadcrumb: {
-        title: '{{ singular | capitalize }} : {{ artifactData.metadata.title || artifactData.name }}'
-      }
-    }
-  })
-  .state('artifacts.one.source', {
-    abstract: true,
-    url: '/source',
-    views: {
-      "main@vamp": {
-        controllerProvider: function () {
-          return 'edit';
-        },
-        controllerAs: '$ctrl',
-        templateUrl: 'app/crud/edit.html'
-      },
-      "right-panel@vamp": {
-        controller: 'revisionsController as $ctrl',
-        templateUrl: 'app/crud/templates/revisions.html'
-      }
-    }
-  })
-  .state('artifacts.one.source-form', {
-    abstract: true,
-    url: '/source-form',
-    views: {
-      "main@vamp": {
-        controllerProvider: ['$stateParams',
-          function ($stateParams) {
-            if ($stateParams.kind === "blueprints") {
-              return 'editBlueprintController';
+      resolve: external && external.resolve || artifactsResolve,
+      views: {
+        "main@vamp": {
+          controllerProvider: function (artifactsMetadata) {
+            if (artifactsMetadata.artifactsMainView) {
+              return artifactsMetadata.artifactsMainView.controller;
             }
-          }],
-        controllerAs: '$ctrl',
-        templateUrl: 'app/crud/edit.html'
+
+            return artifactsMetadata.mainController;
+          },
+          templateProvider: function ($templateCache, artifactsMetadata) {
+            if (artifactsMetadata.artifactsMainView) {
+              return $templateCache.get(artifactsMetadata.artifactsMainView.templateUrl);
+            }
+
+            return $templateCache.get('app/crud/artifacts.html');
+          },
+          controllerAs: '$ctrl'
+        },
+        "right-panel@vamp": {
+          controllerProvider: function (artifactsMetadata) {
+            if (artifactsMetadata.artifactsRightPanel) {
+              return artifactsMetadata.artifactsRightPanel.controller;
+            }
+
+            return emptyController;
+          },
+          controllerAs: '$ctrl',
+          templateProvider: function ($templateCache, artifactsMetadata) {
+            if (artifactsMetadata.artifactsRightPanel) {
+              return $templateCache.get(artifactsMetadata.artifactsRightPanel.templateUrl);
+            }
+
+            return '';
+          }
+        }
       },
-      "right-panel@vamp": {
-        controller: 'revisionsController as $ctrl',
-        templateUrl: 'app/crud/templates/revisions.html'
+      data: {
+        breadcrumb: {
+          title: '{{ artifactsMetadata.kind | capitalize }}'
+        }
       }
-    }
-  })
-  .state('artifacts.one.source.view', {
-    url: '/view',
-    controllerAs: '$ctrl',
-    views: {
-      editor: {
-        templateProvider: ['$stateParams', '$rootScope', '$templateCache',
-          function ($stateParams, $rootScope, $templateCache) {
-            return $templateCache.get('app/crud/templates/editor.html');
-          }]
-      }
-    },
-    data: {
-      breadcrumb: {
-        title: 'View source'
-      }
-    }
-  })
-  .state('artifacts.one.source-form.view', {
-    url: '/view',
-    controllerAs: '$ctrl',
-    views: {
-      editor: {
-        templateProvider: ['$stateParams', '$rootScope', '$templateCache',
-          function ($stateParams, $rootScope, $templateCache) {
-            if ($stateParams.kind === "blueprints") {
-              return $templateCache.get('app/blueprints/templates/editBlueprint.html');
+    })
+    .state('artifacts.add', {
+      url: '/add',
+      views: {
+        "main@vamp": {
+          controllerProvider: function (artifactsMetadata) {
+            if (artifactsMetadata.addMainView) {
+              return artifactsMetadata.addMainView.controller;
             }
-          }]
-      }
-    },
-    data: {
-      breadcrumb: {
-        title: 'View source'
-      }
-    }
-  })
-  .state('artifacts.one.source.edit', {
-    url: '/edit',
-    views: {
-      editor: {
-        templateProvider: ['$rootScope', '$templateCache',
-          function ($rootScope, $templateCache) {
-            return $templateCache.get('app/crud/templates/editor.html');
-          }]
-      }
-    },
-    data: {
-      breadcrumb: {
-        title: 'Edit source'
-      }
-    }
-  })
-  .state('artifacts.one.source-form.edit', {
-    url: '/edit',
-    views: {
-      editor: {
-        templateProvider: ['$stateParams', '$rootScope', '$templateCache',
-          function ($stateParams, $rootScope, $templateCache) {
-            if ($stateParams.kind === "blueprints") {
-              return $templateCache.get('app/blueprints/templates/editBlueprint.html');
+            return 'addController';
+          },
+          controllerAs: '$ctrl',
+          templateProvider: function ($templateCache, artifactsMetadata) {
+            if (artifactsMetadata.addMainView) {
+              return $templateCache.get(artifactsMetadata.addMainView.templateUrl);
             }
-          }]
+            return $templateCache.get('app/crud/templates/addArtifact.html');
+          }
+        }
+      },
+      resolve: {
+        singular: function (artifactsMetadata) {
+          return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
+        },
+        model: function (artifactsMetadata) {
+          return artifactsMetadata.model || artifactsMetadata.kind;
+        }
+      },
+      params: {
+        importData: undefined
+      },
+      data: {
+        breadcrumb: {
+          title: 'New {{ singular }}'
+        }
       }
-    },
-    data: {
-      breadcrumb: {
-        title: 'Edit source'
+    })
+    .state('artifacts.add-form', {
+      url: '/add-form',
+      views: {
+        "main@vamp": {
+          controllerProvider: function (artifactsMetadata) {
+            if (artifactsMetadata.kind === "blueprints") {
+              return 'addBlueprintController';
+            }
+            if (artifactsMetadata.addMainView) {
+              return artifactsMetadata.addMainView.controller;
+            }
+            return 'addController';
+          },
+          controllerAs: '$ctrl',
+          templateProvider: function ($templateCache, artifactsMetadata) {
+            if (artifactsMetadata.addMainView) {
+              return $templateCache.get(artifactsMetadata.addMainView.templateUrl);
+            }
+            if (artifactsMetadata.kind === "blueprints") {
+              return $templateCache.get('app/blueprints/templates/addBlueprint.html');
+            }
+          }
+        }
+      },
+      resolve: {
+        singular: function (artifactsMetadata) {
+          return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
+        },
+        model: function (artifactsMetadata) {
+          return artifactsMetadata.model || artifactsMetadata.kind;
+        }
+      },
+      params: {
+        importData: undefined
+      },
+      data: {
+        breadcrumb: {
+          title: 'New {{ singular }}'
+        }
       }
-    }
-  })
-  .state('artifacts.one.cluster', {
-    abstract: true,
-    url: '^/vamp/{kind:deployments}/:name/:cluster',
-    controller: function ($state) {
-      $state.go('^');
-    },
-    resolve: {
-      clusterData: function ($vamp, $stateParams) {
-        return $vamp.get('/' + $stateParams.kind + '/' + $stateParams.name)
-        .then(function (response) {
-          var artifact = response.data;
+    })
+    .state('artifacts.one', {
+      url: '/:name',
+      views: {
+        "main@vamp": {
+          controllerProvider: function (artifactsMetadata) {
+            if (artifactsMetadata.oneMainView) {
+              return artifactsMetadata.oneMainView.controller;
+            }
 
-          return artifact.clusters[$stateParams.cluster];
-        });
-      }
-    },
-    data: {
-      breadcrumb: {
-        title: 'Cluster : {{ clusterData.name }}'
-      }
-    }
-  })
-  .state('artifacts.one.cluster.service', {
-    url: '/:service',
-    views: {
-      "main@vamp": {
-        controller: 'serviceController as $ctrl',
-        templateUrl: 'app/deployments/templates/service.html'
-      }
-    },
-    resolve: {
-      serviceData: function ($vamp, $stateParams) {
-        return $vamp.get('/' + $stateParams.kind + '/' + $stateParams.name)
-        .then(function (response) {
-          var artifact = response.data;
+            return emptyController;
+          },
+          controllerAs: '$ctrl',
+          templateProvider: function ($templateCache, artifactsMetadata) {
+            if (artifactsMetadata.oneMainView) {
+              return $templateCache.get(artifactsMetadata.oneMainView.templateUrl);
+            }
 
-          return _.find(artifact.clusters[$stateParams.cluster].services, ['breed.name', $stateParams.service]);
-        });
+            return '';
+          }
+        }
+      },
+      resolve: {
+        artifactData: function ($vamp, $stateParams, artifactsMetadata) {
+          var model = (artifactsMetadata.model || artifactsMetadata.kind);
+          return $vamp.get('/' + model + '/' + $stateParams.name)
+            .then(function (response) {
+              return response.data;
+            });
+        },
+        singular: function (artifactsMetadata) {
+          return artifactsMetadata.kind.substring(0, artifactsMetadata.kind.length - 1);
+        },
+        model: function (artifactsMetadata) {
+          return artifactsMetadata.model || artifactsMetadata.kind;
+        }
+      },
+      data: {
+        allowedKinds: allowedKinds,
+        breadcrumb: {
+          title: '{{ singular | capitalize }} : {{ artifactData.metadata.title || artifactData.name }}'
+        }
       }
-    },
-    data: {
-      breadcrumb: {
-        title: 'Service : {{ $stateParams.service }}'
+    })
+    .state('artifacts.one.source', {
+      abstract: true,
+      url: '/source',
+      views: {
+        "main@vamp": {
+          controllerProvider: function () {
+            return 'edit';
+          },
+          controllerAs: '$ctrl',
+          templateUrl: 'app/crud/edit.html'
+        },
+        "right-panel@vamp": {
+          controller: 'revisionsController as $ctrl',
+          templateUrl: 'app/crud/templates/revisions.html'
+        }
       }
-    }
-  })
-  .state('artifacts.one.cluster.service.instance', {
-    url: '/:instance',
-    views: {
-      "main@vamp": {
-        controller: 'instanceController as $ctrl',
-        templateUrl: 'app/deployments/templates/instance.html'
+    })
+    .state('artifacts.one.source-form', {
+      abstract: true,
+      url: '/source-form',
+      views: {
+        "main@vamp": {
+          controllerProvider: ['$stateParams',
+            function ($stateParams) {
+              if ($stateParams.kind === "blueprints") {
+                return 'editBlueprintController';
+              }
+            }],
+          controllerAs: '$ctrl',
+          templateUrl: 'app/crud/edit.html'
+        },
+        "right-panel@vamp": {
+          controller: 'revisionsController as $ctrl',
+          templateUrl: 'app/crud/templates/revisions.html'
+        }
       }
-    },
-    data: {
-      breadcrumb: {
-        title: 'Instance : {{ $stateParams.instance }}'
+    })
+    .state('artifacts.one.source.view', {
+      url: '/view',
+      controllerAs: '$ctrl',
+      views: {
+        editor: {
+          templateProvider: ['$stateParams', '$rootScope', '$templateCache',
+            function ($stateParams, $rootScope, $templateCache) {
+              return $templateCache.get('app/crud/templates/editor.html');
+            }]
+        }
+      },
+      data: {
+        breadcrumb: {
+          title: 'View source'
+        }
       }
-    }
-  })
-  .state('admin', {
-    parent: external && external.name || 'vamp',
-    url: '/admin',
-    abstract: true
-  })
-  .state('admin.vga', {
-    url: '/vga',
-    views: {
-      "main@vamp": {
-        controller: 'vgaController as $ctrl',
-        templateUrl: 'app/system/templates/vgaConfiguration.html'
+    })
+    .state('artifacts.one.source-form.view', {
+      url: '/view',
+      controllerAs: '$ctrl',
+      views: {
+        editor: {
+          templateProvider: ['$stateParams', '$rootScope', '$templateCache',
+            function ($stateParams, $rootScope, $templateCache) {
+              if ($stateParams.kind === "blueprints") {
+                return $templateCache.get('app/blueprints/templates/editBlueprint.html');
+              }
+            }]
+        }
+      },
+      data: {
+        breadcrumb: {
+          title: 'View source'
+        }
       }
-    },
-    data: {
-      breadcrumb: {
-        title: 'VGA configuration'
+    })
+    .state('artifacts.one.source.edit', {
+      url: '/edit',
+      views: {
+        editor: {
+          templateProvider: ['$rootScope', '$templateCache',
+            function ($rootScope, $templateCache) {
+              return $templateCache.get('app/crud/templates/editor.html');
+            }]
+        }
+      },
+      data: {
+        breadcrumb: {
+          title: 'Edit source'
+        }
       }
-    }
-  })
-  .state('admin.log', {
-    url: '/log',
-    views: {
-      "main@vamp": {
-        controller: 'logController as $ctrl',
-        templateUrl: 'app/system/templates/log.html'
+    })
+    .state('artifacts.one.source-form.edit', {
+      url: '/edit',
+      views: {
+        editor: {
+          templateProvider: ['$stateParams', '$rootScope', '$templateCache',
+            function ($stateParams, $rootScope, $templateCache) {
+              if ($stateParams.kind === "blueprints") {
+                return $templateCache.get('app/blueprints/templates/editBlueprint.html');
+              }
+            }]
+        }
+      },
+      data: {
+        breadcrumb: {
+          title: 'Edit source'
+        }
       }
-    },
-    data: {
-      breadcrumb: {
-        title: 'Log'
+    })
+    .state('artifacts.one.cluster', {
+      abstract: true,
+      url: '^/vamp/{kind:deployments}/:name/:cluster',
+      controller: function ($state) {
+        $state.go('^');
+      },
+      resolve: {
+        clusterData: function ($vamp, $stateParams) {
+          return $vamp.get('/' + $stateParams.kind + '/' + $stateParams.name)
+            .then(function (response) {
+              var artifact = response.data;
+              return artifact.clusters[$stateParams.cluster];
+            });
+        }
+      },
+      data: {
+        breadcrumb: {
+          title: 'Cluster : {{ clusterData.name }}'
+        }
       }
-    }
-  })
-  .state('admin.info', {
-    url: '/info',
-    views: {
-      "main@vamp": {
-        controller: 'infoController as $ctrl',
-        templateUrl: 'app/system/templates/infoConfiguration.html'
+    })
+    .state('artifacts.one.cluster.service', {
+      url: '/:service',
+      views: {
+        "main@vamp": {
+          controller: 'serviceController as $ctrl',
+          templateUrl: 'app/deployments/templates/service.html'
+        }
+      },
+      resolve: {
+        serviceData: function ($vamp, $stateParams) {
+          return $vamp.get('/' + $stateParams.kind + '/' + $stateParams.name)
+            .then(function (response) {
+              var artifact = response.data;
+              return _.find(artifact.clusters[$stateParams.cluster].services, ['breed.name', $stateParams.service]);
+            });
+        }
+      },
+      data: {
+        breadcrumb: {
+          title: 'Service : {{ $stateParams.service }}'
+        }
       }
-    },
-    data: {
-      breadcrumb: {
-        title: 'Extended info'
+    })
+    .state('artifacts.one.cluster.service.instance', {
+      url: '/:instance',
+      views: {
+        "main@vamp": {
+          controller: 'instanceController as $ctrl',
+          templateUrl: 'app/deployments/templates/instance.html'
+        }
+      },
+      data: {
+        breadcrumb: {
+          title: 'Instance : {{ $stateParams.instance }}'
+        }
       }
-    }
-  })
-  .state('admin.configuration', {
-    url: '/configuration',
-    views: {
-      "main@vamp": {
-        controller: 'configurationController as $ctrl',
-        templateUrl: 'app/system/templates/backendConfiguration.html'
+    })
+    .state('admin', {
+      parent: external && external.name || 'vamp',
+      url: '/admin',
+      abstract: true
+    })
+    .state('admin.vga', {
+      url: '/vga',
+      views: {
+        "main@vamp": {
+          controller: 'vgaController as $ctrl',
+          templateUrl: 'app/system/templates/vgaConfiguration.html'
+        }
+      },
+      data: {
+        breadcrumb: {
+          title: 'VGA configuration'
+        }
       }
-    },
-    data: {
-      breadcrumb: {
-        title: 'Backend configuration'
+    })
+    .state('admin.log', {
+      url: '/log',
+      views: {
+        "main@vamp": {
+          controller: 'logController as $ctrl',
+          templateUrl: 'app/system/templates/log.html'
+        }
+      },
+      data: {
+        breadcrumb: {
+          title: 'Log'
+        }
       }
-    }
-  });
+    })
+    .state('admin.info', {
+      url: '/info',
+      views: {
+        "main@vamp": {
+          controller: 'infoController as $ctrl',
+          templateUrl: 'app/system/templates/infoConfiguration.html'
+        }
+      },
+      data: {
+        breadcrumb: {
+          title: 'Extended info'
+        }
+      }
+    })
+    .state('admin.configuration', {
+      url: '/configuration',
+      views: {
+        "main@vamp": {
+          controller: 'configurationController as $ctrl',
+          templateUrl: 'app/system/templates/backendConfiguration.html'
+        }
+      },
+      data: {
+        breadcrumb: {
+          title: 'Backend configuration'
+        }
+      }
+    });
 }

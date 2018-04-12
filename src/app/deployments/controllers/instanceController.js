@@ -18,11 +18,7 @@ function InstanceController($scope, $http, $interval, $element, $stateParams, cl
     $ctrl.url = window.location.protocol + '//' + $vamp.baseUrl;
   }
 
-  if ($vamp.getRequestNamespace()) {
-    $ctrl.url += $vamp.getRequestNamespace() + '/';
-  } else if ($vamp.getConnectionNamespace()) {
-    $ctrl.url += $vamp.getConnectionNamespace() + '/';
-  }
+  $ctrl.url += $vamp.getNamespace() + '/';
 
   $ctrl.isFollowLog = true;
   $ctrl.stdout = '';

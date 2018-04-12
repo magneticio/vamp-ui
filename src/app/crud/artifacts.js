@@ -2,7 +2,7 @@ BaseArtifactsController.$inject = ['$ctrl', '$scope', 'artifactsMetadata', '$vam
   '$filter', 'filterFilter', 'toastr', 'alert'];
 
 function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $vamp, uiStatesFactory,
-  $state, $stateParams, $filter, filterFilter, toastr, alert) {
+                                 $state, $stateParams, $filter, filterFilter, toastr, alert) {
   $ctrl.searchTerm = $stateParams.searchTerm;
   $ctrl.initialized = false;
   $ctrl.kind = $stateParams.kind;
@@ -13,9 +13,9 @@ function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $vamp, uiStat
   $ctrl.artifactsMetadata = artifactsMetadata;
   $ctrl.artifacts = [];
   $ctrl.filteredArtifacts = filterFilter($ctrl.artifacts, {name: $ctrl.searchTerm});
-  var _artifacts = [];
+
   $ctrl.peek = function () {
-    $vamp.peek($ctrl.path);
+    $vamp.emit($ctrl.path);
   };
 
   $ctrl.onSearchTermChange = function () {
@@ -31,8 +31,7 @@ function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $vamp, uiStat
   });
 
   $scope.$on($ctrl.path, function (e, response) {
-    angular.copy(_.orderBy(response.data, 'name'), _artifacts);
-    angular.copy(_.orderBy(_artifacts, 'name'), $ctrl.artifacts);
+    angular.copy(_.orderBy(response.data, 'name'), $ctrl.artifacts);
     $ctrl.filteredArtifacts = filterFilter($ctrl.artifacts, {name: $ctrl.searchTerm});
 
     if ($ctrl.onDataResponse) {
@@ -49,8 +48,8 @@ function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $vamp, uiStat
     }
 
     if ((_.includes(response.data.tags, 'archive') ||
-          _.includes(response.data.tags, 'deployed') ||
-          _.includes(response.data.tags, 'undeployed')) && _.includes(response.data.tags, $ctrl.kind)) {
+      _.includes(response.data.tags, 'deployed') ||
+      _.includes(response.data.tags, 'undeployed')) && _.includes(response.data.tags, $ctrl.kind)) {
       $ctrl.peek();
     }
   });
@@ -168,13 +167,14 @@ function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $vamp, uiStat
         $ctrl.selected.length = 0;
 
         _.forEach(names, function (name) {
-          var artifact = _.find(_artifacts, function (artifact) {
+          var artifact = _.find($ctrl.artifacts, function (artifact) {
             return artifact.name === name;
           });
           $vamp.delete($ctrl.path + '/' + name, angular.toJson(artifact))
             .then(function () {
               toastr.success('\'' + name + '\' has been successfully deleted.');
-            }).catch(function (response) {
+            })
+            .catch(function (response) {
               if (response) {
                 toastr.error(response.data.message, 'Deletion of \'' + name + '\' failed.');
               } else {

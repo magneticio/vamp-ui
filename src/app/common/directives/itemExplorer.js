@@ -36,7 +36,7 @@ itemExplorerController.$inject = ['$scope', '$vamp', 'uiStatesFactory', '$state'
 ];
 
 function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $stateParams,
-  $filter, filterFilter, toastr, alert, CRUD_CONFIG, $authorization) {
+                                $filter, filterFilter, toastr, alert, CRUD_CONFIG, $authorization) {
   var $explorer = this;
 
   var readOnly = $authorization.readOnly($scope.itemTypeConfig.kind);
@@ -194,15 +194,17 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
         $scope.onDelete({
           item: item
         });
-      }).then(function () {
-        toastr.success('\'' + item.name + '\' has been successfully deleted.');
-      }).catch(function (response) {
-        if (response) {
-          toastr.error(response.data.message, 'Deletion of \'' + item.name + '\' failed.');
-        } else {
-          toastr.error('Server timeout.', 'Deletion of \'' + item.name + '\' failed.');
-        }
-      });
+      })
+        .then(function () {
+          toastr.success('\'' + item.name + '\' has been successfully deleted.');
+        })
+        .catch(function (response) {
+          if (response) {
+            toastr.error(response.data.message, 'Deletion of \'' + item.name + '\' failed.');
+          } else {
+            toastr.error('Server timeout.', 'Deletion of \'' + item.name + '\' failed.');
+          }
+        });
     }, null, 'btn-danger');
   };
 
@@ -228,15 +230,17 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
             $scope.onDelete({
               item: item
             });
-          }).then(function () {
-            toastr.success('\'' + name + '\' has been successfully deleted.');
-          }).catch(function (response) {
-            if (response) {
-              toastr.error(response.data.message, 'Deletion of \'' + name + '\' failed.');
-            } else {
-              toastr.error('Server timeout.', 'Deletion of \'' + name + '\' failed.');
-            }
-          });
+          })
+            .then(function () {
+              toastr.success('\'' + name + '\' has been successfully deleted.');
+            })
+            .catch(function (response) {
+              if (response) {
+                toastr.error(response.data.message, 'Deletion of \'' + name + '\' failed.');
+              } else {
+                toastr.error('Server timeout.', 'Deletion of \'' + name + '\' failed.');
+              }
+            });
         });
       }, null, 'btn-danger');
     }

@@ -15,12 +15,15 @@ function schedulerController($scope, $state, $stateParams, artifactsMetadata, $c
       toastr.error('Selector is missing.');
       return;
     }
-    $state.go('artifacts.add', {kind: 'gateways', importData: 'name: ~ # set name\nport: 0 # optionally set port\nselector: ' + $scope.selector + '\n'});
+    $state.go('artifacts.add', {
+      kind: 'gateways',
+      importData: 'name: ~ # set name\nport: 0 # optionally set port\nselector: ' + $scope.selector + '\n'
+    });
   };
 
   $scope.$on('$vamp:connection', function (e, connection) {
     if (connection === 'opened') {
-      $vamp.get(path);
+      $vamp.emit(path);
     }
   });
 
@@ -35,7 +38,7 @@ function schedulerController($scope, $state, $stateParams, artifactsMetadata, $c
     });
   });
 
-  $vamp.get(path);
+  $vamp.emit(path);
 
   $scope.$watch('selector', _.debounce(function (selector) {
     selector = selector || 'true';

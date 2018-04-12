@@ -32,7 +32,8 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
         .then(function () {
           $state.go('^');
           toastr.success('Deployment \'' + $ctrl.title + '\' has been successfully deleted.');
-        }).catch(function (response) {
+        })
+        .catch(function (response) {
           if (response) {
             toastr.error(response.data.message, 'Deletion of deployment \'' + $ctrl.deployment.name + '\' failed.');
           } else {
@@ -64,7 +65,8 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
       $vamp.httpPut(path + '/clusters/' + cluster.name + '/services/' + service.breed.name + '/scale', angular.toJson(scale))
         .then(function () {
           toastr.success('Scale for service \'' + service.breed.name + '\' has been successfully updated.');
-        }).catch(function (response) {
+        })
+        .catch(function (response) {
           toastr.error(response.data.message, 'Update of scale for service \'' + service.breed.name + '\' failed.');
         });
     });
@@ -129,12 +131,12 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
       if (_.includes(event.tags, 'deployments:' + $ctrl.deployment.name)) {
         if (_.includes(event.tags, 'synchronization') || _.includes(event.tags, 'archive')) {
           $vamp.get(path)
-          .catch(function () {
-            $ctrl.deployment.clusters = {};
-            alert.show('Warning', '\'' + $ctrl.deployment.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
-              $state.go('^');
+            .catch(function () {
+              $ctrl.deployment.clusters = {};
+              alert.show('Warning', '\'' + $ctrl.deployment.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
+                $state.go('^');
+              });
             });
-          });
         } else {
           chartUpdate(event);
         }
@@ -143,7 +145,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
           return tag.indexOf('deployment-service-scales:' + $ctrl.deployment.name) === 0;
         });
         if (scaleUpdate) {
-          $vamp.peek(path);
+          $vamp.emit(path);
         }
       }
     }
@@ -205,12 +207,15 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
       ],
       _.flatMap(_.map(services, function (service) {
         return [
-          {tags: [nameTag, 'service', 'health', 'services:' + service.breed.name], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}}
+          {
+            tags: [nameTag, 'service', 'health', 'services:' + service.breed.name],
+            timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}
+          }
         ];
       }))
     );
     _.forEach(requests, function (request) {
-      $vamp.peek('/events', JSON.stringify(request));
+      $vamp.emit('/events', JSON.stringify(request));
     });
   }
 
@@ -260,11 +265,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
 
   $ctrl.proxy = function (cluster, service, instance, port, $event) {
     var path = '/proxy/deployments/' + $ctrl.deployment.name + '/clusters/' + cluster.name + '/services/' + service.breed.name + '/instances/' + instance.name + '/ports/' + port + '/';
-    if ($vamp.getRequestNamespace()) {
-      path = $vamp.getRequestNamespace() + '/' + path;
-    } else if ($vamp.getConnectionNamespace()) {
-      path = $vamp.getConnectionNamespace() + '/' + path;
-    }
+    path = $vamp.getNamespace() + '/' + path;
     if ($vamp.baseUrl) {
       path = window.location.protocol + '//' + $vamp.baseUrl + path;
     }

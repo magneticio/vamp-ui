@@ -2,16 +2,138 @@
 /* eslint camelcase: ["error", {properties: "never"}] */
 'use strict';
 angular.module('vamp-ui')
-  .factory('$vamp', ['$http', '$log', '$rootScope', '$websocket', '$timeout', '$q', function ($http, $log, $rootScope, $websocket, $timeout, $q) {
-    return new Vamp($http, $log, $rootScope, $websocket, $timeout, $q);
+  .factory('$vamp', ['$http', '$log', '$rootScope', function ($http, $log, $rootScope) {
+    return new Vamp($http, $log, $rootScope);
   }])
   .run(['$vamp', function ($vamp) {
     $vamp.init();
-    if (Environment.prototype.connect()) {
-      $vamp.connect();
-    }
   }]);
 
+function Vamp($http, $log, $rootScope) {
+  var $this = this;
+  $this.info = {};
+
+  var acceptTypes = {
+    JSON: 'application/json',
+    YAML: 'application/x-yaml'
+  };
+
+  var requestNamespace = null;
+  var connectionNamespace = null;
+
+  this.getNamespace = function () {
+    return requestNamespace || connectionNamespace;
+  };
+
+  this.setRequestNamespace = function (namespace) {
+    var changed = requestNamespace !== namespace;
+    requestNamespace = namespace;
+    if (changed) {
+      $this.notify('$vamp:namespace', 'changed');
+    }
+  };
+
+  this.setConnectionNamespace = function (namespace) {
+    var changed = connectionNamespace !== namespace;
+    connectionNamespace = namespace;
+    if (changed) {
+      $this.notify('$vamp:namespace', 'changed');
+    }
+  };
+
+  this.init = function () {
+    if (Environment.prototype.origin()) {
+      $this.origin = Environment.prototype.origin() + '/';
+    } else {
+      $this.origin = window.location.host;
+      $this.origin += window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
+    }
+  };
+
+  this.get = function (path, params, accept) {
+    return $this.request('GET', path, null, params, accept);
+  };
+
+  this.emit = function (path, params, accept) {
+    return $this.request('GET', path, null, params, accept).then(function (response) {
+      $this.notify(path, response);
+    });
+  };
+
+  this.apiHostPath = function () {
+    var baseUrl = $this.origin;
+    var namespace = $this.getNamespace();
+    if (namespace) {
+      baseUrl += namespace + '/';
+    }
+    return window.location.protocol + '//' + baseUrl + 'api/v1';
+  };
+
+  this.request = function (method, path, data, params, accept) {
+    return $http({
+      method: method,
+      url: $this.apiHostPath() + path,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': acceptTypes[accept || 'JSON']
+      },
+      data: data,
+      params: params
+    });
+  };
+
+  this.notify = function (name, value) {
+    $log.debug('notify: ' + name + ' :: ' + JSON.stringify(value));
+    $rootScope.$broadcast(name, value);
+  };
+
+  this.parseInfo = function (response) {
+    // eslint camelcase: ["error", {properties: "never"}]
+    if (response.content !== 'JSON') {
+      return;
+    }
+    var info = response.data;
+    $this.info.message = info.message;
+    $this.info.running_since = info.running_since;
+    $this.info.version = info.version;
+    $this.info.ui_version = Environment.prototype.version();
+
+    if (!info.persistence || !info.pulse || !info.key_value) {
+      return;
+    }
+
+    $this.info.persistence = info.persistence.database.type === 'key-value' ? info.key_value.type : info.persistence.database.type;
+    $this.info.pulse = info.pulse.type;
+    $this.info.key_value_store = info.key_value.type;
+
+    if (!info.gateway_driver || !info.container_driver || !info.workflow_driver) {
+      return;
+    }
+
+    $this.info.container_driver = info.container_driver.type;
+
+    $this.info.gateway_driver = '';
+    var types = new Set();
+    for (var gateway in info.gateway_driver.marshallers) {
+      if (gateway && info.gateway_driver.marshallers.hasOwnProperty(gateway)) {
+        types.add(info.gateway_driver.marshallers[gateway].type);
+      }
+    }
+    types.forEach(function (value) {
+      $this.info.gateway_driver += $this.info.gateway_driver === '' ? value : ', ' + value;
+    });
+
+    $this.info.workflow_driver = '';
+    for (var workflow in info.workflow_driver) {
+      if (workflow && info.workflow_driver.hasOwnProperty(workflow)) {
+        $this.info.workflow_driver += $this.info.workflow_driver === '' ? workflow : ', ' + workflow;
+      }
+    }
+    return $this.info;
+  };
+}
+
+/*
 function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
   var $this = this;
   var stream;
@@ -284,7 +406,7 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
   }
 
   $rootScope.$on('/info', function (event, data) {
-    /* eslint camelcase: ["error", {properties: "never"}] */
+    // eslint camelcase: ["error", {properties: "never"}]
     if (data.content !== 'JSON') {
       return;
     }
@@ -328,3 +450,4 @@ function Vamp($http, $log, $rootScope, $websocket, $timeout, $q) {
     }
   });
 }
+*/

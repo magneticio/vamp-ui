@@ -16,14 +16,14 @@ function gatewaysController($scope, $state, $stateParams, artifactsMetadata, $va
   };
 
   $ctrl.delete = function (gateway) {
-    $vamp.delete(path + '/' + gateway.name, angular.toJson(gateway)).then(get);
+    $vamp.delete(path + '/' + gateway.name, angular.toJson(gateway)).then(function () {
+      $vamp.emit(path);
+    });
   };
-
-  // $scope event listenters
 
   $scope.$on('$vamp:connection', function (e, connection) {
     if (connection === 'opened') {
-      get();
+      $vamp.emit(path);
     }
   });
 
@@ -38,15 +38,11 @@ function gatewaysController($scope, $state, $stateParams, artifactsMetadata, $va
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'synchronization') ||
       (_.includes(response.data.tags, 'gateways:') && (_.includes(response.data.tags, 'deployed') || _.includes(response.data.tags, 'undeployed')))) {
-      get();
+      $vamp.emit(path);
     }
   });
 
-  function get() {
-    $vamp.get(path);
-  }
-
-  get();
+  $vamp.emit(path);
 }
 
 gatewaysController.$inject = ['$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp', 'namifyFilter'];

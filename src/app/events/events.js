@@ -54,13 +54,11 @@ function EventController($rootScope, $scope, $vamp, $interval, uiStatesFactory, 
 
   function start() {
     $ctrl.events.length = 0;
-    $vamp.peek('/events');
-    $vamp.peek('/events/stream');
+    $vamp.emit('/events');
+    $vamp.emit('/events/stream');
   }
 
-  if ($vamp.connected()) {
-    start();
-  }
+  start();
 
   $scope.$on('$vamp:connection', function (e, connection) {
     if (connection === 'opened') {
@@ -118,7 +116,7 @@ function EventController($rootScope, $scope, $vamp, $interval, uiStatesFactory, 
   $ctrl.connected = false;
 
   function info() {
-    $vamp.peek('/info', '', {on: 'jvm'});
+    $vamp.emit('/info', '', {on: 'jvm'});
   }
 
   function startPolling() {
@@ -135,9 +133,7 @@ function EventController($rootScope, $scope, $vamp, $interval, uiStatesFactory, 
     polling = undefined;
   }
 
-  if ($vamp.connected()) {
-    startPolling();
-  }
+  startPolling();
 
   $scope.$on('$vamp:connection', function (event, connection) {
     if (connection === 'opened') {

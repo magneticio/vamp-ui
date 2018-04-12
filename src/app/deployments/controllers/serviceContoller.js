@@ -37,7 +37,8 @@ function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, ar
       $vamp.httpPut(path + '/clusters/' + clusterData.name + '/services/' + $ctrl.service.breed.name + '/scale', angular.toJson(scale))
         .then(function () {
           toastr.success('Scale for service \'' + $ctrl.service.breed.name + '\' has been successfully updated.');
-        }).catch(function (response) {
+        })
+        .catch(function (response) {
           toastr.error(response.data.message, 'Update of scale for service \'' + $ctrl.service.breed.name + '\' failed.');
         });
     });
@@ -76,13 +77,14 @@ function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, ar
     if (_.includes(event.tags, 'deployments:' + $ctrl.name)) {
       if (_.includes(event.tags, 'synchronization') || _.includes(event.tags, 'archive')) {
         $vamp.await(function () {
-          $vamp.peek(path);
+          $vamp.emit(path);
           toastr.success('Service \'' + $ctrl.serviceName + '\' has been updated in the background.');
-        }).catch(function () {
-          alert.show('Warning', '\'' + $ctrl.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
-            $state.go('artifacts');
+        })
+          .catch(function () {
+            alert.show('Warning', '\'' + $ctrl.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
+              $state.go('artifacts');
+            });
           });
-        });
       } else if (_.includes(event.tags, 'health')) {
         $ctrl.health = 100 * Number(event.value);
       }
@@ -91,7 +93,7 @@ function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, ar
         return tag.indexOf('deployment-service-scales:' + $ctrl.name + '/' + $ctrl.cluster + '/' + $ctrl.serviceName) === 0;
       });
       if (scaleUpdate) {
-        $vamp.peek(path);
+        $vamp.emit(path);
         toastr.warning('Service \'' + $ctrl.serviceName + '\' update has started in the background.');
       }
     }
@@ -100,12 +102,12 @@ function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, ar
   function peekEvents() {
     var nameTag = 'deployments:' + $ctrl.name;
     var requests = [
-          {tags: [nameTag, 'service', 'services:' + $ctrl.service.breed.name], timestamp: {gte: 'now-1m'}},
-          {tags: [nameTag, 'service', 'health', 'services:' + $ctrl.service.breed.name], timestamp: {gte: 'now-1m'}}
+      {tags: [nameTag, 'service', 'services:' + $ctrl.service.breed.name], timestamp: {gte: 'now-1m'}},
+      {tags: [nameTag, 'service', 'health', 'services:' + $ctrl.service.breed.name], timestamp: {gte: 'now-1m'}}
     ];
 
     _.forEach(requests, function (request) {
-      $vamp.peek('/events', JSON.stringify(request));
+      $vamp.emit('/events', JSON.stringify(request));
     });
   }
 

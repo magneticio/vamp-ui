@@ -28,7 +28,7 @@ function deploymentsController($scope, $state, $stateParams, artifactsMetadata, 
 
   $scope.$on('$vamp:connection', function (e, connection) {
     if (connection === 'opened') {
-      get();
+      $vamp.emit(path);
     }
   });
 
@@ -44,18 +44,14 @@ function deploymentsController($scope, $state, $stateParams, artifactsMetadata, 
 
   $scope.$on('/events/stream', function (e, response) {
     if ((_.includes(response.data.tags, 'archive') ||
-          _.includes(response.data.tags, 'deployed') ||
-          _.includes(response.data.tags, 'undeployed') ||
-         _.includes(response.data.tags, 'synchronization')) || _.includes(response.data.tags, 'deployments')) {
-      get();
+      _.includes(response.data.tags, 'deployed') ||
+      _.includes(response.data.tags, 'undeployed') ||
+      _.includes(response.data.tags, 'synchronization')) || _.includes(response.data.tags, 'deployments')) {
+      $vamp.emit(path);
     }
   });
 
-  function get() {
-    $vamp.get(path);
-  }
-
-  get();
+  $vamp.emit(path);
 
   function getScale(deployment) {
     return $vampDeployment.scale(deployment);

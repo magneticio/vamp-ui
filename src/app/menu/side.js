@@ -58,18 +58,16 @@ function SideController($sce, $scope, $rootScope, $vamp, uiStatesFactory, $state
     }
   );
 
-  if ($vamp.connected()) {
-    $vamp.peek('/info');
-  }
+  $vamp.emit('/info');
 
   $scope.$on('$vamp:connection', function (event, connection) {
     if (connection === 'opened') {
-      $vamp.peek('/info');
+      $vamp.emit('/info');
     }
   });
 
-  $scope.$on('/info', function () {
-    $scope.info = $vamp.info;
+  $scope.$on('/info', function (event, data) {
+    $scope.info = $vamp.parseInfo(data);
   });
 
   var path = ($state.params && $state.params.kind) || '';

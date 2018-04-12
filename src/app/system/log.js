@@ -150,6 +150,6 @@ function VampLogService($log, $rootScope, $vamp) {
       return;
     }
     $log.debug('log level: ' + $level);
-    $vamp.peek('/log', '', {logger: 'io.vamp', level: $level});
+    $vamp.emit('/log', '', {logger: 'io.vamp', level: $level});
   };
 }

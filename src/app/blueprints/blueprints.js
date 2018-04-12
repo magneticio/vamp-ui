@@ -17,8 +17,7 @@ function BlueprintsController($scope, artifactsMetadata, $vampBlueprint, $contro
       backdrop: 'static',
       controller: 'importBlueprintControler',
       templateUrl: 'app/blueprints/templates/importBlueprint.html',
-      resolve: {
-      }
+      resolve: {}
     }).result.then(function (data) {
       $state.go('.add', {importData: data.blueprint});
     });
@@ -67,7 +66,7 @@ function BlueprintService($rootScope, $vamp) {
   var deployments = [];
 
   var get = _.throttle(function () {
-    $vamp.get('/deployments');
+    $vamp.emit('/deployments');
   }, 1000, {
     leading: true,
     trailing: false

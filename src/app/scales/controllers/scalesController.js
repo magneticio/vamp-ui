@@ -17,15 +17,13 @@ function scalesController($scope, $state, $stateParams, artifactsMetadata, $vamp
 
   $ctrl.delete = function (scale) {
     $vamp.delete(path + '/' + scale.name, angular.toJson(scale)).then(function () {
-      get();
+      $vamp.emit(path);
     });
   };
 
-  // $scope event listenters
-
   $scope.$on('$vamp:connection', function (e, connection) {
     if (connection === 'opened') {
-      get();
+      $vamp.emit(path);
     }
   });
 
@@ -36,15 +34,11 @@ function scalesController($scope, $state, $stateParams, artifactsMetadata, $vamp
 
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'scales')) {
-      get();
+      $vamp.emit(path);
     }
   });
 
-  function get() {
-    $vamp.get(path);
-  }
-
-  get();
+  $vamp.emit(path);
 }
 
 scalesController.$inject = ['$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp'];

@@ -37,7 +37,8 @@ function WorkflowController($scope, $vamp, toastr, workflowWebPortService, uiSta
     $vamp.httpPut(path + '/status', status, {}, 'JSON')
       .then(function () {
         toastr.success(operation + ' initiated.');
-      }).catch(function (response) {
+      })
+      .catch(function (response) {
         if (response) {
           toastr.error(response.data.message, operation + ' failed.');
         } else {
@@ -48,11 +49,7 @@ function WorkflowController($scope, $vamp, toastr, workflowWebPortService, uiSta
 
   $ctrl.proxy = function (instance, port, $event) {
     var path = 'proxy/workflows/' + $ctrl.workflow.name + '/instances/' + instance.name + '/ports/' + port + '/';
-    if ($vamp.getRequestNamespace()) {
-      path = $vamp.getRequestNamespace() + '/' + path;
-    } else if ($vamp.getConnectionNamespace()) {
-      path = $vamp.getConnectionNamespace() + '/' + path;
-    }
+    path = $vamp.getNamespace() + '/' + path;
     if ($vamp.baseUrl) {
       path = window.location.protocol + '//' + $vamp.baseUrl + path;
     }

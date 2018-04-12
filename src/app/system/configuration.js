@@ -76,9 +76,10 @@ function ConfigurationController($scope, $timeout, $element, $state, artifact, $
           $ctrl.reload('applied');
         }, 0);
         $timeout(function () {
-          $vamp.peek('/info');
+          $vamp.emit('/info');
         }, 3000);
-      }).catch(function (response) {
+      })
+      .catch(function (response) {
         $timeout(function () {
           if (response) {
             toastr.error(response.data.message, 'Updating configuration failed.');
