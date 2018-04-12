@@ -37,22 +37,25 @@ default:
 		--workdir=/srv/src \
 		--env BUILD_UID=$(shell id -u) \
 		--env BUILD_GID=$(shell id -g) \
-		$(BUILD_SERVER) \
-			make build
+		$(BUILD_SERVER) make clean-npm-modules build
 
-
-.PHONY: build
-build:
-	npm rebuild node-sass
-	npm install
+.PHONY: update
+update:
 	npm update
 	npm prune
-	npm run bower install
 	npm run bower update
 	npm run bower prune
+
+.PHONY: build
+build: clean
+	npm rebuild node-sass
+	npm install
+	npm run bower install
 	./environment.sh
 	npm run build
-
+	rm -Rf "$(CURDIR)"/dist/maps
+	rm -Rf "$(CURDIR)"/dist/scripts/app.js "$(CURDIR)"/dist/scripts/vendor.js
+	rm -Rf "$(CURDIR)"/dist/styles/app.css "$(CURDIR)"/dist/styles/vendor.css
 
 .PHONY: pack
 pack: default
@@ -61,8 +64,7 @@ pack: default
 		--rm \
     		--volume "$(CURDIR)"/dist:/usr/local/src \
     		--volume $(PACKER):/usr/local/stash \
-    		$(BUILD_SERVER) \
-      			push $(PROJECT) $(VERSION)
+    		$(BUILD_SERVER) push $(PROJECT) $(VERSION)
 
 .PHONY: pack-local
 pack-local: build
@@ -71,8 +73,7 @@ pack-local: build
 		--rm \
     		--volume "$(CURDIR)"/dist:/usr/local/src \
     		--volume $(PACKER):/usr/local/stash \
-    		$(BUILD_SERVER) \
-      			push $(PROJECT) $(VERSION)
+    		$(BUILD_SERVER) push $(PROJECT) $(VERSION)
 
 .PHONY: clean
 clean:
@@ -82,8 +83,7 @@ clean:
 	rm -rf "$(CURDIR)"/ui
 	rm -rf "$(CURDIR)"/ui.tar.bz2
 
-
-.PHONY: clean-cache
-clean-cache:
+.PHONY: clean-npm-modules
+clean-npm-modules:
 	rm -rf "$(CURDIR)"/node_modules
 	rm -rf "$(CURDIR)"/bower_components
