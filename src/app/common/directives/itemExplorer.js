@@ -193,6 +193,7 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
       $scope.onDelete({item: item})
         .then(function () {
           toastr.success('\'' + item.name + '\' has been successfully deleted.');
+          $vamp.emit(item.kind);
         })
         .catch(function (response) {
           if (response) {
@@ -226,6 +227,7 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
           $scope.onDelete({item: item})
             .then(function () {
               toastr.success('\'' + name + '\' has been successfully deleted.');
+              $vamp.emit(item.kind);
             })
             .catch(function (response) {
               if (response) {

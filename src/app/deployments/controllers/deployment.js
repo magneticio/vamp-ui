@@ -65,6 +65,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
       $vamp.put(path + '/clusters/' + cluster.name + '/services/' + service.breed.name + '/scale', angular.toJson(scale))
         .then(function () {
           toastr.success('Scale for service \'' + service.breed.name + '\' has been successfully updated.');
+          $vamp.emit(path);
         })
         .catch(function (response) {
           toastr.error(response.data.message, 'Update of scale for service \'' + service.breed.name + '\' failed.');
@@ -86,14 +87,14 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
     return _.includes(addedServices, cluster.name + '/' + service.breed.name);
   };
 
-  $vamp.get(path).catch(function () {
+  $vamp.emit(path).catch(function () {
     $state.go('^');
     alert.show('Error', 'Deployment \'' + $stateParams.name + '\' cannot be found.', 'OK', null, function () {
     });
   });
 
   $scope.$on(path, function (e, response) {
-    if (response.status === 'ERROR') {
+    if (response.statusText !== 'OK') {
       return;
     }
     original = response.data;

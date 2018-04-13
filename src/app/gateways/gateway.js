@@ -20,7 +20,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
   var polling;
 
   $ctrl.readOnly = function () {
-    return $authorization.readOnly('blueprints');
+    return $authorization.readOnly('gateways');
   };
 
   this.edit = function () {
@@ -106,14 +106,14 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
     return _.includes(addedRoutes, route.lookup_name);
   };
 
-  $vamp.get(path).catch(function () {
+  $vamp.emit(path).catch(function () {
     $state.go('^');
     alert.show('Error', 'Gateway \'' + $stateParams.name + '\' cannot be found.', 'OK', null, function () {
     });
   });
 
   $scope.$on(path, function (e, response) {
-    if (response.status === 'ERROR') {
+    if (response.statusText !== 'OK') {
       return;
     }
     updateAddedRoutes(response.data);
@@ -162,6 +162,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
     $vamp.put(path, JSON.stringify(gateway))
       .then(function () {
         toastr.success(message);
+        $vamp.emit(path);
       })
       .catch(function (response) {
         toastr.error(response.data.message, 'Update of gateway \'' + $ctrl.gateway.name + '\' failed.');

@@ -57,10 +57,16 @@ function Vamp($http, $log, $rootScope) {
     return $this.request('GET', path, null, params, accept);
   };
 
-  this.emit = function (path, params) {
-    return $this.request('GET', path, null, params).then(function (response) {
-      $this.notify(path, response);
-    });
+  this.emit = function (path, params, error) {
+    return $this.request('GET', path, null, params)
+      .then(function (response) {
+        $this.notify(path.indexOf('/') === 0 ? path : '/' + path, response);
+      })
+      .catch(function (response) {
+        if (error) {
+          error(response);
+        }
+      });
   };
 
   this.post = function (path, data, params, accept) {
@@ -87,6 +93,7 @@ function Vamp($http, $log, $rootScope) {
   };
 
   this.request = function (method, path, data, params, accept) {
+    path = path.indexOf('/') === 0 ? path : '/' + path;
     return $http({
       method: method,
       url: $this.apiHostPath() + path,
