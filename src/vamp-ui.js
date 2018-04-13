@@ -5,7 +5,6 @@ angular.module('vamp-ui', [
   'ui.router',
   'ui.bootstrap',
   'angular-websocket',
-  'analytics.mixpanel',
   'ui.ace',
   'toastr',
   'ngAnimate',

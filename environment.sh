@@ -20,15 +20,12 @@ echo "${green}Version         : ${yellow}${VERSION}${reset}"
 
 if [ -z "$ORIGIN" ]; then
   DEBUG='false'
-  MIXPANEL="3dc73f826819c8e11d0d9898ca4291c8"
 else
   DEBUG='true'
-  MIXPANEL=""
 fi
 
 echo "${green}Debug mode      : ${yellow}${DEBUG}${reset}"
 echo "${green}Vamp API origin : ${yellow}${ORIGIN}${reset}"
-echo "${green}Mixpanel key    : ${yellow}${MIXPANEL}${reset}"
 
 rm -rf ${dir}/src/app/environment.js 2> /dev/null
 touch ${dir}/src/app/environment.js
@@ -41,10 +38,6 @@ function Environment() {
 
 Environment.prototype.origin = function () {
   return '${ORIGIN}';
-};
-
-Environment.prototype.mixpanel = function () {
-  return '${MIXPANEL}';
 };
 
 Environment.prototype.version = function () {
