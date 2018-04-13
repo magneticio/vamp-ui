@@ -1,7 +1,9 @@
+/* global Ui */
 angular.module('vamp-ui').directive('itemExplorer', [function () {
   return {
     restrict: 'E',
     scope: {
+      total: '=',
       items: '=',
       itemTypeConfig: '=',
       noDelete: '=',
@@ -32,13 +34,12 @@ angular.module('vamp-ui').directive('itemExplorer', [function () {
 }]);
 
 itemExplorerController.$inject = ['$scope', '$vamp', 'uiStatesFactory', '$state', '$stateParams',
-  '$filter', 'filterFilter', 'toastr', 'alert', 'CRUD_CONFIG', '$authorization'
+  '$filter', 'filterFilter', 'toastr', 'alert', '$authorization'
 ];
 
 function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $stateParams,
-                                $filter, filterFilter, toastr, alert, CRUD_CONFIG, $authorization) {
+                                $filter, filterFilter, toastr, alert, $authorization) {
   var $explorer = this;
-
   var readOnly = $authorization.readOnly($scope.itemTypeConfig.kind);
 
   // Init
@@ -81,12 +82,18 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
   };
 
   // Pagination
-  $explorer.itemsPerPage = CRUD_CONFIG.ITEMS_PER_PAGE;
   $explorer.pages = 1;
+  $explorer.itemsPerPage = Ui.config.itemsPerPage;
   $explorer.currentPage = parseInt($stateParams.page, 10);
 
+  $scope.$on('/vamp/settings/update', function () {
+    $explorer.itemsPerPage = Ui.config.itemsPerPage;
+    $explorer.calcPagination();
+    $state.go('.', {page: 1}, {reload: true});
+  });
+
   $explorer.calcPagination = function () {
-    var pageSum = Math.ceil($explorer.filteredItems.length / $explorer.itemsPerPage);
+    var pageSum = Math.ceil($explorer.total / $explorer.itemsPerPage);
     $explorer.pages = pageSum === 0 ? 1 : pageSum;
   };
 
@@ -242,6 +249,7 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
   };
 
   function initItems() {
+    $explorer.total = $scope.total || 0;
     angular.copy($scope.items, _items);
     angular.copy(_.orderBy(_items, 'name'), $explorer.items);
     if ($scope.customSearch) {

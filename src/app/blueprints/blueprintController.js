@@ -92,7 +92,6 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
 
   $ctrl.deploy = function ($event) {
     $event.stopPropagation();
-
     $uibModal.open({
       animation: true,
       backdrop: 'static',

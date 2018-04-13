@@ -1,17 +1,19 @@
-<item-explorer items="$ctrl.blueprints"
-  item-type-config="$ctrl.config"
-  on-view="$ctrl.onView(item)" on-add="$ctrl.addForm()" on-delete="$ctrl.delete(item)" >
-  <buttons>
-    <button ng-if="!$ctrl.readOnly()" class="btn btn-primary" type="submit" ng-click="$ctrl.upload()">
-        Import Docker Compose
-    </button>
-  </buttons>
-  <buttons>
-    <button ng-if="!$ctrl.readOnly()" class="btn btn-primary" type="submit" ng-click="$ctrl.add()">
-        Add YAML/JSON
-    </button>
-  </buttons>
+<item-explorer
+        total="$ctrl.total"
+        items="$ctrl.blueprints"
+        item-type-config="$ctrl.config"
+        on-view="$ctrl.onView(item)" on-add="$ctrl.addForm()" on-delete="$ctrl.delete(item)">
+    <buttons>
+        <button ng-if="!$ctrl.readOnly()" class="btn btn-primary" type="submit" ng-click="$ctrl.upload()">
+            Import Docker Compose
+        </button>
+    </buttons>
+    <buttons>
+        <button ng-if="!$ctrl.readOnly()" class="btn btn-primary" type="submit" ng-click="$ctrl.add()">
+            Add YAML/JSON
+        </button>
+    </buttons>
 </item-explorer>
 <div class="loading-artifacts" ng-hide="artifactsLoaded">
-  <div class="loader"></div>
+    <div class="loader"></div>
 </div>

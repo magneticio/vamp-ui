@@ -110,17 +110,22 @@
                     <input id="chartResolution" placeholder="{{$ctrl.defaultConfig.chartResolution}}" class="form-control" type="number"
                            min="1" ng-model="$ctrl.config.chartResolution" required>
                 </div>
+                <div class="form-group" ng-class="{'has-error': form.itemsPerPage.$invalid}">
+                    <label for="itemsPerPage" class="control-label">artifacts per page</label>
+                    <input id="itemsPerPage" placeholder="{{$ctrl.defaultConfig.itemsPerPage}}" class="form-control" type="number"
+                           min="1" ng-model="$ctrl.config.itemsPerPage" required>
+                </div>
                 <div class="form-group" ng-class="{'has-error': form.toastTimeout.$invalid}">
                     <label for="toastTimeout" class="control-label">toast timeout [sec]</label>
                     <input id="toastTimeout" placeholder="{{$ctrl.defaultConfig.toastTimeout}}" class="form-control" type="number"
                            min="1" ng-model="$ctrl.config.toastTimeout" required>
                 </div>
-                <div class="form-group" ng-class="{'has-error': form.toastTimeout.$invalid}">
+                <div class="form-group" ng-class="{'has-error': form.eventPolling.$invalid}">
                     <label for="eventPolling" class="control-label">event polling [sec] <sup>**</sup></label>
                     <input id="eventPolling" placeholder="{{$ctrl.defaultConfig.eventPolling}}" class="form-control" type="number"
                            ng-model="$ctrl.config.eventPolling" required>
                 </div>
-                <div class="form-group" ng-class="{'has-error': form.toastTimeout.$invalid}">
+                <div class="form-group" ng-class="{'has-error': form.jvmMetricsPolling.$invalid}">
                     <label for="jvmMetricsPolling" class="control-label">jvm metrics update [sec]</label>
                     <input id="jvmMetricsPolling" placeholder="{{$ctrl.defaultConfig.jvmMetricsPolling}}" class="form-control" type="number"
                            ng-model="$ctrl.config.jvmMetricsPolling" required>

@@ -1,9 +1,10 @@
-function blueprintsController($scope, $state, $stateParams, artifactsMetadata, $vamp, $uibModal, $authorization) {
+function blueprintsController($controller, $scope, $state, $stateParams, artifactsMetadata, $vamp, $uibModal, $authorization) {
   var $ctrl = this;
+  $controller('PaginationController', {$ctrl: $ctrl, $vamp: $vamp, $scope: $scope, artifactsMetadata: artifactsMetadata, $stateParams: $stateParams});
 
   $ctrl.blueprints = [];
   $ctrl.config = artifactsMetadata;
-  var path = '/blueprints';
+  $ctrl.path = '/blueprints';
 
   $ctrl.readOnly = function () {
     return $authorization.readOnly('blueprints');
@@ -24,7 +25,7 @@ function blueprintsController($scope, $state, $stateParams, artifactsMetadata, $
   };
 
   $ctrl.delete = function (blueprint) {
-    return $vamp.delete(path + '/' + blueprint.name, angular.toJson(blueprint));
+    return $vamp.delete($ctrl.path + '/' + blueprint.name, angular.toJson(blueprint));
   };
 
   $ctrl.upload = function () {
@@ -40,19 +41,20 @@ function blueprintsController($scope, $state, $stateParams, artifactsMetadata, $
     });
   };
 
-  $scope.$on(path, function (e, response) {
+  $scope.$on($ctrl.path, function (e, response) {
     $scope.artifactsLoaded = true;
+    $ctrl.parseHeaders(response);
     angular.copy(_.orderBy(response.data, 'name'), $ctrl.blueprints);
   });
 
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'blueprints')) {
-      $vamp.emit(path);
+      $ctrl.refresh();
     }
   });
 
-  $vamp.emit(path);
+  $ctrl.refresh();
 }
 
-blueprintsController.$inject = ['$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp', '$uibModal', '$authorization'];
+blueprintsController.$inject = ['$controller', '$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp', '$uibModal', '$authorization'];
 angular.module('vamp-ui').controller('blueprintsController', blueprintsController);

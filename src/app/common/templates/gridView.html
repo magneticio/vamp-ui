@@ -1,15 +1,11 @@
 <div class="artifacts">
-    <div ng-repeat="item in $explorer.filteredItems | limitTo : $explorer.itemsPerPage : (($explorer.currentPage - 1) * $explorer.itemsPerPage) track by $index"
-      class="artifact-card">
-      <div class="artifact" ng-class="{selected: $explorer.isSelected(item)}"
-        dynamic-controller-as="{{$explorer.itemTypeConfig.artifactsMainView.gridItem.controller}}"
-        dynamic-controller-alias="$artifactCtrl">
-         <div class="artifact-content">
-           <div class="artifact-header">
-             <!--<div class="header-context"
-               ng-class="{'deploying' : artifact.status === 'updating' || artifact.status === 'deploying' || artifact.status === 'undeploying'}">
-
-             </div>-->
+    <div ng-repeat="item in $explorer.filteredItems"
+         class="artifact-card">
+        <div class="artifact" ng-class="{selected: $explorer.isSelected(item)}"
+             dynamic-controller-as="{{$explorer.itemTypeConfig.artifactsMainView.gridItem.controller}}"
+             dynamic-controller-alias="$artifactCtrl">
+            <div class="artifact-content">
+                <div class="artifact-header">
              <span class="artifact-selection">
                 <div class="styled-checkbox">
                     <input type="checkbox" title="Select"
@@ -19,21 +15,23 @@
                     <label for="{{item.name}}_select"></label>
                 </div>
              </span>
-             <span class="artifact-title clickable" ng-click="$explorer.view(item)" title="{{ item.name }}">{{ item.name }}</span>
-              <div ng-if="$explorer.itemTypeConfig.actions && $explorer.itemTypeConfig.actions.length > 0" class="artifact-actions dropdown">
+                    <span class="artifact-title clickable" ng-click="$explorer.view(item)" title="{{ item.name }}">{{ item.name }}</span>
+                    <div ng-if="$explorer.itemTypeConfig.actions && $explorer.itemTypeConfig.actions.length > 0"
+                         class="artifact-actions dropdown">
                 <span class="artifact-actions-button"
-                  uib-popover-template="'app/crud/templates/actionsMenu.html'"
-                  ng-controller="actionMenuController"
-                  popover-append-to-body="true"
-                  popover-trigger="'outsideClick'"
-                  popover-is-open="isOpen"
-                  popover-placement="bottom-right"><i class="icon-options-vertical"></i>
+                      uib-popover-template="'app/crud/templates/actionsMenu.html'"
+                      ng-controller="actionMenuController"
+                      popover-append-to-body="true"
+                      popover-trigger="'outsideClick'"
+                      popover-is-open="isOpen"
+                      popover-placement="bottom-right"><i class="icon-options-vertical"></i>
                 </span>
-              </div>
-           </div>
-           <div class="artifact-body" ng-include="$explorer.itemTypeConfig.artifactsMainView.gridItem.templateUrl"></div>
-         </div>
+                    </div>
+                </div>
+                <div class="artifact-body"
+                     ng-include="$explorer.itemTypeConfig.artifactsMainView.gridItem.templateUrl"></div>
+            </div>
 
-      </div>
+        </div>
     </div>
 </div>

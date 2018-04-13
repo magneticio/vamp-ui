@@ -58,7 +58,7 @@ function Vamp($http, $log, $rootScope) {
   };
 
   this.emit = function (path, params, error) {
-    return $this.request('GET', path, null, params)
+    return $this.get(path, params)
       .then(function (response) {
         $this.notify(path.indexOf('/') === 0 ? path : '/' + path, response);
       })
