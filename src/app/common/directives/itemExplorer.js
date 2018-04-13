@@ -190,11 +190,7 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
 
   $explorer.delete = function (item) {
     alert.show('Warning', 'Are you sure you want to delete: ' + item.name + '?', 'Delete', 'Cancel', function () {
-      $vamp.await(function () {
-        $scope.onDelete({
-          item: item
-        });
-      })
+      $scope.onDelete({item: item})
         .then(function () {
           toastr.success('\'' + item.name + '\' has been successfully deleted.');
         })
@@ -220,17 +216,14 @@ function itemExplorerController($scope, $vamp, uiStatesFactory, $state, $statePa
     if ($explorer.isSelectedAny()) {
       alert.show('Warning', 'Are you sure you want to delete: ' + bracketNames.join(', ') + '?', 'Delete', 'Cancel', function () {
         $explorer.selected.length = 0;
-
         _.forEach(names, function (name) {
-          $vamp.await(function () {
-            var item = _.find(_items, function (item) {
-              return item.name === name;
-            });
-
-            $scope.onDelete({
-              item: item
-            });
-          })
+          var item = _.find(_items, function (item) {
+            return item.name === name;
+          });
+          if (!item) {
+            return;
+          }
+          $scope.onDelete({item: item})
             .then(function () {
               toastr.success('\'' + name + '\' has been successfully deleted.');
             })

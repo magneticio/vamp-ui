@@ -16,9 +16,7 @@ function gatewaysController($scope, $state, $stateParams, artifactsMetadata, $va
   };
 
   $ctrl.delete = function (gateway) {
-    $vamp.delete(path + '/' + gateway.name, angular.toJson(gateway)).then(function () {
-      $vamp.emit(path);
-    });
+    return $vamp.delete(path + '/' + gateway.name, angular.toJson(gateway));
   };
 
   $scope.$on(path, function (e, response) {

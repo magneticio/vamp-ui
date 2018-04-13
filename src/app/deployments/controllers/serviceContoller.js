@@ -76,10 +76,10 @@ function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, ar
   function handleEvent(event) {
     if (_.includes(event.tags, 'deployments:' + $ctrl.name)) {
       if (_.includes(event.tags, 'synchronization') || _.includes(event.tags, 'archive')) {
-        $vamp.await(function () {
-          $vamp.emit(path);
-          toastr.success('Service \'' + $ctrl.serviceName + '\' has been updated in the background.');
-        })
+        $vamp.get(path)
+          .then(function () {
+            toastr.success('Service \'' + $ctrl.serviceName + '\' has been updated in the background.');
+          })
           .catch(function () {
             alert.show('Warning', '\'' + $ctrl.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
               $state.go('artifacts');

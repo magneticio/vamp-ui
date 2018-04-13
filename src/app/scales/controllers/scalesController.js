@@ -16,9 +16,7 @@ function scalesController($scope, $state, $stateParams, artifactsMetadata, $vamp
   };
 
   $ctrl.delete = function (scale) {
-    $vamp.delete(path + '/' + scale.name, angular.toJson(scale)).then(function () {
-      $vamp.emit(path);
-    });
+    return $vamp.delete(path + '/' + scale.name, angular.toJson(scale));
   };
 
   $scope.$on(path, function (e, response) {

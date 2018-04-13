@@ -20,11 +20,7 @@ function deploymentsController($scope, $state, $stateParams, artifactsMetadata, 
     var index = _.findIndex(_deployments, {
       name: deployment.name
     });
-
-    $vamp.delete(path + '/' + _deployments[index].name, angular.toJson(_deployments[index]))
-      .then(function () {
-        $vamp.emit(path);
-      });
+    return $vamp.delete(path + '/' + _deployments[index].name, angular.toJson(_deployments[index]));
   };
 
   $scope.$on(path, function (e, response) {

@@ -31,9 +31,7 @@ function breedsController($scope, $state, $stateParams, artifactsMetadata, $vamp
   };
 
   $ctrl.delete = function (breed) {
-    $vamp.delete(path + '/' + breed.name, angular.toJson(breed)).then(function () {
-      $vamp.emit(path);
-    });
+    return $vamp.delete(path + '/' + breed.name, angular.toJson(breed));
   };
 
   $scope.$on(path, function (e, response) {

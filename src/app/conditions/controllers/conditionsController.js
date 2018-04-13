@@ -16,9 +16,7 @@ function conditionsController($scope, $state, $stateParams, artifactsMetadata, $
   };
 
   $ctrl.delete = function (condition) {
-    $vamp.delete(path + '/' + condition.name, angular.toJson(condition)).then(function () {
-      $vamp.emit(path);
-    });
+    return $vamp.delete(path + '/' + condition.name, angular.toJson(condition));
   };
 
   $scope.$on(path, function (e, response) {
