@@ -123,8 +123,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
   });
 
   var rootScopeUnregister = $rootScope.$on('/vamp/settings/update', function () {
-    stopPolling();
-    startPolling();
+    $state.reload();
   });
 
   $scope.$on('$destroy', function () {

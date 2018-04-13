@@ -116,8 +116,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
   });
 
   var rootScopeUnregister = $rootScope.$on('/vamp/settings/update', function () {
-    stopPolling();
-    startPolling();
+    $state.reload();
   });
 
   $scope.$on('$destroy', function () {
