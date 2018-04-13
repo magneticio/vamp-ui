@@ -1,11 +1,11 @@
 angular.module('vamp-ui').controller('configurationController', ConfigurationController);
 
-function ConfigurationController($scope, $timeout, $element, $state, artifact, $vamp, $info, alert, toastr) {
+function ConfigurationController($scope, $timeout, $element, $state, artifact, $vamp, $vampInfo, alert, toastr) {
   var $ctrl = this;
   $ctrl.editor = artifact.editor;
 
   $ctrl.type = '';
-  $ctrl.info = $info.info;
+  $ctrl.info = $vampInfo.info;
   $ctrl.source = '';
   $ctrl.flatten = false;
   $ctrl.inEdit = false;

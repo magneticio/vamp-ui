@@ -12,7 +12,7 @@
               <input type="checkbox" ng-model="$ctrl.filters.allocation" > Allocation
             </label>
         </div>
-        <div class="stats" ng-show="$ctrl.connected && $ctrl.jvm">
+        <div class="stats" ng-show="$ctrl.jvm">
             <div class="stat-value">
                 <span class="stat-label">LOAD:</span>
                 {{ $ctrl.jvm.systemLoad | number: 2 }}%

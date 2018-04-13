@@ -115,10 +115,22 @@
                     <input id="toastTimeout" placeholder="{{$ctrl.defaultConfig.toastTimeout}}" class="form-control" type="number"
                            min="1" ng-model="$ctrl.config.toastTimeout" required>
                 </div>
+                <div class="form-group" ng-class="{'has-error': form.toastTimeout.$invalid}">
+                    <label for="eventPolling" class="control-label">event polling [sec] <sup>**</sup></label>
+                    <input id="eventPolling" placeholder="{{$ctrl.defaultConfig.eventPolling}}" class="form-control" type="number"
+                           ng-model="$ctrl.config.eventPolling" required>
+                </div>
+                <div class="form-group" ng-class="{'has-error': form.toastTimeout.$invalid}">
+                    <label for="jvmMetricsPolling" class="control-label">jvm metrics update [sec]</label>
+                    <input id="jvmMetricsPolling" placeholder="{{$ctrl.defaultConfig.jvmMetricsPolling}}" class="form-control" type="number"
+                           ng-model="$ctrl.config.jvmMetricsPolling" required>
+                </div>
             </div>
         </form>
         <br>
         <label class="side-footer"><sup>*</sup> page reload required</label>
+        <br>
+        <label class="side-footer"><sup>**</sup>negative value to disable it, 0 to use websockets</label>
     </div>
 
     <div ng-show="$ctrl.uiStates.proxyPanel" class="proxy-container">

@@ -2,7 +2,7 @@
 /* eslint camelcase: ["error", {properties: "never"}] */
 'use strict';
 angular.module('vamp-ui')
-  .factory('$info', [function () {
+  .factory('$vampInfo', [function () {
     return new VampInfo();
   }]);
 

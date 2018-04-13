@@ -11,6 +11,8 @@ var UiConfig = function () {
     chartNoValueFailureTimeout: 150,
     chartResetValueTimeout: 90,
     chartResolution: 12,
+    eventPolling: 10,
+    jvmMetricsPolling: 60,
     eventsHealth: true,
     eventsMetrics: true,
     eventsAllocation: true

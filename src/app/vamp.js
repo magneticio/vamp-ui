@@ -17,25 +17,25 @@ function Vamp($http, $log, $rootScope) {
     YAML: 'application/x-yaml'
   };
 
-  var requestNamespace = null;
-  var connectionNamespace = null;
+  $this.requestNamespace = null;
+  $this.connectionNamespace = null;
 
   this.namespacePath = function () {
-    var namespace = requestNamespace || connectionNamespace;
+    var namespace = $this.requestNamespace || $this.connectionNamespace;
     return namespace ? namespace + '/' : '';
   };
 
   this.setRequestNamespace = function (namespace) {
-    var changed = requestNamespace !== namespace;
-    requestNamespace = namespace;
+    var changed = $this.requestNamespace !== namespace;
+    $this.requestNamespace = namespace;
     if (changed) {
       $this.notify('$vamp:namespace', 'changed');
     }
   };
 
   this.setConnectionNamespace = function (namespace) {
-    var changed = connectionNamespace !== namespace;
-    connectionNamespace = namespace;
+    var changed = $this.connectionNamespace !== namespace;
+    $this.connectionNamespace = namespace;
     if (changed) {
       $this.notify('$vamp:namespace', 'changed');
     }

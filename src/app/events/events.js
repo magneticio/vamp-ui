@@ -4,7 +4,7 @@ angular.module('vamp-ui').component('events', {
   controller: EventController
 });
 
-function EventController($rootScope, $scope, $vamp, $interval, uiStatesFactory) {
+function EventController($rootScope, $scope, $vamp, $vampWebsocket, $interval, uiStatesFactory) {
   var $ctrl = this;
 
   var maxLength = 50;
@@ -52,15 +52,6 @@ function EventController($rootScope, $scope, $vamp, $interval, uiStatesFactory) 
     }, $rootScope);
   };
 
-  function start() {
-    $ctrl.events.length = 0;
-    $vamp.emit('/events');
-    // websocket
-    // $vamp.emit('/events/stream');
-  }
-
-  start();
-
   function onEvent(event) {
     if ($ctrl.filters[event.type] === false) {
       return;
@@ -100,47 +91,101 @@ function EventController($rootScope, $scope, $vamp, $interval, uiStatesFactory) 
   });
 
   $scope.$on('$vamp:namespace', function () {
-    start();
+    $ctrl.events.length = 0;
+    startReceivingEvents();
   });
+
+  var eventPolling;
+  var eventPollingInterval;
+
+  function getEvents() {
+    $vamp.emit('/events');
+  }
+
+  function startEventPolling() {
+    $interval.cancel(eventPolling);
+    eventPolling = $interval(getEvents, eventPollingInterval * 1000);
+    getEvents();
+  }
+
+  function stopEventPolling() {
+    $interval.cancel(eventPolling);
+    eventPolling = undefined;
+  }
+
+  function startReceivingEvents() {
+    if (eventPollingInterval === Ui.config.eventPolling) {
+      return;
+    }
+    eventPollingInterval = Ui.config.eventPolling;
+    if (eventPollingInterval > 0) {
+      startEventPolling();
+    } else if (eventPollingInterval === 0) {
+      stopEventPolling();
+      if (!$vampWebsocket.connected()) {
+        $vampWebsocket.connect();
+      }
+    }
+  }
+
+  $rootScope.$on('$vamp:websocket', function (event, connection) {
+    if (connection === 'opened') {
+      $vampWebsocket.emit('/events/stream');
+    }
+  });
+
+  function stopReceivingEvents() {
+    stopEventPolling();
+    $vampWebsocket.disconnect();
+  }
+
+  startReceivingEvents();
 
   // jvm metrics
 
-  var polling;
-
-  $ctrl.connected = false;
+  var jvmPolling;
+  var jvmPollingInterval;
 
   function info() {
     $vamp.emit('/info', {on: 'jvm'});
   }
 
-  function startPolling() {
-    info();
-    if (!polling) {
-      polling = $interval(info, 15000);
+  function startJvmPolling() {
+    if (jvmPollingInterval === Ui.config.jvmMetricsPolling) {
+      return;
     }
-    $ctrl.connected = true;
+    $interval.cancel(jvmPolling);
+    jvmPollingInterval = Ui.config.jvmMetricsPolling;
+    jvmPolling = $interval(info, jvmPollingInterval * 1000);
+    info();
   }
 
-  function stopPolling() {
-    $ctrl.connected = false;
-    $interval.cancel(polling);
-    polling = undefined;
+  function stopJvmPolling() {
+    $interval.cancel(jvmPolling);
+    jvmPolling = undefined;
   }
 
-  startPolling();
-
-  $scope.$on('/info', function (event, data) {
-    if (data.content === 'JSON' && data.data.jvm) {
-      var info = data.data;
+  $scope.$on('/info', function (event, response) {
+    try {
+      var info = response.data;
       $ctrl.jvm = {
         systemLoad: info.jvm.operating_system.system_load_average,
         heapCurrent: info.jvm.memory.heap.used / (1024 * 1024),
         heapMax: info.jvm.memory.heap.max / (1024 * 1024)
       };
+    } catch (e) {
     }
   });
 
   $scope.$on('$destroy', function () {
-    stopPolling();
+    stopJvmPolling();
+    stopReceivingEvents();
+  });
+
+  startJvmPolling();
+
+  $scope.$on('/vamp/settings/update', function () {
+    startJvmPolling();
+    startReceivingEvents();
   });
 }

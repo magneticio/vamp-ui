@@ -1,7 +1,7 @@
 /* global Environment */
 angular.module('vamp-ui').controller('logController', LogController)
-.factory('$vampLog', ['$log', '$rootScope', '$vamp', function ($log, $rootScope, $vamp) {
-  return new VampLogService($log, $rootScope, $vamp);
+.factory('$vampLog', ['$log', '$rootScope', '$vamp', '$vampWebsocket', function ($log, $rootScope, $vamp, $vampWebsocket) {
+  return new VampLogService($log, $rootScope, $vamp, $vampWebsocket);
 }]).run(['$vampLog', function ($vampLog) {
   if (Environment.prototype.connect()) {
     $vampLog.init();
@@ -93,7 +93,7 @@ function LogController($scope, $element, $vampLog) {
 }
 
 /** @ngInject */
-function VampLogService($log, $rootScope, $vamp) {
+function VampLogService($log, $rootScope, $vamp, $vampWebsocket) {
   var $service = this;
   var $level = 'INFO';
 
@@ -111,7 +111,9 @@ function VampLogService($log, $rootScope, $vamp) {
   this.init = function () {
     $vamp.init();
     $service.initialized = true;
-    $service.peek();
+    if (!$vampWebsocket.connected()) {
+      $vampWebsocket.connect();
+    }
   };
 
   this.shutdown = function () {
@@ -125,6 +127,12 @@ function VampLogService($log, $rootScope, $vamp) {
   $rootScope.$on('/log', function (e, response) {
     if (response.content === 'JSON') {
       $service.push(response.data);
+    }
+  });
+
+  $rootScope.$on('$vamp:websocket', function (event, connection) {
+    if (connection === 'opened') {
+      $service.peek();
     }
   });
 
@@ -145,6 +153,6 @@ function VampLogService($log, $rootScope, $vamp) {
       return;
     }
     $log.debug('log level: ' + $level);
-    $vamp.emit('/log', {logger: 'io.vamp', level: $level});
+    $vampWebsocket.emit('/log', {logger: 'io.vamp', level: $level});
   };
 }

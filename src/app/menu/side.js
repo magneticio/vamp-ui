@@ -4,9 +4,9 @@ angular.module('vamp-ui').component('side', {
   controller: SideController
 });
 
-function SideController($sce, $scope, $rootScope, $vamp, $info, uiStatesFactory, $state, toastr, toastrConfig) {
+function SideController($sce, $scope, $rootScope, $vamp, $vampInfo, uiStatesFactory, $state, toastr, toastrConfig) {
   var $ctrl = this;
-  $scope.info = $info.info;
+  $scope.info = $vampInfo.info;
   $scope.help = {
     title: '',
     description: '',
@@ -59,7 +59,7 @@ function SideController($sce, $scope, $rootScope, $vamp, $info, uiStatesFactory,
   );
 
   $scope.$on('/info', function (event, response) {
-    $scope.info = $info.updateInfo(response.data);
+    $scope.info = $vampInfo.updateInfo(response.data);
   });
 
   var path = ($state.params && $state.params.kind) || '';
