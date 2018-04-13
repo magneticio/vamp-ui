@@ -21,12 +21,6 @@ function schedulerController($scope, $state, $stateParams, artifactsMetadata, $c
     });
   };
 
-  $scope.$on('$vamp:connection', function (e, connection) {
-    if (connection === 'opened') {
-      $vamp.emit(path);
-    }
-  });
-
   $scope.$on(path, function (e, response) {
     $scope.artifactsLoaded = true;
     response.data.forEach(function (item) {

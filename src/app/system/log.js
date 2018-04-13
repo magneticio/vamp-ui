@@ -128,12 +128,6 @@ function VampLogService($log, $rootScope, $vamp) {
     }
   });
 
-  $rootScope.$on('$vamp:connection', function (event, connection) {
-    if (connection === 'opened') {
-      $service.peek();
-    }
-  });
-
   this.push = function (log) {
     $service.logs.push({
       timestamp: log.timestamp,

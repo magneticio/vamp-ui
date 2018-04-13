@@ -24,12 +24,6 @@ function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $vamp, uiStat
     $ctrl.calcPagination();
   };
 
-  $scope.$on('$vamp:connection', function (e, connection) {
-    if (connection === 'opened') {
-      $ctrl.peek();
-    }
-  });
-
   $scope.$on($ctrl.path, function (e, response) {
     angular.copy(_.orderBy(response.data, 'name'), $ctrl.artifacts);
     $ctrl.filteredArtifacts = filterFilter($ctrl.artifacts, {name: $ctrl.searchTerm});

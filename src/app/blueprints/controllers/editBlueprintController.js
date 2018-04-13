@@ -265,13 +265,6 @@ angular.module('vamp-ui').controller('editBlueprintController',
       }
     });
 
-
-    $scope.$on('$vamp:connection', function (event, connection) {
-      if (connection === 'opened') {
-        $ctrl.peek();
-      }
-    });
-
     this.validate = function () {
       artifact.validate(path, $ctrl.source, validation);
     };

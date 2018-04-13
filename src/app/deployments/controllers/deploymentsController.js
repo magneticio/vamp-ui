@@ -24,14 +24,6 @@ function deploymentsController($scope, $state, $stateParams, artifactsMetadata, 
     $vamp.delete(path + '/' + _deployments[index].name, angular.toJson(_deployments[index]));
   };
 
-  // $scope event listenters
-
-  $scope.$on('$vamp:connection', function (e, connection) {
-    if (connection === 'opened') {
-      $vamp.emit(path);
-    }
-  });
-
   $scope.$on(path, function (e, response) {
     $scope.artifactsLoaded = true;
     angular.copy(_.orderBy(response.data, 'name'), _deployments);

@@ -42,12 +42,6 @@ function blueprintsController($scope, $state, $stateParams, artifactsMetadata, $
     });
   };
 
-  $scope.$on('$vamp:connection', function (e, connection) {
-    if (connection === 'opened') {
-      $vamp.emit(path);
-    }
-  });
-
   $scope.$on(path, function (e, response) {
     $scope.artifactsLoaded = true;
     angular.copy(_.orderBy(response.data, 'name'), $ctrl.blueprints);

@@ -14,11 +14,5 @@ function InfoController($scope, $timeout, $vamp, artifact) {
       });
   };
 
-  $scope.$on('$vamp:connection', function (event, connection) {
-    if (connection === 'opened') {
-      $ctrl.get();
-    }
-  });
-
   $ctrl.get();
 }
