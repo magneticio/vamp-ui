@@ -265,7 +265,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
       return null;
     }
     var path = 'proxy/gateways/' + encodeURIComponent($ctrl.gateway.name) + '/';
-    path = $vamp.getNamespace() + '/' + path;
+    path = $vamp.namespacePath() + path;
     if ($vamp.baseUrl) {
       path = window.location.protocol + '//' + $vamp.baseUrl + path;
     }

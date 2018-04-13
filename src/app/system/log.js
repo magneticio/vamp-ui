@@ -109,6 +109,7 @@ function VampLogService($log, $rootScope, $vamp) {
   };
 
   this.init = function () {
+    $vamp.init();
     $service.initialized = true;
     $service.peek();
   };

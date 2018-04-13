@@ -55,7 +55,8 @@ function EventController($rootScope, $scope, $vamp, $interval, uiStatesFactory, 
   function start() {
     $ctrl.events.length = 0;
     $vamp.emit('/events');
-    $vamp.emit('/events/stream');
+    // websocket
+    // $vamp.emit('/events/stream');
   }
 
   start();

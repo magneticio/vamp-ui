@@ -21,8 +21,9 @@ function Vamp($http, $log, $rootScope) {
   var requestNamespace = null;
   var connectionNamespace = null;
 
-  this.getNamespace = function () {
-    return requestNamespace || connectionNamespace;
+  this.namespacePath = function () {
+    var namespace = requestNamespace || connectionNamespace;
+    return namespace ? namespace + '/' : '';
   };
 
   this.setRequestNamespace = function (namespace) {
@@ -42,6 +43,9 @@ function Vamp($http, $log, $rootScope) {
   };
 
   this.init = function () {
+    if ($this.origin) {
+      return;
+    }
     if (Environment.prototype.origin()) {
       $this.origin = Environment.prototype.origin() + '/';
     } else {
@@ -61,12 +65,7 @@ function Vamp($http, $log, $rootScope) {
   };
 
   this.apiHostPath = function () {
-    var baseUrl = $this.origin;
-    var namespace = $this.getNamespace();
-    if (namespace) {
-      baseUrl += namespace + '/';
-    }
-    return window.location.protocol + '//' + baseUrl + 'api/v1';
+    return window.location.protocol + '//' + $this.origin + $this.namespacePath() + 'api/v1';
   };
 
   this.request = function (method, path, data, params, accept) {

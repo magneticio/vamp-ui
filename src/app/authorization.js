@@ -22,7 +22,7 @@ function AuthorizationService($rootScope, $vamp) {
     if (!$rootScope.session || !$rootScope.session.user) {
       return true;
     }
-    var access = '/' + $vamp.getNamespace() + '/' + artifacts;
+    var access = '/' + $vamp.namespacePath() + artifacts;
     var rights = $rootScope.session.user.rights || {};
     var available = rights[access] || [];
     var found = _.find(available, function (a) {

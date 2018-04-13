@@ -265,7 +265,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
 
   $ctrl.proxy = function (cluster, service, instance, port, $event) {
     var path = '/proxy/deployments/' + $ctrl.deployment.name + '/clusters/' + cluster.name + '/services/' + service.breed.name + '/instances/' + instance.name + '/ports/' + port + '/';
-    path = $vamp.getNamespace() + '/' + path;
+    path = $vamp.namespacePath() + path;
     if ($vamp.baseUrl) {
       path = window.location.protocol + '//' + $vamp.baseUrl + path;
     }
