@@ -136,7 +136,7 @@ angular.module('vamp-ui').controller('editBlueprintController',
     };
 
     this.peek = function () {
-      $vamp.get(path + '?expand_references=true', null, 'JSON').then(function (response) {
+      $vamp.get(path, {expand_references: true}, 'JSON').then(function (response) {
         if ($ctrl.base === null) {
           $ctrl.valid = true;
           $ctrl.base = $ctrl.source = response.data;
@@ -144,11 +144,12 @@ angular.module('vamp-ui').controller('editBlueprintController',
           populateBlueprint();
         }
       });
-      $vamp.emit('/events', JSON.stringify({
+      $vamp.emit('/events', {
         tags: [
           'archive', $ctrl.kind + ':' + $ctrl.name
-        ]
-      }), {type: 'archive'});
+        ],
+        type: 'archive'
+      });
     };
 
     function populateBlueprint() {

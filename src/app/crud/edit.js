@@ -96,18 +96,19 @@ angular.module('vamp-ui').controller('edit',
     };
 
     this.peek = function () {
-      $vamp.get(path, null, 'YAML').then(function (response) {
+      $vamp.get(path, {}, 'YAML').then(function (response) {
         if ($ctrl.base === null) {
           $ctrl.valid = true;
           $ctrl.base = $ctrl.source = response.data;
         }
       });
 
-      $vamp.emit('/events', JSON.stringify({
+      $vamp.emit('/events', {
         tags: [
           'archive', $ctrl.kind + ':' + $ctrl.name
-        ]
-      }), {type: 'archive'});
+        ],
+        type: 'archive'
+      });
     };
 
     this.peek();

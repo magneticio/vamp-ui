@@ -4,7 +4,7 @@ angular.module('vamp-ui').component('events', {
   controller: EventController
 });
 
-function EventController($rootScope, $scope, $vamp, $interval, uiStatesFactory, overlayService) {
+function EventController($rootScope, $scope, $vamp, $interval, uiStatesFactory) {
   var $ctrl = this;
 
   var maxLength = 50;
@@ -110,7 +110,7 @@ function EventController($rootScope, $scope, $vamp, $interval, uiStatesFactory, 
   $ctrl.connected = false;
 
   function info() {
-    $vamp.emit('/info', '', {on: 'jvm'});
+    $vamp.emit('/info', {on: 'jvm'});
   }
 
   function startPolling() {

@@ -109,7 +109,7 @@ function VgaController($state, $scope, $timeout, $element, $vamp, $q, toastr, al
   $ctrl.load = function () {
     $ctrl.inEdit = false;
 
-    $vamp.get('/vga/' + $ctrl.marshaller() + '/' + $ctrl.mode(), null, 'YAML')
+    $vamp.get('/vga/' + $ctrl.marshaller() + '/' + $ctrl.mode(), {}, 'YAML')
       .then(function (res) {
         $timeout(function () {
           var data = res.data || '';
@@ -125,7 +125,7 @@ function VgaController($state, $scope, $timeout, $element, $vamp, $q, toastr, al
       });
   };
 
-  $vamp.get('/info?on=gateway_driver')
+  $vamp.get('/info', {on: 'gateway_driver'})
     .then(function (response) {
       $timeout(function () {
         var data = response.data || {};

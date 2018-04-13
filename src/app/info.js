@@ -2,11 +2,11 @@
 /* eslint camelcase: ["error", {properties: "never"}] */
 'use strict';
 angular.module('vamp-ui')
-  .factory('$info', ['$http', '$log', '$rootScope', function ($http, $log, $rootScope) {
-    return new VampInfo($http, $log, $rootScope);
+  .factory('$info', [function () {
+    return new VampInfo();
   }]);
 
-function VampInfo($http, $log, $rootScope) {
+function VampInfo() {
   var $this = this;
   $this.info = {};
 

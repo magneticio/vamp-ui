@@ -203,7 +203,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
       }))
     );
     _.forEach(requests, function (request) {
-      $vamp.emit('/events', JSON.stringify(request));
+      $vamp.emit('/events', request);
     });
   }
 

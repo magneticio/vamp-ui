@@ -107,7 +107,7 @@ function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, ar
     ];
 
     _.forEach(requests, function (request) {
-      $vamp.emit('/events', JSON.stringify(request));
+      $vamp.emit('/events', request);
     });
   }
 

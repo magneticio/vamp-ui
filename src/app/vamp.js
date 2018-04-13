@@ -57,8 +57,8 @@ function Vamp($http, $log, $rootScope) {
     return $this.request('GET', path, null, params, accept);
   };
 
-  this.emit = function (path, params, accept) {
-    return $this.request('GET', path, null, params, accept).then(function (response) {
+  this.emit = function (path, params) {
+    return $this.request('GET', path, null, params).then(function (response) {
       $this.notify(path, response);
     });
   };
@@ -73,7 +73,7 @@ function Vamp($http, $log, $rootScope) {
       url: $this.apiHostPath() + path,
       headers: {
         'Content-Type': 'application/json',
-        'Accept': acceptTypes[accept || 'JSON']
+        'Accept': acceptTypes[accept || 'JSON'] || acceptTypes.JSON
       },
       data: data,
       params: params

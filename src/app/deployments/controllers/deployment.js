@@ -215,7 +215,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
       }))
     );
     _.forEach(requests, function (request) {
-      $vamp.emit('/events', JSON.stringify(request));
+      $vamp.emit('/events', request);
     });
   }
 

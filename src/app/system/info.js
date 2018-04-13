@@ -6,7 +6,7 @@ function InfoController($scope, $timeout, $vamp, artifact) {
   $ctrl.source = '';
 
   $ctrl.get = function load() {
-    $vamp.get('/info', null, 'YAML')
+    $vamp.get('/info', {}, 'YAML')
       .then(function (res) {
         $timeout(function () {
           $ctrl.source = res.data || '';
