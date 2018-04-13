@@ -68,7 +68,7 @@ function ConfigurationController($scope, $timeout, $element, $state, artifact, $
   };
 
   $ctrl.update = function () {
-    $vamp.httpPut('/configuration', $ctrl.source, {}, 'YAML')
+    $vamp.put('/configuration', $ctrl.source, {}, 'YAML')
       .then(function () {
         $timeout(function () {
           toastr.success('Configuration has been successfully updated. Connection with Vamp should be established again in few moments.');

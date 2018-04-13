@@ -31,7 +31,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
       $vamp.delete(path, JSON.stringify(original))
         .then(function () {
           $state.go('^');
-          toastr.success('Deployment \'' + $ctrl.title + '\' has been successfully deleted.');
+          toastr.success('Deployment \'' + $ctrl.title + '\' deletion has been started.');
         })
         .catch(function (response) {
           if (response) {
@@ -62,7 +62,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
         }
       }
     }).result.then(function (scale) {
-      $vamp.httpPut(path + '/clusters/' + cluster.name + '/services/' + service.breed.name + '/scale', angular.toJson(scale))
+      $vamp.put(path + '/clusters/' + cluster.name + '/services/' + service.breed.name + '/scale', angular.toJson(scale))
         .then(function () {
           toastr.success('Scale for service \'' + service.breed.name + '\' has been successfully updated.');
         })

@@ -29,13 +29,17 @@ function ArtifactService($vamp) {
     }
   };
 
-  this.validate = _.throttle(function (path, data, validation, name) {
-    if (validation && data && path) {
-      if (name) {
-        $vamp.put(path, data, {validate_only: true, name: name}, 'JSON');
-      } else {
-        $vamp.put(path, data, {validate_only: true}, 'JSON');
-      }
+  this.validate = _.throttle(function (path, data, then, error) {
+    if (data && path) {
+      $vamp.validate(path, data).then(function (response) {
+        if (then) {
+          then(response);
+        }
+      }, function (response) {
+        if (error) {
+          error(response);
+        }
+      });
     }
   }, 500, {trailing: true, leading: false});
 

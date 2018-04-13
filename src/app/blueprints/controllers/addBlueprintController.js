@@ -168,10 +168,11 @@ angular.module('vamp-ui').controller('addBlueprintController',
     $ctrl.save = function () {
       var finalBlueprint = prepareBlueprint($ctrl.blueprint);
       var yaml = json2yaml(finalBlueprint);
-      $vamp.post(path, yaml, {}).then(function () {
-        $ctrl.goBack();
-        toastr.success('New blueprint has been successfully created.');
-      })
+      $vamp.post(path, yaml)
+        .then(function () {
+          $ctrl.goBack();
+          toastr.success('New blueprint has been successfully created.');
+        })
         .catch(function (response) {
           if (response && response.data) {
             toastr.error(response.data.message, 'Creation failed.');

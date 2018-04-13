@@ -7,14 +7,13 @@ function importBlueprintControler($scope, $uibModalInstance, $vamp) {
   $scope.ok = function () {
     var filename = $scope.file.name.substring(0, $scope.file.name.lastIndexOf('.'));
     $vamp.post(composePath, $scope.fileContent, {validate_only: true, name: encodeURIComponent(filename)}, 'YAML')
-      .then(
-        function (response) {
-          $scope.validationError = false;
-          $uibModalInstance.close({blueprint: response.data});
-        },
-        function () {
-          $scope.validationError = true;
-        });
+      .then(function (response) {
+        $scope.validationError = false;
+        $uibModalInstance.close({blueprint: response.data});
+      })
+      .catch(function () {
+        $scope.validationError = true;
+      });
   };
 
   $scope.fileSelected = function () {

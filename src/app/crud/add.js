@@ -43,23 +43,6 @@ angular.module('vamp-ui').controller('addController',
       }
     }
 
-    $scope.$on(path, function (e, response) {
-      if (response.content === 'JSON') {
-        if (response.status === 'ERROR') {
-          $ctrl.valid = false;
-          $ctrl.errorClass = 'error';
-          transformErrorMessage(response.data.message);
-          $ctrl.expandError = false;
-        } else {
-          $ctrl.valid = true;
-          $ctrl.errorClass = '';
-          $ctrl.errorMessage = '';
-          $ctrl.restOfMessage = '';
-          $ctrl.expandError = false;
-        }
-      }
-    });
-
     $scope.$on('$stateChangeStart', function (event, toState, toParams) {
       if (!ignoreChange && $ctrl.isModified()) {
         event.preventDefault();
@@ -71,7 +54,22 @@ angular.module('vamp-ui').controller('addController',
     });
 
     this.validate = function () {
-      artifact.validate(path, $ctrl.source, validation);
+      if (validation) {
+        artifact.validate(path, $ctrl.source,
+          function () {
+            $ctrl.valid = true;
+            $ctrl.errorClass = '';
+            $ctrl.errorMessage = '';
+            $ctrl.restOfMessage = '';
+            $ctrl.expandError = false;
+          },
+          function (response) {
+            $ctrl.valid = false;
+            $ctrl.errorClass = 'error';
+            transformErrorMessage(response.data.message);
+            $ctrl.expandError = false;
+          });
+      }
     };
 
     this.isModified = function () {
@@ -90,18 +88,20 @@ angular.module('vamp-ui').controller('addController',
       validation = false;
       ignoreChange = true;
 
-      $vamp.post(path, $ctrl.source, {}, 'JSON').then(function () {
-        goBack();
-        toastr.success('New ' + $ctrl.singular + ' has been successfully created.');
-      }).catch(function (response) {
-        validation = true;
-        ignoreChange = false;
-        if (response && response.data) {
-          toastr.error(response.data.message, 'Creation failed.');
-        } else {
-          toastr.error('Server timeout.', 'Creation failed.');
-        }
-      });
+      $vamp.post(path, $ctrl.source, {}, 'JSON')
+        .then(function () {
+          goBack();
+          toastr.success('New ' + $ctrl.singular + ' has been successfully created.');
+        })
+        .catch(function (response) {
+          validation = true;
+          ignoreChange = false;
+          if (response && response.data) {
+            toastr.error(response.data.message, 'Creation failed.');
+          } else {
+            toastr.error('Server timeout.', 'Creation failed.');
+          }
+        });
     };
 
     this.isBlueprint = function () {

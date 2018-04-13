@@ -190,7 +190,7 @@ angular.module('vamp-ui').controller('editBlueprintController',
           }
         }
 
-        if ($ctrl.blueprint.breed.ports.length == 0) {
+        if ($ctrl.blueprint.breed.ports.length === 0) {
           $ctrl.blueprint.breed.ports = [{
             port: '',
             name: '',
@@ -208,7 +208,7 @@ angular.module('vamp-ui').controller('editBlueprintController',
           }
         }
 
-        if ($ctrl.blueprint.breed.variables.length == 0) {
+        if ($ctrl.blueprint.breed.variables.length === 0) {
           $ctrl.blueprint.breed.variables = [{
             key: '',
             value: ''
@@ -235,23 +235,6 @@ angular.module('vamp-ui').controller('editBlueprintController',
 
     this.peek();
 
-    $scope.$on(path, function (e, response) {
-      if (response.content === 'JSON') {
-        if (response.status === 'ERROR') {
-          $ctrl.valid = false;
-          $ctrl.errorClass = 'error';
-          transformErrorMessage(response.data.message);
-          $ctrl.expandError = false;
-        } else {
-          $ctrl.valid = true;
-          $ctrl.errorClass = '';
-          $ctrl.errorMessage = '';
-          $ctrl.restOfMessage = '';
-          $ctrl.expandError = false;
-        }
-      }
-    });
-
     $scope.$on('/events/stream', function (e, response) {
 
       if ($ctrl.base && _.includes(response.data.tags, $ctrl.kind + ':' + $ctrl.name)) {
@@ -267,7 +250,22 @@ angular.module('vamp-ui').controller('editBlueprintController',
     });
 
     this.validate = function () {
-      artifact.validate(path, $ctrl.source, validation);
+      if (validation) {
+        artifact.validate(path, $ctrl.source,
+          function () {
+            $ctrl.valid = true;
+            $ctrl.errorClass = '';
+            $ctrl.errorMessage = '';
+            $ctrl.restOfMessage = '';
+            $ctrl.expandError = false;
+          },
+          function (response) {
+            $ctrl.valid = false;
+            $ctrl.errorClass = 'error';
+            transformErrorMessage(response.data.message);
+            $ctrl.expandError = false;
+          });
+      }
     };
 
     this.isModified = function () {
@@ -296,8 +294,8 @@ angular.module('vamp-ui').controller('editBlueprintController',
       $ctrl.sourceCopy = angular.copy($ctrl.source);
       var finalBlueprint = prepareBlueprint($ctrl.blueprint);
       var yaml = json2yaml(finalBlueprint);
-      $vamp.httpPut(path, yaml, {}, 'JSON')
-        .then(function (resp) {
+      $vamp.put(path, yaml, {}, 'JSON')
+        .then(function () {
           $ctrl.base = yaml;
           goBack();
           toastr.success('\'' + $ctrl.name + '\' has been successfully saved.');

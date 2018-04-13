@@ -42,7 +42,7 @@ function DeploymentCtrl($scope, $uibModal, $uibTooltip, $vamp, $state, toastr, $
       }
     }).result.then(function (data) {
       function save(blueprint) {
-        return $vamp.httpPut('/blueprints/' + data.name, JSON.stringify(blueprint))
+        return $vamp.put('/blueprints/' + data.name, JSON.stringify(blueprint))
           .then(function () {
             $state.go('artifacts', {kind: 'blueprints'});
             toastr.success('\'' + blueprint.name + '\' has been successfully exported as \'' + data.name + '\'.');

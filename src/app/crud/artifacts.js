@@ -167,6 +167,7 @@ function BaseArtifactsController($ctrl, $scope, artifactsMetadata, $vamp, uiStat
           $vamp.delete($ctrl.path + '/' + name, angular.toJson(artifact))
             .then(function () {
               toastr.success('\'' + name + '\' has been successfully deleted.');
+              $ctrl.peek();
             })
             .catch(function (response) {
               if (response) {

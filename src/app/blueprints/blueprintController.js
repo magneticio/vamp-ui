@@ -106,7 +106,7 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
           return $vamp.get('/info', {on: 'container_driver'})
             .then(function (response) {
               if (response.data.container_driver && response.data.container_driver.type === 'marathon') {
-                return $vamp.httpPut('/deployments/' + $ctrl.blueprint.name + '?validate_only=true', angular.toJson($ctrl.blueprint))
+                return $vamp.put('/deployments/' + $ctrl.blueprint.name, angular.toJson($ctrl.blueprint), {validate_only: true})
                   .then(function (deploymentData) {
                     return getAvailability(deploymentData.data[0], response.data.container_driver);
                   })
@@ -126,7 +126,7 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
       }
     }).result.then(function (data) {
       var deployment = data.name;
-      $vamp.httpPut('/deployments/' + deployment, angular.toJson($ctrl.blueprint))
+      $vamp.put('/deployments/' + deployment, angular.toJson($ctrl.blueprint))
         .then(function () {
           gotoDeployment(deployment);
           toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully deployed as \'' + deployment + '\'.');
@@ -154,7 +154,7 @@ function BlueprintController($scope, $state, $uibModal, toastr, $vamp, $vampBlue
 
     modal.result.then(function (data) {
       var name = data.deployment.name;
-      $vamp.httpPut('/deployments/' + name, angular.toJson($ctrl.blueprint))
+      $vamp.put('/deployments/' + name, angular.toJson($ctrl.blueprint))
         .then(function () {
           gotoDeployment(name);
           toastr.success('\'' + $ctrl.blueprint.name + '\' has been successfully merged to \'' + name + '\'.');

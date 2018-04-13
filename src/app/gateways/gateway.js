@@ -159,7 +159,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
   });
 
   function save(gateway, message) {
-    $vamp.httpPut(path, JSON.stringify(gateway))
+    $vamp.put(path, JSON.stringify(gateway))
       .then(function () {
         toastr.success(message);
       })

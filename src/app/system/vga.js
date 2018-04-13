@@ -85,7 +85,7 @@ function VgaController($state, $scope, $timeout, $element, $vamp, $q, toastr, al
 
   $ctrl.update = function () {
     ignoreChange = true;
-    $vamp.httpPut('/vga/' + $ctrl.marshaller() + '/' + $ctrl.mode(), $ctrl.source, {}, 'YAML')
+    $vamp.put('/vga/' + $ctrl.marshaller() + '/' + $ctrl.mode(), $ctrl.source, {}, 'YAML')
       .then(function () {
         $timeout(function () {
           toastr.success('Template has been successfully updated.');

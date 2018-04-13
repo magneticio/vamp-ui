@@ -34,7 +34,7 @@ function WorkflowController($scope, $vamp, toastr, workflowWebPortService, uiSta
   $ctrl.update = function ($event, status) {
     $event.stopPropagation();
     var operation = status.charAt(0).toUpperCase() + status.substr(1).toLowerCase();
-    $vamp.httpPut(path + '/status', status, {}, 'JSON')
+    $vamp.put(path + '/status', status, {}, 'JSON')
       .then(function () {
         toastr.success(operation + ' initiated.');
       })

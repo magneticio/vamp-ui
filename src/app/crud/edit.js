@@ -113,23 +113,6 @@ angular.module('vamp-ui').controller('edit',
 
     this.peek();
 
-    $scope.$on(path, function (e, response) {
-      if (response.content === 'JSON') {
-        if (response.status === 'ERROR') {
-          $ctrl.valid = false;
-          $ctrl.errorClass = 'error';
-          transformErrorMessage(response.data.message);
-          $ctrl.expandError = false;
-        } else {
-          $ctrl.valid = true;
-          $ctrl.errorClass = '';
-          $ctrl.errorMessage = '';
-          $ctrl.restOfMessage = '';
-          $ctrl.expandError = false;
-        }
-      }
-    });
-
     $scope.$on('/events/stream', function (e, response) {
       if ($ctrl.base && _.includes(response.data.tags, $ctrl.kind + ':' + $ctrl.name)) {
         if (_.includes(response.data.tags, 'archive:delete')) {
@@ -154,7 +137,22 @@ angular.module('vamp-ui').controller('edit',
     });
 
     this.validate = function () {
-      artifact.validate(path, $ctrl.source, validation);
+      if (validation) {
+        artifact.validate(path, $ctrl.source,
+          function () {
+            $ctrl.valid = true;
+            $ctrl.errorClass = '';
+            $ctrl.errorMessage = '';
+            $ctrl.restOfMessage = '';
+            $ctrl.expandError = false;
+          },
+          function (response) {
+            $ctrl.valid = false;
+            $ctrl.errorClass = 'error';
+            transformErrorMessage(response.data.message);
+            $ctrl.expandError = false;
+          });
+      }
     };
 
     this.isModified = function () {
@@ -212,7 +210,7 @@ angular.module('vamp-ui').controller('edit',
       validation = false;
       ignoreChange = true;
       alertConfirmation(skipConfirmation, function () {
-        $vamp.httpPut(path, $ctrl.source, {}, 'JSON')
+        $vamp.put(path, $ctrl.source, {}, 'JSON')
           .then(function () {
             $ctrl.base = $ctrl.source;
             goBack();
