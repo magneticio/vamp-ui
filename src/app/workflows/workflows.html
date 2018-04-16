@@ -1,7 +1,9 @@
-<item-explorer items="$ctrl.workflows"
-  item-type-config="$ctrl.config"
-  on-view="$ctrl.onView(item)" on-add="$ctrl.add()" on-delete="$ctrl.delete(item)" >
+<item-explorer
+        total="$ctrl.total"
+        items="$ctrl.workflows"
+        item-type-config="$ctrl.config"
+        on-view="$ctrl.onView(item)" on-add="$ctrl.add()" on-delete="$ctrl.delete(item)">
 </item-explorer>
 <div class="loading-artifacts" ng-hide="artifactsLoaded">
-  <div class="loader"></div>
+    <div class="loader"></div>
 </div>

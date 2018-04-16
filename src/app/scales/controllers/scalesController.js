@@ -1,9 +1,10 @@
-function scalesController($scope, $state, $stateParams, artifactsMetadata, $vamp) {
+function scalesController($controller, $scope, $state, $stateParams, artifactsMetadata, $vamp) {
   var $ctrl = this;
+  $controller('PaginationController', {$ctrl: $ctrl, $vamp: $vamp, $scope: $scope, artifactsMetadata: artifactsMetadata, $stateParams: $stateParams});
 
   $ctrl.scales = [];
   $ctrl.config = artifactsMetadata;
-  var path = '/scales';
+  $ctrl.path = '/scales';
 
   $ctrl.add = function () {
     $state.go('.add');
@@ -16,22 +17,23 @@ function scalesController($scope, $state, $stateParams, artifactsMetadata, $vamp
   };
 
   $ctrl.delete = function (scale) {
-    return $vamp.delete(path + '/' + scale.name, angular.toJson(scale));
+    return $vamp.delete($ctrl.path + '/' + scale.name, angular.toJson(scale));
   };
 
-  $scope.$on(path, function (e, response) {
+  $scope.$on($ctrl.path, function (e, response) {
     $scope.artifactsLoaded = true;
+    $ctrl.parseHeaders(response);
     angular.copy(_.orderBy(response.data, 'name'), $ctrl.scales);
   });
 
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'scales')) {
-      $vamp.emit(path);
+      $ctrl.refresh();
     }
   });
 
-  $vamp.emit(path);
+  $ctrl.refresh();
 }
 
-scalesController.$inject = ['$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp'];
+scalesController.$inject = ['$controller', '$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp'];
 angular.module('vamp-ui').controller('scalesController', scalesController);

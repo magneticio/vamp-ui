@@ -3,7 +3,7 @@ function workflowsController($scope, $state, $stateParams, artifactsMetadata, $v
 
   $ctrl.workflows = [];
   $ctrl.config = artifactsMetadata;
-  var path = '/workflows';
+  $ctrl.path = '/workflows';
 
   $ctrl.add = function () {
     $state.go('.add');
@@ -16,21 +16,22 @@ function workflowsController($scope, $state, $stateParams, artifactsMetadata, $v
   };
 
   $ctrl.delete = function (workflow) {
-    return $vamp.delete(path + '/' + workflow.name, angular.toJson(workflow));
+    return $vamp.delete($ctrl.path + '/' + workflow.name, angular.toJson(workflow));
   };
 
-  $scope.$on(path, function (e, response) {
+  $scope.$on($ctrl.path, function (e, response) {
     $scope.artifactsLoaded = true;
+    $ctrl.parseHeaders(response);
     angular.copy(_.orderBy(response.data, 'name'), $ctrl.workflows);
   });
 
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'workflows') || _.includes(response.data.tags, 'workflow-statuses')) {
-      $vamp.emit(path);
+      $ctrl.refresh();
     }
   });
 
-  $vamp.emit(path);
+  $ctrl.refresh();
 }
 
 workflowsController.$inject = ['$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp'];
