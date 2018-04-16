@@ -12,6 +12,8 @@ angular.module('vamp-ui')
 function Vamp($http, $log, $rootScope) {
   var $this = this;
 
+  var throttle = {};
+
   var acceptTypes = {
     JSON: 'application/json',
     YAML: 'application/x-yaml'
@@ -93,17 +95,29 @@ function Vamp($http, $log, $rootScope) {
   };
 
   this.request = function (method, path, data, params, accept) {
-    path = path.indexOf('/') === 0 ? path : '/' + path;
-    return $http({
+    var options = {
       method: method,
-      url: $this.apiHostPath() + path,
+      url: $this.apiHostPath() + (path.indexOf('/') === 0 ? path : '/' + path),
       headers: {
         'Content-Type': 'application/json',
         'Accept': acceptTypes[accept || 'JSON'] || acceptTypes.JSON
       },
       data: data,
       params: params || {}
-    });
+    };
+
+    if (method === 'GET') {
+      var key = JSON.stringify(options);
+      throttle[key] = throttle[key] || _.throttle(function () {
+        return $http(options);
+      }, 1000, {
+        leading: true,
+        trailing: false
+      });
+      return throttle[key]();
+    }
+
+    return $http(options);
   };
 
   this.notify = function (name, value) {

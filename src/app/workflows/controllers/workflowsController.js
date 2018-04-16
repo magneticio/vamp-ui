@@ -1,5 +1,6 @@
-function workflowsController($scope, $state, $stateParams, artifactsMetadata, $vamp) {
+function workflowsController($controller, $scope, $state, $stateParams, artifactsMetadata, $vamp) {
   var $ctrl = this;
+  $controller('PaginationController', {$ctrl: $ctrl, $vamp: $vamp, $scope: $scope, artifactsMetadata: artifactsMetadata, $stateParams: $stateParams});
 
   $ctrl.workflows = [];
   $ctrl.config = artifactsMetadata;
@@ -34,5 +35,5 @@ function workflowsController($scope, $state, $stateParams, artifactsMetadata, $v
   $ctrl.refresh();
 }
 
-workflowsController.$inject = ['$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp'];
+workflowsController.$inject = ['$controller', '$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp'];
 angular.module('vamp-ui').controller('workflowsController', workflowsController);
