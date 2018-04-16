@@ -1,6 +1,14 @@
 function schedulerController($scope, $state, $stateParams, artifactsMetadata, $controller, $vamp, toastr) {
   var $ctrl = this;
-  var path = '/scheduler/routing';
+  $controller('PaginationController', {
+    $ctrl: $ctrl,
+    $vamp: $vamp,
+    $scope: $scope,
+    artifactsMetadata: artifactsMetadata,
+    $stateParams: $stateParams
+  });
+
+  $ctrl.path = '/scheduler/routing';
 
   $scope.selector = '';
   $ctrl.schedulerRouting = [];
@@ -21,8 +29,9 @@ function schedulerController($scope, $state, $stateParams, artifactsMetadata, $c
     });
   };
 
-  $scope.$on(path, function (e, response) {
+  $scope.$on($ctrl.path, function (e, response) {
     $scope.artifactsLoaded = true;
+    $ctrl.parseHeaders(response);
     response.data.forEach(function (item) {
       item.name = item.namespace + '/' + item.name;
     });
@@ -32,11 +41,18 @@ function schedulerController($scope, $state, $stateParams, artifactsMetadata, $c
     });
   });
 
-  $vamp.emit(path);
+  $scope.$on('/events/stream', function (e, response) {
+    if ((_.includes(response.data.tags, 'deployed') || _.includes(response.data.tags, 'undeployed') ||
+      _.includes(response.data.tags, 'synchronization')) || _.includes(response.data.tags, 'deployments')) {
+      $ctrl.refresh();
+    }
+  });
+
+  $ctrl.refresh();
 
   $scope.$watch('selector', _.debounce(function (selector) {
     selector = selector || 'true';
-    $vamp.get(path, {selector: selector}).catch(function () {
+    $vamp.get($ctrl.path, {selector: selector}).catch(function () {
       toastr.error('Invalid selector: ' + selector);
     });
   }, 1000));
