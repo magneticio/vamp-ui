@@ -68,15 +68,22 @@ function EventController($rootScope, $scope, $vamp, $vampWebsocket, $interval, u
       return tag !== event.type && !found;
     });
 
-    $ctrl.events.push({
-      type: event.type,
-      value: event.value,
-      timestamp: event.timestamp,
-      tags: _.concat(combined, single)
+    var exists = _.find($ctrl.events, function (e) {
+      return e.id === event.id;
     });
 
-    while ($ctrl.events.length > maxLength) {
-      $ctrl.events.shift();
+    if (!exists) {
+      $ctrl.events.push({
+        id: event.id,
+        type: event.type,
+        value: event.value,
+        timestamp: event.timestamp,
+        tags: _.concat(combined, single)
+      });
+
+      while ($ctrl.events.length > maxLength) {
+        $ctrl.events.shift();
+      }
     }
   }
 
