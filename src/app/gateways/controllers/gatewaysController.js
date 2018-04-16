@@ -1,9 +1,10 @@
-function gatewaysController($scope, $state, $stateParams, artifactsMetadata, $vamp, namifyFilter) {
+function gatewaysController($controller, $scope, $state, $stateParams, artifactsMetadata, $vamp, namifyFilter) {
   var $ctrl = this;
+  $controller('PaginationController', {$ctrl: $ctrl, $vamp: $vamp, $scope: $scope, artifactsMetadata: artifactsMetadata, $stateParams: $stateParams});
 
   $ctrl.gateways = [];
   $ctrl.config = artifactsMetadata;
-  var path = '/gateways';
+  $ctrl.path = '/gateways';
 
   $ctrl.add = function () {
     $state.go('.add');
@@ -16,11 +17,12 @@ function gatewaysController($scope, $state, $stateParams, artifactsMetadata, $va
   };
 
   $ctrl.delete = function (gateway) {
-    return $vamp.delete(path + '/' + gateway.name, angular.toJson(gateway));
+    return $vamp.delete($ctrl.path + '/' + gateway.name, angular.toJson(gateway));
   };
 
-  $scope.$on(path, function (e, response) {
+  $scope.$on($ctrl.path, function (e, response) {
     $scope.artifactsLoaded = true;
+    $ctrl.parseHeaders(response);
     angular.copy(_.orderBy(response.data, 'name'), $ctrl.gateways);
     angular.forEach($ctrl.gateways, function (a) {
       a.routes = namifyFilter(a.routes);
@@ -30,12 +32,12 @@ function gatewaysController($scope, $state, $stateParams, artifactsMetadata, $va
   $scope.$on('/events/stream', function (e, response) {
     if (_.includes(response.data.tags, 'synchronization') ||
       (_.includes(response.data.tags, 'gateways:') && (_.includes(response.data.tags, 'deployed') || _.includes(response.data.tags, 'undeployed')))) {
-      $vamp.emit(path);
+      $ctrl.refresh();
     }
   });
 
-  $vamp.emit(path);
+  $ctrl.refresh();
 }
 
-gatewaysController.$inject = ['$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp', 'namifyFilter'];
+gatewaysController.$inject = ['$controller', '$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp', 'namifyFilter'];
 angular.module('vamp-ui').controller('gatewaysController', gatewaysController);
