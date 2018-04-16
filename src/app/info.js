@@ -17,7 +17,7 @@ function VampInfo() {
     $this.info.ui_version = Environment.prototype.version();
 
     if (!info.persistence || !info.pulse || !info.key_value) {
-      return;
+      return $this.info;
     }
 
     $this.info.persistence = info.persistence.database.type === 'key-value' ? info.key_value.type : info.persistence.database.type;
@@ -25,7 +25,7 @@ function VampInfo() {
     $this.info.key_value_store = info.key_value.type;
 
     if (!info.gateway_driver || !info.container_driver || !info.workflow_driver) {
-      return;
+      return $this.info;
     }
 
     $this.info.container_driver = info.container_driver.type;

@@ -27,6 +27,10 @@ function Vamp($http, $log, $rootScope) {
     return namespace ? namespace + '/' : '';
   };
 
+  this.getConnectionNamespace = function () {
+    return $this.connectionNamespace;
+  };
+
   this.setRequestNamespace = function (namespace) {
     var changed = $this.requestNamespace !== namespace;
     $this.requestNamespace = namespace;

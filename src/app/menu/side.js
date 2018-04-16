@@ -13,7 +13,7 @@ function SideController($sce, $scope, $rootScope, $vamp, $vampInfo, uiStatesFact
     links: []
   };
 
-  if ($rootScope.session) {
+  if ($rootScope.session && $rootScope.session.user) {
     $scope.role = $rootScope.session.user.role;
   }
 
