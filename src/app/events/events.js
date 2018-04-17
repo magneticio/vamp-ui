@@ -52,7 +52,7 @@ function EventController($rootScope, $scope, $vamp, $vampWebsocket, $interval, u
     }, $rootScope);
   };
 
-  function onEvent(event) {
+  function onEvent(event, publish) {
     if ($ctrl.filters[event.type] === false) {
       return;
     }
@@ -73,14 +73,20 @@ function EventController($rootScope, $scope, $vamp, $vampWebsocket, $interval, u
     });
 
     if (!exists) {
-      $ctrl.events.push({
+      var e = {
         id: event.id,
         type: event.type,
         value: event.value,
         timestamp: event.timestamp,
         tags: _.concat(combined, single)
-      });
-
+      };
+      $ctrl.events.push(e);
+      if (publish) {
+        $vamp.notify('/events/stream', {
+          statusText: 'OK',
+          data: e
+        });
+      }
       while ($ctrl.events.length > maxLength) {
         $ctrl.events.shift();
       }
@@ -89,7 +95,7 @@ function EventController($rootScope, $scope, $vamp, $vampWebsocket, $interval, u
 
   $scope.$on('/events', function (e, response) {
     _.forEach(response.data, function (event) {
-      onEvent(event);
+      onEvent(event, true);
     });
   });
 
