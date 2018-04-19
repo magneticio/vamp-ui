@@ -2,78 +2,17 @@
 SHELL             := bash
 .SHELLFLAGS       := -eu -o pipefail -c
 .DEFAULT_GOAL     := default
-.DELETE_ON_ERROR:
-.SUFFIXES:
+.DELETE_ON_ERROR  :
+.SUFFIXES         :
 
-# Constants, these can be overwritten in your Makefile.local
-PACKER       ?= packer
-BUILD_SERVER := magneticio/buildserver
-DIR_NPM	     := "$(HOME)"/.npm
-DIR_GYP	     := "$(HOME)"/.node-gyp
-DIR_BOWER	 := "$(HOME)"/.cache/bower
+STASH     := stash
+PROJECT   := vamp-ui
+FABRICATOR:= node:9.11.1
 
 # if Makefile.local exists, include it.
 ifneq ("$(wildcard Makefile.local)", "")
 	include Makefile.local
 endif
-
-VERSION := $(shell git describe --tags)
-PROJECT := vamp-ui
-
-# Targets
-.PHONY: all
-all: default
-
-# Using our buildserver which contains all the necessary dependencies
-.PHONY: default
-default:
-	test "$(DEPS_OK)" = "true" || docker pull $(BUILD_SERVER)
-	docker run \
-		--rm \
-		--volume "$(CURDIR)":/srv/src \
-		--volume $(DIR_NPM):/home/vamp/.npm \
-		--volume $(DIR_GYP):/home/vamp/.node-gyp \
-		--volume $(DIR_BOWER):/home/vamp/.cache/bower \
-		--workdir=/srv/src \
-		--env BUILD_UID=$(shell id -u) \
-		--env BUILD_GID=$(shell id -g) \
-		$(BUILD_SERVER) make clean-npm-modules build
-
-.PHONY: update
-update:
-	npm update
-	npm prune
-	npm run bower update
-	npm run bower prune
-
-.PHONY: build
-build: clean
-	npm rebuild node-sass
-	npm install
-	npm run bower install
-	./environment.sh
-	npm run build
-	rm -Rf "$(CURDIR)"/dist/maps
-	rm -Rf "$(CURDIR)"/dist/scripts/app.js "$(CURDIR)"/dist/scripts/vendor.js
-	rm -Rf "$(CURDIR)"/dist/styles/app.css "$(CURDIR)"/dist/styles/vendor.css
-
-.PHONY: pack
-pack: default
-	docker volume create $(PACKER)
-	docker run \
-		--rm \
-    		--volume "$(CURDIR)"/dist:/usr/local/src \
-    		--volume $(PACKER):/usr/local/stash \
-    		$(BUILD_SERVER) push $(PROJECT) $(VERSION)
-
-.PHONY: pack-local
-pack-local: build
-	docker volume create $(PACKER)
-	docker run \
-		--rm \
-    		--volume "$(CURDIR)"/dist:/usr/local/src \
-    		--volume $(PACKER):/usr/local/stash \
-    		$(BUILD_SERVER) push $(PROJECT) $(VERSION)
 
 .PHONY: clean
 clean:
@@ -83,7 +22,42 @@ clean:
 	rm -rf "$(CURDIR)"/ui
 	rm -rf "$(CURDIR)"/ui.tar.bz2
 
-.PHONY: clean-npm-modules
-clean-npm-modules:
+.PHONY: purge
+purge: clean
 	rm -rf "$(CURDIR)"/node_modules
 	rm -rf "$(CURDIR)"/bower_components
+
+.PHONY: update
+update:
+	yarn install
+	yarn upgrade
+	yarn run bower update
+	yarn run bower prune
+
+.PHONY: local
+local:
+	yarn install
+	yarn run bower install --allow-root
+	./environment.sh
+	yarn run build
+	rm -Rf "$(CURDIR)"/dist/maps
+	rm -Rf "$(CURDIR)"/dist/scripts/app.js "$(CURDIR)"/dist/scripts/vendor.js
+	rm -Rf "$(CURDIR)"/dist/styles/app.css "$(CURDIR)"/dist/styles/vendor.css
+
+.PHONY: stash
+stash:
+	rm -Rf $$HOME/.stash/$(PROJECT) || true
+	mkdir -p $$HOME/.stash
+	cp -r $(CURDIR)/dist $$HOME/.stash/$(PROJECT)
+
+.PHONY: build
+build:
+	docker run \
+         --rm \
+         --volume $(STASH):/root \
+         --volume $(CURDIR):/$(PROJECT) \
+         --workdir=/$(PROJECT) -it \
+         $(FABRICATOR) make local stash
+
+.PHONY: default
+default: clean build

@@ -93,9 +93,7 @@
       "linebreak-style": "off"
     }
   },
-  "dependencies": {
-    "gulp-eslint": "^3.0.1"
-  },
+  "dependencies": {},
   "browserslist": [
     "last 2 versions"
   ]

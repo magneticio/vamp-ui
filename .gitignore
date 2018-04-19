@@ -10,3 +10,4 @@ local.sh
 ui.tar.bz2
 ui/
 /npm-debug.log
+/yarn-error.log
