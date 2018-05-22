@@ -23,10 +23,10 @@
   <span ng-repeat="instance in item.instances">
     <div ng-repeat="(portName, port) in instance.ports | orderByKeys"
               ng-if="$artifactCtrl.proxy(instance, portName)">
-        <span class="row-action"
-           ng-click="$artifactCtrl.proxy(instance, portName, $event)">
-            {{instance.name | limitTo: 20 }} : {{port}}
-        </span>
+        <a class="row-action"
+           ng-href="{{ $artifactCtrl.proxy(instance, portName, $event) }}" target="_blank">
+            {{instance.name | limitTo: 20 }} : {{port}}&nbsp;<i class="fa fa-external-link" aria-hidden="true"></i>
+        </a>
     </div>
   </span>
 </td>

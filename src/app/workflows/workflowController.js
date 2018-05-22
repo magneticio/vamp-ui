@@ -47,16 +47,11 @@ function WorkflowController($scope, $vamp, toastr, workflowWebPortService, uiSta
       });
   };
 
-  $ctrl.proxy = function (instance, port, $event) {
+  $ctrl.proxy = function (instance, port) {
     var path = 'proxy/workflows/' + $ctrl.workflow.name + '/instances/' + instance.name + '/ports/' + port + '/';
     path = $vamp.namespacePath() + path;
     if ($vamp.baseUrl) {
       path = window.location.protocol + '//' + $vamp.baseUrl + path;
-    }
-    if ($event) {
-      $event.stopPropagation();
-      workflowWebPortService.selectPort(path);
-      uiStatesFactory.setRightPanelViewState(uiStatesFactory.STATE_ENUM.EXPANDED);
     }
     return path;
   };

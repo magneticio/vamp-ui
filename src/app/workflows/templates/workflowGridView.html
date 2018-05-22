@@ -24,11 +24,9 @@
             <li ng-repeat="instance in item.instances">
               <div ng-repeat="(portName, port) in instance.ports | orderByKeys"
                         ng-if="$artifactCtrl.proxy(instance, portName)">
-                  <span class="clickable"
-                     ng-click="$artifactCtrl.proxy(instance, portName, $event)">
-                       <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;
-                      {{instance.name | limitTo: 20 }} : {{port}}
-                  </span>
+                  <a ng-href="{{ $artifactCtrl.proxy(instance, portName, $event) }}" target="_blank">
+                      {{instance.name | limitTo: 20 }} : {{port}}&nbsp;<i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;
+                  </a>
               </div>
             </li>
         </ul>
