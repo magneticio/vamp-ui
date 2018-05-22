@@ -9,19 +9,20 @@ angular.module('vamp-ui').controller('edit',
 
     this.errorClass = '';
     this.errorMessage = '';
-    $ctrl.restOfMessage = '';
+    this.restOfMessage = '';
     this.editor = artifact.editor;
-    $ctrl.expandError = false;
+    this.expandError = false;
+    this.loaddedAt = Date.now();
 
     var path = '/' + this.kind + '/' + this.name;
 
     this.base = null;
     this.source = null;
 
-    $ctrl.activeRevisiton = revisionsService.activeRevision;
+    this.activeRevisiton = revisionsService.activeRevision;
 
     this.valid = true;
-    $ctrl.inEdit = false;
+    this.inEdit = false;
     var validation = true;
     var ignoreChange = false;
 
@@ -118,10 +119,14 @@ angular.module('vamp-ui').controller('edit',
         if (_.includes(response.data.tags, 'archive:delete')) {
           alert.show('Warning', '\'' + $ctrl.name + '\' has been deleted in background. If you save the content, \'' + $ctrl.name + '\' will be recreated.', 'OK');
         } else if (!ignoreChange && _.includes(response.data.tags, 'archive:update')) {
-          alert.show('Warning', '\'' + $ctrl.name + '\' has been updated in background. Do you want to reload changes?', 'Reload', 'Keep', function () {
-            $ctrl.base = $ctrl.source = null;
-            $ctrl.peek();
-          });
+          var timestamp = new Date(response.data.timestamp).getTime();
+          if (timestamp - $ctrl.loaddedAt > 3000) {
+            $ctrl.loaddedAt = timestamp;
+            alert.show('Warning', '\'' + $ctrl.name + '\' has been updated in background. Do you want to reload changes?', 'Reload', 'Keep', function () {
+              $ctrl.base = $ctrl.source = null;
+              $ctrl.peek();
+            });
+          }
         }
       }
     });
