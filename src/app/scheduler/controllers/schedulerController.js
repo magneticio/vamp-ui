@@ -1,3 +1,4 @@
+/* global Ui */
 function schedulerController($scope, $state, $stateParams, artifactsMetadata, $controller, $vamp, toastr) {
   var $ctrl = this;
   $controller('PaginationController', {
@@ -10,7 +11,7 @@ function schedulerController($scope, $state, $stateParams, artifactsMetadata, $c
 
   $ctrl.path = '/scheduler/routing';
 
-  $scope.selector = '';
+  $scope.selector = $ctrl.selector;
   $ctrl.schedulerRouting = [];
   $ctrl.config = artifactsMetadata;
 
@@ -50,9 +51,15 @@ function schedulerController($scope, $state, $stateParams, artifactsMetadata, $c
 
   $ctrl.refresh();
 
-  $scope.$watch('selector', _.debounce(function (selector) {
-    selector = selector || 'true';
-    $vamp.get($ctrl.path, {selector: selector}).catch(function () {
+  $scope.$watch('selector', _.debounce(function (newSelector, oldSelector) {
+    if (newSelector === oldSelector) {
+      return;
+    }
+    var selector = newSelector || 'true';
+    $ctrl.selector = selector;
+    var params = {selector: selector};
+    params.per_page = Ui.config.itemsPerPage;
+    $vamp.emit($ctrl.path, params).catch(function () {
       toastr.error('Invalid selector: ' + selector);
     });
   }, 1000));
