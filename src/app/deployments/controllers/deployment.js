@@ -128,38 +128,38 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
   $scope.$on('/events/stream', function (e, response) {
     var event = response.data;
     if ($ctrl.deployment) {
-      if (_.includes(event.tags, 'deployments:' + $ctrl.deployment.name)) {
-        if (_.includes(event.tags, 'synchronization') || _.includes(event.tags, 'archive')) {
-          $vamp.get(path)
-            .catch(function () {
-              $ctrl.deployment.clusters = {};
-              alert.show('Warning', '\'' + $ctrl.deployment.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
-                $state.go('^');
-              });
-            });
-        } else {
-          chartUpdate(event);
-        }
-      } else {
-        var scaleUpdate = _.find(event.tags, function (tag) {
-          return tag.indexOf('deployment-service-scales:' + $ctrl.deployment.name) === 0;
-        });
-        if (scaleUpdate) {
-          $vamp.emit(path);
-        }
-      }
+      onEvent(event);
     }
   });
 
   $scope.$on('/events', function (e, response) {
     $timeout(function () {
-      _.forEach(response.data, function (event) {
-        if ($ctrl.deployment && _.includes(event.tags, 'deployments:' + $ctrl.deployment.name)) {
-          chartUpdate(event);
-        }
-      });
+      _.forEach(response.data, onEvent);
     }, 0);
   });
+
+  function onEvent(event) {
+    if (_.includes(event.tags, 'deployments:' + $ctrl.deployment.name)) {
+      if (_.includes(event.tags, 'synchronization') || _.includes(event.tags, 'archive')) {
+        $vamp.get(path)
+          .catch(function () {
+            $ctrl.deployment.clusters = {};
+            alert.show('Warning', '\'' + $ctrl.deployment.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
+              $state.go('^');
+            });
+          });
+      } else {
+        chartUpdate(event);
+      }
+    } else {
+      var scaleUpdate = _.find(event.tags, function (tag) {
+        return tag.indexOf('deployment-service-scales:' + $ctrl.deployment.name) === 0;
+      });
+      if (scaleUpdate) {
+        $vamp.emit(path);
+      }
+    }
+  }
 
   function header(cluster, service) {
     var header = '# cluster: ' + cluster.name + '\n';

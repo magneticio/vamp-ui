@@ -133,7 +133,16 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
   });
 
   $scope.$on('/events/stream', function (e, response) {
-    var event = response.data;
+    onEvent(response.data);
+  });
+
+  $scope.$on('/events', function (e, response) {
+    $timeout(function () {
+      _.forEach(response.data, onEvent);
+    }, 0);
+  });
+
+  function onEvent(event) {
     if ($ctrl.gateway && _.includes(event.tags, 'gateways:' + $ctrl.gateway.name)) {
       if (_.includes(event.tags, 'archive:delete')) {
         $state.go('^');
@@ -142,20 +151,10 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
       } else {
         chartUpdate(event);
       }
-    } else if (_.includes(response.data.tags, 'synchronization')) {
+    } else if (_.includes(event.tags, 'synchronization')) {
       $vamp.emit(path);
     }
-  });
-
-  $scope.$on('/events', function (e, response) {
-    $timeout(function () {
-      _.forEach(response.data, function (event) {
-        if ($ctrl.gateway && _.includes(event.tags, 'gateways:' + $ctrl.gateway.name)) {
-          chartUpdate(event);
-        }
-      });
-    }, 0);
-  });
+  }
 
   function save(gateway, message) {
     $vamp.put(path, JSON.stringify(gateway))
