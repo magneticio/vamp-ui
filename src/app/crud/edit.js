@@ -105,7 +105,7 @@ angular.module('vamp-ui').controller('edit',
       });
 
       $vamp.emit('/events', {
-        tags: [
+        tag: [
           'archive', $ctrl.kind + ':' + $ctrl.name
         ],
         type: 'archive'

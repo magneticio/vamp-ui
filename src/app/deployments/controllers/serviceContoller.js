@@ -102,8 +102,8 @@ function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, ar
   function peekEvents() {
     var nameTag = 'deployments:' + $ctrl.name;
     var requests = [
-      {tags: [nameTag, 'service', 'services:' + $ctrl.service.breed.name], timestamp: {gte: 'now-1m'}},
-      {tags: [nameTag, 'service', 'health', 'services:' + $ctrl.service.breed.name], timestamp: {gte: 'now-1m'}}
+      {tag: [nameTag, 'service', 'services:' + $ctrl.service.breed.name], timestamp: {gte: 'now-1m'}},
+      {tag: [nameTag, 'service', 'health', 'services:' + $ctrl.service.breed.name], timestamp: {gte: 'now-1m'}}
     ];
 
     _.forEach(requests, function (request) {

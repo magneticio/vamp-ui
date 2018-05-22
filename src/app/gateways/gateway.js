@@ -180,22 +180,22 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
     var nameTag = 'gateways:' + $ctrl.gateway.name;
     var requests = _.concat(
       [
-        {tags: [nameTag, 'gateway', 'health'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
-        {tags: [nameTag, 'gateway', 'metrics:rate'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
-        {tags: [nameTag, 'gateway', 'metrics:responseTime'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}}
+        {tag: [nameTag, 'gateway', 'health'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
+        {tag: [nameTag, 'gateway', 'metrics:rate'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
+        {tag: [nameTag, 'gateway', 'metrics:responseTime'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}}
       ],
       _.flatMap(_.map($ctrl.gateway.routes, function (v, n) {
         return [
           {
-            tags: [nameTag, 'route', 'health', 'routes:' + n],
+            tag: [nameTag, 'route', 'health', 'routes:' + n],
             timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}
           },
           {
-            tags: [nameTag, 'route', 'metrics:rate', 'routes:' + n],
+            tag: [nameTag, 'route', 'metrics:rate', 'routes:' + n],
             timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}
           },
           {
-            tags: [nameTag, 'route', 'metrics:responseTime', 'routes:' + n],
+            tag: [nameTag, 'route', 'metrics:responseTime', 'routes:' + n],
             timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}
           }
         ];

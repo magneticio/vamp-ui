@@ -38,7 +38,7 @@ function revisionsController($scope, revisionsService, $stateParams, $vamp, type
 
   $ctrl.peek = function () {
     $vamp.emit('/events', {
-      tags: [
+      tag: [
         'archive', $ctrl.kind + ':' + $ctrl.name
       ],
       type: 'archive'

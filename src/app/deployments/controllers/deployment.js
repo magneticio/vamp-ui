@@ -202,13 +202,13 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
     var nameTag = 'deployments:' + $ctrl.deployment.name;
     var requests = _.concat(
       [
-        {tags: [nameTag, 'deployment', 'health'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
-        {tags: [nameTag, 'allocation'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}}
+        {tag: [nameTag, 'deployment', 'health'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
+        {tag: [nameTag, 'allocation'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}}
       ],
       _.flatMap(_.map(services, function (service) {
         return [
           {
-            tags: [nameTag, 'service', 'health', 'services:' + service.breed.name],
+            tag: [nameTag, 'service', 'health', 'services:' + service.breed.name],
             timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}
           }
         ];
