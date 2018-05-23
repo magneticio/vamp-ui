@@ -78,7 +78,7 @@ function EventController($rootScope, $scope, $vamp, $vampWebsocket, $interval, u
         type: event.type,
         value: event.value,
         timestamp: event.timestamp,
-        tag: _.concat(combined, single)
+        tags: _.concat(combined, single)
       };
       $ctrl.events.push(e);
       if (publish) {
