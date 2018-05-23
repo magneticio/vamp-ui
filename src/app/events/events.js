@@ -57,17 +57,6 @@ function EventController($rootScope, $scope, $vamp, $vampWebsocket, $interval, u
       return;
     }
 
-    var combined = _.filter(event.tags, function (tag) {
-      return tag.indexOf(':') !== -1;
-    });
-
-    var single = _.filter(event.tags, function (tag) {
-      var found = _.find(combined, function (c) {
-        return c.indexOf(tag + ':') !== -1 || c === tag;
-      });
-      return tag !== event.type && !found;
-    });
-
     var exists = _.find($ctrl.events, function (e) {
       return e.id === event.id;
     });
@@ -78,7 +67,7 @@ function EventController($rootScope, $scope, $vamp, $vampWebsocket, $interval, u
         type: event.type,
         value: event.value,
         timestamp: event.timestamp,
-        tags: _.concat(combined, single)
+        tags: event.tags
       };
       $ctrl.events.push(e);
       if (publish) {
