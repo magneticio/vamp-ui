@@ -15,6 +15,7 @@ function EventController($rootScope, $scope, $vamp, $vampWebsocket, $interval, u
   this.filters = {
     health: Ui.config.eventsHealth,
     metrics: Ui.config.eventsMetrics,
+    capacity: Ui.config.eventsCapacity,
     allocation: Ui.config.eventsAllocation
   };
 
@@ -48,6 +49,7 @@ function EventController($rootScope, $scope, $vamp, $vampWebsocket, $interval, u
     Ui.save({
       eventsHealth: $ctrl.filters.health,
       eventsMetrics: $ctrl.filters.metrics,
+      eventsCapacity: $ctrl.filters.capacity,
       eventsAllocation: $ctrl.filters.allocation
     }, $rootScope);
   };

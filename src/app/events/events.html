@@ -11,6 +11,9 @@
             <label ng-click="filter($event, 'allocation')">
               <input type="checkbox" ng-model="$ctrl.filters.allocation" > Allocation
             </label>
+            <label ng-click="filter($event, 'capacity')">
+                <input type="checkbox" ng-model="$ctrl.filters.capacity" > Capacity
+            </label>
         </div>
         <div class="stats" ng-show="$ctrl.jvm">
             <div class="stat-value">

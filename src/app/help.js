@@ -79,7 +79,7 @@ Help.prototype.entries = function () {
       ]
     },
     workflows: {
-      description: "Workflows are apps (services) deployed on cluster to measure activity and dynamically change the runtime configuration. Click on a workflow port to view executions and access the execution log. You can suspend or restart a workflow from its action menu. Note that the Health and Metrics workflows are required by the Vamp UI.",
+      description: "Workflows are apps (services) deployed on cluster to measure activity and dynamically change the runtime configuration. Click on a workflow port to view executions and access the execution log. You can suspend or restart a workflow from its action menu.",
       links: [
         {
           title: 'Using workflows',

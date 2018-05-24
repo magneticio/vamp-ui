@@ -16,6 +16,7 @@ var UiConfig = function () {
     jvmMetricsPolling: 60,
     eventsHealth: true,
     eventsMetrics: true,
+    eventsCapacity: true,
     eventsAllocation: true
   };
 
