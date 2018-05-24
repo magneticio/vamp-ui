@@ -105,8 +105,6 @@
   }
 
   TimeSeriesCharts.prototype.define = function (definitions) {
-    this.invalidate();
-
     var remove = _.difference(_.map(charts, function (v, n) {
       return n;
     }), _.map(definitions, function (definition) {

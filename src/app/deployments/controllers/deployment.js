@@ -93,10 +93,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
     });
   });
 
-  $scope.$on(path, function (e, response) {
-    if (response.statusText !== 'OK') {
-      return;
-    }
+  var updated = _.throttle(function (response) {
     original = response.data;
     updateAddedServices(original);
     $ctrl.deployment = angular.copy(original);
@@ -113,6 +110,16 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
     }, 0);
 
     startPolling();
+  }, 1000, {
+    leading: true,
+    trailing: false
+  });
+
+  $scope.$on(path, function (e, response) {
+    if (response.statusText !== 'OK') {
+      return;
+    }
+    updated(response);
   });
 
   var rootScopeUnregister = $rootScope.$on('/vamp/settings/update', function () {
@@ -140,23 +147,21 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
 
   function onEvent(event) {
     if (_.includes(event.tags, 'deployments:' + $ctrl.deployment.name)) {
-      if (_.includes(event.tags, 'synchronization') || _.includes(event.tags, 'archive')) {
-        $vamp.get(path)
-          .catch(function () {
-            $ctrl.deployment.clusters = {};
-            alert.show('Warning', '\'' + $ctrl.deployment.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
-              $state.go('^');
-            });
+      var archive = _.includes(event.tags, 'archive');
+      var synchronization = _.includes(event.tags, 'synchronization');
+      if (archive || synchronization) {
+        var scaleUpdate = _.find(event.tags, function (tag) {
+          return tag.indexOf('deployment-service-scales:' + $ctrl.deployment.name) === 0;
+        });
+        var promise = synchronization || scaleUpdate ? $vamp.emit(path) : $vamp.get(path);
+        promise.catch(function () {
+          $ctrl.deployment.clusters = {};
+          alert.show('Warning', '\'' + $ctrl.deployment.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
+            $state.go('^');
           });
+        });
       } else {
         chartUpdate(event);
-      }
-    } else {
-      var scaleUpdate = _.find(event.tags, function (tag) {
-        return tag.indexOf('deployment-service-scales:' + $ctrl.deployment.name) === 0;
-      });
-      if (scaleUpdate) {
-        $vamp.emit(path);
       }
     }
   }

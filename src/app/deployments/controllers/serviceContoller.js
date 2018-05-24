@@ -76,7 +76,7 @@ function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, ar
   function handleEvent(event) {
     if (_.includes(event.tags, 'deployments:' + $ctrl.name)) {
       if (_.includes(event.tags, 'synchronization') || _.includes(event.tags, 'archive')) {
-        $vamp.get(path)
+        $vamp.emit(path)
           .then(function () {
             toastr.success('Service \'' + $ctrl.serviceName + '\' has been updated in the background.');
           })
