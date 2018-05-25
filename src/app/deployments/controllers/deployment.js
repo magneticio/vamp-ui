@@ -65,11 +65,11 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
     }).result.then(function (scale) {
       $vamp.put(path + '/clusters/' + cluster.name + '/services/' + service.breed.name + '/scale', angular.toJson(scale))
         .then(function () {
-          toastr.success('Scale for service \'' + service.breed.name + '\' has been successfully updated.');
+          toastr.success('Scale update for service \'' + service.breed.name + '\' has been accepted.');
           $vamp.emit(path);
         })
         .catch(function (response) {
-          toastr.error(response.data.message, 'Update of scale for service \'' + service.breed.name + '\' failed.');
+          toastr.error(response.data.message, 'Scale update for service \'' + service.breed.name + '\' failed.');
         });
     });
   };
