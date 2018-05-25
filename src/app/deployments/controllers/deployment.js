@@ -17,6 +17,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
 
   this.last = [];
   var polling;
+  var lastUpdate;
 
   $ctrl.readOnly = function () {
     return $authorization.readOnly('deployments');
@@ -120,6 +121,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
       return;
     }
     updated(response);
+    $timeout(peekEvents, 0);
   });
 
   var rootScopeUnregister = $rootScope.$on('/vamp/settings/update', function () {
@@ -153,7 +155,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
         var scaleUpdate = _.find(event.tags, function (tag) {
           return tag.indexOf('deployment-service-scales:' + $ctrl.deployment.name) === 0;
         });
-        var promise = synchronization || scaleUpdate ? $vamp.emit(path) : $vamp.get(path);
+        var promise = (synchronization || scaleUpdate) && isNewUpdate(event) ? $vamp.emit(path) : $vamp.get(path);
         promise.catch(function () {
           $ctrl.deployment.clusters = {};
           alert.show('Warning', '\'' + $ctrl.deployment.name + '\' has been deleted in background. Do you want to leave or stay on this page?', 'Leave', 'Stay', function () {
@@ -164,6 +166,15 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
         chartUpdate(event);
       }
     }
+  }
+
+  function isNewUpdate(event) {
+    var timestamp = new Date(event.timestamp).getTime();
+    if (!lastUpdate || lastUpdate < timestamp) {
+      lastUpdate = timestamp;
+      return true;
+    }
+    return false;
   }
 
   function header(cluster, service) {
@@ -236,6 +247,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
       })
     );
 
+    charts.invalidate();
     charts.define(definitions);
 
     _.forEach(definitions, function (definition) {

@@ -18,6 +18,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
   this.sliderOptions = slider.weightOptions;
 
   var polling;
+  var lastUpdate;
 
   $ctrl.readOnly = function () {
     return $authorization.readOnly('gateways');
@@ -119,6 +120,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
     updateAddedRoutes(response.data);
     $ctrl.gateway = response.data;
     $timeout(updateCharts, 0);
+    $timeout(peekEvents, 0);
     startPolling();
   });
 
@@ -142,16 +144,27 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
     }, 0);
   });
 
+  function isNewUpdate(event) {
+    var timestamp = new Date(event.timestamp).getTime();
+    if (!lastUpdate || lastUpdate < timestamp) {
+      lastUpdate = timestamp;
+      return true;
+    }
+    return false;
+  }
+
   function onEvent(event) {
     if ($ctrl.gateway && _.includes(event.tags, 'gateways:' + $ctrl.gateway.name)) {
       if (_.includes(event.tags, 'archive:delete')) {
         $state.go('^');
       } else if (_.includes(event.tags, 'archive:update') || _.includes(event.tags, 'deployed')) {
-        $vamp.emit(path);
+        if (isNewUpdate(event)) {
+          $vamp.emit(path);
+        }
       } else {
         chartUpdate(event);
       }
-    } else if (_.includes(event.tags, 'synchronization')) {
+    } else if (_.includes(event.tags, 'synchronization') && isNewUpdate(event)) {
       $vamp.emit(path);
     }
   }
@@ -222,6 +235,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
       }))
     );
 
+    charts.invalidate();
     charts.define(definitions);
 
     _.forEach(definitions, function (definition) {
