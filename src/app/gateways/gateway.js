@@ -1,4 +1,5 @@
 /* global TimeSeriesCharts, Ui */
+/* eslint-disable no-new */
 angular.module('vamp-ui').controller('GatewayController', GatewayController);
 
 /** @ngInject */
@@ -275,6 +276,12 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
 
   $ctrl.proxy = function ($event) {
     if (!$ctrl.gateway || !$ctrl.gateway.deployed || !$ctrl.gateway.service || !$ctrl.gateway.service.port.endsWith('/http')) {
+      return null;
+    }
+    try {
+      // check if host:port are valid
+      new URL('http://' + $ctrl.gateway.service.host + ':' + $ctrl.gateway.service.port);
+    } catch (e) {
       return null;
     }
     var path = 'proxy/gateways/' + encodeURIComponent($ctrl.gateway.name) + '/';
