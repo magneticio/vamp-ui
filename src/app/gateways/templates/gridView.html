@@ -21,8 +21,8 @@
         <p class="v-label">routes :</p>
         <ul>
             <li ng-repeat="route in item.routes | limitTo: 3 | orderBy:'name'">
-                <p ng-if="route.name.length <= 25">{{ route.name }}</p>
-                <p ng-if="route.name.length > 25">{{ route.name | limitTo: 25 }} ...</p>
+                <p ng-if="(route.metadata.title && route.metadata.title.length <= 25) || route.name.length <= 25">{{ route.metadata.title || route.name }}</p>
+                <p ng-if="(route.metadata.title && route.metadata.title.length > 25) || route.name.length > 25">{{ (route.metadata.title || route.name) | limitTo: 25 }} ...</p>
             </li>
             <li><i ng-if="(item.routes | countKeys) > 3" class="fa fa-ellipsis-h"></i></li>
         </ul>

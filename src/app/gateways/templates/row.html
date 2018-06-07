@@ -20,7 +20,7 @@
 </td>
 <td class="col-3">
   <span ng-repeat="route in item.routes | orderBy:'name'">
-      {{ route.name }}
+      {{ route.metadata.title || route.name }}
   </span>
 </td>
 <td>
