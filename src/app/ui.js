@@ -43,6 +43,7 @@ var UiConfig = function () {
         config[property] = cfg[property] == null ? config[property] : cfg[property];
       }
     }
+    config.itemsPerPage = config.itemsPerPage > 30 ? 30 : config.itemsPerPage;
     if (typeof (Storage) !== 'undefined') {
       localStorage.setItem('ui-config.' + namespace($rootScope), JSON.stringify(config));
       return true;

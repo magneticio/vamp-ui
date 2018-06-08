@@ -118,7 +118,7 @@
                     <label for="itemsPerPage" class="control-label">artifacts per page</label>
                     <input id="itemsPerPage" placeholder="{{$ctrl.defaultConfig.itemsPerPage}}" class="form-control"
                            type="number"
-                           min="1" ng-model="$ctrl.config.itemsPerPage" required>
+                           min="1" max="30" ng-model="$ctrl.config.itemsPerPage" required>
                 </div>
                 <div class="form-group" ng-class="{'has-error': form.toastTimeout.$invalid}">
                     <label for="toastTimeout" class="control-label">toast timeout [sec]</label>
