@@ -194,7 +194,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
     var nameTag = 'gateways:' + $ctrl.gateway.name;
     var requests = _.concat(
       [
-        {tag: [nameTag, 'gateway', 'synchronization'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
+        {tag: [nameTag, 'synchronization'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
         {tag: [nameTag, 'gateway', 'health'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
         {tag: [nameTag, 'gateway', 'metrics:rate'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
         {tag: [nameTag, 'gateway', 'metrics:responseTime'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}}

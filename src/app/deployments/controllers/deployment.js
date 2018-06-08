@@ -218,7 +218,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
     var nameTag = 'deployments:' + $ctrl.deployment.name;
     var requests = _.concat(
       [
-        {tag: [nameTag, 'deployment', 'synchronization'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
+        {tag: [nameTag, 'synchronization'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
         {tag: [nameTag, 'deployment', 'health'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}},
         {tag: [nameTag, 'allocation'], timestamp: {gte: 'now-' + Ui.config.chartResolution + 'm'}}
       ],
