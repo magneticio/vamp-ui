@@ -19,7 +19,7 @@ function blueprintsController($controller, $scope, $state, $stateParams, artifac
   };
 
   $ctrl.onView = function (blueprint) {
-    $state.go('.one.source-form.view', {
+    $state.go('.one', {
       name: blueprint.name
     });
   };
