@@ -10,7 +10,7 @@ function MenuController(uiStatesFactory, $state, $timeout) {
 
   $ctrl.leftPanelState = uiStatesFactory.viewStates.left;
   $ctrl.artifacts = VAMP.Artifacts.prototype.all();
-  
+
   $ctrl.toggleSidebar = function () {
     if ($ctrl.leftPanelState === uiStatesFactory.STATE_ENUM.COLLAPSED) {
       uiStatesFactory.setLeftPanelViewState(uiStatesFactory.STATE_ENUM.EXPANDED);
