@@ -19,11 +19,6 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4 text-right" ng-if="$ctrl.kind == 'blueprints'">
-              <button ng-if="!$ctrl.readOnly()" class="btn btn-primary" type="submit" ng-click="$ctrl.toggleViewMode()" ng-disabled="$ctrl.inEdit">
-                  {{ $ctrl.formMode ? 'YAML/JSON' : 'Form' }}
-              </button>
-            </div>
           </div>
         </div>
         <div ui-view="editor">
