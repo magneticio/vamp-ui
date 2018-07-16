@@ -116,10 +116,12 @@ angular.module('vamp-ui').controller('edit',
 
     $scope.$on('/events/stream', function (e, response) {
       if ($ctrl.base && _.includes(response.data.tags, $ctrl.kind + ':' + $ctrl.name)) {
+        var timestamp = new Date(response.data.timestamp).getTime();
         if (_.includes(response.data.tags, 'archive:delete')) {
-          alert.show('Warning', '\'' + $ctrl.name + '\' has been deleted in background. If you save the content, \'' + $ctrl.name + '\' will be recreated.', 'OK');
+          if (timestamp - $ctrl.loaddedAt > 3000) {
+            alert.show('Warning', '\'' + $ctrl.name + '\' has been deleted in background. If you save the content, \'' + $ctrl.name + '\' will be recreated.', 'OK');
+          }
         } else if (!ignoreChange && _.includes(response.data.tags, 'archive:update')) {
-          var timestamp = new Date(response.data.timestamp).getTime();
           if (timestamp - $ctrl.loaddedAt > 3000) {
             $ctrl.loaddedAt = timestamp;
             alert.show('Warning', '\'' + $ctrl.name + '\' has been updated in background. Do you want to reload changes?', 'Reload', 'Keep', function () {
