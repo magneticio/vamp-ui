@@ -19,7 +19,7 @@ function VampInfo() {
     if (info.token_expires && info.token_expires > 0) {
       var today = new Date();
       var expiryDate = new Date($this.info.token_expires * 1000);
-      var miliseconds = expiryDate.getTime() - today.getTime();    
+      var miliseconds = expiryDate.getTime() - today.getTime();
       $this.info.days_till_evaluation_expires = Math.ceil(miliseconds / (1000 * 60 * 60 * 24));
       $this.info.token_expires = info.token_expires;
     }
