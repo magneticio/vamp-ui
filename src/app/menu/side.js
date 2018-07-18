@@ -1,4 +1,4 @@
-/* global Help, Ui */
+/* global Help, Ui, Environment */
 angular.module('vamp-ui').component('side', {
   templateUrl: 'app/menu/templates/side.html',
   controller: SideController
@@ -22,6 +22,7 @@ function SideController($sce, $scope, $rootScope, $vamp, $vampInfo, uiStatesFact
 
   $ctrl.config = angular.copy(Ui.config);
   $ctrl.defaultConfig = Ui.defaultConfig;
+  $ctrl.evaluation = Environment.prototype.evaluation();
 
   $ctrl.trust = function (src) {
     return $sce.trustAsResourceUrl(src);

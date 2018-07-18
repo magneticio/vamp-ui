@@ -62,7 +62,15 @@
                 <td>WORKFLOW DRIVER</td>
                 <td>{{info.workflow_driver}}</td>
             </tr>
+            <tr ng-if="info.days_till_evaluation_expires">
+                <td>DAYS LEFT IN EVALUATION</td>
+                <td>{{info.days_till_evaluation_expires}}</td>
+            </tr>
         </table>
+        <div class="evaluation evaluation-panel" ng-show="$ctrl.evaluation">
+            <i class="icon-info"></i>
+            <a href="https://vamp.io/trial-expiry/" target="_blank">This is an evaluation version, restrictions may apply. It expires in {{info.days_till_evaluation_expires || "unknown" }} day(s)</a>
+        </div>
     </div>
 
     <div ng-show="$ctrl.uiStates.helpPanel">

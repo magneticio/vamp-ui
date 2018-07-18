@@ -16,6 +16,14 @@ function VampInfo() {
     $this.info.version = info.version;
     $this.info.ui_version = Environment.prototype.version();
 
+    if (info.token_expires && info.token_expires > 0) {
+      var today = new Date();
+      var expiryDate = new Date($this.info.token_expires * 1000);
+      var miliseconds = expiryDate.getTime() - today.getTime();    
+      $this.info.days_till_evaluation_expires = Math.ceil(miliseconds / (1000 * 60 * 60 * 24));
+      $this.info.token_expires = info.token_expires;
+    }
+
     if (!info.persistence || !info.pulse || !info.key_value) {
       return $this.info;
     }
