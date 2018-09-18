@@ -22,7 +22,6 @@ function VampInfo() {
       var miliseconds = expiryDate.getTime() - today.getTime();
       $this.info.days_till_evaluation_expires = info.token_expires === 0 ? 0 : Math.ceil(miliseconds / (1000 * 60 * 60 * 24));
       $this.info.token_expires = info.token_expires;
-      console.log($this.info);
     }
 
     if (!info.persistence || !info.pulse || !info.key_value) {
