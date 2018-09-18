@@ -62,7 +62,7 @@
                 <td>WORKFLOW DRIVER</td>
                 <td>{{info.workflow_driver}}</td>
             </tr>
-            <tr ng-if="info.days_till_evaluation_expires">
+          <tr ng-if="$ctrl.evaluation && info.days_till_evaluation_expires">
                 <td>DAYS LEFT IN EVALUATION</td>
                 <td>{{info.days_till_evaluation_expires}}</td>
             </tr>
