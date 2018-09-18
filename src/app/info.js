@@ -16,13 +16,18 @@ function VampInfo() {
     $this.info.version = info.version;
     $this.info.ui_version = Environment.prototype.version();
 
-    if (info.token_expires >= 0) {
+    // The token is an epoch date
+    if (info.token_expires > 0) {
       var today = new Date();
       var expiryDate = new Date($this.info.token_expires * 1000);
       var miliseconds = expiryDate.getTime() - today.getTime();
       $this.info.days_till_evaluation_expires = info.token_expires === 0 ? 0 : Math.ceil(miliseconds / (1000 * 60 * 60 * 24));
-      $this.info.token_expires = info.token_expires;
+    // The token is a  0 value
+    } else {
+      $this.info.days_till_evaluation_expires = 0;
     }
+
+    $this.info.token_expires = info.token_expires;
 
     if (!info.persistence || !info.pulse || !info.key_value) {
       return $this.info;
