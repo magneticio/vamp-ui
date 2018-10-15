@@ -1,4 +1,4 @@
-function gatewaysController($controller, $scope, $state, $stateParams, artifactsMetadata, $vamp, namifyFilter) {
+function gatewaysController($controller, $scope, $state, $stateParams, artifactsMetadata, $vamp, namifyFilter, $authorization) {
   var $ctrl = this;
   $controller('PaginationController', {$ctrl: $ctrl, $vamp: $vamp, $scope: $scope, artifactsMetadata: artifactsMetadata, $stateParams: $stateParams});
 
@@ -36,8 +36,15 @@ function gatewaysController($controller, $scope, $state, $stateParams, artifacts
     }
   });
 
-  $ctrl.refresh();
+  var authorized = $authorization.authorized(artifactsMetadata.kind, $authorization.action.read);
+  if (authorized) {
+    $ctrl.refresh();
+  } else {
+    $state.go('artifacts', {
+      kind: 'workflows'
+    });
+  }
 }
 
-gatewaysController.$inject = ['$controller', '$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp', 'namifyFilter'];
+gatewaysController.$inject = ['$controller', '$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp', 'namifyFilter', '$authorization'];
 angular.module('vamp-ui').controller('gatewaysController', gatewaysController);
