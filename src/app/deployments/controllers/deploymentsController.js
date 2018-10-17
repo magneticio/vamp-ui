@@ -1,4 +1,4 @@
-function deploymentsController($controller, $scope, $state, $stateParams, artifactsMetadata, $vamp, $vampDeployment) {
+function deploymentsController($controller, $scope, $state, $stateParams, artifactsMetadata, $vamp, $vampDeployment, $authorization) {
   var $ctrl = this;
   $controller('PaginationController', {$ctrl: $ctrl, $vamp: $vamp, $scope: $scope, artifactsMetadata: artifactsMetadata, $stateParams: $stateParams});
 
@@ -44,7 +44,14 @@ function deploymentsController($controller, $scope, $state, $stateParams, artifa
     }
   });
 
-  $ctrl.refresh();
+  var authorized = $authorization.authorized(artifactsMetadata.kind, $authorization.action.read);
+  if (authorized) {
+    $ctrl.refresh();
+  } else {
+    $state.go('artifacts', {
+      kind: 'gateways'
+    });
+  }
 
   function getScale(deployment) {
     return $vampDeployment.scale(deployment);
@@ -55,5 +62,5 @@ function deploymentsController($controller, $scope, $state, $stateParams, artifa
   }
 }
 
-deploymentsController.$inject = ['$controller', '$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp', '$vampDeployment'];
+deploymentsController.$inject = ['$controller', '$scope', '$state', '$stateParams', 'artifactsMetadata', '$vamp', '$vampDeployment', '$authorization'];
 angular.module('vamp-ui').controller('deploymentsController', deploymentsController);
