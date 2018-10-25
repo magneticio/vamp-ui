@@ -935,6 +935,7 @@ p, div {
   .label {
     text-overflow: ellipsis;
     max-width: 26rem;
+    max-height: 4rem;
     overflow: hidden;
     display: inline-block;
     white-space: inherit;
