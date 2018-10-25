@@ -929,14 +929,15 @@ p, div {
 }
 
 .gateway-route-condition {
-  padding: 2.6rem 0 0 0;
+  padding: 2.6rem 2.6rem 0 0;
   margin: 0;
 
   .label {
     text-overflow: ellipsis;
     max-width: 26rem;
     overflow: hidden;
-    display: inline-block
+    display: inline-block;
+    white-space: inherit;
   }
 }
 
