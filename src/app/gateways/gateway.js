@@ -29,6 +29,23 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
     $state.go('.source.view');
   };
 
+  this.openBuilder = function () {
+    $uibModal.open({
+      animation: true,
+      backdrop: 'static',
+      controller: 'conditionBuilderController',
+      templateUrl: 'app/gateways/templates/conditionBuilder.html',
+      windowClass: 'condition-builder-modal',
+      resolve: {
+        url: function () {
+          return '#/vamp/gateways/';
+        }
+      }
+    }).result.then(function (r) {
+      console.log(r);
+    });
+  };
+
   this.delete = function () {
     alert.show('Warning', 'Are you sure you want to delete gateway \'' + $ctrl.gateway.name + '\'?', 'Delete', 'Cancel', function () {
       $vamp.delete(path)
