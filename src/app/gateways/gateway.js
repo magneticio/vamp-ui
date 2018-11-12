@@ -115,7 +115,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
   });
 
   $scope.$on(path, function (e, response) {
-    if (response.statusText !== 'OK') {
+    if (response.status !== 200) {
       return;
     }
     updateAddedRoutes(response.data);

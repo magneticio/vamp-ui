@@ -117,7 +117,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
   });
 
   $scope.$on(path, function (e, response) {
-    if (response.statusText !== 'OK') {
+    if (response.status !== 200) {
       return;
     }
     updated(response);

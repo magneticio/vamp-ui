@@ -45,7 +45,7 @@ function ServiceController($scope, $timeout, $state, $stateParams, $uibModal, ar
   };
 
   $scope.$on(path, function (e, response) {
-    if (response.statusText !== 'OK') {
+    if (response.status !== 200) {
       return;
     }
 
