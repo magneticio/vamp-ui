@@ -117,7 +117,7 @@ function DeploymentController(uiStatesFactory, $rootScope, $scope, $stateParams,
   });
 
   $scope.$on(path, function (e, response) {
-    if (response.status !== 200) {
+    if (response.status < 200 || response.status > 299) {
       return;
     }
     updated(response);
