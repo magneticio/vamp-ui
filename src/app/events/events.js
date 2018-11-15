@@ -74,6 +74,7 @@ function EventController($rootScope, $scope, $vamp, $vampWebsocket, $interval, u
       $ctrl.events.push(e);
       if (publish) {
         $vamp.notify('/events/stream', {
+          statusText: 'OK',
           data: e
         });
       }
