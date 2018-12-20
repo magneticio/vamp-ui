@@ -1013,6 +1013,9 @@ p, div {
   width: 100%;
   height: 100%;
 }
+.condition-builder-modal .modal-content {
+  padding: 0;
+}
 .condition-builder-modal .modal-body {
   overflow: hidden;
   padding-top: 56.25%;

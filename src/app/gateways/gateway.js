@@ -38,7 +38,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
       windowClass: 'condition-builder-modal',
       resolve: {
         url: function () {
-          return '#/vamp/gateways/';
+          return '../bower_components/vamp-conditionbuilder/index.html';
         }
       }
     }).result.then(function (r) {

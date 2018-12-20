@@ -2,7 +2,8 @@ function conditionBuilderController($scope, $uibModalInstance, $sce, url) {
   $scope.url = $sce.trustAsResourceUrl(url);
 
   $scope.ok = function () {
-    $uibModalInstance.close({});
+    var bs = window.document.getElementById('builder').contentWindow.builderSource;
+    $uibModalInstance.close(bs);
   };
 
   $scope.cancel = function () {
