@@ -29,7 +29,8 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
     $state.go('.source.view');
   };
 
-  this.openBuilder = function () {
+  this.openBuilder = function (name) {
+    var gateway = angular.copy($ctrl.gateway);
     $uibModal.open({
       animation: true,
       backdrop: 'static',
@@ -38,12 +39,15 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
       windowClass: 'condition-builder-modal',
       resolve: {
         url: function () {
-          return '../bower_components/vamp-conditionbuilder/index.html';
+          return 'conditionbuilder/index.html';
+        },
+        conditionBuilderObject: function () {
+          return gateway.routes[name].metadata;
         }
       }
-    }).result.then(function (r) {
-      console.log(r);
-    });
+    }).result.then((function (r) {
+      this.saveCondition(name, r.shortcodes, r.builder);
+    }).bind(this));
   };
 
   this.delete = function () {
@@ -82,7 +86,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
     });
   };
 
-  this.saveCondition = function (route, condition) {
+  this.saveCondition = function (route, condition, conditionBuilderObject) {
     var gateway = angular.copy($ctrl.gateway);
     if (!condition || condition.trim().length === 0) {
       gateway.routes[route].condition = null;
@@ -96,6 +100,10 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
       };
     } else {
       gateway.routes[route].condition = condition;
+    }
+
+    if (conditionBuilderObject) {
+      gateway.routes[route].metadata = conditionBuilderObject;
     }
 
     save(gateway, 'Condition has been successfully updated.');

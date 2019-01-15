@@ -152,7 +152,7 @@
                         {{route.condition.condition || 'none'}}
                     </span>
                 </editable-text>
-                <button class="btn btn-primary pull-right" title="Condition Builder" type="submit" ng-click="$ctrl.openBuilder()">
+                <button class="btn-xs" title="Condition Builder" type="submit" ng-disabled="$ctrl.readOnly()" ng-click="$ctrl.openBuilder(name, route)">
                     Condition Builder
                 </button>
             </div>
