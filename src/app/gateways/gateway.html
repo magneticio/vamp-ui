@@ -145,15 +145,15 @@
         </div>
         <div class="col-md-4">
             <div class="col-sm-8 gateway-row gateway-route-condition">
-                <editable-text active="!$ctrl.readOnly()" text="{{route.condition.condition}}"
+                <!--editable-text active="!$ctrl.readOnly()" text="{{route.condition.condition}}"
                                edited="$ctrl.saveCondition(name, value)">
                     <span highlighter="route.condition.condition" class="label"
                           ng-class="{'label-success': route.condition.condition, 'label-primary': !label-default}">
                         {{route.condition.condition || 'none'}}
                     </span>
-                </editable-text>
-                <button class="btn-xs" title="Condition Builder" type="submit" ng-disabled="$ctrl.readOnly()" ng-click="$ctrl.openBuilder(name, route)">
-                    Condition Builder
+                </editable-text-->
+                <button class="btn-xs btn-primary" title="Condition Builder" type="submit" ng-disabled="$ctrl.readOnly()" ng-click="$ctrl.openBuilder(name, route)">
+                    Modify Condition
                 </button>
             </div>
             <div class="col-sm-4 gateway-row gateway-route-condition-strength">

@@ -31,6 +31,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
 
   this.openBuilder = function (name) {
     var gateway = angular.copy($ctrl.gateway);
+    var route = gateway.routes[name];
     $uibModal.open({
       animation: true,
       backdrop: 'static',
@@ -42,7 +43,18 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
           return 'conditionbuilder/index.html';
         },
         conditionBuilderObject: function () {
-          return gateway.routes[name].metadata;
+          return route.metadata;
+        },
+        condition: function () {
+          if (route.condition && typeof route.condition === "string") {
+            return route.condition;
+          }
+          if (route.condition && route.condition.condition && typeof route.condition.condition === "string") {
+            return route.condition.condition;
+          }
+          if (route.reference && route.reference.condition && typeof route.reference.condition === "string") {
+            return route.reference.condition;
+          }
         }
       }
     }).result.then((function (r) {

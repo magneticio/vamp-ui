@@ -1,8 +1,11 @@
-function conditionBuilderController($scope, $uibModalInstance, $sce, url, conditionBuilderObject) {
+function conditionBuilderController($scope, $uibModalInstance, $sce, url, conditionBuilderObject, condition) {
   $scope.url = $sce.trustAsResourceUrl(url);
 
   $uibModalInstance.opened.then(function () {
-    window.localStorage.setItem('builder-data', JSON.stringify({builder: conditionBuilderObject}));
+    window.localStorage.setItem('builder-data', JSON.stringify({
+      builder: conditionBuilderObject,
+      shortcodes: condition
+    }));
   });
 
   $scope.ok = function () {
@@ -19,5 +22,5 @@ function conditionBuilderController($scope, $uibModalInstance, $sce, url, condit
   };
 }
 
-conditionBuilderController.$inject = ['$scope', '$uibModalInstance', '$sce', 'url', 'conditionBuilderObject'];
+conditionBuilderController.$inject = ['$scope', '$uibModalInstance', '$sce', 'url', 'conditionBuilderObject', 'condition'];
 angular.module('vamp-ui').controller('conditionBuilderController', conditionBuilderController);
