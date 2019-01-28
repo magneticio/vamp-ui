@@ -152,9 +152,11 @@
                         {{route.condition.condition || 'none'}}
                     </span>
                 </editable-text-->
-                <button class="btn-xs btn-primary" title="Condition Builder" type="submit" ng-disabled="$ctrl.readOnly()" ng-click="$ctrl.openBuilder(name, route)">
-                    Modify Condition
-                </button>
+                <a class="proxy-anchor" ng-disabled="$ctrl.readOnly()"
+                   ng-click="$ctrl.openBuilder(name, route)">
+                    <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;
+                    {{ route.condition ? 'Modify Condition' : 'Create Condition'}}
+                </a>
             </div>
             <div class="col-sm-4 gateway-row gateway-route-condition-strength">
                 <editable-number-slider active="!$ctrl.readOnly() && route.condition.condition"
