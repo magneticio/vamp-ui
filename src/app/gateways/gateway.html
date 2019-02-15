@@ -145,18 +145,24 @@
         </div>
         <div class="col-md-4">
             <div class="col-sm-8 gateway-row gateway-route-condition">
+                <div class="editable">
+                    <span uib-tooltip="{{route.condition.condition}}" tooltip-popup-delay="1000"
+                    tooltip-enable="route.condition.condition"
+                    highlighter="route.condition.condition" class="label"
+                        ng-class="{'label-success': route.condition.condition, 'label-primary': !label-default}">
+                      {{route.condition.condition || 'none'}}
+                    </span>
+                    <div class="editable-icon" ng-click="$ctrl.openBuilder(name, route)">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+                </div>
                 <!--editable-text active="!$ctrl.readOnly()" text="{{route.condition.condition}}"
-                               edited="$ctrl.saveCondition(name, value)">
+                               edited="$ctrl.openBuilder(name, route)">
                     <span highlighter="route.condition.condition" class="label"
                           ng-class="{'label-success': route.condition.condition, 'label-primary': !label-default}">
                         {{route.condition.condition || 'none'}}
                     </span>
                 </editable-text-->
-                <a class="proxy-anchor" ng-disabled="$ctrl.readOnly()"
-                   ng-click="$ctrl.openBuilder(name, route)">
-                    <i class="fa fa-cog" aria-hidden="true"></i>&nbsp;
-                    {{ route.condition ? 'Modify Condition' : 'Create Condition'}}
-                </a>
             </div>
             <div class="col-sm-4 gateway-row gateway-route-condition-strength">
                 <editable-number-slider active="!$ctrl.readOnly() && route.condition.condition"
