@@ -145,9 +145,10 @@
         </div>
         <div class="col-md-4">
             <div class="col-sm-8 gateway-row gateway-route-condition">
-                <div class="editable">
+                <div class="editable" style="width: 80%;">
                     <span uib-tooltip="{{route.condition.condition}}" tooltip-popup-delay="1000"
                     tooltip-enable="route.condition.condition"
+                    tooltip-class="wraptooltip"
                     highlighter="route.condition.condition" class="label"
                         ng-class="{'label-success': route.condition.condition, 'label-primary': !label-default}">
                       {{route.condition.condition || 'none'}}

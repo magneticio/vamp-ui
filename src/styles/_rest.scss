@@ -789,6 +789,10 @@ p, div {
   }
 }
 
+.wraptooltip .tooltip-inner {
+  white-space: normal;
+}
+
 @keyframes highlightChange {
   0% {
     background-color: $warning-button-color;
