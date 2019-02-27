@@ -29,6 +29,39 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
     $state.go('.source.view');
   };
 
+  this.openBuilder = function (name) {
+    var gateway = angular.copy($ctrl.gateway);
+    var route = gateway.routes[name];
+    $uibModal.open({
+      animation: true,
+      backdrop: 'static',
+      controller: 'conditionBuilderController',
+      templateUrl: 'app/gateways/templates/conditionBuilder.html',
+      windowClass: 'condition-builder-modal',
+      resolve: {
+        url: function () {
+          return 'conditionbuilder/index.html';
+        },
+        conditionBuilderObject: function () {
+          return route.metadata;
+        },
+        condition: function () {
+          if (route.condition && typeof route.condition === "string") {
+            return route.condition;
+          }
+          if (route.condition && route.condition.condition && typeof route.condition.condition === "string") {
+            return route.condition.condition;
+          }
+          if (route.reference && route.reference.condition && typeof route.reference.condition === "string") {
+            return route.reference.condition;
+          }
+        }
+      }
+    }).result.then((function (r) {
+      this.saveCondition(name, r.conditionSource, r.builder);
+    }).bind(this));
+  };
+
   this.delete = function () {
     alert.show('Warning', 'Are you sure you want to delete gateway \'' + $ctrl.gateway.name + '\'?', 'Delete', 'Cancel', function () {
       $vamp.delete(path)
@@ -65,7 +98,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
     });
   };
 
-  this.saveCondition = function (route, condition) {
+  this.saveCondition = function (route, condition, conditionBuilderObject) {
     var gateway = angular.copy($ctrl.gateway);
     if (!condition || condition.trim().length === 0) {
       gateway.routes[route].condition = null;
@@ -79,6 +112,10 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
       };
     } else {
       gateway.routes[route].condition = condition;
+    }
+
+    if (conditionBuilderObject) {
+      gateway.routes[route].metadata = conditionBuilderObject;
     }
 
     save(gateway, 'Condition has been successfully updated.');

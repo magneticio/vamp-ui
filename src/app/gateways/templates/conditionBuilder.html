@@ -1,0 +1,10 @@
+<div class="modal-body">
+  <iframe id="builder" ng-src='{{url}}'></iframe>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-info" type="button" ng-click="ok()">Save</button>
+  <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
+  <ul>
+      <li ng-repeat="message in messages track by $index">{{message}}</li>
+    </ul>
+</div>

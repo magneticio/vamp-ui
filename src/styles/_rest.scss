@@ -789,6 +789,10 @@ p, div {
   }
 }
 
+.wraptooltip .tooltip-inner {
+  white-space: normal;
+}
+
 @keyframes highlightChange {
   0% {
     background-color: $warning-button-color;
@@ -1006,6 +1010,28 @@ p, div {
       font-weight: $font-weight-regular;
     }
   }
+}
+
+.condition-builder-modal .modal-dialog {
+  overflow: hidden;
+  width: 900px;
+  height: 700px;
+}
+.condition-builder-modal .modal-content {
+  padding: 0;
+}
+.condition-builder-modal .modal-body {
+  overflow: hidden;
+  padding-top: 56.25%;
+  position: relative;
+}
+.condition-builder-modal .modal-body iframe {
+  border: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 .modal-content {
