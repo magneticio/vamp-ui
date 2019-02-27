@@ -2,10 +2,14 @@ function conditionBuilderController($scope, $uibModalInstance, $sce, url, condit
   $scope.url = $sce.trustAsResourceUrl(url);
 
   $uibModalInstance.opened.then(function () {
-    window.localStorage.setItem('builder-data', JSON.stringify({
-      builder: conditionBuilderObject,
-      conditionSource: condition
-    }));
+    if (condition) {
+      window.localStorage.setItem('builder-data', JSON.stringify({
+        builder: conditionBuilderObject,
+        conditionSource: condition
+      }));
+    } else {
+      window.localStorage.setItem('builder-data', null);
+    }
   });
 
   $scope.ok = function () {
