@@ -4,7 +4,7 @@ function conditionBuilderController($scope, $uibModalInstance, $sce, url, condit
   $uibModalInstance.opened.then(function () {
     window.localStorage.setItem('builder-data', JSON.stringify({
       builder: conditionBuilderObject,
-      shortcodes: condition
+      conditionSource: condition
     }));
   });
 

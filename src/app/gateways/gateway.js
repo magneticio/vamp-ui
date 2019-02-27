@@ -58,7 +58,7 @@ function GatewayController($rootScope, $scope, $filter, $stateParams, $timeout, 
         }
       }
     }).result.then((function (r) {
-      this.saveCondition(name, r.shortcodes, r.builder);
+      this.saveCondition(name, r.conditionSource, r.builder);
     }).bind(this));
   };
 
