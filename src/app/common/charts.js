@@ -15,6 +15,7 @@
       maxValueScale: 1,
       interpolation: 'bezier',
       sharpLines: true,
+      scaleSmoothing: 1,
       grid: {
         fillStyle: 'transparent',
         strokeStyle: '#37647D',
@@ -42,6 +43,7 @@
       maxValueScale: 1,
       interpolation: 'bezier',
       sharpLines: true,
+      scaleSmoothing: 1,
       borderVisible: false,
       grid: {
         fillStyle: 'transparent',
