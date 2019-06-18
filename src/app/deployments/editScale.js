@@ -13,16 +13,17 @@ angular.module('vamp-ui').component('editScale', {
 function EditScale($scope) {
   var $ctrl = this;
 
-  this.note = '';
-  this.service = this.resolve.service;
-  this.cluster = this.resolve.cluster;
-  this.deployment = this.resolve.deployment;
-
-  this.scale = angular.copy(this.service.scale);
-  this.scale.memory = parseInt(this.scale.memory, 10) + ' MB';
-
   this.save = function () {
     $ctrl.close({$value: $ctrl.scale});
+  };
+
+  this.$onInit = function () {
+    this.note = '';
+    this.service = this.resolve.service;
+    this.cluster = this.resolve.cluster;
+    this.deployment = this.resolve.deployment;
+    this.scale = angular.copy(this.service.scale);
+    this.scale.memory = parseInt(this.scale.memory, 10) + ' MB';
   };
 
   $scope.$on('/events/stream', function (e, response) {
