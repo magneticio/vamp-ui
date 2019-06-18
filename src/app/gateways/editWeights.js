@@ -12,7 +12,6 @@ angular.module('vamp-ui').component('editWeights', {
 /** @ngInject */
 function EditWeights($scope, slider) {
   var $ctrl = this;
-  var gateway = this.resolve.gateway;
 
   $scope.sliderOptions = slider.weightOptions;
 
@@ -49,6 +48,8 @@ function EditWeights($scope, slider) {
   }, true);
 
   this.$onInit = function () {
+    var gateway = this.resolve.gateway;
+
     $scope.routeCount = _.size(gateway.routes);
 
     $scope.weights = _.reduce(gateway.routes, function (weights, route, name) {
