@@ -19,7 +19,7 @@ function VampInfo() {
     // The token is an epoch date
     if (info.token_expires > 0) {
       var today = new Date();
-      var expiryDate = new Date($this.info.token_expires * 1000);
+      var expiryDate = new Date(info.token_expires * 1000);
       var miliseconds = expiryDate.getTime() - today.getTime();
       $this.info.days_till_evaluation_expires = info.token_expires === 0 ? 0 : Math.ceil(miliseconds / (1000 * 60 * 60 * 24));
     // The token is a  0 value
